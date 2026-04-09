@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flächenberechnung - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '12-analysis-flaechenberechnung';
+    const THEMA_CONFIG = { name: 'Flächenberechnung', bereich: 'analysis' };
+    const AUFGABEN = [
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 1 — Fläche unter einer Parabel über [0, a]
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 1, level: 1, typ: "numerisch",
+        frage: "Berechne die Fläche zwischen \\(f(x) = x^2\\) und der \\(x\\)-Achse auf \\([0, 2]\\). Runde auf zwei Dezimalstellen.",
+        loesung: 2.67, toleranz: 0.01,
+        tipp: "\\(f(x) \\geq 0\\) auf \\([0, 2]\\), also \\(A = \\int_0^2 x^2\\,dx\\).",
+        loesungsweg: "\\(A = \\left[\\frac{1}{3}x^3\\right]_0^2 = \\frac{8}{3} \\approx 2{,}67\\)."
+    },
+    {
+        id: 2, level: 1, typ: "mc",
+        frage: "Wie berechnet man die Fläche unter \\(f(x) = 3x\\) auf \\([0, 4]\\)?",
+        optionen: [
+            "\\(A = \\int_0^4 3x\\,dx = \\left[\\frac{3}{2}x^2\\right]_0^4 = 24\\)",
+            "\\(A = f(4) - f(0) = 12 - 0 = 12\\)",
+            "\\(A = 3 \\cdot 4 = 12\\)",
+            "\\(A = \\int_0^4 3\\,dx = 12\\)"
+        ],
+        korrekt: 0,
+        tipp: "Fläche = Integral der Funktion über dem Intervall.",
+        loesungsweg: "\\(A = \\int_0^4 3x\\,dx = \\left[\\frac{3}{2}x^2\\right]_0^4 = 24\\)."
+    },
+    {
+        id: 3, level: 1, typ: "numerisch",
+        frage: "Berechne die Fläche zwischen \\(f(x) = x^2 + 1\\) und der \\(x\\)-Achse auf \\([0, 3]\\).",
+        loesung: 12, toleranz: 0,
+        tipp: "\\(f(x) > 0\\) auf \\([0, 3]\\). Also \\(A = \\int_0^3 (x^2 + 1)\\,dx\\).",
+        loesungsweg: "\\(A = \\left[\\frac{1}{3}x^3 + x\\right]_0^3 = (9 + 3) - 0 = 12\\)."
+    },
+    {
+        id: 4, level: 1, typ: "mc",
+        frage: "Wie berechnet man die Fläche zwischen \\(f(x)\\) und der \\(x\\)-Achse auf \\([a, b]\\), wenn \\(f(x) \\geq 0\\)?",
+        optionen: [
+            "\\(A = \\int_a^b f(x)\\,dx\\)",
+            "\\(A = f(b) - f(a)\\)",
+            "\\(A = \\int_a^b f'(x)\\,dx\\)",
+            "\\(A = F(a) - F(b)\\)"
+        ],
+        korrekt: 0,
+        tipp: "Wenn die Funktion nicht-negativ ist, stimmt Fläche und Integral überein.",
+        loesungsweg: "Für \\(f(x) \\geq 0\\) gilt: Flächeninhalt = \\(\\int_a^b f(x)\\,dx\\)."
+    },
+    {
+        id: 5, level: 1, typ: "numerisch",
+        frage: "Berechne die Fläche zwischen \\(f(x) = 4 - x^2\\) und der \\(x\\)-Achse auf \\([0, 2]\\). Runde auf zwei Dezimalstellen.",
+        loesung: 5.33, toleranz: 0.01,
+        tipp: "Auf \\([0, 2]\\) gilt \\(f(x) \\geq 0\\). Also direkt integrieren.",
+        loesungsweg: "\\(A = \\left[4x - \\frac{1}{3}x^3\\right]_0^2 = 8 - \\frac{8}{3} = \\frac{16}{3} \\approx 5{,}33\\)."
+    },
+    {
+        id: 6, level: 1, typ: "numerisch",
+        frage: "Berechne die Fläche zwischen \\(f(x) = 2x + 1\\) und der \\(x\\)-Achse auf \\([0, 3]\\).",
+        loesung: 12, toleranz: 0,
+        tipp: "\\(A = \\int_0^3 (2x+1)\\,dx\\). Stammfunktion: \\(x^2 + x\\).",
+        loesungsweg: "\\(A = \\left[x^2 + x\\right]_0^3 = (9 + 3) - 0 = 12\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 2 — Fläche mit Vorzeichenkorrektur (|∫|)
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 7, level: 2, typ: "numerisch",
+        frage: "Berechne die Fläche zwischen \\(f(x) = x^2 - 4\\) und der \\(x\\)-Achse auf \\([0, 2]\\). <br><em>Hinweis: \\(f(x) \\leq 0\\) auf diesem Intervall.</em>",
+        loesung: 5.33, toleranz: 0.01,
+        tipp: "Da \\(f(x) \\leq 0\\): \\(A = \\left|\\int_0^2 (x^2-4)\\,dx\\right|\\).",
+        loesungsweg: "\\(\\int_0^2 (x^2-4)\\,dx = \\left[\\frac{1}{3}x^3 - 4x\\right]_0^2 = \\frac{8}{3} - 8 = -\\frac{16}{3}\\). \\(A = \\frac{16}{3} \\approx 5{,}33\\)."
+    },
+    {
+        id: 8, level: 2, typ: "mc",
+        frage: "\\(f(x) = -x\\) liegt auf \\([0, 4]\\) unterhalb der \\(x\\)-Achse. Wie berechnet man die eingeschlossene Fläche?",
+        optionen: [
+            "\\(A = \\left|\\int_0^4 (-x)\\,dx\\right| = |-8| = 8\\)",
+            "\\(A = \\int_0^4 (-x)\\,dx = -8\\)",
+            "Die Fläche ist negativ: \\(A = -8\\)",
+            "\\(A = \\int_0^4 x\\,dx = 8\\) (Vorzeichen ignorieren)"
+        ],
+        korrekt: 0,
+        tipp: "Fläche ist stets positiv. Man nimmt den Betrag des Integrals.",
+        loesungsweg: "\\(\\int_0^4 (-x)\\,dx = -8\\). Da Fläche positiv sein muss: \\(A = |-8| = 8\\)."
+    },
+    {
+        id: 9, level: 2, typ: "mc",
+        frage: "\\(f(x) = x^3\\) wechselt bei \\(x = 0\\) das Vorzeichen. Wie berechnet man die Fläche auf \\([-1, 1]\\)?",
+        optionen: [
+            "\\(A = \\left|\\int_{-1}^0 x^3\\,dx\\right| + \\left|\\int_0^1 x^3\\,dx\\right|\\)",
+            "\\(A = \\int_{-1}^1 x^3\\,dx\\)",
+            "\\(A = \\int_{-1}^1 |x|^3\\,dx\\)",
+            "\\(A = 2 \\cdot \\int_{-1}^0 x^3\\,dx\\)"
+        ],
+        korrekt: 0,
+        tipp: "Bei Vorzeichenwechsel: An der Nullstelle aufteilen und Beträge addieren.",
+        loesungsweg: "\\(\\left|\\int_{-1}^0 x^3\\,dx\\right| = \\left|-\\frac{1}{4}\\right| = \\frac{1}{4}\\). \\(\\left|\\int_0^1 x^3\\,dx\\right| = \\frac{1}{4}\\). \\(A = \\frac{1}{2}\\)."
+    },
+    {
+        id: 10, level: 2, typ: "numerisch",
+        frage: "Berechne die Fläche zwischen \\(f(x) = x^3\\) und der \\(x\\)-Achse auf \\([-1, 1]\\).",
+        loesung: 0.5, toleranz: 0.01,
+        tipp: "Aufteilen bei \\(x = 0\\): \\(A = \\left|\\int_{-1}^0 x^3\\,dx\\right| + \\int_0^1 x^3\\,dx\\).",
+        loesungsweg: "\\(\\int_{-1}^0 x^3\\,dx = \\left[\\frac{1}{4}x^4\\right]_{-1}^0 = 0 - \\frac{1}{4} = -\\frac{1}{4}\\). \\(\\int_0^1 x^3\\,dx = \\frac{1}{4}\\). \\(A = \\frac{1}{4} + \\frac{1}{4} = \\frac{1}{2} = 0{,}5\\)."
+    },
+    {
+        id: 11, level: 2, typ: "numerisch",
+        frage: "Berechne die Fläche zwischen \\(f(x) = x^2 - 1\\) und der \\(x\\)-Achse auf \\([0, 2]\\). <br><em>Nullstelle bei \\(x = 1\\)!</em> Runde auf zwei Dezimalstellen.",
+        loesung: 2, toleranz: 0.01,
+        tipp: "Aufteilen: \\([0,1]\\) (\\(f \\leq 0\\)) und \\([1,2]\\) (\\(f \\geq 0\\)).",
+        loesungsweg: "\\(\\int_0^1 (x^2-1)\\,dx = [\\frac{1}{3}x^3-x]_0^1 = \\frac{1}{3}-1 = -\\frac{2}{3}\\). \\(\\int_1^2 (x^2-1)\\,dx = (\\frac{8}{3}-2)-(\\frac{1}{3}-1) = \\frac{2}{3}+\\frac{2}{3} = \\frac{4}{3}\\). \\(A = \\frac{2}{3}+\\frac{4}{3} = 2\\)."
+    },
+    {
+        id: 12, level: 2, typ: "mc",
+        frage: "Die Fläche zwischen \\(f(x) = \\sin(x)\\) und der \\(x\\)-Achse auf \\([0, 2\\pi]\\) beträgt:",
+        optionen: [
+            "\\(A = 4\\), da \\(\\left|\\int_0^\\pi\\sin(x)\\,dx\\right| + \\left|\\int_\\pi^{2\\pi}\\sin(x)\\,dx\\right| = 2 + 2\\)",
+            "\\(A = 0\\), da \\(\\int_0^{2\\pi}\\sin(x)\\,dx = 0\\)",
+            "\\(A = 2\\), da nur \\(\\int_0^\\pi\\sin(x)\\,dx\\) zählt",
+            "\\(A = 2\\pi\\)"
+        ],
+        korrekt: 0,
+        tipp: "Aufteilen bei \\(x = \\pi\\)! Positive und negative Fläche getrennt berechnen.",
+        loesungsweg: "\\(\\int_0^\\pi \\sin(x)\\,dx = 2\\). \\(\\int_\\pi^{2\\pi} \\sin(x)\\,dx = -2\\). \\(A = |2| + |-2| = 4\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 3 — Fläche zwischen f und g (Schnittpunkte → Integrale)
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 13, level: 3, typ: "mc",
+        frage: "Wie berechnet man die Fläche zwischen zwei Funktionen \\(f\\) und \\(g\\) auf \\([a, b]\\)?",
+        optionen: [
+            "\\(A = \\int_a^b |f(x) - g(x)|\\,dx\\)",
+            "\\(A = \\int_a^b f(x)\\,dx - \\int_a^b g(x)\\,dx\\)",
+            "\\(A = \\int_a^b f(x) \\cdot g(x)\\,dx\\)",
+            "\\(A = |\\int_a^b f(x)\\,dx| + |\\int_a^b g(x)\\,dx|\\)"
+        ],
+        korrekt: 0,
+        tipp: "Man integriert den Betrag der Differenz der beiden Funktionen.",
+        loesungsweg: "Die Fläche zwischen \\(f\\) und \\(g\\) ist \\(A = \\int_a^b |f(x) - g(x)|\\,dx\\). Bei bekannter Lage: obere minus untere Funktion."
+    },
+    {
+        id: 14, level: 3, typ: "numerisch",
+        frage: "Berechne die Fläche zwischen \\(f(x) = x^2\\) und \\(g(x) = x\\) auf \\([0, 1]\\). <br><em>Hinweis: \\(g(x) \\geq f(x)\\) auf \\([0, 1]\\).</em> Runde auf zwei Dezimalstellen.",
+        loesung: 0.17, toleranz: 0.01,
+        tipp: "\\(A = \\int_0^1 (x - x^2)\\,dx\\). Obere minus untere Funktion.",
+        loesungsweg: "\\(A = \\int_0^1 (x - x^2)\\,dx = \\left[\\frac{1}{2}x^2 - \\frac{1}{3}x^3\\right]_0^1 = \\frac{1}{2} - \\frac{1}{3} = \\frac{1}{6} \\approx 0{,}17\\)."
+    },
+    {
+        id: 15, level: 3, typ: "mc",
+        frage: "Was sind die Schnittpunkte von \\(f(x) = x^2\\) und \\(g(x) = 4\\)?",
+        optionen: [
+            "\\(x = -2\\) und \\(x = 2\\)",
+            "\\(x = 0\\) und \\(x = 4\\)",
+            "\\(x = 2\\) (nur einer)",
+            "\\(x = -4\\) und \\(x = 4\\)"
+        ],
+        korrekt: 0,
+        tipp: "Setze \\(x^2 = 4\\) und löse nach \\(x\\).",
+        loesungsweg: "\\(x^2 = 4 \\Rightarrow x = \\pm 2\\). Schnittpunkte bei \\(x = -2\\) und \\(x = 2\\)."
+    },
+    {
+        id: 16, level: 3, typ: "numerisch",
+        frage: "Berechne die Fläche zwischen \\(f(x) = x^2\\) und \\(g(x) = 4\\) auf \\([-2, 2]\\). Runde auf zwei Dezimalstellen.",
+        loesung: 10.67, toleranz: 0.01,
+        tipp: "\\(g(x) \\geq f(x)\\) auf \\([-2, 2]\\). \\(A = \\int_{-2}^{2} (4 - x^2)\\,dx\\).",
+        loesungsweg: "\\(A = \\left[4x - \\frac{1}{3}x^3\\right]_{-2}^{2} = (8 - \\frac{8}{3}) - (-8 + \\frac{8}{3}) = 16 - \\frac{16}{3} = \\frac{32}{3} \\approx 10{,}67\\)."
+    },
+    {
+        id: 17, level: 3, typ: "numerisch",
+        frage: "Berechne die Fläche zwischen \\(f(x) = x^2\\) und \\(g(x) = 2x\\). <br><em>Schnittpunkte zuerst bestimmen!</em> Runde auf zwei Dezimalstellen.",
+        loesung: 1.33, toleranz: 0.01,
+        tipp: "Schnittpunkte: \\(x^2 = 2x \\Rightarrow x(x-2) = 0\\), also \\(x = 0\\) und \\(x = 2\\).",
+        loesungsweg: "Auf \\([0, 2]\\): \\(2x \\geq x^2\\). \\(A = \\int_0^2 (2x - x^2)\\,dx = \\left[x^2 - \\frac{1}{3}x^3\\right]_0^2 = 4 - \\frac{8}{3} = \\frac{4}{3} \\approx 1{,}33\\)."
+    },
+    {
+        id: 18, level: 3, typ: "numerisch",
+        frage: "Berechne die Fläche zwischen \\(f(x) = x^2 - 2x\\) und \\(g(x) = 0\\) (x-Achse). <br><em>Schnittpunkte: \\(x = 0\\) und \\(x = 2\\).</em> Runde auf zwei Dezimalstellen.",
+        loesung: 1.33, toleranz: 0.01,
+        tipp: "Auf \\([0, 2]\\) gilt \\(f(x) \\leq 0\\). Also \\(A = \\left|\\int_0^2 (x^2-2x)\\,dx\\right|\\).",
+        loesungsweg: "\\(\\int_0^2 (x^2-2x)\\,dx = \\left[\\frac{1}{3}x^3-x^2\\right]_0^2 = \\frac{8}{3}-4 = -\\frac{4}{3}\\). \\(A = \\frac{4}{3} \\approx 1{,}33\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 4 — Fläche zwischen Parabel und Gerade
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 19, level: 4, typ: "numerisch",
+        frage: "Berechne die Fläche zwischen \\(f(x) = x^2\\) und \\(g(x) = x + 2\\). <br><em>Schnittpunkte bestimmen!</em>",
+        loesung: 4.5, toleranz: 0.01,
+        tipp: "\\(x^2 = x + 2 \\Rightarrow x^2 - x - 2 = 0 \\Rightarrow (x-2)(x+1) = 0\\). SP: \\(x = -1, x = 2\\).",
+        loesungsweg: "\\(A = \\int_{-1}^{2} (x+2-x^2)\\,dx = \\left[\\frac{1}{2}x^2+2x-\\frac{1}{3}x^3\\right]_{-1}^{2} = (2+4-\\frac{8}{3}) - (\\frac{1}{2}-2+\\frac{1}{3}) = \\frac{10}{3}-(-\\frac{7}{6}) = \\frac{10}{3}+\\frac{7}{6} = \\frac{27}{6} = 4{,}5\\)."
+    },
+    {
+        id: 20, level: 4, typ: "numerisch",
+        frage: "Berechne die Fläche zwischen \\(f(x) = -x^2 + 4\\) und \\(g(x) = 0\\) (x-Achse). <br><em>Nullstellen: \\(x = -2, x = 2\\).</em> Runde auf zwei Dezimalstellen.",
+        loesung: 10.67, toleranz: 0.01,
+        tipp: "Auf \\([-2, 2]\\) ist \\(f(x) \\geq 0\\). Also direkt integrieren.",
+        loesungsweg: "\\(A = \\int_{-2}^{2} (-x^2+4)\\,dx = \\left[-\\frac{1}{3}x^3+4x\\right]_{-2}^{2} = (-\\frac{8}{3}+8)-(\\frac{8}{3}-8) = \\frac{32}{3} \\approx 10{,}67\\)."
+    },
+    {
+        id: 21, level: 4, typ: "mc",
+        frage: "Die Fläche zwischen \\(f(x) = x^2 - 1\\) und \\(g(x) = 3\\) soll berechnet werden. Welcher Ansatz ist korrekt?",
+        optionen: [
+            "\\(A = \\int_{-2}^{2}(3 - (x^2-1))\\,dx = \\int_{-2}^{2}(4-x^2)\\,dx\\)",
+            "\\(A = \\int_{-2}^{2}(x^2-1-3)\\,dx\\)",
+            "\\(A = \\int_{-1}^{3}(3-x^2)\\,dx\\)",
+            "\\(A = \\int_{-2}^{2}3\\,dx - \\int_{-2}^{2}1\\,dx\\)"
+        ],
+        korrekt: 0,
+        tipp: "Schnittpunkte: \\(x^2 - 1 = 3 \\Rightarrow x = \\pm 2\\). Auf \\([-2,2]\\): \\(g(x) \\geq f(x)\\), also obere minus untere.",
+        loesungsweg: "\\(A = \\int_{-2}^{2}(g(x)-f(x))\\,dx = \\int_{-2}^{2}(3-(x^2-1))\\,dx = \\int_{-2}^{2}(4-x^2)\\,dx = \\frac{32}{3} \\approx 10{,}67\\)."
+    },
+    {
+        id: 22, level: 4, typ: "numerisch",
+        frage: "Berechne die Fläche zwischen \\(f(x) = x^2\\) und \\(g(x) = 3x - 2\\). <br><em>Schnittpunkte: \\(x^2 = 3x - 2 \\Rightarrow x = 1, x = 2\\).</em> Runde auf zwei Dezimalstellen.",
+        loesung: 0.17, toleranz: 0.01,
+        tipp: "Auf \\([1, 2]\\): \\(g(x) \\geq f(x)\\). \\(A = \\int_1^2 (3x-2-x^2)\\,dx\\).",
+        loesungsweg: "\\(A = \\left[\\frac{3}{2}x^2-2x-\\frac{1}{3}x^3\\right]_1^2 = (6-4-\\frac{8}{3})-(\\frac{3}{2}-2-\\frac{1}{3}) = -\\frac{2}{3}-(-\\frac{5}{6}) = -\\frac{2}{3}+\\frac{5}{6} = \\frac{1}{6} \\approx 0{,}17\\)."
+    },
+    {
+        id: 23, level: 4, typ: "mc",
+        frage: "Was muss man tun, bevor man die Fläche zwischen \\(f\\) und \\(g\\) berechnet?",
+        optionen: [
+            "Die Schnittpunkte von \\(f\\) und \\(g\\) bestimmen (\\(f(x) = g(x)\\) lösen)",
+            "Beide Funktionen ableiten",
+            "Den Mittelwert beider Funktionen berechnen",
+            "Die Stammfunktionen addieren"
+        ],
+        korrekt: 0,
+        tipp: "Die Schnittpunkte bilden die Integrationsgrenzen.",
+        loesungsweg: "Man löst \\(f(x) = g(x)\\), um die Schnittpunkte (= Integrationsgrenzen) zu bestimmen. Dann integriert man \\(|f - g|\\)."
+    },
+    {
+        id: 24, level: 4, typ: "numerisch",
+        frage: "Berechne die Fläche zwischen \\(f(x) = x^2 - 4x + 3\\) und der \\(x\\)-Achse. <br><em>Nullstellen: \\(x = 1, x = 3\\).</em> Runde auf zwei Dezimalstellen.",
+        loesung: 1.33, toleranz: 0.01,
+        tipp: "Auf \\([1, 3]\\) gilt \\(f(x) \\leq 0\\). \\(A = \\left|\\int_1^3 (x^2-4x+3)\\,dx\\right|\\).",
+        loesungsweg: "\\(\\int_1^3 (x^2-4x+3)\\,dx = \\left[\\frac{1}{3}x^3-2x^2+3x\\right]_1^3 = (9-18+9)-(\\frac{1}{3}-2+3) = 0-\\frac{4}{3} = -\\frac{4}{3}\\). \\(A = \\frac{4}{3} \\approx 1{,}33\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 5 — Fläche mit mehreren Schnittpunkten (aufteilen)
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Berechne die Fläche zwischen \\(f(x) = x^3 - 4x\\) und der \\(x\\)-Achse auf \\([0, 2]\\).",
+        loesung: 4, toleranz: 0.01,
+        tipp: "Nullstelle bei \\(x = 0\\) und \\(x = 2\\). Auf \\([0, 2]\\): \\(f(x) \\leq 0\\).",
+        loesungsweg: "\\(\\int_0^2 (x^3-4x)\\,dx = \\left[\\frac{1}{4}x^4-2x^2\\right]_0^2 = (4-8)-0 = -4\\). \\(A = |-4| = 4\\)."
+    },
+    {
+        id: 26, level: 5, typ: "numerisch",
+        frage: "Berechne die gesamte Fläche zwischen \\(f(x) = x^3 - x\\) und der \\(x\\)-Achse auf \\([-1, 1]\\). <br><em>Nullstellen: \\(x = -1, 0, 1\\).</em>",
+        loesung: 0.5, toleranz: 0.01,
+        tipp: "Aufteilen: \\([-1, 0]\\) und \\([0, 1]\\). Beträge addieren!",
+        loesungsweg: "\\(\\int_{-1}^0 (x^3-x)\\,dx = [\\frac{1}{4}x^4-\\frac{1}{2}x^2]_{-1}^0 = 0-(\\frac{1}{4}-\\frac{1}{2}) = \\frac{1}{4}\\). \\(\\int_0^1 (x^3-x)\\,dx = \\frac{1}{4}-\\frac{1}{2} = -\\frac{1}{4}\\). \\(A = \\frac{1}{4}+\\frac{1}{4} = \\frac{1}{2}\\)."
+    },
+    {
+        id: 27, level: 5, typ: "numerisch",
+        frage: "Berechne die Fläche zwischen \\(f(x) = x^2 - 4\\) und \\(g(x) = -x^2 + 4\\). <br><em>Schnittpunkte: \\(x = -2, x = 2\\).</em> Runde auf zwei Dezimalstellen.",
+        loesung: 21.33, toleranz: 0.01,
+        tipp: "\\(g(x) \\geq f(x)\\) auf \\([-2, 2]\\). \\(A = \\int_{-2}^{2}(-x^2+4-x^2+4)\\,dx = \\int_{-2}^{2}(8-2x^2)\\,dx\\).",
+        loesungsweg: "\\(A = \\left[8x-\\frac{2}{3}x^3\\right]_{-2}^{2} = (16-\\frac{16}{3})-(-16+\\frac{16}{3}) = 32-\\frac{32}{3} = \\frac{64}{3} \\approx 21{,}33\\)."
+    },
+    {
+        id: 28, level: 5, typ: "mc",
+        frage: "\\(f(x) = x^2\\) und \\(g(x) = x + 6\\). Was sind die Schnittpunkte?",
+        optionen: [
+            "\\(x = -2\\) und \\(x = 3\\)",
+            "\\(x = -3\\) und \\(x = 2\\)",
+            "\\(x = 0\\) und \\(x = 6\\)",
+            "\\(x = -1\\) und \\(x = 6\\)"
+        ],
+        korrekt: 0,
+        tipp: "\\(x^2 = x + 6 \\Rightarrow x^2 - x - 6 = 0\\). Faktorisieren!",
+        loesungsweg: "\\(x^2 - x - 6 = (x-3)(x+2) = 0\\). Schnittpunkte: \\(x = -2\\) und \\(x = 3\\)."
+    },
+    {
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Berechne die Fläche zwischen \\(f(x) = x^2\\) und \\(g(x) = x + 6\\) (aus vorheriger Aufgabe). Runde auf zwei Dezimalstellen.",
+        loesung: 20.83, toleranz: 0.01,
+        tipp: "Schnittpunkte: \\(x = -2, x = 3\\). \\(g(x) \\geq f(x)\\) auf \\([-2, 3]\\).",
+        loesungsweg: "\\(A = \\int_{-2}^{3}(x+6-x^2)\\,dx = \\left[\\frac{1}{2}x^2+6x-\\frac{1}{3}x^3\\right]_{-2}^{3} = (\\frac{9}{2}+18-9)-(2-12+\\frac{8}{3}) = \\frac{27}{2}-(-\\frac{22}{3}) = \\frac{81+44}{6} = \\frac{125}{6} \\approx 20{,}83\\)."
+    },
+    {
+        id: 30, level: 5, typ: "mc",
+        frage: "Bei der Fläche zwischen \\(f\\) und \\(g\\) mit drei Schnittpunkten \\(x_1 < x_2 < x_3\\): Welche Strategie?",
+        optionen: [
+            "Zwei Teilintegrale berechnen: \\(\\int_{x_1}^{x_2}|f-g|\\,dx + \\int_{x_2}^{x_3}|f-g|\\,dx\\)",
+            "Ein einziges Integral \\(\\int_{x_1}^{x_3}(f-g)\\,dx\\) genügt",
+            "Nur das größte Teilintervall integrieren",
+            "Die drei Schnittpunkte mitteln"
+        ],
+        korrekt: 0,
+        tipp: "An Schnittpunkten kann sich ändern, welche Funktion oben liegt.",
+        loesungsweg: "An jedem Schnittpunkt kann sich die Reihenfolge (oben/unten) ändern. Daher: Aufteilen und Beträge der Teilintegrale addieren."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 6 — Fläche mit Parameter
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 31, level: 6, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = x^2\\). Für welches \\(a > 0\\) gilt \\(\\displaystyle\\int_0^a x^2\\,dx = 9\\)?",
+        loesung: 3, toleranz: 0,
+        tipp: "\\(\\int_0^a x^2\\,dx = \\frac{1}{3}a^3 = 9\\). Löse nach \\(a\\).",
+        loesungsweg: "\\(\\frac{1}{3}a^3 = 9 \\Rightarrow a^3 = 27 \\Rightarrow a = 3\\)."
+    },
+    {
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Für welches \\(a > 0\\) beträgt die Fläche zwischen \\(f(x) = 2x\\) und der \\(x\\)-Achse auf \\([0, a]\\) genau 8?",
+        loesung: 2.83, toleranz: 0.01,
+        tipp: "\\(\\int_0^a 2x\\,dx = a^2 = 8\\). Löse nach \\(a\\).",
+        loesungsweg: "\\(\\int_0^a 2x\\,dx = \\left[x^2\\right]_0^a = a^2 = 8\\). \\(a = \\sqrt{8} = 2\\sqrt{2} \\approx 2{,}83\\)."
+    },
+    {
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Für welches \\(a > 0\\) gilt \\(\\displaystyle\\int_0^a (3x^2 + 1)\\,dx = 10\\)?",
+        loesung: 2, toleranz: 0,
+        tipp: "\\(\\int_0^a (3x^2+1)\\,dx = a^3 + a\\). Löse \\(a^3 + a = 10\\).",
+        loesungsweg: "\\([x^3+x]_0^a = a^3 + a = 10\\). Probieren: \\(a = 2\\): \\(8 + 2 = 10\\). \\(\\checkmark\\)"
+    },
+    {
+        id: 34, level: 6, typ: "mc",
+        frage: "Die Fläche zwischen \\(f(x) = ax\\) und der \\(x\\)-Achse auf \\([0, 2]\\) soll 6 betragen. Welcher Wert hat \\(a\\)?",
+        optionen: [
+            "\\(a = 3\\), denn \\(\\int_0^2 ax\\,dx = 2a = 6\\)",
+            "\\(a = 6\\), denn \\(\\int_0^2 ax\\,dx = a\\)",
+            "\\(a = 2\\), denn \\(\\int_0^2 ax\\,dx = 3a\\)",
+            "\\(a = 1{,}5\\), denn \\(\\int_0^2 ax\\,dx = 4a\\)"
+        ],
+        korrekt: 0,
+        tipp: "\\(\\int_0^2 ax\\,dx = a \\cdot \\left[\\frac{1}{2}x^2\\right]_0^2 = 2a\\). Setze gleich 6.",
+        loesungsweg: "\\(\\int_0^2 ax\\,dx = a \\cdot 2 = 2a = 6\\). Also \\(a = 3\\)."
+    },
+    {
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Für welches \\(a > 0\\) gilt \\(\\displaystyle\\int_0^a e^x\\,dx = e^2 - 1\\)? Gib \\(a\\) an.",
+        loesung: 2, toleranz: 0,
+        tipp: "\\(\\int_0^a e^x\\,dx = e^a - 1\\). Setze gleich \\(e^2 - 1\\).",
+        loesungsweg: "\\(e^a - 1 = e^2 - 1 \\Rightarrow e^a = e^2 \\Rightarrow a = 2\\)."
+    },
+    {
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Die Fläche zwischen \\(f(x) = x^2\\) und \\(g(x) = a\\) (\\(a > 0\\)) beträgt 36. <br><em>Schnittpunkte: \\(x = \\pm\\sqrt{a}\\).</em> Bestimme \\(a\\).",
+        loesung: 9, toleranz: 0,
+        tipp: "\\(A = \\int_{-\\sqrt{a}}^{\\sqrt{a}} (a - x^2)\\,dx = 2\\int_0^{\\sqrt{a}} (a-x^2)\\,dx = \\frac{4}{3}a^{3/2}\\). Setze gleich 36.",
+        loesungsweg: "\\(A = \\frac{4}{3}a^{3/2} = 36 \\Rightarrow a^{3/2} = 27 \\Rightarrow a = 27^{2/3} = (3^3)^{2/3} = 3^2 = 9\\)."
+    }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

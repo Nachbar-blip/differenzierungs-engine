@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kettenregel (LK) - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '11-lk-analysis-kettenregel';
+    const THEMA_CONFIG = { name: 'Kettenregel (LK)', bereich: 'analysis' };
+    const AUFGABEN = [
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 1 — Innere und äußere Funktion erkennen
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 1, level: 1, typ: "mc",
+        frage: "Gegeben ist \\(f(x) = (2x+1)^3\\). Was ist die innere Funktion \\(u(x)\\)?",
+        optionen: ["\\(u(x) = 2x+1\\)", "\\(u(x) = x^3\\)", "\\(u(x) = 2x\\)", "\\(u(x) = (2x+1)^3\\)"],
+        korrekt: 0,
+        tipp: "Die innere Funktion ist das, was „im Inneren“ steht — also das Argument der äußeren Funktion.",
+        loesungsweg: "Bei \\(f(x) = (2x+1)^3\\) ist die äußere Funktion \\(v(u) = u^3\\) und die innere Funktion \\(u(x) = 2x+1\\)."
+    },
+    {
+        id: 2, level: 1, typ: "mc",
+        frage: "Gegeben ist \\(f(x) = e^{3x}\\). Was ist die innere Funktion \\(u(x)\\)?",
+        optionen: ["\\(u(x) = 3x\\)", "\\(u(x) = e^x\\)", "\\(u(x) = 3\\)", "\\(u(x) = e^{3x}\\)"],
+        korrekt: 0,
+        tipp: "Was steht im Exponenten? Das ist die innere Funktion.",
+        loesungsweg: "Bei \\(f(x) = e^{3x}\\) ist die äußere Funktion \\(v(u) = e^u\\) und die innere Funktion \\(u(x) = 3x\\)."
+    },
+    {
+        id: 3, level: 1, typ: "mc",
+        frage: "Gegeben ist \\(f(x) = \\sin(x^2)\\). Was ist die äußere Funktion?",
+        optionen: ["\\(v(u) = \\sin(u)\\)", "\\(v(u) = u^2\\)", "\\(v(u) = \\sin(x)\\)", "\\(v(u) = x^2\\)"],
+        korrekt: 0,
+        tipp: "Die äußere Funktion ist die, die „außen“ angewendet wird — hier der Sinus.",
+        loesungsweg: "Bei \\(f(x) = \\sin(x^2)\\) ist die äußere Funktion \\(v(u) = \\sin(u)\\) und die innere Funktion \\(u(x) = x^2\\)."
+    },
+    {
+        id: 4, level: 1, typ: "mc",
+        frage: "Gegeben ist \\(f(x) = \\sqrt{5x-3}\\). Was ist die innere Funktion?",
+        optionen: ["\\(u(x) = 5x-3\\)", "\\(u(x) = \\sqrt{x}\\)", "\\(u(x) = 5x\\)", "\\(u(x) = x-3\\)"],
+        korrekt: 0,
+        tipp: "Was steht unter der Wurzel? Das ist das Argument — die innere Funktion.",
+        loesungsweg: "Bei \\(f(x) = \\sqrt{5x-3}\\) ist die äußere Funktion \\(v(u) = \\sqrt{u}\\) und die innere Funktion \\(u(x) = 5x-3\\)."
+    },
+    {
+        id: 5, level: 1, typ: "mc",
+        frage: "Gegeben ist \\(f(x) = \\cos(2x+\\pi)\\). Was ist die innere Funktion?",
+        optionen: ["\\(u(x) = 2x+\\pi\\)", "\\(u(x) = \\cos(x)\\)", "\\(u(x) = 2x\\)", "\\(u(x) = x+\\pi\\)"],
+        korrekt: 0,
+        tipp: "Das Argument des Kosinus ist die innere Funktion.",
+        loesungsweg: "Bei \\(f(x) = \\cos(2x+\\pi)\\) ist die innere Funktion \\(u(x) = 2x+\\pi\\) und die äußere Funktion \\(v(u) = \\cos(u)\\)."
+    },
+    {
+        id: 6, level: 1, typ: "mc",
+        frage: "Wie lautet die Kettenregel für \\(f(x) = v(u(x))\\)?",
+        optionen: [
+            "\\(f'(x) = v'(u(x)) \\cdot u'(x)\\)",
+            "\\(f'(x) = v'(x) \\cdot u'(x)\\)",
+            "\\(f'(x) = v(u'(x))\\)",
+            "\\(f'(x) = v'(u(x)) + u'(x)\\)"
+        ],
+        korrekt: 0,
+        tipp: "Die Kettenregel sagt: Äußere Ableitung (ausgewertet an der inneren Funktion) MAL innere Ableitung.",
+        loesungsweg: "Die Kettenregel lautet: \\(f'(x) = v'(u(x)) \\cdot u'(x)\\) — „äußere Ableitung mal innere Ableitung“."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 2 — Einfache Kettenregel (Potenzfunktionen)
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 7, level: 2, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = (3x+1)^4\\). Berechne \\(f'(0)\\).",
+        loesung: 12, toleranz: 0,
+        tipp: "Kettenregel: Äußere Ableitung \\(4(3x+1)^3\\) mal innere Ableitung \\(3\\).",
+        loesungsweg: "\\(f'(x) = 4(3x+1)^3 \\cdot 3 = 12(3x+1)^3\\). Einsetzen: \\(f'(0) = 12 \\cdot (1)^3 = 12\\)."
+    },
+    {
+        id: 8, level: 2, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = (2x-3)^5\\). Berechne \\(f'(2)\\).",
+        loesung: 10, toleranz: 0,
+        tipp: "Kettenregel: \\(f'(x) = 5(2x-3)^4 \\cdot 2 = 10(2x-3)^4\\).",
+        loesungsweg: "\\(f'(x) = 10(2x-3)^4\\). Einsetzen: \\(f'(2) = 10 \\cdot (4-3)^4 = 10 \\cdot 1 = 10\\)."
+    },
+    {
+        id: 9, level: 2, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = (x+4)^3\\). Berechne \\(f'(-3)\\).",
+        loesung: 3, toleranz: 0,
+        tipp: "Kettenregel: \\(f'(x) = 3(x+4)^2 \\cdot 1 = 3(x+4)^2\\).",
+        loesungsweg: "\\(f'(x) = 3(x+4)^2\\). Einsetzen: \\(f'(-3) = 3 \\cdot (-3+4)^2 = 3 \\cdot 1 = 3\\)."
+    },
+    {
+        id: 10, level: 2, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = (5x+2)^2\\). Berechne \\(f'(0)\\).",
+        loesung: 20, toleranz: 0,
+        tipp: "Kettenregel: \\(f'(x) = 2(5x+2) \\cdot 5 = 10(5x+2)\\).",
+        loesungsweg: "\\(f'(x) = 10(5x+2)\\). Einsetzen: \\(f'(0) = 10 \\cdot 2 = 20\\)."
+    },
+    {
+        id: 11, level: 2, typ: "mc",
+        frage: "Wie lautet die Ableitung von \\(f(x) = (4x-1)^3\\)?",
+        optionen: [
+            "\\(f'(x) = 12(4x-1)^2\\)",
+            "\\(f'(x) = 3(4x-1)^2\\)",
+            "\\(f'(x) = 4(4x-1)^2\\)",
+            "\\(f'(x) = 12(4x-1)^3\\)"
+        ],
+        korrekt: 0,
+        tipp: "Äußere Ableitung: \\(3(4x-1)^2\\). Innere Ableitung: \\(4\\). Multiplizieren!",
+        loesungsweg: "\\(f'(x) = 3(4x-1)^2 \\cdot 4 = 12(4x-1)^2\\)."
+    },
+    {
+        id: 12, level: 2, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = (1-2x)^3\\). Berechne \\(f'(0)\\).",
+        loesung: -6, toleranz: 0,
+        tipp: "Kettenregel: \\(f'(x) = 3(1-2x)^2 \\cdot (-2) = -6(1-2x)^2\\).",
+        loesungsweg: "\\(f'(x) = 3(1-2x)^2 \\cdot (-2) = -6(1-2x)^2\\). Einsetzen: \\(f'(0) = -6 \\cdot 1^2 = -6\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 3 — Kettenregel mit e-Funktion
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 13, level: 3, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = e^{2x}\\). Berechne \\(f'(0)\\).",
+        loesung: 2, toleranz: 0,
+        tipp: "Kettenregel: \\((e^{u})' = e^{u} \\cdot u'\\). Hier ist \\(u = 2x\\), also \\(u' = 2\\).",
+        loesungsweg: "\\(f'(x) = e^{2x} \\cdot 2 = 2e^{2x}\\). Einsetzen: \\(f'(0) = 2 \\cdot e^0 = 2 \\cdot 1 = 2\\)."
+    },
+    {
+        id: 14, level: 3, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = e^{-3x}\\). Berechne \\(f'(0)\\).",
+        loesung: -3, toleranz: 0,
+        tipp: "Innere Funktion: \\(u = -3x\\), also \\(u' = -3\\).",
+        loesungsweg: "\\(f'(x) = e^{-3x} \\cdot (-3) = -3e^{-3x}\\). Einsetzen: \\(f'(0) = -3 \\cdot 1 = -3\\)."
+    },
+    {
+        id: 15, level: 3, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = e^{x^2}\\). Berechne \\(f'(1)\\). <br>Runde auf zwei Dezimalstellen.",
+        loesung: 5.44, toleranz: 0.01,
+        tipp: "Innere Funktion: \\(u = x^2\\), also \\(u' = 2x\\). Kettenregel anwenden!",
+        loesungsweg: "\\(f'(x) = e^{x^2} \\cdot 2x\\). Einsetzen: \\(f'(1) = e^1 \\cdot 2 = 2e \\approx 2 \\cdot 2{,}718 = 5{,}44\\)."
+    },
+    {
+        id: 16, level: 3, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = e^{-x^2}\\). Berechne \\(f'(1)\\). <br>Runde auf zwei Dezimalstellen.",
+        loesung: -0.74, toleranz: 0.01,
+        tipp: "Innere Funktion: \\(u = -x^2\\), also \\(u' = -2x\\).",
+        loesungsweg: "\\(f'(x) = e^{-x^2} \\cdot (-2x)\\). Einsetzen: \\(f'(1) = e^{-1} \\cdot (-2) = -\\frac{2}{e} \\approx -0{,}74\\)."
+    },
+    {
+        id: 17, level: 3, typ: "mc",
+        frage: "Wie lautet die Ableitung von \\(f(x) = e^{5x+1}\\)?",
+        optionen: [
+            "\\(f'(x) = 5e^{5x+1}\\)",
+            "\\(f'(x) = e^{5x+1}\\)",
+            "\\(f'(x) = (5x+1)e^{5x}\\)",
+            "\\(f'(x) = 5e^{5x}\\)"
+        ],
+        korrekt: 0,
+        tipp: "Innere Funktion: \\(u = 5x+1\\), innere Ableitung: \\(u' = 5\\).",
+        loesungsweg: "\\(f'(x) = e^{5x+1} \\cdot 5 = 5e^{5x+1}\\)."
+    },
+    {
+        id: 18, level: 3, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = 3e^{-2x}\\). Berechne \\(f'(0)\\).",
+        loesung: -6, toleranz: 0,
+        tipp: "Faktorregel + Kettenregel: \\(f'(x) = 3 \\cdot e^{-2x} \\cdot (-2)\\).",
+        loesungsweg: "\\(f'(x) = 3 \\cdot (-2) \\cdot e^{-2x} = -6e^{-2x}\\). Einsetzen: \\(f'(0) = -6 \\cdot 1 = -6\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 4 — Kettenregel mit trigonometrischen Funktionen
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 19, level: 4, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = \\sin(3x)\\). Berechne \\(f'(0)\\).",
+        loesung: 3, toleranz: 0,
+        tipp: "Kettenregel: \\(f'(x) = \\cos(3x) \\cdot 3\\). Beachte: \\(\\cos(0) = 1\\).",
+        loesungsweg: "\\(f'(x) = \\cos(3x) \\cdot 3 = 3\\cos(3x)\\). Einsetzen: \\(f'(0) = 3 \\cdot \\cos(0) = 3 \\cdot 1 = 3\\)."
+    },
+    {
+        id: 20, level: 4, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = \\cos(2x)\\). Berechne \\(f'(0)\\).",
+        loesung: 0, toleranz: 0,
+        tipp: "Kettenregel: \\(f'(x) = -\\sin(2x) \\cdot 2\\). Beachte: \\(\\sin(0) = 0\\).",
+        loesungsweg: "\\(f'(x) = -\\sin(2x) \\cdot 2 = -2\\sin(2x)\\). Einsetzen: \\(f'(0) = -2 \\cdot \\sin(0) = 0\\)."
+    },
+    {
+        id: 21, level: 4, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = \\sin(x^2)\\). Berechne \\(f'(0)\\).",
+        loesung: 0, toleranz: 0,
+        tipp: "Kettenregel: \\(f'(x) = \\cos(x^2) \\cdot 2x\\).",
+        loesungsweg: "\\(f'(x) = \\cos(x^2) \\cdot 2x\\). Einsetzen: \\(f'(0) = \\cos(0) \\cdot 0 = 1 \\cdot 0 = 0\\)."
+    },
+    {
+        id: 22, level: 4, typ: "mc",
+        frage: "Wie lautet die Ableitung von \\(f(x) = \\cos(x^2)\\)?",
+        optionen: [
+            "\\(f'(x) = -2x\\sin(x^2)\\)",
+            "\\(f'(x) = -\\sin(x^2)\\)",
+            "\\(f'(x) = 2x\\cos(x^2)\\)",
+            "\\(f'(x) = -2x\\cos(x^2)\\)"
+        ],
+        korrekt: 0,
+        tipp: "Äußere Ableitung von \\(\\cos(u)\\) ist \\(-\\sin(u)\\). Innere Ableitung von \\(x^2\\) ist \\(2x\\).",
+        loesungsweg: "\\(f'(x) = -\\sin(x^2) \\cdot 2x = -2x\\sin(x^2)\\)."
+    },
+    {
+        id: 23, level: 4, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = \\sin(2x+1)\\). Berechne \\(f'(0)\\). <br>Runde auf zwei Dezimalstellen.",
+        loesung: 1.08, toleranz: 0.01,
+        tipp: "Kettenregel: \\(f'(x) = \\cos(2x+1) \\cdot 2\\). Einsetzen mit \\(x=0\\): \\(2\\cos(1)\\). Taschenrechner im Bogenmaß!",
+        loesungsweg: "\\(f'(x) = 2\\cos(2x+1)\\). Einsetzen: \\(f'(0) = 2\\cos(1) \\approx 2 \\cdot 0{,}5403 = 1{,}08\\)."
+    },
+    {
+        id: 24, level: 4, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = 2\\sin(4x)\\). Berechne \\(f'(0)\\).",
+        loesung: 8, toleranz: 0,
+        tipp: "Faktorregel + Kettenregel: \\(f'(x) = 2 \\cdot \\cos(4x) \\cdot 4 = 8\\cos(4x)\\).",
+        loesungsweg: "\\(f'(x) = 2 \\cdot 4\\cos(4x) = 8\\cos(4x)\\). Einsetzen: \\(f'(0) = 8 \\cdot \\cos(0) = 8 \\cdot 1 = 8\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 5 — Doppelte Kettenregel / verschachtelte Verkettungen
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = e^{\\sin(x)}\\). Berechne \\(f'(0)\\).",
+        loesung: 1, toleranz: 0,
+        tipp: "Doppelte Kettenregel: \\(f'(x) = e^{\\sin(x)} \\cdot \\cos(x)\\). Setze \\(x = 0\\) ein.",
+        loesungsweg: "\\(f'(x) = e^{\\sin(x)} \\cdot \\cos(x)\\). Einsetzen: \\(f'(0) = e^{\\sin(0)} \\cdot \\cos(0) = e^0 \\cdot 1 = 1\\)."
+    },
+    {
+        id: 26, level: 5, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = (2x^2+1)^{-3}\\). Berechne \\(f'(1)\\). <br>Runde auf vier Dezimalstellen.",
+        loesung: -0.1481, toleranz: 0.0005,
+        tipp: "Kettenregel: \\(f'(x) = -3(2x^2+1)^{-4} \\cdot 4x = -12x(2x^2+1)^{-4}\\).",
+        loesungsweg: "\\(f'(x) = -12x(2x^2+1)^{-4}\\). Einsetzen: \\(f'(1) = -12 \\cdot 1 \\cdot 3^{-4} = -\\frac{12}{81} = -\\frac{4}{27} \\approx -0{,}1481\\)."
+    },
+    {
+        id: 27, level: 5, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = \\sin(e^x)\\). Berechne \\(f'(0)\\). <br>Runde auf zwei Dezimalstellen.",
+        loesung: 0.54, toleranz: 0.01,
+        tipp: "Doppelte Verkettung: \\(f'(x) = \\cos(e^x) \\cdot e^x\\).",
+        loesungsweg: "\\(f'(x) = \\cos(e^x) \\cdot e^x\\). Einsetzen: \\(f'(0) = \\cos(e^0) \\cdot e^0 = \\cos(1) \\cdot 1 \\approx 0{,}54\\)."
+    },
+    {
+        id: 28, level: 5, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = e^{-x^2+2x}\\). Berechne \\(f'(1)\\).",
+        loesung: 0, toleranz: 0,
+        tipp: "Innere Funktion: \\(u = -x^2+2x\\), also \\(u' = -2x+2\\). Bei \\(x=1\\): \\(u' = 0\\).",
+        loesungsweg: "\\(f'(x) = e^{-x^2+2x} \\cdot (-2x+2)\\). Einsetzen: \\(f'(1) = e^{-1+2} \\cdot (-2+2) = e^1 \\cdot 0 = 0\\). (Extremstelle!)"
+    },
+    {
+        id: 29, level: 5, typ: "mc",
+        frage: "Wie lautet die Ableitung von \\(f(x) = \\cos(3x^2)\\)?",
+        optionen: [
+            "\\(f'(x) = -6x\\sin(3x^2)\\)",
+            "\\(f'(x) = -\\sin(3x^2)\\)",
+            "\\(f'(x) = -3\\sin(3x^2)\\)",
+            "\\(f'(x) = 6x\\cos(3x^2)\\)"
+        ],
+        korrekt: 0,
+        tipp: "Äußere Ableitung: \\(-\\sin(3x^2)\\). Innere Ableitung von \\(3x^2\\): \\(6x\\). Multiplizieren!",
+        loesungsweg: "\\(f'(x) = -\\sin(3x^2) \\cdot 6x = -6x\\sin(3x^2)\\)."
+    },
+    {
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = \\sqrt{4x+1} = (4x+1)^{\\frac{1}{2}}\\). Berechne \\(f'(2)\\).",
+        loesung: 0.6667, toleranz: 0.001,
+        tipp: "Kettenregel: \\(f'(x) = \\frac{1}{2}(4x+1)^{-\\frac{1}{2}} \\cdot 4 = \\frac{2}{\\sqrt{4x+1}}\\).",
+        loesungsweg: "\\(f'(x) = \\frac{2}{\\sqrt{4x+1}}\\). Einsetzen: \\(f'(2) = \\frac{2}{\\sqrt{9}} = \\frac{2}{3} \\approx 0{,}6667\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 6 — Kettenregel + Produktregel kombiniert
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 31, level: 6, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = x^2 \\cdot e^{-x}\\). Berechne \\(f'(0)\\).",
+        loesung: 0, toleranz: 0,
+        tipp: "Produktregel + Kettenregel: \\(f'(x) = 2x \\cdot e^{-x} + x^2 \\cdot (-e^{-x})\\).",
+        loesungsweg: "\\(f'(x) = 2x \\cdot e^{-x} + x^2 \\cdot (-e^{-x}) = e^{-x}(2x - x^2)\\). Einsetzen: \\(f'(0) = e^0 \\cdot (0 - 0) = 0\\)."
+    },
+    {
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = x^2 \\cdot e^{-x}\\). Berechne \\(f'(2)\\). <br>Runde auf vier Dezimalstellen.",
+        loesung: 0, toleranz: 0.0001,
+        tipp: "\\(f'(x) = e^{-x}(2x - x^2)\\). Setze \\(x = 2\\) ein: \\(2 \\cdot 2 - 4 = 0\\).",
+        loesungsweg: "\\(f'(x) = e^{-x}(2x - x^2)\\). Einsetzen: \\(f'(2) = e^{-2}(4 - 4) = e^{-2} \\cdot 0 = 0\\). (Extremstelle!)"
+    },
+    {
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = x \\cdot e^{2x}\\). Berechne \\(f'(0)\\).",
+        loesung: 1, toleranz: 0,
+        tipp: "Produktregel: \\(u = x\\), \\(v = e^{2x}\\). \\(v' = 2e^{2x}\\) (Kettenregel!).",
+        loesungsweg: "\\(f'(x) = 1 \\cdot e^{2x} + x \\cdot 2e^{2x} = e^{2x}(1 + 2x)\\). Einsetzen: \\(f'(0) = e^0 \\cdot 1 = 1\\)."
+    },
+    {
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = \\sin(x) \\cdot \\cos(2x)\\). Berechne \\(f'(0)\\).",
+        loesung: 1, toleranz: 0,
+        tipp: "Produktregel: \\(f'(x) = \\cos(x) \\cdot \\cos(2x) + \\sin(x) \\cdot (-2\\sin(2x))\\).",
+        loesungsweg: "\\(f'(x) = \\cos(x)\\cos(2x) - 2\\sin(x)\\sin(2x)\\). Einsetzen: \\(f'(0) = 1 \\cdot 1 - 2 \\cdot 0 \\cdot 0 = 1\\)."
+    },
+    {
+        id: 35, level: 6, typ: "mc",
+        frage: "Gegeben ist \\(f(x) = x \\cdot \\sin(3x)\\). Welche Ableitung ist korrekt?",
+        optionen: [
+            "\\(f'(x) = \\sin(3x) + 3x\\cos(3x)\\)",
+            "\\(f'(x) = 3\\cos(3x)\\)",
+            "\\(f'(x) = \\sin(3x) + x\\cos(3x)\\)",
+            "\\(f'(x) = x\\cos(3x) + 3\\sin(3x)\\)"
+        ],
+        korrekt: 0,
+        tipp: "Produktregel: \\(u' \\cdot v + u \\cdot v'\\). Dabei \\(v' = 3\\cos(3x)\\) (Kettenregel!).",
+        loesungsweg: "\\(f'(x) = 1 \\cdot \\sin(3x) + x \\cdot 3\\cos(3x) = \\sin(3x) + 3x\\cos(3x)\\)."
+    },
+    {
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = e^{-x} \\cdot \\sin(x)\\). Berechne \\(f'(0)\\).",
+        loesung: 1, toleranz: 0,
+        tipp: "Produktregel + Kettenregel: \\(f'(x) = -e^{-x}\\sin(x) + e^{-x}\\cos(x)\\).",
+        loesungsweg: "\\(f'(x) = -e^{-x}\\sin(x) + e^{-x}\\cos(x) = e^{-x}(\\cos(x) - \\sin(x))\\). Einsetzen: \\(f'(0) = 1 \\cdot (1 - 0) = 1\\)."
+    }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tangenten am Kreis (LK) - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #70AD47; --spirale-secondary: #2E7D32; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '12-lk-geom-tangenten';
+    const THEMA_CONFIG = { name: 'Tangenten am Kreis (LK)', bereich: 'geometrie' };
+    const AUFGABEN = [
+      // ========== LEVEL 1 — babyleicht: Steigung der Tangente im Berührpunkt (6 Aufgaben) ==========
+      {
+        "id": 1,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Kreis \\(k: x^2+y^2=25\\), Mittelpunkt \\(M(0|0)\\), Punkt \\(P(3|4)\\) auf dem Kreis. Berechne die Steigung der Geraden \\(MP\\).",
+        "loesung": 1.33,
+        "toleranz": 0.01,
+        "tipp": "Steigung \\(m_{MP} = \\frac{y_P - y_M}{x_P - x_M}\\).",
+        "loesungsweg": "$$m_{MP} = \\frac{4-0}{3-0} = \\frac{4}{3} \\approx 1{,}33$$"
+      },
+      {
+        "id": 2,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Die Gerade \\(MP\\) hat die Steigung \\(m_{MP} = \\frac{4}{3}\\). Berechne die Steigung der Tangente an den Kreis in \\(P\\). (Die Tangente steht senkrecht auf dem Radius.)",
+        "loesung": -0.75,
+        "toleranz": 0.01,
+        "tipp": "Für senkrechte Geraden gilt: \\(m_t = -\\frac{1}{m_{MP}}\\).",
+        "loesungsweg": "$$m_t = -\\frac{1}{m_{MP}} = -\\frac{1}{\\frac{4}{3}} = -\\frac{3}{4} = -0{,}75$$"
+      },
+      {
+        "id": 3,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Kreis \\(k: x^2+y^2=25\\), Punkt \\(P(4|3)\\) auf \\(k\\). Berechne die Steigung der Tangente in \\(P\\). Runde auf zwei Dezimalstellen.",
+        "loesung": -1.33,
+        "toleranz": 0.01,
+        "tipp": "Erst \\(m_{MP} = \\frac{3}{4}\\), dann \\(m_t = -\\frac{1}{m_{MP}}\\).",
+        "loesungsweg": "$$m_{MP} = \\frac{3}{4}, \\quad m_t = -\\frac{1}{\\frac{3}{4}} = -\\frac{4}{3} \\approx -1{,}33$$"
+      },
+      {
+        "id": 4,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Warum steht die Tangente an einen Kreis senkrecht auf dem Radius im Berührpunkt?",
+        "optionen": [
+          "Weil der Radius die kürzeste Verbindung vom Mittelpunkt zur Tangente ist",
+          "Weil die Tangente den Kreis in zwei Teile teilt",
+          "Weil es so definiert ist, ohne tieferen Grund",
+          "Weil die Tangente durch den Mittelpunkt geht"
+        ],
+        "korrekt": 0,
+        "tipp": "Der Abstand eines Punktes zu einer Geraden ist minimal, wenn die Verbindung senkrecht steht.",
+        "loesungsweg": "Der Radius ist die kürzeste Verbindung vom Mittelpunkt zur Tangente (Lot). Da die Tangente den Kreis nur berührt, hat der Mittelpunkt genau den Abstand \\(r\\) zur Tangente, und dieser Abstand wird im Lotfußpunkt (= Berührpunkt) angenommen. Daher stehen Radius und Tangente senkrecht aufeinander."
+      },
+      {
+        "id": 5,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Kreis \\(k: x^2+y^2=100\\), Punkt \\(P(6|8)\\) auf \\(k\\). Berechne die Steigung der Tangente in \\(P\\).",
+        "loesung": -0.75,
+        "toleranz": 0.01,
+        "tipp": "\\(m_{MP} = \\frac{8}{6} = \\frac{4}{3}\\), dann \\(m_t = ?\\)",
+        "loesungsweg": "$$m_{MP} = \\frac{8}{6} = \\frac{4}{3}, \\quad m_t = -\\frac{3}{4} = -0{,}75$$"
+      },
+      {
+        "id": 6,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Kreis \\(k: x^2+y^2=25\\), Punkt \\(P(0|5)\\) auf \\(k\\). Welche Steigung hat die Tangente in \\(P\\)?",
+        "loesung": 0,
+        "toleranz": 0.01,
+        "tipp": "Die Gerade \\(MP\\) ist hier vertikal. Was ist die Steigung einer horizontalen Geraden?",
+        "loesungsweg": "\\(M(0|0)\\) und \\(P(0|5)\\): Die Gerade \\(MP\\) ist vertikal (undefinierte Steigung). Die Tangente steht senkrecht darauf, ist also **horizontal** mit Steigung \\(m_t = 0\\)."
+      },
+
+      // ========== LEVEL 2 — leicht: Tangentengleichung aufstellen (6 Aufgaben) ==========
+      {
+        "id": 7,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Kreis \\(k: x^2+y^2=25\\), Berührpunkt \\(P(3|4)\\). Die Tangente hat die Form \\(y = mx + b\\). Berechne \\(b\\). Runde auf zwei Dezimalstellen.",
+        "loesung": 6.25,
+        "toleranz": 0.01,
+        "tipp": "Steigung \\(m_t = -\\frac{3}{4}\\). Setze \\(P(3|4)\\) in \\(y = m_t x + b\\) ein.",
+        "loesungsweg": "$$m_t = -\\frac{3}{4}$$ Einsetzen von \\(P(3|4)\\): $$4 = -\\frac{3}{4} \\cdot 3 + b = -\\frac{9}{4} + b \\Rightarrow b = 4 + \\frac{9}{4} = \\frac{25}{4} = 6{,}25$$"
+      },
+      {
+        "id": 8,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Die Tangentengleichung am Kreis \\(x^2+y^2=r^2\\) im Punkt \\(P(x_0|y_0)\\) lautet:",
+        "optionen": [
+          "\\(x_0 \\cdot x + y_0 \\cdot y = r^2\\)",
+          "\\(x_0 \\cdot x - y_0 \\cdot y = r^2\\)",
+          "\\((x-x_0)^2 + (y-y_0)^2 = r^2\\)",
+          "\\(y - y_0 = \\frac{x_0}{y_0}(x - x_0)\\)"
+        ],
+        "korrekt": 0,
+        "tipp": "Diese Formel heißt auch „Berührungsgleichung" oder „polare Form".",
+        "loesungsweg": "Die Tangentengleichung am Kreis \\(x^2+y^2=r^2\\) im Berührpunkt \\(P(x_0|y_0)\\) lautet: $$x_0 \\cdot x + y_0 \\cdot y = r^2$$ Man erhält sie, indem man in der Kreisgleichung \\(x^2 \\to x_0 x\\) und \\(y^2 \\to y_0 y\\) ersetzt."
+      },
+      {
+        "id": 9,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Kreis \\(k: x^2+y^2=50\\), Berührpunkt \\(P(5|5)\\). Verwende die Berührungsgleichung \\(x_0 x + y_0 y = r^2\\). Wie lautet der \\(y\\)-Achsenabschnitt der Tangente?",
+        "loesung": 10,
+        "toleranz": 0.01,
+        "tipp": "Setze \\(x = 0\\) in \\(5x + 5y = 50\\) ein.",
+        "loesungsweg": "Berührungsgleichung: \\(5x + 5y = 50\\), also \\(x + y = 10\\), also \\(y = -x + 10\\). Der \\(y\\)-Achsenabschnitt ist \\(b = 10\\)."
+      },
+      {
+        "id": 10,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Kreis \\(k: (x-2)^2+(y-1)^2=25\\), Berührpunkt \\(P(5|5)\\). Berechne die Steigung der Tangente in \\(P\\). Runde auf zwei Dezimalstellen.",
+        "loesung": -0.75,
+        "toleranz": 0.01,
+        "tipp": "Mittelpunkt \\(M(2|1)\\). Berechne \\(m_{MP}\\), dann \\(m_t = -1/m_{MP}\\).",
+        "loesungsweg": "$$m_{MP} = \\frac{5-1}{5-2} = \\frac{4}{3}, \\quad m_t = -\\frac{3}{4} = -0{,}75$$"
+      },
+      {
+        "id": 11,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Kreis \\(k: (x-2)^2+(y-1)^2=25\\), Berührpunkt \\(P(5|5)\\), Steigung \\(m_t = -0{,}75\\). Bestimme den \\(y\\)-Achsenabschnitt \\(b\\) der Tangente. Runde auf zwei Dezimalstellen.",
+        "loesung": 8.75,
+        "toleranz": 0.01,
+        "tipp": "Setze \\(P(5|5)\\) in \\(y = -0{,}75x + b\\) ein.",
+        "loesungsweg": "$$5 = -0{,}75 \\cdot 5 + b = -3{,}75 + b \\Rightarrow b = 8{,}75$$ Tangente: \\(y = -0{,}75x + 8{,}75\\)."
+      },
+      {
+        "id": 12,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Kreis \\(k: x^2+y^2=169\\), Berührpunkt \\(P(5|12)\\). Gib den \\(x\\)-Achsenabschnitt der Tangente an. Runde auf zwei Dezimalstellen.",
+        "loesung": 33.8,
+        "toleranz": 0.01,
+        "tipp": "Berührungsgleichung: \\(5x+12y=169\\). Setze \\(y=0\\).",
+        "loesungsweg": "Berührungsgleichung: \\(5x + 12y = 169\\). Für \\(y = 0\\): \\(5x = 169 \\Rightarrow x = 33{,}8\\)."
+      },
+
+      // ========== LEVEL 3 — nervenschonend: Tangenten von externem Punkt (6 Aufgaben) ==========
+      {
+        "id": 13,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Vom Punkt \\(P(7|1)\\) werden Tangenten an \\(k: x^2+y^2=25\\) gelegt. Ansatz: \\(y = m(x-7)+1\\). Einsetzen in Kreisgleichung ergibt eine quadratische Gleichung in \\(x\\). Die Diskriminante muss 0 sein. Berechne die **positive** Steigung \\(m\\). Runde auf zwei Dezimalstellen.",
+        "loesung": 1.33,
+        "toleranz": 0.05,
+        "tipp": "Setze \\(y = m(x-7)+1\\) in \\(x^2+y^2=25\\) ein. Multipliziere aus und fordere Diskriminante \\(D = 0\\).",
+        "loesungsweg": "Eleganter Weg über die Berührbedingung: Die Gerade \\(y=mx+c\\) berührt den Kreis \\(x^2+y^2=r^2\\) genau dann, wenn \\(c^2 = r^2(1+m^2)\\). Aus \\(y = m(x-7)+1\\) folgt \\(c = 1-7m\\), also $$(1-7m)^2 = 25(1+m^2)$$ $$1-14m+49m^2 = 25+25m^2$$ $$24m^2-14m-24 = 0$$ $$m = \\frac{14 \\pm \\sqrt{196+2304}}{48} = \\frac{14 \\pm 50}{48}$$ $$m_1 = \\frac{64}{48} = \\frac{4}{3} \\approx 1{,}33, \\quad m_2 = \\frac{-36}{48} = -\\frac{3}{4} = -0{,}75$$ Die positive Steigung ist \\(m \\approx 1{,}33\\)."
+      },
+      {
+        "id": 14,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Vom Punkt \\(P(7|1)\\) an \\(k: x^2+y^2=25\\): Die zwei Tangenten haben die Steigungen \\(m_1 = \\frac{4}{3}\\) und \\(m_2 = -\\frac{3}{4}\\). Gib die Gleichung der ersten Tangente an: \\(y = \\frac{4}{3}x + b\\). Berechne \\(b\\). Runde auf zwei Dezimalstellen.",
+        "loesung": -8.33,
+        "toleranz": 0.05,
+        "tipp": "Setze \\(P(7|1)\\) ein: \\(1 = \\frac{4}{3} \\cdot 7 + b\\).",
+        "loesungsweg": "$$1 = \\frac{4}{3} \\cdot 7 + b = \\frac{28}{3} + b \\Rightarrow b = 1 - \\frac{28}{3} = -\\frac{25}{3} \\approx -8{,}33$$"
+      },
+      {
+        "id": 15,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Vom Punkt \\(P(0|7)\\) werden Tangenten an \\(k: x^2+y^2=25\\) gelegt. Die Tangenten haben die Form \\(y = mx + 7\\). Welche Bedingung muss erfüllt sein, damit die Gerade den Kreis berührt?",
+        "optionen": [
+          "\\(c^2 = r^2(1+m^2)\\), also \\(49 = 25(1+m^2)\\)",
+          "\\(c = r \\cdot m\\), also \\(7 = 5m\\)",
+          "\\(c^2 = r^2 - m^2\\), also \\(49 = 25 - m^2\\)",
+          "\\(c = r^2(1+m)\\), also \\(7 = 25(1+m)\\)"
+        ],
+        "korrekt": 0,
+        "tipp": "Die Gerade \\(y=mx+c\\) berührt den Kreis \\(x^2+y^2=r^2\\), wenn der Abstand des Mittelpunkts zur Geraden gleich \\(r\\) ist.",
+        "loesungsweg": "Der Abstand von \\(M(0|0)\\) zur Geraden \\(mx - y + c = 0\\) ist \\(\\frac{|c|}{\\sqrt{1+m^2}}\\). Berührung: \\(\\frac{|c|}{\\sqrt{1+m^2}} = r\\), also \\(c^2 = r^2(1+m^2)\\). Hier: \\(49 = 25(1+m^2)\\)."
+      },
+      {
+        "id": 16,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Punkt \\(P(3|0)\\), Kreis \\(k: x^2+y^2=25\\). Wie viele Tangenten kann man von \\(P\\) an \\(k\\) legen?",
+        "optionen": [
+          "0 — der Punkt liegt innerhalb des Kreises",
+          "1 — der Punkt liegt auf dem Kreis",
+          "2 — der Punkt liegt außerhalb des Kreises",
+          "Unendlich viele"
+        ],
+        "korrekt": 0,
+        "tipp": "Prüfe: \\(|MP|^2 = 9 < 25 = r^2\\). Liegt \\(P\\) innen, auf oder außen?",
+        "loesungsweg": "\\(|MP|^2 = 9 < 25 = r^2\\). Der Punkt liegt **innerhalb** des Kreises. Von einem inneren Punkt kann man **keine** Tangente legen."
+      },
+      {
+        "id": 17,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Punkt \\(P(5|0)\\), Kreis \\(k: x^2+y^2=25\\). Wie viele Tangenten kann man von \\(P\\) an \\(k\\) legen?",
+        "optionen": [
+          "0",
+          "1",
+          "2",
+          "Unendlich viele"
+        ],
+        "korrekt": 1,
+        "tipp": "\\(|MP|^2 = 25 = r^2\\). Wo liegt \\(P\\)?",
+        "loesungsweg": "\\(|MP|^2 = 25 = r^2\\). Der Punkt liegt **auf** dem Kreis. Es gibt genau **eine** Tangente (die Berührungstangente in \\(P\\))."
+      },
+      {
+        "id": 18,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Vom Punkt \\(P(10|0)\\) an \\(k: x^2+y^2=25\\). Der Ansatz \\(y=m(x-10)\\) wird eingesetzt. Welcher Schritt führt zur Bestimmung der Steigungen?",
+        "optionen": [
+          "Die Diskriminante der resultierenden quadratischen Gleichung muss 0 sein",
+          "Man setzt \\(y=0\\) und löst nach \\(m\\) auf",
+          "Man differenziert die Kreisgleichung nach \\(m\\)",
+          "Man berechnet den Schnittpunkt der Gerade mit der \\(x\\)-Achse"
+        ],
+        "korrekt": 0,
+        "tipp": "Tangente = Gerade, die den Kreis in genau einem Punkt berührt.",
+        "loesungsweg": "Einsetzen von \\(y=m(x-10)\\) in \\(x^2+y^2=25\\) ergibt eine quadratische Gleichung in \\(x\\). Damit die Gerade den Kreis **berührt** (genau ein Schnittpunkt), muss die **Diskriminante \\(D = 0\\)** sein. Das ergibt: \\(100m^2=25(1+m^2)\\), also \\(m = \\pm\\frac{1}{\\sqrt{3}}\\)."
+      },
+
+      // ========== LEVEL 4 — mittel: Tangentenlänge (6 Aufgaben) ==========
+      {
+        "id": 19,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Berechne die Länge der Tangente vom Punkt \\(P(7|1)\\) an den Kreis \\(k: x^2+y^2=25\\).",
+        "loesung": 5,
+        "toleranz": 0.01,
+        "tipp": "Die Tangentenlänge ist \\(t = \\sqrt{|PM|^2 - r^2}\\).",
+        "loesungsweg": "$$|PM|^2 = 7^2+1^2 = 50, \\quad r^2 = 25$$ $$t = \\sqrt{50-25} = \\sqrt{25} = 5$$"
+      },
+      {
+        "id": 20,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Berechne die Tangentenlänge von \\(P(6|8)\\) an \\(k: (x-1)^2+(y-2)^2=16\\). Runde auf zwei Dezimalstellen.",
+        "loesung": 6.71,
+        "toleranz": 0.01,
+        "tipp": "\\(|PM|^2 = (6-1)^2+(8-2)^2\\), dann \\(t = \\sqrt{|PM|^2 - r^2}\\).",
+        "loesungsweg": "$$|PM|^2 = 5^2+6^2 = 25+36 = 61, \\quad r^2 = 16$$ $$t = \\sqrt{61-16} = \\sqrt{45} = 3\\sqrt{5} \\approx 6{,}71$$"
+      },
+      {
+        "id": 21,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Die Tangentenlänge von \\(P\\) an einen Kreis mit Mittelpunkt \\(M\\) und Radius \\(r\\) berechnet sich als:",
+        "optionen": [
+          "\\(t = \\sqrt{|PM|^2 - r^2}\\)",
+          "\\(t = |PM| - r\\)",
+          "\\(t = \\sqrt{|PM|^2 + r^2}\\)",
+          "\\(t = |PM| \\cdot r\\)"
+        ],
+        "korrekt": 0,
+        "tipp": "Im rechtwinkligen Dreieck \\(M\\)-Berührpunkt-\\(P\\) gilt der Satz des Pythagoras.",
+        "loesungsweg": "Das Dreieck aus \\(M\\), Berührpunkt \\(B\\) und \\(P\\) hat einen rechten Winkel bei \\(B\\) (Tangente \\(\\perp\\) Radius). Nach Pythagoras: \\(|PM|^2 = r^2 + t^2\\), also \\(t = \\sqrt{|PM|^2 - r^2}\\)."
+      },
+      {
+        "id": 22,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Berechne die Tangentenlänge von \\(P(0|0)\\) an \\(k: (x-5)^2+(y-12)^2=25\\).",
+        "loesung": 12,
+        "toleranz": 0.01,
+        "tipp": "\\(|PM|^2 = 25+144 = 169\\), \\(r^2 = 25\\).",
+        "loesungsweg": "$$|PM|^2 = 5^2+12^2 = 169, \\quad r^2 = 25$$ $$t = \\sqrt{169-25} = \\sqrt{144} = 12$$"
+      },
+      {
+        "id": 23,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Die Tangentenlänge von \\(P\\) an \\(k: x^2+y^2=9\\) beträgt \\(t = 4\\). Berechne den Abstand \\(|PM|\\).",
+        "loesung": 5,
+        "toleranz": 0.01,
+        "tipp": "\\(t^2 = |PM|^2 - r^2 \\Rightarrow |PM|^2 = t^2 + r^2\\).",
+        "loesungsweg": "$$|PM|^2 = t^2 + r^2 = 16 + 9 = 25 \\Rightarrow |PM| = 5$$"
+      },
+      {
+        "id": 24,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Welche Kurve bilden alle Punkte, von denen die Tangentenlänge an den Kreis \\(k: x^2+y^2=r^2\\) den Wert \\(t\\) hat?",
+        "optionen": [
+          "Einen konzentrischen Kreis mit Radius \\(\\sqrt{r^2+t^2}\\)",
+          "Eine Gerade im Abstand \\(t\\) vom Mittelpunkt",
+          "Einen Kreis mit Radius \\(r+t\\)",
+          "Eine Ellipse"
+        ],
+        "korrekt": 0,
+        "tipp": "\\(t = \\sqrt{|PM|^2 - r^2}\\), also \\(|PM|^2 = r^2 + t^2\\) = konstant.",
+        "loesungsweg": "Alle Punkte mit gleicher Tangentenlänge \\(t\\) erfüllen \\(|PM|^2 = r^2+t^2\\), also \\(|PM| = \\sqrt{r^2+t^2}\\). Das ist ein **konzentrischer Kreis** (gleicher Mittelpunkt) mit Radius \\(\\sqrt{r^2+t^2}\\)."
+      },
+
+      // ========== LEVEL 5 — anspruchsvoll: Gemeinsame Tangenten zweier Kreise (6 Aufgaben) ==========
+      {
+        "id": 25,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Zwei Kreise liegen **außerhalb** voneinander (\\(d > r_1+r_2\\)). Wie viele gemeinsame Tangenten haben sie?",
+        "optionen": [
+          "2",
+          "3",
+          "4",
+          "1"
+        ],
+        "korrekt": 2,
+        "tipp": "Es gibt äußere und innere Tangenten. Zähle beide Typen.",
+        "loesungsweg": "Zwei getrennte Kreise haben **4 gemeinsame Tangenten**: 2 äußere Tangenten (berühren beide Kreise auf derselben Seite) und 2 innere Tangenten (kreuzen die Verbindungsstrecke der Mittelpunkte)."
+      },
+      {
+        "id": 26,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Zwei Kreise berühren sich von außen. Wie viele gemeinsame Tangenten gibt es?",
+        "optionen": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "korrekt": 2,
+        "tipp": "Die beiden inneren Tangenten verschmelzen zu einer.",
+        "loesungsweg": "Bei äußerer Berührung verschmelzen die 2 inneren Tangenten zu **einer** gemeinsamen Tangente im Berührpunkt. Zusammen mit den 2 äußeren Tangenten ergibt das **3** gemeinsame Tangenten."
+      },
+      {
+        "id": 27,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Kreise \\(k_1: M_1(0|0)\\), \\(r_1=4\\) und \\(k_2: M_2(10|0)\\), \\(r_2=2\\). Der äußere Ähnlichkeitspunkt \\(A\\) teilt \\(\\overline{M_1M_2}\\) von außen im Verhältnis \\(r_1:r_2 = 4:2\\). Berechne die \\(x\\)-Koordinate von \\(A\\).",
+        "loesung": 20,
+        "toleranz": 0.01,
+        "tipp": "Äußere Teilung: \\(A\\) liegt auf der Verlängerung von \\(M_1M_2\\) über \\(M_2\\) hinaus. \\(\\frac{|M_1A|}{|M_2A|} = \\frac{r_1}{r_2}\\).",
+        "loesungsweg": "Äußere Teilung im Verhältnis \\(4:2 = 2:1\\): $$x_A = \\frac{2 \\cdot 10 - 1 \\cdot 0}{2-1} = \\frac{20}{1} = 20$$ Der äußere Ähnlichkeitspunkt liegt bei \\(A(20|0)\\)."
+      },
+      {
+        "id": 28,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Gleiche Kreise wie oben: \\(k_1: M_1(0|0)\\), \\(r_1=4\\), \\(k_2: M_2(10|0)\\), \\(r_2=2\\). Der innere Ähnlichkeitspunkt \\(I\\) teilt \\(\\overline{M_1M_2}\\) von innen im Verhältnis \\(r_1:r_2\\). Berechne \\(x_I\\). Runde auf zwei Dezimalstellen.",
+        "loesung": 6.67,
+        "toleranz": 0.01,
+        "tipp": "Innere Teilung: \\(x_I = \\frac{r_1 \\cdot x_2 + r_2 \\cdot x_1}{r_1+r_2}\\).",
+        "loesungsweg": "$$x_I = \\frac{4 \\cdot 10 + 2 \\cdot 0}{4+2} = \\frac{40}{6} = \\frac{20}{3} \\approx 6{,}67$$"
+      },
+      {
+        "id": 29,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Zwei Kreise schneiden sich in zwei Punkten. Wie viele gemeinsame Tangenten gibt es?",
+        "optionen": [
+          "0",
+          "1",
+          "2",
+          "4"
+        ],
+        "korrekt": 2,
+        "tipp": "Innere Tangenten sind nicht möglich, da sich die Kreise überlappen.",
+        "loesungsweg": "Bei zwei Schnittpunkten gibt es keine inneren Tangenten (die Kreise überlappen). Es bleiben die **2 äußeren Tangenten**."
+      },
+      {
+        "id": 30,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Wie viele gemeinsame Tangenten haben zwei Kreise, wobei einer vollständig im anderen liegt (\\(d < |r_1 - r_2|\\))?",
+        "loesung": 0,
+        "toleranz": 0,
+        "tipp": "Kann man bei einem eingeschlossenen Kreis eine gemeinsame Tangente finden?",
+        "loesungsweg": "Wenn ein Kreis vollständig im anderen liegt, gibt es **keine** gemeinsame Tangente, da jede Tangente an den inneren Kreis den äußeren Kreis schneiden (nicht berühren) würde. Anzahl: 0."
+      },
+
+      // ========== LEVEL 6 — wagnerisch: Potenz eines Punktes, Tangentenpolygone (6 Aufgaben) ==========
+      {
+        "id": 31,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Die Potenz eines Punktes \\(P\\) bzgl. eines Kreises \\(k\\) kann definiert werden als \\(\\text{pot}(P) = |PM|^2 - r^2\\). Welche Aussage ist korrekt?",
+        "optionen": [
+          "Für einen Punkt auf dem Kreis gilt: \\(\\text{pot}(P) = 0\\), und die Tangentenlänge ist \\(t = \\sqrt{\\text{pot}(P)}\\)",
+          "Die Potenz ist immer positiv",
+          "Die Potenz hat keine geometrische Bedeutung",
+          "Für innere Punkte ist die Tangentenlänge \\(\\sqrt{-\\text{pot}(P)}\\)"
+        ],
+        "korrekt": 0,
+        "tipp": "Verknüpfe die Potenz mit der Tangentenlängenformel \\(t = \\sqrt{|PM|^2 - r^2}\\).",
+        "loesungsweg": "Für \\(P\\) auf dem Kreis: \\(|PM| = r\\), also \\(\\text{pot}(P) = 0\\). Für äußere Punkte: \\(\\text{pot}(P) > 0\\) und \\(t = \\sqrt{\\text{pot}(P)}\\). Für innere Punkte: \\(\\text{pot}(P) < 0\\), die Tangentenlänge existiert nicht. Antwort A fasst dies korrekt zusammen."
+      },
+      {
+        "id": 32,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Punkt \\(P(8|6)\\). Kreis \\(k: (x-2)^2+(y-1)^2=9\\). Berechne die Potenz von \\(P\\) bzgl. \\(k\\).",
+        "loesung": 52,
+        "toleranz": 0.01,
+        "tipp": "\\(\\text{pot}(P) = |PM|^2 - r^2\\).",
+        "loesungsweg": "$$|PM|^2 = (8-2)^2+(6-1)^2 = 36+25 = 61$$ $$\\text{pot}(P) = 61 - 9 = 52$$"
+      },
+      {
+        "id": 33,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Eine Sekante durch \\(P(8|6)\\) schneidet den Kreis \\(k: (x-2)^2+(y-1)^2=9\\) in Punkten \\(A\\) und \\(B\\). Es gilt: \\(\\overline{PA} \\cdot \\overline{PB} = \\text{pot}(P)\\). Berechne \\(\\overline{PA} \\cdot \\overline{PB}\\).",
+        "loesung": 52,
+        "toleranz": 0.01,
+        "tipp": "Das Produkt der gerichteten Abstände einer Sekante durch \\(P\\) ist konstant und gleich der Potenz.",
+        "loesungsweg": "Nach dem Potenzsatz gilt für jede Sekante durch \\(P\\): $$\\overline{PA} \\cdot \\overline{PB} = \\text{pot}(P) = |PM|^2 - r^2 = 61 - 9 = 52$$"
+      },
+      {
+        "id": 34,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Einem Kreis wird ein Viereck umbeschrieben (Tangentenviereck). Welche Eigenschaft hat dieses Viereck?",
+        "optionen": [
+          "Die Summe gegenüberliegender Seiten ist gleich: \\(a+c = b+d\\)",
+          "Alle Seiten sind gleich lang",
+          "Die Diagonalen stehen senkrecht aufeinander",
+          "Gegenüberliegende Winkel ergänzen sich zu \\(180°\\)"
+        ],
+        "korrekt": 0,
+        "tipp": "Nutze die Eigenschaft, dass die Tangentenabschnitte von einem Punkt gleich lang sind.",
+        "loesungsweg": "Von jeder Ecke des Vierecks sind die Tangentenabschnitte zu den Berührpunkten gleich lang. Seien diese \\(p, q, r, s\\). Dann: \\(a = p+q\\), \\(b = q+r\\), \\(c = r+s\\), \\(d = s+p\\). Also: $$a+c = p+q+r+s = b+d$$"
+      },
+      {
+        "id": 35,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Ein Tangentenviereck hat die Seiten \\(a = 8\\), \\(b = 6\\), \\(c = 7\\). Berechne die Seite \\(d\\).",
+        "loesung": 9,
+        "toleranz": 0,
+        "tipp": "Tangentenviereck: \\(a+c = b+d\\).",
+        "loesungsweg": "$$a + c = b + d \\Rightarrow 8 + 7 = 6 + d \\Rightarrow d = 15 - 6 = 9$$"
+      },
+      {
+        "id": 36,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Ein Dreieck mit den Seiten \\(a=13\\), \\(b=14\\), \\(c=15\\) hat einen Inkreis. Berechne den Inkreisradius \\(\\rho\\). (Hinweis: \\(A = s \\cdot \\rho\\) mit \\(s = \\frac{a+b+c}{2}\\), und \\(A = \\sqrt{s(s-a)(s-b)(s-c)}\\).) Gib \\(\\rho\\) an.",
+        "loesung": 4,
+        "toleranz": 0.01,
+        "tipp": "Berechne \\(s = 21\\), dann \\(A = \\sqrt{21 \\cdot 8 \\cdot 7 \\cdot 6}\\), dann \\(\\rho = A/s\\).",
+        "loesungsweg": "$$s = \\frac{13+14+15}{2} = 21$$ $$A = \\sqrt{21 \\cdot 8 \\cdot 7 \\cdot 6} = \\sqrt{7056} = 84$$ $$\\rho = \\frac{A}{s} = \\frac{84}{21} = 4$$"
+      }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

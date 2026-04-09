@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vektoren Wiederholung - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #70AD47; --spirale-secondary: #2E7D32; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '12-geom-vektoren-wiederholung';
+    const THEMA_CONFIG = { name: 'Vektoren Wiederholung', bereich: 'geometrie' };
+    const AUFGABEN = [
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 1 — Einfache Vektoraddition und -subtraktion in R²
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 1, level: 1, typ: "numerisch",
+        frage: "Gegeben sind \\(\\vec{a} = \\begin{pmatrix} 3 \\\\ 5 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 2 \\\\ -1 \\end{pmatrix}\\). Berechne die erste Komponente von \\(\\vec{a} + \\vec{b}\\).",
+        loesung: 5, toleranz: 0,
+        tipp: "Vektoren werden komponentenweise addiert: \\(\\begin{pmatrix} a_1 \\\\ a_2 \\end{pmatrix} + \\begin{pmatrix} b_1 \\\\ b_2 \\end{pmatrix} = \\begin{pmatrix} a_1+b_1 \\\\ a_2+b_2 \\end{pmatrix}\\).",
+        loesungsweg: "\\(\\vec{a} + \\vec{b} = \\begin{pmatrix} 3+2 \\\\ 5+(-1) \\end{pmatrix} = \\begin{pmatrix} 5 \\\\ 4 \\end{pmatrix}\\). Die erste Komponente ist \\(5\\)."
+    },
+    {
+        id: 2, level: 1, typ: "numerisch",
+        frage: "Gegeben sind \\(\\vec{a} = \\begin{pmatrix} 7 \\\\ 2 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} -3 \\\\ 4 \\end{pmatrix}\\). Berechne die zweite Komponente von \\(\\vec{a} + \\vec{b}\\).",
+        loesung: 6, toleranz: 0,
+        tipp: "Addiere die zweiten Komponenten: \\(2 + 4\\).",
+        loesungsweg: "\\(\\vec{a} + \\vec{b} = \\begin{pmatrix} 7+(-3) \\\\ 2+4 \\end{pmatrix} = \\begin{pmatrix} 4 \\\\ 6 \\end{pmatrix}\\). Die zweite Komponente ist \\(6\\)."
+    },
+    {
+        id: 3, level: 1, typ: "numerisch",
+        frage: "Gegeben sind \\(\\vec{a} = \\begin{pmatrix} 5 \\\\ 8 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix}\\). Berechne die erste Komponente von \\(\\vec{a} - \\vec{b}\\).",
+        loesung: 3, toleranz: 0,
+        tipp: "Subtraktion komponentenweise: \\(\\vec{a} - \\vec{b} = \\begin{pmatrix} a_1 - b_1 \\\\ a_2 - b_2 \\end{pmatrix}\\).",
+        loesungsweg: "\\(\\vec{a} - \\vec{b} = \\begin{pmatrix} 5-2 \\\\ 8-3 \\end{pmatrix} = \\begin{pmatrix} 3 \\\\ 5 \\end{pmatrix}\\). Die erste Komponente ist \\(3\\)."
+    },
+    {
+        id: 4, level: 1, typ: "mc",
+        frage: "Welcher Vektor ist \\(\\begin{pmatrix} 1 \\\\ -2 \\end{pmatrix} + \\begin{pmatrix} -4 \\\\ 6 \\end{pmatrix}\\)?",
+        optionen: ["\\(\\begin{pmatrix} -3 \\\\ 4 \\end{pmatrix}\\)", "\\(\\begin{pmatrix} 5 \\\\ -8 \\end{pmatrix}\\)", "\\(\\begin{pmatrix} -3 \\\\ -4 \\end{pmatrix}\\)", "\\(\\begin{pmatrix} 3 \\\\ 4 \\end{pmatrix}\\)"],
+        korrekt: 0,
+        tipp: "Addiere komponentenweise: \\(1 + (-4)\\) und \\(-2 + 6\\).",
+        loesungsweg: "\\(\\begin{pmatrix} 1+(-4) \\\\ -2+6 \\end{pmatrix} = \\begin{pmatrix} -3 \\\\ 4 \\end{pmatrix}\\)."
+    },
+    {
+        id: 5, level: 1, typ: "numerisch",
+        frage: "Gegeben ist \\(\\vec{a} = \\begin{pmatrix} -2 \\\\ 6 \\end{pmatrix}\\). Berechne die zweite Komponente von \\(-\\vec{a}\\).",
+        loesung: -6, toleranz: 0,
+        tipp: "Der Gegenvektor \\(-\\vec{a}\\) hat in jeder Komponente das umgekehrte Vorzeichen.",
+        loesungsweg: "\\(-\\vec{a} = \\begin{pmatrix} 2 \\\\ -6 \\end{pmatrix}\\). Die zweite Komponente ist \\(-6\\)."
+    },
+    {
+        id: 6, level: 1, typ: "numerisch",
+        frage: "Punkte \\(A(1, 3)\\) und \\(B(4, 7)\\). Berechne die erste Komponente von \\(\\overrightarrow{AB}\\).",
+        loesung: 3, toleranz: 0,
+        tipp: "\\(\\overrightarrow{AB} = \\vec{b} - \\vec{a} = \\begin{pmatrix} b_1 - a_1 \\\\ b_2 - a_2 \\end{pmatrix}\\).",
+        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 4-1 \\\\ 7-3 \\end{pmatrix} = \\begin{pmatrix} 3 \\\\ 4 \\end{pmatrix}\\). Die erste Komponente ist \\(3\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 2 — R³-Vektoren, Skalarmultiplikation
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 7, level: 2, typ: "numerisch",
+        frage: "Gegeben ist \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ -3 \\\\ 5 \\end{pmatrix}\\). Berechne die dritte Komponente von \\(3\\vec{a}\\).",
+        loesung: 15, toleranz: 0,
+        tipp: "Skalarmultiplikation: Jede Komponente wird mit dem Skalar multipliziert.",
+        loesungsweg: "\\(3\\vec{a} = \\begin{pmatrix} 6 \\\\ -9 \\\\ 15 \\end{pmatrix}\\). Die dritte Komponente ist \\(15\\)."
+    },
+    {
+        id: 8, level: 2, typ: "numerisch",
+        frage: "Gegeben sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 4 \\\\ -2 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 3 \\\\ -1 \\\\ 5 \\end{pmatrix}\\). Berechne die zweite Komponente von \\(\\vec{a} + \\vec{b}\\).",
+        loesung: 3, toleranz: 0,
+        tipp: "Komponentenweise addieren: \\(4 + (-1) = ?\\).",
+        loesungsweg: "\\(\\vec{a} + \\vec{b} = \\begin{pmatrix} 1+3 \\\\ 4+(-1) \\\\ -2+5 \\end{pmatrix} = \\begin{pmatrix} 4 \\\\ 3 \\\\ 3 \\end{pmatrix}\\). Die zweite Komponente ist \\(3\\)."
+    },
+    {
+        id: 9, level: 2, typ: "numerisch",
+        frage: "Berechne die erste Komponente von \\(2\\begin{pmatrix} 3 \\\\ -1 \\\\ 4 \\end{pmatrix} - \\begin{pmatrix} 1 \\\\ 2 \\\\ -3 \\end{pmatrix}\\).",
+        loesung: 5, toleranz: 0,
+        tipp: "Zuerst Skalarmultiplikation, dann Subtraktion: \\(2 \\cdot 3 - 1 = ?\\).",
+        loesungsweg: "\\(2\\begin{pmatrix} 3 \\\\ -1 \\\\ 4 \\end{pmatrix} - \\begin{pmatrix} 1 \\\\ 2 \\\\ -3 \\end{pmatrix} = \\begin{pmatrix} 6 \\\\ -2 \\\\ 8 \\end{pmatrix} - \\begin{pmatrix} 1 \\\\ 2 \\\\ -3 \\end{pmatrix} = \\begin{pmatrix} 5 \\\\ -4 \\\\ 11 \\end{pmatrix}\\). Erste Komponente: \\(5\\)."
+    },
+    {
+        id: 10, level: 2, typ: "mc",
+        frage: "Welcher Vektor ist \\(-2 \\cdot \\begin{pmatrix} 1 \\\\ -3 \\\\ 2 \\end{pmatrix}\\)?",
+        optionen: [
+            "\\(\\begin{pmatrix} -2 \\\\ 6 \\\\ -4 \\end{pmatrix}\\)",
+            "\\(\\begin{pmatrix} 2 \\\\ -6 \\\\ 4 \\end{pmatrix}\\)",
+            "\\(\\begin{pmatrix} -2 \\\\ -6 \\\\ -4 \\end{pmatrix}\\)",
+            "\\(\\begin{pmatrix} -2 \\\\ 6 \\\\ 4 \\end{pmatrix}\\)"
+        ],
+        korrekt: 0,
+        tipp: "Multipliziere jede Komponente mit \\(-2\\).",
+        loesungsweg: "\\(-2 \\cdot \\begin{pmatrix} 1 \\\\ -3 \\\\ 2 \\end{pmatrix} = \\begin{pmatrix} -2 \\\\ 6 \\\\ -4 \\end{pmatrix}\\)."
+    },
+    {
+        id: 11, level: 2, typ: "numerisch",
+        frage: "Punkte \\(A(2, 1, -3)\\) und \\(B(5, -2, 4)\\). Berechne die dritte Komponente von \\(\\overrightarrow{AB}\\).",
+        loesung: 7, toleranz: 0,
+        tipp: "\\(\\overrightarrow{AB} = B - A\\), also dritte Komponente: \\(4 - (-3)\\).",
+        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 5-2 \\\\ -2-1 \\\\ 4-(-3) \\end{pmatrix} = \\begin{pmatrix} 3 \\\\ -3 \\\\ 7 \\end{pmatrix}\\). Dritte Komponente: \\(7\\)."
+    },
+    {
+        id: 12, level: 2, typ: "numerisch",
+        frage: "Berechne die zweite Komponente des Mittelpunkts \\(M\\) der Strecke \\(\\overline{AB}\\) mit \\(A(2, 6, -4)\\) und \\(B(4, -2, 8)\\).",
+        loesung: 2, toleranz: 0,
+        tipp: "Mittelpunkt: \\(M = \\frac{1}{2}(\\vec{a} + \\vec{b})\\).",
+        loesungsweg: "\\(M = \\frac{1}{2}\\begin{pmatrix} 2+4 \\\\ 6+(-2) \\\\ -4+8 \\end{pmatrix} = \\frac{1}{2}\\begin{pmatrix} 6 \\\\ 4 \\\\ 4 \\end{pmatrix} = \\begin{pmatrix} 3 \\\\ 2 \\\\ 2 \\end{pmatrix}\\). Zweite Komponente: \\(2\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 3 — Betrag berechnen, Einheitsvektoren
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 13, level: 3, typ: "numerisch",
+        frage: "Berechne den Betrag von \\(\\vec{a} = \\begin{pmatrix} 3 \\\\ 4 \\end{pmatrix}\\).",
+        loesung: 5, toleranz: 0,
+        tipp: "\\(|\\vec{a}| = \\sqrt{a_1^2 + a_2^2}\\).",
+        loesungsweg: "\\(|\\vec{a}| = \\sqrt{3^2 + 4^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5\\)."
+    },
+    {
+        id: 14, level: 3, typ: "numerisch",
+        frage: "Berechne den Betrag von \\(\\vec{v} = \\begin{pmatrix} 2 \\\\ -1 \\\\ 2 \\end{pmatrix}\\).",
+        loesung: 3, toleranz: 0,
+        tipp: "\\(|\\vec{v}| = \\sqrt{v_1^2 + v_2^2 + v_3^2}\\).",
+        loesungsweg: "\\(|\\vec{v}| = \\sqrt{2^2 + (-1)^2 + 2^2} = \\sqrt{4 + 1 + 4} = \\sqrt{9} = 3\\)."
+    },
+    {
+        id: 15, level: 3, typ: "numerisch",
+        frage: "Berechne den Betrag von \\(\\vec{w} = \\begin{pmatrix} 1 \\\\ 2 \\\\ -2 \\end{pmatrix}\\).",
+        loesung: 3, toleranz: 0,
+        tipp: "\\(|\\vec{w}| = \\sqrt{1^2 + 2^2 + (-2)^2}\\).",
+        loesungsweg: "\\(|\\vec{w}| = \\sqrt{1 + 4 + 4} = \\sqrt{9} = 3\\)."
+    },
+    {
+        id: 16, level: 3, typ: "numerisch",
+        frage: "Berechne den Abstand der Punkte \\(A(1, 3, -2)\\) und \\(B(4, 7, -2)\\).",
+        loesung: 5, toleranz: 0,
+        tipp: "Der Abstand ist der Betrag des Verbindungsvektors: \\(d = |\\overrightarrow{AB}|\\).",
+        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 3 \\\\ 4 \\\\ 0 \\end{pmatrix}\\). \\(|\\overrightarrow{AB}| = \\sqrt{9 + 16 + 0} = \\sqrt{25} = 5\\)."
+    },
+    {
+        id: 17, level: 3, typ: "mc",
+        frage: "Der Einheitsvektor \\(\\vec{a}_0\\) in Richtung \\(\\vec{a}\\) wird berechnet durch:",
+        optionen: [
+            "\\(\\vec{a}_0 = \\frac{1}{|\\vec{a}|} \\cdot \\vec{a}\\)",
+            "\\(\\vec{a}_0 = |\\vec{a}| \\cdot \\vec{a}\\)",
+            "\\(\\vec{a}_0 = \\frac{\\vec{a}}{\\vec{a}}\\)",
+            "\\(\\vec{a}_0 = \\vec{a} - |\\vec{a}|\\)"
+        ],
+        korrekt: 0,
+        tipp: "Ein Einheitsvektor hat den Betrag 1 und zeigt in die gleiche Richtung wie der Originalvektor.",
+        loesungsweg: "\\(\\vec{a}_0 = \\frac{\\vec{a}}{|\\vec{a}|}\\). Man teilt den Vektor durch seinen Betrag."
+    },
+    {
+        id: 18, level: 3, typ: "numerisch",
+        frage: "Gegeben ist \\(\\vec{a} = \\begin{pmatrix} 0 \\\\ 3 \\\\ 4 \\end{pmatrix}\\). Berechne die dritte Komponente des Einheitsvektors \\(\\vec{a}_0\\).",
+        loesung: 0.8, toleranz: 0.01,
+        tipp: "Zuerst: \\(|\\vec{a}| = \\sqrt{0 + 9 + 16} = 5\\). Dann jede Komponente durch 5 teilen.",
+        loesungsweg: "\\(|\\vec{a}| = 5\\). \\(\\vec{a}_0 = \\frac{1}{5}\\begin{pmatrix} 0 \\\\ 3 \\\\ 4 \\end{pmatrix} = \\begin{pmatrix} 0 \\\\ 0{,}6 \\\\ 0{,}8 \\end{pmatrix}\\). Dritte Komponente: \\(0{,}8\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 4 — Skalarprodukt, Winkel zwischen Vektoren
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 19, level: 4, typ: "numerisch",
+        frage: "Berechne das Skalarprodukt \\(\\vec{a} \\cdot \\vec{b}\\) mit \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ -1 \\\\ 3 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 4 \\\\ 5 \\\\ -2 \\end{pmatrix}\\).",
+        loesung: -3, toleranz: 0,
+        tipp: "\\(\\vec{a} \\cdot \\vec{b} = a_1 b_1 + a_2 b_2 + a_3 b_3\\).",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 2 \\cdot 4 + (-1) \\cdot 5 + 3 \\cdot (-2) = 8 - 5 - 6 = -3\\)."
+    },
+    {
+        id: 20, level: 4, typ: "numerisch",
+        frage: "Berechne das Skalarprodukt \\(\\vec{u} \\cdot \\vec{v}\\) mit \\(\\vec{u} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix}\\) und \\(\\vec{v} = \\begin{pmatrix} 4 \\\\ -5 \\\\ 6 \\end{pmatrix}\\).",
+        loesung: 12, toleranz: 0,
+        tipp: "Multipliziere komponentenweise und addiere: \\(1 \\cdot 4 + 2 \\cdot (-5) + 3 \\cdot 6\\).",
+        loesungsweg: "\\(\\vec{u} \\cdot \\vec{v} = 1 \\cdot 4 + 2 \\cdot (-5) + 3 \\cdot 6 = 4 - 10 + 18 = 12\\)."
+    },
+    {
+        id: 21, level: 4, typ: "mc",
+        frage: "Wann stehen zwei Vektoren \\(\\vec{a}\\) und \\(\\vec{b}\\) senkrecht aufeinander?",
+        optionen: [
+            "Wenn \\(\\vec{a} \\cdot \\vec{b} = 0\\)",
+            "Wenn \\(|\\vec{a}| = |\\vec{b}|\\)",
+            "Wenn \\(\\vec{a} \\cdot \\vec{b} = 1\\)",
+            "Wenn \\(\\vec{a} + \\vec{b} = \\vec{0}\\)"
+        ],
+        korrekt: 0,
+        tipp: "Orthogonalität bedeutet einen Winkel von 90°. Was ergibt \\(\\cos(90°)\\)?",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = |\\vec{a}| \\cdot |\\vec{b}| \\cdot \\cos(\\varphi)\\). Bei \\(\\varphi = 90°\\) ist \\(\\cos(90°) = 0\\), also \\(\\vec{a} \\cdot \\vec{b} = 0\\)."
+    },
+    {
+        id: 22, level: 4, typ: "numerisch",
+        frage: "Berechne den Winkel (in Grad) zwischen \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\).",
+        loesung: 90, toleranz: 0,
+        tipp: "Berechne \\(\\cos(\\varphi) = \\frac{\\vec{a} \\cdot \\vec{b}}{|\\vec{a}| \\cdot |\\vec{b}|}\\).",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 0\\), \\(|\\vec{a}| = 1\\), \\(|\\vec{b}| = 1\\). Also \\(\\cos(\\varphi) = 0\\), d.h. \\(\\varphi = 90°\\)."
+    },
+    {
+        id: 23, level: 4, typ: "numerisch",
+        frage: "Berechne den Winkel (in Grad) zwischen \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\). Runde auf ganze Grad.",
+        loesung: 45, toleranz: 1,
+        tipp: "\\(\\cos(\\varphi) = \\frac{\\vec{a} \\cdot \\vec{b}}{|\\vec{a}| \\cdot |\\vec{b}|} = \\frac{1}{\\sqrt{2} \\cdot 1}\\).",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 1\\), \\(|\\vec{a}| = \\sqrt{2}\\), \\(|\\vec{b}| = 1\\). \\(\\cos(\\varphi) = \\frac{1}{\\sqrt{2}}\\), also \\(\\varphi = 45°\\)."
+    },
+    {
+        id: 24, level: 4, typ: "numerisch",
+        frage: "Berechne den Winkel (in Grad) zwischen \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 1 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 1 \\end{pmatrix}\\). Runde auf ganze Grad.",
+        loesung: 60, toleranz: 1,
+        tipp: "\\(\\cos(\\varphi) = \\frac{\\vec{a} \\cdot \\vec{b}}{|\\vec{a}| \\cdot |\\vec{b}|}\\). Berechne zuerst das Skalarprodukt, dann die Beträge.",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 0 + 0 + 1 = 1\\). \\(|\\vec{a}| = \\sqrt{1+0+1} = \\sqrt{2}\\), \\(|\\vec{b}| = \\sqrt{0+1+1} = \\sqrt{2}\\). \\(\\cos(\\varphi) = \\frac{1}{\\sqrt{2} \\cdot \\sqrt{2}} = \\frac{1}{2}\\). \\(\\varphi = 60°\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 5 — Kollinearität und Komplanarität prüfen
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 25, level: 5, typ: "mc",
+        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ -4 \\\\ 6 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} -1 \\\\ 2 \\\\ -3 \\end{pmatrix}\\) kollinear?",
+        optionen: ["Ja, denn \\(\\vec{a} = -2 \\cdot \\vec{b}\\)", "Nein, sie sind nicht kollinear", "Ja, denn \\(\\vec{a} = 2 \\cdot \\vec{b}\\)", "Kann man nicht entscheiden"],
+        korrekt: 0,
+        tipp: "Zwei Vektoren sind kollinear, wenn einer ein Vielfaches des anderen ist. Prüfe: \\(\\frac{2}{-1} = \\frac{-4}{2} = \\frac{6}{-3}\\)?",
+        loesungsweg: "\\(\\frac{2}{-1} = -2\\), \\(\\frac{-4}{2} = -2\\), \\(\\frac{6}{-3} = -2\\). Alle Quotienten gleich \\(\\Rightarrow \\vec{a} = -2 \\vec{b}\\), also kollinear."
+    },
+    {
+        id: 26, level: 5, typ: "mc",
+        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 3 \\\\ 1 \\\\ -2 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 6 \\\\ 2 \\\\ 1 \\end{pmatrix}\\) kollinear?",
+        optionen: ["Ja, es gilt \\(\\vec{b} = 2\\vec{a}\\)", "Nein, die Quotienten sind nicht alle gleich", "Ja, das Skalarprodukt ist 0", "Nein, weil beide den gleichen Betrag haben"],
+        korrekt: 1,
+        tipp: "Prüfe: \\(\\frac{6}{3} = 2\\), \\(\\frac{2}{1} = 2\\), \\(\\frac{1}{-2} = ?\\).",
+        loesungsweg: "\\(\\frac{6}{3} = 2\\), \\(\\frac{2}{1} = 2\\), aber \\(\\frac{1}{-2} = -0{,}5 \\neq 2\\). Die Quotienten sind nicht alle gleich \\(\\Rightarrow\\) nicht kollinear."
+    },
+    {
+        id: 27, level: 5, typ: "numerisch",
+        frage: "Für welchen Wert von \\(t\\) sind \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ -3 \\\\ 1 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 4 \\\\ -6 \\\\ t \\end{pmatrix}\\) kollinear?",
+        loesung: 2, toleranz: 0,
+        tipp: "Kollinear heißt \\(\\vec{b} = r \\cdot \\vec{a}\\). Aus den ersten Komponenten: \\(r = \\frac{4}{2} = 2\\). Also muss \\(t = 2 \\cdot 1\\) gelten.",
+        loesungsweg: "Aus \\(\\frac{4}{2} = 2\\) und \\(\\frac{-6}{-3} = 2\\) folgt \\(r = 2\\). Damit: \\(t = 2 \\cdot 1 = 2\\)."
+    },
+    {
+        id: 28, level: 5, typ: "mc",
+        frage: "Drei Vektoren \\(\\vec{a}, \\vec{b}, \\vec{c}\\) sind komplanar, wenn:",
+        optionen: [
+            "\\(\\vec{c}\\) als Linearkombination von \\(\\vec{a}\\) und \\(\\vec{b}\\) darstellbar ist",
+            "alle drei paarweise senkrecht stehen",
+            "alle drei den gleichen Betrag haben",
+            "das Skalarprodukt aller Paare gleich 0 ist"
+        ],
+        korrekt: 0,
+        tipp: "Komplanar = in einer Ebene liegend. Das Spatprodukt ist dann 0.",
+        loesungsweg: "Drei Vektoren sind komplanar, wenn sie linear abhängig sind, d.h. \\(\\vec{c} = s \\cdot \\vec{a} + t \\cdot \\vec{b}\\). Äquivalent: Spatprodukt \\(= 0\\)."
+    },
+    {
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Berechne das Spatprodukt \\((\\vec{a}, \\vec{b}, \\vec{c})\\) mit \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}\\).",
+        loesung: 1, toleranz: 0,
+        tipp: "Das Spatprodukt ist die Determinante der 3×3-Matrix aus den drei Spaltenvektoren.",
+        loesungsweg: "\\(\\det\\begin{pmatrix} 1 & 0 & 0 \\\\ 0 & 1 & 0 \\\\ 0 & 0 & 1 \\end{pmatrix} = 1\\). Die Standardbasisvektoren sind nicht komplanar (Spatprodukt \\(\\neq 0\\))."
+    },
+    {
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Berechne das Spatprodukt von \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 4 \\\\ 5 \\\\ 6 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 7 \\\\ 8 \\\\ 9 \\end{pmatrix}\\). Sind sie komplanar?",
+        loesung: 0, toleranz: 0,
+        tipp: "Berechne die Determinante: \\(1(45-48) - 2(36-42) + 3(32-35)\\).",
+        loesungsweg: "\\(\\det = 1(5 \\cdot 9 - 6 \\cdot 8) - 2(4 \\cdot 9 - 6 \\cdot 7) + 3(4 \\cdot 8 - 5 \\cdot 7) = 1(-3) - 2(-6) + 3(-3) = -3 + 12 - 9 = 0\\). Spatprodukt \\(= 0 \\Rightarrow\\) komplanar."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 6 — Linearkombinationen, Beweisaufgaben
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 31, level: 6, typ: "numerisch",
+        frage: "Stelle \\(\\vec{c} = \\begin{pmatrix} 5 \\\\ 1 \\\\ 3 \\end{pmatrix}\\) als Linearkombination \\(\\vec{c} = s \\cdot \\vec{a} + t \\cdot \\vec{b}\\) dar mit \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 1 \\\\ 1 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 1 \\\\ -1 \\\\ 0 \\end{pmatrix}\\). Berechne \\(s\\).",
+        loesung: 3, toleranz: 0,
+        tipp: "LGS aufstellen: \\(s + t = 5\\), \\(s - t = 1\\), \\(s = 3\\). Addiere Zeile 1 und 2.",
+        loesungsweg: "LGS: (1) \\(s + t = 5\\), (2) \\(s - t = 1\\), (3) \\(s = 3\\). Aus (1)+(2): \\(2s = 6 \\Rightarrow s = 3\\). Aus (1): \\(t = 2\\). Probe in (3): \\(s = 3\\) \\(\\checkmark\\). Also \\(s = 3\\)."
+    },
+    {
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Gegeben ist das Dreieck \\(ABC\\) mit \\(A(1, 2, 3)\\), \\(B(4, 6, 3)\\), \\(C(1, 2, 7)\\). Berechne den Flächeninhalt des Dreiecks.",
+        loesung: 10, toleranz: 0.1,
+        tipp: "\\(A = \\frac{1}{2} |\\overrightarrow{AB} \\times \\overrightarrow{AC}|\\). Berechne zuerst die Vektoren, dann das Kreuzprodukt.",
+        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 3 \\\\ 4 \\\\ 0 \\end{pmatrix}\\), \\(\\overrightarrow{AC} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 4 \\end{pmatrix}\\). Kreuzprodukt: \\(\\overrightarrow{AB} \\times \\overrightarrow{AC} = \\begin{pmatrix} 4 \\cdot 4 - 0 \\cdot 0 \\\\ 0 \\cdot 0 - 3 \\cdot 4 \\\\ 3 \\cdot 0 - 4 \\cdot 0 \\end{pmatrix} = \\begin{pmatrix} 16 \\\\ -12 \\\\ 0 \\end{pmatrix}\\). \\(|\\vec{n}| = \\sqrt{256 + 144} = \\sqrt{400} = 20\\). \\(A = \\frac{20}{2} = 10\\)."
+    },
+    {
+        id: 33, level: 6, typ: "mc",
+        frage: "Gegeben sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ -1 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 3 \\\\ -1 \\\\ 2 \\end{pmatrix}\\). Welches ist das Kreuzprodukt \\(\\vec{a} \\times \\vec{b}\\)?",
+        optionen: [
+            "\\(\\begin{pmatrix} 3 \\\\ -5 \\\\ -7 \\end{pmatrix}\\)",
+            "\\(\\begin{pmatrix} -3 \\\\ 5 \\\\ 7 \\end{pmatrix}\\)",
+            "\\(\\begin{pmatrix} 3 \\\\ 5 \\\\ -7 \\end{pmatrix}\\)",
+            "\\(\\begin{pmatrix} -3 \\\\ -5 \\\\ 7 \\end{pmatrix}\\)"
+        ],
+        korrekt: 0,
+        tipp: "Kreuzprodukt: \\(\\vec{a} \\times \\vec{b} = \\begin{pmatrix} a_2 b_3 - a_3 b_2 \\\\ a_3 b_1 - a_1 b_3 \\\\ a_1 b_2 - a_2 b_1 \\end{pmatrix}\\).",
+        loesungsweg: "\\(\\vec{a} \\times \\vec{b} = \\begin{pmatrix} 2 \\cdot 2 - (-1) \\cdot (-1) \\\\ (-1) \\cdot 3 - 1 \\cdot 2 \\\\ 1 \\cdot (-1) - 2 \\cdot 3 \\end{pmatrix} = \\begin{pmatrix} 4 - 1 \\\\ -3 - 2 \\\\ -1 - 6 \\end{pmatrix} = \\begin{pmatrix} 3 \\\\ -5 \\\\ -7 \\end{pmatrix}\\)."
+    },
+    {
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Zeige, dass \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 1 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 1 \\end{pmatrix}\\) nicht komplanar sind. Berechne das Spatprodukt.",
+        loesung: 2, toleranz: 0,
+        tipp: "Spatprodukt \\(= \\det\\begin{pmatrix} 1 & 0 & 1 \\\\ 1 & 1 & 0 \\\\ 0 & 1 & 1 \\end{pmatrix}\\). Entwickle nach der ersten Zeile.",
+        loesungsweg: "\\(\\det\\begin{pmatrix} 1 & 0 & 1 \\\\ 1 & 1 & 0 \\\\ 0 & 1 & 1 \\end{pmatrix} = 1(1-0) - 0(1-0) + 1(1-0) = 1 + 0 + 1 = 2\\). Da \\(2 \\neq 0\\), sind die Vektoren nicht komplanar."
+    },
+    {
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Berechne den Winkel (in Grad) zwischen \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 2 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 2 \\\\ -1 \\\\ 2 \\end{pmatrix}\\). Runde auf ganze Grad.",
+        loesung: 64, toleranz: 1,
+        tipp: "\\(\\vec{a} \\cdot \\vec{b} = 2 - 2 + 4 = 4\\). \\(|\\vec{a}| = 3\\), \\(|\\vec{b}| = 3\\). \\(\\cos(\\varphi) = \\frac{4}{9}\\).",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 2 - 2 + 4 = 4\\). \\(|\\vec{a}| = \\sqrt{1+4+4} = 3\\), \\(|\\vec{b}| = \\sqrt{4+1+4} = 3\\). \\(\\cos(\\varphi) = \\frac{4}{9} \\approx 0{,}444\\). \\(\\varphi = \\arccos(0{,}444) \\approx 63{,}6° \\approx 64°\\)."
+    },
+    {
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Gegeben sind \\(A(1, 0, 0)\\), \\(B(0, 2, 0)\\), \\(C(0, 0, 3)\\). Berechne die Fläche des Dreiecks \\(ABC\\).",
+        loesung: 3.5, toleranz: 0.05,
+        tipp: "\\(\\overrightarrow{AB} = \\begin{pmatrix} -1 \\\\ 2 \\\\ 0 \\end{pmatrix}\\), \\(\\overrightarrow{AC} = \\begin{pmatrix} -1 \\\\ 0 \\\\ 3 \\end{pmatrix}\\). Kreuzprodukt berechnen, Betrag halbieren.",
+        loesungsweg: "\\(\\overrightarrow{AB} \\times \\overrightarrow{AC} = \\begin{pmatrix} 2 \\cdot 3 - 0 \\cdot 0 \\\\ 0 \\cdot (-1) - (-1) \\cdot 3 \\\\ (-1) \\cdot 0 - 2 \\cdot (-1) \\end{pmatrix} = \\begin{pmatrix} 6 \\\\ 3 \\\\ 2 \\end{pmatrix}\\). \\(|\\vec{n}| = \\sqrt{36 + 9 + 4} = 7\\). \\(A = \\frac{7}{2} = 3{,}5\\)."
+    }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

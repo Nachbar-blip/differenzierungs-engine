@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zufallsgrößen - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #ED7D31; --spirale-secondary: #C55A11; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '12-stoch-zufallsgroessen';
+    const THEMA_CONFIG = { name: 'Zufallsgrößen', bereich: 'stochastik' };
+    const AUFGABEN = [
+
+      // ═══════════════════════════════════════════════════════════
+      // Level 1 — Zufallsgröße erkennen (Zuordnung Ergebnis → Zahl)
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 1, level: 1, typ: 'mc',
+        frage: 'Ein Würfel wird einmal geworfen. Welche der folgenden Zuordnungen beschreibt eine Zufallsgröße?',
+        optionen: [
+          'Die Augenzahl des Würfels',
+          'Die Farbe des Würfels',
+          'Das Material des Würfels',
+          'Die Größe des Würfels'
+        ],
+        korrekt: 0,
+        tipp: 'Eine Zufallsgröße ordnet jedem Ergebnis eines Zufallsexperiments eine reelle Zahl zu.',
+        loesungsweg: 'Die Augenzahl ordnet jedem Wurfergebnis eine Zahl (1–6) zu. Farbe, Material und Größe sind keine Zahlenwerte des Zufallsexperiments.'
+      },
+      {
+        id: 2, level: 1, typ: 'mc',
+        frage: 'Zwei Münzen werden geworfen. Die Zufallsgröße \\(X\\) zählt die Anzahl „Kopf". Welche Werte kann \\(X\\) annehmen?',
+        optionen: [
+          '\\(\\{0, 1, 2\\}\\)',
+          '\\(\\{1, 2\\}\\)',
+          '\\(\\{0, 1\\}\\)',
+          '\\(\\{1, 2, 3\\}\\)'
+        ],
+        korrekt: 0,
+        tipp: 'Überlege: Wie viele Münzen können „Kopf" zeigen? Minimum und Maximum?',
+        loesungsweg: 'Bei zwei Münzen kann 0-mal, 1-mal oder 2-mal Kopf fallen. Also \\(X \\in \\{0, 1, 2\\}\\).'
+      },
+      {
+        id: 3, level: 1, typ: 'mc',
+        frage: 'In einer Urne liegen 3 rote und 2 blaue Kugeln. Es wird eine Kugel gezogen. Die Zufallsgröße \\(X\\) ordnet einer roten Kugel den Wert 1 und einer blauen den Wert 0 zu. Was ist \\(P(X = 1)\\)?',
+        optionen: [
+          '\\(\\frac{3}{5}\\)',
+          '\\(\\frac{2}{5}\\)',
+          '\\(\\frac{1}{2}\\)',
+          '\\(\\frac{1}{5}\\)'
+        ],
+        korrekt: 0,
+        tipp: 'Rot entspricht \\(X = 1\\). Wie viele rote Kugeln gibt es? Wie viele insgesamt?',
+        loesungsweg: '\\(P(X = 1) = P(\\text{rot}) = \\frac{3}{5}\\), da 3 von 5 Kugeln rot sind.'
+      },
+      {
+        id: 4, level: 1, typ: 'mc',
+        frage: 'Welche Aussage über diskrete Zufallsgrößen ist korrekt?',
+        optionen: [
+          'Sie können nur endlich viele oder abzählbar unendlich viele Werte annehmen',
+          'Sie können jeden beliebigen reellen Wert annehmen',
+          'Sie nehmen immer nur positive Werte an',
+          'Sie sind immer ganzzahlig'
+        ],
+        korrekt: 0,
+        tipp: 'Diskret bedeutet „abzählbar" — im Gegensatz zu stetig.',
+        loesungsweg: 'Diskrete Zufallsgrößen nehmen nur abzählbar viele Werte an (z.B. 0, 1, 2, ... oder endlich viele). Sie müssen weder positiv noch ganzzahlig sein.'
+      },
+      {
+        id: 5, level: 1, typ: 'mc',
+        frage: 'Ein Glücksrad hat die Sektoren 1, 2, 3 und 4 (gleich groß). Die Zufallsgröße \\(X\\) gibt die gedrehte Zahl an. Was ist \\(P(X \\geq 3)\\)?',
+        optionen: [
+          '\\(\\frac{1}{2}\\)',
+          '\\(\\frac{1}{4}\\)',
+          '\\(\\frac{3}{4}\\)',
+          '\\(\\frac{1}{3}\\)'
+        ],
+        korrekt: 0,
+        tipp: 'Welche Werte erfüllen \\(X \\geq 3\\)? Das sind \\(X = 3\\) und \\(X = 4\\).',
+        loesungsweg: '\\(P(X \\geq 3) = P(X=3) + P(X=4) = \\frac{1}{4} + \\frac{1}{4} = \\frac{1}{2}\\)'
+      },
+      {
+        id: 6, level: 1, typ: 'mc',
+        frage: 'Bei einem Zufallsexperiment wird eine Zufallsgröße \\(X\\) definiert. Für eine vollständige Wahrscheinlichkeitsverteilung muss gelten:',
+        optionen: [
+          'Die Summe aller Wahrscheinlichkeiten ergibt 1',
+          'Alle Wahrscheinlichkeiten sind gleich groß',
+          'Es gibt mindestens 6 mögliche Werte',
+          'Der Erwartungswert muss positiv sein'
+        ],
+        korrekt: 0,
+        tipp: 'Was ist die Grundregel jeder Wahrscheinlichkeitsverteilung?',
+        loesungsweg: 'Für jede Wahrscheinlichkeitsverteilung gilt: \\(\\sum_i P(X = x_i) = 1\\). Die Wahrscheinlichkeiten müssen nicht gleich sein.'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // Level 2 — Wahrscheinlichkeitsverteilung (Tabelle lesen/ergänzen)
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 7, level: 2, typ: 'numerisch',
+        frage: 'Gegeben ist die Verteilung: \\(P(X=1) = 0{,}2\\), \\(P(X=2) = 0{,}3\\), \\(P(X=3) = 0{,}1\\), \\(P(X=4) = ?\\). Bestimme \\(P(X=4)\\).',
+        loesung: 0.4, toleranz: 0.01,
+        tipp: 'Die Summe aller Wahrscheinlichkeiten muss 1 ergeben.',
+        loesungsweg: '\\(P(X=4) = 1 - 0{,}2 - 0{,}3 - 0{,}1 = 0{,}4\\)'
+      },
+      {
+        id: 8, level: 2, typ: 'numerisch',
+        frage: 'Eine Zufallsgröße \\(X\\) hat die Verteilung: \\(P(X=0) = 0{,}1\\), \\(P(X=1) = 0{,}3\\), \\(P(X=2) = 0{,}4\\), \\(P(X=3) = 0{,}2\\). Berechne \\(P(X \\leq 2)\\).',
+        loesung: 0.8, toleranz: 0.01,
+        tipp: '\\(P(X \\leq 2) = P(X=0) + P(X=1) + P(X=2)\\)',
+        loesungsweg: '\\(P(X \\leq 2) = 0{,}1 + 0{,}3 + 0{,}4 = 0{,}8\\)'
+      },
+      {
+        id: 9, level: 2, typ: 'numerisch',
+        frage: 'Die Zufallsgröße \\(X\\) nimmt die Werte 1, 2 und 3 an. Es gilt \\(P(X=1) = P(X=3) = 0{,}25\\). Bestimme \\(P(X=2)\\).',
+        loesung: 0.5, toleranz: 0.01,
+        tipp: 'Nutze \\(P(X=1) + P(X=2) + P(X=3) = 1\\).',
+        loesungsweg: '\\(P(X=2) = 1 - 0{,}25 - 0{,}25 = 0{,}5\\)'
+      },
+      {
+        id: 10, level: 2, typ: 'mc',
+        frage: 'Welche der folgenden Tabellen kann eine Wahrscheinlichkeitsverteilung sein?',
+        optionen: [
+          '\\(P(X=1) = 0{,}5,\\ P(X=2) = 0{,}3,\\ P(X=3) = 0{,}2\\)',
+          '\\(P(X=1) = 0{,}5,\\ P(X=2) = 0{,}3,\\ P(X=3) = 0{,}3\\)',
+          '\\(P(X=1) = 0{,}6,\\ P(X=2) = -0{,}1,\\ P(X=3) = 0{,}5\\)',
+          '\\(P(X=1) = 0{,}4,\\ P(X=2) = 0{,}4,\\ P(X=3) = 0{,}4\\)'
+        ],
+        korrekt: 0,
+        tipp: 'Alle Wahrscheinlichkeiten müssen zwischen 0 und 1 liegen, und ihre Summe muss 1 sein.',
+        loesungsweg: 'Nur die erste Zeile ergibt \\(0{,}5 + 0{,}3 + 0{,}2 = 1\\) mit allen Werten \\(\\geq 0\\). Die zweite: Summe = 1,1. Die dritte: negativer Wert. Die vierte: Summe = 1,2.'
+      },
+      {
+        id: 11, level: 2, typ: 'numerisch',
+        frage: 'Zwei faire Würfel werden geworfen. \\(X\\) ist die Augensumme. Bestimme \\(P(X = 7)\\).',
+        loesung: 0.17, toleranz: 0.01,
+        tipp: 'Wie viele Kombinationen ergeben die Summe 7? Insgesamt gibt es \\(6 \\times 6 = 36\\) Möglichkeiten.',
+        loesungsweg: 'Kombinationen für Summe 7: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1) — das sind 6 Stück. \\(P(X=7) = \\frac{6}{36} = \\frac{1}{6} \\approx 0{,}17\\)'
+      },
+      {
+        id: 12, level: 2, typ: 'numerisch',
+        frage: 'Eine Zufallsgröße hat die Verteilung: \\(P(X=0) = 0{,}15\\), \\(P(X=1) = 0{,}35\\), \\(P(X=2) = p\\), \\(P(X=3) = 0{,}2\\). Berechne \\(P(X > 1)\\).',
+        loesung: 0.5, toleranz: 0.01,
+        tipp: 'Bestimme zuerst \\(p\\), dann berechne \\(P(X=2) + P(X=3)\\).',
+        loesungsweg: '\\(p = 1 - 0{,}15 - 0{,}35 - 0{,}2 = 0{,}3\\). Also \\(P(X > 1) = P(X=2) + P(X=3) = 0{,}3 + 0{,}2 = 0{,}5\\).'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // Level 3 — Erwartungswert E(X)
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 13, level: 3, typ: 'numerisch',
+        frage: 'Berechne \\(E(X)\\) für die Verteilung: \\(P(X=1) = 0{,}5\\), \\(P(X=2) = 0{,}3\\), \\(P(X=3) = 0{,}2\\).',
+        loesung: 1.7, toleranz: 0.01,
+        tipp: '\\(E(X) = \\sum x_i \\cdot P(X = x_i)\\)',
+        loesungsweg: '\\(E(X) = 1 \\cdot 0{,}5 + 2 \\cdot 0{,}3 + 3 \\cdot 0{,}2 = 0{,}5 + 0{,}6 + 0{,}6 = 1{,}7\\)'
+      },
+      {
+        id: 14, level: 3, typ: 'numerisch',
+        frage: 'Ein Glücksrad hat die Sektoren: 0€ (40%), 5€ (35%), 10€ (20%), 50€ (5%). Berechne den erwarteten Gewinn \\(E(X)\\).',
+        loesung: 6.25, toleranz: 0.01,
+        tipp: '\\(E(X) = 0 \\cdot 0{,}4 + 5 \\cdot 0{,}35 + 10 \\cdot 0{,}2 + 50 \\cdot 0{,}05\\)',
+        loesungsweg: '\\(E(X) = 0 \\cdot 0{,}4 + 5 \\cdot 0{,}35 + 10 \\cdot 0{,}2 + 50 \\cdot 0{,}05 = 0 + 1{,}75 + 2 + 2{,}5 = 6{,}25\\)'
+      },
+      {
+        id: 15, level: 3, typ: 'numerisch',
+        frage: 'Berechne \\(E(X)\\) für die Verteilung: \\(P(X=0) = 0{,}1\\), \\(P(X=1) = 0{,}2\\), \\(P(X=2) = 0{,}4\\), \\(P(X=3) = 0{,}3\\).',
+        loesung: 1.9, toleranz: 0.01,
+        tipp: '\\(E(X) = 0 \\cdot 0{,}1 + 1 \\cdot 0{,}2 + 2 \\cdot 0{,}4 + 3 \\cdot 0{,}3\\)',
+        loesungsweg: '\\(E(X) = 0 + 0{,}2 + 0{,}8 + 0{,}9 = 1{,}9\\)'
+      },
+      {
+        id: 16, level: 3, typ: 'numerisch',
+        frage: 'Ein Würfel wird einmal geworfen. \\(X\\) ist die Augenzahl. Berechne \\(E(X)\\).',
+        loesung: 3.5, toleranz: 0.01,
+        tipp: 'Jede Augenzahl hat die Wahrscheinlichkeit \\(\\frac{1}{6}\\).',
+        loesungsweg: '\\(E(X) = \\frac{1}{6}(1 + 2 + 3 + 4 + 5 + 6) = \\frac{21}{6} = 3{,}5\\)'
+      },
+      {
+        id: 17, level: 3, typ: 'numerisch',
+        frage: 'Berechne \\(E(X)\\) für: \\(P(X=-2) = 0{,}3\\), \\(P(X=0) = 0{,}4\\), \\(P(X=5) = 0{,}3\\).',
+        loesung: 0.9, toleranz: 0.01,
+        tipp: 'Achtung: \\(X\\) kann auch negative Werte annehmen!',
+        loesungsweg: '\\(E(X) = (-2) \\cdot 0{,}3 + 0 \\cdot 0{,}4 + 5 \\cdot 0{,}3 = -0{,}6 + 0 + 1{,}5 = 0{,}9\\)'
+      },
+      {
+        id: 18, level: 3, typ: 'numerisch',
+        frage: 'Bei einer Lotterie gewinnt man 100€ mit Wahrscheinlichkeit 0,02 und 10€ mit Wahrscheinlichkeit 0,1. Sonst gewinnt man nichts. Berechne \\(E(X)\\).',
+        loesung: 3, toleranz: 0.01,
+        tipp: '\\(P(X=0) = 1 - 0{,}02 - 0{,}1 = 0{,}88\\). Berechne \\(E(X) = 100 \\cdot 0{,}02 + 10 \\cdot 0{,}1 + 0 \\cdot 0{,}88\\).',
+        loesungsweg: '\\(E(X) = 100 \\cdot 0{,}02 + 10 \\cdot 0{,}1 + 0 \\cdot 0{,}88 = 2 + 1 + 0 = 3\\)'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // Level 4 — Varianz V(X)
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 19, level: 4, typ: 'numerisch',
+        frage: 'Berechne \\(V(X)\\) für: \\(P(X=1) = 0{,}5\\), \\(P(X=2) = 0{,}3\\), \\(P(X=3) = 0{,}2\\). (\\(E(X) = 1{,}7\\))',
+        loesung: 0.61, toleranz: 0.01,
+        tipp: '\\(V(X) = \\sum (x_i - \\mu)^2 \\cdot P(X = x_i)\\) mit \\(\\mu = 1{,}7\\).',
+        loesungsweg: '\\(V(X) = (1-1{,}7)^2 \\cdot 0{,}5 + (2-1{,}7)^2 \\cdot 0{,}3 + (3-1{,}7)^2 \\cdot 0{,}2 = 0{,}49 \\cdot 0{,}5 + 0{,}09 \\cdot 0{,}3 + 1{,}69 \\cdot 0{,}2 = 0{,}245 + 0{,}027 + 0{,}338 = 0{,}61\\)'
+      },
+      {
+        id: 20, level: 4, typ: 'numerisch',
+        frage: 'Berechne \\(V(X)\\) für: \\(P(X=0) = 0{,}1\\), \\(P(X=1) = 0{,}2\\), \\(P(X=2) = 0{,}4\\), \\(P(X=3) = 0{,}3\\). (\\(E(X) = 1{,}9\\))',
+        loesung: 0.89, toleranz: 0.01,
+        tipp: 'Berechne \\((x_i - 1{,}9)^2 \\cdot P(X = x_i)\\) für jeden Wert und summiere.',
+        loesungsweg: '\\(V(X) = (0-1{,}9)^2 \\cdot 0{,}1 + (1-1{,}9)^2 \\cdot 0{,}2 + (2-1{,}9)^2 \\cdot 0{,}4 + (3-1{,}9)^2 \\cdot 0{,}3\\) \\(= 3{,}61 \\cdot 0{,}1 + 0{,}81 \\cdot 0{,}2 + 0{,}01 \\cdot 0{,}4 + 1{,}21 \\cdot 0{,}3 = 0{,}361 + 0{,}162 + 0{,}004 + 0{,}363 = 0{,}89\\)'
+      },
+      {
+        id: 21, level: 4, typ: 'numerisch',
+        frage: 'Berechne \\(V(X)\\) mit dem Verschiebungssatz: \\(V(X) = E(X^2) - [E(X)]^2\\). Gegeben: \\(E(X) = 3{,}5\\), \\(E(X^2) = \\frac{91}{6}\\). (Fairer Würfel)',
+        loesung: 2.92, toleranz: 0.01,
+        tipp: '\\(V(X) = E(X^2) - [E(X)]^2 = \\frac{91}{6} - 3{,}5^2\\)',
+        loesungsweg: '\\(V(X) = \\frac{91}{6} - 3{,}5^2 = 15{,}1\\overline{6} - 12{,}25 = 2{,}91\\overline{6} \\approx 2{,}92\\)'
+      },
+      {
+        id: 22, level: 4, typ: 'mc',
+        frage: 'Was passiert mit der Varianz, wenn man zu jeder Ausprägung einer Zufallsgröße eine Konstante \\(c\\) addiert, also \\(Y = X + c\\)?',
+        optionen: [
+          '\\(V(Y) = V(X)\\) — die Varianz bleibt gleich',
+          '\\(V(Y) = V(X) + c\\)',
+          '\\(V(Y) = V(X) + c^2\\)',
+          '\\(V(Y) = c \\cdot V(X)\\)'
+        ],
+        korrekt: 0,
+        tipp: 'Eine Verschiebung ändert den Erwartungswert, aber nicht die Streuung.',
+        loesungsweg: 'Addiert man eine Konstante, verschiebt sich die gesamte Verteilung, aber die Abstände zum Mittelwert bleiben gleich. Daher: \\(V(X+c) = V(X)\\).'
+      },
+      {
+        id: 23, level: 4, typ: 'numerisch',
+        frage: 'Berechne \\(V(X)\\) für: \\(P(X=-1) = 0{,}25\\), \\(P(X=0) = 0{,}5\\), \\(P(X=1) = 0{,}25\\).',
+        loesung: 0.5, toleranz: 0.01,
+        tipp: 'Berechne zuerst \\(E(X)\\), dann \\(V(X)\\).',
+        loesungsweg: '\\(E(X) = (-1) \\cdot 0{,}25 + 0 \\cdot 0{,}5 + 1 \\cdot 0{,}25 = 0\\). \\(V(X) = (-1-0)^2 \\cdot 0{,}25 + (0-0)^2 \\cdot 0{,}5 + (1-0)^2 \\cdot 0{,}25 = 0{,}25 + 0 + 0{,}25 = 0{,}5\\)'
+      },
+      {
+        id: 24, level: 4, typ: 'numerisch',
+        frage: 'Gegeben: \\(P(X=2) = 0{,}4\\), \\(P(X=5) = 0{,}6\\). Berechne \\(V(X)\\).',
+        loesung: 2.16, toleranz: 0.01,
+        tipp: 'Berechne zuerst \\(E(X) = 2 \\cdot 0{,}4 + 5 \\cdot 0{,}6\\).',
+        loesungsweg: '\\(E(X) = 2 \\cdot 0{,}4 + 5 \\cdot 0{,}6 = 0{,}8 + 3 = 3{,}8\\). \\(V(X) = (2-3{,}8)^2 \\cdot 0{,}4 + (5-3{,}8)^2 \\cdot 0{,}6 = 3{,}24 \\cdot 0{,}4 + 1{,}44 \\cdot 0{,}6 = 1{,}296 + 0{,}864 = 2{,}16\\)'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // Level 5 — Standardabweichung σ(X), Interpretation
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 25, level: 5, typ: 'numerisch',
+        frage: 'Berechne die Standardabweichung \\(\\sigma(X)\\) für \\(V(X) = 0{,}61\\).',
+        loesung: 0.78, toleranz: 0.01,
+        tipp: '\\(\\sigma(X) = \\sqrt{V(X)}\\)',
+        loesungsweg: '\\(\\sigma(X) = \\sqrt{0{,}61} \\approx 0{,}781 \\approx 0{,}78\\)'
+      },
+      {
+        id: 26, level: 5, typ: 'numerisch',
+        frage: 'Berechne \\(\\sigma(X)\\) für die Verteilung: \\(P(X=2) = 0{,}4\\), \\(P(X=5) = 0{,}6\\). (\\(V(X) = 2{,}16\\))',
+        loesung: 1.47, toleranz: 0.01,
+        tipp: '\\(\\sigma(X) = \\sqrt{V(X)} = \\sqrt{2{,}16}\\)',
+        loesungsweg: '\\(\\sigma(X) = \\sqrt{2{,}16} \\approx 1{,}47\\)'
+      },
+      {
+        id: 27, level: 5, typ: 'mc',
+        frage: 'Zwei Zufallsgrößen haben denselben Erwartungswert \\(E(X) = 5\\). Zufallsgröße \\(A\\) hat \\(\\sigma = 0{,}5\\), Zufallsgröße \\(B\\) hat \\(\\sigma = 3\\). Was bedeutet das?',
+        optionen: [
+          'Die Werte von \\(A\\) liegen näher am Erwartungswert als die von \\(B\\)',
+          'Die Werte von \\(B\\) liegen näher am Erwartungswert als die von \\(A\\)',
+          '\\(A\\) hat mehr mögliche Werte als \\(B\\)',
+          'Beide streuen gleich stark'
+        ],
+        korrekt: 0,
+        tipp: 'Eine kleinere Standardabweichung bedeutet weniger Streuung.',
+        loesungsweg: 'Die Standardabweichung misst die durchschnittliche Abweichung vom Erwartungswert. \\(\\sigma_A = 0{,}5 < 3 = \\sigma_B\\), also liegen die Werte von \\(A\\) näher am Erwartungswert.'
+      },
+      {
+        id: 28, level: 5, typ: 'numerisch',
+        frage: 'Ein fairer Würfel wird geworfen. Berechne \\(\\sigma(X)\\). (\\(V(X) \\approx 2{,}917\\))',
+        loesung: 1.71, toleranz: 0.01,
+        tipp: '\\(\\sigma = \\sqrt{V(X)} = \\sqrt{2{,}917}\\)',
+        loesungsweg: '\\(\\sigma(X) = \\sqrt{2{,}917} \\approx 1{,}708 \\approx 1{,}71\\)'
+      },
+      {
+        id: 29, level: 5, typ: 'mc',
+        frage: 'Welche Einheit hat die Standardabweichung im Vergleich zur Varianz?',
+        optionen: [
+          'Dieselbe Einheit wie die Zufallsgröße \\(X\\)',
+          'Das Quadrat der Einheit von \\(X\\)',
+          'Sie ist einheitenlos',
+          'Die Wurzel der Einheit von \\(X\\)'
+        ],
+        korrekt: 0,
+        tipp: '\\(\\sigma = \\sqrt{V(X)}\\). Wenn \\(X\\) in Euro gemessen wird, in welcher Einheit ist dann \\(\\sigma\\)?',
+        loesungsweg: 'Da \\(V(X)\\) in (Einheit)² gemessen wird und \\(\\sigma = \\sqrt{V(X)}\\), hat \\(\\sigma\\) dieselbe Einheit wie \\(X\\). Das macht die Standardabweichung besser interpretierbar als die Varianz.'
+      },
+      {
+        id: 30, level: 5, typ: 'numerisch',
+        frage: 'Gegeben: \\(P(X=0) = 0{,}5\\), \\(P(X=4) = 0{,}5\\). Berechne \\(\\sigma(X)\\).',
+        loesung: 2, toleranz: 0.01,
+        tipp: 'Berechne erst \\(E(X)\\), dann \\(V(X)\\), dann \\(\\sigma(X)\\).',
+        loesungsweg: '\\(E(X) = 0 \\cdot 0{,}5 + 4 \\cdot 0{,}5 = 2\\). \\(V(X) = (0-2)^2 \\cdot 0{,}5 + (4-2)^2 \\cdot 0{,}5 = 4 \\cdot 0{,}5 + 4 \\cdot 0{,}5 = 4\\). \\(\\sigma(X) = \\sqrt{4} = 2\\)'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // Level 6 — Kombiniert: E(X), V(X), σ(X) in Sachkontexten
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 31, level: 6, typ: 'numerisch',
+        frage: 'Bei einem Spiel zahlt man 2€ Einsatz. Man wirft eine Münze: Bei Kopf gewinnt man 3€, bei Zahl gewinnt man nichts. Berechne den erwarteten Reingewinn \\(E(X)\\) (Gewinn minus Einsatz).',
+        loesung: -0.5, toleranz: 0.01,
+        tipp: 'Reingewinn bei Kopf: \\(3 - 2 = 1\\)€. Reingewinn bei Zahl: \\(0 - 2 = -2\\)€.',
+        loesungsweg: '\\(E(X) = 1 \\cdot 0{,}5 + (-2) \\cdot 0{,}5 = 0{,}5 - 1 = -0{,}5\\). Im Mittel verliert man 0,50€ pro Spiel.'
+      },
+      {
+        id: 32, level: 6, typ: 'numerisch',
+        frage: 'Wie hoch müsste der Gewinn bei Kopf sein, damit das Spiel aus Aufgabe 31 fair ist? (Einsatz bleibt 2€, bei Zahl gewinnt man nichts.)',
+        loesung: 4, toleranz: 0,
+        tipp: 'Fair bedeutet \\(E(X) = 0\\). Setze \\((g - 2) \\cdot 0{,}5 + (-2) \\cdot 0{,}5 = 0\\) und löse nach \\(g\\).',
+        loesungsweg: '\\((g-2) \\cdot 0{,}5 + (-2) \\cdot 0{,}5 = 0 \\Rightarrow 0{,}5g - 1 - 1 = 0 \\Rightarrow 0{,}5g = 2 \\Rightarrow g = 4\\). Man müsste 4€ bei Kopf gewinnen.'
+      },
+      {
+        id: 33, level: 6, typ: 'numerisch',
+        frage: 'Eine Versicherung zahlt bei Schaden (Wahrscheinlichkeit 0,02) eine Summe von 10.000€ aus. Die Jahresprämie beträgt 300€. Berechne den erwarteten Gewinn der Versicherung pro Vertrag \\(E(G)\\).',
+        loesung: 100, toleranz: 0,
+        tipp: 'Gewinn der Versicherung: Prämie minus eventuelle Auszahlung. \\(E(G) = 300 - 10000 \\cdot 0{,}02\\)',
+        loesungsweg: '\\(E(G) = 300 \\cdot 1 - 10000 \\cdot 0{,}02 = 300 - 200 = 100\\)€ Gewinn pro Vertrag im Mittel.'
+      },
+      {
+        id: 34, level: 6, typ: 'numerisch',
+        frage: 'Ein Glücksrad: \\(P(X=0) = 0{,}5\\), \\(P(X=2) = 0{,}3\\), \\(P(X=10) = 0{,}2\\). Berechne \\(\\sigma(X)\\). Runde auf zwei Dezimalstellen.',
+        loesung: 3.8, toleranz: 0.01,
+        tipp: 'Berechne erst \\(E(X)\\), dann \\(V(X)\\), dann \\(\\sigma\\).',
+        loesungsweg: '\\(E(X) = 0 \\cdot 0{,}5 + 2 \\cdot 0{,}3 + 10 \\cdot 0{,}2 = 0 + 0{,}6 + 2 = 2{,}6\\). \\(V(X) = (0-2{,}6)^2 \\cdot 0{,}5 + (2-2{,}6)^2 \\cdot 0{,}3 + (10-2{,}6)^2 \\cdot 0{,}2 = 6{,}76 \\cdot 0{,}5 + 0{,}36 \\cdot 0{,}3 + 54{,}76 \\cdot 0{,}2 = 3{,}38 + 0{,}108 + 10{,}952 = 14{,}44\\). \\(\\sigma = \\sqrt{14{,}44} = 3{,}8\\)'
+      },
+      {
+        id: 35, level: 6, typ: 'numerisch',
+        frage: 'Bei einem Würfelspiel gewinnt man das Doppelte der Augenzahl in Euro. Der Einsatz beträgt 7€. Berechne den erwarteten Reingewinn \\(E(X)\\).',
+        loesung: 0, toleranz: 0,
+        tipp: 'Der Gewinn ist \\(2 \\cdot \\text{Augenzahl} - 7\\). \\(E(2 \\cdot \\text{Augenzahl}) = 2 \\cdot E(\\text{Augenzahl}) = 2 \\cdot 3{,}5 = 7\\).',
+        loesungsweg: '\\(E(X) = 2 \\cdot E(\\text{Augenzahl}) - 7 = 2 \\cdot 3{,}5 - 7 = 7 - 7 = 0\\). Das Spiel ist fair.'
+      },
+      {
+        id: 36, level: 6, typ: 'numerisch',
+        frage: 'Tom spielt folgendes Spiel: Er zieht eine Karte aus 10 Karten (nummeriert 1–10). Er erhält so viele Euro wie die Kartennummer. Der Einsatz beträgt 6€. Berechne \\(V(X)\\) des Reingewinns.',
+        loesung: 8.25, toleranz: 0.01,
+        tipp: 'Reingewinn: Kartennummer minus 6. \\(V(X-6) = V(X)\\). Berechne \\(V(X)\\) für gleichverteilte Werte 1–10.',
+        loesungsweg: '\\(E(X) = \\frac{1+2+\\ldots+10}{10} = 5{,}5\\). \\(E(X^2) = \\frac{1^2+2^2+\\ldots+10^2}{10} = \\frac{385}{10} = 38{,}5\\). \\(V(X) = 38{,}5 - 5{,}5^2 = 38{,}5 - 30{,}25 = 8{,}25\\). Da \\(V(X-6) = V(X)\\), ist \\(V(\\text{Reingewinn}) = 8{,}25\\).'
+      }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

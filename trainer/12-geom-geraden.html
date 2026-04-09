@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geraden im Raum - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #70AD47; --spirale-secondary: #2E7D32; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '12-geom-geraden';
+    const THEMA_CONFIG = { name: 'Geraden im Raum', bereich: 'geometrie' };
+    const AUFGABEN = [
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 1 — Punkt auf Gerade prüfen (Parameter einsetzen)
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 1, level: 1, typ: "mc",
+        frage: "Gegeben ist die Gerade \\(g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix} + t \\cdot \\begin{pmatrix} 2 \\\\ 1 \\\\ -1 \\end{pmatrix}\\). Liegt der Punkt \\(P(5, 4, 1)\\) auf \\(g\\)?",
+        optionen: ["Ja, für \\(t = 2\\)", "Ja, für \\(t = 3\\)", "Nein, kein passendes \\(t\\) existiert", "Ja, für \\(t = 1\\)"],
+        korrekt: 0,
+        tipp: "Setze \\(P\\) in die Geradengleichung ein: \\(5 = 1 + 2t\\), \\(4 = 2 + t\\), \\(1 = 3 - t\\). Prüfe, ob alle dasselbe \\(t\\) ergeben.",
+        loesungsweg: "Aus Komponente 1: \\(5 = 1 + 2t \\Rightarrow t = 2\\). Komponente 2: \\(4 = 2 + 2 = 4\\) \\(\\checkmark\\). Komponente 3: \\(1 = 3 - 2 = 1\\) \\(\\checkmark\\). Also liegt \\(P\\) auf \\(g\\) für \\(t = 2\\)."
+    },
+    {
+        id: 2, level: 1, typ: "mc",
+        frage: "Gegeben ist \\(g: \\vec{x} = \\begin{pmatrix} 0 \\\\ 1 \\\\ -2 \\end{pmatrix} + t \\cdot \\begin{pmatrix} 1 \\\\ 3 \\\\ 2 \\end{pmatrix}\\). Liegt \\(P(2, 7, 3)\\) auf \\(g\\)?",
+        optionen: ["Ja, für \\(t = 2\\)", "Nein", "Ja, für \\(t = 3\\)", "Ja, für \\(t = 1\\)"],
+        korrekt: 1,
+        tipp: "Setze ein: \\(2 = 0 + t\\), \\(7 = 1 + 3t\\), \\(3 = -2 + 2t\\). Ergibt sich überall dasselbe \\(t\\)?",
+        loesungsweg: "Aus Komp. 1: \\(t = 2\\). Komp. 2: \\(7 = 1 + 6 = 7\\) \\(\\checkmark\\). Komp. 3: \\(3 = -2 + 4 = 2 \\neq 3\\) \\(\\times\\). \\(P\\) liegt nicht auf \\(g\\)."
+    },
+    {
+        id: 3, level: 1, typ: "numerisch",
+        frage: "Gegeben ist \\(g: \\vec{x} = \\begin{pmatrix} 3 \\\\ -1 \\\\ 2 \\end{pmatrix} + t \\cdot \\begin{pmatrix} 1 \\\\ 2 \\\\ -1 \\end{pmatrix}\\). Für welchen Wert von \\(t\\) hat der Punkt auf \\(g\\) die \\(x_1\\)-Koordinate 7?",
+        loesung: 4, toleranz: 0,
+        tipp: "Setze die erste Komponente gleich 7: \\(3 + t = 7\\).",
+        loesungsweg: "\\(x_1 = 3 + t = 7 \\Rightarrow t = 4\\). Der Punkt ist \\((7, 7, -2)\\)."
+    },
+    {
+        id: 4, level: 1, typ: "numerisch",
+        frage: "Gegeben ist \\(g: \\vec{x} = \\begin{pmatrix} 2 \\\\ 5 \\\\ -3 \\end{pmatrix} + t \\cdot \\begin{pmatrix} -1 \\\\ 2 \\\\ 4 \\end{pmatrix}\\). Berechne die \\(x_3\\)-Koordinate des Punktes auf \\(g\\) für \\(t = 3\\).",
+        loesung: 9, toleranz: 0,
+        tipp: "Setze \\(t = 3\\) in die dritte Komponente ein: \\(-3 + 3 \\cdot 4\\).",
+        loesungsweg: "\\(x_3 = -3 + 3 \\cdot 4 = -3 + 12 = 9\\)."
+    },
+    {
+        id: 5, level: 1, typ: "mc",
+        frage: "Eine Gerade im Raum wird beschrieben durch \\(\\vec{x} = \\vec{p} + t \\cdot \\vec{u}\\). Was ist \\(\\vec{u}\\)?",
+        optionen: ["Der Richtungsvektor", "Der Ortsvektor", "Der Normalenvektor", "Der Stützvektor"],
+        korrekt: 0,
+        tipp: "\\(\\vec{p}\\) ist der Stützvektor (Aufpunkt). Was gibt die Richtung der Geraden an?",
+        loesungsweg: "\\(\\vec{u}\\) ist der Richtungsvektor. Er gibt die Richtung an, in der sich die Gerade erstreckt. \\(\\vec{p}\\) ist der Stütz-/Ortsvektor eines Punktes auf der Geraden."
+    },
+    {
+        id: 6, level: 1, typ: "numerisch",
+        frage: "Gegeben ist \\(g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 4 \\end{pmatrix} + t \\cdot \\begin{pmatrix} 2 \\\\ -3 \\\\ 1 \\end{pmatrix}\\). Berechne die \\(x_2\\)-Koordinate des Punktes auf \\(g\\) für \\(t = -2\\).",
+        loesung: 6, toleranz: 0,
+        tipp: "\\(x_2 = 0 + (-2) \\cdot (-3) = ?\\).",
+        loesungsweg: "\\(x_2 = 0 + (-2) \\cdot (-3) = 0 + 6 = 6\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 2 — Geradengleichung aufstellen aus 2 Punkten
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 7, level: 2, typ: "numerisch",
+        frage: "Gegeben sind \\(A(1, 3, -2)\\) und \\(B(4, 9, 1)\\). Die Gerade \\(g\\) durch \\(A\\) und \\(B\\) hat den Richtungsvektor \\(\\overrightarrow{AB}\\). Berechne die zweite Komponente von \\(\\overrightarrow{AB}\\).",
+        loesung: 6, toleranz: 0,
+        tipp: "\\(\\overrightarrow{AB} = B - A\\), also zweite Komponente: \\(9 - 3\\).",
+        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 4-1 \\\\ 9-3 \\\\ 1-(-2) \\end{pmatrix} = \\begin{pmatrix} 3 \\\\ 6 \\\\ 3 \\end{pmatrix}\\). Zweite Komponente: \\(6\\)."
+    },
+    {
+        id: 8, level: 2, typ: "mc",
+        frage: "Gegeben sind \\(A(2, -1, 3)\\) und \\(B(5, 2, 0)\\). Welche Geradengleichung beschreibt die Gerade durch \\(A\\) und \\(B\\)?",
+        optionen: [
+            "\\(\\vec{x} = \\begin{pmatrix} 2 \\\\ -1 \\\\ 3 \\end{pmatrix} + t \\begin{pmatrix} 3 \\\\ 3 \\\\ -3 \\end{pmatrix}\\)",
+            "\\(\\vec{x} = \\begin{pmatrix} 5 \\\\ 2 \\\\ 0 \\end{pmatrix} + t \\begin{pmatrix} 2 \\\\ -1 \\\\ 3 \\end{pmatrix}\\)",
+            "\\(\\vec{x} = \\begin{pmatrix} 3 \\\\ 3 \\\\ -3 \\end{pmatrix} + t \\begin{pmatrix} 2 \\\\ -1 \\\\ 3 \\end{pmatrix}\\)",
+            "\\(\\vec{x} = \\begin{pmatrix} 2 \\\\ -1 \\\\ 3 \\end{pmatrix} + t \\begin{pmatrix} 5 \\\\ 2 \\\\ 0 \\end{pmatrix}\\)"
+        ],
+        korrekt: 0,
+        tipp: "Stützvektor = Ortsvektor von \\(A\\). Richtungsvektor = \\(\\overrightarrow{AB} = B - A\\).",
+        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 3 \\\\ 3 \\\\ -3 \\end{pmatrix}\\). Geradengleichung: \\(\\vec{x} = \\begin{pmatrix} 2 \\\\ -1 \\\\ 3 \\end{pmatrix} + t \\begin{pmatrix} 3 \\\\ 3 \\\\ -3 \\end{pmatrix}\\)."
+    },
+    {
+        id: 9, level: 2, typ: "numerisch",
+        frage: "Gegeben sind \\(P(0, 4, -1)\\) und \\(Q(6, -2, 5)\\). Vereinfache den Richtungsvektor \\(\\overrightarrow{PQ}\\), indem du durch den GGT teilst. Wie lautet die erste Komponente des vereinfachten Richtungsvektors?",
+        loesung: 3, toleranz: 0,
+        tipp: "\\(\\overrightarrow{PQ} = \\begin{pmatrix} 6 \\\\ -6 \\\\ 6 \\end{pmatrix}\\). Der GGT ist 6, also teile durch 2 (oder 6, je nachdem ob du normierst).",
+        loesungsweg: "\\(\\overrightarrow{PQ} = \\begin{pmatrix} 6 \\\\ -6 \\\\ 6 \\end{pmatrix} = 2 \\cdot \\begin{pmatrix} 3 \\\\ -3 \\\\ 3 \\end{pmatrix}\\). Vereinfacht: \\(\\begin{pmatrix} 3 \\\\ -3 \\\\ 3 \\end{pmatrix}\\) (oder weiter \\(\\begin{pmatrix} 1 \\\\ -1 \\\\ 1 \\end{pmatrix}\\)). Erste Komponente: \\(3\\)."
+    },
+    {
+        id: 10, level: 2, typ: "numerisch",
+        frage: "Gegeben ist die Gerade \\(g\\) durch \\(A(1, 2, 3)\\) mit Richtungsvektor \\(\\vec{u} = \\begin{pmatrix} 2 \\\\ -1 \\\\ 4 \\end{pmatrix}\\). Welche \\(x_1\\)-Koordinate hat der Punkt auf \\(g\\) mit \\(x_2 = 0\\)?",
+        loesung: 5, toleranz: 0,
+        tipp: "Aus \\(x_2 = 2 + t \\cdot (-1) = 0\\) folgt \\(t = 2\\). Dann \\(x_1 = 1 + 2 \\cdot 2\\).",
+        loesungsweg: "\\(x_2 = 2 - t = 0 \\Rightarrow t = 2\\). \\(x_1 = 1 + 2 \\cdot 2 = 5\\)."
+    },
+    {
+        id: 11, level: 2, typ: "numerisch",
+        frage: "Die Gerade \\(g\\) geht durch \\(A(3, 1, -1)\\) und \\(B(7, 5, 3)\\). Berechne den Schnittpunkt von \\(g\\) mit der \\(x_1 x_2\\)-Ebene (\\(x_3 = 0\\)). Gib die \\(x_1\\)-Koordinate an.",
+        loesung: 4, toleranz: 0,
+        tipp: "Richtungsvektor: \\(\\overrightarrow{AB} = \\begin{pmatrix} 4 \\\\ 4 \\\\ 4 \\end{pmatrix}\\). Setze \\(x_3 = -1 + 4t = 0\\).",
+        loesungsweg: "\\(g: \\vec{x} = \\begin{pmatrix} 3 \\\\ 1 \\\\ -1 \\end{pmatrix} + t \\begin{pmatrix} 4 \\\\ 4 \\\\ 4 \\end{pmatrix}\\). Aus \\(x_3 = -1 + 4t = 0\\): \\(t = \\frac{1}{4}\\). \\(x_1 = 3 + 4 \\cdot \\frac{1}{4} = 3 + 1 = 4\\)."
+    },
+    {
+        id: 12, level: 2, typ: "mc",
+        frage: "Zwei Geraden haben denselben Stützpunkt aber verschiedene Richtungsvektoren. Was gilt?",
+        optionen: [
+            "Sie schneiden sich im Stützpunkt",
+            "Sie sind parallel",
+            "Sie sind identisch",
+            "Sie sind windschief"
+        ],
+        korrekt: 0,
+        tipp: "Wenn beide Geraden durch denselben Punkt gehen, haben sie mindestens diesen Punkt gemeinsam.",
+        loesungsweg: "Beide Geraden gehen durch den Stützpunkt. Da die Richtungsvektoren verschieden (und nicht kollinear) sind, schneiden sie sich genau in diesem Punkt."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 3 — Lagebeziehung zweier Geraden (parallel, identisch, Schnittpunkt)
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 13, level: 3, typ: "mc",
+        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 2 \\end{pmatrix} + t \\begin{pmatrix} 2 \\\\ 1 \\\\ -1 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 3 \\\\ 1 \\\\ 1 \\end{pmatrix} + s \\begin{pmatrix} 4 \\\\ 2 \\\\ -2 \\end{pmatrix}\\). Welche Lagebeziehung liegt vor?",
+        optionen: ["Identisch", "Echt parallel", "Schneidend", "Windschief"],
+        korrekt: 0,
+        tipp: "Prüfe zuerst: Sind die Richtungsvektoren kollinear? \\(\\begin{pmatrix} 4 \\\\ 2 \\\\ -2 \\end{pmatrix} = 2 \\cdot \\begin{pmatrix} 2 \\\\ 1 \\\\ -1 \\end{pmatrix}\\)? Dann: Liegt der Stützpunkt von \\(h\\) auf \\(g\\)?",
+        loesungsweg: "Richtungsvektoren kollinear: \\(\\begin{pmatrix} 4 \\\\ 2 \\\\ -2 \\end{pmatrix} = 2 \\cdot \\begin{pmatrix} 2 \\\\ 1 \\\\ -1 \\end{pmatrix}\\) \\(\\checkmark\\). Liegt \\((3,1,1)\\) auf \\(g\\)? \\(3 = 1 + 2t \\Rightarrow t = 1\\). Prüfe: \\(0 + 1 = 1\\) \\(\\checkmark\\), \\(2 - 1 = 1\\) \\(\\checkmark\\). Also identisch."
+    },
+    {
+        id: 14, level: 3, typ: "mc",
+        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix} + t \\begin{pmatrix} 1 \\\\ 0 \\\\ -1 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 0 \\\\ 5 \\\\ 0 \\end{pmatrix} + s \\begin{pmatrix} -2 \\\\ 0 \\\\ 2 \\end{pmatrix}\\). Welche Lagebeziehung?",
+        optionen: ["Echt parallel", "Identisch", "Schneidend", "Windschief"],
+        korrekt: 0,
+        tipp: "Sind die Richtungsvektoren kollinear? \\(\\begin{pmatrix} -2 \\\\ 0 \\\\ 2 \\end{pmatrix} = -2 \\cdot \\begin{pmatrix} 1 \\\\ 0 \\\\ -1 \\end{pmatrix}\\). Dann: Liegt \\((0,5,0)\\) auf \\(g\\)?",
+        loesungsweg: "Richtungsvektoren kollinear (Faktor \\(-2\\)). Liegt \\((0,5,0)\\) auf \\(g\\)? \\(0 = 1+t \\Rightarrow t = -1\\). \\(2 + 0 = 2 \\neq 5\\). Also nicht identisch, sondern echt parallel."
+    },
+    {
+        id: 15, level: 3, typ: "mc",
+        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} + t \\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix} + s \\begin{pmatrix} 0 \\\\ 1 \\\\ 1 \\end{pmatrix}\\). Welche Lagebeziehung?",
+        optionen: ["Windschief", "Parallel", "Identisch", "Schneidend"],
+        korrekt: 0,
+        tipp: "Richtungsvektoren nicht kollinear. Stelle das LGS auf: \\(1+t = 0\\), \\(t = 1+s\\), \\(0 = s\\).",
+        loesungsweg: "Nicht kollinear. LGS: (1) \\(1+t = 0\\), (2) \\(t = 1+s\\), (3) \\(0 = s\\). Aus (3): \\(s = 0\\). Aus (2): \\(t = 1\\). Probe in (1): \\(1+1 = 2 \\neq 0\\). Widerspruch \\(\\Rightarrow\\) windschief."
+    },
+    {
+        id: 16, level: 3, typ: "numerisch",
+        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 3 \\end{pmatrix} + t \\begin{pmatrix} 1 \\\\ 1 \\\\ -1 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 5 \\\\ 0 \\\\ -1 \\end{pmatrix} + s \\begin{pmatrix} -1 \\\\ 1 \\\\ 1 \\end{pmatrix}\\). Berechne den Parameter \\(t\\) des Schnittpunkts.",
+        loesung: 2, toleranz: 0,
+        tipp: "LGS: (1) \\(1+t = 5-s\\), (2) \\(t = s\\), (3) \\(3-t = -1+s\\). Aus (2) setze \\(s = t\\) ein.",
+        loesungsweg: "Aus (2): \\(s = t\\). In (1): \\(1+t = 5-t \\Rightarrow 2t = 4 \\Rightarrow t = 2\\), \\(s = 2\\). Probe in (3): \\(3-2 = 1\\) und \\(-1+2 = 1\\). \\(1 = 1\\) \\(\\checkmark\\). Schnittpunkt: \\((3, 2, 1)\\)."
+    },
+    {
+        id: 17, level: 3, typ: "mc",
+        frage: "Welche Lagebeziehungen sind für zwei Geraden im R³ möglich?",
+        optionen: [
+            "Identisch, echt parallel, schneidend, windschief",
+            "Identisch, parallel, schneidend",
+            "Parallel, schneidend, windschief",
+            "Nur schneidend oder parallel"
+        ],
+        korrekt: 0,
+        tipp: "Im R² gibt es nur parallel (inkl. identisch) und schneidend. Im R³ kommt eine vierte Möglichkeit hinzu.",
+        loesungsweg: "Im R³ gibt es vier Lagebeziehungen: identisch, echt parallel, schneidend und windschief (nicht parallel, kein Schnittpunkt)."
+    },
+    {
+        id: 18, level: 3, typ: "mc",
+        frage: "Wie erkennt man, ob zwei Geraden parallel sind?",
+        optionen: [
+            "Die Richtungsvektoren sind kollinear (Vielfache voneinander)",
+            "Die Stützvektoren sind gleich",
+            "Das Skalarprodukt der Richtungsvektoren ist 0",
+            "Die Geraden haben keinen Schnittpunkt"
+        ],
+        korrekt: 0,
+        tipp: "Parallelität hängt nur von den Richtungsvektoren ab, nicht von den Stützvektoren.",
+        loesungsweg: "Zwei Geraden sind parallel, wenn \\(\\vec{u}_1 = r \\cdot \\vec{u}_2\\) für ein \\(r \\in \\mathbb{R}\\). Ob sie zusätzlich identisch oder echt parallel sind, prüft man mit einem Punkt."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 4 — Schnittpunkt berechnen, Schnittwinkel
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 19, level: 4, typ: "numerisch",
+        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 2 \\end{pmatrix} + t \\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 3 \\\\ 4 \\\\ 2 \\end{pmatrix} + s \\begin{pmatrix} 1 \\\\ -1 \\\\ 0 \\end{pmatrix}\\). Berechne die \\(x_1\\)-Koordinate des Schnittpunkts.",
+        loesung: 4, toleranz: 0,
+        tipp: "Gleichsetzen: \\(1+t = 3+s\\), \\(t = 4-s\\), \\(2 = 2\\). Aus Zeile 2: \\(t = 4-s\\). In Zeile 1 einsetzen.",
+        loesungsweg: "Zeile 3: \\(2 = 2\\) \\(\\checkmark\\) (immer erfüllt). Zeile 2: \\(t = 4-s\\). In Zeile 1: \\(1 + 4-s = 3+s \\Rightarrow 5-s = 3+s \\Rightarrow 2 = 2s \\Rightarrow s = 1\\), \\(t = 3\\). Schnittpunkt: \\(\\begin{pmatrix} 1+3 \\\\ 3 \\\\ 2 \\end{pmatrix} = \\begin{pmatrix} 4 \\\\ 3 \\\\ 2 \\end{pmatrix}\\). \\(x_1 = 4\\)."
+    },
+    {
+        id: 20, level: 4, typ: "numerisch",
+        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 3 \\end{pmatrix} + t \\begin{pmatrix} 1 \\\\ 2 \\\\ -1 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 1 \\\\ 6 \\\\ -1 \\end{pmatrix} + s \\begin{pmatrix} 1 \\\\ -1 \\\\ 2 \\end{pmatrix}\\). Berechne die \\(x_2\\)-Koordinate des Schnittpunkts.",
+        loesung: 5, toleranz: 0,
+        tipp: "LGS: (1) \\(t = 1+s\\), (2) \\(1+2t = 6-s\\), (3) \\(3-t = -1+2s\\). Setze (1) in (2) ein.",
+        loesungsweg: "Aus (1): \\(t = 1+s\\). In (2): \\(1+2(1+s) = 6-s \\Rightarrow 3+2s = 6-s \\Rightarrow 3s = 3 \\Rightarrow s = 1\\), \\(t = 2\\). Probe in (3): \\(3-2 = 1\\) und \\(-1+2 = 1\\) \\(\\checkmark\\). Schnittpunkt: \\((2, 5, 1)\\). \\(x_2 = 5\\)."
+    },
+    {
+        id: 21, level: 4, typ: "numerisch",
+        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 3 \\\\ 0 \\end{pmatrix} + t \\begin{pmatrix} 2 \\\\ -1 \\\\ 1 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 7 \\\\ -1 \\\\ 4 \\end{pmatrix} + s \\begin{pmatrix} -1 \\\\ 1 \\\\ -1 \\end{pmatrix}\\). Berechne die \\(x_1\\)-Koordinate des Schnittpunkts.",
+        loesung: 5, toleranz: 0,
+        tipp: "LGS: (1) \\(1+2t = 7-s\\), (2) \\(3-t = -1+s\\), (3) \\(t = 4-s\\). Aus (3) folgt \\(s = 4-t\\). Setze in (1) ein.",
+        loesungsweg: "Aus (3): \\(s = 4-t\\). In (1): \\(1+2t = 7-(4-t) = 3+t \\Rightarrow t = 2\\), \\(s = 2\\). Probe in (2): \\(3-2 = 1\\) und \\(-1+2 = 1\\) \\(\\checkmark\\). Schnittpunkt: \\((5, 1, 2)\\). \\(x_1 = 5\\)."
+    },
+    {
+        id: 22, level: 4, typ: "numerisch",
+        frage: "Berechne den Schnittwinkel (in Grad) der Geraden mit Richtungsvektoren \\(\\vec{u} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\) und \\(\\vec{v} = \\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix}\\).",
+        loesung: 45, toleranz: 1,
+        tipp: "Schnittwinkel: \\(\\cos(\\alpha) = \\frac{|\\vec{u} \\cdot \\vec{v}|}{|\\vec{u}| \\cdot |\\vec{v}|}\\). Beachte den Betrag im Zähler!",
+        loesungsweg: "\\(\\vec{u} \\cdot \\vec{v} = 1\\). \\(|\\vec{u}| = 1\\), \\(|\\vec{v}| = \\sqrt{2}\\). \\(\\cos(\\alpha) = \\frac{1}{\\sqrt{2}}\\). \\(\\alpha = 45°\\)."
+    },
+    {
+        id: 23, level: 4, typ: "numerisch",
+        frage: "Berechne den Schnittwinkel (in Grad) zweier Geraden mit Richtungsvektoren \\(\\vec{u} = \\begin{pmatrix} 1 \\\\ 1 \\\\ 1 \\end{pmatrix}\\) und \\(\\vec{v} = \\begin{pmatrix} 1 \\\\ -1 \\\\ 0 \\end{pmatrix}\\). Runde auf ganze Grad.",
+        loesung: 90, toleranz: 1,
+        tipp: "\\(\\vec{u} \\cdot \\vec{v} = 1 - 1 + 0 = 0\\). Was bedeutet Skalarprodukt gleich 0?",
+        loesungsweg: "\\(\\vec{u} \\cdot \\vec{v} = 1 - 1 + 0 = 0\\). \\(\\cos(\\alpha) = 0\\). \\(\\alpha = 90°\\). Die Geraden stehen senkrecht aufeinander."
+    },
+    {
+        id: 24, level: 4, typ: "numerisch",
+        frage: "Berechne den Schnittwinkel (in Grad) der Geraden mit \\(\\vec{u} = \\begin{pmatrix} 2 \\\\ 1 \\\\ 0 \\end{pmatrix}\\) und \\(\\vec{v} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 2 \\end{pmatrix}\\). Runde auf ganze Grad.",
+        loesung: 78, toleranz: 1,
+        tipp: "Schnittwinkel: \\(\\cos(\\alpha) = \\frac{|\\vec{u} \\cdot \\vec{v}|}{|\\vec{u}| \\cdot |\\vec{v}|}\\). Berechne Skalarprodukt und Beträge.",
+        loesungsweg: "\\(\\vec{u} \\cdot \\vec{v} = 0 + 1 + 0 = 1\\). \\(|\\vec{u}| = \\sqrt{5}\\), \\(|\\vec{v}| = \\sqrt{5}\\). \\(\\cos(\\alpha) = \\frac{1}{5} = 0{,}2\\). \\(\\alpha = \\arccos(0{,}2) \\approx 78{,}5°\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 5 — Windschief erkennen und begründen
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 25, level: 5, typ: "mc",
+        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} + t \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix} + s \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\). Welche Lagebeziehung?",
+        optionen: ["Windschief", "Schneidend", "Parallel", "Identisch"],
+        korrekt: 0,
+        tipp: "Richtungsvektoren nicht kollinear (\\(\\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\) und \\(\\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\)). Löse das LGS: \\(1 = s\\), \\(t = 0\\), \\(0 = 1\\).",
+        loesungsweg: "LGS: (1) \\(1 = s\\), (2) \\(t = 0\\), (3) \\(0 = 1\\). Zeile 3 ist ein Widerspruch! Da die Richtungsvektoren nicht kollinear sind, sind die Geraden windschief."
+    },
+    {
+        id: 26, level: 5, typ: "mc",
+        frage: "Wann sind zwei Geraden windschief?",
+        optionen: [
+            "Nicht parallel und kein Schnittpunkt (nur im R³ möglich)",
+            "Parallel aber nicht identisch",
+            "Wenn das Skalarprodukt der Richtungsvektoren 0 ist",
+            "Wenn beide durch den Ursprung gehen"
+        ],
+        korrekt: 0,
+        tipp: "Windschiefe Geraden gibt es nur im R³ (nicht in der Ebene!). Sie sind weder parallel noch schneiden sie sich.",
+        loesungsweg: "Zwei Geraden sind windschief, wenn sie sich weder schneiden noch parallel zueinander sind. Dies ist nur im R³ (und höher) möglich, nicht im R²."
+    },
+    {
+        id: 27, level: 5, typ: "mc",
+        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 0 \\end{pmatrix} + t \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} + s \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\). Welche Lagebeziehung?",
+        optionen: ["Schneidend im Punkt \\((1, 2, 3)\\)", "Windschief", "Parallel", "Identisch"],
+        korrekt: 1,
+        tipp: "LGS: \\(t = 1\\), \\(2t = s\\), \\(3t = 0\\). Aus Zeile 3: \\(t = 0\\). Widerspruch zu Zeile 1!",
+        loesungsweg: "Richtungsvektoren nicht kollinear. LGS: (1) \\(t = 1\\), (3) \\(3t = 0 \\Rightarrow t = 0\\). Widerspruch \\(\\Rightarrow\\) kein Schnittpunkt. Da nicht parallel: windschief."
+    },
+    {
+        id: 28, level: 5, typ: "numerisch",
+        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix} + t \\begin{pmatrix} 1 \\\\ 1 \\\\ -1 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 4 \\\\ 1 \\\\ 4 \\end{pmatrix} + s \\begin{pmatrix} -1 \\\\ 1 \\\\ -1 \\end{pmatrix}\\). Berechne \\(t\\) für den Schnittpunkt (falls existent). Falls windschief, gib \\(-999\\) ein.",
+        loesung: 1, toleranz: 0,
+        tipp: "LGS: (1) \\(1+t = 4-s\\), (2) \\(2+t = 1+s\\), (3) \\(3-t = 4-s\\). Aus (3): \\(s = t+1\\). Setze in (1) ein.",
+        loesungsweg: "Aus (3): \\(s = t+1\\). In (1): \\(1+t = 4-(t+1) = 3-t \\Rightarrow 2t = 2 \\Rightarrow t = 1\\), \\(s = 2\\). Probe in (2): \\(2+1 = 3\\) und \\(1+2 = 3\\) \\(\\checkmark\\). Schnittpunkt: \\((2, 3, 2)\\). \\(t = 1\\)."
+    },
+    {
+        id: 29, level: 5, typ: "mc",
+        frage: "Die \\(x_1\\)-Achse und die Gerade \\(h: \\vec{x} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix} + s \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}\\) sind:",
+        optionen: ["Windschief", "Parallel", "Schneidend", "Identisch"],
+        korrekt: 0,
+        tipp: "Die \\(x_1\\)-Achse: \\(g: \\vec{x} = t \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\). Richtungsvektoren \\(\\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\) und \\(\\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}\\): kollinear?",
+        loesungsweg: "Richtungsvektoren nicht kollinear. LGS: (1) \\(t = 0\\), (2) \\(0 = 1\\). Widerspruch in Zeile 2 \\(\\Rightarrow\\) windschief. Die \\(x_1\\)-Achse und \\(h\\) liegen in verschiedenen parallelen Ebenen."
+    },
+    {
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} + t \\begin{pmatrix} 1 \\\\ 1 \\\\ 1 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 0 \\\\ 2 \\\\ 0 \\end{pmatrix} + s \\begin{pmatrix} 2 \\\\ -1 \\\\ 1 \\end{pmatrix}\\). Berechne \\(t\\) für den Schnittpunkt.",
+        loesung: 1, toleranz: 0,
+        tipp: "LGS: (1) \\(1+t = 2s\\), (2) \\(t = 2-s\\), (3) \\(t = s\\). Aus (3) und (2): \\(s = 2-s \\Rightarrow s = 1\\).",
+        loesungsweg: "Aus (3): \\(t = s\\). In (2): \\(s = 2-s \\Rightarrow 2s = 2 \\Rightarrow s = 1\\), \\(t = 1\\). Probe in (1): \\(1+1 = 2 = 2 \\cdot 1\\) \\(\\checkmark\\). Schnittpunkt für \\(t = 1\\): \\(\\begin{pmatrix} 2 \\\\ 1 \\\\ 1 \\end{pmatrix}\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 6 — Abstand windschiefer Geraden, Lotfußpunkt
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 31, level: 6, typ: "numerisch",
+        frage: "Berechne den Abstand der windschiefen Geraden \\(g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} + t \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix} + s \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\).",
+        loesung: 1, toleranz: 0,
+        tipp: "Formel: \\(d = \\frac{|\\overrightarrow{P_1P_2} \\cdot (\\vec{u}_1 \\times \\vec{u}_2)|}{|\\vec{u}_1 \\times \\vec{u}_2|}\\). Berechne zuerst das Kreuzprodukt der Richtungsvektoren.",
+        loesungsweg: "\\(\\vec{u}_1 \\times \\vec{u}_2 = \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix} \\times \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} = \\begin{pmatrix} 0 \\\\ 0 \\\\ -1 \\end{pmatrix}\\). \\(\\overrightarrow{P_1 P_2} = \\begin{pmatrix} -1 \\\\ 0 \\\\ 1 \\end{pmatrix}\\). \\(d = \\frac{|(-1)(0) + (0)(0) + (1)(-1)|}{1} = \\frac{|-1|}{1} = 1\\)."
+    },
+    {
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Berechne den Abstand der parallelen Geraden \\(g: \\vec{x} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 0 \\end{pmatrix} + t \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 0 \\\\ 3 \\\\ 4 \\end{pmatrix} + s \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\).",
+        loesung: 5, toleranz: 0,
+        tipp: "Bei parallelen Geraden: Verbindungsvektor \\(\\overrightarrow{P_1P_2}\\) berechnen, dann den Anteil senkrecht zum Richtungsvektor bestimmen: \\(d = \\frac{|\\overrightarrow{P_1P_2} \\times \\vec{u}|}{|\\vec{u}|}\\).",
+        loesungsweg: "\\(\\overrightarrow{P_1P_2} = \\begin{pmatrix} 0 \\\\ 3 \\\\ 4 \\end{pmatrix}\\). \\(\\overrightarrow{P_1P_2} \\times \\vec{u} = \\begin{pmatrix} 0 \\\\ 3 \\\\ 4 \\end{pmatrix} \\times \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} = \\begin{pmatrix} 0 \\\\ 4 \\\\ -3 \\end{pmatrix}\\). \\(d = \\frac{\\sqrt{0+16+9}}{1} = \\sqrt{25} = 5\\)."
+    },
+    {
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix} + t \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\) und der Punkt \\(P(1, 5, 7)\\). Berechne den Abstand von \\(P\\) zu \\(g\\).",
+        loesung: 5, toleranz: 0,
+        tipp: "Lotfußpunkt: Der nächste Punkt auf \\(g\\) zu \\(P\\). Da \\(g\\) parallel zur \\(x_1\\)-Achse verläuft, ändert sich nur \\(x_1\\). Der Lotfußpunkt hat \\(x_2 = 2\\) und \\(x_3 = 3\\).",
+        loesungsweg: "Lotfußpunkt \\(F\\) auf \\(g\\): \\(F = (1, 2, 3)\\) (für \\(t = 0\\), da die \\(x_1\\)-Koordinate keinen Einfluss auf den Abstand hat). \\(\\overrightarrow{FP} = \\begin{pmatrix} 0 \\\\ 3 \\\\ 4 \\end{pmatrix}\\). \\(d = \\sqrt{0+9+16} = 5\\)."
+    },
+    {
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Berechne den Abstand der windschiefen Geraden \\(g: \\vec{x} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 0 \\end{pmatrix} + t \\begin{pmatrix} 1 \\\\ 0 \\\\ 1 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 0 \\end{pmatrix} + s \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\). Runde auf zwei Dezimalstellen.",
+        loesung: 0.71, toleranz: 0.02,
+        tipp: "Kreuzprodukt: \\(\\begin{pmatrix} 1 \\\\ 0 \\\\ 1 \\end{pmatrix} \\times \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix} = \\begin{pmatrix} -1 \\\\ 0 \\\\ 1 \\end{pmatrix}\\).",
+        loesungsweg: "\\(\\vec{u}_1 \\times \\vec{u}_2 = \\begin{pmatrix} 0 \\cdot 0 - 1 \\cdot 1 \\\\ 1 \\cdot 0 - 1 \\cdot 0 \\\\ 1 \\cdot 1 - 0 \\cdot 0 \\end{pmatrix} = \\begin{pmatrix} -1 \\\\ 0 \\\\ 1 \\end{pmatrix}\\). \\(\\overrightarrow{P_1P_2} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 0 \\end{pmatrix}\\). \\(d = \\frac{|(-1)(1) + 0 \\cdot 2 + 1 \\cdot 0|}{\\sqrt{1+0+1}} = \\frac{1}{\\sqrt{2}} \\approx 0{,}71\\)."
+    },
+    {
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 2 \\\\ 1 \\\\ 0 \\end{pmatrix} + t \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\). Bestimme den Lotfußpunkt \\(F\\) von \\(P(5, 4, 0)\\) auf \\(g\\). Gib die \\(x_1\\)-Koordinate von \\(F\\) an.",
+        loesung: 5, toleranz: 0,
+        tipp: "Setze \\(F = A + t \\cdot \\vec{u}\\) und nutze die Bedingung \\(\\overrightarrow{FP} \\cdot \\vec{u} = 0\\), um \\(t\\) zu bestimmen.",
+        loesungsweg: "\\(F = \\begin{pmatrix} 2+t \\\\ 1 \\\\ 0 \\end{pmatrix}\\). \\(\\overrightarrow{FP} = \\begin{pmatrix} 5-2-t \\\\ 3 \\\\ 0 \\end{pmatrix} = \\begin{pmatrix} 3-t \\\\ 3 \\\\ 0 \\end{pmatrix}\\). Bedingung: \\(\\overrightarrow{FP} \\cdot \\vec{u} = 0\\): \\((3-t) \\cdot 1 + 3 \\cdot 0 + 0 \\cdot 0 = 3-t = 0 \\Rightarrow t = 3\\). \\(F = (5, 1, 0)\\). \\(x_1 = 5\\)."
+    },
+    {
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Berechne den Abstand der windschiefen Geraden \\(g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} + t \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 0 \\\\ 3 \\\\ 0 \\end{pmatrix} + s \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\).",
+        loesung: 3, toleranz: 0,
+        tipp: "Kreuzprodukt der Richtungsvektoren: \\(\\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix} \\times \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\).",
+        loesungsweg: "\\(\\vec{n} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix} \\times \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\). \\(\\overrightarrow{P_1P_2} = \\begin{pmatrix} -1 \\\\ 3 \\\\ 0 \\end{pmatrix}\\). \\(d = \\frac{|0 \\cdot (-1) + 1 \\cdot 3 + 0 \\cdot 0|}{1} = 3\\)."
+    }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

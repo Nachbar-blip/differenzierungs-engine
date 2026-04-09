@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kurvendiskussion - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '11-analysis-kurvendiskussion';
+    const THEMA_CONFIG = { name: 'Kurvendiskussion', bereich: 'analysis' };
+    const AUFGABEN = [
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 1 — babyleicht (IDs 1–6)
+      // Einfache Eigenschaften: Symmetrie, Nullstellenanzahl, Grad
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 1,
+        level: 1,
+        typ: 'mc',
+        frage: 'Ist die Funktion \\(f(x) = x^3\\) achsensymmetrisch oder punktsymmetrisch zum Ursprung?',
+        optionen: [
+          'Achsensymmetrisch zur \\(y\\)-Achse',
+          'Punktsymmetrisch zum Ursprung',
+          'Weder noch',
+          'Beides gleichzeitig'
+        ],
+        korrekt: 1,
+        tipp: 'Prüfe: Gilt \\(f(-x) = -f(x)\\) oder \\(f(-x) = f(x)\\)?',
+        loesungsweg: '\\(f(-x) = (-x)^3 = -x^3 = -f(x)\\). Da \\(f(-x) = -f(x)\\), ist \\(f\\) punktsymmetrisch zum Ursprung.'
+      },
+      {
+        id: 2,
+        level: 1,
+        typ: 'numerisch',
+        frage: 'Wie viele Nullstellen hat die Funktion \\(f(x) = x^2 - 4\\)?',
+        loesung: 2,
+        toleranz: 0,
+        tipp: 'Setze \\(f(x) = 0\\) und löse nach \\(x\\) auf.',
+        loesungsweg: '\\(x^2 - 4 = 0 \\Rightarrow x^2 = 4 \\Rightarrow x_1 = -2,\\; x_2 = 2\\). Also 2 Nullstellen.'
+      },
+      {
+        id: 3,
+        level: 1,
+        typ: 'mc',
+        frage: 'Welche Symmetrieeigenschaft hat \\(f(x) = x^4 - 2x^2\\)?',
+        optionen: [
+          'Punktsymmetrisch zum Ursprung',
+          'Achsensymmetrisch zur \\(y\\)-Achse',
+          'Keine Symmetrie',
+          'Symmetrisch zur \\(x\\)-Achse'
+        ],
+        korrekt: 1,
+        tipp: 'Alle Exponenten sind gerade. Was bedeutet das für \\(f(-x)\\)?',
+        loesungsweg: '\\(f(-x) = (-x)^4 - 2(-x)^2 = x^4 - 2x^2 = f(x)\\). Alle Exponenten gerade \\(\\Rightarrow\\) achsensymmetrisch zur \\(y\\)-Achse.'
+      },
+      {
+        id: 4,
+        level: 1,
+        typ: 'numerisch',
+        frage: 'Bestimme den \\(y\\)-Achsenabschnitt von \\(f(x) = 2x^3 - x^2 + 5\\).',
+        loesung: 5,
+        toleranz: 0,
+        tipp: 'Der \\(y\\)-Achsenabschnitt ist der Funktionswert bei \\(x = 0\\).',
+        loesungsweg: '\\(f(0) = 2 \\cdot 0^3 - 0^2 + 5 = 5\\). Der \\(y\\)-Achsenabschnitt ist \\(5\\).'
+      },
+      {
+        id: 5,
+        level: 1,
+        typ: 'mc',
+        frage: 'Was ist der Definitionsbereich der Funktion \\(f(x) = x^3 - 3x + 1\\)?',
+        optionen: [
+          '\\(D = \\mathbb{R}\\)',
+          '\\(D = \\mathbb{R} \\setminus \\{0\\}\\)',
+          '\\(D = [0, \\infty)\\)',
+          '\\(D = (-\\infty, 0]\\)'
+        ],
+        korrekt: 0,
+        tipp: 'Ganzrationale Funktionen (Polynome) sind überall definiert.',
+        loesungsweg: 'Polynomfunktionen sind für alle reellen Zahlen definiert, also \\(D = \\mathbb{R}\\).'
+      },
+      {
+        id: 6,
+        level: 1,
+        typ: 'mc',
+        frage: 'Wie verhält sich \\(f(x) = -2x^4 + x^2\\) für \\(x \\to \\pm\\infty\\)?',
+        optionen: [
+          '\\(f(x) \\to +\\infty\\)',
+          '\\(f(x) \\to -\\infty\\)',
+          '\\(f(x) \\to +\\infty\\) für \\(x \\to +\\infty\\) und \\(f(x) \\to -\\infty\\) für \\(x \\to -\\infty\\)',
+          '\\(f(x) \\to 0\\)'
+        ],
+        korrekt: 1,
+        tipp: 'Der führende Koeffizient ist negativ und der Grad gerade. Was passiert dann?',
+        loesungsweg: 'Grad 4 (gerade) mit negativem Leitkoeffizienten \\(-2\\): Für \\(x \\to \\pm\\infty\\) gilt \\(f(x) \\to -\\infty\\).'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 2 — leicht (IDs 7–12)
+      // Nullstellen, Symmetrie, y-Achsenabschnitt berechnen
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 7,
+        level: 2,
+        typ: 'numerisch',
+        frage: 'Bestimme die positive Nullstelle von \\(f(x) = x^2 - 5x + 6\\).',
+        loesung: 3,
+        toleranz: 0,
+        tipp: 'Faktorisiere: \\(x^2 - 5x + 6 = (x - ?)(x - ?)\\).',
+        loesungsweg: '\\(x^2 - 5x + 6 = (x-2)(x-3) = 0 \\Rightarrow x_1 = 2,\\; x_2 = 3\\). Die größere positive Nullstelle ist \\(x = 3\\).'
+      },
+      {
+        id: 8,
+        level: 2,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^3 - 4x\\). Bestimme die Anzahl der Nullstellen.',
+        loesung: 3,
+        toleranz: 0,
+        tipp: 'Klammere \\(x\\) aus: \\(f(x) = x(x^2 - 4)\\).',
+        loesungsweg: '\\(f(x) = x(x^2 - 4) = x(x-2)(x+2) = 0\\). Nullstellen: \\(x_1 = -2,\\; x_2 = 0,\\; x_3 = 2\\). Also 3 Nullstellen.'
+      },
+      {
+        id: 9,
+        level: 2,
+        typ: 'mc',
+        frage: 'Welche Symmetrieeigenschaft hat \\(f(x) = x^3 - 4x\\)?',
+        optionen: [
+          'Achsensymmetrisch zur \\(y\\)-Achse',
+          'Punktsymmetrisch zum Ursprung',
+          'Keine Symmetrie',
+          'Achsensymmetrisch zu \\(x = 2\\)'
+        ],
+        korrekt: 1,
+        tipp: 'Berechne \\(f(-x)\\) und vergleiche mit \\(-f(x)\\).',
+        loesungsweg: '\\(f(-x) = (-x)^3 - 4(-x) = -x^3 + 4x = -(x^3 - 4x) = -f(x)\\). Also punktsymmetrisch zum Ursprung.'
+      },
+      {
+        id: 10,
+        level: 2,
+        typ: 'numerisch',
+        frage: 'Berechne den Funktionswert von \\(f(x) = x^3 - 6x^2 + 11x - 6\\) an der Stelle \\(x = 1\\).',
+        loesung: 0,
+        toleranz: 0,
+        tipp: 'Setze \\(x = 1\\) direkt in die Funktion ein.',
+        loesungsweg: '\\(f(1) = 1 - 6 + 11 - 6 = 0\\). Also ist \\(x = 1\\) eine Nullstelle.'
+      },
+      {
+        id: 11,
+        level: 2,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^3 - 6x^2 + 11x - 6\\). Du weißt, dass \\(x = 1\\) eine Nullstelle ist. Führe Polynomdivision durch und bestimme die größte Nullstelle.',
+        loesung: 3,
+        toleranz: 0,
+        tipp: '\\((x^3 - 6x^2 + 11x - 6) : (x - 1) = x^2 - 5x + 6\\). Faktorisiere das Ergebnis.',
+        loesungsweg: 'Polynomdivision: \\((x^3 - 6x^2 + 11x - 6) : (x-1) = x^2 - 5x + 6 = (x-2)(x-3)\\). Nullstellen: \\(x_1=1, x_2=2, x_3=3\\). Größte: \\(x=3\\).'
+      },
+      {
+        id: 12,
+        level: 2,
+        typ: 'mc',
+        frage: 'Wie verhält sich \\(f(x) = x^3 - 3x\\) für \\(x \\to +\\infty\\)?',
+        optionen: [
+          '\\(f(x) \\to +\\infty\\)',
+          '\\(f(x) \\to -\\infty\\)',
+          '\\(f(x) \\to 0\\)',
+          '\\(f(x)\\) oszilliert'
+        ],
+        korrekt: 0,
+        tipp: 'Der führende Term ist \\(x^3\\) mit positivem Koeffizient.',
+        loesungsweg: 'Grad 3 (ungerade), Leitkoeffizient \\(+1 > 0\\): Für \\(x \\to +\\infty\\) gilt \\(f(x) \\to +\\infty\\).'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 3 — mittel (IDs 13–18)
+      // Standard-Kurvendiskussion: Nullstellen, Extrema, Wendepunkte
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 13,
+        level: 3,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^3 - 3x\\). Bestimme die \\(x\\)-Koordinate des lokalen Hochpunkts.',
+        loesung: -1,
+        toleranz: 0,
+        tipp: 'Berechne \\(f\'(x) = 0\\) und prüfe mit \\(f\'\'(x)\\), welche Stelle ein Hochpunkt ist.',
+        loesungsweg: '\\(f\'(x) = 3x^2 - 3 = 0 \\Rightarrow x = \\pm 1\\). \\(f\'\'(x) = 6x\\). \\(f\'\'(-1) = -6 < 0 \\Rightarrow\\) Hochpunkt bei \\(x = -1\\).'
+      },
+      {
+        id: 14,
+        level: 3,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^3 - 3x\\). Berechne den \\(y\\)-Wert des lokalen Hochpunkts.',
+        loesung: 2,
+        toleranz: 0,
+        tipp: 'Setze die \\(x\\)-Koordinate des Hochpunkts in \\(f(x)\\) ein.',
+        loesungsweg: 'Hochpunkt bei \\(x = -1\\): \\(f(-1) = (-1)^3 - 3(-1) = -1 + 3 = 2\\). Der Hochpunkt ist \\((-1 \\mid 2)\\).'
+      },
+      {
+        id: 15,
+        level: 3,
+        typ: 'numerisch',
+        frage: 'Bestimme die \\(x\\)-Koordinate des Wendepunkts von \\(f(x) = x^3 - 3x\\).',
+        loesung: 0,
+        toleranz: 0,
+        tipp: 'Setze \\(f\'\'(x) = 0\\).',
+        loesungsweg: '\\(f\'\'(x) = 6x = 0 \\Rightarrow x = 0\\). \\(f\'\'\'(x) = 6 \\neq 0\\), also liegt bei \\(x = 0\\) ein Wendepunkt vor.'
+      },
+      {
+        id: 16,
+        level: 3,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^3 - 12x + 2\\). Berechne den \\(y\\)-Wert des Tiefpunkts.',
+        loesung: -14,
+        toleranz: 0,
+        tipp: '\\(f\'(x) = 3x^2 - 12 = 0 \\Rightarrow x = \\pm 2\\). Welche Stelle ist der Tiefpunkt?',
+        loesungsweg: '\\(f\'(x) = 3x^2 - 12 = 0 \\Rightarrow x = \\pm 2\\). \\(f\'\'(x) = 6x\\). \\(f\'\'(2) = 12 > 0 \\Rightarrow\\) Tiefpunkt bei \\(x = 2\\). \\(f(2) = 8 - 24 + 2 = -14\\).'
+      },
+      {
+        id: 17,
+        level: 3,
+        typ: 'mc',
+        frage: 'Gegeben ist \\(f(x) = x^3 - 3x^2\\). Welche Aussage über die Nullstellen ist korrekt?',
+        optionen: [
+          '\\(f\\) hat genau eine Nullstelle',
+          '\\(f\\) hat genau zwei Nullstellen: \\(x = 0\\) und \\(x = 3\\)',
+          '\\(f\\) hat drei verschiedene Nullstellen',
+          '\\(f\\) hat keine Nullstellen'
+        ],
+        korrekt: 1,
+        tipp: 'Klammere aus: \\(f(x) = x^2(x - 3)\\). Wie viele verschiedene Nullstellen gibt es?',
+        loesungsweg: '\\(f(x) = x^2(x - 3) = 0 \\Rightarrow x_1 = 0\\) (doppelt) und \\(x_2 = 3\\). Zwei verschiedene Nullstellen.'
+      },
+      {
+        id: 18,
+        level: 3,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^3 - 3x^2\\). An welcher Stelle \\(x\\) liegt der Wendepunkt?',
+        loesung: 1,
+        toleranz: 0,
+        tipp: '\\(f\'\'(x) = 6x - 6\\). Setze gleich Null.',
+        loesungsweg: '\\(f\'(x) = 3x^2 - 6x\\), \\(f\'\'(x) = 6x - 6 = 0 \\Rightarrow x = 1\\). \\(f\'\'\'(x) = 6 \\neq 0\\), also Wendepunkt bei \\(x = 1\\).'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 4 — anspruchsvoll (IDs 19–24)
+      // Vollständige Analyse von Polynomen 3. und 4. Grades
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 19,
+        level: 4,
+        typ: 'numerisch',
+        frage: 'Führe eine Kurvendiskussion von \\(f(x) = x^4 - 8x^2\\) durch. Wie viele Extremstellen hat \\(f\\)?',
+        loesung: 3,
+        toleranz: 0,
+        tipp: '\\(f\'(x) = 4x^3 - 16x = 4x(x^2 - 4)\\). Wie viele Lösungen hat \\(f\'(x) = 0\\)?',
+        loesungsweg: '\\(f\'(x) = 4x^3 - 16x = 4x(x-2)(x+2) = 0 \\Rightarrow x_1 = -2,\\; x_2 = 0,\\; x_3 = 2\\). Also 3 Extremstellen.'
+      },
+      {
+        id: 20,
+        level: 4,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^4 - 8x^2\\). Berechne den \\(y\\)-Wert des Hochpunkts.',
+        loesung: 0,
+        toleranz: 0,
+        tipp: 'Prüfe mit \\(f\'\'(x)\\), welche der drei Extremstellen ein Hochpunkt ist.',
+        loesungsweg: '\\(f\'\'(x) = 12x^2 - 16\\). \\(f\'\'(0) = -16 < 0 \\Rightarrow\\) Hochpunkt bei \\(x = 0\\). \\(f(0) = 0\\).'
+      },
+      {
+        id: 21,
+        level: 4,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^4 - 8x^2\\). Bestimme den \\(y\\)-Wert der Tiefpunkte.',
+        loesung: -16,
+        toleranz: 0,
+        tipp: '\\(f\'\'(\\pm 2) = 12 \\cdot 4 - 16 = 32 > 0\\). Setze \\(x = 2\\) in \\(f(x)\\) ein.',
+        loesungsweg: '\\(f\'\'(2) = 48 - 16 = 32 > 0 \\Rightarrow\\) Tiefpunkt. \\(f(2) = 16 - 32 = -16\\). Wegen Symmetrie: \\(f(-2) = -16\\) ebenfalls.'
+      },
+      {
+        id: 22,
+        level: 4,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^3 - 6x^2 + 9x\\). Berechne die \\(x\\)-Koordinate des Hochpunkts.',
+        loesung: 1,
+        toleranz: 0,
+        tipp: '\\(f\'(x) = 3x^2 - 12x + 9 = 3(x^2 - 4x + 3) = 3(x-1)(x-3)\\).',
+        loesungsweg: '\\(f\'(x) = 3(x-1)(x-3) = 0 \\Rightarrow x_1 = 1,\\; x_2 = 3\\). \\(f\'\'(x) = 6x - 12\\). \\(f\'\'(1) = -6 < 0 \\Rightarrow\\) Hochpunkt bei \\(x = 1\\).'
+      },
+      {
+        id: 23,
+        level: 4,
+        typ: 'mc',
+        frage: 'Gegeben ist \\(f(x) = x^4 - 8x^2\\). Wie viele Wendepunkte hat \\(f\\)?',
+        optionen: [
+          '0',
+          '1',
+          '2',
+          '3'
+        ],
+        korrekt: 2,
+        tipp: '\\(f\'\'(x) = 12x^2 - 16 = 0\\). Wie viele Lösungen gibt es?',
+        loesungsweg: '\\(f\'\'(x) = 12x^2 - 16 = 0 \\Rightarrow x^2 = \\frac{4}{3} \\Rightarrow x = \\pm\\frac{2}{\\sqrt{3}}\\). \\(f\'\'\'(x) = 24x \\neq 0\\) an beiden Stellen. Also 2 Wendepunkte.'
+      },
+      {
+        id: 24,
+        level: 4,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^3 - 6x^2 + 9x\\). Bestimme den \\(y\\)-Wert des Tiefpunkts.',
+        loesung: 0,
+        toleranz: 0,
+        tipp: 'Der Tiefpunkt liegt bei \\(x = 3\\). Setze ein.',
+        loesungsweg: '\\(f\'\'(3) = 18 - 12 = 6 > 0 \\Rightarrow\\) Tiefpunkt bei \\(x = 3\\). \\(f(3) = 27 - 54 + 27 = 0\\).'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 5 — schwer (IDs 25–30)
+      // Zusammenhang Graph↔Ableitung, mehrere Eigenschaften
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 25,
+        level: 5,
+        typ: 'mc',
+        frage: 'Gegeben ist \\(f(x) = x^4 - 4x^3 + 4x^2\\). Welche Aussage ist richtig?',
+        optionen: [
+          '\\(f\\) hat bei \\(x = 0\\) einen Tiefpunkt und bei \\(x = 2\\) einen Tiefpunkt',
+          '\\(f\\) hat bei \\(x = 0\\) einen Hochpunkt und bei \\(x = 2\\) einen Tiefpunkt',
+          '\\(f\\) hat bei \\(x = 0\\) einen Tiefpunkt und bei \\(x = 2\\) eine doppelte Nullstelle mit Tiefpunkt',
+          '\\(f\\) hat bei \\(x = 0\\) einen Tiefpunkt, bei \\(x = 1\\) einen Hochpunkt und bei \\(x = 2\\) einen Tiefpunkt'
+        ],
+        korrekt: 3,
+        tipp: '\\(f(x) = x^2(x-2)^2\\). Berechne \\(f\'(x)\\) und alle kritischen Stellen.',
+        loesungsweg: '\\(f\'(x) = 4x^3 - 12x^2 + 8x = 4x(x^2-3x+2) = 4x(x-1)(x-2)\\). Nullstellen bei \\(x=0,1,2\\). \\(f\'\'(x)=12x^2-24x+8\\). \\(f\'\'(0)=8>0\\) (TP), \\(f\'\'(1)=-4<0\\) (HP), \\(f\'\'(2)=8>0\\) (TP).'
+      },
+      {
+        id: 26,
+        level: 5,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = \\frac{1}{4}x^4 - 2x^2\\). Bestimme die Summe aller \\(x\\)-Koordinaten der Extremstellen.',
+        loesung: 0,
+        toleranz: 0,
+        tipp: '\\(f\'(x) = x^3 - 4x = x(x^2-4) = 0\\). Nutze die Symmetrie.',
+        loesungsweg: '\\(f\'(x) = x^3 - 4x = x(x-2)(x+2) = 0\\). Extremstellen bei \\(x = -2, 0, 2\\). Summe: \\(-2 + 0 + 2 = 0\\).'
+      },
+      {
+        id: 27,
+        level: 5,
+        typ: 'mc',
+        frage: 'Der Graph von \\(f\'(x)\\) schneidet die \\(x\\)-Achse an den Stellen \\(x = -1\\) und \\(x = 3\\) und hat bei \\(x = 1\\) ein Minimum. Was gilt für \\(f\\)?',
+        optionen: [
+          '\\(f\\) hat bei \\(x = 1\\) einen Wendepunkt',
+          '\\(f\\) hat bei \\(x = -1\\) und \\(x = 3\\) Wendepunkte',
+          '\\(f\\) hat bei \\(x = -1\\) einen Hochpunkt und bei \\(x = 3\\) einen Tiefpunkt',
+          '\\(f\\) hat bei \\(x = 1\\) ein Extremum'
+        ],
+        korrekt: 0,
+        tipp: 'Ein Minimum von \\(f\'\\) bedeutet \\(f\'\'(1) = 0\\) und \\(f\' \\) wechselt von fallend zu steigend. Was bedeutet das für \\(f\\)?',
+        loesungsweg: 'Das Minimum von \\(f\'\\) bei \\(x=1\\) bedeutet \\(f\'\'(1)=0\\) mit Vorzeichenwechsel von \\(f\'\'\\) (\\(-\\) zu \\(+\\)). Also hat \\(f\\) bei \\(x=1\\) einen Wendepunkt (Rechts-Links-Wendepunkt).'
+      },
+      {
+        id: 28,
+        level: 5,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = 2x^3 - 9x^2 + 12x - 4\\). Bestimme die Differenz der \\(y\\)-Werte von Hoch- und Tiefpunkt.',
+        loesung: 1,
+        toleranz: 0,
+        tipp: '\\(f\'(x) = 6x^2 - 18x + 12 = 6(x-1)(x-2)\\). Berechne \\(f(1)\\) und \\(f(2)\\).',
+        loesungsweg: '\\(f\'(x) = 6(x-1)(x-2) = 0 \\Rightarrow x_1=1, x_2=2\\). \\(f\'\'(x)=12x-18\\). \\(f\'\'(1)=-6<0\\) (HP), \\(f\'\'(2)=6>0\\) (TP). \\(f(1) = 2-9+12-4 = 1\\), \\(f(2) = 16-36+24-4 = 0\\). Differenz: \\(1-0=1\\).'
+      },
+      {
+        id: 29,
+        level: 5,
+        typ: 'mc',
+        frage: 'Gegeben ist \\(f(x) = x^3 - 3x^2 + 3x - 1\\). Welche besondere Eigenschaft hat \\(f\\) bei \\(x = 1\\)?',
+        optionen: [
+          'Hochpunkt',
+          'Tiefpunkt',
+          'Sattelpunkt (Terrassenpunkt)',
+          'Wendepunkt ohne Satteleigenschaft'
+        ],
+        korrekt: 2,
+        tipp: 'Berechne \\(f\'(1)\\), \\(f\'\'(1)\\) und \\(f\'\'\'(1)\\). Was fällt auf?',
+        loesungsweg: '\\(f(x) = (x-1)^3\\). \\(f\'(x) = 3(x-1)^2\\), \\(f\'(1) = 0\\). \\(f\'\'(x) = 6(x-1)\\), \\(f\'\'(1) = 0\\). Kein VZW von \\(f\'\\) bei \\(x=1\\) \\(\\Rightarrow\\) kein Extremum. Es ist ein Sattelpunkt (Terrassenpunkt).'
+      },
+      {
+        id: 30,
+        level: 5,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^4 - 4x^3 + 6x^2 - 4x\\). Bestimme die Anzahl der lokalen Extremstellen.',
+        loesung: 1,
+        toleranz: 0,
+        tipp: '\\(f\'(x) = 4x^3 - 12x^2 + 12x - 4 = 4(x-1)^3\\). Wie viele Nullstellen mit VZW hat \\(f\'\\)?',
+        loesungsweg: '\\(f\'(x) = 4(x-1)^3 = 0 \\Rightarrow x = 1\\) (dreifach). Da \\(f\'\\) eine ungerade Potenz hat, wechselt \\(f\'\\) das Vorzeichen bei \\(x=1\\). \\(f\'(0) = -4 < 0\\), \\(f\'(2) = 4 > 0\\) \\(\\Rightarrow\\) Tiefpunkt bei \\(x = 1\\). Also 1 Extremstelle.'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 6 — Experte (IDs 31–36)
+      // e-Funktionen, parameterabhängige Analyse, vollständige KD
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 31,
+        level: 6,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = (x^2 - 1) \\cdot e^{-x}\\). Bestimme die Anzahl der Nullstellen.',
+        loesung: 2,
+        toleranz: 0,
+        tipp: '\\(e^{-x} > 0\\) für alle \\(x\\). Wann wird \\(x^2 - 1 = 0\\)?',
+        loesungsweg: '\\(f(x) = 0 \\Leftrightarrow x^2 - 1 = 0\\) (da \\(e^{-x} \\neq 0\\)). \\(x^2 = 1 \\Rightarrow x = \\pm 1\\). Also 2 Nullstellen.'
+      },
+      {
+        id: 32,
+        level: 6,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x \\cdot e^{-x}\\). Bestimme die \\(x\\)-Koordinate des Hochpunkts.',
+        loesung: 1,
+        toleranz: 0,
+        tipp: 'Produktregel: \\(f\'(x) = e^{-x} + x \\cdot (-e^{-x}) = e^{-x}(1 - x)\\).',
+        loesungsweg: '\\(f\'(x) = e^{-x}(1-x) = 0 \\Rightarrow x = 1\\) (da \\(e^{-x} \\neq 0\\)). \\(f\'\'(x) = e^{-x}(x-2)\\). \\(f\'\'(1) = e^{-1}(-1) < 0 \\Rightarrow\\) Hochpunkt bei \\(x = 1\\).'
+      },
+      {
+        id: 33,
+        level: 6,
+        typ: 'mc',
+        frage: 'Gegeben ist \\(f(x) = x \\cdot e^{-x}\\). Wie verhält sich \\(f\\) für \\(x \\to +\\infty\\)?',
+        optionen: [
+          '\\(f(x) \\to +\\infty\\)',
+          '\\(f(x) \\to -\\infty\\)',
+          '\\(f(x) \\to 0\\)',
+          '\\(f(x) \\to 1\\)'
+        ],
+        korrekt: 2,
+        tipp: 'Die Exponentialfunktion wächst schneller als jedes Polynom.',
+        loesungsweg: 'Für \\(x \\to +\\infty\\) dominiert \\(e^{-x} \\to 0\\) über das lineare Wachstum von \\(x\\). Also \\(f(x) = \\frac{x}{e^x} \\to 0\\).'
+      },
+      {
+        id: 34,
+        level: 6,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^2 \\cdot e^{-x}\\). Bestimme die \\(x\\)-Koordinate des Wendepunkts mit \\(x > 0\\) (auf eine Dezimalstelle gerundet).',
+        loesung: 3.4,
+        toleranz: 0.1,
+        tipp: '\\(f\'(x) = e^{-x}(2x - x^2)\\). Bilde \\(f\'\'(x)\\) und setze gleich Null.',
+        loesungsweg: '\\(f\'(x) = e^{-x}(2x-x^2)\\). \\(f\'\'(x) = e^{-x}(x^2 - 4x + 2) = 0 \\Rightarrow x^2 - 4x + 2 = 0 \\Rightarrow x = 2 \\pm \\sqrt{2}\\). Der positive Wendepunkt mit \\(x > 2\\) ist \\(x = 2 + \\sqrt{2} \\approx 3{,}4\\).'
+      },
+      {
+        id: 35,
+        level: 6,
+        typ: 'mc',
+        frage: 'Die Funktionenschar \\(f_a(x) = x^3 - 3a^2 x\\) mit \\(a > 0\\) hat Extremstellen. Welche Aussage ist korrekt?',
+        optionen: [
+          'Die Extremstellen liegen bei \\(x = \\pm a\\) und der Abstand wächst mit \\(a\\)',
+          'Die Extremstellen liegen immer bei \\(x = \\pm 1\\)',
+          'Für \\(a > 1\\) gibt es keine Extremstellen',
+          'Der Wendepunkt verschiebt sich mit wachsendem \\(a\\) nach rechts'
+        ],
+        korrekt: 0,
+        tipp: '\\(f_a\'(x) = 3x^2 - 3a^2 = 3(x^2 - a^2) = 0\\). Löse nach \\(x\\) auf.',
+        loesungsweg: '\\(f_a\'(x) = 3(x-a)(x+a) = 0 \\Rightarrow x = \\pm a\\). Der Abstand der Extremstellen ist \\(2a\\), wächst also mit \\(a\\). Der Wendepunkt \\(f_a\'\'(x)=6x=0\\) liegt immer bei \\(x=0\\).'
+      },
+      {
+        id: 36,
+        level: 6,
+        typ: 'mc',
+        frage: 'Gegeben ist \\(f(x) = (x-2)^2 \\cdot e^x\\). Welche der folgenden Aussagen zur vollständigen Kurvendiskussion ist korrekt?',
+        optionen: [
+          '\\(f\\) hat einen Hochpunkt bei \\(x = 0\\) und einen Tiefpunkt bei \\(x = 2\\)',
+          '\\(f\\) hat einen Tiefpunkt bei \\(x = 0\\) und einen Hochpunkt bei \\(x = 2\\)',
+          '\\(f\\) hat einen Tiefpunkt bei \\(x = 0\\) und bei \\(x = 2\\) eine Nullstelle mit VZW',
+          '\\(f\\) hat keine Extremstellen'
+        ],
+        korrekt: 0,
+        tipp: '\\(f\'(x) = e^x[(x-2)^2 + 2(x-2)] = e^x(x-2)(x+0) = e^x \\cdot x(x-2)\\). Setze \\(f\'(x) = 0\\).',
+        loesungsweg: '\\(f\'(x) = e^x[2(x-2) + (x-2)^2] = e^x(x-2)(x) = 0 \\Rightarrow x_1 = 0,\\; x_2 = 2\\). \\(f\'\'(x) = e^x(x^2 - 2)\\). \\(f\'\'(0) = -2 < 0 \\Rightarrow\\) HP bei \\(x = 0\\). \\(f\'\'(2) = 2e^2 > 0 \\Rightarrow\\) TP bei \\(x = 2\\).'
+      }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

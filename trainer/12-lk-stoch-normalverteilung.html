@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Normalverteilung (LK) - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #ED7D31; --spirale-secondary: #C55A11; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '12-lk-stoch-normalverteilung';
+    const THEMA_CONFIG = { name: 'Normalverteilung (LK)', bereich: 'stochastik' };
+    const AUFGABEN = [
+
+    // ===== LEVEL 1: Eigenschaften der Normalverteilung (MC) =====
+    {
+        id: 1, level: 1, typ: "mc",
+        frage: "Welche Aussage über die Gauß'sche Glockenkurve ist korrekt?",
+        optionen: [
+            "Die Fläche unter der Kurve beträgt 1.",
+            "Die Fläche unter der Kurve beträgt 2π.",
+            "Die Fläche unter der Kurve beträgt σ.",
+            "Die Fläche unter der Kurve beträgt μ."
+        ],
+        korrekt: 0,
+        tipp: "Die Dichtefunktion einer Wahrscheinlichkeitsverteilung hat welche Gesamtfläche?",
+        loesungsweg: "Für jede Wahrscheinlichkeitsdichtefunktion gilt: Die Gesamtfläche unter der Kurve beträgt genau 1, da die Summe aller Wahrscheinlichkeiten 100% ergibt."
+    },
+    {
+        id: 2, level: 1, typ: "mc",
+        frage: "Wo liegen die Wendepunkte der Normalverteilung \\( N(\\mu, \\sigma^2) \\)?",
+        optionen: [
+            "Bei \\( x = \\mu \\pm \\sigma \\)",
+            "Bei \\( x = \\mu \\pm 2\\sigma \\)",
+            "Bei \\( x = \\mu \\pm \\sigma^2 \\)",
+            "Bei \\( x = 0 \\) und \\( x = 1 \\)"
+        ],
+        korrekt: 0,
+        tipp: "Die Wendepunkte sind genau eine Standardabweichung vom Erwartungswert entfernt.",
+        loesungsweg: "Die Dichtefunktion der Normalverteilung hat ihre Wendepunkte bei \\( x = \\mu - \\sigma \\) und \\( x = \\mu + \\sigma \\). Dort ändert sich die Krümmung der Glockenkurve."
+    },
+    {
+        id: 3, level: 1, typ: "mc",
+        frage: "Welcher Anteil der Werte liegt bei einer Normalverteilung im Intervall \\( [\\mu - \\sigma;\\, \\mu + \\sigma] \\)?",
+        optionen: [
+            "Etwa 50%",
+            "Etwa 68,3%",
+            "Etwa 95,4%",
+            "Etwa 99,7%"
+        ],
+        korrekt: 1,
+        tipp: "Denke an die Sigma-Regeln: 1σ, 2σ, 3σ.",
+        loesungsweg: "Die erste Sigma-Regel besagt: Etwa 68,3% aller Werte liegen im Intervall \\( [\\mu - \\sigma;\\, \\mu + \\sigma] \\). Für \\( 2\\sigma \\) sind es ca. 95,4% und für \\( 3\\sigma \\) ca. 99,7%."
+    },
+    {
+        id: 4, level: 1, typ: "mc",
+        frage: "Welche Eigenschaft hat die Dichtefunktion der Normalverteilung?",
+        optionen: [
+            "Sie ist symmetrisch bezüglich \\( x = 0 \\).",
+            "Sie ist symmetrisch bezüglich \\( x = \\mu \\).",
+            "Sie ist symmetrisch bezüglich \\( x = \\sigma \\).",
+            "Sie ist nicht symmetrisch."
+        ],
+        korrekt: 1,
+        tipp: "Die Symmetrieachse der Glockenkurve hängt vom Erwartungswert ab.",
+        loesungsweg: "Die Dichtefunktion der Normalverteilung ist stets symmetrisch bezüglich \\( x = \\mu \\) (dem Erwartungswert). Nur die Standardnormalverteilung mit \\( \\mu = 0 \\) ist symmetrisch zu \\( x = 0 \\)."
+    },
+    {
+        id: 5, level: 1, typ: "mc",
+        frage: "Was beschreibt die Verteilungsfunktion \\( \\Phi(z) \\) der Standardnormalverteilung?",
+        optionen: [
+            "Die Dichte an der Stelle \\( z \\)",
+            "Die Wahrscheinlichkeit \\( P(Z \\leq z) \\)",
+            "Die Wahrscheinlichkeit \\( P(Z = z) \\)",
+            "Den Erwartungswert der Verteilung"
+        ],
+        korrekt: 1,
+        tipp: "Die Verteilungsfunktion gibt eine kumulierte Wahrscheinlichkeit an.",
+        loesungsweg: "Die Verteilungsfunktion \\( \\Phi(z) = P(Z \\leq z) \\) gibt die Wahrscheinlichkeit an, dass die standardnormalverteilte Zufallsvariable \\( Z \\) einen Wert kleiner oder gleich \\( z \\) annimmt."
+    },
+    {
+        id: 6, level: 1, typ: "mc",
+        frage: "Welche Parameter hat die Standardnormalverteilung?",
+        optionen: [
+            "\\( \\mu = 1 \\) und \\( \\sigma = 0 \\)",
+            "\\( \\mu = 0 \\) und \\( \\sigma = 0 \\)",
+            "\\( \\mu = 0 \\) und \\( \\sigma = 1 \\)",
+            "\\( \\mu = 1 \\) und \\( \\sigma = 1 \\)"
+        ],
+        korrekt: 2,
+        tipp: "Standard bedeutet: zentriert und normiert.",
+        loesungsweg: "Die Standardnormalverteilung hat den Erwartungswert \\( \\mu = 0 \\) und die Standardabweichung \\( \\sigma = 1 \\). Man schreibt \\( Z \\sim N(0, 1) \\)."
+    },
+
+    // ===== LEVEL 2: z-Transformation =====
+    {
+        id: 7, level: 2, typ: "numerisch",
+        frage: "Gegeben: \\( X \\sim N(50,\\, 10^2) \\). Berechne den z-Wert für \\( x = 70 \\).",
+        loesung: 2,
+        toleranz: 0.01,
+        tipp: "Verwende die Formel \\( z = \\frac{x - \\mu}{\\sigma} \\).",
+        loesungsweg: "\\( z = \\frac{x - \\mu}{\\sigma} = \\frac{70 - 50}{10} = \\frac{20}{10} = 2 \\)"
+    },
+    {
+        id: 8, level: 2, typ: "numerisch",
+        frage: "Gegeben: \\( X \\sim N(100,\\, 15^2) \\). Berechne den z-Wert für \\( x = 130 \\).",
+        loesung: 2,
+        toleranz: 0.01,
+        tipp: "Verwende \\( z = \\frac{x - \\mu}{\\sigma} \\) mit \\( \\mu = 100 \\) und \\( \\sigma = 15 \\).",
+        loesungsweg: "\\( z = \\frac{130 - 100}{15} = \\frac{30}{15} = 2 \\)"
+    },
+    {
+        id: 9, level: 2, typ: "numerisch",
+        frage: "Gegeben: \\( X \\sim N(80,\\, 4^2) \\). Berechne den z-Wert für \\( x = 74 \\).",
+        loesung: -1.5,
+        toleranz: 0.01,
+        tipp: "Negative z-Werte bedeuten: Der Wert liegt unterhalb des Erwartungswerts.",
+        loesungsweg: "\\( z = \\frac{74 - 80}{4} = \\frac{-6}{4} = -1{,}5 \\)"
+    },
+    {
+        id: 10, level: 2, typ: "numerisch",
+        frage: "Gegeben: \\( X \\sim N(200,\\, 25^2) \\). Berechne den z-Wert für \\( x = 249 \\).",
+        loesung: 1.96,
+        toleranz: 0.01,
+        tipp: "Verwende \\( z = \\frac{x - \\mu}{\\sigma} \\). Achte auf \\( \\sigma = 25 \\).",
+        loesungsweg: "\\( z = \\frac{249 - 200}{25} = \\frac{49}{25} = 1{,}96 \\)"
+    },
+    {
+        id: 11, level: 2, typ: "numerisch",
+        frage: "Gegeben: \\( X \\sim N(30,\\, 6^2) \\). Für welchen x-Wert ergibt sich \\( z = 2{,}5 \\)?",
+        loesung: 45,
+        toleranz: 0.01,
+        tipp: "Stelle die z-Formel nach \\( x \\) um: \\( x = \\mu + z \\cdot \\sigma \\).",
+        loesungsweg: "\\( x = \\mu + z \\cdot \\sigma = 30 + 2{,}5 \\cdot 6 = 30 + 15 = 45 \\)"
+    },
+    {
+        id: 12, level: 2, typ: "numerisch",
+        frage: "Gegeben: \\( X \\sim N(500,\\, 50^2) \\). Berechne den z-Wert für \\( x = 425 \\).",
+        loesung: -1.5,
+        toleranz: 0.01,
+        tipp: "Verwende \\( z = \\frac{x - \\mu}{\\sigma} \\). Das Ergebnis ist negativ.",
+        loesungsweg: "\\( z = \\frac{425 - 500}{50} = \\frac{-75}{50} = -1{,}5 \\)"
+    },
+
+    // ===== LEVEL 3: Φ-Tabelle ablesen =====
+    {
+        id: 13, level: 3, typ: "numerisch",
+        frage: "Bestimme \\( \\Phi(1) \\), also \\( P(Z \\leq 1) \\).",
+        loesung: 0.8413,
+        toleranz: 0.01,
+        tipp: "Lies den Wert aus der Standardnormalverteilungstabelle ab.",
+        loesungsweg: "Aus der Tabelle: \\( \\Phi(1) = 0{,}8413 \\). Das bedeutet: 84,13% der Werte liegen unterhalb von \\( z = 1 \\)."
+    },
+    {
+        id: 14, level: 3, typ: "numerisch",
+        frage: "Bestimme \\( \\Phi(2) \\), also \\( P(Z \\leq 2) \\).",
+        loesung: 0.9772,
+        toleranz: 0.01,
+        tipp: "Lies den Wert aus der Φ-Tabelle für \\( z = 2 \\) ab.",
+        loesungsweg: "Aus der Tabelle: \\( \\Phi(2) = 0{,}9772 \\). Also liegen 97,72% der Werte unterhalb von \\( z = 2 \\)."
+    },
+    {
+        id: 15, level: 3, typ: "numerisch",
+        frage: "Berechne \\( P(Z > 1) \\) mithilfe von \\( \\Phi(1) = 0{,}8413 \\).",
+        loesung: 0.1587,
+        toleranz: 0.01,
+        tipp: "Es gilt: \\( P(Z > z) = 1 - \\Phi(z) \\).",
+        loesungsweg: "\\( P(Z > 1) = 1 - \\Phi(1) = 1 - 0{,}8413 = 0{,}1587 \\)"
+    },
+    {
+        id: 16, level: 3, typ: "numerisch",
+        frage: "Berechne \\( \\Phi(-1{,}5) \\) mithilfe der Symmetrie. Hinweis: \\( \\Phi(1{,}5) = 0{,}9332 \\).",
+        loesung: 0.0668,
+        toleranz: 0.01,
+        tipp: "Nutze die Symmetrieregel: \\( \\Phi(-z) = 1 - \\Phi(z) \\).",
+        loesungsweg: "\\( \\Phi(-1{,}5) = 1 - \\Phi(1{,}5) = 1 - 0{,}9332 = 0{,}0668 \\)"
+    },
+    {
+        id: 17, level: 3, typ: "numerisch",
+        frage: "Bestimme \\( \\Phi(1{,}96) \\), also \\( P(Z \\leq 1{,}96) \\).",
+        loesung: 0.975,
+        toleranz: 0.01,
+        tipp: "Dieser z-Wert ist besonders wichtig für das 95%-Konfidenzintervall.",
+        loesungsweg: "Aus der Tabelle: \\( \\Phi(1{,}96) = 0{,}975 \\). Dieser Wert wird häufig bei Konfidenzintervallen und Hypothesentests verwendet."
+    },
+    {
+        id: 18, level: 3, typ: "numerisch",
+        frage: "Berechne \\( P(Z > 2) \\) mithilfe von \\( \\Phi(2) = 0{,}9772 \\).",
+        loesung: 0.0228,
+        toleranz: 0.01,
+        tipp: "Gegenwahrscheinlichkeit: \\( P(Z > z) = 1 - \\Phi(z) \\).",
+        loesungsweg: "\\( P(Z > 2) = 1 - \\Phi(2) = 1 - 0{,}9772 = 0{,}0228 \\)"
+    },
+
+    // ===== LEVEL 4: Wahrscheinlichkeiten P(a ≤ X ≤ b) =====
+    {
+        id: 19, level: 4, typ: "numerisch",
+        frage: "Sei \\( Z \\sim N(0, 1) \\). Berechne \\( P(-1 \\leq Z \\leq 1) \\). Hinweis: \\( \\Phi(1) = 0{,}8413 \\).",
+        loesung: 0.6826,
+        toleranz: 0.01,
+        tipp: "Nutze \\( P(a \\leq Z \\leq b) = \\Phi(b) - \\Phi(a) \\) und die Symmetrie.",
+        loesungsweg: "\\( P(-1 \\leq Z \\leq 1) = \\Phi(1) - \\Phi(-1) = \\Phi(1) - (1 - \\Phi(1)) = 2 \\cdot \\Phi(1) - 1 = 2 \\cdot 0{,}8413 - 1 = 0{,}6826 \\)"
+    },
+    {
+        id: 20, level: 4, typ: "numerisch",
+        frage: "Sei \\( X \\sim N(100,\\, 10^2) \\). Berechne \\( P(X \\leq 120) \\). Hinweis: \\( \\Phi(2) = 0{,}9772 \\).",
+        loesung: 0.9772,
+        toleranz: 0.01,
+        tipp: "Transformiere zuerst: \\( z = \\frac{120 - 100}{10} = 2 \\).",
+        loesungsweg: "z-Transformation: \\( z = \\frac{120 - 100}{10} = 2 \\). Dann: \\( P(X \\leq 120) = \\Phi(2) = 0{,}9772 \\)."
+    },
+    {
+        id: 21, level: 4, typ: "numerisch",
+        frage: "Sei \\( X \\sim N(50,\\, 5^2) \\). Berechne \\( P(45 \\leq X \\leq 55) \\). Hinweis: \\( \\Phi(1) = 0{,}8413 \\).",
+        loesung: 0.6826,
+        toleranz: 0.01,
+        tipp: "Transformiere beide Grenzen: \\( z_1 = \\frac{45 - 50}{5} \\), \\( z_2 = \\frac{55 - 50}{5} \\).",
+        loesungsweg: "\\( z_1 = \\frac{45-50}{5} = -1 \\), \\( z_2 = \\frac{55-50}{5} = 1 \\). Also: \\( P(45 \\leq X \\leq 55) = \\Phi(1) - \\Phi(-1) = 0{,}8413 - 0{,}1587 = 0{,}6826 \\)."
+    },
+    {
+        id: 22, level: 4, typ: "numerisch",
+        frage: "Sei \\( X \\sim N(170,\\, 8^2) \\). Berechne \\( P(X \\geq 186) \\). Hinweis: \\( \\Phi(2) = 0{,}9772 \\).",
+        loesung: 0.0228,
+        toleranz: 0.01,
+        tipp: "Berechne zuerst \\( z = \\frac{186 - 170}{8} \\), dann die Gegenwahrscheinlichkeit.",
+        loesungsweg: "\\( z = \\frac{186 - 170}{8} = 2 \\). Dann: \\( P(X \\geq 186) = 1 - \\Phi(2) = 1 - 0{,}9772 = 0{,}0228 \\)."
+    },
+    {
+        id: 23, level: 4, typ: "numerisch",
+        frage: "Sei \\( X \\sim N(60,\\, 20^2) \\). Berechne \\( P(20 \\leq X \\leq 90) \\). Hinweis: \\( \\Phi(1{,}5) = 0{,}9332 \\), \\( \\Phi(2) = 0{,}9772 \\).",
+        loesung: 0.9104,
+        toleranz: 0.01,
+        tipp: "Transformiere: \\( z_1 = \\frac{20 - 60}{20} \\) und \\( z_2 = \\frac{90 - 60}{20} \\).",
+        loesungsweg: "\\( z_1 = \\frac{20-60}{20} = -2 \\), \\( z_2 = \\frac{90-60}{20} = 1{,}5 \\). Also: \\( P(20 \\leq X \\leq 90) = \\Phi(1{,}5) - \\Phi(-2) = 0{,}9332 - (1 - 0{,}9772) = 0{,}9332 - 0{,}0228 = 0{,}9104 \\)."
+    },
+    {
+        id: 24, level: 4, typ: "numerisch",
+        frage: "Sei \\( X \\sim N(0, 1) \\). Berechne \\( P(-1{,}96 \\leq Z \\leq 1{,}96) \\). Hinweis: \\( \\Phi(1{,}96) = 0{,}975 \\).",
+        loesung: 0.95,
+        toleranz: 0.01,
+        tipp: "Nutze die Symmetrie: \\( P(-z \\leq Z \\leq z) = 2\\Phi(z) - 1 \\).",
+        loesungsweg: "\\( P(-1{,}96 \\leq Z \\leq 1{,}96) = 2 \\cdot \\Phi(1{,}96) - 1 = 2 \\cdot 0{,}975 - 1 = 0{,}95 \\). Das ist das bekannte 95%-Intervall."
+    },
+
+    // ===== LEVEL 5: Approximation Binomial → Normal =====
+    {
+        id: 25, level: 5, typ: "mc",
+        frage: "Wann darf die Binomialverteilung \\( B(n, p) \\) durch die Normalverteilung approximiert werden?",
+        optionen: [
+            "Wenn \\( n \\cdot p > 5 \\)",
+            "Wenn \\( \\sigma = \\sqrt{n \\cdot p \\cdot (1-p)} > 3 \\)",
+            "Wenn \\( n > 100 \\)",
+            "Wenn \\( p = 0{,}5 \\)"
+        ],
+        korrekt: 1,
+        tipp: "Die Faustregel bezieht sich auf die Standardabweichung σ.",
+        loesungsweg: "Die Faustregel für die Normalapproximation lautet: \\( \\sigma = \\sqrt{n \\cdot p \\cdot (1-p)} > 3 \\). Dann kann \\( B(n, p) \\) durch \\( N(\\mu, \\sigma^2) \\) mit \\( \\mu = n \\cdot p \\) approximiert werden."
+    },
+    {
+        id: 26, level: 5, typ: "numerisch",
+        frage: "Sei \\( X \\sim B(400,\\, 0{,}3) \\). Berechne \\( \\mu \\) für die Normalapproximation.",
+        loesung: 120,
+        toleranz: 0.01,
+        tipp: "Für die Binomialverteilung gilt: \\( \\mu = n \\cdot p \\).",
+        loesungsweg: "\\( \\mu = n \\cdot p = 400 \\cdot 0{,}3 = 120 \\)"
+    },
+    {
+        id: 27, level: 5, typ: "numerisch",
+        frage: "Sei \\( X \\sim B(400,\\, 0{,}3) \\). Berechne \\( \\sigma \\) für die Normalapproximation. Runde auf zwei Dezimalstellen.",
+        loesung: 9.17,
+        toleranz: 0.05,
+        tipp: "Verwende \\( \\sigma = \\sqrt{n \\cdot p \\cdot (1-p)} \\).",
+        loesungsweg: "\\( \\sigma = \\sqrt{400 \\cdot 0{,}3 \\cdot 0{,}7} = \\sqrt{84} \\approx 9{,}17 \\). Da \\( \\sigma > 3 \\), ist die Approximation zulässig."
+    },
+    {
+        id: 28, level: 5, typ: "mc",
+        frage: "Bei der Normalapproximation der Binomialverteilung: Wie wird \\( P(X \\leq 7) \\) mit Stetigkeitskorrektur berechnet?",
+        optionen: [
+            "\\( P(Y \\leq 7) \\) ohne Korrektur",
+            "\\( P(Y \\leq 7{,}5) \\)",
+            "\\( P(Y \\leq 6{,}5) \\)",
+            "\\( P(Y \\leq 8) \\)"
+        ],
+        korrekt: 1,
+        tipp: "Die Stetigkeitskorrektur erweitert das Intervall um 0,5 in Richtung der Ungleichung.",
+        loesungsweg: "Bei der Stetigkeitskorrektur wird \\( P(X \\leq 7) \\) zu \\( P(Y \\leq 7{,}5) \\). Man addiert 0,5, weil die diskrete Verteilung den Wert 7 einschließt und die stetige Verteilung diesen Bereich bis 7,5 abdecken muss."
+    },
+    {
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Sei \\( X \\sim B(100,\\, 0{,}5) \\). Approximiere \\( P(X \\leq 60) \\) mit Stetigkeitskorrektur. Gib den z-Wert an, der in \\( \\Phi \\) eingesetzt wird.",
+        loesung: 2.1,
+        toleranz: 0.01,
+        tipp: "Berechne \\( \\mu = np \\), \\( \\sigma = \\sqrt{np(1-p)} \\), dann \\( z = \\frac{60{,}5 - \\mu}{\\sigma} \\).",
+        loesungsweg: "\\( \\mu = 100 \\cdot 0{,}5 = 50 \\), \\( \\sigma = \\sqrt{100 \\cdot 0{,}5 \\cdot 0{,}5} = \\sqrt{25} = 5 \\). Mit Stetigkeitskorrektur: \\( z = \\frac{60{,}5 - 50}{5} = \\frac{10{,}5}{5} = 2{,}1 \\)."
+    },
+    {
+        id: 30, level: 5, typ: "mc",
+        frage: "Sei \\( X \\sim B(900,\\, 0{,}4) \\). Welche Normalverteilung wird zur Approximation verwendet?",
+        optionen: [
+            "\\( N(360;\\, 14{,}7^2) \\)",
+            "\\( N(360;\\, 216) \\)",
+            "\\( N(540;\\, 14{,}7^2) \\)",
+            "\\( N(360;\\, 14{,}7) \\)"
+        ],
+        korrekt: 0,
+        tipp: "Berechne \\( \\mu = np \\) und \\( \\sigma = \\sqrt{np(1-p)} \\). Die Normalverteilung wird als \\( N(\\mu;\\, \\sigma^2) \\) geschrieben.",
+        loesungsweg: "\\( \\mu = 900 \\cdot 0{,}4 = 360 \\). \\( \\sigma = \\sqrt{900 \\cdot 0{,}4 \\cdot 0{,}6} = \\sqrt{216} \\approx 14{,}7 \\). Also: \\( N(360;\\, 14{,}7^2) \\). Dabei ist \\( 14{,}7^2 \\approx 216 \\)."
+    },
+
+    // ===== LEVEL 6: Sachaufgaben =====
+    {
+        id: 31, level: 6, typ: "numerisch",
+        frage: "Eine Maschine füllt Flaschen mit im Mittel 500 ml. Die Standardabweichung beträgt 5 ml (normalverteilt). Wie groß ist die Wahrscheinlichkeit, dass eine Flasche weniger als 490 ml enthält? Hinweis: \\( \\Phi(2) = 0{,}9772 \\).",
+        loesung: 0.0228,
+        toleranz: 0.01,
+        tipp: "Berechne den z-Wert für 490 ml und nutze die Symmetrie.",
+        loesungsweg: "\\( z = \\frac{490 - 500}{5} = -2 \\). Also: \\( P(X < 490) = \\Phi(-2) = 1 - \\Phi(2) = 1 - 0{,}9772 = 0{,}0228 \\). Etwa 2,3% der Flaschen enthalten weniger als 490 ml."
+    },
+    {
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Die Körpergröße von Männern ist normalverteilt mit \\( \\mu = 178 \\) cm und \\( \\sigma = 8 \\) cm. Welcher Anteil ist zwischen 170 cm und 194 cm groß? Hinweis: \\( \\Phi(1) = 0{,}8413 \\), \\( \\Phi(2) = 0{,}9772 \\).",
+        loesung: 0.8185,
+        toleranz: 0.01,
+        tipp: "Transformiere beide Grenzen und berechne \\( \\Phi(z_2) - \\Phi(z_1) \\).",
+        loesungsweg: "\\( z_1 = \\frac{170-178}{8} = -1 \\), \\( z_2 = \\frac{194-178}{8} = 2 \\). \\( P(170 \\leq X \\leq 194) = \\Phi(2) - \\Phi(-1) = 0{,}9772 - (1 - 0{,}8413) = 0{,}9772 - 0{,}1587 = 0{,}8185 \\)."
+    },
+    {
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Bei einer Qualitätskontrolle werden 600 Bauteile geprüft. Die Ausschussquote beträgt \\( p = 0{,}05 \\). Berechne \\( \\sigma \\) für die Normalapproximation. Runde auf zwei Dezimalstellen.",
+        loesung: 5.34,
+        toleranz: 0.05,
+        tipp: "Verwende \\( \\sigma = \\sqrt{n \\cdot p \\cdot (1-p)} \\).",
+        loesungsweg: "\\( \\sigma = \\sqrt{600 \\cdot 0{,}05 \\cdot 0{,}95} = \\sqrt{28{,}5} \\approx 5{,}34 \\). Da \\( \\sigma > 3 \\), ist die Normalapproximation erlaubt."
+    },
+    {
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Eine Batterie hat eine mittlere Lebensdauer von 2000 Stunden (\\( \\sigma = 200 \\) h, normalverteilt). Wie groß ist die Wahrscheinlichkeit, dass sie länger als 2300 Stunden hält? Hinweis: \\( \\Phi(1{,}5) = 0{,}9332 \\).",
+        loesung: 0.0668,
+        toleranz: 0.01,
+        tipp: "Berechne \\( z = \\frac{2300 - 2000}{200} \\) und nutze die Gegenwahrscheinlichkeit.",
+        loesungsweg: "\\( z = \\frac{2300 - 2000}{200} = 1{,}5 \\). Also: \\( P(X > 2300) = 1 - \\Phi(1{,}5) = 1 - 0{,}9332 = 0{,}0668 \\). Die Wahrscheinlichkeit beträgt etwa 6,7%."
+    },
+    {
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Schrauben haben eine normalverteilte Länge mit \\( \\mu = 30 \\) mm und \\( \\sigma = 0{,}5 \\) mm. Schrauben mit einer Abweichung von mehr als 1 mm vom Sollwert werden aussortiert. Welcher Anteil wird aussortiert? Hinweis: \\( \\Phi(2) = 0{,}9772 \\).",
+        loesung: 0.0456,
+        toleranz: 0.01,
+        tipp: "Aussortiert werden Schrauben mit \\( X < 29 \\) oder \\( X > 31 \\). Berechne \\( P(|X - 30| > 1) \\).",
+        loesungsweg: "Akzeptiert: \\( 29 \\leq X \\leq 31 \\). \\( z = \\frac{1}{0{,}5} = 2 \\). \\( P(29 \\leq X \\leq 31) = 2\\Phi(2) - 1 = 2 \\cdot 0{,}9772 - 1 = 0{,}9544 \\). Aussortiert: \\( 1 - 0{,}9544 = 0{,}0456 \\), also etwa 4,6%."
+    },
+    {
+        id: 36, level: 6, typ: "numerisch",
+        frage: "In einer Klausur sind die Punkte normalverteilt mit \\( \\mu = 60 \\) und \\( \\sigma = 12 \\). Ab 84 Punkten gibt es eine 1. Welcher Anteil der Schüler bekommt eine 1? Hinweis: \\( \\Phi(2) = 0{,}9772 \\).",
+        loesung: 0.0228,
+        toleranz: 0.01,
+        tipp: "Berechne \\( z = \\frac{84 - 60}{12} \\) und nutze die Gegenwahrscheinlichkeit.",
+        loesungsweg: "\\( z = \\frac{84 - 60}{12} = 2 \\). \\( P(X \\geq 84) = 1 - \\Phi(2) = 1 - 0{,}9772 = 0{,}0228 \\). Etwa 2,3% der Schüler bekommen eine 1."
+    }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

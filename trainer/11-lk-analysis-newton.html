@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newtonverfahren (LK) - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '11-lk-analysis-newton';
+    const THEMA_CONFIG = { name: 'Newtonverfahren (LK)', bereich: 'analysis' };
+    const AUFGABEN = [
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 1 — babyleicht (IDs 1–6)
+      // Einen Newton-Schritt berechnen, einfache Funktionen
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 1,
+        level: 1,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^2 - 4\\). Führe einen Newton-Schritt mit Startwert \\(x_0 = 3\\) durch. Berechne \\(x_1\\).',
+        loesung: 2.1667,
+        toleranz: 0.01,
+        tipp: 'Newton-Formel: \\(x_1 = x_0 - \\frac{f(x_0)}{f\'(x_0)}\\). Berechne \\(f(3)\\) und \\(f\'(3)\\).',
+        loesungsweg: '\\(f\'(x) = 2x\\). \\(x_1 = 3 - \\frac{9 - 4}{6} = 3 - \\frac{5}{6} = \\frac{13}{6} \\approx 2{,}1667\\)'
+      },
+      {
+        id: 2,
+        level: 1,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^2 - 9\\). Führe einen Newton-Schritt mit \\(x_0 = 4\\) durch. Berechne \\(x_1\\).',
+        loesung: 3.125,
+        toleranz: 0.01,
+        tipp: '\\(f(4) = 7\\), \\(f\'(4) = 8\\). Setze in die Newton-Formel ein.',
+        loesungsweg: '\\(f\'(x) = 2x\\). \\(x_1 = 4 - \\frac{16 - 9}{8} = 4 - \\frac{7}{8} = \\frac{25}{8} = 3{,}125\\)'
+      },
+      {
+        id: 3,
+        level: 1,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^2 - 2\\). Startwert \\(x_0 = 1\\). Berechne \\(x_1\\) (Näherung für \\(\\sqrt{2}\\)).',
+        loesung: 1.5,
+        toleranz: 0.01,
+        tipp: '\\(f(1) = -1\\), \\(f\'(1) = 2\\).',
+        loesungsweg: '\\(x_1 = 1 - \\frac{1 - 2}{2} = 1 - \\frac{-1}{2} = 1 + 0{,}5 = 1{,}5\\)'
+      },
+      {
+        id: 4,
+        level: 1,
+        typ: 'mc',
+        frage: 'Die Newton-Formel lautet \\(x_{n+1} = x_n - \\frac{f(x_n)}{f\'(x_n)}\\). Was berechnet man geometrisch in jedem Schritt?',
+        optionen: [
+          'Den Schnittpunkt der Sekante mit der x-Achse',
+          'Den Schnittpunkt der Tangente mit der x-Achse',
+          'Den Wendepunkt der Funktion',
+          'Das Minimum der Funktion'
+        ],
+        korrekt: 1,
+        tipp: 'Die Tangente an \\(f\\) bei \\(x_n\\) hat die Steigung \\(f\'(x_n)\\).',
+        loesungsweg: 'Das Newton-Verfahren ersetzt die Funktion lokal durch ihre Tangente und bestimmt deren Nullstelle. Dies ist der Schnittpunkt der Tangente an \\(f\\) im Punkt \\(x_n\\) mit der x-Achse.'
+      },
+      {
+        id: 5,
+        level: 1,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^3 - 8\\). Startwert \\(x_0 = 3\\). Berechne \\(x_1\\).',
+        loesung: 2.2963,
+        toleranz: 0.01,
+        tipp: '\\(f(3) = 19\\), \\(f\'(x) = 3x^2\\), also \\(f\'(3) = 27\\).',
+        loesungsweg: '\\(f\'(x) = 3x^2\\). \\(x_1 = 3 - \\frac{27 - 8}{27} = 3 - \\frac{19}{27} \\approx 3 - 0{,}7037 = 2{,}2963\\)'
+      },
+      {
+        id: 6,
+        level: 1,
+        typ: 'mc',
+        frage: 'Wann ist die Newton-Formel \\(x_{n+1} = x_n - \\frac{f(x_n)}{f\'(x_n)}\\) nicht definiert?',
+        optionen: [
+          'Wenn \\(f(x_n) = 0\\)',
+          'Wenn \\(f\'(x_n) = 0\\)',
+          'Wenn \\(x_n = 0\\)',
+          'Wenn \\(f\'\'(x_n) = 0\\)'
+        ],
+        korrekt: 1,
+        tipp: 'Bei einer Division durch Null ist der Ausdruck nicht definiert.',
+        loesungsweg: 'Die Formel enthält den Bruch \\(\\frac{f(x_n)}{f\'(x_n)}\\). Für \\(f\'(x_n) = 0\\) ist die Division nicht definiert (waagerechte Tangente, kein Schnittpunkt mit x-Achse).'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 2 — leicht (IDs 7–12)
+      // Zwei Iterationsschritte, x₂ berechnen
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 7,
+        level: 2,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^2 - 5\\). Startwert \\(x_0 = 2\\). Berechne \\(x_2\\) (zwei Newton-Schritte).',
+        loesung: 2.2361,
+        toleranz: 0.01,
+        tipp: '\\(x_1 = 2 - \\frac{-1}{4} = 2{,}25\\). Dann nochmal mit \\(x_1\\).',
+        loesungsweg: '\\(x_1 = 2 - \\frac{4 - 5}{4} = 2 + 0{,}25 = 2{,}25\\). \\(x_2 = 2{,}25 - \\frac{5{,}0625 - 5}{4{,}5} = 2{,}25 - \\frac{0{,}0625}{4{,}5} \\approx 2{,}25 - 0{,}01389 \\approx 2{,}2361\\)'
+      },
+      {
+        id: 8,
+        level: 2,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^2 - 3\\). Startwert \\(x_0 = 2\\). Berechne \\(x_2\\).',
+        loesung: 1.7321,
+        toleranz: 0.01,
+        tipp: '\\(x_1 = 2 - \\frac{1}{4} = 1{,}75\\). Dann \\(x_2 = 1{,}75 - \\frac{f(1{,}75)}{f\'(1{,}75)}\\).',
+        loesungsweg: '\\(x_1 = 1{,}75\\). \\(f(1{,}75) = 3{,}0625 - 3 = 0{,}0625\\). \\(f\'(1{,}75) = 3{,}5\\). \\(x_2 = 1{,}75 - \\frac{0{,}0625}{3{,}5} \\approx 1{,}75 - 0{,}01786 \\approx 1{,}7321\\)'
+      },
+      {
+        id: 9,
+        level: 2,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^3 - 2\\). Startwert \\(x_0 = 1\\). Berechne \\(x_1\\).',
+        loesung: 1.3333,
+        toleranz: 0.01,
+        tipp: '\\(f(1) = -1\\), \\(f\'(1) = 3\\).',
+        loesungsweg: '\\(f\'(x) = 3x^2\\). \\(x_1 = 1 - \\frac{-1}{3} = 1 + \\frac{1}{3} = \\frac{4}{3} \\approx 1{,}3333\\)'
+      },
+      {
+        id: 10,
+        level: 2,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^3 - 2\\). Startwert \\(x_0 = 1\\). Berechne \\(x_2\\) (Näherung für \\(\\sqrt[3]{2}\\)).',
+        loesung: 1.2639,
+        toleranz: 0.01,
+        tipp: 'Aus der vorigen Aufgabe: \\(x_1 = \\frac{4}{3}\\). Berechne nun \\(f\\!\\left(\\frac{4}{3}\\right)\\) und \\(f\'\\!\\left(\\frac{4}{3}\\right)\\).',
+        loesungsweg: '\\(x_1 = \\frac{4}{3}\\). \\(f\\!\\left(\\frac{4}{3}\\right) = \\frac{64}{27} - 2 = \\frac{10}{27}\\). \\(f\'\\!\\left(\\frac{4}{3}\\right) = 3 \\cdot \\frac{16}{9} = \\frac{16}{3}\\). \\(x_2 = \\frac{4}{3} - \\frac{10/27}{16/3} = \\frac{4}{3} - \\frac{10}{144} = \\frac{4}{3} - \\frac{5}{72} \\approx 1{,}3333 - 0{,}0694 = 1{,}2639\\)'
+      },
+      {
+        id: 11,
+        level: 2,
+        typ: 'mc',
+        frage: 'Beim Newton-Verfahren für \\(f(x) = x^2 - 7\\) mit \\(x_0 = 3\\) ergibt sich \\(x_1 = \\frac{8}{3}\\). Wie verhält sich der Fehler \\(|x_1 - \\sqrt{7}|\\) im Vergleich zu \\(|x_0 - \\sqrt{7}|\\)?',
+        optionen: [
+          'Der Fehler hat sich ungefähr halbiert',
+          'Der Fehler hat sich ungefähr geviertelt',
+          'Der Fehler ist fast quadratisch kleiner geworden',
+          'Der Fehler ist unverändert'
+        ],
+        korrekt: 2,
+        tipp: 'Das Newton-Verfahren konvergiert quadratisch, d.h. \\(|x_{n+1} - x^*| \\approx c \\cdot |x_n - x^*|^2\\).',
+        loesungsweg: '\\(\\sqrt{7} \\approx 2{,}6458\\). \\(|x_0 - \\sqrt{7}| = |3 - 2{,}6458| \\approx 0{,}3542\\). \\(x_1 = \\frac{8}{3} \\approx 2{,}6667\\), also \\(|x_1 - \\sqrt{7}| \\approx 0{,}0209\\). Verhältnis: \\(\\frac{0{,}0209}{0{,}3542^2} \\approx 0{,}17\\) — typisch für quadratische Konvergenz.'
+      },
+      {
+        id: 12,
+        level: 2,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^2 - 7\\). Startwert \\(x_0 = 3\\). Berechne \\(x_1\\).',
+        loesung: 2.6667,
+        toleranz: 0.01,
+        tipp: '\\(f(3) = 2\\), \\(f\'(3) = 6\\).',
+        loesungsweg: '\\(x_1 = 3 - \\frac{9 - 7}{6} = 3 - \\frac{2}{6} = 3 - \\frac{1}{3} = \\frac{8}{3} \\approx 2{,}6667\\)'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 3 — mittel (IDs 13–18)
+      // Newton für kubische Polynome, Startwert gegeben
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 13,
+        level: 3,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^3 - x - 1\\). Startwert \\(x_0 = 1\\). Berechne \\(x_1\\).',
+        loesung: 1.5,
+        toleranz: 0.01,
+        tipp: '\\(f(1) = -1\\), \\(f\'(x) = 3x^2 - 1\\), also \\(f\'(1) = 2\\).',
+        loesungsweg: '\\(f\'(x) = 3x^2 - 1\\). \\(x_1 = 1 - \\frac{1 - 1 - 1}{3 - 1} = 1 - \\frac{-1}{2} = 1{,}5\\)'
+      },
+      {
+        id: 14,
+        level: 3,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^3 - x - 1\\). Berechne \\(x_2\\) mit \\(x_1 = 1{,}5\\).',
+        loesung: 1.3478,
+        toleranz: 0.01,
+        tipp: '\\(f(1{,}5) = 3{,}375 - 1{,}5 - 1 = 0{,}875\\). \\(f\'(1{,}5) = 6{,}75 - 1 = 5{,}75\\).',
+        loesungsweg: '\\(x_2 = 1{,}5 - \\frac{0{,}875}{5{,}75} \\approx 1{,}5 - 0{,}1522 = 1{,}3478\\)'
+      },
+      {
+        id: 15,
+        level: 3,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^3 + x - 3\\). Startwert \\(x_0 = 1\\). Berechne \\(x_1\\).',
+        loesung: 1.25,
+        toleranz: 0.01,
+        tipp: '\\(f(1) = -1\\), \\(f\'(x) = 3x^2 + 1\\), also \\(f\'(1) = 4\\).',
+        loesungsweg: '\\(x_1 = 1 - \\frac{1 + 1 - 3}{3 + 1} = 1 - \\frac{-1}{4} = 1{,}25\\)'
+      },
+      {
+        id: 16,
+        level: 3,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^3 - 2x - 5\\). Startwert \\(x_0 = 2\\). Berechne \\(x_1\\).',
+        loesung: 2.1,
+        toleranz: 0.01,
+        tipp: '\\(f(2) = 8 - 4 - 5 = -1\\). \\(f\'(2) = 12 - 2 = 10\\).',
+        loesungsweg: '\\(f\'(x) = 3x^2 - 2\\). \\(x_1 = 2 - \\frac{-1}{10} = 2 + 0{,}1 = 2{,}1\\)'
+      },
+      {
+        id: 17,
+        level: 3,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^3 - 2x - 5\\). Berechne \\(x_2\\) ausgehend von \\(x_1 = 2{,}1\\).',
+        loesung: 2.0946,
+        toleranz: 0.01,
+        tipp: '\\(f(2{,}1) = 9{,}261 - 4{,}2 - 5 = 0{,}061\\). \\(f\'(2{,}1) = 13{,}23 - 2 = 11{,}23\\).',
+        loesungsweg: '\\(f(2{,}1) = 9{,}261 - 4{,}2 - 5 = 0{,}061\\). \\(f\'(2{,}1) = 3 \\cdot 4{,}41 - 2 = 11{,}23\\). \\(x_2 = 2{,}1 - \\frac{0{,}061}{11{,}23} \\approx 2{,}1 - 0{,}0054 = 2{,}0946\\)'
+      },
+      {
+        id: 18,
+        level: 3,
+        typ: 'mc',
+        frage: 'Das Newton-Verfahren konvergiert quadratisch. Was bedeutet das anschaulich?',
+        optionen: [
+          'Die Anzahl korrekter Dezimalstellen verdoppelt sich ungefähr pro Schritt',
+          'Der Fehler halbiert sich pro Schritt',
+          'Nach zwei Schritten ist die exakte Lösung erreicht',
+          'Die Konvergenz ist langsamer als beim Bisektionsverfahren'
+        ],
+        korrekt: 0,
+        tipp: 'Quadratische Konvergenz: \\(|x_{n+1} - x^*| \\approx c |x_n - x^*|^2\\). Wenn der Fehler \\(10^{-3}\\) ist, wird er \\(\\approx 10^{-6}\\).',
+        loesungsweg: 'Bei quadratischer Konvergenz wird der Fehler in jedem Schritt quadriert (bis auf eine Konstante). Ein Fehler von \\(10^{-k}\\) wird zu \\(\\approx 10^{-2k}\\). Die Anzahl korrekter Dezimalstellen verdoppelt sich also ungefähr pro Schritt.'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 4 — fortgeschritten (IDs 19–24)
+      // Startwertproblematik, Konvergenzfragen (MC)
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 19,
+        level: 4,
+        typ: 'mc',
+        frage: 'Gegeben ist \\(f(x) = x^3 - 3x + 1\\). Diese Funktion hat drei reelle Nullstellen. Welcher Startwert \\(x_0\\) konvergiert am ehesten zur Nullstelle nahe \\(x \\approx 1{,}53\\)?',
+        optionen: [
+          '\\(x_0 = 0\\)',
+          '\\(x_0 = 1\\)',
+          '\\(x_0 = 2\\)',
+          '\\(x_0 = -1\\)'
+        ],
+        korrekt: 2,
+        tipp: 'Der Startwert sollte nahe an der gesuchten Nullstelle liegen und \\(f\'(x_0) \\neq 0\\) gelten.',
+        loesungsweg: '\\(x_0 = 2\\) liegt am nächsten an \\(1{,}53\\). \\(f(2) = 3 > 0\\), \\(f\'(2) = 9 \\neq 0\\). Newton konvergiert: \\(x_1 = 2 - \\frac{3}{9} = \\frac{5}{3} \\approx 1{,}667\\). \\(x_0 = 1\\) wäre problematisch: \\(f\'(1) = 0\\)!'
+      },
+      {
+        id: 20,
+        level: 4,
+        typ: 'mc',
+        frage: 'Warum kann \\(x_0 = 1\\) als Startwert für \\(f(x) = x^3 - 3x + 1\\) problematisch sein?',
+        optionen: [
+          'Weil \\(f(1) = 0\\) und man schon fertig ist',
+          'Weil \\(f\'(1) = 0\\) und die Newton-Formel nicht definiert ist',
+          'Weil \\(f\'\'(1) = 0\\)',
+          'Weil \\(x_0 = 1\\) zu weit von allen Nullstellen entfernt liegt'
+        ],
+        korrekt: 1,
+        tipp: 'Berechne \\(f\'(1) = 3 \\cdot 1 - 3 = 0\\). Was passiert mit dem Nenner?',
+        loesungsweg: '\\(f\'(x) = 3x^2 - 3\\). \\(f\'(1) = 0\\). Die Newton-Formel \\(x_1 = 1 - \\frac{f(1)}{f\'(1)} = 1 - \\frac{-1}{0}\\) ist nicht definiert (Division durch Null).'
+      },
+      {
+        id: 21,
+        level: 4,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^4 - 5x^2 + 4\\). Die positive Nullstelle nahe \\(x = 2\\) soll mit Newton gefunden werden. Startwert \\(x_0 = 2{,}5\\). Berechne \\(x_1\\).',
+        loesung: 2.185,
+        toleranz: 0.01,
+        tipp: 'Berechne \\(f(2{,}5)\\) und \\(f\'(2{,}5)\\) und setze in die Newton-Formel ein.',
+        loesungsweg: '\\(f(x) = (x^2-1)(x^2-4)\\), Nullstellen \\(x = \\pm 1, \\pm 2\\). \\(f(2{,}5) = 39{,}0625 - 31{,}25 + 4 = 11{,}8125\\). \\(f\'(x) = 4x^3 - 10x\\), also \\(f\'(2{,}5) = 62{,}5 - 25 = 37{,}5\\). \\(x_1 = 2{,}5 - \\frac{11{,}8125}{37{,}5} = 2{,}5 - 0{,}315 = 2{,}185\\). Die weiteren Iterationen konvergieren gegen \\(x = 2\\).'
+      },
+      {
+        id: 22,
+        level: 4,
+        typ: 'mc',
+        frage: 'Gegeben ist \\(f(x) = x^2\\). Startwert \\(x_0 = 1\\). Was passiert beim Newton-Verfahren?',
+        optionen: [
+          'Sofortige Konvergenz in einem Schritt',
+          'Konvergenz gegen \\(x = 0\\), aber nur linear (nicht quadratisch)',
+          'Divergenz',
+          'Oszillation zwischen \\(1\\) und \\(-1\\)'
+        ],
+        korrekt: 1,
+        tipp: '\\(x_1 = 1 - \\frac{1}{2} = 0{,}5\\). \\(x_2 = 0{,}25\\). \\(x_3 = 0{,}125\\). Erkennst du das Muster?',
+        loesungsweg: '\\(x_{n+1} = x_n - \\frac{x_n^2}{2x_n} = x_n - \\frac{x_n}{2} = \\frac{x_n}{2}\\). Also \\(x_n = \\frac{1}{2^n} \\to 0\\). Konvergenz, aber nur linear (Halbierung pro Schritt), weil \\(x = 0\\) eine doppelte Nullstelle ist.'
+      },
+      {
+        id: 23,
+        level: 4,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^3 - 6x^2 + 11x - 6 = (x-1)(x-2)(x-3)\\). Startwert \\(x_0 = 3{,}5\\). Berechne \\(x_1\\).',
+        loesung: 3.174,
+        toleranz: 0.01,
+        tipp: '\\(f(3{,}5) = (2{,}5)(1{,}5)(0{,}5) = 1{,}875\\). \\(f\'(x) = 3x^2 - 12x + 11\\), also \\(f\'(3{,}5) = 5{,}75\\).',
+        loesungsweg: '\\(f(3{,}5) = (3{,}5 - 1)(3{,}5 - 2)(3{,}5 - 3) = 2{,}5 \\cdot 1{,}5 \\cdot 0{,}5 = 1{,}875\\). \\(f\'(x) = 3x^2 - 12x + 11\\), also \\(f\'(3{,}5) = 3 \\cdot 12{,}25 - 42 + 11 = 5{,}75\\). \\(x_1 = 3{,}5 - \\frac{1{,}875}{5{,}75} \\approx 3{,}5 - 0{,}326 = 3{,}174\\). Weitere Iterationen konvergieren gegen \\(x = 3\\).'
+      },
+      {
+        id: 24,
+        level: 4,
+        typ: 'mc',
+        frage: 'Man möchte die Gleichung \\(\\cos(x) = x\\) mit dem Newton-Verfahren lösen. Wie muss man die Funktion \\(f\\) definieren?',
+        optionen: [
+          '\\(f(x) = \\cos(x)\\)',
+          '\\(f(x) = x\\)',
+          '\\(f(x) = \\cos(x) - x\\)',
+          '\\(f(x) = \\frac{\\cos(x)}{x}\\)'
+        ],
+        korrekt: 2,
+        tipp: 'Man formt die Gleichung um, sodass eine Seite Null wird.',
+        loesungsweg: '\\(\\cos(x) = x \\Leftrightarrow \\cos(x) - x = 0\\). Also \\(f(x) = \\cos(x) - x\\). Newton-Formel: \\(x_{n+1} = x_n - \\frac{\\cos(x_n) - x_n}{-\\sin(x_n) - 1}\\).'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 5 — schwer (IDs 25–30)
+      // Newton für transzendente Gleichungen
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 25,
+        level: 5,
+        typ: 'numerisch',
+        frage: 'Löse \\(e^x = 3x\\) näherungsweise. Definiere \\(f(x) = e^x - 3x\\). Startwert \\(x_0 = 2\\). Berechne \\(x_1\\).',
+        loesung: 1.6835,
+        toleranz: 0.01,
+        tipp: '\\(f(2) = e^2 - 6 \\approx 7{,}389 - 6 = 1{,}389\\). \\(f\'(x) = e^x - 3\\). \\(f\'(2) = e^2 - 3 \\approx 4{,}389\\).',
+        loesungsweg: '\\(f(2) = e^2 - 6 \\approx 1{,}3891\\). \\(f\'(2) = e^2 - 3 \\approx 4{,}3891\\). \\(x_1 = 2 - \\frac{1{,}3891}{4{,}3891} \\approx 2 - 0{,}3165 = 1{,}6835\\).'
+      },
+      {
+        id: 26,
+        level: 5,
+        typ: 'numerisch',
+        frage: 'Löse \\(\\ln(x) = 2 - x\\) näherungsweise. Definiere \\(f(x) = \\ln(x) - 2 + x\\). Startwert \\(x_0 = 1\\). Berechne \\(x_1\\).',
+        loesung: 1.5,
+        toleranz: 0.01,
+        tipp: '\\(f(1) = 0 - 2 + 1 = -1\\). \\(f\'(x) = \\frac{1}{x} + 1\\). \\(f\'(1) = 2\\).',
+        loesungsweg: '\\(f(1) = \\ln(1) - 2 + 1 = -1\\). \\(f\'(1) = 1 + 1 = 2\\). \\(x_1 = 1 - \\frac{-1}{2} = 1 + 0{,}5 = 1{,}5\\).'
+      },
+      {
+        id: 27,
+        level: 5,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = e^x - 3x\\). Startwert \\(x_0 = 0\\). Berechne \\(x_1\\) (Näherung für die kleinere Lösung von \\(e^x = 3x\\)).',
+        loesung: 0.5,
+        toleranz: 0.01,
+        tipp: '\\(f(0) = 1\\). \\(f\'(0) = e^0 - 3 = -2\\).',
+        loesungsweg: '\\(f(0) = 1 - 0 = 1\\). \\(f\'(0) = 1 - 3 = -2\\). \\(x_1 = 0 - \\frac{1}{-2} = 0 + 0{,}5 = 0{,}5\\)'
+      },
+      {
+        id: 28,
+        level: 5,
+        typ: 'numerisch',
+        frage: 'Löse \\(x \\cdot e^x = 1\\) näherungsweise. \\(f(x) = xe^x - 1\\). Startwert \\(x_0 = 1\\). Berechne \\(x_1\\).',
+        loesung: 0.6839,
+        toleranz: 0.01,
+        tipp: '\\(f(1) = e - 1 \\approx 1{,}718\\). \\(f\'(x) = e^x + xe^x = e^x(1+x)\\). \\(f\'(1) = 2e \\approx 5{,}436\\).',
+        loesungsweg: '\\(f(1) = e - 1 \\approx 1{,}7183\\). \\(f\'(1) = 2e \\approx 5{,}4366\\). \\(x_1 = 1 - \\frac{1{,}7183}{5{,}4366} \\approx 1 - 0{,}3161 = 0{,}6839\\)'
+      },
+      {
+        id: 29,
+        level: 5,
+        typ: 'mc',
+        frage: 'Man löst \\(\\sin(x) = \\frac{x}{2}\\) mit Newton. Die Funktion ist \\(f(x) = \\sin(x) - \\frac{x}{2}\\). Welche Ableitung benötigt man?',
+        optionen: [
+          '\\(f\'(x) = \\cos(x) - \\frac{1}{2}\\)',
+          '\\(f\'(x) = -\\cos(x) - \\frac{1}{2}\\)',
+          '\\(f\'(x) = \\cos(x) + \\frac{1}{2}\\)',
+          '\\(f\'(x) = \\sin(x) - \\frac{1}{2}\\)'
+        ],
+        korrekt: 0,
+        tipp: 'Leite \\(\\sin(x)\\) und \\(\\frac{x}{2}\\) einzeln ab.',
+        loesungsweg: '\\(f\'(x) = \\cos(x) - \\frac{1}{2}\\). Die Ableitung von \\(\\sin(x)\\) ist \\(\\cos(x)\\) und die von \\(-\\frac{x}{2}\\) ist \\(-\\frac{1}{2}\\).'
+      },
+      {
+        id: 30,
+        level: 5,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = \\sin(x) - \\frac{x}{2}\\). Startwert \\(x_0 = 2\\). Berechne \\(x_1\\). (Taschenrechner im Bogenmaß!)',
+        loesung: 1.9010,
+        toleranz: 0.01,
+        tipp: '\\(\\sin(2) \\approx 0{,}9093\\). \\(f(2) \\approx 0{,}9093 - 1 = -0{,}0907\\). \\(f\'(2) = \\cos(2) - 0{,}5 \\approx -0{,}4161 - 0{,}5 = -0{,}9161\\).',
+        loesungsweg: '\\(f(2) = \\sin(2) - 1 \\approx -0{,}0907\\). \\(f\'(2) = \\cos(2) - 0{,}5 \\approx -0{,}9161\\). \\(x_1 = 2 - \\frac{-0{,}0907}{-0{,}9161} \\approx 2 - 0{,}0990 = 1{,}9010\\)'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 6 — wagnerisch (IDs 31–36)
+      // Divergenz, Versagen, mehrfache Nullstellen
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 31,
+        level: 6,
+        typ: 'mc',
+        frage: 'Gegeben ist \\(f(x) = x^3 - 3x + 1\\). Man startet bei \\(x_0 = 0\\). Was passiert?',
+        optionen: [
+          'Konvergenz gegen die Nullstelle bei \\(x \\approx 0{,}347\\)',
+          'Konvergenz gegen die Nullstelle bei \\(x \\approx -1{,}879\\)',
+          'Das Verfahren springt zwischen verschiedenen Werten (Zyklus)',
+          'Division durch Null im ersten Schritt'
+        ],
+        korrekt: 0,
+        tipp: '\\(f(0) = 1\\), \\(f\'(0) = -3\\). \\(x_1 = 0 - \\frac{1}{-3} = \\frac{1}{3} \\approx 0{,}333\\). Nahe an welcher Nullstelle?',
+        loesungsweg: '\\(x_1 = \\frac{1}{3}\\). \\(f(\\frac{1}{3}) \\approx 0{,}037 - 1 + 1 = 0{,}037\\). Das ist nahe an der Nullstelle \\(x \\approx 0{,}347\\). Newton konvergiert dorthin.'
+      },
+      {
+        id: 32,
+        level: 6,
+        typ: 'mc',
+        frage: 'Gegeben ist \\(f(x) = x^{1/3}\\) (Kubikwurzel). Startwert \\(x_0 = 1\\). Was passiert beim Newton-Verfahren?',
+        optionen: [
+          'Schnelle Konvergenz gegen \\(x = 0\\)',
+          'Langsame Konvergenz gegen \\(x = 0\\)',
+          'Divergenz: \\(|x_n| \\to \\infty\\)',
+          'Oszillation um \\(x = 0\\)'
+        ],
+        korrekt: 2,
+        tipp: '\\(f\'(x) = \\frac{1}{3}x^{-2/3}\\). Berechne \\(x_1 = x_0 - \\frac{x_0^{1/3}}{\\frac{1}{3}x_0^{-2/3}} = x_0 - 3x_0\\).',
+        loesungsweg: '\\(x_1 = x_0 - \\frac{x_0^{1/3}}{\\frac{1}{3}x_0^{-2/3}} = x_0 - 3x_0 = -2x_0\\). Also \\(x_1 = -2\\), \\(x_2 = 4\\), \\(x_3 = -8\\), ... Die Beträge wachsen: \\(|x_n| = 2^n \\to \\infty\\). Divergenz!'
+      },
+      {
+        id: 33,
+        level: 6,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = (x - 1)^2\\) (doppelte Nullstelle). Startwert \\(x_0 = 3\\). Berechne \\(x_1\\) und \\(x_2\\).',
+        loesung: 1.5,
+        toleranz: 0.01,
+        tipp: '\\(x_{n+1} = x_n - \\frac{(x_n - 1)^2}{2(x_n - 1)} = x_n - \\frac{x_n - 1}{2} = \\frac{x_n + 1}{2}\\).',
+        loesungsweg: '\\(x_{n+1} = \\frac{x_n + 1}{2}\\). \\(x_1 = \\frac{3 + 1}{2} = 2\\). \\(x_2 = \\frac{2 + 1}{2} = 1{,}5\\). Antwort: \\(x_2 = 1{,}5\\). Beachte: nur lineare Konvergenz wegen doppelter Nullstelle!'
+      },
+      {
+        id: 34,
+        level: 6,
+        typ: 'mc',
+        frage: 'Bei einer doppelten Nullstelle \\(f(x) = (x - a)^2\\) konvergiert Newton nur linear statt quadratisch. Mit welcher Modifikation kann man quadratische Konvergenz wiederherstellen?',
+        optionen: [
+          '\\(x_{n+1} = x_n - 2 \\cdot \\frac{f(x_n)}{f\'(x_n)}\\)',
+          '\\(x_{n+1} = x_n - \\frac{f(x_n)}{f\'(x_n) + 1}\\)',
+          '\\(x_{n+1} = x_n - \\frac{f(x_n)}{2 \\cdot f\'(x_n)}\\)',
+          '\\(x_{n+1} = x_n - \\frac{f\'(x_n)}{f\'\'(x_n)}\\)'
+        ],
+        korrekt: 0,
+        tipp: 'Bei einer Nullstelle der Vielfachheit \\(m\\) multipliziert man den Newton-Korrekturterm mit \\(m\\).',
+        loesungsweg: 'Modifizierte Newton-Formel: \\(x_{n+1} = x_n - m \\cdot \\frac{f(x_n)}{f\'(x_n)}\\). Für eine doppelte Nullstelle (\\(m = 2\\)): \\(x_{n+1} = x_n - 2 \\cdot \\frac{f(x_n)}{f\'(x_n)}\\). Damit wird die quadratische Konvergenz wiederhergestellt.'
+      },
+      {
+        id: 35,
+        level: 6,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = e^x - x - 2\\). Startwert \\(x_0 = 1\\). Berechne \\(x_2\\) (zwei Newton-Schritte).',
+        loesung: 1.1462,
+        toleranz: 0.01,
+        tipp: '\\(f(1) = e - 3 \\approx -0{,}2817\\). \\(f\'(1) = e - 1 \\approx 1{,}7183\\). Berechne \\(x_1\\), dann \\(x_2\\).',
+        loesungsweg: '\\(x_1 = 1 - \\frac{-0{,}2817}{1{,}7183} \\approx 1 + 0{,}1639 = 1{,}1639\\). \\(f(1{,}1639) \\approx 3{,}2025 - 3{,}1639 = 0{,}0386\\). \\(f\'(1{,}1639) \\approx 2{,}2025\\). \\(x_2 \\approx 1{,}1639 - 0{,}0175 = 1{,}1462\\).'
+      },
+      {
+        id: 36,
+        level: 6,
+        typ: 'mc',
+        frage: 'Welche der folgenden Situationen führt garantiert zum Versagen des Newton-Verfahrens?',
+        optionen: [
+          'Die Funktion hat mehrere Nullstellen',
+          'Der Startwert liegt in der Nähe eines lokalen Extremums mit \\(f\'(x_0) \\approx 0\\)',
+          'Die Funktion ist ein Polynom vierten Grades',
+          'Die Funktion hat eine Nullstelle bei \\(x = 0\\)'
+        ],
+        korrekt: 1,
+        tipp: 'In der Newton-Formel steht \\(f\'(x_n)\\) im Nenner. Was passiert, wenn dieser Wert sehr klein wird?',
+        loesungsweg: 'Wenn \\(f\'(x_n) \\approx 0\\) (nahe eines Extremums), wird der Korrekturterm \\(\\frac{f(x_n)}{f\'(x_n)}\\) sehr groß. Der nächste Wert \\(x_{n+1}\\) springt weit weg, was zu Divergenz oder Oszillation führt. Mehrere Nullstellen oder Polynomgrad sind kein Hindernis.'
+      }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tangenten &amp; Normalen - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '11-analysis-tangenten-normalen';
+    const THEMA_CONFIG = { name: 'Tangenten & Normalen', bereich: 'analysis' };
+    const AUFGABEN = [
+
+      // ═══════════════════════════════════════════════════════════
+      // Level 1 — Steigung an einer Stelle berechnen
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 1, level: 1, typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^2\\). Berechne \\(f\'(3)\\).',
+        loesung: 6, toleranz: 0,
+        tipp: 'Die Ableitung von \\(x^2\\) ist \\(2x\\). Setze \\(x = 3\\) ein.',
+        loesungsweg: '\\(f\'(x) = 2x \\Rightarrow f\'(3) = 2 \\cdot 3 = 6\\)'
+      },
+      {
+        id: 2, level: 1, typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = 3x^2\\). Berechne \\(f\'(2)\\).',
+        loesung: 12, toleranz: 0,
+        tipp: 'Die Ableitung von \\(3x^2\\) ist \\(6x\\).',
+        loesungsweg: '\\(f\'(x) = 6x \\Rightarrow f\'(2) = 6 \\cdot 2 = 12\\)'
+      },
+      {
+        id: 3, level: 1, typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^3\\). Berechne \\(f\'(2)\\).',
+        loesung: 12, toleranz: 0,
+        tipp: 'Die Ableitung von \\(x^3\\) ist \\(3x^2\\).',
+        loesungsweg: '\\(f\'(x) = 3x^2 \\Rightarrow f\'(2) = 3 \\cdot 4 = 12\\)'
+      },
+      {
+        id: 4, level: 1, typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^2 + 4x\\). Berechne \\(f\'(1)\\).',
+        loesung: 6, toleranz: 0,
+        tipp: 'Leite gliedweise ab: \\(f\'(x) = 2x + 4\\).',
+        loesungsweg: '\\(f\'(x) = 2x + 4 \\Rightarrow f\'(1) = 2 + 4 = 6\\)'
+      },
+      {
+        id: 5, level: 1, typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = 5x^2 - 3x\\). Berechne \\(f\'(1)\\).',
+        loesung: 7, toleranz: 0,
+        tipp: 'Ableitung: \\(f\'(x) = 10x - 3\\).',
+        loesungsweg: '\\(f\'(x) = 10x - 3 \\Rightarrow f\'(1) = 10 - 3 = 7\\)'
+      },
+      {
+        id: 6, level: 1, typ: 'mc',
+        frage: 'Was gibt die Ableitung \\(f\'(x_0)\\) geometrisch an?',
+        optionen: [
+          'Den Funktionswert an der Stelle \\(x_0\\)',
+          'Die Steigung der Tangente an der Stelle \\(x_0\\)',
+          'Den Flächeninhalt unter dem Graphen',
+          'Die Krümmung an der Stelle \\(x_0\\)'
+        ],
+        korrekt: 1,
+        tipp: 'Die Ableitung beschreibt die momentane Änderungsrate.',
+        loesungsweg: 'Die Ableitung \\(f\'(x_0)\\) ist die Steigung der Tangente an den Graphen von \\(f\\) im Punkt \\((x_0, f(x_0))\\).'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // Level 2 — Tangentengleichung aufstellen (einfach)
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 7, level: 2, typ: 'numerisch',
+        frage: 'Bestimme den y-Achsenabschnitt der Tangente an \\(f(x) = x^2\\) im Punkt \\(x_0 = 2\\).<br>Die Tangente hat die Form \\(t(x) = mx + b\\). Gib \\(b\\) an.',
+        loesung: -4, toleranz: 0,
+        tipp: 'Tangentengleichung: \\(t(x) = f\'(x_0)(x - x_0) + f(x_0)\\). Multipliziere aus und lies \\(b\\) ab.',
+        loesungsweg: '\\(f\'(2) = 4\\), \\(f(2) = 4\\). Tangente: \\(t(x) = 4(x - 2) + 4 = 4x - 4\\). Also \\(b = -4\\).'
+      },
+      {
+        id: 8, level: 2, typ: 'numerisch',
+        frage: 'Bestimme die Steigung der Tangente an \\(f(x) = x^2 - 2x\\) im Punkt \\(x_0 = 3\\).',
+        loesung: 4, toleranz: 0,
+        tipp: 'Bilde die Ableitung und setze \\(x_0 = 3\\) ein.',
+        loesungsweg: '\\(f\'(x) = 2x - 2 \\Rightarrow f\'(3) = 4\\)'
+      },
+      {
+        id: 9, level: 2, typ: 'numerisch',
+        frage: 'Die Tangente an \\(f(x) = x^2\\) bei \\(x_0 = 1\\) hat die Form \\(t(x) = mx + b\\). Gib \\(b\\) an.',
+        loesung: -1, toleranz: 0,
+        tipp: 'Berechne \\(f(1)\\) und \\(f\'(1)\\), dann stelle die Tangentengleichung auf.',
+        loesungsweg: '\\(f(1) = 1\\), \\(f\'(1) = 2\\). Tangente: \\(t(x) = 2(x-1) + 1 = 2x - 1\\). Also \\(b = -1\\).'
+      },
+      {
+        id: 10, level: 2, typ: 'numerisch',
+        frage: 'Berechne den Funktionswert der Tangente an \\(f(x) = x^2 + 1\\) bei \\(x_0 = 2\\) an der Stelle \\(x = 0\\).',
+        loesung: -3, toleranz: 0,
+        tipp: 'Stelle zuerst die Tangentengleichung auf und setze dann \\(x = 0\\) ein.',
+        loesungsweg: '\\(f(2) = 5\\), \\(f\'(2) = 4\\). Tangente: \\(t(x) = 4(x-2) + 5 = 4x - 3\\). \\(t(0) = -3\\).'
+      },
+      {
+        id: 11, level: 2, typ: 'mc',
+        frage: 'Wie lautet die allgemeine Tangentengleichung im Punkt \\((x_0, f(x_0))\\)?',
+        optionen: [
+          '\\(t(x) = f(x_0) \\cdot (x - x_0) + f\'(x_0)\\)',
+          '\\(t(x) = f\'(x_0) \\cdot (x - x_0) + f(x_0)\\)',
+          '\\(t(x) = f\'(x_0) \\cdot x + f(x_0)\\)',
+          '\\(t(x) = f(x_0) \\cdot x + f\'(x_0)\\)'
+        ],
+        korrekt: 1,
+        tipp: 'Punkt-Steigungsform: Steigung mal \\((x - x_0)\\) plus Funktionswert.',
+        loesungsweg: 'Die Tangentengleichung lautet: \\(t(x) = f\'(x_0) \\cdot (x - x_0) + f(x_0)\\).'
+      },
+      {
+        id: 12, level: 2, typ: 'numerisch',
+        frage: 'Bestimme den y-Achsenabschnitt der Tangente an \\(f(x) = 2x^2 + x\\) im Punkt \\(x_0 = 1\\).<br>Gib \\(b\\) an.',
+        loesung: -2, toleranz: 0,
+        tipp: '\\(f(1) = 3\\), \\(f\'(1) = 5\\). Tangente: \\(t(x) = 5(x - 1) + 3\\).',
+        loesungsweg: '\\(f\'(x) = 4x + 1\\), \\(f\'(1) = 5\\), \\(f(1) = 3\\). \\(t(x) = 5(x-1)+3 = 5x - 2\\). Also \\(b = -2\\).'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // Level 3 — Tangentengleichung bei kubischen Funktionen
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 13, level: 3, typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^3 - 2x\\). Bestimme den y-Achsenabschnitt der Tangente bei \\(x_0 = 1\\).<br>Gib \\(b\\) an.',
+        loesung: -2, toleranz: 0,
+        tipp: 'Berechne \\(f(1)\\) und \\(f\'(1)\\). Die Ableitung ist \\(f\'(x) = 3x^2 - 2\\).',
+        loesungsweg: '\\(f(1) = -1\\), \\(f\'(1) = 1\\). Tangente: \\(t(x) = 1 \\cdot (x - 1) + (-1) = x - 2\\). Also \\(b = -2\\).'
+      },
+      {
+        id: 14, level: 3, typ: 'numerisch',
+        frage: 'Bestimme die Steigung der Tangente an \\(f(x) = x^3 - 3x^2 + 2\\) bei \\(x_0 = 2\\).',
+        loesung: 0, toleranz: 0,
+        tipp: '\\(f\'(x) = 3x^2 - 6x\\). Setze \\(x_0 = 2\\) ein.',
+        loesungsweg: '\\(f\'(x) = 3x^2 - 6x \\Rightarrow f\'(2) = 12 - 12 = 0\\). Die Tangente ist waagerecht.'
+      },
+      {
+        id: 15, level: 3, typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = x^3 + x\\). Bestimme den y-Achsenabschnitt der Tangente bei \\(x_0 = -1\\).<br>Gib \\(b\\) an.',
+        loesung: 2, toleranz: 0,
+        tipp: '\\(f(-1) = -2\\), \\(f\'(x) = 3x^2 + 1\\), \\(f\'(-1) = 4\\).',
+        loesungsweg: '\\(f(-1) = -2\\), \\(f\'(-1) = 4\\). Tangente: \\(t(x) = 4(x+1) - 2 = 4x + 2\\). Also \\(b = 2\\).'
+      },
+      {
+        id: 16, level: 3, typ: 'numerisch',
+        frage: 'Die Tangente an \\(f(x) = \\frac{1}{3}x^3 - x\\) bei \\(x_0 = 3\\) schneidet die y-Achse. Berechne diesen y-Achsenabschnitt \\(b\\).',
+        loesung: -18, toleranz: 0,
+        tipp: '\\(f(3) = 9 - 3 = 6\\), \\(f\'(x) = x^2 - 1\\), \\(f\'(3) = 8\\).',
+        loesungsweg: '\\(f(3) = 6\\), \\(f\'(3) = 8\\). Tangente: \\(t(x) = 8(x - 3) + 6 = 8x - 18\\). Also \\(b = -18\\).'
+      },
+      {
+        id: 17, level: 3, typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = -x^3 + 6x\\). Berechne die Steigung der Tangente bei \\(x_0 = -1\\).',
+        loesung: 3, toleranz: 0,
+        tipp: '\\(f\'(x) = -3x^2 + 6\\). Setze \\(x_0 = -1\\) ein.',
+        loesungsweg: '\\(f\'(x) = -3x^2 + 6 \\Rightarrow f\'(-1) = -3 + 6 = 3\\)'
+      },
+      {
+        id: 18, level: 3, typ: 'mc',
+        frage: 'Die Tangente an \\(f(x) = x^3 - 3x^2 + 2\\) bei \\(x_0 = 2\\) hat die Steigung \\(0\\). Was bedeutet das geometrisch?',
+        optionen: [
+          'Der Graph hat eine Nullstelle',
+          'Der Graph hat einen Extrempunkt',
+          'Der Graph hat einen Wendepunkt',
+          'Die Funktion ist nicht differenzierbar'
+        ],
+        korrekt: 1,
+        tipp: 'Wenn die Tangente waagerecht ist, hat die Ableitung den Wert 0.',
+        loesungsweg: 'Eine waagerechte Tangente (\\(f\'(x_0) = 0\\)) deutet auf einen Extrempunkt (Hoch- oder Tiefpunkt) hin. Hier: \\(f\'\'(2) = 6 \\cdot 2 - 6 = 6 > 0\\), also Tiefpunkt.'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // Level 4 — Normalengleichung & Anstiegswinkel
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 19, level: 4, typ: 'numerisch',
+        frage: 'Bestimme die Steigung der Normalen an \\(f(x) = x^2\\) im Punkt \\(x_0 = 2\\).',
+        loesung: -0.25, toleranz: 0.01,
+        tipp: 'Die Normale steht senkrecht auf der Tangente. Wenn \\(m_t\\) die Tangentensteigung ist, dann ist \\(m_n = -\\frac{1}{m_t}\\).',
+        loesungsweg: '\\(f\'(2) = 4\\). Normalensteigung: \\(m_n = -\\frac{1}{4} = -0{,}25\\).'
+      },
+      {
+        id: 20, level: 4, typ: 'numerisch',
+        frage: 'Berechne den Anstiegswinkel der Tangente an \\(f(x) = x^2\\) bei \\(x_0 = 1\\) in Grad (gerundet auf eine Dezimale).',
+        loesung: 63.4, toleranz: 0.1,
+        tipp: 'Der Anstiegswinkel \\(\\alpha\\) berechnet sich über \\(\\alpha = \\arctan(m)\\), wobei \\(m = f\'(x_0)\\).',
+        loesungsweg: '\\(f\'(1) = 2\\). \\(\\alpha = \\arctan(2) \\approx 63{,}4°\\).'
+      },
+      {
+        id: 21, level: 4, typ: 'numerisch',
+        frage: 'Bestimme den y-Achsenabschnitt der Normalen an \\(f(x) = x^2 + 1\\) im Punkt \\(x_0 = 2\\).<br>Gib \\(b\\) an.',
+        loesung: 5.5, toleranz: 0.01,
+        tipp: 'Normalensteigung: \\(m_n = -\\frac{1}{f\'(2)}\\). Verwende die Punkt-Steigungsform mit dem Punkt \\((2, f(2))\\).',
+        loesungsweg: '\\(f(2) = 5\\), \\(f\'(2) = 4\\), \\(m_n = -0{,}25\\). Normale: \\(n(x) = -0{,}25(x-2) + 5 = -0{,}25x + 5{,}5\\). Also \\(b = 5{,}5\\).'
+      },
+      {
+        id: 22, level: 4, typ: 'numerisch',
+        frage: 'Berechne den Anstiegswinkel der Tangente an \\(f(x) = x^3\\) bei \\(x_0 = 1\\) in Grad (gerundet auf eine Dezimale).',
+        loesung: 71.6, toleranz: 0.1,
+        tipp: '\\(f\'(1) = 3\\). Berechne \\(\\alpha = \\arctan(3)\\).',
+        loesungsweg: '\\(f\'(1) = 3\\). \\(\\alpha = \\arctan(3) \\approx 71{,}6°\\).'
+      },
+      {
+        id: 23, level: 4, typ: 'numerisch',
+        frage: 'Bestimme die Steigung der Normalen an \\(f(x) = x^3 - 3x\\) im Punkt \\(x_0 = 2\\).',
+        loesung: -1/9, toleranz: 0.01,
+        tipp: '\\(f\'(x) = 3x^2 - 3\\). Die Normalensteigung ist \\(-\\frac{1}{f\'(x_0)}\\).',
+        loesungsweg: '\\(f\'(2) = 9\\). Normalensteigung: \\(m_n = -\\frac{1}{9} \\approx -0{,}111\\).'
+      },
+      {
+        id: 24, level: 4, typ: 'mc',
+        frage: 'Welche Beziehung besteht zwischen der Tangentensteigung \\(m_t\\) und der Normalensteigung \\(m_n\\)?',
+        optionen: [
+          '\\(m_n = m_t\\)',
+          '\\(m_n = -m_t\\)',
+          '\\(m_n = -\\frac{1}{m_t}\\)',
+          '\\(m_n = \\frac{1}{m_t}\\)'
+        ],
+        korrekt: 2,
+        tipp: 'Zwei senkrechte Geraden haben Steigungen, deren Produkt \\(-1\\) ergibt.',
+        loesungsweg: 'Für senkrechte Geraden gilt: \\(m_t \\cdot m_n = -1\\), also \\(m_n = -\\frac{1}{m_t}\\).'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // Level 5 — Stelle mit vorgegebener Steigung / Tangente durch externen Punkt
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 25, level: 5, typ: 'numerisch',
+        frage: 'An welcher Stelle \\(x_0\\) hat die Tangente an \\(f(x) = x^2\\) die Steigung \\(8\\)?',
+        loesung: 4, toleranz: 0,
+        tipp: 'Setze \\(f\'(x_0) = 8\\) und löse nach \\(x_0\\) auf.',
+        loesungsweg: '\\(f\'(x) = 2x\\). \\(2x_0 = 8 \\Rightarrow x_0 = 4\\).'
+      },
+      {
+        id: 26, level: 5, typ: 'numerisch',
+        frage: 'An welcher Stelle \\(x_0 > 0\\) hat die Tangente an \\(f(x) = x^3\\) die Steigung \\(12\\)?',
+        loesung: 2, toleranz: 0,
+        tipp: '\\(f\'(x) = 3x^2\\). Löse \\(3x_0^2 = 12\\).',
+        loesungsweg: '\\(3x_0^2 = 12 \\Rightarrow x_0^2 = 4 \\Rightarrow x_0 = 2\\) (da \\(x_0 > 0\\)).'
+      },
+      {
+        id: 27, level: 5, typ: 'numerisch',
+        frage: 'Vom Punkt \\(P(0, -1)\\) wird eine Tangente an \\(f(x) = x^2\\) gelegt. Bestimme die positive Berührstelle \\(x_0\\).',
+        loesung: 1, toleranz: 0,
+        tipp: 'Die Tangente durch \\(P\\) muss den Graphen berühren. Setze \\(P\\) in die Tangentengleichung \\(t(x) = 2x_0(x - x_0) + x_0^2\\) ein.',
+        loesungsweg: 'Tangente bei \\(x_0\\): \\(t(x) = 2x_0 \\cdot x - x_0^2\\). \\(P(0,-1)\\) einsetzen: \\(-1 = -x_0^2 \\Rightarrow x_0^2 = 1 \\Rightarrow x_0 = 1\\).'
+      },
+      {
+        id: 28, level: 5, typ: 'numerisch',
+        frage: 'An welcher Stelle \\(x_0\\) hat die Tangente an \\(f(x) = \\frac{1}{3}x^3 - x\\) die Steigung \\(0\\)?<br>Gib die positive Lösung an.',
+        loesung: 1, toleranz: 0,
+        tipp: '\\(f\'(x) = x^2 - 1 = 0\\). Löse nach \\(x\\) auf.',
+        loesungsweg: '\\(f\'(x) = x^2 - 1 = 0 \\Rightarrow x = \\pm 1\\). Positive Lösung: \\(x_0 = 1\\).'
+      },
+      {
+        id: 29, level: 5, typ: 'numerisch',
+        frage: 'Vom Punkt \\(P(0, -4)\\) wird eine Tangente an \\(f(x) = x^2\\) gelegt. Bestimme die positive Berührstelle \\(x_0\\).',
+        loesung: 2, toleranz: 0,
+        tipp: 'Tangente bei \\(x_0\\): \\(t(x) = 2x_0 x - x_0^2\\). Setze \\(P(0, -4)\\) ein: \\(-4 = -x_0^2\\).',
+        loesungsweg: '\\(-4 = -x_0^2 \\Rightarrow x_0^2 = 4 \\Rightarrow x_0 = 2\\).'
+      },
+      {
+        id: 30, level: 5, typ: 'mc',
+        frage: 'Von einem Punkt \\(P\\) unterhalb der Parabel \\(f(x) = x^2\\) werden Tangenten an den Graphen gelegt. Wie viele Tangenten gibt es im Allgemeinen?',
+        optionen: [
+          'Keine Tangente',
+          'Genau eine Tangente',
+          'Genau zwei Tangenten',
+          'Unendlich viele Tangenten'
+        ],
+        korrekt: 2,
+        tipp: 'Die Bedingung führt auf eine quadratische Gleichung für die Berührstelle.',
+        loesungsweg: 'Liegt \\(P\\) unterhalb der Parabel, hat die Gleichung \\(P \\in t(x)\\) zwei Lösungen. Es gibt also genau zwei Tangenten.'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // Level 6 — Zwei Tangenten von externem Punkt / Tangente parallel zu Gerade
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 31, level: 6, typ: 'numerisch',
+        frage: 'Bestimme die Summe der beiden Berührstellen der Tangenten von \\(P(0, -9)\\) an \\(f(x) = x^2\\).',
+        loesung: 0, toleranz: 0,
+        tipp: 'Tangente bei \\(x_0\\): \\(t(x) = 2x_0 x - x_0^2\\). Setze \\(P\\) ein: \\(-9 = -x_0^2\\), also \\(x_0 = \\pm 3\\).',
+        loesungsweg: '\\(-9 = -x_0^2 \\Rightarrow x_0 = \\pm 3\\). Summe: \\(3 + (-3) = 0\\).'
+      },
+      {
+        id: 32, level: 6, typ: 'numerisch',
+        frage: 'An welcher Stelle \\(x_0\\) ist die Tangente an \\(f(x) = x^3 - 3x\\) parallel zur Geraden \\(g(x) = 9x + 1\\)?<br>Gib die positive Lösung an.',
+        loesung: 2, toleranz: 0,
+        tipp: 'Parallel bedeutet gleiche Steigung. Setze \\(f\'(x_0) = 9\\).',
+        loesungsweg: '\\(f\'(x) = 3x^2 - 3\\). \\(3x_0^2 - 3 = 9 \\Rightarrow x_0^2 = 4 \\Rightarrow x_0 = 2\\).'
+      },
+      {
+        id: 33, level: 6, typ: 'numerisch',
+        frage: 'Die Tangente an \\(f(x) = x^2 - 4x + 5\\) soll parallel zur Geraden \\(g(x) = 2x - 1\\) sein. Bestimme die Berührstelle \\(x_0\\).',
+        loesung: 3, toleranz: 0,
+        tipp: '\\(f\'(x) = 2x - 4\\). Setze \\(f\'(x_0) = 2\\) und löse nach \\(x_0\\).',
+        loesungsweg: '\\(2x_0 - 4 = 2 \\Rightarrow x_0 = 3\\).'
+      },
+      {
+        id: 34, level: 6, typ: 'numerisch',
+        frage: 'Vom Punkt \\(P(2, -5)\\) werden zwei Tangenten an \\(f(x) = x^2\\) gelegt. Berechne das Produkt der beiden Berührstellen.',
+        loesung: -5, toleranz: 0,
+        tipp: 'Tangente bei \\(x_0\\): \\(t(x) = 2x_0 x - x_0^2\\). Setze \\(P(2,-5)\\) ein und löse die quadratische Gleichung.',
+        loesungsweg: '\\(-5 = 4x_0 - x_0^2 \\Rightarrow x_0^2 - 4x_0 - 5 = 0\\). Mit Vieta: \\(x_1 \\cdot x_2 = -5\\). (Lösungen: \\(x_0 = 5\\) und \\(x_0 = -1\\).)'
+      },
+      {
+        id: 35, level: 6, typ: 'numerisch',
+        frage: 'Die Tangente an \\(f(x) = x^3\\) bei \\(x_0 = 1\\) schneidet den Graphen in einem weiteren Punkt. Bestimme die x-Koordinate dieses Schnittpunkts.',
+        loesung: -2, toleranz: 0,
+        tipp: 'Tangente: \\(t(x) = 3x - 2\\). Setze \\(x^3 = 3x - 2\\), also \\(x^3 - 3x + 2 = 0\\). Klammere \\((x-1)^2\\) aus.',
+        loesungsweg: '\\(f(1)=1\\), \\(f\'(1)=3\\). Tangente: \\(t(x)=3(x-1)+1=3x-2\\). \\(x^3=3x-2 \\Rightarrow x^3-3x+2=0\\). Polynomdivision durch \\((x-1)^2\\): \\((x-1)^2(x+2)=0\\). Zweiter Schnittpunkt: \\(x = -2\\).'
+      },
+      {
+        id: 36, level: 6, typ: 'numerisch',
+        frage: 'An welcher Stelle \\(x_0 > 0\\) verläuft die Tangente an \\(f(x) = x^2\\) unter einem Winkel von \\(45°\\) zur x-Achse?',
+        loesung: 0.5, toleranz: 0.01,
+        tipp: '\\(\\tan(45°) = 1\\). Setze \\(f\'(x_0) = 1\\).',
+        loesungsweg: '\\(f\'(x) = 2x\\). \\(\\tan(45°) = 1 \\Rightarrow 2x_0 = 1 \\Rightarrow x_0 = 0{,}5\\).'
+      }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

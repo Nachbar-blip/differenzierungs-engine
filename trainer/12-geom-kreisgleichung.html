@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kreisgleichung - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #70AD47; --spirale-secondary: #2E7D32; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '12-geom-kreisgleichung';
+    const THEMA_CONFIG = { name: 'Kreisgleichung', bereich: 'geometrie' };
+    const AUFGABEN = [
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 1 — Radius und Mittelpunkt aus Normalform ablesen
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 1, level: 1, typ: "numerisch",
+        frage: "Gegeben ist der Kreis \\((x-3)^2 + (y-4)^2 = 25\\). Wie groß ist der Radius \\(r\\)?",
+        loesung: 5, toleranz: 0,
+        tipp: "Die Kreisgleichung hat die Form \\((x-a)^2 + (y-b)^2 = r^2\\). Ziehe die Wurzel aus der rechten Seite.",
+        loesungsweg: "\\(r^2 = 25\\), also \\(r = \\sqrt{25} = 5\\)."
+    },
+    {
+        id: 2, level: 1, typ: "numerisch",
+        frage: "Gegeben ist \\((x+2)^2 + (y-1)^2 = 16\\). Welche \\(x\\)-Koordinate hat der Mittelpunkt?",
+        loesung: -2, toleranz: 0,
+        tipp: "\\((x+2)^2 = (x-(-2))^2\\). Der Mittelpunkt ist \\(M(a \\mid b)\\), wobei \\((x-a)^2 + (y-b)^2 = r^2\\).",
+        loesungsweg: "\\((x+2)^2 = (x-(-2))^2\\), also \\(a = -2\\). Der Mittelpunkt hat die \\(x\\)-Koordinate \\(-2\\)."
+    },
+    {
+        id: 3, level: 1, typ: "numerisch",
+        frage: "Gegeben ist \\((x-5)^2 + (y+3)^2 = 49\\). Wie groß ist der Radius?",
+        loesung: 7, toleranz: 0,
+        tipp: "\\(r^2 = 49\\). Ziehe die Wurzel.",
+        loesungsweg: "\\(r = \\sqrt{49} = 7\\)."
+    },
+    {
+        id: 4, level: 1, typ: "mc",
+        frage: "Welchen Mittelpunkt hat der Kreis \\((x-1)^2 + (y+5)^2 = 9\\)?",
+        optionen: ["\\(M(1 \\mid -5)\\)", "\\(M(-1 \\mid 5)\\)", "\\(M(1 \\mid 5)\\)", "\\(M(-1 \\mid -5)\\)"],
+        korrekt: 0,
+        tipp: "\\((y+5)^2 = (y-(-5))^2\\). Der Mittelpunkt ist \\(M(a \\mid b)\\) mit \\((x-a)^2 + (y-b)^2 = r^2\\).",
+        loesungsweg: "Aus \\((x-1)^2 + (y-(-5))^2 = 9\\) folgt \\(M(1 \\mid -5)\\)."
+    },
+    {
+        id: 5, level: 1, typ: "numerisch",
+        frage: "Gegeben ist \\(x^2 + y^2 = 36\\). Wie groß ist der Radius?",
+        loesung: 6, toleranz: 0,
+        tipp: "Ein Kreis mit \\(x^2 + y^2 = r^2\\) hat den Mittelpunkt im Ursprung.",
+        loesungsweg: "\\(r^2 = 36\\), also \\(r = 6\\). Mittelpunkt ist \\(M(0 \\mid 0)\\)."
+    },
+    {
+        id: 6, level: 1, typ: "mc",
+        frage: "Welcher Kreis hat den Mittelpunkt \\(M(0 \\mid 0)\\) und den Radius \\(r = 4\\)?",
+        optionen: ["\\(x^2 + y^2 = 16\\)", "\\(x^2 + y^2 = 4\\)", "\\((x-4)^2 + y^2 = 16\\)", "\\(x^2 + y^2 = 8\\)"],
+        korrekt: 0,
+        tipp: "Setze \\(a = 0\\), \\(b = 0\\) und \\(r = 4\\) in \\((x-a)^2 + (y-b)^2 = r^2\\) ein.",
+        loesungsweg: "\\((x-0)^2 + (y-0)^2 = 4^2\\), also \\(x^2 + y^2 = 16\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 2 — Kreisgleichung aus M und r aufstellen
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 7, level: 2, typ: "numerisch",
+        frage: "Ein Kreis hat den Mittelpunkt \\(M(2 \\mid -3)\\) und den Radius \\(r = 4\\). Wie lautet die rechte Seite der Kreisgleichung \\((x-2)^2 + (y+3)^2 = \\,?\\)",
+        loesung: 16, toleranz: 0,
+        tipp: "Die rechte Seite ist \\(r^2\\).",
+        loesungsweg: "\\(r^2 = 4^2 = 16\\). Die Gleichung lautet \\((x-2)^2 + (y+3)^2 = 16\\)."
+    },
+    {
+        id: 8, level: 2, typ: "mc",
+        frage: "Wie lautet die Kreisgleichung für \\(M(-1 \\mid 4)\\) und \\(r = 3\\)?",
+        optionen: [
+            "\\((x+1)^2 + (y-4)^2 = 9\\)",
+            "\\((x-1)^2 + (y+4)^2 = 9\\)",
+            "\\((x+1)^2 + (y-4)^2 = 3\\)",
+            "\\((x-1)^2 + (y-4)^2 = 9\\)"
+        ],
+        korrekt: 0,
+        tipp: "\\((x-(-1))^2 = (x+1)^2\\) und \\(r^2 = 9\\).",
+        loesungsweg: "\\((x-(-1))^2 + (y-4)^2 = 3^2\\), also \\((x+1)^2 + (y-4)^2 = 9\\)."
+    },
+    {
+        id: 9, level: 2, typ: "numerisch",
+        frage: "Ein Kreis hat den Mittelpunkt \\(M(3 \\mid 1)\\) und geht durch den Punkt \\(P(6 \\mid 5)\\). Berechne \\(r^2\\).",
+        loesung: 25, toleranz: 0,
+        tipp: "\\(r = |MP|\\). Berechne \\(r^2 = (6-3)^2 + (5-1)^2\\).",
+        loesungsweg: "\\(r^2 = (6-3)^2 + (5-1)^2 = 9 + 16 = 25\\)."
+    },
+    {
+        id: 10, level: 2, typ: "numerisch",
+        frage: "Ein Kreis hat den Mittelpunkt \\(M(0 \\mid 2)\\) und geht durch \\(P(3 \\mid 6)\\). Wie groß ist der Radius?",
+        loesung: 5, toleranz: 0,
+        tipp: "Berechne den Abstand \\(|MP| = \\sqrt{(3-0)^2 + (6-2)^2}\\).",
+        loesungsweg: "\\(r = \\sqrt{3^2 + 4^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5\\)."
+    },
+    {
+        id: 11, level: 2, typ: "numerisch",
+        frage: "Stelle die Kreisgleichung für \\(M(4 \\mid -2)\\) und \\(r = \\sqrt{10}\\) auf. Wie lautet \\(r^2\\)?",
+        loesung: 10, toleranz: 0,
+        tipp: "\\(r^2 = (\\sqrt{10})^2 = 10\\).",
+        loesungsweg: "\\((x-4)^2 + (y+2)^2 = 10\\). Die rechte Seite ist \\(r^2 = 10\\)."
+    },
+    {
+        id: 12, level: 2, typ: "numerisch",
+        frage: "Ein Kreis hat den Durchmesser \\(\\overline{AB}\\) mit \\(A(1 \\mid 3)\\) und \\(B(5 \\mid 7)\\). Berechne \\(r^2\\).",
+        loesung: 8, toleranz: 0,
+        tipp: "Der Mittelpunkt ist der Mittelpunkt von \\(AB\\). Der Radius ist der halbe Durchmesser: \\(r = \\frac{|AB|}{2}\\).",
+        loesungsweg: "\\(M = \\left(\\frac{1+5}{2} \\mid \\frac{3+7}{2}\\right) = (3 \\mid 5)\\). \\(|AB|^2 = (5-1)^2 + (7-3)^2 = 16+16 = 32\\). \\(r^2 = \\frac{|AB|^2}{4} = \\frac{32}{4} = 8\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 3 — Quadratische Ergänzung: Allgemeine Form → Normalform
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 13, level: 3, typ: "numerisch",
+        frage: "Bestimme den Radius des Kreises \\(x^2 + y^2 - 4x + 6y - 3 = 0\\).",
+        loesung: 4, toleranz: 0,
+        tipp: "Quadratische Ergänzung: \\(x^2 - 4x = (x-2)^2 - 4\\) und \\(y^2 + 6y = (y+3)^2 - 9\\).",
+        loesungsweg: "\\((x-2)^2 - 4 + (y+3)^2 - 9 - 3 = 0\\), also \\((x-2)^2 + (y+3)^2 = 16\\). \\(r = 4\\)."
+    },
+    {
+        id: 14, level: 3, typ: "numerisch",
+        frage: "Gegeben ist \\(x^2 + y^2 + 2x - 8y + 8 = 0\\). Welche \\(y\\)-Koordinate hat der Mittelpunkt?",
+        loesung: 4, toleranz: 0,
+        tipp: "\\(y^2 - 8y = (y-4)^2 - 16\\). Die \\(y\\)-Koordinate des Mittelpunkts ist der Wert in der Klammer.",
+        loesungsweg: "\\(x^2 + 2x = (x+1)^2 - 1\\), \\(y^2 - 8y = (y-4)^2 - 16\\). Also \\((x+1)^2 + (y-4)^2 = 1 + 16 - 8 = 9\\). Mittelpunkt \\(M(-1 \\mid 4)\\)."
+    },
+    {
+        id: 15, level: 3, typ: "numerisch",
+        frage: "Bestimme \\(r^2\\) für den Kreis \\(x^2 + y^2 - 6x - 2y - 6 = 0\\).",
+        loesung: 16, toleranz: 0,
+        tipp: "Quadratische Ergänzung: \\(x^2 - 6x = (x-3)^2 - 9\\) und \\(y^2 - 2y = (y-1)^2 - 1\\).",
+        loesungsweg: "\\((x-3)^2 - 9 + (y-1)^2 - 1 - 6 = 0\\), also \\((x-3)^2 + (y-1)^2 = 16\\). \\(r^2 = 16\\)."
+    },
+    {
+        id: 16, level: 3, typ: "mc",
+        frage: "Welchen Mittelpunkt hat der Kreis \\(x^2 + y^2 + 10x - 4y + 20 = 0\\)?",
+        optionen: [
+            "\\(M(-5 \\mid 2)\\)",
+            "\\(M(5 \\mid -2)\\)",
+            "\\(M(10 \\mid -4)\\)",
+            "\\(M(-5 \\mid -2)\\)"
+        ],
+        korrekt: 0,
+        tipp: "\\(x^2 + 10x = (x+5)^2 - 25\\), \\(y^2 - 4y = (y-2)^2 - 4\\).",
+        loesungsweg: "\\((x+5)^2 - 25 + (y-2)^2 - 4 + 20 = 0\\), also \\((x+5)^2 + (y-2)^2 = 9\\). Mittelpunkt \\(M(-5 \\mid 2)\\)."
+    },
+    {
+        id: 17, level: 3, typ: "numerisch",
+        frage: "Gegeben ist \\(x^2 + y^2 - 8x + 4y = 0\\). Berechne den Radius.",
+        loesung: 4.47, toleranz: 0.01,
+        tipp: "\\(x^2 - 8x = (x-4)^2 - 16\\), \\(y^2 + 4y = (y+2)^2 - 4\\). Also \\(r^2 = 20\\).",
+        loesungsweg: "\\((x-4)^2 - 16 + (y+2)^2 - 4 = 0\\), also \\((x-4)^2 + (y+2)^2 = 20\\). \\(r = \\sqrt{20} = 2\\sqrt{5} \\approx 4{,}47\\)."
+    },
+    {
+        id: 18, level: 3, typ: "numerisch",
+        frage: "Gegeben ist \\(2x^2 + 2y^2 - 12x + 8y - 10 = 0\\). Berechne \\(r^2\\) (nach Division durch 2 und quadratischer Ergänzung).",
+        loesung: 18, toleranz: 0,
+        tipp: "Erst durch 2 teilen: \\(x^2 + y^2 - 6x + 4y - 5 = 0\\). Dann quadratische Ergänzung.",
+        loesungsweg: "Geteilt durch 2: \\(x^2 + y^2 - 6x + 4y - 5 = 0\\). \\((x-3)^2 - 9 + (y+2)^2 - 4 - 5 = 0\\). \\((x-3)^2 + (y+2)^2 = 18\\). \\(r^2 = 18\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 4 — Punkt auf Kreis prüfen, Kreisgleichung aus 3 Punkten
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 19, level: 4, typ: "mc",
+        frage: "Liegt der Punkt \\(P(3 \\mid 4)\\) auf dem Kreis \\(x^2 + y^2 = 25\\)?",
+        optionen: [
+            "Ja, denn \\(3^2 + 4^2 = 25\\)",
+            "Nein, denn \\(3^2 + 4^2 = 24\\)",
+            "Ja, denn \\(3 + 4 < 25\\)",
+            "Nein, denn \\(3^2 + 4^2 = 49\\)"
+        ],
+        korrekt: 0,
+        tipp: "Setze die Koordinaten von \\(P\\) in die Kreisgleichung ein und prüfe, ob Gleichheit gilt.",
+        loesungsweg: "\\(3^2 + 4^2 = 9 + 16 = 25 \\checkmark\\). Der Punkt liegt auf dem Kreis."
+    },
+    {
+        id: 20, level: 4, typ: "mc",
+        frage: "Liegt \\(P(2 \\mid 3)\\) auf dem Kreis \\((x-1)^2 + (y-1)^2 = 4\\)?",
+        optionen: [
+            "Nein, denn \\((2-1)^2 + (3-1)^2 = 5 \\neq 4\\)",
+            "Ja, denn \\((2-1)^2 + (3-1)^2 = 4\\)",
+            "Ja, denn \\(2^2 + 3^2 = 13 > 4\\)",
+            "Nein, denn \\(2 + 3 = 5\\)"
+        ],
+        korrekt: 0,
+        tipp: "Einsetzen: \\((2-1)^2 + (3-1)^2 = 1 + 4 = 5\\). Vergleiche mit \\(r^2 = 4\\).",
+        loesungsweg: "\\((2-1)^2 + (3-1)^2 = 1 + 4 = 5 \\neq 4\\). \\(P\\) liegt nicht auf dem Kreis (sondern außerhalb)."
+    },
+    {
+        id: 21, level: 4, typ: "numerisch",
+        frage: "Ein Kreis geht durch \\(A(1 \\mid 0)\\), \\(B(0 \\mid 1)\\), \\(C(-1 \\mid 0)\\). Sein Mittelpunkt liegt bei \\(M(0 \\mid b)\\). Bestimme \\(b\\).",
+        loesung: 0, toleranz: 0,
+        tipp: "Aus Symmetrie (\\(A\\) und \\(C\\) liegen symmetrisch zur \\(y\\)-Achse) folgt \\(a = 0\\). Setze \\(A\\) und \\(B\\) ein und löse das Gleichungssystem.",
+        loesungsweg: "\\(M(0 \\mid b)\\), \\(r^2 = 1 + b^2\\) (aus \\(A\\)). Aus \\(B\\): \\(0 + (1-b)^2 = 1 + b^2\\), also \\(1 - 2b + b^2 = 1 + b^2\\), \\(-2b = 0\\), \\(b = 0\\)."
+    },
+    {
+        id: 22, level: 4, typ: "numerisch",
+        frage: "Ein Kreis geht durch \\(A(0 \\mid 0)\\), \\(B(4 \\mid 0)\\), \\(C(0 \\mid 4)\\). Berechne \\(r^2\\).",
+        loesung: 8, toleranz: 0,
+        tipp: "Ansatz: \\((x-a)^2 + (y-b)^2 = r^2\\). Setze alle drei Punkte ein und löse das Gleichungssystem. Aus Symmetrie folgt \\(a = b = 2\\).",
+        loesungsweg: "Aus \\(A(0,0)\\): \\(a^2 + b^2 = r^2\\). Aus \\(B(4,0)\\): \\((4-a)^2 + b^2 = r^2\\). Differenz: \\(16 - 8a = 0\\), \\(a = 2\\). Analog \\(b = 2\\). \\(r^2 = 4 + 4 = 8\\)."
+    },
+    {
+        id: 23, level: 4, typ: "numerisch",
+        frage: "Prüfe: Wie groß ist \\((x-2)^2 + (y+1)^2\\) für den Punkt \\(P(5 \\mid 3)\\)? <br>Der Kreis hat \\(r^2 = 25\\).",
+        loesung: 25, toleranz: 0,
+        tipp: "Setze \\(x = 5\\) und \\(y = 3\\) in \\((x-2)^2 + (y+1)^2\\) ein.",
+        loesungsweg: "\\((5-2)^2 + (3+1)^2 = 9 + 16 = 25 = r^2\\). Der Punkt liegt auf dem Kreis."
+    },
+    {
+        id: 24, level: 4, typ: "numerisch",
+        frage: "Ein Kreis geht durch \\(A(2 \\mid 0)\\), \\(B(0 \\mid 2)\\) und \\(C(-2 \\mid 0)\\). Berechne den Radius.",
+        loesung: 2, toleranz: 0,
+        tipp: "Aus Symmetrie: \\(M(0 \\mid b)\\). Setze \\(A(2,0)\\) ein: \\(4 + b^2 = r^2\\). Setze \\(B(0,2)\\) ein: \\((2-b)^2 = r^2\\).",
+        loesungsweg: "\\(4 + b^2 = 4 - 4b + b^2\\), also \\(4b = 0\\), \\(b = 0\\). \\(r^2 = 4\\), \\(r = 2\\). Der Kreis ist \\(x^2 + y^2 = 4\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 5 — Kreis durch Punkt mit Mittelpunkt auf Gerade
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Ein Kreis hat seinen Mittelpunkt auf der \\(x\\)-Achse und geht durch \\(P(3 \\mid 4)\\) und \\(Q(-3 \\mid 4)\\). Berechne den Radius.",
+        loesung: 5, toleranz: 0,
+        tipp: "Mittelpunkt auf \\(x\\)-Achse: \\(M(a \\mid 0)\\). Aus Symmetrie von \\(P\\) und \\(Q\\): \\(a = 0\\).",
+        loesungsweg: "\\(M(a \\mid 0)\\). \\((3-a)^2 + 16 = (-3-a)^2 + 16\\), also \\(a = 0\\). \\(r^2 = 9 + 16 = 25\\), \\(r = 5\\)."
+    },
+    {
+        id: 26, level: 5, typ: "numerisch",
+        frage: "Ein Kreis hat seinen Mittelpunkt auf der Geraden \\(y = x\\) und geht durch \\(A(0 \\mid 0)\\) und \\(B(4 \\mid 0)\\). Berechne \\(r^2\\).",
+        loesung: 8, toleranz: 0,
+        tipp: "Mittelpunkt \\(M(a \\mid a)\\) (weil \\(y = x\\)). Setze \\(A\\) und \\(B\\) ein.",
+        loesungsweg: "Aus \\(A\\): \\(a^2 + a^2 = r^2 = 2a^2\\). Aus \\(B\\): \\((4-a)^2 + a^2 = r^2\\). Gleichsetzen: \\(16 - 8a + a^2 + a^2 = 2a^2\\), also \\(16 - 8a = 0\\), \\(a = 2\\). \\(r^2 = 2 \\cdot 4 = 8\\)."
+    },
+    {
+        id: 27, level: 5, typ: "numerisch",
+        frage: "Ein Kreis hat seinen Mittelpunkt auf der \\(y\\)-Achse und geht durch \\(P(4 \\mid 3)\\). Der Radius ist \\(r = 5\\). Berechne die kleinere \\(y\\)-Koordinate des Mittelpunkts.",
+        loesung: 0, toleranz: 0,
+        tipp: "\\(M(0 \\mid b)\\). Bedingung: \\(16 + (3-b)^2 = 25\\), also \\((3-b)^2 = 9\\).",
+        loesungsweg: "\\((3-b)^2 = 9\\), also \\(3-b = \\pm 3\\). \\(b = 0\\) oder \\(b = 6\\). Die kleinere Lösung ist \\(b = 0\\). Prüfe: \\(\\sqrt{16 + 9} = 5\\) ✓."
+    },
+    {
+        id: 28, level: 5, typ: "numerisch",
+        frage: "Ein Kreis hat seinen Mittelpunkt auf der Geraden \\(y = 2x - 1\\) und geht durch \\(A(1 \\mid 1)\\) und \\(B(3 \\mid 1)\\). Welche \\(x\\)-Koordinate hat \\(M\\)?",
+        loesung: 2, toleranz: 0,
+        tipp: "\\(A\\) und \\(B\\) haben dieselbe \\(y\\)-Koordinate. Die Mittelsenkrechte von \\(AB\\) ist \\(x = 2\\).",
+        loesungsweg: "Mittelsenkrechte von \\(AB\\): \\(x = \\frac{1+3}{2} = 2\\). \\(M\\) liegt auf \\(y = 2x - 1\\) und \\(x = 2\\), also \\(M(2 \\mid 3)\\)."
+    },
+    {
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Ein Kreis mit Mittelpunkt auf der Geraden \\(y = -x + 5\\) geht durch \\(P(1 \\mid 1)\\) und hat den Radius \\(r = \\sqrt{5}\\). Berechne \\(r^2\\).",
+        loesung: 5, toleranz: 0,
+        tipp: "Die Frage verlangt nur \\(r^2\\). Setze direkt ein.",
+        loesungsweg: "\\(r^2 = (\\sqrt{5})^2 = 5\\)."
+    },
+    {
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Ein Kreis hat seinen Mittelpunkt auf der Geraden \\(x = 3\\), geht durch \\(A(0 \\mid 0)\\) und \\(B(6 \\mid 0)\\) und hat den Radius \\(r = 3\\). Berechne die \\(y\\)-Koordinate des Mittelpunkts.",
+        loesung: 0, toleranz: 0,
+        tipp: "\\(M(3 \\mid b)\\). Aus \\(A(0 \\mid 0)\\): \\(9 + b^2 = r^2 = 9\\), also \\(b^2 = 0\\).",
+        loesungsweg: "\\(M(3 \\mid b)\\). Einsetzen von \\(A\\): \\((0-3)^2 + (0-b)^2 = 9\\), also \\(9 + b^2 = 9\\), \\(b = 0\\). Kontrolle mit \\(B\\): \\((6-3)^2 + 0 = 9\\) ✓."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 6 — Kreisgleichung aus Bedingungen (berührt Achse, 2 Punkte)
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 31, level: 6, typ: "numerisch",
+        frage: "Ein Kreis mit Mittelpunkt \\(M(3 \\mid r)\\) berührt die \\(x\\)-Achse. Er geht durch \\(P(0 \\mid 3)\\). Berechne \\(r\\) (der positive Wert).",
+        loesung: 3, toleranz: 0,
+        tipp: "Berührt die \\(x\\)-Achse \\(\\Rightarrow\\) Abstand von \\(M\\) zur \\(x\\)-Achse \\(= r\\), also \\(b = r\\). Setze \\(P\\) in die Kreisgleichung ein.",
+        loesungsweg: "\\((0-3)^2 + (3-r)^2 = r^2\\). \\(9 + 9 - 6r + r^2 = r^2\\). \\(18 - 6r = 0\\). \\(r = 3\\)."
+    },
+    {
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Ein Kreis berührt die \\(y\\)-Achse und hat den Mittelpunkt \\(M(r \\mid 2)\\) (mit \\(r > 0\\)). Er geht durch \\(P(5 \\mid 6)\\). Berechne \\(r\\).",
+        loesung: 4.1, toleranz: 0.1,
+        tipp: "Berührt die \\(y\\)-Achse \\(\\Rightarrow a = r\\). Einsetzen: \\((5-r)^2 + (6-2)^2 = r^2\\).",
+        loesungsweg: "\\((5-r)^2 + 16 = r^2\\). \\(25 - 10r + r^2 + 16 = r^2\\). \\(41 - 10r = 0\\). \\(r = 4{,}1\\)."
+    },
+    {
+        id: 33, level: 6, typ: "mc",
+        frage: "Ein Kreis berührt sowohl die \\(x\\)- als auch die \\(y\\)-Achse und hat den Radius \\(r = 3\\). Wie viele solche Kreise gibt es?",
+        optionen: [
+            "4 (einen in jedem Quadranten)",
+            "2 (einen oben, einen unten)",
+            "1 (nur im 1. Quadranten)",
+            "Unendlich viele"
+        ],
+        korrekt: 0,
+        tipp: "Wenn ein Kreis beide Achsen berührt, muss \\(|a| = |b| = r\\) gelten. Wie viele Vorzeichenkombinationen gibt es?",
+        loesungsweg: "\\(M(\\pm r \\mid \\pm r)\\), also \\(M(3,3)\\), \\(M(-3,3)\\), \\(M(-3,-3)\\), \\(M(3,-3)\\). Es gibt 4 Kreise."
+    },
+    {
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Ein Kreis berührt die \\(x\\)-Achse, hat seinen Mittelpunkt auf der Geraden \\(y = x\\) und geht durch \\(P(2 \\mid 4)\\). Berechne den kleineren Radius \\(r\\) (\\(r > 0\\)).",
+        loesung: 2, toleranz: 0,
+        tipp: "\\(M(a \\mid a)\\) mit \\(a = r\\) (berührt \\(x\\)-Achse). Einsetzen von \\(P\\): \\((2-r)^2 + (4-r)^2 = r^2\\).",
+        loesungsweg: "\\((2-r)^2 + (4-r)^2 = r^2\\). \\(4 - 4r + r^2 + 16 - 8r + r^2 = r^2\\). \\(r^2 - 12r + 20 = 0\\). \\(r = \\frac{12 \\pm \\sqrt{144-80}}{2} = \\frac{12 \\pm 8}{2}\\). \\(r = 10\\) oder \\(r = 2\\). Prüfe \\(M\\) auf \\(y=x\\): \\(M(2 \\mid 2)\\) mit \\(r = 2\\). ✓"
+    },
+    {
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Ein Kreis berührt die \\(x\\)-Achse in \\(T(2 \\mid 0)\\) und geht durch \\(P(5 \\mid 3)\\). Berechne den Radius.",
+        loesung: 3, toleranz: 0,
+        tipp: "Berührt in \\(T(2,0)\\) \\(\\Rightarrow\\) \\(M(2 \\mid r)\\). Setze \\(P\\) in die Kreisgleichung ein.",
+        loesungsweg: "\\(M(2 \\mid r)\\). Einsetzen von \\(P(5,3)\\): \\((5-2)^2 + (3-r)^2 = r^2\\). \\(9 + 9 - 6r + r^2 = r^2\\). \\(18 - 6r = 0\\). \\(r = 3\\)."
+    },
+    {
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Ein Kreis berührt die \\(x\\)-Achse in \\(T(4 \\mid 0)\\) und geht durch \\(P(1 \\mid 3)\\). Berechne den Radius.",
+        loesung: 3, toleranz: 0,
+        tipp: "Berührt in \\(T(4,0)\\) \\(\\Rightarrow\\) \\(M(4 \\mid r)\\) (Mittelpunkt senkrecht über \\(T\\)). Setze \\(P\\) ein.",
+        loesungsweg: "\\(M(4 \\mid r)\\), Kreisgleichung \\((x-4)^2 + (y-r)^2 = r^2\\). Einsetzen von \\(P(1,3)\\): \\(9 + (3-r)^2 = r^2\\). \\(9 + 9 - 6r + r^2 = r^2\\). \\(18 - 6r = 0\\). \\(r = 3\\)."
+    }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

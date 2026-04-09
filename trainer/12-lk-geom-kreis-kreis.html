@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kreis/Kreis (LK) - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #70AD47; --spirale-secondary: #2E7D32; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '12-lk-geom-kreis-kreis';
+    const THEMA_CONFIG = { name: 'Kreis/Kreis (LK)', bereich: 'geometrie' };
+    const AUFGABEN = [
+      // ========== LEVEL 1 — babyleicht: Abstand zweier Mittelpunkte (6 Aufgaben) ==========
+      {
+        "id": 1,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Berechne den Abstand der Mittelpunkte \\(M_1(1|2)\\) und \\(M_2(4|6)\\).",
+        "loesung": 5,
+        "toleranz": 0.01,
+        "tipp": "Verwende die Abstandsformel: \\(d = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}\\).",
+        "loesungsweg": "$$d = \\sqrt{(4-1)^2 + (6-2)^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5$$"
+      },
+      {
+        "id": 2,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Berechne den Abstand der Mittelpunkte \\(M_1(0|0)\\) und \\(M_2(3|4)\\).",
+        "loesung": 5,
+        "toleranz": 0.01,
+        "tipp": "Verwende die Abstandsformel: \\(d = \\sqrt{x_2^2 + y_2^2}\\), da \\(M_1\\) im Ursprung liegt.",
+        "loesungsweg": "$$d = \\sqrt{3^2 + 4^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5$$"
+      },
+      {
+        "id": 3,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Gegeben sind \\(M_1(-2|3)\\) und \\(M_2(1|-1)\\). Berechne den Abstand \\(d\\).",
+        "loesung": 5,
+        "toleranz": 0.01,
+        "tipp": "Achte auf die Vorzeichen bei der Subtraktion!",
+        "loesungsweg": "$$d = \\sqrt{(1-(-2))^2 + ((-1)-3)^2} = \\sqrt{3^2 + (-4)^2} = \\sqrt{9+16} = 5$$"
+      },
+      {
+        "id": 4,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Berechne den Abstand der Mittelpunkte \\(M_1(2|5)\\) und \\(M_2(6|8)\\).",
+        "loesung": 5,
+        "toleranz": 0.01,
+        "tipp": "\\(d = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}\\)",
+        "loesungsweg": "$$d = \\sqrt{(6-2)^2 + (8-5)^2} = \\sqrt{16 + 9} = \\sqrt{25} = 5$$"
+      },
+      {
+        "id": 5,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Berechne den Abstand der Mittelpunkte \\(M_1(-3|1)\\) und \\(M_2(0|5)\\). Runde auf zwei Dezimalstellen.",
+        "loesung": 5,
+        "toleranz": 0.01,
+        "tipp": "\\(d = \\sqrt{(0-(-3))^2 + (5-1)^2}\\)",
+        "loesungsweg": "$$d = \\sqrt{3^2 + 4^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5$$"
+      },
+      {
+        "id": 6,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Der Abstand zweier Mittelpunkte \\(M_1\\) und \\(M_2\\) wird berechnet mit …",
+        "optionen": [
+          "\\(d = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}\\)",
+          "\\(d = |x_2-x_1| + |y_2-y_1|\\)",
+          "\\(d = (x_2-x_1)^2 + (y_2-y_1)^2\\)",
+          "\\(d = \\sqrt{(x_2+x_1)^2 + (y_2+y_1)^2}\\)"
+        ],
+        "korrekt": 0,
+        "tipp": "Denke an den Satz des Pythagoras im Koordinatensystem.",
+        "loesungsweg": "Der euklidische Abstand zweier Punkte in der Ebene ist \\(d = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}\\). Das folgt direkt aus dem Satz des Pythagoras."
+      },
+
+      // ========== LEVEL 2 — leicht: Lagebeziehung bestimmen (6 Aufgaben) ==========
+      {
+        "id": 7,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Kreis \\(k_1\\): Mittelpunkt \\(M_1(0|0)\\), \\(r_1 = 3\\). Kreis \\(k_2\\): Mittelpunkt \\(M_2(7|0)\\), \\(r_2 = 2\\). Welche Lagebeziehung liegt vor?",
+        "optionen": [
+          "Die Kreise schneiden sich in zwei Punkten",
+          "Die Kreise berühren sich von außen",
+          "Die Kreise liegen außerhalb voneinander",
+          "Der eine Kreis liegt im anderen"
+        ],
+        "korrekt": 2,
+        "tipp": "Berechne \\(d = |M_1 M_2|\\) und vergleiche mit \\(r_1 + r_2\\) und \\(|r_1 - r_2|\\).",
+        "loesungsweg": "\\(d = 7\\), \\(r_1 + r_2 = 5\\), \\(|r_1 - r_2| = 1\\). Da \\(d = 7 > 5 = r_1 + r_2\\), liegen die Kreise **außerhalb** voneinander (keine gemeinsamen Punkte)."
+      },
+      {
+        "id": 8,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Kreis \\(k_1\\): \\(M_1(0|0)\\), \\(r_1 = 4\\). Kreis \\(k_2\\): \\(M_2(5|0)\\), \\(r_2 = 1\\). Welche Lagebeziehung?",
+        "optionen": [
+          "Außerhalb voneinander",
+          "Äußere Berührung",
+          "Zwei Schnittpunkte",
+          "Innere Berührung"
+        ],
+        "korrekt": 1,
+        "tipp": "\\(d = 5\\), \\(r_1 + r_2 = ?\\)",
+        "loesungsweg": "\\(d = 5\\), \\(r_1 + r_2 = 5\\). Da \\(d = r_1 + r_2\\), liegt eine **äußere Berührung** vor (genau ein gemeinsamer Punkt)."
+      },
+      {
+        "id": 9,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Kreis \\(k_1\\): \\(M_1(0|0)\\), \\(r_1 = 5\\). Kreis \\(k_2\\): \\(M_2(3|0)\\), \\(r_2 = 4\\). Lagebeziehung?",
+        "optionen": [
+          "Außerhalb",
+          "Äußere Berührung",
+          "Zwei Schnittpunkte",
+          "Innere Berührung"
+        ],
+        "korrekt": 2,
+        "tipp": "Prüfe: \\(|r_1 - r_2| < d < r_1 + r_2\\)?",
+        "loesungsweg": "\\(d = 3\\), \\(r_1 + r_2 = 9\\), \\(|r_1 - r_2| = 1\\). Es gilt \\(1 < 3 < 9\\), also \\(|r_1-r_2| < d < r_1+r_2\\). Die Kreise **schneiden sich in zwei Punkten**."
+      },
+      {
+        "id": 10,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Kreis \\(k_1\\): \\(M_1(0|0)\\), \\(r_1 = 6\\). Kreis \\(k_2\\): \\(M_2(2|0)\\), \\(r_2 = 4\\). Welche Lagebeziehung?",
+        "optionen": [
+          "Zwei Schnittpunkte",
+          "Innere Berührung",
+          "\\(k_2\\) liegt vollständig in \\(k_1\\)",
+          "Äußere Berührung"
+        ],
+        "korrekt": 1,
+        "tipp": "\\(d = 2\\), \\(|r_1 - r_2| = ?\\)",
+        "loesungsweg": "\\(d = 2\\), \\(|r_1 - r_2| = |6-4| = 2\\). Da \\(d = |r_1 - r_2|\\), liegt eine **innere Berührung** vor."
+      },
+      {
+        "id": 11,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Kreis \\(k_1\\): \\(M_1(0|0)\\), \\(r_1 = 10\\). Kreis \\(k_2\\): \\(M_2(1|0)\\), \\(r_2 = 3\\). Lagebeziehung?",
+        "optionen": [
+          "Äußere Berührung",
+          "Zwei Schnittpunkte",
+          "\\(k_2\\) liegt vollständig in \\(k_1\\)",
+          "Innere Berührung"
+        ],
+        "korrekt": 2,
+        "tipp": "\\(d = 1\\), \\(|r_1 - r_2| = 7\\). Ist \\(d < |r_1-r_2|\\)?",
+        "loesungsweg": "\\(d = 1 < 7 = |r_1 - r_2|\\). Da \\(d < |r_1 - r_2|\\), liegt \\(k_2\\) **vollständig im Inneren** von \\(k_1\\)."
+      },
+      {
+        "id": 12,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Kreis \\(k_1\\): \\(M_1(1|2)\\), \\(r_1 = 3\\). Kreis \\(k_2\\): \\(M_2(6|14)\\), \\(r_2 = 5\\). Berechne \\(d - (r_1 + r_2)\\). Ist das Ergebnis positiv, berühren/schneiden sich die Kreise nicht.",
+        "loesung": 5,
+        "toleranz": 0.01,
+        "tipp": "Berechne zunächst \\(d = |M_1 M_2|\\), dann \\(d - (r_1 + r_2)\\).",
+        "loesungsweg": "$$d = \\sqrt{(6-1)^2 + (14-2)^2} = \\sqrt{25 + 144} = \\sqrt{169} = 13$$ $$d - (r_1 + r_2) = 13 - (3+5) = 13 - 8 = 5$$ Da \\(5 > 0\\), liegen die Kreise außerhalb voneinander."
+      },
+
+      // ========== LEVEL 3 — nervenschonend: Schnittpunkte zweier Kreise (6 Aufgaben) ==========
+      {
+        "id": 13,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Bestimme die Schnittpunkte von \\(k_1: x^2 + y^2 = 25\\) und \\(k_2: (x-3)^2 + y^2 = 16\\). Gib die \\(x\\)-Koordinate der Schnittpunkte an.",
+        "loesung": 3,
+        "toleranz": 0.01,
+        "tipp": "Subtrahiere die beiden Kreisgleichungen, um eine lineare Gleichung (die Radikalachse) zu erhalten.",
+        "loesungsweg": "Ausmultiplizieren von \\(k_2\\): \\(x^2 - 6x + 9 + y^2 = 16\\). Subtraktion \\(k_1 - k_2\\): $$x^2+y^2 - (x^2-6x+9+y^2) = 25-16$$ $$6x - 9 = 9 \\Rightarrow x = 3$$ Beide Schnittpunkte haben \\(x = 3\\)."
+      },
+      {
+        "id": 14,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Kreise \\(k_1: x^2 + y^2 = 25\\) und \\(k_2: (x-3)^2 + y^2 = 16\\). Du weißt bereits, dass \\(x = 3\\). Berechne den **positiven** \\(y\\)-Wert der Schnittpunkte.",
+        "loesung": 4,
+        "toleranz": 0.01,
+        "tipp": "Setze \\(x = 3\\) in \\(k_1\\) ein: \\(9 + y^2 = 25\\).",
+        "loesungsweg": "$$9 + y^2 = 25 \\Rightarrow y^2 = 16 \\Rightarrow y = \\pm 4$$ Der positive Wert ist \\(y = 4\\). Die Schnittpunkte sind \\(S_1(3|4)\\) und \\(S_2(3|-4)\\)."
+      },
+      {
+        "id": 15,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Bestimme die \\(x\\)-Koordinate der Schnittpunkte von \\(k_1: x^2+y^2=20\\) und \\(k_2: (x-4)^2+y^2=4\\). Subtrahiere \\(k_2\\) von \\(k_1\\).",
+        "loesung": 4,
+        "toleranz": 0.01,
+        "tipp": "\\(k_2\\) ausmultipliziert: \\(x^2-8x+16+y^2=4\\). Dann \\(k_1-k_2\\).",
+        "loesungsweg": "\\(k_2\\): \\(x^2-8x+16+y^2=4\\). \\(k_1-k_2\\): $$8x-16 = 16 \\Rightarrow 8x = 32 \\Rightarrow x = 4$$ \\(y^2 = 20-16 = 4 \\Rightarrow y = \\pm 2\\). Schnittpunkte: \\((4|2)\\) und \\((4|-2)\\)."
+      },
+      {
+        "id": 16,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Kreise \\(k_1: x^2+y^2=13\\) und \\(k_2: (x-4)^2+(y-2)^2=5\\). Durch Subtraktion erhält man die Schnittgerade \\(ax+by=c\\). Vereinfache so, dass \\(b=1\\). Wie lautet \\(c\\)?",
+        "loesung": 7,
+        "toleranz": 0.01,
+        "tipp": "Multipliziere \\(k_2\\) aus und subtrahiere von \\(k_1\\).",
+        "loesungsweg": "\\(k_2\\): \\(x^2-8x+16+y^2-4y+4=5\\). \\(k_1-k_2\\): $$8x-16+4y-4 = 13-5 = 8$$ $$8x+4y = 28 \\Rightarrow 2x+y = 7$$ In der Form \\(ax+by=c\\) mit \\(b=1\\): \\(c = 7\\)."
+      },
+      {
+        "id": 17,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Bestimme die Anzahl der Schnittpunkte von \\(k_1: x^2+y^2=9\\) und \\(k_2: (x-6)^2+y^2=4\\).",
+        "loesung": 0,
+        "toleranz": 0,
+        "tipp": "Berechne den Abstand der Mittelpunkte und vergleiche mit \\(r_1+r_2\\).",
+        "loesungsweg": "\\(d = 6\\), \\(r_1+r_2 = 3+2 = 5\\). Da \\(d = 6 > 5 = r_1+r_2\\), haben die Kreise **keine gemeinsamen Punkte**. Anzahl: 0."
+      },
+      {
+        "id": 18,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Bestimme die \\(x\\)-Koordinate der Schnittpunkte von \\(k_1: x^2+y^2=50\\) und \\(k_2: (x-5)^2+y^2=25\\).",
+        "loesung": 5,
+        "toleranz": 0.01,
+        "tipp": "Subtrahiere die beiden Gleichungen.",
+        "loesungsweg": "\\(k_2\\): \\(x^2-10x+25+y^2=25\\). \\(k_1-k_2\\): $$10x-25 = 25 \\Rightarrow 10x = 50 \\Rightarrow x = 5$$ Einsetzen: \\(25+y^2=50 \\Rightarrow y=\\pm 5\\). Schnittpunkte: \\((5|5)\\) und \\((5|-5)\\)."
+      },
+
+      // ========== LEVEL 4 — mittel: Berührbedingung (6 Aufgaben) ==========
+      {
+        "id": 19,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Kreis \\(k_1: M_1(0|0)\\), \\(r_1=3\\). Kreis \\(k_2: M_2(7|0)\\), Radius \\(r_2\\). Für welches \\(r_2 > 0\\) berühren sich die Kreise von **außen**?",
+        "loesung": 4,
+        "toleranz": 0.01,
+        "tipp": "Äußere Berührung: \\(d = r_1 + r_2\\).",
+        "loesungsweg": "$$d = 7, \\quad r_1 + r_2 = 7 \\Rightarrow 3 + r_2 = 7 \\Rightarrow r_2 = 4$$"
+      },
+      {
+        "id": 20,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Kreis \\(k_1: M_1(0|0)\\), \\(r_1=5\\). Kreis \\(k_2: M_2(2|0)\\), Radius \\(r_2\\). Für welches \\(r_2 > 0\\) berühren sich die Kreise **innen**?",
+        "loesung": 3,
+        "toleranz": 0.01,
+        "tipp": "Innere Berührung: \\(d = |r_1 - r_2|\\), wobei \\(k_2\\) im Inneren von \\(k_1\\) liegt.",
+        "loesungsweg": "$$d = 2, \\quad |r_1 - r_2| = d \\Rightarrow |5 - r_2| = 2$$ Da \\(r_2 < r_1\\): \\(5 - r_2 = 2 \\Rightarrow r_2 = 3\\)."
+      },
+      {
+        "id": 21,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Kreise \\(k_1: M_1(1|2)\\), \\(r_1=r\\) und \\(k_2: M_2(4|6)\\), \\(r_2=2\\). Für welches \\(r > 0\\) berühren sich die Kreise von außen?",
+        "loesung": 3,
+        "toleranz": 0.01,
+        "tipp": "Berechne \\(d\\), dann setze \\(d = r + r_2\\) und löse nach \\(r\\).",
+        "loesungsweg": "$$d = \\sqrt{9+16} = 5$$ Äußere Berührung: \\(d = r + r_2 \\Rightarrow 5 = r + 2 \\Rightarrow r = 3\\)."
+      },
+      {
+        "id": 22,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Zwei Kreise mit \\(r_1=4\\), \\(r_2=2\\), \\(d=6\\) berühren sich. Wo liegt der Berührpunkt?",
+        "optionen": [
+          "Auf der Strecke \\(M_1M_2\\), im Abstand \\(r_1\\) von \\(M_1\\)",
+          "Auf der Verlängerung von \\(M_1M_2\\) über \\(M_2\\) hinaus",
+          "Im Mittelpunkt von \\(M_1M_2\\)",
+          "Das kann man nicht bestimmen"
+        ],
+        "korrekt": 0,
+        "tipp": "Bei äußerer Berührung (\\(d = r_1+r_2\\)) liegt der Berührpunkt zwischen den Mittelpunkten.",
+        "loesungsweg": "Da \\(d = 6 = 4+2 = r_1+r_2\\), ist dies eine äußere Berührung. Der Berührpunkt teilt \\(\\overline{M_1M_2}\\) im Verhältnis \\(r_1:r_2 = 4:2\\), also liegt er im Abstand \\(r_1 = 4\\) von \\(M_1\\) auf der Verbindungsstrecke."
+      },
+      {
+        "id": 23,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Kreise \\(k_1: M_1(0|0)\\), \\(r_1=6\\) und \\(k_2: M_2(10|0)\\), \\(r_2=r\\). Es sollen **zwei** Schnittpunkte existieren. Gib den **größten ganzzahligen** Wert von \\(r\\) an, für den dies gilt.",
+        "loesung": 15,
+        "toleranz": 0,
+        "tipp": "Zwei Schnittpunkte: \\(|r_1-r_2| < d < r_1+r_2\\), also \\(|6-r| < 10 < 6+r\\).",
+        "loesungsweg": "Bedingung 1: \\(10 < 6+r \\Rightarrow r > 4\\). Bedingung 2: \\(|6-r| < 10\\). Falls \\(r \\ge 6\\): \\(r-6 < 10 \\Rightarrow r < 16\\). Falls \\(r < 6\\): \\(6-r < 10 \\Rightarrow r > -4\\) (immer erfüllt). Also: \\(4 < r < 16\\). Größter ganzzahliger Wert: \\(r = 15\\)."
+      },
+      {
+        "id": 24,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Kreis \\(k_1: x^2+y^2=r^2\\) und \\(k_2: (x-5)^2+y^2=9\\). Für welches \\(r > 0\\) berühren sich die Kreise von außen?",
+        "loesung": 2,
+        "toleranz": 0.01,
+        "tipp": "\\(r_2 = 3\\), \\(d = 5\\). Äußere Berührung: \\(d = r + r_2\\).",
+        "loesungsweg": "$$d = 5, \\quad r_2 = 3$$ Äußere Berührung: \\(5 = r + 3 \\Rightarrow r = 2\\)."
+      },
+
+      // ========== LEVEL 5 — anspruchsvoll: Radikalachse / Potenzgerade (6 Aufgaben) ==========
+      {
+        "id": 25,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Bestimme die Radikalachse von \\(k_1: x^2+y^2=25\\) und \\(k_2: (x-6)^2+y^2=16\\). Die Radikalachse hat die Form \\(x = c\\). Gib \\(c\\) an. Runde auf zwei Dezimalstellen.",
+        "loesung": 3.75,
+        "toleranz": 0.01,
+        "tipp": "Subtrahiere die Kreisgleichungen. Die Radikalachse ist die Menge aller Punkte mit gleicher Potenz bzgl. beider Kreise.",
+        "loesungsweg": "\\(k_2\\): \\(x^2-12x+36+y^2=16\\). \\(k_1-k_2\\): $$12x - 36 = 9 \\Rightarrow 12x = 45 \\Rightarrow x = 3{,}75$$"
+      },
+      {
+        "id": 26,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Berechne die **Potenz** des Punktes \\(P(7|1)\\) bezüglich des Kreises \\(k: (x-2)^2+(y-3)^2=9\\).",
+        "loesung": 20,
+        "toleranz": 0.01,
+        "tipp": "Die Potenz eines Punktes \\(P\\) bzgl. eines Kreises mit Mittelpunkt \\(M\\) und Radius \\(r\\) ist \\(\\text{pot}(P) = |PM|^2 - r^2\\).",
+        "loesungsweg": "$$|PM|^2 = (7-2)^2 + (1-3)^2 = 25 + 4 = 29$$ $$\\text{pot}(P) = 29 - 9 = 20$$"
+      },
+      {
+        "id": 27,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Was beschreibt die Radikalachse zweier Kreise geometrisch?",
+        "optionen": [
+          "Die Menge aller Punkte mit gleicher Potenz bzgl. beider Kreise",
+          "Die Verbindungsgerade der Mittelpunkte",
+          "Die gemeinsame Tangente beider Kreise",
+          "Die Mittelsenkrechte der Verbindungsstrecke der Schnittpunkte"
+        ],
+        "korrekt": 0,
+        "tipp": "Die Radikalachse steht senkrecht auf der Zentralen (Verbindung der Mittelpunkte).",
+        "loesungsweg": "Die Radikalachse ist die **Menge aller Punkte, die bzgl. beider Kreise die gleiche Potenz haben**. Sie steht stets senkrecht auf der Zentralen \\(M_1M_2\\). Falls die Kreise sich schneiden, geht sie durch die Schnittpunkte."
+      },
+      {
+        "id": 28,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Kreise \\(k_1: x^2+y^2=10\\) und \\(k_2: (x-4)^2+(y-2)^2=8\\). Die Radikalachse hat die Form \\(ax+by=c\\). Bestimme \\(a\\), wenn \\(b=1\\) (nach Vereinfachung).",
+        "loesung": 2,
+        "toleranz": 0.01,
+        "tipp": "Subtrahiere die Gleichungen und vereinfache.",
+        "loesungsweg": "\\(k_2\\): \\(x^2-8x+16+y^2-4y+4=8\\). \\(k_1-k_2\\): $$8x-16+4y-4 = 2 \\Rightarrow 8x+4y = 22 \\Rightarrow 2x+y = 5{,}5$$ In der Form \\(ax+by=c\\) mit \\(b=1\\): \\(a = 2\\)."
+      },
+      {
+        "id": 29,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Berechne die Potenz des Punktes \\(P(0|0)\\) bzgl. des Kreises \\(k: (x-3)^2+(y+1)^2=4\\).",
+        "loesung": 6,
+        "toleranz": 0.01,
+        "tipp": "\\(\\text{pot}(P) = |PM|^2 - r^2\\) mit \\(M(3|-1)\\), \\(r=2\\).",
+        "loesungsweg": "$$|PM|^2 = 3^2+(-1)^2 = 9+1 = 10$$ $$\\text{pot}(P) = 10 - 4 = 6$$"
+      },
+      {
+        "id": 30,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Die Potenz eines Punktes \\(P\\) bzgl. eines Kreises ist negativ. Was bedeutet das?",
+        "optionen": [
+          "\\(P\\) liegt außerhalb des Kreises",
+          "\\(P\\) liegt auf dem Kreis",
+          "\\(P\\) liegt innerhalb des Kreises",
+          "\\(P\\) liegt auf der Radikalachse"
+        ],
+        "korrekt": 2,
+        "tipp": "\\(\\text{pot}(P) = |PM|^2 - r^2\\). Wann ist das negativ?",
+        "loesungsweg": "\\(\\text{pot}(P) < 0 \\Leftrightarrow |PM|^2 < r^2 \\Leftrightarrow |PM| < r\\). Der Punkt liegt näher am Mittelpunkt als der Radius reicht — also **innerhalb** des Kreises."
+      },
+
+      // ========== LEVEL 6 — wagnerisch: Kreisbüschel, orthogonale Kreise (6 Aufgaben) ==========
+      {
+        "id": 31,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Zwei Kreise \\(k_1\\) und \\(k_2\\) schneiden sich orthogonal. Was gilt für die Radien und den Mittelpunktsabstand?",
+        "optionen": [
+          "\\(d^2 = r_1^2 + r_2^2\\)",
+          "\\(d = r_1 + r_2\\)",
+          "\\(d^2 = r_1^2 - r_2^2\\)",
+          "\\(d = r_1 \\cdot r_2\\)"
+        ],
+        "korrekt": 0,
+        "tipp": "Orthogonal bedeutet: Die Tangenten in den Schnittpunkten stehen senkrecht aufeinander. Betrachte das Dreieck \\(M_1 S M_2\\).",
+        "loesungsweg": "In einem Schnittpunkt \\(S\\) stehen die Radien \\(M_1S\\) und \\(M_2S\\) senkrecht aufeinander (da die Tangenten senkrecht sind und jeder Radius senkrecht auf seiner Tangente steht). Im rechtwinkligen Dreieck \\(M_1 S M_2\\) gilt nach Pythagoras: $$d^2 = r_1^2 + r_2^2$$"
+      },
+      {
+        "id": 32,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Kreis \\(k_1: x^2+y^2=16\\). Ein Kreis \\(k_2\\) mit Mittelpunkt \\(M_2(5|0)\\) schneidet \\(k_1\\) orthogonal. Berechne \\(r_2\\).",
+        "loesung": 3,
+        "toleranz": 0.01,
+        "tipp": "Orthogonalität: \\(d^2 = r_1^2 + r_2^2\\). Hier: \\(d=5\\), \\(r_1=4\\).",
+        "loesungsweg": "$$d^2 = r_1^2 + r_2^2 \\Rightarrow 25 = 16 + r_2^2 \\Rightarrow r_2^2 = 9 \\Rightarrow r_2 = 3$$"
+      },
+      {
+        "id": 33,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Das Kreisbüschel durch die Schnittpunkte von \\(k_1: x^2+y^2-25=0\\) und \\(k_2: x^2+y^2-6x-16=0\\) lautet:",
+        "optionen": [
+          "\\(k_1 + \\lambda \\cdot k_2 = 0\\), also \\((1+\\lambda)(x^2+y^2) - 6\\lambda x - 25 - 16\\lambda = 0\\)",
+          "\\(k_1 \\cdot k_2 = 0\\)",
+          "\\(k_1 - k_2 = 6x - 9 = 0\\) (nur die Radikalachse)",
+          "\\(\\lambda \\cdot k_1 = k_2\\)"
+        ],
+        "korrekt": 0,
+        "tipp": "Ein Kreisbüschel ist eine einparametrige Schar \\(k_1 + \\lambda \\cdot k_2 = 0\\), wobei für \\(\\lambda = -1\\) die Radikalachse entsteht.",
+        "loesungsweg": "Das Kreisbüschel durch die Grundpunkte (Schnittpunkte) zweier Kreise wird durch \\(k_1 + \\lambda \\cdot k_2 = 0\\) beschrieben. Für jeden Wert von \\(\\lambda \\neq -1\\) ergibt sich ein Kreis, der ebenfalls durch die Schnittpunkte geht. Für \\(\\lambda = -1\\) entartet der Kreis zur Radikalachse."
+      },
+      {
+        "id": 34,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Kreise \\(k_1: x^2+y^2-25=0\\) und \\(k_2: x^2+y^2-6x-16=0\\). Für welches \\(\\lambda\\) entartet der Büschelkreis \\(k_1+\\lambda \\cdot k_2 = 0\\) zur Geraden (Radikalachse)?",
+        "loesung": -1,
+        "toleranz": 0.01,
+        "tipp": "Das Büschel entartet zur Geraden, wenn der \\(x^2+y^2\\)-Term verschwindet, also wenn der Koeffizient \\((1+\\lambda)=0\\).",
+        "loesungsweg": "Büschel: \\((x^2+y^2-25) + \\lambda(x^2+y^2-6x-16) = 0\\), also $$(1+\\lambda)(x^2+y^2) - 6\\lambda x - 25 - 16\\lambda = 0$$ Damit kein quadratischer Term bleibt: \\(1+\\lambda = 0 \\Rightarrow \\lambda = -1\\). Einsetzen: \\(6x - 25 + 16 = 0 \\Rightarrow 6x = 9 \\Rightarrow x = 1{,}5\\). Das ist die Radikalachse."
+      },
+      {
+        "id": 35,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Kreis \\(k_1: x^2+y^2=9\\) und \\(k_2: (x-4)^2+y^2=r_2^2\\) sollen sich orthogonal schneiden. Berechne \\(r_2\\), wenn die Kreise durch den Punkt \\(S\\left(\\frac{9}{4}\\bigg|\\frac{3\\sqrt{7}}{4}\\right)\\) gehen. Runde auf zwei Dezimalstellen.",
+        "loesung": 2.65,
+        "toleranz": 0.05,
+        "tipp": "Orthogonalität: \\(d^2 = r_1^2 + r_2^2\\), also \\(16 = 9 + r_2^2\\).",
+        "loesungsweg": "$$d = 4, \\quad r_1 = 3$$ Orthogonalität: \\(d^2 = r_1^2 + r_2^2 \\Rightarrow 16 = 9 + r_2^2 \\Rightarrow r_2^2 = 7 \\Rightarrow r_2 = \\sqrt{7} \\approx 2{,}65\\)."
+      },
+      {
+        "id": 36,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Drei Kreise \\(k_1, k_2, k_3\\) sind paarweise nicht-konzentrisch. Ihre drei Radikalachsen …",
+        "optionen": [
+          "… schneiden sich in genau einem Punkt (dem Radikalzentrum)",
+          "… sind stets parallel zueinander",
+          "… bilden ein Dreieck",
+          "… existieren nur, wenn sich alle Kreise schneiden"
+        ],
+        "korrekt": 0,
+        "tipp": "Der Schnittpunkt aller drei Radikalachsen heißt Radikalzentrum (auch Potenzpunkt).",
+        "loesungsweg": "Die drei Radikalachsen dreier paarweise nicht-konzentrischer Kreise schneiden sich stets in **einem gemeinsamen Punkt**, dem **Radikalzentrum**. In diesem Punkt ist die Potenz bzgl. aller drei Kreise gleich. (Beweis: Der Schnittpunkt von Radikalachse 1-2 und 1-3 hat gleiche Potenz bzgl. aller drei Kreise, liegt also auch auf Radikalachse 2-3.)"
+      }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DifferenzierungsEngine — Adaptives Mathe-Training</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #1a1a2e;
+    padding: 2rem 1rem 3rem;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  /* ── Header ─────────────────────────────────────── */
+  header { text-align: center; margin-bottom: 1.5rem; }
+  header h1 {
+    font-size: 2.2rem; font-weight: 700; color: #fff;
+    letter-spacing: -0.5px; margin-bottom: 0.25rem;
+  }
+  header .subtitle {
+    font-size: 1.05rem; color: rgba(255,255,255,0.85);
+    font-weight: 400;
+  }
+
+  /* ── Gesamtfortschritt ──────────────────────────── */
+  .gesamt {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
+    padding: 0.9rem 1.4rem;
+    color: #fff;
+    text-align: center;
+    font-size: 0.95rem;
+    margin-bottom: 1.2rem;
+  }
+
+  /* ── Filter Toggle ──────────────────────────────── */
+  .filter-bar {
+    display: flex; justify-content: center; gap: 0.4rem;
+    margin-bottom: 1.5rem;
+  }
+  .filter-btn {
+    padding: 0.45rem 1.2rem;
+    border: 2px solid rgba(255,255,255,0.5);
+    border-radius: 999px;
+    background: transparent;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover { background: rgba(255,255,255,0.15); }
+  .filter-btn.active {
+    background: #fff;
+    color: #764ba2;
+    border-color: #fff;
+  }
+
+  /* ── Two-column grid ────────────────────────────── */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  @media (max-width: 768px) {
+    .grid { grid-template-columns: 1fr; }
+    header h1 { font-size: 1.6rem; }
+  }
+
+  .column-header {
+    font-size: 1.15rem; font-weight: 700; color: #fff;
+    margin-bottom: 0.6rem; padding-left: 0.25rem;
+  }
+
+  /* ── Section Cards ──────────────────────────────── */
+  .section-card {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    padding: 0.65rem 1rem;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .section-title.analysis   { background: #667eea; }
+  .section-title.geometrie  { background: #70AD47; }
+  .section-title.stochastik { background: #ED7D31; }
+
+  /* ── Theme rows ─────────────────────────────────── */
+  .theme-list { padding: 0.35rem 0; }
+
+  .theme-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.45rem 1rem;
+    text-decoration: none;
+    color: #1a1a2e;
+    transition: background 0.15s;
+    position: relative;
+  }
+  .theme-row:hover { background: #f5f5ff; }
+
+  .theme-row .connector {
+    width: 14px;
+    text-align: center;
+    color: #bbb;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    font-family: monospace;
+  }
+
+  .theme-name {
+    flex: 1;
+    font-size: 0.88rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .lk-badge {
+    background: #8B5CF6;
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.1rem 0.45rem;
+    border-radius: 999px;
+    flex-shrink: 0;
+    letter-spacing: 0.5px;
+  }
+
+  .level-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #667eea;
+    background: #eef1ff;
+    border-radius: 999px;
+    padding: 0.1rem 0.45rem;
+    flex-shrink: 0;
+    min-width: 28px;
+    text-align: center;
+  }
+  .level-badge.neu {
+    color: #999;
+    background: #f0f0f0;
+  }
+
+  /* ── Progress bar ───────────────────────────────── */
+  .progress-wrap {
+    width: 60px;
+    height: 7px;
+    background: #e8e8e8;
+    border-radius: 99px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, #34d399, #10b981);
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  /* ── LK filter hide ─────────────────────────────── */
+  body.filter-gk .lk-only { display: none; }
+
+  /* ── Footer ─────────────────────────────────────── */
+  footer {
+    text-align: center;
+    margin-top: 2rem;
+    color: rgba(255,255,255,0.55);
+    font-size: 0.78rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <h1>DifferenzierungsEngine</h1>
+    <p class="subtitle">Adaptives Mathe-Training &middot; Oberstufe</p>
+  </header>
+
+  <div class="gesamt" id="gesamt"></div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="alle">Alle</button>
+    <button class="filter-btn" data-filter="gk">Nur GK</button>
+    <button class="filter-btn" data-filter="lk">Nur LK</button>
+  </div>
+
+  <div class="grid">
+
+    <!-- ═══════════ Klasse 11 ═══════════ -->
+    <div class="col">
+      <div class="column-header">Klasse 11</div>
+
+      <!-- Analysis I -->
+      <div class="section-card">
+        <div class="section-title analysis">Analysis I &middot; Grundlagen</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/11-analysis-funktionsbegriff.html" data-key="spirale-11-analysis-funktionsbegriff">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Funktionsbegriff</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/11-analysis-grenzwerte.html" data-key="spirale-11-analysis-grenzwerte">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Grenzwerte</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row lk-only" href="trainer/11-lk-analysis-grenzwertsaetze.html" data-key="spirale-11-lk-analysis-grenzwertsaetze">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Grenzwerts&auml;tze</span>
+            <span class="lk-badge">LK</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Analysis II -->
+      <div class="section-card">
+        <div class="section-title analysis">Analysis II &middot; Differentialrechnung</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/11-analysis-ableitungsregeln.html" data-key="spirale-11-analysis-ableitungsregeln">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Ableitungsregeln</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/11-analysis-monotonie-kruemmung.html" data-key="spirale-11-analysis-monotonie-kruemmung">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Monotonie / Kr&uuml;mmung</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/11-analysis-tangenten-normalen.html" data-key="spirale-11-analysis-tangenten-normalen">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Tangenten / Normalen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/11-analysis-extrempunkte-wendepunkte.html" data-key="spirale-11-analysis-extrempunkte-wendepunkte">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Extrem- / Wendepunkte</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/11-analysis-kurvendiskussion.html" data-key="spirale-11-analysis-kurvendiskussion">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Kurvendiskussion</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/11-analysis-steckbriefaufgaben.html" data-key="spirale-11-analysis-steckbriefaufgaben">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Steckbriefaufgaben</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/11-analysis-extremwertaufgaben.html" data-key="spirale-11-analysis-extremwertaufgaben">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Extremwertaufgaben</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row lk-only" href="trainer/11-lk-analysis-kettenregel.html" data-key="spirale-11-lk-analysis-kettenregel">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Kettenregel</span>
+            <span class="lk-badge">LK</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row lk-only" href="trainer/11-lk-analysis-funktionsscharen.html" data-key="spirale-11-lk-analysis-funktionsscharen">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Funktionsscharen</span>
+            <span class="lk-badge">LK</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row lk-only" href="trainer/11-lk-analysis-newton.html" data-key="spirale-11-lk-analysis-newton">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Newton-Verfahren</span>
+            <span class="lk-badge">LK</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /col 11 -->
+
+    <!-- ═══════════ Klasse 12 ═══════════ -->
+    <div class="col">
+      <div class="column-header">Klasse 12</div>
+
+      <!-- Analytische Geometrie I -->
+      <div class="section-card">
+        <div class="section-title geometrie">Analytische Geometrie I</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/12-geom-vektoren-wiederholung.html" data-key="spirale-12-geom-vektoren-wiederholung">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Vektoren Wdh.</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/12-geom-geraden.html" data-key="spirale-12-geom-geraden">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Geraden</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/12-geom-ebenen.html" data-key="spirale-12-geom-ebenen">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Ebenen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/12-geom-abstaende.html" data-key="spirale-12-geom-abstaende">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Abst&auml;nde</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row lk-only" href="trainer/12-lk-geom-ebene-ebene.html" data-key="spirale-12-lk-geom-ebene-ebene">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Ebene / Ebene</span>
+            <span class="lk-badge">LK</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Analytische Geometrie II -->
+      <div class="section-card">
+        <div class="section-title geometrie">Analytische Geometrie II</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/12-geom-kreisgleichung.html" data-key="spirale-12-geom-kreisgleichung">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Kreisgleichung</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/12-geom-kreis-lagebeziehungen.html" data-key="spirale-12-geom-kreis-lagebeziehungen">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Kreis Lagebeziehungen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row lk-only" href="trainer/12-lk-geom-kreis-kreis.html" data-key="spirale-12-lk-geom-kreis-kreis">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Kreis / Kreis</span>
+            <span class="lk-badge">LK</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row lk-only" href="trainer/12-lk-geom-tangenten.html" data-key="spirale-12-lk-geom-tangenten">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Tangenten</span>
+            <span class="lk-badge">LK</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Analysis III -->
+      <div class="section-card">
+        <div class="section-title analysis">Analysis III &middot; Integralrechnung</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/12-analysis-stammfunktionen.html" data-key="spirale-12-analysis-stammfunktionen">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Stammfunktionen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/12-analysis-bestimmtes-integral.html" data-key="spirale-12-analysis-bestimmtes-integral">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Bestimmtes Integral</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/12-analysis-flaechenberechnung.html" data-key="spirale-12-analysis-flaechenberechnung">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Fl&auml;chenberechnung</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row lk-only" href="trainer/12-lk-analysis-ln-substitution.html" data-key="spirale-12-lk-analysis-ln-substitution">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">ln / Substitution</span>
+            <span class="lk-badge">LK</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Stochastik I -->
+      <div class="section-card">
+        <div class="section-title stochastik">Stochastik I &middot; Bedingte W.</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/12-stoch-grundlagen.html" data-key="spirale-12-stoch-grundlagen">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Grundlagen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/12-stoch-bedingte-wahrscheinlichkeit.html" data-key="spirale-12-stoch-bedingte-wahrscheinlichkeit">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Bedingte Wahrscheinlichkeit</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Stochastik II -->
+      <div class="section-card">
+        <div class="section-title stochastik">Stochastik II &middot; Binomialverteilung</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/12-stoch-zufallsgroessen.html" data-key="spirale-12-stoch-zufallsgroessen">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Zufallsgr&ouml;&szlig;en</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/12-stoch-binomialverteilung.html" data-key="spirale-12-stoch-binomialverteilung">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Binomialverteilung</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/12-stoch-sigma-umgebungen.html" data-key="spirale-12-stoch-sigma-umgebungen">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">&sigma;-Umgebungen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row lk-only" href="trainer/12-lk-stoch-normalverteilung.html" data-key="spirale-12-lk-stoch-normalverteilung">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Normalverteilung</span>
+            <span class="lk-badge">LK</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Stochastik III -->
+      <div class="section-card">
+        <div class="section-title stochastik">Stochastik III</div>
+        <div class="theme-list">
+          <a class="theme-row lk-only" href="trainer/12-lk-stoch-beurteilende-statistik.html" data-key="spirale-12-lk-stoch-beurteilende-statistik">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Beurteilende Statistik</span>
+            <span class="lk-badge">LK</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /col 12 -->
+
+  </div><!-- /grid -->
+
+  <footer>DifferenzierungsEngine &middot; Adaptives Spiral-Training</footer>
+
+</div><!-- /container -->
+
+<script>
+(function () {
+  'use strict';
+
+  const LEVEL_NAMEN = {
+    1: 'babyleicht', 2: 'leicht', 3: 'nervenschonend',
+    4: 'mittel', 5: 'anspruchsvoll', 6: 'wagnerisch'
+  };
+
+  // ── Progress laden ──────────────────────────────────────────
+
+  function loadProgress() {
+    const rows = document.querySelectorAll('.theme-row');
+    let begonnen = 0;
+    let abgeschlossen = 0;
+    const total = rows.length;
+
+    rows.forEach(function (row) {
+      const key = row.getAttribute('data-key');
+      if (!key) return;
+
+      let data = null;
+      try {
+        const raw = localStorage.getItem(key);
+        if (raw) data = JSON.parse(raw);
+      } catch (e) { /* ignorieren */ }
+
+      const badge = row.querySelector('.level-badge');
+      const fill = row.querySelector('.progress-fill');
+
+      if (data && data.totalAttempts > 0) {
+        begonnen++;
+        const level = data.level || 3;
+        const pct = Math.round((level / 6) * 100);
+
+        badge.textContent = 'Lvl ' + level;
+        badge.classList.remove('neu');
+        fill.style.width = pct + '%';
+
+        if (level >= 6) abgeschlossen++;
+      }
+    });
+
+    // Gesamtfortschritt
+    const el = document.getElementById('gesamt');
+    el.textContent = begonnen + ' von ' + total + ' Themen begonnen, ' +
+                     abgeschlossen + ' abgeschlossen';
+  }
+
+  // ── GK/LK Filter ───────────────────────────────────────────
+
+  function initFilter() {
+    const buttons = document.querySelectorAll('.filter-btn');
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        buttons.forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+
+        const mode = btn.getAttribute('data-filter');
+        document.body.classList.remove('filter-gk');
+
+        if (mode === 'gk') {
+          document.body.classList.add('filter-gk');
+        }
+        // "alle" und "lk" zeigen alles (LK-Schueler machen GK-Themen mit)
+      });
+    });
+  }
+
+  // ── Init ────────────────────────────────────────────────────
+
+  loadProgress();
+  initFilter();
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beurteilende Statistik (LK) - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #ED7D31; --spirale-secondary: #C55A11; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '12-lk-stoch-beurteilende-statistik';
+    const THEMA_CONFIG = { name: 'Beurteilende Statistik (LK)', bereich: 'stochastik' };
+    const AUFGABEN = [
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 1 — Grundbegriffe: Grundgesamtheit, Stichprobe, Parameter, Schätzwert
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 1, level: 1, typ: "mc",
+        frage: "Was versteht man unter der <strong>Grundgesamtheit</strong> in der beurteilenden Statistik?",
+        optionen: [
+            "Die Gesamtheit aller Objekte, über die eine Aussage getroffen werden soll",
+            "Eine zufällig ausgewählte Teilmenge der Bevölkerung",
+            "Die Menge aller durchgeführten Stichproben",
+            "Die Anzahl der Merkmalsausprägungen in einer Erhebung"
+        ],
+        korrekt: 0,
+        tipp: "Die Grundgesamtheit umfasst alle Objekte, die untersucht werden sollen — nicht nur die tatsächlich befragten.",
+        loesungsweg: "Die Grundgesamtheit (Population) ist die Menge aller statistischen Einheiten, über die eine Aussage getroffen werden soll. Die Stichprobe ist davon nur eine Teilmenge."
+    },
+    {
+        id: 2, level: 1, typ: "mc",
+        frage: "Was ist eine <strong>Stichprobe</strong>?",
+        optionen: [
+            "Eine Teilmenge der Grundgesamtheit, die tatsächlich untersucht wird",
+            "Die gesamte Population",
+            "Ein theoretisches Modell ohne reale Daten",
+            "Die Wahrscheinlichkeitsverteilung eines Merkmals"
+        ],
+        korrekt: 0,
+        tipp: "Man kann oft nicht die gesamte Grundgesamtheit untersuchen und wählt daher eine Teilmenge aus.",
+        loesungsweg: "Eine Stichprobe ist eine Teilmenge der Grundgesamtheit, die zufällig ausgewählt und untersucht wird, um Rückschlüsse auf die Grundgesamtheit zu ziehen."
+    },
+    {
+        id: 3, level: 1, typ: "mc",
+        frage: "In einer Umfrage werden 500 von 20.000 Schülern befragt, ob sie Nachhilfe nehmen. Was ist hier der <strong>Parameter</strong> \\(p\\)?",
+        optionen: [
+            "Der (unbekannte) Anteil aller 20.000 Schüler, die Nachhilfe nehmen",
+            "Der Anteil der 500 befragten Schüler, die Nachhilfe nehmen",
+            "Die Anzahl 500",
+            "Die Differenz zwischen 20.000 und 500"
+        ],
+        korrekt: 0,
+        tipp: "Der Parameter beschreibt eine Eigenschaft der Grundgesamtheit, nicht der Stichprobe.",
+        loesungsweg: "Der Parameter \\(p\\) ist der wahre (unbekannte) Anteil in der Grundgesamtheit. Der Anteil in der Stichprobe \\(\\hat{p}\\) ist dagegen der Schätzwert."
+    },
+    {
+        id: 4, level: 1, typ: "mc",
+        frage: "Was ist eine <strong>Punktschätzung</strong>?",
+        optionen: [
+            "Ein einzelner Wert, der als Schätzung für den unbekannten Parameter verwendet wird",
+            "Ein Intervall, in dem der Parameter mit einer bestimmten Wahrscheinlichkeit liegt",
+            "Ein Test, ob eine Hypothese abgelehnt wird",
+            "Die exakte Berechnung des Parameters aus der Grundgesamtheit"
+        ],
+        korrekt: 0,
+        tipp: "Punkt = ein einzelner Wert, im Gegensatz zu einem Intervall.",
+        loesungsweg: "Bei der Punktschätzung wird der unbekannte Parameter \\(p\\) durch einen einzelnen Wert geschätzt, z. B. durch die relative Häufigkeit \\(h = \\frac{k}{n}\\) in der Stichprobe."
+    },
+    {
+        id: 5, level: 1, typ: "mc",
+        frage: "Bei einer Stichprobe von \\(n = 200\\) Personen geben 60 an, regelmäßig Sport zu treiben. Was ist der Schätzwert \\(\\hat{p}\\)?",
+        optionen: [
+            "\\(\\hat{p} = 0{,}30\\)",
+            "\\(\\hat{p} = 0{,}60\\)",
+            "\\(\\hat{p} = 60\\)",
+            "\\(\\hat{p} = 140\\)"
+        ],
+        korrekt: 0,
+        tipp: "Der Schätzwert ist die relative Häufigkeit: \\(\\hat{p} = \\frac{k}{n}\\).",
+        loesungsweg: "\\(\\hat{p} = \\frac{60}{200} = 0{,}30\\). Der Schätzwert für den Anteil der Sportler in der Grundgesamtheit beträgt 30 %."
+    },
+    {
+        id: 6, level: 1, typ: "mc",
+        frage: "Welche Aussage über die Beziehung zwischen Stichprobe und Grundgesamtheit ist korrekt?",
+        optionen: [
+            "Je größer die Stichprobe, desto genauer ist in der Regel die Schätzung",
+            "Die Stichprobe muss mindestens 50 % der Grundgesamtheit umfassen",
+            "Die Stichprobe liefert immer den exakten Wert des Parameters",
+            "Die Größe der Stichprobe hat keinen Einfluss auf die Genauigkeit"
+        ],
+        korrekt: 0,
+        tipp: "Denke an den Zusammenhang zwischen Stichprobenumfang und Standardfehler.",
+        loesungsweg: "Mit wachsendem Stichprobenumfang \\(n\\) sinkt der Standardfehler \\(\\sqrt{\\frac{p(1-p)}{n}}\\), die Schätzung wird also genauer."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 2 — Konfidenzintervall für p
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 7, level: 2, typ: "mc",
+        frage: "Wie lautet die Formel für das 95 %-Konfidenzintervall für den Parameter \\(p\\)?",
+        optionen: [
+            "\\(\\left[ h - 1{,}96 \\cdot \\sqrt{\\frac{h(1-h)}{n}} \\;;\\; h + 1{,}96 \\cdot \\sqrt{\\frac{h(1-h)}{n}} \\right]\\)",
+            "\\(\\left[ h - 1{,}64 \\cdot \\sqrt{\\frac{h(1-h)}{n}} \\;;\\; h + 1{,}64 \\cdot \\sqrt{\\frac{h(1-h)}{n}} \\right]\\)",
+            "\\(\\left[ n \\cdot h - 1{,}96 \\;;\\; n \\cdot h + 1{,}96 \\right]\\)",
+            "\\(\\left[ h - \\frac{1{,}96}{n} \\;;\\; h + \\frac{1{,}96}{n} \\right]\\)"
+        ],
+        korrekt: 0,
+        tipp: "Für das 95 %-Niveau ist \\(z = 1{,}96\\). Die Formel verwendet \\(h \\pm z \\cdot \\sqrt{\\frac{h(1-h)}{n}}\\).",
+        loesungsweg: "Das 95 %-Konfidenzintervall lautet \\(\\left[ h - 1{,}96 \\cdot \\sqrt{\\frac{h(1-h)}{n}} \\;,\\; h + 1{,}96 \\cdot \\sqrt{\\frac{h(1-h)}{n}} \\right]\\)."
+    },
+    {
+        id: 8, level: 2, typ: "numerisch",
+        frage: "In einer Stichprobe mit \\(n = 400\\) wird eine relative Häufigkeit \\(h = 0{,}35\\) beobachtet. Berechne die <strong>halbe Breite</strong> des 95 %-Konfidenzintervalls. Runde auf vier Dezimalstellen.",
+        loesung: 0.0467, toleranz: 0.001,
+        tipp: "Halbe Breite: \\(1{,}96 \\cdot \\sqrt{\\frac{h(1-h)}{n}} = 1{,}96 \\cdot \\sqrt{\\frac{0{,}35 \\cdot 0{,}65}{400}}\\).",
+        loesungsweg: "\\(\\sqrt{\\frac{0{,}35 \\cdot 0{,}65}{400}} = \\sqrt{\\frac{0{,}2275}{400}} = \\sqrt{0{,}00056875} \\approx 0{,}02385\\). Halbe Breite: \\(1{,}96 \\cdot 0{,}02385 \\approx 0{,}0467\\)."
+    },
+    {
+        id: 9, level: 2, typ: "numerisch",
+        frage: "Stichprobe: \\(n = 100\\), beobachtete Treffer: \\(k = 40\\). Berechne die <strong>untere Grenze</strong> des 95 %-Konfidenzintervalls. Runde auf zwei Dezimalstellen.",
+        loesung: 0.30, toleranz: 0.01,
+        tipp: "\\(h = 0{,}40\\). Untere Grenze: \\(h - 1{,}96 \\cdot \\sqrt{\\frac{0{,}4 \\cdot 0{,}6}{100}}\\).",
+        loesungsweg: "\\(h = \\frac{40}{100} = 0{,}40\\). \\(\\sqrt{\\frac{0{,}4 \\cdot 0{,}6}{100}} = \\sqrt{0{,}0024} \\approx 0{,}04899\\). Untere Grenze: \\(0{,}40 - 1{,}96 \\cdot 0{,}04899 \\approx 0{,}40 - 0{,}096 = 0{,}304 \\approx 0{,}30\\)."
+    },
+    {
+        id: 10, level: 2, typ: "numerisch",
+        frage: "Stichprobe: \\(n = 100\\), beobachtete Treffer: \\(k = 40\\). Berechne die <strong>obere Grenze</strong> des 95 %-Konfidenzintervalls. Runde auf zwei Dezimalstellen.",
+        loesung: 0.50, toleranz: 0.01,
+        tipp: "Obere Grenze: \\(h + 1{,}96 \\cdot \\sqrt{\\frac{h(1-h)}{n}}\\).",
+        loesungsweg: "\\(h = 0{,}40\\). \\(\\sqrt{\\frac{0{,}24}{100}} \\approx 0{,}04899\\). Obere Grenze: \\(0{,}40 + 1{,}96 \\cdot 0{,}04899 \\approx 0{,}40 + 0{,}096 = 0{,}496 \\approx 0{,}50\\)."
+    },
+    {
+        id: 11, level: 2, typ: "mc",
+        frage: "Was bedeutet ein 95 %-Konfidenzintervall?",
+        optionen: [
+            "Bei wiederholter Stichprobenziehung überdecken ca. 95 % der berechneten Intervalle den wahren Parameter \\(p\\)",
+            "Der Parameter \\(p\\) liegt mit 95 % Sicherheit genau in der Mitte des Intervalls",
+            "95 % aller Stichprobenwerte liegen im Intervall",
+            "Der Parameter \\(p\\) ändert sich mit 5 % Wahrscheinlichkeit"
+        ],
+        korrekt: 0,
+        tipp: "Das Konfidenzniveau beschreibt die Überdeckungswahrscheinlichkeit bei Wiederholung des Verfahrens.",
+        loesungsweg: "Ein 95 %-Konfidenzintervall bedeutet: Wiederholt man das Stichprobenverfahren, so überdecken etwa 95 % aller so berechneten Intervalle den wahren Parameter \\(p\\)."
+    },
+    {
+        id: 12, level: 2, typ: "numerisch",
+        frage: "Bei einer Stichprobe von \\(n = 900\\) und \\(h = 0{,}60\\): Berechne die halbe Breite des 95 %-Konfidenzintervalls. Runde auf vier Dezimalstellen.",
+        loesung: 0.0320, toleranz: 0.001,
+        tipp: "\\(1{,}96 \\cdot \\sqrt{\\frac{0{,}6 \\cdot 0{,}4}{900}}\\).",
+        loesungsweg: "\\(\\sqrt{\\frac{0{,}24}{900}} = \\sqrt{0{,}000\\overline{266}} \\approx 0{,}01633\\). Halbe Breite: \\(1{,}96 \\cdot 0{,}01633 \\approx 0{,}0320\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 3 — Prognoseintervall
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 13, level: 3, typ: "mc",
+        frage: "Was gibt das Prognoseintervall an?",
+        optionen: [
+            "Das Intervall, in dem die Trefferanzahl \\(X\\) bei \\(n\\) Versuchen mit hoher Wahrscheinlichkeit liegt",
+            "Das Intervall, in dem der unbekannte Parameter \\(p\\) liegt",
+            "Die Wahrscheinlichkeit für genau \\(k\\) Treffer",
+            "Den Erwartungswert der Binomialverteilung"
+        ],
+        korrekt: 0,
+        tipp: "Beim Prognoseintervall ist \\(p\\) bekannt und man prognostiziert die Anzahl der Treffer.",
+        loesungsweg: "Das Prognoseintervall gibt an, in welchem Bereich die Trefferanzahl \\(X\\) bei bekanntem \\(p\\) und \\(n\\) Versuchen mit vorgegebener Wahrscheinlichkeit liegt."
+    },
+    {
+        id: 14, level: 3, typ: "numerisch",
+        frage: "Ein Würfel wird \\(n = 600\\)-mal geworfen. Die Wahrscheinlichkeit für eine 6 ist \\(p = \\frac{1}{6}\\). Berechne den <strong>Erwartungswert</strong> \\(\\mu = n \\cdot p\\).",
+        loesung: 100, toleranz: 0,
+        tipp: "\\(\\mu = n \\cdot p = 600 \\cdot \\frac{1}{6}\\).",
+        loesungsweg: "\\(\\mu = 600 \\cdot \\frac{1}{6} = 100\\)."
+    },
+    {
+        id: 15, level: 3, typ: "numerisch",
+        frage: "Für \\(n = 600\\) und \\(p = \\frac{1}{6}\\): Berechne die Standardabweichung \\(\\sigma = \\sqrt{n \\cdot p \\cdot (1-p)}\\). Runde auf zwei Dezimalstellen.",
+        loesung: 9.13, toleranz: 0.01,
+        tipp: "\\(\\sigma = \\sqrt{600 \\cdot \\frac{1}{6} \\cdot \\frac{5}{6}} = \\sqrt{\\frac{500}{6}}\\).",
+        loesungsweg: "\\(\\sigma = \\sqrt{600 \\cdot \\frac{1}{6} \\cdot \\frac{5}{6}} = \\sqrt{\\frac{500}{6}} = \\sqrt{83{,}\\overline{3}} \\approx 9{,}13\\)."
+    },
+    {
+        id: 16, level: 3, typ: "numerisch",
+        frage: "Für \\(n = 600\\) und \\(p = \\frac{1}{6}\\): Berechne die <strong>untere Grenze</strong> des 95 %-Prognoseintervalls \\(\\mu - 1{,}96 \\cdot \\sigma\\). Runde auf ganze Zahlen.",
+        loesung: 82, toleranz: 1,
+        tipp: "\\(\\mu = 100\\), \\(\\sigma \\approx 9{,}13\\). Untere Grenze: \\(100 - 1{,}96 \\cdot 9{,}13\\).",
+        loesungsweg: "Untere Grenze: \\(100 - 1{,}96 \\cdot 9{,}13 \\approx 100 - 17{,}89 \\approx 82\\)."
+    },
+    {
+        id: 17, level: 3, typ: "numerisch",
+        frage: "Für \\(n = 600\\) und \\(p = \\frac{1}{6}\\): Berechne die <strong>obere Grenze</strong> des 95 %-Prognoseintervalls \\(\\mu + 1{,}96 \\cdot \\sigma\\). Runde auf ganze Zahlen.",
+        loesung: 118, toleranz: 1,
+        tipp: "\\(\\mu = 100\\), \\(\\sigma \\approx 9{,}13\\). Obere Grenze: \\(100 + 1{,}96 \\cdot 9{,}13\\).",
+        loesungsweg: "Obere Grenze: \\(100 + 1{,}96 \\cdot 9{,}13 \\approx 100 + 17{,}89 \\approx 118\\)."
+    },
+    {
+        id: 18, level: 3, typ: "mc",
+        frage: "Bei \\(n = 200\\) und \\(p = 0{,}5\\) ergibt sich das 95 %-Prognoseintervall \\([86; 114]\\). Was bedeutet es, wenn bei einem Experiment \\(X = 120\\) Treffer beobachtet werden?",
+        optionen: [
+            "120 liegt außerhalb des Prognoseintervalls — das Ergebnis ist auffällig und deutet darauf hin, dass \\(p = 0{,}5\\) nicht zutrifft",
+            "120 liegt innerhalb des Prognoseintervalls — alles ist unauffällig",
+            "Das Prognoseintervall ist falsch berechnet",
+            "Man kann keine Aussage treffen, da \\(n\\) zu klein ist"
+        ],
+        korrekt: 0,
+        tipp: "Vergleiche 120 mit dem Intervall \\([86; 114]\\). Liegt 120 innerhalb oder außerhalb?",
+        loesungsweg: "Da \\(120 > 114\\), liegt das Ergebnis außerhalb des Prognoseintervalls. Das ist ein Hinweis darauf, dass die Annahme \\(p = 0{,}5\\) möglicherweise nicht stimmt."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 4 — Hypothesentest einseitig
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 19, level: 4, typ: "mc",
+        frage: "Ein Hersteller behauptet, mindestens 80 % seiner Produkte seien fehlerfrei. Ein Prüfer vermutet, dass es weniger sind. Wie lauten \\(H_0\\) und \\(H_1\\)?",
+        optionen: [
+            "\\(H_0\\colon p \\ge 0{,}80\\) und \\(H_1\\colon p < 0{,}80\\)",
+            "\\(H_0\\colon p \\le 0{,}80\\) und \\(H_1\\colon p > 0{,}80\\)",
+            "\\(H_0\\colon p = 0{,}80\\) und \\(H_1\\colon p = 0{,}70\\)",
+            "\\(H_0\\colon p < 0{,}80\\) und \\(H_1\\colon p \\ge 0{,}80\\)"
+        ],
+        korrekt: 0,
+        tipp: "Die Nullhypothese enthält die Behauptung des Herstellers. Die Alternativhypothese drückt den Verdacht des Prüfers aus.",
+        loesungsweg: "\\(H_0\\colon p \\ge 0{,}80\\) (Behauptung) gegen \\(H_1\\colon p < 0{,}80\\) (Verdacht). Dies ist ein linksseitiger Test."
+    },
+    {
+        id: 20, level: 4, typ: "mc",
+        frage: "Was ist der <strong>Ablehnungsbereich</strong> bei einem linksseitigen Test?",
+        optionen: [
+            "Der Bereich kleiner Werte von \\(X\\), bei denen \\(H_0\\) abgelehnt wird",
+            "Der Bereich großer Werte von \\(X\\), bei denen \\(H_0\\) abgelehnt wird",
+            "Das gesamte Intervall \\([0; n]\\)",
+            "Der Bereich, in dem \\(H_0\\) bestätigt wird"
+        ],
+        korrekt: 0,
+        tipp: "Linksseitig: Die Alternativhypothese vermutet einen kleineren Wert als \\(H_0\\).",
+        loesungsweg: "Beim linksseitigen Test liegt der Ablehnungsbereich links, also bei kleinen Werten: \\(\\overline{A} = \\{0, 1, \\ldots, k\\}\\). Fällt \\(X\\) in diesen Bereich, wird \\(H_0\\) abgelehnt."
+    },
+    {
+        id: 21, level: 4, typ: "mc",
+        frage: "Was gibt das Signifikanzniveau \\(\\alpha\\) an?",
+        optionen: [
+            "Die maximal zulässige Wahrscheinlichkeit, \\(H_0\\) abzulehnen, obwohl \\(H_0\\) wahr ist",
+            "Die Wahrscheinlichkeit, dass \\(H_1\\) wahr ist",
+            "Die Wahrscheinlichkeit, dass der Test kein Ergebnis liefert",
+            "Die Mindestanzahl der Stichproben"
+        ],
+        korrekt: 0,
+        tipp: "\\(\\alpha\\) begrenzt das Risiko eines Fehlers 1. Art.",
+        loesungsweg: "Das Signifikanzniveau \\(\\alpha\\) ist die obere Schranke für die Wahrscheinlichkeit eines Fehlers 1. Art: \\(P(H_0 \\text{ ablehnen} \\mid H_0 \\text{ wahr}) \\le \\alpha\\)."
+    },
+    {
+        id: 22, level: 4, typ: "numerisch",
+        frage: "Test: \\(H_0\\colon p \\ge 0{,}5\\), \\(n = 100\\), \\(\\alpha = 0{,}05\\), linksseitig. Die Ablehnungsgrenze liegt bei \\(k\\), sodass \\(H_0\\) abgelehnt wird, wenn \\(X \\le k\\). Mithilfe der Sigma-Regel: \\(k = n \\cdot p_0 - 1{,}64 \\cdot \\sqrt{n \\cdot p_0 \\cdot (1-p_0)}\\). Berechne \\(k\\) (abrunden auf ganze Zahl).",
+        loesung: 41, toleranz: 0,
+        tipp: "\\(n \\cdot p_0 = 50\\), \\(\\sigma = \\sqrt{100 \\cdot 0{,}5 \\cdot 0{,}5} = 5\\). \\(k = 50 - 1{,}64 \\cdot 5\\).",
+        loesungsweg: "\\(\\mu = 50\\), \\(\\sigma = 5\\). \\(k = 50 - 1{,}64 \\cdot 5 = 50 - 8{,}2 = 41{,}8\\). Abrunden auf ganze Zahl: \\(k = 41\\). \\(H_0\\) wird also abgelehnt, wenn \\(X \\le 41\\)."
+    },
+    {
+        id: 23, level: 4, typ: "mc",
+        frage: "Ein rechtsseitiger Test prüft \\(H_0\\colon p \\le 0{,}3\\) gegen \\(H_1\\colon p > 0{,}3\\) bei \\(n = 50\\) und \\(\\alpha = 0{,}05\\). Wo liegt der Ablehnungsbereich?",
+        optionen: [
+            "Bei großen Werten: \\(X \\ge k\\) für ein bestimmtes \\(k\\)",
+            "Bei kleinen Werten: \\(X \\le k\\) für ein bestimmtes \\(k\\)",
+            "In der Mitte: \\(k_1 \\le X \\le k_2\\)",
+            "Es gibt keinen Ablehnungsbereich"
+        ],
+        korrekt: 0,
+        tipp: "Rechtsseitig bedeutet: Die Alternativhypothese vermutet einen größeren Wert.",
+        loesungsweg: "Beim rechtsseitigen Test liegt der Ablehnungsbereich rechts, bei großen Werten von \\(X\\): \\(\\overline{A} = \\{k, k+1, \\ldots, n\\}\\)."
+    },
+    {
+        id: 24, level: 4, typ: "mc",
+        frage: "Bei einem Test mit \\(n = 200\\), \\(H_0\\colon p = 0{,}4\\), linksseitig, \\(\\alpha = 0{,}05\\) wird \\(X = 65\\) beobachtet. Der Ablehnungsbereich ist \\(X \\le 67\\). Wird \\(H_0\\) abgelehnt?",
+        optionen: [
+            "Ja, denn \\(65 \\le 67\\), also liegt \\(X\\) im Ablehnungsbereich",
+            "Nein, denn \\(65 < 67\\), also liegt \\(X\\) nicht im Ablehnungsbereich",
+            "Nein, denn \\(65 > 0\\)",
+            "Ja, denn \\(65 > 40\\)"
+        ],
+        korrekt: 0,
+        tipp: "Prüfe: Liegt \\(X = 65\\) im Ablehnungsbereich \\(\\{0, 1, \\ldots, 67\\}\\)?",
+        loesungsweg: "Da \\(X = 65 \\le 67\\), liegt das Ergebnis im Ablehnungsbereich. \\(H_0\\) wird auf dem 5 %-Niveau abgelehnt."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 5 — Fehler 1. und 2. Art
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 25, level: 5, typ: "mc",
+        frage: "Was ist ein <strong>Fehler 1. Art</strong> (\\(\\alpha\\)-Fehler)?",
+        optionen: [
+            "\\(H_0\\) wird abgelehnt, obwohl \\(H_0\\) in Wirklichkeit wahr ist",
+            "\\(H_0\\) wird beibehalten, obwohl \\(H_0\\) in Wirklichkeit falsch ist",
+            "\\(H_1\\) wird abgelehnt, obwohl \\(H_1\\) wahr ist",
+            "Der Test liefert kein Ergebnis"
+        ],
+        korrekt: 0,
+        tipp: "Fehler 1. Art = fälschliches Ablehnen der Nullhypothese.",
+        loesungsweg: "Fehler 1. Art: \\(H_0\\) wird abgelehnt, obwohl sie wahr ist. Die Wahrscheinlichkeit dafür ist höchstens \\(\\alpha\\)."
+    },
+    {
+        id: 26, level: 5, typ: "mc",
+        frage: "Was ist ein <strong>Fehler 2. Art</strong> (\\(\\beta\\)-Fehler)?",
+        optionen: [
+            "\\(H_0\\) wird beibehalten, obwohl \\(H_0\\) in Wirklichkeit falsch ist",
+            "\\(H_0\\) wird abgelehnt, obwohl \\(H_0\\) in Wirklichkeit wahr ist",
+            "\\(H_1\\) wird abgelehnt, obwohl \\(H_0\\) falsch ist",
+            "Beide Hypothesen werden gleichzeitig abgelehnt"
+        ],
+        korrekt: 0,
+        tipp: "Fehler 2. Art = fälschliches Beibehalten der Nullhypothese.",
+        loesungsweg: "Fehler 2. Art: \\(H_0\\) wird beibehalten (nicht abgelehnt), obwohl sie falsch ist und \\(H_1\\) zutrifft. Die Wahrscheinlichkeit dafür ist \\(\\beta\\)."
+    },
+    {
+        id: 27, level: 5, typ: "mc",
+        frage: "Ein Medikament-Test prüft \\(H_0\\colon\\) „Das Medikament wirkt nicht" gegen \\(H_1\\colon\\) „Das Medikament wirkt". Was bedeutet ein Fehler 1. Art im Sachkontext?",
+        optionen: [
+            "Man schließt, dass das Medikament wirkt, obwohl es in Wirklichkeit nicht wirkt",
+            "Man schließt, dass das Medikament nicht wirkt, obwohl es in Wirklichkeit wirkt",
+            "Das Medikament hat Nebenwirkungen",
+            "Die Stichprobe ist zu klein"
+        ],
+        korrekt: 0,
+        tipp: "Fehler 1. Art = \\(H_0\\) fälschlicherweise ablehnen. Hier: fälschlich Wirksamkeit feststellen.",
+        loesungsweg: "Fehler 1. Art: \\(H_0\\) (keine Wirkung) wird abgelehnt, obwohl sie stimmt. Man lässt ein unwirksames Medikament zu."
+    },
+    {
+        id: 28, level: 5, typ: "mc",
+        frage: "Wie verändert sich die Wahrscheinlichkeit für einen Fehler 2. Art, wenn man das Signifikanzniveau \\(\\alpha\\) <strong>verkleinert</strong>?",
+        optionen: [
+            "Die Wahrscheinlichkeit für einen Fehler 2. Art steigt (bei gleichem \\(n\\))",
+            "Die Wahrscheinlichkeit für einen Fehler 2. Art sinkt",
+            "Beide Fehlerwahrscheinlichkeiten sinken gleichzeitig",
+            "Es gibt keinen Zusammenhang zwischen den beiden Fehlern"
+        ],
+        korrekt: 0,
+        tipp: "Bei festem Stichprobenumfang: Wird \\(\\alpha\\) kleiner, wird der Ablehnungsbereich kleiner — was passiert dann mit \\(\\beta\\)?",
+        loesungsweg: "Bei festem \\(n\\) stehen \\(\\alpha\\) und \\(\\beta\\) in einem Spannungsverhältnis: Verkleinert man \\(\\alpha\\), wird der Ablehnungsbereich kleiner, sodass \\(\\beta\\) steigt. Nur eine Vergrößerung von \\(n\\) kann beide gleichzeitig senken."
+    },
+    {
+        id: 29, level: 5, typ: "mc",
+        frage: "Bei einem Test mit \\(H_0\\colon p \\ge 0{,}5\\) und \\(n = 100\\) liegt der Ablehnungsbereich bei \\(X \\le 41\\). Der wahre Anteil ist \\(p = 0{,}45\\). Was ist die Wahrscheinlichkeit des Fehlers 2. Art näherungsweise? <br><em>Hinweis: Bei \\(p = 0{,}45\\) ist \\(\\mu = 45\\) und \\(\\sigma \\approx 4{,}97\\). \\(P(X > 41) = P\\!\\left(Z > \\frac{41-45}{4{,}97}\\right) = P(Z > -0{,}81) \\approx 0{,}79\\).</em>",
+        optionen: [
+            "\\(\\beta \\approx 0{,}79\\) — es ist sehr wahrscheinlich, dass \\(H_0\\) fälschlich beibehalten wird",
+            "\\(\\beta \\approx 0{,}21\\)",
+            "\\(\\beta \\approx 0{,}05\\)",
+            "\\(\\beta = 0\\)"
+        ],
+        korrekt: 0,
+        tipp: "Fehler 2. Art = \\(H_0\\) wird nicht abgelehnt, obwohl \\(p = 0{,}45 < 0{,}5\\). Das heißt \\(P(X > 41 \\mid p = 0{,}45)\\).",
+        loesungsweg: "Bei \\(p = 0{,}45\\): \\(\\mu = 45\\), \\(\\sigma \\approx 4{,}97\\). \\(P(X > 41) = P\\!\\left(Z > \\frac{41 - 45}{4{,}97}\\right) = P(Z > -0{,}81) = \\Phi(0{,}81) \\approx 0{,}79\\). Der Fehler 2. Art ist also sehr hoch."
+    },
+    {
+        id: 30, level: 5, typ: "mc",
+        frage: "Wie kann man sowohl den Fehler 1. Art als auch den Fehler 2. Art gleichzeitig verkleinern?",
+        optionen: [
+            "Den Stichprobenumfang \\(n\\) vergrößern",
+            "Das Signifikanzniveau \\(\\alpha\\) verkleinern",
+            "Das Signifikanzniveau \\(\\alpha\\) vergrößern",
+            "Es ist grundsätzlich unmöglich"
+        ],
+        korrekt: 0,
+        tipp: "Bei festem \\(n\\) sind \\(\\alpha\\) und \\(\\beta\\) gegenläufig. Welche Größe kann man noch verändern?",
+        loesungsweg: "Durch Vergrößerung des Stichprobenumfangs \\(n\\) wird der Test trennschärfer: Sowohl \\(\\alpha\\) als auch \\(\\beta\\) können gesenkt werden."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 6 — Komplexe Testaufgaben, zweiseitige Tests, Sachkontexte
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 31, level: 6, typ: "mc",
+        frage: "Ein zweiseitiger Test prüft \\(H_0\\colon p = 0{,}5\\) gegen \\(H_1\\colon p \\neq 0{,}5\\) bei \\(\\alpha = 0{,}05\\). Wo liegt der Ablehnungsbereich?",
+        optionen: [
+            "Auf beiden Seiten: \\(X \\le k_1\\) oder \\(X \\ge k_2\\), wobei jeweils \\(\\frac{\\alpha}{2} = 0{,}025\\) verwendet wird",
+            "Nur links: \\(X \\le k\\)",
+            "Nur rechts: \\(X \\ge k\\)",
+            "Es gibt keinen Ablehnungsbereich bei zweiseitigen Tests"
+        ],
+        korrekt: 0,
+        tipp: "Zweiseitig = Abweichung nach oben oder unten ist verdächtig. Das \\(\\alpha\\) wird auf beide Seiten aufgeteilt.",
+        loesungsweg: "Beim zweiseitigen Test wird \\(\\alpha\\) halbiert: \\(\\frac{\\alpha}{2} = 0{,}025\\) je Seite. Der Ablehnungsbereich liegt bei \\(X \\le k_1\\) oder \\(X \\ge k_2\\) (symmetrisch bei \\(p = 0{,}5\\))."
+    },
+    {
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Zweiseitiger Test: \\(H_0\\colon p = 0{,}5\\), \\(n = 400\\), \\(\\alpha = 0{,}05\\). Mit der Sigma-Regel (\\(z = 1{,}96\\)): Berechne die <strong>obere Ablehnungsgrenze</strong> \\(k_2 = n \\cdot p + 1{,}96 \\cdot \\sqrt{n \\cdot p \\cdot (1-p)}\\). Runde auf ganze Zahlen.",
+        loesung: 220, toleranz: 1,
+        tipp: "\\(\\mu = 200\\), \\(\\sigma = \\sqrt{400 \\cdot 0{,}25} = 10\\). \\(k_2 = 200 + 1{,}96 \\cdot 10\\).",
+        loesungsweg: "\\(\\mu = 200\\), \\(\\sigma = 10\\). \\(k_2 = 200 + 1{,}96 \\cdot 10 = 200 + 19{,}6 = 219{,}6\\). Aufgerundet: \\(k_2 = 220\\)."
+    },
+    {
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Gleicher Test wie zuvor: \\(H_0\\colon p = 0{,}5\\), \\(n = 400\\), \\(\\alpha = 0{,}05\\). Berechne die <strong>untere Ablehnungsgrenze</strong> \\(k_1 = n \\cdot p - 1{,}96 \\cdot \\sqrt{n \\cdot p \\cdot (1-p)}\\). Runde auf ganze Zahlen.",
+        loesung: 180, toleranz: 1,
+        tipp: "\\(k_1 = 200 - 1{,}96 \\cdot 10\\).",
+        loesungsweg: "\\(k_1 = 200 - 19{,}6 = 180{,}4\\). Abgerundet: \\(k_1 = 180\\)."
+    },
+    {
+        id: 34, level: 6, typ: "mc",
+        frage: "Eine Firma testet, ob ihr neues Produkt eine andere Fehlerquote als bisher (\\(p_0 = 0{,}08\\)) hat. Bei \\(n = 500\\) werden 55 fehlerhafte Stücke gefunden. \\(h = 0{,}11\\). Das 95 %-Konfidenzintervall ist \\([0{,}083;\\; 0{,}137]\\). Was folgt daraus?",
+        optionen: [
+            "Da \\(p_0 = 0{,}08\\) nicht im Konfidenzintervall liegt, wird die bisherige Fehlerquote angezweifelt",
+            "Da \\(p_0 = 0{,}08\\) im Konfidenzintervall liegt, bleibt alles beim Alten",
+            "Das Konfidenzintervall ist zu breit für eine Aussage",
+            "Man benötigt einen einseitigen Test"
+        ],
+        korrekt: 0,
+        tipp: "Liegt \\(p_0 = 0{,}08\\) im Intervall \\([0{,}083;\\; 0{,}137]\\)?",
+        loesungsweg: "\\(p_0 = 0{,}08 < 0{,}083\\) liegt nicht im Konfidenzintervall. Auf dem 5 %-Niveau wird die bisherige Fehlerquote abgelehnt — die neue Fehlerquote scheint höher zu sein."
+    },
+    {
+        id: 35, level: 6, typ: "mc",
+        frage: "Beim Testen einer Münze (\\(H_0\\colon p = 0{,}5\\), zweiseitig, \\(\\alpha = 0{,}05\\)) bei \\(n = 100\\) Würfen fallen 62 Mal Kopf. Der Ablehnungsbereich ist \\(X \\le 40\\) oder \\(X \\ge 60\\). Welche Entscheidung wird getroffen?",
+        optionen: [
+            "\\(H_0\\) wird abgelehnt, da \\(62 \\ge 60\\): Die Münze ist vermutlich nicht fair",
+            "\\(H_0\\) wird beibehalten, da \\(62\\) nahe bei \\(50\\) liegt",
+            "\\(H_0\\) wird beibehalten, da \\(62 < 100\\)",
+            "Keine Entscheidung möglich"
+        ],
+        korrekt: 0,
+        tipp: "Liegt \\(X = 62\\) im Ablehnungsbereich \\(X \\le 40\\) oder \\(X \\ge 60\\)?",
+        loesungsweg: "\\(X = 62 \\ge 60\\), also liegt das Ergebnis im Ablehnungsbereich. \\(H_0\\) wird abgelehnt: Die Münze ist auf dem 5 %-Niveau signifikant unfair."
+    },
+    {
+        id: 36, level: 6, typ: "mc",
+        frage: "Ein Lehrer möchte prüfen, ob der Anteil der Schüler, die den neuen Lernstoff verstehen, von \\(p_0 = 0{,}6\\) gestiegen ist. Er testet \\(H_0\\colon p \\le 0{,}6\\) gegen \\(H_1\\colon p > 0{,}6\\) mit \\(n = 150\\) und \\(\\alpha = 0{,}05\\). Ergebnis: \\(X = 102\\). Ablehnungsbereich: \\(X \\ge 101\\). Welcher Fehler kann hier auftreten?",
+        optionen: [
+            "Fehler 1. Art: Der Lehrer schließt, dass der Anteil gestiegen ist, obwohl er in Wirklichkeit bei \\(p \\le 0{,}6\\) liegt",
+            "Fehler 2. Art: Der Lehrer schließt, dass der Anteil gestiegen ist, obwohl er es nicht ist",
+            "Kein Fehler, da \\(X = 102 > 101\\)",
+            "Fehler 2. Art: Der Lehrer schließt, dass der Anteil nicht gestiegen ist"
+        ],
+        korrekt: 0,
+        tipp: "Da \\(H_0\\) abgelehnt wird (\\(102 \\ge 101\\)): Welcher Fehler kann bei einer Ablehnung passieren?",
+        loesungsweg: "Da \\(X = 102 \\ge 101\\), wird \\(H_0\\) abgelehnt. Bei einer Ablehnung kann nur ein Fehler 1. Art auftreten: \\(H_0\\) wird fälschlicherweise verworfen, obwohl der Anteil tatsächlich bei \\(p \\le 0{,}6\\) liegt."
+    }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extremwertaufgaben - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '11-analysis-extremwertaufgaben';
+    const THEMA_CONFIG = { name: 'Extremwertaufgaben', bereich: 'analysis' };
+    const AUFGABEN = [
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 1 — babyleicht (IDs 1–6)
+      // Einfache Optimierung ohne Nebenbedingung
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 1,
+        level: 1,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = -x^2 + 6x\\). An welcher Stelle \\(x\\) hat \\(f\\) ein Maximum?',
+        loesung: 3,
+        toleranz: 0,
+        tipp: 'Bilde die Ableitung \\(f\'(x)\\) und setze sie gleich Null.',
+        loesungsweg: '\\(f\'(x) = -2x + 6 = 0\\) \\(\\Rightarrow\\) \\(x = 3\\). \\(f\'\'(x) = -2 < 0\\) \\(\\Rightarrow\\) Maximum.'
+      },
+      {
+        id: 2,
+        level: 1,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = -x^2 + 6x\\). Berechne den maximalen Funktionswert.',
+        loesung: 9,
+        toleranz: 0,
+        tipp: 'Bestimme zuerst die Stelle des Maximums, dann setze sie in \\(f(x)\\) ein.',
+        loesungsweg: '\\(f\'(x) = -2x + 6 = 0\\) \\(\\Rightarrow\\) \\(x = 3\\). \\(f(3) = -9 + 18 = 9\\).'
+      },
+      {
+        id: 3,
+        level: 1,
+        typ: 'numerisch',
+        frage: 'Maximiere \\(f(x) = -2x^2 + 16x - 5\\). Welchen Wert hat \\(x\\) im Maximum?',
+        loesung: 4,
+        toleranz: 0,
+        tipp: '\\(f\'(x) = -4x + 16\\). Setze gleich Null.',
+        loesungsweg: '\\(f\'(x) = -4x + 16 = 0\\) \\(\\Rightarrow\\) \\(x = 4\\). \\(f\'\'(x) = -4 < 0\\) \\(\\Rightarrow\\) Maximum bei \\(x = 4\\).'
+      },
+      {
+        id: 4,
+        level: 1,
+        typ: 'numerisch',
+        frage: 'Minimiere \\(f(x) = x^2 - 10x + 30\\). Wie lautet der minimale Funktionswert?',
+        loesung: 5,
+        toleranz: 0,
+        tipp: '\\(f\'(x) = 2x - 10 = 0\\). Bestimme \\(x\\) und setze in \\(f\\) ein.',
+        loesungsweg: '\\(f\'(x) = 2x - 10 = 0\\) \\(\\Rightarrow\\) \\(x = 5\\). \\(f(5) = 25 - 50 + 30 = 5\\).'
+      },
+      {
+        id: 5,
+        level: 1,
+        typ: 'mc',
+        frage: 'Was ist der erste Schritt bei einer Extremwertaufgabe?',
+        optionen: [
+          'Ableitung bilden und gleich Null setzen',
+          'Definitionsbereich bestimmen',
+          'Zielfunktion aufstellen',
+          'Zweite Ableitung bilden'
+        ],
+        korrekt: 2,
+        tipp: 'Bevor man ableiten kann, muss man wissen, was man optimieren will.',
+        loesungsweg: 'Der erste Schritt ist stets das Aufstellen der Zielfunktion, die den zu optimierenden Wert beschreibt.'
+      },
+      {
+        id: 6,
+        level: 1,
+        typ: 'numerisch',
+        frage: 'Gegeben ist \\(f(x) = -3x^2 + 24x + 1\\). Berechne die Stelle des Maximums.',
+        loesung: 4,
+        toleranz: 0,
+        tipp: 'Leite ab: \\(f\'(x) = -6x + 24\\).',
+        loesungsweg: '\\(f\'(x) = -6x + 24 = 0\\) \\(\\Rightarrow\\) \\(x = 4\\). \\(f\'\'(x) = -6 < 0\\) \\(\\Rightarrow\\) Maximum.'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 2 — leicht (IDs 7–12)
+      // Rechteck mit festem Umfang — Fläche maximieren
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 7,
+        level: 2,
+        typ: 'numerisch',
+        frage: 'Ein Rechteck hat den Umfang \\(U = 20\\). Welche Seitenlänge \\(a\\) maximiert die Fläche?',
+        loesung: 5,
+        toleranz: 0,
+        tipp: 'Nebenbedingung: \\(2a + 2b = 20\\), also \\(b = 10 - a\\). Zielfunktion: \\(A(a) = a \\cdot b\\).',
+        loesungsweg: '\\(b = 10 - a\\). \\(A(a) = a(10 - a) = 10a - a^2\\). \\(A\'(a) = 10 - 2a = 0\\) \\(\\Rightarrow\\) \\(a = 5\\).'
+      },
+      {
+        id: 8,
+        level: 2,
+        typ: 'numerisch',
+        frage: 'Ein Rechteck hat den Umfang \\(U = 20\\). Wie groß ist die maximale Fläche?',
+        loesung: 25,
+        toleranz: 0,
+        tipp: 'Bestimme die optimale Seitenlänge und berechne dann \\(A = a \\cdot b\\).',
+        loesungsweg: '\\(a = 5\\), \\(b = 10 - 5 = 5\\). \\(A = 5 \\cdot 5 = 25\\).'
+      },
+      {
+        id: 9,
+        level: 2,
+        typ: 'numerisch',
+        frage: 'Ein Rechteck hat den Umfang \\(U = 36\\). Welche Seitenlänge \\(a\\) maximiert die Fläche?',
+        loesung: 9,
+        toleranz: 0,
+        tipp: '\\(2a + 2b = 36\\), also \\(b = 18 - a\\). Stelle \\(A(a) = a(18 - a)\\) auf.',
+        loesungsweg: '\\(A(a) = a(18 - a) = 18a - a^2\\). \\(A\'(a) = 18 - 2a = 0\\) \\(\\Rightarrow\\) \\(a = 9\\). Maximale Fläche: \\(81\\).'
+      },
+      {
+        id: 10,
+        level: 2,
+        typ: 'mc',
+        frage: 'Ein Rechteck mit festem Umfang hat maximale Fläche, wenn ...',
+        optionen: [
+          'es ein Quadrat ist',
+          'eine Seite doppelt so lang wie die andere ist',
+          'eine Seite dreimal so lang wie die andere ist',
+          'die Fläche dem Umfang entspricht'
+        ],
+        korrekt: 0,
+        tipp: 'Setze \\(b = \\frac{U}{2} - a\\) und optimiere \\(A(a) = a \\cdot b\\).',
+        loesungsweg: '\\(A(a) = a\\left(\\frac{U}{2} - a\\right)\\). Maximum bei \\(a = \\frac{U}{4}\\), also \\(a = b\\) — ein Quadrat.'
+      },
+      {
+        id: 11,
+        level: 2,
+        typ: 'numerisch',
+        frage: 'Die Summe zweier positiver Zahlen ist 12. Wie lautet das Maximum ihres Produkts?',
+        loesung: 36,
+        toleranz: 0,
+        tipp: 'Sei \\(x + y = 12\\). Dann \\(P(x) = x(12 - x)\\). Maximiere \\(P\\).',
+        loesungsweg: '\\(P(x) = 12x - x^2\\). \\(P\'(x) = 12 - 2x = 0\\) \\(\\Rightarrow\\) \\(x = 6\\). \\(P(6) = 6 \\cdot 6 = 36\\).'
+      },
+      {
+        id: 12,
+        level: 2,
+        typ: 'numerisch',
+        frage: 'Ein Rechteck hat den Umfang \\(U = 28\\). Berechne die maximale Fläche.',
+        loesung: 49,
+        toleranz: 0,
+        tipp: 'Optimale Seitenlänge: \\(a = \\frac{U}{4}\\). Dann \\(A = a^2\\).',
+        loesungsweg: '\\(a = \\frac{28}{4} = 7\\). \\(A = 7 \\cdot 7 = 49\\).'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 3 — mittel (IDs 13–18)
+      // Schachtel aus Karton (Ecken ausschneiden), Volumen maximieren
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 13,
+        level: 3,
+        typ: 'numerisch',
+        frage: 'Aus einem \\(12 \\times 12\\)-Karton werden an den Ecken Quadrate der Seitenlänge \\(x\\) ausgeschnitten und eine offene Schachtel gefaltet. Stelle die Volumenfunktion auf: \\(V(x) = x(12 - 2x)^2\\). Welches \\(x\\) maximiert das Volumen?',
+        loesung: 2,
+        toleranz: 0,
+        tipp: 'Leite \\(V(x) = x(12 - 2x)^2\\) ab und setze \\(V\'(x) = 0\\).',
+        loesungsweg: '\\(V(x) = x(12 - 2x)^2 = x(144 - 48x + 4x^2) = 4x^3 - 48x^2 + 144x\\). \\(V\'(x) = 12x^2 - 96x + 144 = 12(x^2 - 8x + 12) = 12(x - 2)(x - 6) = 0\\). \\(x = 2\\) oder \\(x = 6\\). Da \\(x = 6\\) kein Volumen ergibt, ist \\(x = 2\\).'
+      },
+      {
+        id: 14,
+        level: 3,
+        typ: 'numerisch',
+        frage: 'Karton \\(12 \\times 12\\), Ecken \\(x\\) ausgeschnitten. Wie groß ist das maximale Volumen der Schachtel?',
+        loesung: 128,
+        toleranz: 0,
+        tipp: 'Setze das optimale \\(x = 2\\) in \\(V(x) = x(12 - 2x)^2\\) ein.',
+        loesungsweg: '\\(V(2) = 2 \\cdot (12 - 4)^2 = 2 \\cdot 64 = 128\\).'
+      },
+      {
+        id: 15,
+        level: 3,
+        typ: 'numerisch',
+        frage: 'Aus einem \\(18 \\times 18\\)-Karton werden Quadrate der Seitenlänge \\(x\\) ausgeschnitten. Welches \\(x\\) maximiert das Volumen der Schachtel?',
+        loesung: 3,
+        toleranz: 0,
+        tipp: '\\(V(x) = x(18 - 2x)^2\\). Leite ab und löse \\(V\'(x) = 0\\).',
+        loesungsweg: '\\(V(x) = x(18 - 2x)^2\\). \\(V\'(x) = (18 - 2x)^2 + x \\cdot 2(18 - 2x)(-2) = (18 - 2x)[(18 - 2x) - 4x] = (18 - 2x)(18 - 6x)\\). \\(V\'(x) = 0\\): \\(x = 9\\) (entfällt) oder \\(x = 3\\).'
+      },
+      {
+        id: 16,
+        level: 3,
+        typ: 'numerisch',
+        frage: 'Aus einem \\(18 \\times 18\\)-Karton werden Ecken \\(x = 3\\) ausgeschnitten. Berechne das maximale Volumen.',
+        loesung: 432,
+        toleranz: 0,
+        tipp: 'Setze \\(x = 3\\) in \\(V(x) = x(18 - 2x)^2\\) ein.',
+        loesungsweg: '\\(V(3) = 3 \\cdot (18 - 6)^2 = 3 \\cdot 144 = 432\\).'
+      },
+      {
+        id: 17,
+        level: 3,
+        typ: 'mc',
+        frage: 'Aus einem \\(a \\times a\\)-Karton werden Ecken \\(x\\) ausgeschnitten. Welcher Zusammenhang gilt stets für das optimale \\(x\\)?',
+        optionen: [
+          '\\(x = \\frac{a}{6}\\)',
+          '\\(x = \\frac{a}{4}\\)',
+          '\\(x = \\frac{a}{3}\\)',
+          '\\(x = \\frac{a}{2}\\)'
+        ],
+        korrekt: 0,
+        tipp: 'Für \\(a = 12\\) war \\(x = 2\\), für \\(a = 18\\) war \\(x = 3\\). Siehst du das Muster?',
+        loesungsweg: '\\(V(x) = x(a - 2x)^2\\). \\(V\'(x) = (a - 2x)(a - 6x) = 0\\). Sinnvolle Lösung: \\(x = \\frac{a}{6}\\).'
+      },
+      {
+        id: 18,
+        level: 3,
+        typ: 'numerisch',
+        frage: 'Aus einem \\(24 \\times 24\\)-Karton werden Ecken ausgeschnitten. Welches \\(x\\) maximiert das Volumen?',
+        loesung: 4,
+        toleranz: 0,
+        tipp: 'Nutze die allgemeine Formel \\(x = \\frac{a}{6}\\).',
+        loesungsweg: '\\(x = \\frac{24}{6} = 4\\). Kontrolle: \\(V(4) = 4 \\cdot 16^2 = 1024\\).'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 4 — fortgeschritten (IDs 19–24)
+      // Zaun an einer Wand (3 Seiten), Material minimieren
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 19,
+        level: 4,
+        typ: 'numerisch',
+        frage: 'An einer Hauswand soll ein rechteckiges Beet mit \\(A = 50\\,\\text{m}^2\\) eingezäunt werden (3 Seiten Zaun). Die Seite parallel zur Wand sei \\(a\\), die beiden senkrechten Seiten je \\(b\\). Welches \\(b\\) minimiert den Zaunverbrauch?',
+        loesung: 5,
+        toleranz: 0,
+        tipp: 'Nebenbedingung: \\(a \\cdot b = 50\\), also \\(a = \\frac{50}{b}\\). Zaun: \\(Z = a + 2b\\).',
+        loesungsweg: '\\(Z(b) = \\frac{50}{b} + 2b\\). \\(Z\'(b) = -\\frac{50}{b^2} + 2 = 0\\) \\(\\Rightarrow\\) \\(b^2 = 25\\) \\(\\Rightarrow\\) \\(b = 5\\).'
+      },
+      {
+        id: 20,
+        level: 4,
+        typ: 'numerisch',
+        frage: 'Beet an Hauswand, \\(A = 50\\,\\text{m}^2\\), 3 Seiten Zaun. Wie lang ist die Seite \\(a\\) (parallel zur Wand) im Optimum?',
+        loesung: 10,
+        toleranz: 0,
+        tipp: 'Aus der vorherigen Aufgabe: \\(b = 5\\). Dann \\(a = \\frac{50}{b}\\).',
+        loesungsweg: '\\(a = \\frac{50}{5} = 10\\). Der minimale Zaun beträgt \\(Z = 10 + 2 \\cdot 5 = 20\\,\\text{m}\\).'
+      },
+      {
+        id: 21,
+        level: 4,
+        typ: 'numerisch',
+        frage: 'An einer Wand soll ein Beet mit \\(A = 72\\,\\text{m}^2\\) eingezäunt werden (3 Seiten). Wie viel Zaun (in m) wird minimal benötigt?',
+        loesung: 24,
+        toleranz: 0,
+        tipp: '\\(Z(b) = \\frac{72}{b} + 2b\\). Minimiere und berechne dann \\(Z(b_{\\text{opt}})\\).',
+        loesungsweg: '\\(Z\'(b) = -\\frac{72}{b^2} + 2 = 0\\) \\(\\Rightarrow\\) \\(b^2 = 36\\) \\(\\Rightarrow\\) \\(b = 6\\). \\(a = \\frac{72}{6} = 12\\). \\(Z = 12 + 12 = 24\\).'
+      },
+      {
+        id: 22,
+        level: 4,
+        typ: 'mc',
+        frage: 'Beim Zaun-an-der-Wand-Problem (3 Seiten) mit fester Fläche \\(A\\) gilt im Optimum:',
+        optionen: [
+          '\\(a = b\\) (Quadrat)',
+          '\\(a = 2b\\) (doppelt so lang wie breit)',
+          '\\(a = 3b\\)',
+          '\\(a = 4b\\)'
+        ],
+        korrekt: 1,
+        tipp: 'Für \\(A = 50\\) war \\(a = 10\\), \\(b = 5\\). Für \\(A = 72\\) war \\(a = 12\\), \\(b = 6\\).',
+        loesungsweg: '\\(Z(b) = \\frac{A}{b} + 2b\\). \\(Z\'(b) = 0\\) \\(\\Rightarrow\\) \\(b = \\sqrt{\\frac{A}{2}}\\). Dann \\(a = \\frac{A}{b} = \\sqrt{2A} = 2b\\). Also \\(a = 2b\\).'
+      },
+      {
+        id: 23,
+        level: 4,
+        typ: 'numerisch',
+        frage: 'Es stehen 30 m Zaun zur Verfügung, um an einer Wand ein Rechteck einzuzäunen (3 Seiten). Welche Fläche (in m\\(^2\\)) ist maximal möglich?',
+        loesung: 112.5,
+        toleranz: 0.01,
+        tipp: 'Nebenbedingung: \\(a + 2b = 30\\). Zielfunktion: \\(A = a \\cdot b\\). Eliminiere \\(a\\).',
+        loesungsweg: '\\(a = 30 - 2b\\). \\(A(b) = (30 - 2b) \\cdot b = 30b - 2b^2\\). \\(A\'(b) = 30 - 4b = 0\\) \\(\\Rightarrow\\) \\(b = 7{,}5\\). \\(A = 7{,}5 \\cdot 15 = 112{,}5\\).'
+      },
+      {
+        id: 24,
+        level: 4,
+        typ: 'numerisch',
+        frage: 'Es stehen 40 m Zaun zur Verfügung (3 Seiten an einer Wand). Wie lautet die Seitenlänge \\(b\\) (senkrecht zur Wand) bei maximaler Fläche?',
+        loesung: 10,
+        toleranz: 0,
+        tipp: '\\(a + 2b = 40\\). \\(A(b) = (40 - 2b) \\cdot b\\). Maximiere.',
+        loesungsweg: '\\(A(b) = 40b - 2b^2\\). \\(A\'(b) = 40 - 4b = 0\\) \\(\\Rightarrow\\) \\(b = 10\\). \\(a = 20\\), \\(A = 200\\).'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 5 — schwer (IDs 25–30)
+      // Dosenoptimierung (Zylinder: Oberfläche minimieren bei gegebenem Volumen)
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 25,
+        level: 5,
+        typ: 'numerisch',
+        frage: 'Ein zylindrisches Gefäß hat das Volumen \\(V = 250\\pi\\,\\text{cm}^3\\). Welcher Radius \\(r\\) (in cm) minimiert die Oberfläche \\(O = 2\\pi r^2 + 2\\pi r h\\)?',
+        loesung: 5,
+        toleranz: 0.01,
+        tipp: 'Nebenbedingung: \\(\\pi r^2 h = 250\\pi\\), also \\(h = \\frac{250}{r^2}\\). Einsetzen in \\(O\\).',
+        loesungsweg: '\\(h = \\frac{250}{r^2}\\). \\(O(r) = 2\\pi r^2 + \\frac{500\\pi}{r}\\). \\(O\'(r) = 4\\pi r - \\frac{500\\pi}{r^2} = 0\\) \\(\\Rightarrow\\) \\(r^3 = 125\\) \\(\\Rightarrow\\) \\(r = 5\\).'
+      },
+      {
+        id: 26,
+        level: 5,
+        typ: 'numerisch',
+        frage: 'Ein geschlossener Zylinder hat das Volumen \\(V = 250\\pi\\,\\text{cm}^3\\). Der optimale Radius ist \\(r = 5\\,\\text{cm}\\). Wie groß ist die zugehörige Höhe \\(h\\) (in cm)?',
+        loesung: 10,
+        toleranz: 0,
+        tipp: '\\(V = \\pi r^2 h\\). Löse nach \\(h\\) auf.',
+        loesungsweg: '\\(250\\pi = \\pi \\cdot 25 \\cdot h\\) \\(\\Rightarrow\\) \\(h = 10\\).'
+      },
+      {
+        id: 27,
+        level: 5,
+        typ: 'mc',
+        frage: 'Bei der Dosenoptimierung (Zylinder, Oberfläche minimieren bei festem Volumen) gilt im Optimum:',
+        optionen: [
+          '\\(h = r\\)',
+          '\\(h = 2r\\)',
+          '\\(h = 3r\\)',
+          '\\(h = \\pi r\\)'
+        ],
+        korrekt: 1,
+        tipp: 'Setze \\(h = \\frac{V}{\\pi r^2}\\) in \\(O\\) ein und leite ab. Welche Beziehung ergibt sich?',
+        loesungsweg: '\\(O(r) = 2\\pi r^2 + \\frac{2V}{r}\\). \\(O\'(r) = 4\\pi r - \\frac{2V}{r^2} = 0\\) \\(\\Rightarrow\\) \\(V = 2\\pi r^3\\). Also \\(h = \\frac{V}{\\pi r^2} = \\frac{2\\pi r^3}{\\pi r^2} = 2r\\).'
+      },
+      {
+        id: 28,
+        level: 5,
+        typ: 'numerisch',
+        frage: 'Ein Zylinder mit \\(V = 2000\\pi\\,\\text{cm}^3\\) soll minimale Oberfläche haben. Berechne den optimalen Radius \\(r\\) (in cm).',
+        loesung: 10,
+        toleranz: 0.01,
+        tipp: 'Im Optimum gilt \\(V = 2\\pi r^3\\). Löse nach \\(r\\) auf.',
+        loesungsweg: '\\(2\\pi r^3 = 2000\\pi\\) \\(\\Rightarrow\\) \\(r^3 = 1000\\) \\(\\Rightarrow\\) \\(r = 10\\).'
+      },
+      {
+        id: 29,
+        level: 5,
+        typ: 'numerisch',
+        frage: 'Ein offener Zylinder (ohne Deckel) mit \\(V = 27\\pi\\,\\text{cm}^3\\) soll minimale Oberfläche \\(O = \\pi r^2 + 2\\pi r h\\) haben. Berechne \\(r\\) (in cm).',
+        loesung: 3,
+        toleranz: 0.01,
+        tipp: '\\(h = \\frac{27}{r^2}\\). \\(O(r) = \\pi r^2 + \\frac{54\\pi}{r}\\). Setze \\(O\'(r) = 0\\).',
+        loesungsweg: '\\(O(r) = \\pi r^2 + \\frac{54\\pi}{r}\\). \\(O\'(r) = 2\\pi r - \\frac{54\\pi}{r^2} = 0\\) \\(\\Rightarrow\\) \\(r^3 = 27\\) \\(\\Rightarrow\\) \\(r = 3\\).'
+      },
+      {
+        id: 30,
+        level: 5,
+        typ: 'numerisch',
+        frage: 'Ein geschlossener Zylinder soll bei \\(V = 128\\pi\\,\\text{cm}^3\\) minimale Oberfläche haben. Berechne die minimale Oberfläche (in cm\\(^2\\), ohne \\(\\pi\\), d.h. gib den Faktor vor \\(\\pi\\) an).',
+        loesung: 96,
+        toleranz: 0.01,
+        tipp: 'Optimum: \\(h = 2r\\) und \\(V = 2\\pi r^3 = 128\\pi\\). Dann \\(O = 6\\pi r^2\\).',
+        loesungsweg: '\\(2\\pi r^3 = 128\\pi\\) \\(\\Rightarrow\\) \\(r^3 = 64\\) \\(\\Rightarrow\\) \\(r = 4\\). \\(h = 8\\). \\(O = 2\\pi \\cdot 16 + 2\\pi \\cdot 4 \\cdot 8 = 32\\pi + 64\\pi = 96\\pi\\). Faktor: \\(96\\).'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 6 — wagnerisch (IDs 31–36)
+      // Zwei-Variablen-Optimierung, Abstand Punkt–Kurve,
+      // einbeschriebenes Rechteck in Parabel
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 31,
+        level: 6,
+        typ: 'numerisch',
+        frage: 'Bestimme den minimalen Abstand des Punktes \\(P(3 \\mid 0)\\) zur Parabel \\(y = x^2\\). Minimiere \\(d^2(x) = (x - 3)^2 + x^4\\). An welcher Stelle \\(x\\) liegt das Minimum? (Runde auf 2 Dezimalen.)',
+        loesung: 1,
+        toleranz: 0.01,
+        tipp: '\\(D(x) = (x-3)^2 + x^4\\). \\(D\'(x) = 2(x-3) + 4x^3 = 0\\). Probiere \\(x = 1\\).',
+        loesungsweg: '\\(D\'(x) = 4x^3 + 2x - 6 = 0\\), also \\(2x^3 + x - 3 = 0\\). Probe \\(x = 1\\): \\(2 + 1 - 3 = 0\\) \\(\\checkmark\\). Die Stelle ist \\(x = 1\\).'
+      },
+      {
+        id: 32,
+        level: 6,
+        typ: 'numerisch',
+        frage: 'Ein Rechteck wird unter der Parabel \\(y = 4 - x^2\\) symmetrisch zur y-Achse einbeschrieben (Grundseite auf der x-Achse). Welche halbe Breite \\(x\\) maximiert die Rechteckfläche?',
+        loesung: 1.15,
+        toleranz: 0.02,
+        tipp: '\\(A(x) = 2x(4 - x^2)\\). Leite ab und setze gleich Null.',
+        loesungsweg: '\\(A(x) = 2x(4 - x^2) = 8x - 2x^3\\). \\(A\'(x) = 8 - 6x^2 = 0\\) \\(\\Rightarrow\\) \\(x^2 = \\frac{4}{3}\\) \\(\\Rightarrow\\) \\(x = \\frac{2}{\\sqrt{3}} \\approx 1{,}15\\).'
+      },
+      {
+        id: 33,
+        level: 6,
+        typ: 'numerisch',
+        frage: 'Rechteck unter \\(y = 4 - x^2\\), symmetrisch. Berechne die maximale Fläche des Rechtecks. (Runde auf 2 Dezimalen.)',
+        loesung: 6.16,
+        toleranz: 0.02,
+        tipp: 'Setze \\(x = \\frac{2}{\\sqrt{3}}\\) in \\(A = 2x(4 - x^2)\\) ein.',
+        loesungsweg: '\\(x = \\frac{2}{\\sqrt{3}}\\), \\(4 - x^2 = 4 - \\frac{4}{3} = \\frac{8}{3}\\). \\(A = 2 \\cdot \\frac{2}{\\sqrt{3}} \\cdot \\frac{8}{3} = \\frac{32}{3\\sqrt{3}} = \\frac{32\\sqrt{3}}{9} \\approx 6{,}16\\).'
+      },
+      {
+        id: 34,
+        level: 6,
+        typ: 'numerisch',
+        frage: 'Ein Rechteck wird unter der Parabel \\(y = 9 - x^2\\) einbeschrieben (Grundseite auf der x-Achse, symmetrisch). Berechne die maximale Fläche. (Runde auf 2 Dezimalen.)',
+        loesung: 20.78,
+        toleranz: 0.02,
+        tipp: '\\(A(x) = 2x(9 - x^2) = 18x - 2x^3\\). \\(A\'(x) = 18 - 6x^2 = 0\\).',
+        loesungsweg: '\\(x^2 = 3\\), \\(x = \\sqrt{3}\\). \\(A = 2\\sqrt{3}(9 - 3) = 12\\sqrt{3} \\approx 20{,}78\\).'
+      },
+      {
+        id: 35,
+        level: 6,
+        typ: 'numerisch',
+        frage: 'Bestimme den minimalen Abstand (nicht \\(d^2\\)!) des Punktes \\(P(0 \\mid 1)\\) zur Parabel \\(y = x^2\\). (Runde auf 2 Dezimalen.)',
+        loesung: 0.87,
+        toleranz: 0.02,
+        tipp: '\\(d^2(x) = x^2 + (x^2 - 1)^2\\). Minimiere und ziehe dann die Wurzel.',
+        loesungsweg: '\\(D(x) = x^2 + x^4 - 2x^2 + 1 = x^4 - x^2 + 1\\). \\(D\'(x) = 4x^3 - 2x = 2x(2x^2 - 1) = 0\\). \\(x = 0\\) oder \\(x^2 = \\frac{1}{2}\\). \\(D(0) = 1\\), \\(D\\left(\\frac{1}{\\sqrt{2}}\\right) = \\frac{1}{4} - \\frac{1}{2} + 1 = \\frac{3}{4}\\). \\(d = \\sqrt{\\frac{3}{4}} = \\frac{\\sqrt{3}}{2} \\approx 0{,}87\\).'
+      },
+      {
+        id: 36,
+        level: 6,
+        typ: 'mc',
+        frage: 'Beim Einbeschreiben eines Rechtecks unter \\(y = a^2 - x^2\\) (symmetrisch, Grundseite auf x-Achse) gilt für die optimale halbe Breite \\(x\\):',
+        optionen: [
+          '\\(x = \\frac{a}{\\sqrt{3}}\\)',
+          '\\(x = \\frac{a}{2}\\)',
+          '\\(x = \\frac{a}{\\sqrt{2}}\\)',
+          '\\(x = a\\)'
+        ],
+        korrekt: 0,
+        tipp: '\\(A(x) = 2x(a^2 - x^2)\\). \\(A\'(x) = 2a^2 - 6x^2 = 0\\). Löse nach \\(x\\).',
+        loesungsweg: '\\(A\'(x) = 2a^2 - 6x^2 = 0\\) \\(\\Rightarrow\\) \\(x^2 = \\frac{a^2}{3}\\) \\(\\Rightarrow\\) \\(x = \\frac{a}{\\sqrt{3}}\\).'
+      }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

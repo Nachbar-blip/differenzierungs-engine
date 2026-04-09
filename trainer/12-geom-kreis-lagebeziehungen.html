@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kreis-Lagebeziehungen - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #70AD47; --spirale-secondary: #2E7D32; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '12-geom-kreis-lagebeziehungen';
+    const THEMA_CONFIG = { name: 'Kreis-Lagebeziehungen', bereich: 'geometrie' };
+    const AUFGABEN = [
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 1 — Punkt innerhalb / außerhalb / auf dem Kreis
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 1, level: 1, typ: "mc",
+        frage: "Kreis: \\(x^2 + y^2 = 25\\). Liegt \\(P(3 \\mid 4)\\) innerhalb, auf oder außerhalb des Kreises?",
+        optionen: ["Auf dem Kreis", "Innerhalb", "Außerhalb", "Kann man nicht entscheiden"],
+        korrekt: 0,
+        tipp: "Berechne \\(d^2 = 3^2 + 4^2\\) und vergleiche mit \\(r^2 = 25\\).",
+        loesungsweg: "\\(d^2 = 9 + 16 = 25 = r^2\\). Der Punkt liegt genau auf dem Kreis."
+    },
+    {
+        id: 2, level: 1, typ: "mc",
+        frage: "Kreis: \\((x-2)^2 + (y-1)^2 = 16\\). Liegt \\(P(2 \\mid 1)\\) innerhalb, auf oder außerhalb?",
+        optionen: ["Innerhalb (es ist der Mittelpunkt)", "Auf dem Kreis", "Außerhalb", "Auf dem Rand"],
+        korrekt: 0,
+        tipp: "Setze \\(P\\) ein: \\((2-2)^2 + (1-1)^2 = 0 < 16\\).",
+        loesungsweg: "\\(0 < 16 = r^2\\). \\(P\\) ist der Mittelpunkt und liegt innerhalb des Kreises."
+    },
+    {
+        id: 3, level: 1, typ: "numerisch",
+        frage: "Kreis: \\(x^2 + y^2 = 100\\). Berechne den Abstand von \\(P(6 \\mid 8)\\) zum Mittelpunkt.",
+        loesung: 10, toleranz: 0,
+        tipp: "\\(d = \\sqrt{6^2 + 8^2}\\).",
+        loesungsweg: "\\(d = \\sqrt{36 + 64} = \\sqrt{100} = 10 = r\\). Der Punkt liegt auf dem Kreis."
+    },
+    {
+        id: 4, level: 1, typ: "mc",
+        frage: "Kreis: \\((x+1)^2 + (y-3)^2 = 9\\). Liegt \\(P(2 \\mid 5)\\) innerhalb, auf oder außerhalb?",
+        optionen: ["Außerhalb", "Auf dem Kreis", "Innerhalb", "Genau am Rand"],
+        korrekt: 0,
+        tipp: "\\((2+1)^2 + (5-3)^2 = 9 + 4 = 13\\). Vergleiche mit \\(r^2 = 9\\).",
+        loesungsweg: "\\(13 > 9 = r^2\\). Der Punkt liegt außerhalb des Kreises."
+    },
+    {
+        id: 5, level: 1, typ: "numerisch",
+        frage: "Kreis: \\((x-4)^2 + (y+2)^2 = 20\\). Berechne \\((1-4)^2 + (0+2)^2\\) um die Lage von \\(P(1 \\mid 0)\\) zu prüfen.",
+        loesung: 13, toleranz: 0,
+        tipp: "Einfach einsetzen: \\((1-4)^2 + (0+2)^2 = 9 + 4\\).",
+        loesungsweg: "\\((-3)^2 + 2^2 = 9 + 4 = 13 < 20 = r^2\\). \\(P\\) liegt innerhalb des Kreises."
+    },
+    {
+        id: 6, level: 1, typ: "mc",
+        frage: "Wann liegt ein Punkt \\(P\\) außerhalb eines Kreises mit Mittelpunkt \\(M\\) und Radius \\(r\\)?",
+        optionen: [
+            "Wenn \\(|MP| > r\\)",
+            "Wenn \\(|MP| < r\\)",
+            "Wenn \\(|MP| = r\\)",
+            "Wenn \\(|MP| \\leq r\\)"
+        ],
+        korrekt: 0,
+        tipp: "Ein Punkt ist außerhalb, wenn sein Abstand zum Mittelpunkt größer als der Radius ist.",
+        loesungsweg: "\\(|MP| > r \\Leftrightarrow\\) \\(P\\) liegt außerhalb. \\(|MP| = r\\): auf dem Kreis. \\(|MP| < r\\): innerhalb."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 2 — Gerade-Kreis: Diskriminante → Anzahl Schnittpunkte
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 7, level: 2, typ: "numerisch",
+        frage: "Kreis: \\(x^2 + y^2 = 25\\), Gerade: \\(y = 3\\). Setze ein und bestimme die Diskriminante \\(D\\) der entstehenden Gleichung.",
+        loesung: 64, toleranz: 0,
+        tipp: "Einsetzen: \\(x^2 + 9 = 25\\), also \\(x^2 = 16\\). Schreibe als \\(x^2 - 16 = 0\\). \\(D = 0^2 - 4 \\cdot 1 \\cdot (-16) = 64\\).",
+        loesungsweg: "\\(x^2 + 9 = 25 \\Rightarrow x^2 - 16 = 0\\). \\(D = 0 - 4 \\cdot (-16) = 64 > 0\\). Zwei Schnittpunkte."
+    },
+    {
+        id: 8, level: 2, typ: "mc",
+        frage: "Kreis: \\(x^2 + y^2 = 9\\), Gerade: \\(y = x + 5\\). Wie viele Schnittpunkte gibt es?",
+        optionen: ["Keine (Passante)", "Einen (Tangente)", "Zwei (Sekante)", "Unendlich viele"],
+        korrekt: 0,
+        tipp: "Einsetzen: \\(x^2 + (x+5)^2 = 9\\), also \\(2x^2 + 10x + 25 = 9\\), \\(2x^2 + 10x + 16 = 0\\). Berechne \\(D\\).",
+        loesungsweg: "\\(2x^2 + 10x + 16 = 0\\), \\(x^2 + 5x + 8 = 0\\). \\(D = 25 - 32 = -7 < 0\\). Keine Schnittpunkte (Passante)."
+    },
+    {
+        id: 9, level: 2, typ: "numerisch",
+        frage: "Kreis: \\(x^2 + y^2 = 10\\), Gerade: \\(y = 3x\\). Bestimme die Anzahl der Schnittpunkte.",
+        loesung: 2, toleranz: 0,
+        tipp: "Einsetzen: \\(x^2 + 9x^2 = 10\\), also \\(10x^2 = 10\\).",
+        loesungsweg: "\\(10x^2 = 10\\), \\(x^2 = 1\\), \\(x = \\pm 1\\). Zwei Schnittpunkte: \\((1, 3)\\) und \\((-1, -3)\\)."
+    },
+    {
+        id: 10, level: 2, typ: "mc",
+        frage: "Kreis: \\(x^2 + y^2 = 8\\), Gerade: \\(y = x + 4\\). Was ist die Lagebeziehung?",
+        optionen: ["Tangente (\\(D = 0\\))", "Sekante (\\(D > 0\\))", "Passante (\\(D < 0\\))", "Die Gerade geht durch den Mittelpunkt"],
+        korrekt: 0,
+        tipp: "Einsetzen: \\(x^2 + (x+4)^2 = 8\\), also \\(2x^2 + 8x + 16 = 8\\), \\(2x^2 + 8x + 8 = 0\\), \\(x^2 + 4x + 4 = 0\\).",
+        loesungsweg: "\\(x^2 + 4x + 4 = (x+2)^2 = 0\\). \\(D = 0\\), genau ein Berührpunkt: Tangente. \\(x = -2\\), \\(y = 2\\)."
+    },
+    {
+        id: 11, level: 2, typ: "numerisch",
+        frage: "Kreis: \\((x-1)^2 + y^2 = 4\\), Gerade: \\(y = 2\\). Berechne die Diskriminante der entstehenden Gleichung in \\(x\\).",
+        loesung: 0, toleranz: 0,
+        tipp: "Einsetzen: \\((x-1)^2 + 4 = 4\\), also \\((x-1)^2 = 0\\).",
+        loesungsweg: "\\((x-1)^2 = 0\\), also \\(x = 1\\). Nur eine Lösung: Die Gerade ist Tangente. \\(D = 0\\)."
+    },
+    {
+        id: 12, level: 2, typ: "numerisch",
+        frage: "Kreis: \\(x^2 + y^2 = 13\\), Gerade: \\(y = x + 1\\). Berechne die Diskriminante \\(D\\).",
+        loesung: 100, toleranz: 0,
+        tipp: "Einsetzen: \\(x^2 + (x+1)^2 = 13\\), also \\(2x^2 + 2x + 1 = 13\\), \\(2x^2 + 2x - 12 = 0\\), \\(x^2 + x - 6 = 0\\).",
+        loesungsweg: "\\(x^2 + x - 6 = 0\\). \\(D = 1 + 24 = 25\\). Aber als Diskriminante der Originalgleichung \\(2x^2 + 2x - 12 = 0\\): \\(D = 4 + 96 = 100 > 0\\). Zwei Schnittpunkte."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 3 — Schnittpunkte Gerade/Kreis berechnen
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 13, level: 3, typ: "numerisch",
+        frage: "Berechne die Schnittpunkte von \\(x^2 + y^2 = 25\\) und \\(y = 3\\). Wie groß ist die positive \\(x\\)-Koordinate?",
+        loesung: 4, toleranz: 0,
+        tipp: "\\(x^2 + 9 = 25\\), also \\(x^2 = 16\\).",
+        loesungsweg: "\\(x^2 = 16\\), \\(x = \\pm 4\\). Schnittpunkte: \\((4, 3)\\) und \\((-4, 3)\\). Die positive \\(x\\)-Koordinate ist \\(4\\)."
+    },
+    {
+        id: 14, level: 3, typ: "numerisch",
+        frage: "Kreis: \\(x^2 + y^2 = 20\\), Gerade: \\(y = 2x\\). Berechne die positive \\(x\\)-Koordinate des Schnittpunkts.",
+        loesung: 2, toleranz: 0,
+        tipp: "Einsetzen: \\(x^2 + 4x^2 = 20\\), also \\(5x^2 = 20\\).",
+        loesungsweg: "\\(5x^2 = 20\\), \\(x^2 = 4\\), \\(x = \\pm 2\\). Positiver Schnittpunkt: \\((2, 4)\\)."
+    },
+    {
+        id: 15, level: 3, typ: "numerisch",
+        frage: "Kreis: \\(x^2 + y^2 = 13\\), Gerade: \\(y = x + 1\\). Berechne die Summe der beiden \\(x\\)-Werte der Schnittpunkte.",
+        loesung: -1, toleranz: 0,
+        tipp: "Nach Vieta: Für \\(x^2 + x - 6 = 0\\) ist die Summe der Nullstellen \\(-\\frac{p}{1} = -1\\).",
+        loesungsweg: "\\(x^2 + (x+1)^2 = 13\\), \\(2x^2 + 2x - 12 = 0\\), \\(x^2 + x - 6 = 0\\), \\((x+3)(x-2) = 0\\). \\(x_1 = -3, x_2 = 2\\). Summe: \\(-3 + 2 = -1\\)."
+    },
+    {
+        id: 16, level: 3, typ: "numerisch",
+        frage: "Kreis: \\((x-2)^2 + y^2 = 9\\), Gerade: \\(y = x - 2\\). Berechne das Produkt der beiden \\(x\\)-Koordinaten der Schnittpunkte.",
+        loesung: -0.5, toleranz: 0.01,
+        tipp: "Einsetzen: \\((x-2)^2 + (x-2)^2 = 9\\), also \\(2(x-2)^2 = 9\\).",
+        loesungsweg: "\\(2(x-2)^2 = 9\\), \\((x-2)^2 = 4{,}5\\), \\(x - 2 = \\pm \\frac{3}{\\sqrt{2}}\\). \\(x_1 \\cdot x_2 = (2 + \\frac{3}{\\sqrt{2}})(2 - \\frac{3}{\\sqrt{2}}) = 4 - \\frac{9}{2} = -0{,}5\\)."
+    },
+    {
+        id: 17, level: 3, typ: "numerisch",
+        frage: "Kreis: \\(x^2 + y^2 = 50\\), Gerade: \\(y = -x + 10\\). Berechne die größere \\(x\\)-Koordinate der Schnittpunkte.",
+        loesung: 5, toleranz: 0,
+        tipp: "Einsetzen: \\(x^2 + (10-x)^2 = 50\\).",
+        loesungsweg: "\\(x^2 + 100 - 20x + x^2 = 50\\), \\(2x^2 - 20x + 50 = 0\\), \\(x^2 - 10x + 25 = 0\\), \\((x-5)^2 = 0\\). Nur \\(x = 5\\), \\(y = 5\\). Die Gerade ist Tangente!"
+    },
+    {
+        id: 18, level: 3, typ: "numerisch",
+        frage: "Kreis: \\(x^2 + y^2 = 25\\), Gerade: \\(y = \\frac{3}{4}x + \\frac{25}{4}\\). Berechne die \\(x\\)-Koordinate des Berührpunkts.",
+        loesung: -3, toleranz: 0,
+        tipp: "Einsetzen und vereinfachen. Wenn \\(D = 0\\), gibt es genau eine Lösung.",
+        loesungsweg: "\\(x^2 + \\left(\\frac{3x+25}{4}\\right)^2 = 25\\). \\(16x^2 + 9x^2 + 150x + 625 = 400\\). \\(25x^2 + 150x + 225 = 0\\). \\(x^2 + 6x + 9 = (x+3)^2 = 0\\). \\(x = -3\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 4 — Tangente an Kreis (D=0 Bedingung)
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 19, level: 4, typ: "numerisch",
+        frage: "Bestimme den Wert von \\(t > 0\\), sodass \\(y = x + t\\) Tangente an \\(x^2 + y^2 = 8\\) ist.",
+        loesung: 4, toleranz: 0,
+        tipp: "Einsetzen: \\(x^2 + (x+t)^2 = 8\\), also \\(2x^2 + 2tx + t^2 - 8 = 0\\). Setze \\(D = 0\\).",
+        loesungsweg: "\\(D = 4t^2 - 4 \\cdot 2 \\cdot (t^2 - 8) = 4t^2 - 8t^2 + 64 = -4t^2 + 64 = 0\\). \\(t^2 = 16\\), \\(t = 4\\) (da \\(t > 0\\))."
+    },
+    {
+        id: 20, level: 4, typ: "numerisch",
+        frage: "Die Gerade \\(y = 2x + c\\) soll Tangente an \\(x^2 + y^2 = 5\\) sein. Berechne \\(c > 0\\).",
+        loesung: 5, toleranz: 0,
+        tipp: "Einsetzen: \\(x^2 + (2x+c)^2 = 5\\), also \\(5x^2 + 4cx + c^2 - 5 = 0\\). Setze \\(D = 0\\).",
+        loesungsweg: "\\(D = 16c^2 - 20(c^2 - 5) = 16c^2 - 20c^2 + 100 = -4c^2 + 100 = 0\\). \\(c^2 = 25\\), \\(c = 5\\)."
+    },
+    {
+        id: 21, level: 4, typ: "numerisch",
+        frage: "Die Tangente an \\(x^2 + y^2 = 25\\) im Punkt \\(P(3 \\mid 4)\\) hat die Gleichung \\(3x + 4y = 25\\). Berechne den \\(y\\)-Achsenabschnitt dieser Tangente.",
+        loesung: 6.25, toleranz: 0.01,
+        tipp: "Stelle die Gleichung nach \\(y\\) um: \\(y = -\\frac{3}{4}x + \\frac{25}{4}\\).",
+        loesungsweg: "\\(4y = -3x + 25\\), \\(y = -\\frac{3}{4}x + \\frac{25}{4}\\). \\(y\\)-Achsenabschnitt: \\(\\frac{25}{4} = 6{,}25\\)."
+    },
+    {
+        id: 22, level: 4, typ: "mc",
+        frage: "Die Tangente an \\(x^2 + y^2 = r^2\\) im Punkt \\(P(x_0 \\mid y_0)\\) hat die Gleichung:",
+        optionen: [
+            "\\(x_0 \\cdot x + y_0 \\cdot y = r^2\\)",
+            "\\(x_0 \\cdot x - y_0 \\cdot y = r^2\\)",
+            "\\(\\frac{x}{x_0} + \\frac{y}{y_0} = r^2\\)",
+            "\\(y - y_0 = -\\frac{x_0}{y_0}(x - x_0)\\)"
+        ],
+        korrekt: 0,
+        tipp: "Die Tangentengleichung im Punkt \\(P(x_0, y_0)\\) auf dem Kreis \\(x^2 + y^2 = r^2\\) lautet \\(x_0 x + y_0 y = r^2\\).",
+        loesungsweg: "Die Tangente steht senkrecht auf dem Radiusvektor \\(\\overrightarrow{OP}\\). Mit der Steigung \\(-\\frac{x_0}{y_0}\\) und dem Punkt \\(P\\) folgt: \\(x_0 x + y_0 y = x_0^2 + y_0^2 = r^2\\)."
+    },
+    {
+        id: 23, level: 4, typ: "numerisch",
+        frage: "Bestimme \\(c > 0\\), sodass \\(y = -x + c\\) Tangente an \\((x-1)^2 + (y-2)^2 = 8\\) ist.",
+        loesung: 7, toleranz: 0,
+        tipp: "Abstandsformel: Der Abstand des Mittelpunkts \\(M(1,2)\\) von der Geraden muss gleich \\(r = 2\\sqrt{2}\\) sein. Gerade: \\(x + y - c = 0\\).",
+        loesungsweg: "Abstand: \\(d = \\frac{|1 + 2 - c|}{\\sqrt{2}} = 2\\sqrt{2}\\). \\(|3 - c| = 4\\). \\(c = 7\\) oder \\(c = -1\\). Da \\(c > 0\\): \\(c = 7\\)."
+    },
+    {
+        id: 24, level: 4, typ: "numerisch",
+        frage: "Kreis: \\(x^2 + y^2 = 9\\). Die Tangente im Punkt \\(P(0 \\mid 3)\\) hat die Steigung \\(m\\). Berechne \\(m\\).",
+        loesung: 0, toleranz: 0,
+        tipp: "Der Radiusvektor zu \\(P(0,3)\\) zeigt in \\(y\\)-Richtung. Die Tangente steht senkrecht dazu.",
+        loesungsweg: "Tangentengleichung: \\(0 \\cdot x + 3 \\cdot y = 9\\), also \\(y = 3\\). Das ist eine horizontale Gerade mit Steigung \\(m = 0\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 5 — Passante/Tangente/Sekante für Geradenscharen
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Für welchen Wert \\(t > 0\\) ist \\(y = 2x + t\\) Tangente an \\(x^2 + y^2 = 20\\)?",
+        loesung: 10, toleranz: 0,
+        tipp: "Einsetzen: \\(x^2 + (2x+t)^2 = 20\\), also \\(5x^2 + 4tx + t^2 - 20 = 0\\). \\(D = 0\\).",
+        loesungsweg: "\\(D = 16t^2 - 20(t^2 - 20) = -4t^2 + 400 = 0\\). \\(t^2 = 100\\), \\(t = 10\\)."
+    },
+    {
+        id: 26, level: 5, typ: "mc",
+        frage: "Geradenschar \\(y = tx + 1\\), Kreis \\(x^2 + y^2 = 1\\). Für welche \\(t\\)-Werte ist die Gerade Sekante?",
+        optionen: [
+            "Für kein \\(t\\) (die Gerade geht immer durch \\((0,1)\\) auf dem Kreis)",
+            "Für \\(|t| < 1\\)",
+            "Für \\(|t| > 1\\)",
+            "Für alle \\(t \\in \\mathbb{R}\\)"
+        ],
+        korrekt: 0,
+        tipp: "Jede Gerade der Schar geht durch \\((0, 1)\\), also durch einen Punkt auf dem Kreis. Prüfe: Gibt es einen zweiten Schnittpunkt?",
+        loesungsweg: "\\((0,1)\\) liegt auf \\(x^2+y^2=1\\). Einsetzen: \\(x^2 + (tx+1)^2 = 1\\), \\(x^2(1+t^2) + 2tx = 0\\), \\(x((1+t^2)x + 2t) = 0\\). Für \\(t \\neq 0\\): zweiter Schnittpunkt bei \\(x = \\frac{-2t}{1+t^2} \\neq 0\\). Für \\(t = 0\\): \\(y = 1\\) ist Tangente. Also: Sekante für \\(t \\neq 0\\), Tangente für \\(t = 0\\). Die Gerade geht immer durch \\((0,1)\\)."
+    },
+    {
+        id: 27, level: 5, typ: "numerisch",
+        frage: "Geradenschar \\(g_t: y = x + t\\). Für welches \\(t > 0\\) ist \\(g_t\\) Tangente an \\(x^2 + y^2 = 18\\)?",
+        loesung: 6, toleranz: 0,
+        tipp: "\\(D = 0\\) liefert \\(t^2 = 36\\).",
+        loesungsweg: "\\(x^2 + (x+t)^2 = 18\\), \\(2x^2 + 2tx + t^2 - 18 = 0\\). \\(D = 4t^2 - 8(t^2 - 18) = -4t^2 + 144 = 0\\). \\(t^2 = 36\\), \\(t = 6\\)."
+    },
+    {
+        id: 28, level: 5, typ: "numerisch",
+        frage: "Kreis: \\((x-3)^2 + (y-1)^2 = 5\\), Geradenschar: \\(y = 2x + c\\). Berechne den größeren Wert von \\(c\\), für den die Gerade Tangente ist.",
+        loesung: 0, toleranz: 0,
+        tipp: "Abstand von \\(M(3,1)\\) zur Geraden \\(2x - y + c = 0\\): \\(d = \\frac{|6 - 1 + c|}{\\sqrt{5}} = \\sqrt{5}\\).",
+        loesungsweg: "\\(|5 + c| = 5\\). \\(c = 0\\) oder \\(c = -10\\). Der größere Wert ist \\(c = 0\\)."
+    },
+    {
+        id: 29, level: 5, typ: "mc",
+        frage: "Kreis \\(x^2 + y^2 = r^2\\), Gerade \\(y = mx + c\\). Wann ist die Gerade eine Passante?",
+        optionen: [
+            "Wenn \\(c^2 > r^2(1 + m^2)\\)",
+            "Wenn \\(c^2 = r^2(1 + m^2)\\)",
+            "Wenn \\(c^2 < r^2(1 + m^2)\\)",
+            "Wenn \\(m > r\\)"
+        ],
+        korrekt: 0,
+        tipp: "Der Abstand des Ursprungs von der Geraden ist \\(d = \\frac{|c|}{\\sqrt{1+m^2}}\\). Passante: \\(d > r\\).",
+        loesungsweg: "\\(\\frac{|c|}{\\sqrt{1+m^2}} > r \\Leftrightarrow |c| > r\\sqrt{1+m^2} \\Leftrightarrow c^2 > r^2(1+m^2)\\)."
+    },
+    {
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Für welches \\(t > 0\\) ist \\(y = -\\frac{1}{2}x + t\\) Tangente an \\(x^2 + y^2 = 5\\)?",
+        loesung: 2.5, toleranz: 0.01,
+        tipp: "Abstand vom Ursprung: \\(d = \\frac{|t|}{\\sqrt{1 + \\frac{1}{4}}} = \\frac{t}{\\frac{\\sqrt{5}}{2}} = \\frac{2t}{\\sqrt{5}}\\). Setze \\(d = \\sqrt{5}\\).",
+        loesungsweg: "\\(\\frac{2t}{\\sqrt{5}} = \\sqrt{5}\\), \\(2t = 5\\), \\(t = 2{,}5\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 6 — Gemeinsame Tangenten zweier Kreise
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 31, level: 6, typ: "numerisch",
+        frage: "Zwei Kreise: \\(k_1: x^2 + y^2 = 4\\) und \\(k_2: (x-5)^2 + y^2 = 1\\). Berechne den Abstand der Mittelpunkte.",
+        loesung: 5, toleranz: 0,
+        tipp: "\\(M_1(0,0)\\), \\(M_2(5,0)\\). \\(d = |M_1 M_2|\\).",
+        loesungsweg: "\\(d = \\sqrt{(5-0)^2 + 0^2} = 5\\). Da \\(d = 5 > r_1 + r_2 = 3\\): Die Kreise liegen außerhalb voneinander."
+    },
+    {
+        id: 32, level: 6, typ: "mc",
+        frage: "Zwei Kreise mit \\(r_1 = 2\\), \\(r_2 = 1\\) und Mittelpunktsabstand \\(d = 5\\). Wie viele gemeinsame Tangenten gibt es?",
+        optionen: [
+            "4 (2 äußere, 2 innere)",
+            "3",
+            "2",
+            "1"
+        ],
+        korrekt: 0,
+        tipp: "\\(d > r_1 + r_2\\) (die Kreise liegen getrennt). Dann gibt es 4 gemeinsame Tangenten.",
+        loesungsweg: "\\(d = 5 > r_1 + r_2 = 3\\). Getrennte Kreise haben 4 gemeinsame Tangenten: 2 äußere und 2 innere."
+    },
+    {
+        id: 33, level: 6, typ: "mc",
+        frage: "Zwei Kreise mit \\(r_1 = 3\\), \\(r_2 = 2\\) und \\(d = 5\\). Wie viele gemeinsame Tangenten gibt es?",
+        optionen: [
+            "3 (die Kreise berühren sich äußerlich)",
+            "4",
+            "2",
+            "1"
+        ],
+        korrekt: 0,
+        tipp: "\\(d = r_1 + r_2 = 5\\). Bei äußerer Berührung gibt es 3 gemeinsame Tangenten.",
+        loesungsweg: "\\(d = r_1 + r_2\\): äußere Berührung. Es gibt 2 äußere Tangenten und 1 gemeinsame Tangente am Berührpunkt, also 3 insgesamt."
+    },
+    {
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Äußere Tangente an \\(k_1: x^2 + y^2 = 4\\) und \\(k_2: (x-6)^2 + y^2 = 4\\): Die Tangente hat die Form \\(y = c\\). Berechne \\(c > 0\\).",
+        loesung: 2, toleranz: 0,
+        tipp: "Gleiche Radien \\(\\Rightarrow\\) die äußeren Tangenten sind parallel zur Verbindungsgeraden. Horizontale Tangenten: \\(y = \\pm r\\).",
+        loesungsweg: "Beide Kreise haben \\(r = 2\\). Die äußeren Tangenten parallel zur \\(x\\)-Achse sind \\(y = 2\\) und \\(y = -2\\). Für \\(c > 0\\): \\(c = 2\\)."
+    },
+    {
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Innere Tangenten: \\(k_1: x^2 + y^2 = 4\\), \\(k_2: (x-5)^2 + y^2 = 1\\). Die inneren Tangenten schneiden die Verbindungsstrecke im Verhältnis \\(r_1 : r_2\\). Berechne die \\(x\\)-Koordinate dieses Teilpunkts.",
+        loesung: 3.33, toleranz: 0.02,
+        tipp: "Der innere Ähnlichkeitspunkt teilt \\(\\overline{M_1 M_2}\\) innen im Verhältnis \\(r_1 : r_2 = 2 : 1\\).",
+        loesungsweg: "\\(x = \\frac{2 \\cdot 5 + 1 \\cdot 0}{2 + 1} = \\frac{10}{3} \\approx 3{,}33\\)."
+    },
+    {
+        id: 36, level: 6, typ: "mc",
+        frage: "Zwei Kreise mit \\(r_1 = 5\\), \\(r_2 = 3\\) und \\(d = 1\\). Wie viele gemeinsame Tangenten gibt es?",
+        optionen: [
+            "0 (ein Kreis liegt vollständig im anderen)",
+            "1 (innere Berührung)",
+            "2",
+            "4"
+        ],
+        korrekt: 0,
+        tipp: "Prüfe: \\(d = 1 < |r_1 - r_2| = 2\\). Ein Kreis liegt vollständig im anderen.",
+        loesungsweg: "\\(d = 1 < |r_1 - r_2| = |5 - 3| = 2\\). Der kleinere Kreis liegt vollständig im größeren, ohne Berührung. Es gibt 0 gemeinsame Tangenten."
+    }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

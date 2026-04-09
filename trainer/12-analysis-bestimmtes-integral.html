@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bestimmtes Integral - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '12-analysis-bestimmtes-integral';
+    const THEMA_CONFIG = { name: 'Bestimmtes Integral', bereich: 'analysis' };
+    const AUFGABEN = [
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 1 — Einfache bestimmte Integrale (Potenzfunktionen)
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 1, level: 1, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^2 x\\, dx\\).",
+        loesung: 2, toleranz: 0,
+        tipp: "Stammfunktion von \\(x\\) ist \\(\\frac{1}{2}x^2\\). Dann obere minus untere Grenze.",
+        loesungsweg: "\\(\\left[\\frac{1}{2}x^2\\right]_0^2 = \\frac{1}{2} \\cdot 4 - \\frac{1}{2} \\cdot 0 = 2\\)."
+    },
+    {
+        id: 2, level: 1, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^3 x^2\\, dx\\).",
+        loesung: 9, toleranz: 0,
+        tipp: "Stammfunktion: \\(\\frac{1}{3}x^3\\). Einsetzen: obere Grenze minus untere Grenze.",
+        loesungsweg: "\\(\\left[\\frac{1}{3}x^3\\right]_0^3 = \\frac{1}{3} \\cdot 27 - 0 = 9\\)."
+    },
+    {
+        id: 3, level: 1, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_1^2 x^2\\, dx\\). Runde auf zwei Dezimalstellen.",
+        loesung: 2.33, toleranz: 0.01,
+        tipp: "\\(\\left[\\frac{1}{3}x^3\\right]_1^2 = \\frac{8}{3} - \\frac{1}{3}\\).",
+        loesungsweg: "\\(\\left[\\frac{1}{3}x^3\\right]_1^2 = \\frac{8}{3} - \\frac{1}{3} = \\frac{7}{3} \\approx 2{,}33\\)."
+    },
+    {
+        id: 4, level: 1, typ: "mc",
+        frage: "Was berechnet \\(\\displaystyle\\int_a^b f(x)\\, dx\\)?",
+        optionen: [
+            "Den orientierten Flächeninhalt zwischen Graph und \\(x\\)-Achse von \\(a\\) bis \\(b\\)",
+            "Die Ableitung von \\(f\\) an der Stelle \\(a\\)",
+            "Den Mittelwert von \\(f\\) auf \\([a, b]\\)",
+            "Die Steigung der Tangente bei \\(x = b\\)"
+        ],
+        korrekt: 0,
+        tipp: "Das bestimmte Integral misst die \"vorzeichenbehaftete Fläche\" zwischen Graph und x-Achse.",
+        loesungsweg: "Das bestimmte Integral \\(\\int_a^b f(x)\\,dx = F(b) - F(a)\\) berechnet den orientierten Flächeninhalt."
+    },
+    {
+        id: 5, level: 1, typ: "mc",
+        frage: "Was ist \\(\\displaystyle\\int_0^4 3\\, dx\\)?",
+        optionen: [
+            "\\(12\\), denn \\([3x]_0^4 = 12 - 0\\)",
+            "\\(3\\), denn die Konstante bleibt",
+            "\\(7\\), denn \\(3 + 4 = 7\\)",
+            "\\(0{,}75\\), denn \\(3 / 4 = 0{,}75\\)"
+        ],
+        korrekt: 0,
+        tipp: "Stammfunktion von \\(3\\) ist \\(3x\\). Grenzen einsetzen!",
+        loesungsweg: "\\(\\left[3x\\right]_0^4 = 3 \\cdot 4 - 3 \\cdot 0 = 12\\)."
+    },
+    {
+        id: 6, level: 1, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^1 x^3\\, dx\\).",
+        loesung: 0.25, toleranz: 0.01,
+        tipp: "Stammfunktion: \\(\\frac{1}{4}x^4\\).",
+        loesungsweg: "\\(\\left[\\frac{1}{4}x^4\\right]_0^1 = \\frac{1}{4} - 0 = 0{,}25\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 2 — Polynome integrieren
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 7, level: 2, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_1^3 (2x + 1)\\, dx\\).",
+        loesung: 10, toleranz: 0,
+        tipp: "Stammfunktion: \\(x^2 + x\\). Grenzen einsetzen.",
+        loesungsweg: "\\(\\left[x^2 + x\\right]_1^3 = (9 + 3) - (1 + 1) = 12 - 2 = 10\\)."
+    },
+    {
+        id: 8, level: 2, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^2 (x^2 - 2x)\\, dx\\). Runde auf zwei Dezimalstellen.",
+        loesung: -1.33, toleranz: 0.01,
+        tipp: "Stammfunktion: \\(\\frac{1}{3}x^3 - x^2\\). Beachte: Negatives Ergebnis ist möglich!",
+        loesungsweg: "\\(\\left[\\frac{1}{3}x^3 - x^2\\right]_0^2 = \\left(\\frac{8}{3} - 4\\right) - 0 = \\frac{8-12}{3} = -\\frac{4}{3} \\approx -1{,}33\\)."
+    },
+    {
+        id: 9, level: 2, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^1 (3x^2 + 4x - 1)\\, dx\\).",
+        loesung: 2, toleranz: 0,
+        tipp: "Stammfunktion: \\(x^3 + 2x^2 - x\\). Grenzen einsetzen.",
+        loesungsweg: "\\(\\left[x^3 + 2x^2 - x\\right]_0^1 = (1 + 2 - 1) - 0 = 2\\)."
+    },
+    {
+        id: 10, level: 2, typ: "mc",
+        frage: "Welche Eigenschaft gilt für bestimmte Integrale?",
+        optionen: [
+            "\\(\\int_a^b f(x)\\,dx = -\\int_b^a f(x)\\,dx\\)",
+            "\\(\\int_a^b f(x)\\,dx = \\int_b^a f(x)\\,dx\\)",
+            "\\(\\int_a^a f(x)\\,dx = 1\\)",
+            "\\(\\int_a^b f(x)\\,dx \\geq 0\\) immer"
+        ],
+        korrekt: 0,
+        tipp: "Was passiert, wenn man die Integrationsgrenzen vertauscht?",
+        loesungsweg: "Beim Vertauschen der Grenzen ändert sich das Vorzeichen: \\(\\int_a^b f(x)\\,dx = -\\int_b^a f(x)\\,dx\\)."
+    },
+    {
+        id: 11, level: 2, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_{-1}^{1} (x^3 + x)\\, dx\\).",
+        loesung: 0, toleranz: 0,
+        tipp: "\\(f(x) = x^3 + x\\) ist eine ungerade Funktion. Was gilt für ungerade Funktionen auf \\([-a, a]\\)?",
+        loesungsweg: "\\(\\left[\\frac{1}{4}x^4 + \\frac{1}{2}x^2\\right]_{-1}^{1} = (\\frac{1}{4} + \\frac{1}{2}) - (\\frac{1}{4} + \\frac{1}{2}) = 0\\). (Ungerade Funktion!)"
+    },
+    {
+        id: 12, level: 2, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^2 (4x^3 - 6x + 2)\\, dx\\).",
+        loesung: 8, toleranz: 0,
+        tipp: "Stammfunktion: \\(x^4 - 3x^2 + 2x\\). Grenzen einsetzen.",
+        loesungsweg: "\\(\\left[x^4 - 3x^2 + 2x\\right]_0^2 = (16 - 12 + 4) - 0 = 8\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 3 — Integrale mit sin, cos, e^x
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 13, level: 3, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^{\\pi} \\sin(x)\\, dx\\).",
+        loesung: 2, toleranz: 0.01,
+        tipp: "Stammfunktion von \\(\\sin(x)\\) ist \\(-\\cos(x)\\).",
+        loesungsweg: "\\(\\left[-\\cos(x)\\right]_0^{\\pi} = -\\cos(\\pi) - (-\\cos(0)) = -(-1) + 1 = 1 + 1 = 2\\)."
+    },
+    {
+        id: 14, level: 3, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^{\\pi/2} \\cos(x)\\, dx\\).",
+        loesung: 1, toleranz: 0.01,
+        tipp: "Stammfunktion von \\(\\cos(x)\\) ist \\(\\sin(x)\\).",
+        loesungsweg: "\\(\\left[\\sin(x)\\right]_0^{\\pi/2} = \\sin(\\pi/2) - \\sin(0) = 1 - 0 = 1\\)."
+    },
+    {
+        id: 15, level: 3, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^1 e^x\\, dx\\). Runde auf zwei Dezimalstellen.",
+        loesung: 1.72, toleranz: 0.01,
+        tipp: "Stammfunktion von \\(e^x\\) ist \\(e^x\\). \\(e^1 \\approx 2{,}718\\).",
+        loesungsweg: "\\(\\left[e^x\\right]_0^1 = e^1 - e^0 = e - 1 \\approx 2{,}718 - 1 = 1{,}72\\)."
+    },
+    {
+        id: 16, level: 3, typ: "mc",
+        frage: "Was ist \\(\\displaystyle\\int_0^{2\\pi} \\sin(x)\\, dx\\)?",
+        optionen: [
+            "\\(0\\), da positive und negative Flächenanteile sich aufheben",
+            "\\(2\\pi\\)",
+            "\\(2\\), da \\(\\int_0^\\pi \\sin(x)\\,dx = 2\\)",
+            "\\(-2\\)"
+        ],
+        korrekt: 0,
+        tipp: "Sinus über eine volle Periode: Was passiert mit den Flächenanteilen?",
+        loesungsweg: "\\(\\left[-\\cos(x)\\right]_0^{2\\pi} = -\\cos(2\\pi) + \\cos(0) = -1 + 1 = 0\\). Die Flächen heben sich auf."
+    },
+    {
+        id: 17, level: 3, typ: "mc",
+        frage: "Was bedeutet es, wenn \\(\\displaystyle\\int_a^b f(x)\\, dx = 0\\)?",
+        optionen: [
+            "Die positiven und negativen Flächenanteile heben sich auf",
+            "\\(f(x) = 0\\) auf \\([a, b]\\)",
+            "\\(f\\) hat keine Stammfunktion",
+            "\\(a = b\\) muss gelten"
+        ],
+        korrekt: 0,
+        tipp: "Ein Integral kann Null sein, obwohl die Funktion nicht Null ist — wenn sich positive und negative Anteile aufheben.",
+        loesungsweg: "Das orientierte Integral kann 0 sein, wenn sich Flächen oberhalb und unterhalb der x-Achse gegenseitig aufheben."
+    },
+    {
+        id: 18, level: 3, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^2 (e^x - 1)\\, dx\\). Runde auf zwei Dezimalstellen.",
+        loesung: 4.39, toleranz: 0.01,
+        tipp: "\\(\\int_0^2 e^x\\,dx - \\int_0^2 1\\,dx = [e^x]_0^2 - [x]_0^2\\).",
+        loesungsweg: "\\([e^x - x]_0^2 = (e^2 - 2) - (1 - 0) = e^2 - 3 \\approx 7{,}389 - 3 = 4{,}39\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 4 — Integral als Flächeninhalt, Vorzeichenwechsel
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 19, level: 4, typ: "mc",
+        frage: "Gilt \\(\\displaystyle\\int_0^2 f(x)\\,dx = \\text{Flächeninhalt}\\), wenn \\(f(x) < 0\\) auf \\([0, 2]\\)?",
+        optionen: [
+            "Nein, das Integral ist negativ, der Flächeninhalt aber positiv",
+            "Ja, Integral und Flächeninhalt sind immer gleich",
+            "Nein, das Integral existiert nicht bei negativen Funktionen",
+            "Ja, negative Funktionen haben keinen Flächeninhalt"
+        ],
+        korrekt: 0,
+        tipp: "Das Integral liefert den orientierten Flächeninhalt — unterhalb der x-Achse mit negativem Vorzeichen.",
+        loesungsweg: "Liegt der Graph unterhalb der x-Achse, so ist \\(\\int f(x)\\,dx < 0\\). Für den Flächeninhalt nimmt man den Betrag: \\(A = \\left|\\int f(x)\\,dx\\right|\\)."
+    },
+    {
+        id: 20, level: 4, typ: "numerisch",
+        frage: "Berechne den Flächeninhalt zwischen \\(f(x) = x^2 - 1\\) und der \\(x\\)-Achse auf \\([0, 1]\\). <br><em>Hinweis: \\(f(x) \\leq 0\\) auf diesem Intervall.</em>",
+        loesung: 0.67, toleranz: 0.01,
+        tipp: "Da \\(f(x) \\leq 0\\): \\(A = -\\int_0^1 (x^2 - 1)\\,dx = \\left|\\int_0^1 (x^2 - 1)\\,dx\\right|\\).",
+        loesungsweg: "\\(\\int_0^1 (x^2-1)\\,dx = \\left[\\frac{1}{3}x^3 - x\\right]_0^1 = \\frac{1}{3} - 1 = -\\frac{2}{3}\\). Flächeninhalt: \\(A = \\frac{2}{3} \\approx 0{,}67\\)."
+    },
+    {
+        id: 21, level: 4, typ: "mc",
+        frage: "Was ist \\(\\displaystyle\\int_{-1}^{1} x\\, dx\\) und warum?",
+        optionen: [
+            "\\(0\\), weil \\(f(x) = x\\) ungerade ist und sich die Flächen auf \\([-1,1]\\) aufheben",
+            "\\(1\\), weil \\(\\frac{1}{2} \\cdot 1^2 = \\frac{1}{2}\\) verdoppelt wird",
+            "\\(-1\\), weil die Fläche unterhalb überwiegt",
+            "\\(2\\), weil \\(\\int_{-1}^1 |x|\\,dx = 2\\)"
+        ],
+        korrekt: 0,
+        tipp: "\\(f(x) = x\\) ist eine ungerade Funktion. Was gilt für ungerade Funktionen auf symmetrischen Intervallen?",
+        loesungsweg: "\\(\\left[\\frac{1}{2}x^2\\right]_{-1}^{1} = \\frac{1}{2} - \\frac{1}{2} = 0\\). Ungerade Funktion auf \\([-a, a]\\): Integral = 0."
+    },
+    {
+        id: 22, level: 4, typ: "numerisch",
+        frage: "\\(f(x) = x^2 - 4\\) hat Nullstellen bei \\(x = -2\\) und \\(x = 2\\). <br>Berechne \\(\\displaystyle\\int_{-2}^{2} (x^2 - 4)\\, dx\\). Runde auf zwei Dezimalstellen.",
+        loesung: -10.67, toleranz: 0.01,
+        tipp: "Auf \\([-2, 2]\\) gilt \\(x^2 - 4 \\leq 0\\). Das Integral wird negativ.",
+        loesungsweg: "\\(\\left[\\frac{1}{3}x^3 - 4x\\right]_{-2}^{2} = (\\frac{8}{3} - 8) - (-\\frac{8}{3} + 8) = \\frac{8}{3} - 8 + \\frac{8}{3} - 8 = \\frac{16}{3} - 16 = -\\frac{32}{3} \\approx -10{,}67\\)."
+    },
+    {
+        id: 23, level: 4, typ: "numerisch",
+        frage: "Berechne den tatsächlichen Flächeninhalt, den \\(f(x) = x^2 - 4\\) auf \\([-2, 2]\\) mit der \\(x\\)-Achse einschließt.",
+        loesung: 10.67, toleranz: 0.01,
+        tipp: "Da \\(f \\leq 0\\) auf \\([-2,2]\\): \\(A = \\left|\\int_{-2}^{2}(x^2-4)\\,dx\\right|\\).",
+        loesungsweg: "\\(A = \\left|-\\frac{32}{3}\\right| = \\frac{32}{3} \\approx 10{,}67\\)."
+    },
+    {
+        id: 24, level: 4, typ: "mc",
+        frage: "Wie berechnet man den Flächeninhalt, wenn \\(f\\) auf \\([a, b]\\) das Vorzeichen wechselt?",
+        optionen: [
+            "Intervall an den Nullstellen aufteilen und Beträge der Teilintegrale addieren",
+            "Einfach \\(\\int_a^b f(x)\\,dx\\) berechnen",
+            "\\(\\int_a^b |f(x)|\\,dx\\) ist nicht berechenbar",
+            "Nur den positiven Teil integrieren"
+        ],
+        korrekt: 0,
+        tipp: "Bei Vorzeichenwechsel muss man an der Nullstelle aufteilen.",
+        loesungsweg: "Man teilt an den Nullstellen auf: \\(A = \\left|\\int_a^{x_0} f\\,dx\\right| + \\left|\\int_{x_0}^b f\\,dx\\right|\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 5 — Integralfunktion J(x) = ∫₀ˣ f(t) dt
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 25, level: 5, typ: "mc",
+        frage: "Sei \\(J(x) = \\displaystyle\\int_0^x f(t)\\, dt\\). Was gilt nach dem Hauptsatz der Differential- und Integralrechnung?",
+        optionen: [
+            "\\(J'(x) = f(x)\\)",
+            "\\(J'(x) = F(x)\\)",
+            "\\(J'(x) = f'(x)\\)",
+            "\\(J'(x) = \\int f(x)\\,dx\\)"
+        ],
+        korrekt: 0,
+        tipp: "Der HDI besagt: Die Ableitung der Integralfunktion ist die Integrandfunktion.",
+        loesungsweg: "Hauptsatz: \\(J'(x) = \\frac{d}{dx}\\int_0^x f(t)\\,dt = f(x)\\)."
+    },
+    {
+        id: 26, level: 5, typ: "numerisch",
+        frage: "Sei \\(J(x) = \\displaystyle\\int_0^x (2t + 1)\\, dt\\). Berechne \\(J(3)\\).",
+        loesung: 12, toleranz: 0,
+        tipp: "Berechne \\(\\int_0^3 (2t+1)\\,dt\\) mit der Stammfunktion \\(t^2 + t\\).",
+        loesungsweg: "\\(J(3) = \\left[t^2 + t\\right]_0^3 = (9 + 3) - 0 = 12\\)."
+    },
+    {
+        id: 27, level: 5, typ: "numerisch",
+        frage: "Sei \\(J(x) = \\displaystyle\\int_0^x t^2\\, dt\\). Berechne \\(J'(4)\\).",
+        loesung: 16, toleranz: 0,
+        tipp: "Nach dem Hauptsatz gilt \\(J'(x) = f(x) = x^2\\). Einsetzen!",
+        loesungsweg: "\\(J'(x) = x^2\\) (Hauptsatz). \\(J'(4) = 4^2 = 16\\)."
+    },
+    {
+        id: 28, level: 5, typ: "mc",
+        frage: "Welchen Wert hat \\(J(0) = \\displaystyle\\int_0^0 f(t)\\, dt\\)?",
+        optionen: ["\\(J(0) = 0\\)", "\\(J(0) = f(0)\\)", "\\(J(0) = 1\\)", "\\(J(0) = F(0)\\)"],
+        korrekt: 0,
+        tipp: "Was passiert bei einem Integral, dessen obere und untere Grenze gleich sind?",
+        loesungsweg: "\\(\\int_a^a f(t)\\,dt = 0\\) für jede Funktion \\(f\\). Also \\(J(0) = 0\\)."
+    },
+    {
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Sei \\(J(x) = \\displaystyle\\int_1^x \\frac{1}{t^2}\\, dt\\). Berechne \\(J(2)\\).",
+        loesung: 0.5, toleranz: 0.01,
+        tipp: "Stammfunktion von \\(t^{-2}\\) ist \\(-t^{-1} = -\\frac{1}{t}\\).",
+        loesungsweg: "\\(J(2) = \\left[-\\frac{1}{t}\\right]_1^2 = -\\frac{1}{2} - \\left(-\\frac{1}{1}\\right) = -\\frac{1}{2} + 1 = \\frac{1}{2}\\)."
+    },
+    {
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Sei \\(J(x) = \\displaystyle\\int_0^x e^t\\, dt\\). Berechne \\(J(2)\\). Runde auf zwei Dezimalstellen.",
+        loesung: 6.39, toleranz: 0.01,
+        tipp: "\\(J(x) = e^x - 1\\). Einsetzen: \\(J(2) = e^2 - 1\\).",
+        loesungsweg: "\\(J(2) = \\left[e^t\\right]_0^2 = e^2 - e^0 = e^2 - 1 \\approx 7{,}389 - 1 = 6{,}39\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 6 — Rekonstruierter Bestand, orientierter Flächeninhalt
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 31, level: 6, typ: "numerisch",
+        frage: "Ein Behälter wird mit der Rate \\(r(t) = 6t\\) (Liter/min) befüllt. Wie viel Liter fließen in den ersten 3 Minuten hinein?",
+        loesung: 27, toleranz: 0,
+        tipp: "Gesamtmenge = \\(\\int_0^3 6t\\,dt\\).",
+        loesungsweg: "\\(\\int_0^3 6t\\,dt = \\left[3t^2\\right]_0^3 = 3 \\cdot 9 = 27\\) Liter."
+    },
+    {
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Die Geschwindigkeit eines Objekts ist \\(v(t) = 3t^2 - 12t + 9\\) (m/s). <br>Berechne die zurückgelegte Strecke (Wegintegral) von \\(t = 0\\) bis \\(t = 1\\). <br><em>Hinweis: Prüfe, ob \\(v(t) \\geq 0\\) auf \\([0, 1]\\).</em>",
+        loesung: 4, toleranz: 0,
+        tipp: "\\(v(t) = 3(t-1)(t-3)\\). Auf \\([0,1]\\): \\(v(t) \\geq 0\\). Also \\(\\int_0^1 v(t)\\,dt\\).",
+        loesungsweg: "\\(\\int_0^1 (3t^2-12t+9)\\,dt = \\left[t^3-6t^2+9t\\right]_0^1 = 1 - 6 + 9 = 4\\) m."
+    },
+    {
+        id: 33, level: 6, typ: "mc",
+        frage: "Was ist der Unterschied zwischen dem orientierten Integral \\(\\int_a^b f(x)\\,dx\\) und dem Flächeninhalt \\(A\\)?",
+        optionen: [
+            "Das Integral kann negativ sein; der Flächeninhalt \\(A = \\int_a^b |f(x)|\\,dx\\) ist stets \\(\\geq 0\\)",
+            "Es gibt keinen Unterschied",
+            "Der Flächeninhalt kann negativ sein, das Integral nicht",
+            "Beides ist immer positiv"
+        ],
+        korrekt: 0,
+        tipp: "Orientiert heißt: Unterhalb der x-Achse zählt negativ. Fläche ist immer positiv.",
+        loesungsweg: "Das orientierte Integral berücksichtigt das Vorzeichen. Der Flächeninhalt wird durch \\(A = \\int_a^b |f(x)|\\,dx \\geq 0\\) berechnet."
+    },
+    {
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Berechne den orientierten Flächeninhalt \\(\\displaystyle\\int_0^{3\\pi/2} \\cos(x)\\, dx\\). Runde auf zwei Dezimalstellen.",
+        loesung: -1, toleranz: 0.01,
+        tipp: "Stammfunktion: \\(\\sin(x)\\). \\(\\sin(3\\pi/2) = -1\\).",
+        loesungsweg: "\\(\\left[\\sin(x)\\right]_0^{3\\pi/2} = \\sin(3\\pi/2) - \\sin(0) = -1 - 0 = -1\\)."
+    },
+    {
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Ein Bestand ändert sich mit der Rate \\(r(t) = 4 - 2t\\). Anfangsbestand: \\(B(0) = 10\\). <br>Berechne \\(B(3)\\).",
+        loesung: 13, toleranz: 0,
+        tipp: "\\(B(3) = B(0) + \\int_0^3 (4 - 2t)\\,dt\\).",
+        loesungsweg: "\\(\\int_0^3 (4-2t)\\,dt = \\left[4t - t^2\\right]_0^3 = 12 - 9 = 3\\). Also \\(B(3) = 10 + 3 = 13\\)."
+    },
+    {
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Berechne den tatsächlichen Flächeninhalt zwischen \\(f(x) = \\sin(x)\\) und der \\(x\\)-Achse auf \\([0, 2\\pi]\\). <br><em>Hinweis: Nullstelle bei \\(x = \\pi\\). Aufteilen!</em>",
+        loesung: 4, toleranz: 0.01,
+        tipp: "\\(A = \\left|\\int_0^\\pi \\sin(x)\\,dx\\right| + \\left|\\int_\\pi^{2\\pi} \\sin(x)\\,dx\\right|\\).",
+        loesungsweg: "\\(\\int_0^\\pi \\sin(x)\\,dx = [-\\cos(x)]_0^\\pi = 1+1 = 2\\). \\(\\int_\\pi^{2\\pi} \\sin(x)\\,dx = [-\\cos(x)]_\\pi^{2\\pi} = -1-1 = -2\\). \\(A = 2 + |-2| = 2 + 2 = 4\\)."
+    }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

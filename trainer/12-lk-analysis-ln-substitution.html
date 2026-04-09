@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ln &amp; Substitution (LK) - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '12-lk-analysis-ln-substitution';
+    const THEMA_CONFIG = { name: 'ln & Substitution (LK)', bereich: 'analysis' };
+    const AUFGABEN = [
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 1 — ∫ 1/x dx = ln|x| + C (MC Verständnis)
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 1, level: 1, typ: "mc",
+        frage: "Welche Funktion ist eine Stammfunktion von \\(f(x) = \\frac{1}{x}\\)?",
+        optionen: ["\\(F(x) = \\ln|x|\\)", "\\(F(x) = x^0 = 1\\)", "\\(F(x) = -\\frac{1}{x^2}\\)", "\\(F(x) = e^x\\)"],
+        korrekt: 0,
+        tipp: "Die Potenzregel versagt bei \\(x^{-1}\\), denn \\(\\frac{x^0}{0}\\) ist nicht definiert. Die Stammfunktion ist der natürliche Logarithmus.",
+        loesungsweg: "\\(\\int \\frac{1}{x}\\,dx = \\ln|x| + C\\). Dies ist die einzige Ausnahme der Potenzregel."
+    },
+    {
+        id: 2, level: 1, typ: "mc",
+        frage: "Warum steht \\(\\ln|x|\\) mit Betrag?",
+        optionen: [
+            "Weil \\(\\ln\\) nur für positive Argumente definiert ist, aber \\(\\frac{1}{x}\\) auch für \\(x < 0\\) existiert",
+            "Weil der Betrag die Stammfunktion vereinfacht",
+            "Weil \\(\\ln(x)\\) für negative \\(x\\) zu \\(\\ln|x|\\) wird durch die Kettenregel",
+            "Der Betrag ist optional und kann weggelassen werden"
+        ],
+        korrekt: 0,
+        tipp: "\\(\\ln(x)\\) ist nur für \\(x > 0\\) definiert. Für \\(x < 0\\) braucht man \\(\\ln(-x) = \\ln|x|\\).",
+        loesungsweg: "Da \\(\\ln(x)\\) nur für \\(x > 0\\) definiert ist, schreibt man \\(\\ln|x|\\), um auch negative \\(x\\)-Werte abzudecken."
+    },
+    {
+        id: 3, level: 1, typ: "numerisch",
+        frage: "Gegeben ist \\(F(x) = 3\\ln|x|\\). Berechne \\(F(e)\\). Runde auf zwei Dezimalstellen.",
+        loesung: 3, toleranz: 0.01,
+        tipp: "\\(\\ln(e) = 1\\). Also \\(F(e) = 3 \\cdot \\ln(e) = 3 \\cdot 1\\).",
+        loesungsweg: "\\(F(e) = 3 \\cdot \\ln(e) = 3 \\cdot 1 = 3\\)."
+    },
+    {
+        id: 4, level: 1, typ: "mc",
+        frage: "Welche Stammfunktion hat \\(f(x) = \\frac{5}{x}\\)?",
+        optionen: ["\\(F(x) = 5\\ln|x| + C\\)", "\\(F(x) = \\frac{5}{x^2} + C\\)", "\\(F(x) = \\ln|5x| + C\\)", "\\(F(x) = 5e^x + C\\)"],
+        korrekt: 0,
+        tipp: "Faktor 5 wird beim Aufleiten beibehalten: \\(\\int \\frac{5}{x}\\,dx = 5\\int \\frac{1}{x}\\,dx\\).",
+        loesungsweg: "\\(\\int \\frac{5}{x}\\,dx = 5 \\cdot \\ln|x| + C\\)."
+    },
+    {
+        id: 5, level: 1, typ: "mc",
+        frage: "Welche Aussage ist richtig?",
+        optionen: [
+            "\\(\\int x^{-1}\\,dx = \\ln|x| + C\\) (Sonderfall der Potenzregel)",
+            "\\(\\int x^{-1}\\,dx = \\frac{x^0}{0} + C\\)",
+            "\\(\\int x^{-1}\\,dx = -x^{-2} + C\\)",
+            "\\(\\int x^{-1}\\,dx\\) existiert nicht"
+        ],
+        korrekt: 0,
+        tipp: "Die Potenzregel \\(\\frac{x^{n+1}}{n+1}\\) funktioniert nicht für \\(n = -1\\), da man durch 0 teilen würde.",
+        loesungsweg: "Für \\(n = -1\\) versagt die Potenzregel. Stattdessen: \\(\\int x^{-1}\\,dx = \\ln|x| + C\\)."
+    },
+    {
+        id: 6, level: 1, typ: "numerisch",
+        frage: "Gegeben ist \\(F(x) = -2\\ln|x|\\). Berechne \\(F(e^3)\\).",
+        loesung: -6, toleranz: 0,
+        tipp: "\\(\\ln(e^3) = 3\\).",
+        loesungsweg: "\\(F(e^3) = -2 \\cdot \\ln(e^3) = -2 \\cdot 3 = -6\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 2 — ∫₁ᵉ 1/x dx und einfache bestimmte Integrale
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 7, level: 2, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_1^e \\frac{1}{x}\\,dx\\).",
+        loesung: 1, toleranz: 0,
+        tipp: "\\(\\left[\\ln|x|\\right]_1^e = \\ln(e) - \\ln(1)\\).",
+        loesungsweg: "\\(\\left[\\ln|x|\\right]_1^e = \\ln(e) - \\ln(1) = 1 - 0 = 1\\)."
+    },
+    {
+        id: 8, level: 2, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_1^{e^2} \\frac{1}{x}\\,dx\\).",
+        loesung: 2, toleranz: 0,
+        tipp: "\\(\\ln(e^2) = 2\\).",
+        loesungsweg: "\\(\\left[\\ln|x|\\right]_1^{e^2} = \\ln(e^2) - \\ln(1) = 2 - 0 = 2\\)."
+    },
+    {
+        id: 9, level: 2, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_1^e \\frac{3}{x}\\,dx\\).",
+        loesung: 3, toleranz: 0,
+        tipp: "\\(3 \\cdot \\left[\\ln|x|\\right]_1^e = 3 \\cdot 1\\).",
+        loesungsweg: "\\(3 \\cdot \\left[\\ln|x|\\right]_1^e = 3 \\cdot (\\ln(e) - \\ln(1)) = 3 \\cdot 1 = 3\\)."
+    },
+    {
+        id: 10, level: 2, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_1^4 \\frac{1}{x}\\,dx\\). Runde auf zwei Dezimalstellen.",
+        loesung: 1.39, toleranz: 0.01,
+        tipp: "\\(\\ln(4) = \\ln(2^2) = 2\\ln(2) \\approx 2 \\cdot 0{,}693\\).",
+        loesungsweg: "\\(\\left[\\ln|x|\\right]_1^4 = \\ln(4) - \\ln(1) = \\ln(4) \\approx 1{,}386 \\approx 1{,}39\\)."
+    },
+    {
+        id: 11, level: 2, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_2^6 \\frac{1}{x}\\,dx\\). Runde auf zwei Dezimalstellen.",
+        loesung: 1.1, toleranz: 0.01,
+        tipp: "\\(\\ln(6) - \\ln(2) = \\ln\\left(\\frac{6}{2}\\right) = \\ln(3)\\).",
+        loesungsweg: "\\(\\left[\\ln|x|\\right]_2^6 = \\ln(6) - \\ln(2) = \\ln(3) \\approx 1{,}099 \\approx 1{,}10\\)."
+    },
+    {
+        id: 12, level: 2, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_1^e \\left(\\frac{1}{x} + 1\\right)\\,dx\\). Runde auf zwei Dezimalstellen.",
+        loesung: 2.72, toleranz: 0.01,
+        tipp: "Summenregel: \\(\\int_1^e \\frac{1}{x}\\,dx + \\int_1^e 1\\,dx = 1 + (e-1)\\).",
+        loesungsweg: "\\(\\left[\\ln|x| + x\\right]_1^e = (\\ln(e) + e) - (\\ln(1) + 1) = (1 + e) - (0 + 1) = e \\approx 2{,}72\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 3 — Lineare Substitution: ∫ e^(ax+b) dx
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 13, level: 3, typ: "mc",
+        frage: "Wie lautet \\(\\displaystyle\\int e^{2x}\\,dx\\)?",
+        optionen: ["\\(\\frac{1}{2}e^{2x} + C\\)", "\\(2e^{2x} + C\\)", "\\(e^{2x} + C\\)", "\\(\\frac{e^{2x}}{2x} + C\\)"],
+        korrekt: 0,
+        tipp: "Bei linearer Substitution: Innere Ableitung in den Nenner. Innere Ableitung von \\(2x\\) ist 2.",
+        loesungsweg: "\\(\\int e^{2x}\\,dx = \\frac{1}{2}e^{2x} + C\\). Probe: \\(\\left(\\frac{1}{2}e^{2x}\\right)' = \\frac{1}{2} \\cdot 2 \\cdot e^{2x} = e^{2x}\\). \\(\\checkmark\\)"
+    },
+    {
+        id: 14, level: 3, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^1 e^{3x}\\,dx\\). Runde auf zwei Dezimalstellen.",
+        loesung: 6.36, toleranz: 0.01,
+        tipp: "\\(\\int e^{3x}\\,dx = \\frac{1}{3}e^{3x}\\). Grenzen einsetzen.",
+        loesungsweg: "\\(\\left[\\frac{1}{3}e^{3x}\\right]_0^1 = \\frac{1}{3}e^3 - \\frac{1}{3} = \\frac{1}{3}(e^3 - 1) \\approx \\frac{1}{3}(20{,}086 - 1) = 6{,}36\\)."
+    },
+    {
+        id: 15, level: 3, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^1 e^{2x}\\,dx\\). Runde auf zwei Dezimalstellen.",
+        loesung: 3.19, toleranz: 0.01,
+        tipp: "\\(\\left[\\frac{1}{2}e^{2x}\\right]_0^1 = \\frac{1}{2}e^2 - \\frac{1}{2}e^0\\).",
+        loesungsweg: "\\(\\left[\\frac{1}{2}e^{2x}\\right]_0^1 = \\frac{1}{2}e^2 - \\frac{1}{2} = \\frac{1}{2}(e^2 - 1) \\approx \\frac{1}{2}(7{,}389 - 1) = 3{,}19\\)."
+    },
+    {
+        id: 16, level: 3, typ: "mc",
+        frage: "Wie lautet die allgemeine Regel für \\(\\displaystyle\\int e^{ax+b}\\,dx\\)?",
+        optionen: [
+            "\\(\\frac{1}{a}e^{ax+b} + C\\)",
+            "\\(a \\cdot e^{ax+b} + C\\)",
+            "\\(\\frac{e^{ax+b}}{ax+b} + C\\)",
+            "\\((ax+b) \\cdot e^{ax+b} + C\\)"
+        ],
+        korrekt: 0,
+        tipp: "Bei linearer Substitution teilt man durch die innere Ableitung \\(a\\).",
+        loesungsweg: "\\(\\int e^{ax+b}\\,dx = \\frac{1}{a}e^{ax+b} + C\\). Man teilt durch die Ableitung des inneren Terms."
+    },
+    {
+        id: 17, level: 3, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^1 e^{-x}\\,dx\\). Runde auf zwei Dezimalstellen.",
+        loesung: 0.63, toleranz: 0.01,
+        tipp: "\\(\\int e^{-x}\\,dx = -e^{-x} + C\\). Innere Ableitung: \\(-1\\).",
+        loesungsweg: "\\(\\left[-e^{-x}\\right]_0^1 = -e^{-1} - (-e^0) = -\\frac{1}{e} + 1 = 1 - \\frac{1}{e} \\approx 1 - 0{,}368 = 0{,}63\\)."
+    },
+    {
+        id: 18, level: 3, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^2 e^{\\frac{1}{2}x}\\,dx\\). Runde auf zwei Dezimalstellen.",
+        loesung: 3.44, toleranz: 0.01,
+        tipp: "\\(\\int e^{x/2}\\,dx = 2e^{x/2} + C\\). Innere Ableitung: \\(\\frac{1}{2}\\), also Faktor 2.",
+        loesungsweg: "\\(\\left[2e^{x/2}\\right]_0^2 = 2e^1 - 2e^0 = 2e - 2 \\approx 5{,}436 - 2 = 3{,}44\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 4 — ∫ 1/(ax+b) dx = (1/a)·ln|ax+b| + C
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 19, level: 4, typ: "mc",
+        frage: "Wie lautet \\(\\displaystyle\\int \\frac{1}{3x+2}\\,dx\\)?",
+        optionen: [
+            "\\(\\frac{1}{3}\\ln|3x+2| + C\\)",
+            "\\(3\\ln|3x+2| + C\\)",
+            "\\(\\ln|3x+2| + C\\)",
+            "\\(\\frac{1}{3x+2} + C\\)"
+        ],
+        korrekt: 0,
+        tipp: "Lineare Substitution: \\(\\int \\frac{1}{ax+b}\\,dx = \\frac{1}{a}\\ln|ax+b| + C\\).",
+        loesungsweg: "\\(\\int \\frac{1}{3x+2}\\,dx = \\frac{1}{3}\\ln|3x+2| + C\\). Innere Ableitung: 3, also Faktor \\(\\frac{1}{3}\\)."
+    },
+    {
+        id: 20, level: 4, typ: "mc",
+        frage: "Wie lautet \\(\\displaystyle\\int \\frac{1}{2x-1}\\,dx\\)?",
+        optionen: [
+            "\\(\\frac{1}{2}\\ln|2x-1| + C\\)",
+            "\\(2\\ln|2x-1| + C\\)",
+            "\\(\\ln|2x-1| + C\\)",
+            "\\(-\\frac{1}{(2x-1)^2} + C\\)"
+        ],
+        korrekt: 0,
+        tipp: "Innere Ableitung von \\(2x - 1\\) ist 2. Also Faktor \\(\\frac{1}{2}\\) vor den ln.",
+        loesungsweg: "\\(\\int \\frac{1}{2x-1}\\,dx = \\frac{1}{2}\\ln|2x-1| + C\\)."
+    },
+    {
+        id: 21, level: 4, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_1^3 \\frac{1}{2x+1}\\,dx\\). Runde auf zwei Dezimalstellen.",
+        loesung: 0.42, toleranz: 0.01,
+        tipp: "\\(\\left[\\frac{1}{2}\\ln|2x+1|\\right]_1^3\\). Einsetzen!",
+        loesungsweg: "\\(\\left[\\frac{1}{2}\\ln|2x+1|\\right]_1^3 = \\frac{1}{2}\\ln(7) - \\frac{1}{2}\\ln(3) = \\frac{1}{2}\\ln\\left(\\frac{7}{3}\\right) \\approx \\frac{1}{2} \\cdot 0{,}847 = 0{,}42\\)."
+    },
+    {
+        id: 22, level: 4, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^1 \\frac{4}{4x+1}\\,dx\\). Runde auf zwei Dezimalstellen.",
+        loesung: 1.61, toleranz: 0.01,
+        tipp: "\\(\\int \\frac{4}{4x+1}\\,dx = 4 \\cdot \\frac{1}{4}\\ln|4x+1| = \\ln|4x+1|\\).",
+        loesungsweg: "\\(\\left[\\ln|4x+1|\\right]_0^1 = \\ln(5) - \\ln(1) = \\ln(5) \\approx 1{,}61\\)."
+    },
+    {
+        id: 23, level: 4, typ: "mc",
+        frage: "Wie lautet die allgemeine Regel für \\(\\displaystyle\\int \\frac{1}{ax+b}\\,dx\\)?",
+        optionen: [
+            "\\(\\frac{1}{a}\\ln|ax+b| + C\\)",
+            "\\(a \\cdot \\ln|ax+b| + C\\)",
+            "\\(\\frac{\\ln|ax+b|}{ax+b} + C\\)",
+            "\\(-\\frac{1}{(ax+b)^2} + C\\)"
+        ],
+        korrekt: 0,
+        tipp: "Wie bei \\(e^{ax+b}\\): Durch die innere Ableitung \\(a\\) teilen.",
+        loesungsweg: "\\(\\int \\frac{1}{ax+b}\\,dx = \\frac{1}{a}\\ln|ax+b| + C\\)."
+    },
+    {
+        id: 24, level: 4, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_2^{e+1} \\frac{1}{x-1}\\,dx\\).",
+        loesung: 1, toleranz: 0.01,
+        tipp: "\\(\\int \\frac{1}{x-1}\\,dx = \\ln|x-1| + C\\). Innere Ableitung: 1.",
+        loesungsweg: "\\(\\left[\\ln|x-1|\\right]_2^{e+1} = \\ln(e+1-1) - \\ln(2-1) = \\ln(e) - \\ln(1) = 1 - 0 = 1\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 5 — ∫ sin(ax+b), ∫ cos(ax+b) dx
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 25, level: 5, typ: "mc",
+        frage: "Wie lautet \\(\\displaystyle\\int \\sin(2x)\\,dx\\)?",
+        optionen: [
+            "\\(-\\frac{1}{2}\\cos(2x) + C\\)",
+            "\\(-2\\cos(2x) + C\\)",
+            "\\(\\frac{1}{2}\\cos(2x) + C\\)",
+            "\\(-\\cos(2x) + C\\)"
+        ],
+        korrekt: 0,
+        tipp: "Stammfunktion von \\(\\sin\\) ist \\(-\\cos\\). Innere Ableitung: 2, also Faktor \\(\\frac{1}{2}\\).",
+        loesungsweg: "\\(\\int \\sin(2x)\\,dx = -\\frac{1}{2}\\cos(2x) + C\\). Probe: \\((-\\frac{1}{2}\\cos(2x))' = -\\frac{1}{2} \\cdot (-\\sin(2x)) \\cdot 2 = \\sin(2x)\\). \\(\\checkmark\\)"
+    },
+    {
+        id: 26, level: 5, typ: "mc",
+        frage: "Wie lautet \\(\\displaystyle\\int \\cos(3x - 1)\\,dx\\)?",
+        optionen: [
+            "\\(\\frac{1}{3}\\sin(3x-1) + C\\)",
+            "\\(3\\sin(3x-1) + C\\)",
+            "\\(-\\frac{1}{3}\\sin(3x-1) + C\\)",
+            "\\(\\sin(3x-1) + C\\)"
+        ],
+        korrekt: 0,
+        tipp: "Stammfunktion von \\(\\cos\\) ist \\(\\sin\\). Innere Ableitung: 3, also Faktor \\(\\frac{1}{3}\\).",
+        loesungsweg: "\\(\\int \\cos(3x-1)\\,dx = \\frac{1}{3}\\sin(3x-1) + C\\)."
+    },
+    {
+        id: 27, level: 5, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^{\\pi/2} \\sin(2x)\\,dx\\).",
+        loesung: 1, toleranz: 0.01,
+        tipp: "\\(\\left[-\\frac{1}{2}\\cos(2x)\\right]_0^{\\pi/2}\\). Beachte: \\(\\cos(\\pi) = -1\\), \\(\\cos(0) = 1\\).",
+        loesungsweg: "\\(\\left[-\\frac{1}{2}\\cos(2x)\\right]_0^{\\pi/2} = -\\frac{1}{2}\\cos(\\pi) + \\frac{1}{2}\\cos(0) = -\\frac{1}{2}(-1) + \\frac{1}{2}(1) = \\frac{1}{2} + \\frac{1}{2} = 1\\)."
+    },
+    {
+        id: 28, level: 5, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^{\\pi} \\cos\\left(\\frac{x}{2}\\right)\\,dx\\).",
+        loesung: 2, toleranz: 0.01,
+        tipp: "\\(\\int \\cos(x/2)\\,dx = 2\\sin(x/2) + C\\). Innere Ableitung: \\(\\frac{1}{2}\\), Kehrwert: 2.",
+        loesungsweg: "\\(\\left[2\\sin(x/2)\\right]_0^{\\pi} = 2\\sin(\\pi/2) - 2\\sin(0) = 2 \\cdot 1 - 0 = 2\\)."
+    },
+    {
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^{\\pi/4} \\cos(2x)\\,dx\\).",
+        loesung: 0.5, toleranz: 0.01,
+        tipp: "\\(\\int \\cos(2x)\\,dx = \\frac{1}{2}\\sin(2x)\\). Grenzen einsetzen.",
+        loesungsweg: "\\(\\left[\\frac{1}{2}\\sin(2x)\\right]_0^{\\pi/4} = \\frac{1}{2}\\sin(\\pi/2) - \\frac{1}{2}\\sin(0) = \\frac{1}{2} \\cdot 1 - 0 = 0{,}5\\)."
+    },
+    {
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^{\\pi/3} \\sin(3x)\\,dx\\). Runde auf zwei Dezimalstellen.",
+        loesung: 0.67, toleranz: 0.01,
+        tipp: "\\(\\left[-\\frac{1}{3}\\cos(3x)\\right]_0^{\\pi/3}\\). \\(\\cos(\\pi) = -1\\), \\(\\cos(0) = 1\\).",
+        loesungsweg: "\\(\\left[-\\frac{1}{3}\\cos(3x)\\right]_0^{\\pi/3} = -\\frac{1}{3}\\cos(\\pi) + \\frac{1}{3}\\cos(0) = \\frac{1}{3} + \\frac{1}{3} = \\frac{2}{3} \\approx 0{,}67\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 6 — Kombination: Partialbruch-Hinweis, gemischte Aufgaben
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 31, level: 6, typ: "mc",
+        frage: "Wie integriert man \\(\\displaystyle\\int \\frac{2x+1}{x^2+x}\\,dx\\)?",
+        optionen: [
+            "Erkennen, dass Zähler = Ableitung des Nenners: \\(\\ln|x^2+x| + C\\)",
+            "Partialbruchzerlegung notwendig",
+            "Lineare Substitution \\(u = x^2 + x\\)",
+            "Nicht mit Standardmethoden lösbar"
+        ],
+        korrekt: 0,
+        tipp: "Prüfe: Ist der Zähler die Ableitung des Nenners? \\((x^2+x)' = 2x+1\\). Ja!",
+        loesungsweg: "Da \\((x^2+x)' = 2x+1\\) = Zähler, gilt: \\(\\int \\frac{2x+1}{x^2+x}\\,dx = \\ln|x^2+x| + C\\). (Logarithmische Integration.)"
+    },
+    {
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_1^2 \\frac{2x+1}{x^2+x}\\,dx\\). Runde auf zwei Dezimalstellen.",
+        loesung: 1.1, toleranz: 0.01,
+        tipp: "\\(\\left[\\ln|x^2+x|\\right]_1^2 = \\ln(6) - \\ln(2) = \\ln(3)\\).",
+        loesungsweg: "\\(\\left[\\ln|x^2+x|\\right]_1^2 = \\ln(2^2+2) - \\ln(1^2+1) = \\ln(6) - \\ln(2) = \\ln(3) \\approx 1{,}10\\)."
+    },
+    {
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^1 \\left(e^{2x} + \\frac{1}{x+1}\\right)\\,dx\\). Runde auf zwei Dezimalstellen.",
+        loesung: 3.89, toleranz: 0.01,
+        tipp: "\\(\\int e^{2x}\\,dx = \\frac{1}{2}e^{2x}\\). \\(\\int \\frac{1}{x+1}\\,dx = \\ln|x+1|\\).",
+        loesungsweg: "\\(\\left[\\frac{1}{2}e^{2x} + \\ln|x+1|\\right]_0^1 = (\\frac{1}{2}e^2 + \\ln 2) - (\\frac{1}{2} + 0) = \\frac{e^2-1}{2} + \\ln 2 \\approx 3{,}195 + 0{,}693 = 3{,}89\\)."
+    },
+    {
+        id: 34, level: 6, typ: "mc",
+        frage: "Welche Methode eignet sich für \\(\\displaystyle\\int \\frac{3}{x+5}\\,dx\\)?",
+        optionen: [
+            "Lineare Substitution: \\(\\frac{3}{1}\\ln|x+5| + C = 3\\ln|x+5| + C\\)",
+            "Partialbruchzerlegung",
+            "Produktregel rückwärts",
+            "Potenzregel mit \\(n = -1\\)"
+        ],
+        korrekt: 0,
+        tipp: "\\(\\frac{3}{x+5}\\) hat die Form \\(\\frac{k}{ax+b}\\) mit \\(a = 1\\).",
+        loesungsweg: "\\(\\int \\frac{3}{x+5}\\,dx = 3 \\cdot \\frac{1}{1}\\ln|x+5| + C = 3\\ln|x+5| + C\\)."
+    },
+    {
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^{\\pi} \\left(\\sin(2x) + e^{-x}\\right)\\,dx\\). Runde auf zwei Dezimalstellen.",
+        loesung: 0.96, toleranz: 0.01,
+        tipp: "\\(\\int \\sin(2x)\\,dx = -\\frac{1}{2}\\cos(2x)\\), \\(\\int e^{-x}\\,dx = -e^{-x}\\).",
+        loesungsweg: "\\(\\left[-\\frac{1}{2}\\cos(2x) - e^{-x}\\right]_0^\\pi = (-\\frac{1}{2}\\cos(2\\pi) - e^{-\\pi}) - (-\\frac{1}{2}\\cos(0) - e^0) = (-\\frac{1}{2} - e^{-\\pi}) - (-\\frac{1}{2} - 1) = -e^{-\\pi} + 1 \\approx -0{,}043 + 1 = 0{,}96\\)."
+    },
+    {
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_1^e \\left(\\frac{2}{x} + 3x\\right)\\,dx\\). Runde auf zwei Dezimalstellen.",
+        loesung: 11.58, toleranz: 0.05,
+        tipp: "\\(\\int \\frac{2}{x}\\,dx = 2\\ln|x|\\), \\(\\int 3x\\,dx = \\frac{3}{2}x^2\\).",
+        loesungsweg: "\\(\\left[2\\ln|x| + \\frac{3}{2}x^2\\right]_1^e = (2\\ln(e) + \\frac{3}{2}e^2) - (2\\ln(1) + \\frac{3}{2}) = (2 + \\frac{3}{2}e^2) - \\frac{3}{2} = 2 + \\frac{3}{2}(e^2 - 1) \\approx 2 + \\frac{3}{2} \\cdot 6{,}389 = 2 + 9{,}58 = 11{,}58\\)."
+    }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

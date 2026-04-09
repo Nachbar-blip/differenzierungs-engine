@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stammfunktionen - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '12-analysis-stammfunktionen';
+    const THEMA_CONFIG = { name: 'Stammfunktionen', bereich: 'analysis' };
+    const AUFGABEN = [
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 1 — Potenzregel umgekehrt: F(x) für x^n
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 1, level: 1, typ: "mc",
+        frage: "Welche Funktion ist eine Stammfunktion von \\(f(x) = x^2\\)?",
+        optionen: ["\\(F(x) = \\frac{1}{3}x^3\\)", "\\(F(x) = 2x\\)", "\\(F(x) = x^3\\)", "\\(F(x) = \\frac{1}{2}x^2\\)"],
+        korrekt: 0,
+        tipp: "Beim Aufleiten wird der Exponent um 1 erhöht und durch den neuen Exponenten geteilt.",
+        loesungsweg: "Aufleiten: Exponent +1 und durch neuen Exponent teilen: \\(F(x) = \\frac{x^{2+1}}{2+1} = \\frac{1}{3}x^3\\)."
+    },
+    {
+        id: 2, level: 1, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = x^4\\). Die Stammfunktion lautet \\(F(x) = \\frac{1}{a}x^5\\). Bestimme \\(a\\).",
+        loesung: 5, toleranz: 0,
+        tipp: "Beim Aufleiten von \\(x^n\\) entsteht \\(\\frac{x^{n+1}}{n+1}\\).",
+        loesungsweg: "\\(F(x) = \\frac{x^{4+1}}{4+1} = \\frac{1}{5}x^5\\). Also \\(a = 5\\)."
+    },
+    {
+        id: 3, level: 1, typ: "mc",
+        frage: "Welche Funktion ist eine Stammfunktion von \\(f(x) = x^5\\)?",
+        optionen: ["\\(F(x) = \\frac{1}{6}x^6\\)", "\\(F(x) = 5x^4\\)", "\\(F(x) = \\frac{1}{5}x^6\\)", "\\(F(x) = x^6\\)"],
+        korrekt: 0,
+        tipp: "Aufleiten: Exponent um 1 erhöhen, dann durch den neuen Exponenten teilen.",
+        loesungsweg: "\\(F(x) = \\frac{x^{5+1}}{5+1} = \\frac{1}{6}x^6\\)."
+    },
+    {
+        id: 4, level: 1, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = x^3\\). Berechne \\(F(2)\\), wobei \\(F\\) die Stammfunktion ohne Konstante ist.",
+        loesung: 4, toleranz: 0,
+        tipp: "\\(F(x) = \\frac{1}{4}x^4\\). Dann \\(x = 2\\) einsetzen.",
+        loesungsweg: "\\(F(x) = \\frac{1}{4}x^4\\). Einsetzen: \\(F(2) = \\frac{1}{4} \\cdot 16 = 4\\)."
+    },
+    {
+        id: 5, level: 1, typ: "mc",
+        frage: "Welche Funktion ist eine Stammfunktion von \\(f(x) = 1\\) (also \\(x^0\\))?",
+        optionen: ["\\(F(x) = x\\)", "\\(F(x) = 0\\)", "\\(F(x) = 1\\)", "\\(F(x) = x^2\\)"],
+        korrekt: 0,
+        tipp: "Was hat die Ableitung 1? Denke an eine lineare Funktion.",
+        loesungsweg: "\\(F(x) = x\\), denn \\(F'(x) = 1 = f(x)\\). \\(\\checkmark\\)"
+    },
+    {
+        id: 6, level: 1, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = x\\). Die Stammfunktion ist \\(F(x) = \\frac{1}{a}x^2\\). Bestimme \\(a\\).",
+        loesung: 2, toleranz: 0,
+        tipp: "\\(x = x^1\\). Aufleiten: \\(\\frac{x^{1+1}}{1+1}\\).",
+        loesungsweg: "\\(F(x) = \\frac{x^2}{2} = \\frac{1}{2}x^2\\). Also \\(a = 2\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 2 — Stammfunktion von Polynomen
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 7, level: 2, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = 3x^2 + 2x\\). Berechne \\(F(1)\\) (ohne Konstante).",
+        loesung: 2, toleranz: 0,
+        tipp: "Leite jeden Summanden einzeln auf: \\(3x^2 \\to x^3\\), \\(2x \\to x^2\\).",
+        loesungsweg: "\\(F(x) = x^3 + x^2\\). Einsetzen: \\(F(1) = 1 + 1 = 2\\)."
+    },
+    {
+        id: 8, level: 2, typ: "mc",
+        frage: "Welche Funktion ist eine Stammfunktion von \\(f(x) = 6x^2 - 4x + 1\\)?",
+        optionen: [
+            "\\(F(x) = 2x^3 - 2x^2 + x\\)",
+            "\\(F(x) = 12x - 4\\)",
+            "\\(F(x) = 6x^3 - 4x^2 + x\\)",
+            "\\(F(x) = 2x^3 - 2x^2\\)"
+        ],
+        korrekt: 0,
+        tipp: "Jeden Summanden einzeln aufleiten: \\(6x^2 \\to 2x^3\\), \\(-4x \\to -2x^2\\), \\(1 \\to x\\).",
+        loesungsweg: "\\(F(x) = \\frac{6}{3}x^3 - \\frac{4}{2}x^2 + x = 2x^3 - 2x^2 + x\\)."
+    },
+    {
+        id: 9, level: 2, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = 4x^3 - 6x\\). Berechne \\(F(2)\\) (ohne Konstante).",
+        loesung: 4, toleranz: 0,
+        tipp: "\\(F(x) = x^4 - 3x^2\\). Dann \\(x = 2\\) einsetzen.",
+        loesungsweg: "\\(F(x) = x^4 - 3x^2\\). Einsetzen: \\(F(2) = 16 - 12 = 4\\)."
+    },
+    {
+        id: 10, level: 2, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = x^2 - 4x + 3\\). Berechne \\(F(3)\\) (ohne Konstante).",
+        loesung: 0, toleranz: 0,
+        tipp: "\\(F(x) = \\frac{1}{3}x^3 - 2x^2 + 3x\\). Einsetzen!",
+        loesungsweg: "\\(F(x) = \\frac{1}{3}x^3 - 2x^2 + 3x\\). Einsetzen: \\(F(3) = 9 - 18 + 9 = 0\\)."
+    },
+    {
+        id: 11, level: 2, typ: "mc",
+        frage: "Welche Funktion ist eine Stammfunktion von \\(f(x) = 10x^4 + 3x^2 - 1\\)?",
+        optionen: [
+            "\\(F(x) = 2x^5 + x^3 - x\\)",
+            "\\(F(x) = 40x^3 + 6x\\)",
+            "\\(F(x) = 10x^5 + 3x^3 - x\\)",
+            "\\(F(x) = 2x^5 + x^3 - 1\\)"
+        ],
+        korrekt: 0,
+        tipp: "\\(10x^4 \\to \\frac{10}{5}x^5 = 2x^5\\), \\(3x^2 \\to x^3\\), \\(-1 \\to -x\\).",
+        loesungsweg: "\\(F(x) = \\frac{10}{5}x^5 + \\frac{3}{3}x^3 - x = 2x^5 + x^3 - x\\)."
+    },
+    {
+        id: 12, level: 2, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = -2x + 5\\). Berechne \\(F(4)\\) (ohne Konstante).",
+        loesung: 4, toleranz: 0,
+        tipp: "\\(F(x) = -x^2 + 5x\\). Einsetzen!",
+        loesungsweg: "\\(F(x) = -x^2 + 5x\\). Einsetzen: \\(F(4) = -16 + 20 = 4\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 3 — Stammfunktionen von e^x, sin(x), cos(x)
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 13, level: 3, typ: "mc",
+        frage: "Welche Funktion ist eine Stammfunktion von \\(f(x) = e^x\\)?",
+        optionen: ["\\(F(x) = e^x\\)", "\\(F(x) = xe^x\\)", "\\(F(x) = \\frac{e^x}{x}\\)", "\\(F(x) = e^{x+1}\\)"],
+        korrekt: 0,
+        tipp: "Die Exponentialfunktion \\(e^x\\) ist ihre eigene Ableitung - also auch ihre eigene Stammfunktion.",
+        loesungsweg: "\\(F(x) = e^x + C\\), denn \\(F'(x) = e^x = f(x)\\). \\(\\checkmark\\)"
+    },
+    {
+        id: 14, level: 3, typ: "mc",
+        frage: "Welche Funktion ist eine Stammfunktion von \\(f(x) = \\cos(x)\\)?",
+        optionen: ["\\(F(x) = \\sin(x)\\)", "\\(F(x) = -\\sin(x)\\)", "\\(F(x) = \\cos(x)\\)", "\\(F(x) = -\\cos(x)\\)"],
+        korrekt: 0,
+        tipp: "Gesucht: Welche Funktion hat als Ableitung \\(\\cos(x)\\)?",
+        loesungsweg: "\\((\\sin(x))' = \\cos(x)\\), also ist \\(F(x) = \\sin(x)\\) eine Stammfunktion von \\(\\cos(x)\\)."
+    },
+    {
+        id: 15, level: 3, typ: "mc",
+        frage: "Welche Funktion ist eine Stammfunktion von \\(f(x) = \\sin(x)\\)?",
+        optionen: ["\\(F(x) = -\\cos(x)\\)", "\\(F(x) = \\cos(x)\\)", "\\(F(x) = -\\sin(x)\\)", "\\(F(x) = \\sin(x)\\)"],
+        korrekt: 0,
+        tipp: "Gesucht: Welche Funktion hat als Ableitung \\(\\sin(x)\\)? Beachte: \\((-\\cos(x))' = \\sin(x)\\).",
+        loesungsweg: "\\((-\\cos(x))' = -(-\\sin(x)) = \\sin(x) = f(x)\\). Also \\(F(x) = -\\cos(x)\\)."
+    },
+    {
+        id: 16, level: 3, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = 3e^x\\). Berechne \\(F(0)\\) (ohne Konstante).",
+        loesung: 3, toleranz: 0,
+        tipp: "\\(F(x) = 3e^x\\). Einsetzen: \\(e^0 = 1\\).",
+        loesungsweg: "\\(F(x) = 3e^x\\). Einsetzen: \\(F(0) = 3 \\cdot e^0 = 3 \\cdot 1 = 3\\)."
+    },
+    {
+        id: 17, level: 3, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = 2\\cos(x)\\). Berechne \\(F\\left(\\frac{\\pi}{2}\\right)\\) (ohne Konstante).",
+        loesung: 2, toleranz: 0.01,
+        tipp: "\\(F(x) = 2\\sin(x)\\). Berechne \\(\\sin(\\pi/2)\\).",
+        loesungsweg: "\\(F(x) = 2\\sin(x)\\). Einsetzen: \\(F(\\pi/2) = 2\\sin(\\pi/2) = 2 \\cdot 1 = 2\\)."
+    },
+    {
+        id: 18, level: 3, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = -\\sin(x)\\). Berechne \\(F(\\pi)\\) (ohne Konstante).",
+        loesung: -1, toleranz: 0.01,
+        tipp: "\\(F(x) = \\cos(x)\\), denn \\((\\cos(x))' = -\\sin(x)\\).",
+        loesungsweg: "\\((-\\sin(x))\\) aufleiten ergibt \\(\\cos(x)\\), denn \\((\\cos(x))' = -\\sin(x)\\). \\(F(\\pi) = \\cos(\\pi) = -1\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 4 — Stammfunktion nachweisen (F' = f prüfen)
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 19, level: 4, typ: "mc",
+        frage: "Ist \\(F(x) = x^3 - x\\) eine Stammfunktion von \\(f(x) = 3x^2 - 1\\)?",
+        optionen: ["Ja, denn \\(F'(x) = 3x^2 - 1 = f(x)\\)", "Nein, denn \\(F'(x) = 3x^2 + 1\\)", "Nein, denn \\(F'(x) = x^2 - 1\\)", "Ja, denn \\(F(x) \\cdot f(x) = 0\\)"],
+        korrekt: 0,
+        tipp: "Leite \\(F(x)\\) ab und prüfe, ob \\(F'(x) = f(x)\\) gilt.",
+        loesungsweg: "\\(F'(x) = 3x^2 - 1\\). Das ist gleich \\(f(x)\\), also ist \\(F\\) eine Stammfunktion von \\(f\\). \\(\\checkmark\\)"
+    },
+    {
+        id: 20, level: 4, typ: "mc",
+        frage: "Ist \\(F(x) = \\frac{1}{4}x^4 + 2x\\) eine Stammfunktion von \\(f(x) = x^3 + 2\\)?",
+        optionen: ["Ja, denn \\(F'(x) = x^3 + 2 = f(x)\\)", "Nein, denn \\(F'(x) = x^3\\)", "Nein, denn \\(F'(x) = x^4 + 2\\)", "Ja, denn \\(F(0) = 0\\)"],
+        korrekt: 0,
+        tipp: "Berechne \\(F'(x)\\) und vergleiche mit \\(f(x)\\).",
+        loesungsweg: "\\(F'(x) = \\frac{4}{4}x^3 + 2 = x^3 + 2 = f(x)\\). \\(\\checkmark\\)"
+    },
+    {
+        id: 21, level: 4, typ: "mc",
+        frage: "Ist \\(F(x) = e^x + x^2\\) eine Stammfunktion von \\(f(x) = e^x + 2x\\)?",
+        optionen: ["Ja, denn \\(F'(x) = e^x + 2x = f(x)\\)", "Nein, denn \\(F'(x) = e^x + x^2\\)", "Nein, denn \\(F'(x) = xe^x + 2x\\)", "Ja, denn beide enthalten \\(e^x\\)"],
+        korrekt: 0,
+        tipp: "Leite \\(F(x)\\) ab: \\((e^x)' = e^x\\), \\((x^2)' = 2x\\).",
+        loesungsweg: "\\(F'(x) = e^x + 2x = f(x)\\). Ja, \\(F\\) ist eine Stammfunktion von \\(f\\). \\(\\checkmark\\)"
+    },
+    {
+        id: 22, level: 4, typ: "mc",
+        frage: "Ist \\(F(x) = \\sin(x) + x\\) eine Stammfunktion von \\(f(x) = \\cos(x) + 1\\)?",
+        optionen: ["Ja, denn \\(F'(x) = \\cos(x) + 1 = f(x)\\)", "Nein, denn \\(F'(x) = \\cos(x)\\)", "Nein, denn \\(F'(x) = -\\cos(x) + 1\\)", "Ja, denn \\(F(0) = 0\\)"],
+        korrekt: 0,
+        tipp: "\\((\\sin(x))' = \\cos(x)\\) und \\((x)' = 1\\).",
+        loesungsweg: "\\(F'(x) = \\cos(x) + 1 = f(x)\\). Ja! \\(\\checkmark\\)"
+    },
+    {
+        id: 23, level: 4, typ: "numerisch",
+        frage: "\\(F(x) = ax^3 + 2x\\) soll eine Stammfunktion von \\(f(x) = 6x^2 + 2\\) sein. Bestimme \\(a\\).",
+        loesung: 2, toleranz: 0,
+        tipp: "\\(F'(x) = 3ax^2 + 2\\). Setze gleich mit \\(f(x) = 6x^2 + 2\\).",
+        loesungsweg: "\\(F'(x) = 3ax^2 + 2\\). Vergleich: \\(3a = 6\\), also \\(a = 2\\)."
+    },
+    {
+        id: 24, level: 4, typ: "numerisch",
+        frage: "\\(F(x) = x^4 + bx^2\\) soll eine Stammfunktion von \\(f(x) = 4x^3 - 6x\\) sein. Bestimme \\(b\\).",
+        loesung: -3, toleranz: 0,
+        tipp: "\\(F'(x) = 4x^3 + 2bx\\). Vergleiche mit \\(f(x) = 4x^3 - 6x\\).",
+        loesungsweg: "\\(F'(x) = 4x^3 + 2bx\\). Vergleich: \\(2b = -6\\), also \\(b = -3\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 5 — Anfangswertproblem F(0) = c
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Bestimme die Stammfunktion \\(F\\) von \\(f(x) = 2x\\) mit \\(F(0) = 3\\). Berechne \\(F(2)\\).",
+        loesung: 7, toleranz: 0,
+        tipp: "Allgemeine Stammfunktion: \\(F(x) = x^2 + C\\). Bedingung \\(F(0) = 3\\) liefert \\(C\\).",
+        loesungsweg: "\\(F(x) = x^2 + C\\). \\(F(0) = 0 + C = 3\\), also \\(C = 3\\). \\(F(x) = x^2 + 3\\). \\(F(2) = 4 + 3 = 7\\)."
+    },
+    {
+        id: 26, level: 5, typ: "numerisch",
+        frage: "Bestimme \\(F\\) von \\(f(x) = 3x^2 - 1\\) mit \\(F(1) = 2\\). Berechne \\(F(0)\\).",
+        loesung: 2, toleranz: 0,
+        tipp: "\\(F(x) = x^3 - x + C\\). Nutze \\(F(1) = 2\\) zur Bestimmung von \\(C\\).",
+        loesungsweg: "\\(F(x) = x^3 - x + C\\). \\(F(1) = 1 - 1 + C = C = 2\\). Also \\(F(x) = x^3 - x + 2\\). \\(F(0) = 0 - 0 + 2 = 2\\)."
+    },
+    {
+        id: 27, level: 5, typ: "numerisch",
+        frage: "Bestimme \\(F\\) von \\(f(x) = e^x\\) mit \\(F(0) = 5\\). Berechne \\(F(0)\\).",
+        loesung: 5, toleranz: 0,
+        tipp: "\\(F(x) = e^x + C\\). \\(F(0) = e^0 + C = 1 + C = 5\\).",
+        loesungsweg: "\\(F(x) = e^x + C\\). \\(F(0) = 1 + C = 5 \\Rightarrow C = 4\\). Also \\(F(x) = e^x + 4\\). \\(F(0) = 5\\). \\(\\checkmark\\)"
+    },
+    {
+        id: 28, level: 5, typ: "numerisch",
+        frage: "Bestimme \\(F\\) von \\(f(x) = 4x - 3\\) mit \\(F(0) = 1\\). Berechne \\(F(3)\\).",
+        loesung: 10, toleranz: 0,
+        tipp: "\\(F(x) = 2x^2 - 3x + C\\). \\(F(0) = C = 1\\).",
+        loesungsweg: "\\(F(x) = 2x^2 - 3x + 1\\). Einsetzen: \\(F(3) = 18 - 9 + 1 = 10\\)."
+    },
+    {
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Bestimme \\(F\\) von \\(f(x) = \\cos(x)\\) mit \\(F(0) = 0\\). Berechne \\(F\\left(\\frac{\\pi}{2}\\right)\\).",
+        loesung: 1, toleranz: 0.01,
+        tipp: "\\(F(x) = \\sin(x) + C\\). \\(F(0) = \\sin(0) + C = 0\\), also \\(C = 0\\).",
+        loesungsweg: "\\(F(x) = \\sin(x)\\). \\(F(\\pi/2) = \\sin(\\pi/2) = 1\\)."
+    },
+    {
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Bestimme \\(F\\) von \\(f(x) = x^2 + 1\\) mit \\(F(0) = -2\\). Berechne \\(F(3)\\).",
+        loesung: 10, toleranz: 0,
+        tipp: "\\(F(x) = \\frac{1}{3}x^3 + x + C\\). \\(F(0) = C = -2\\).",
+        loesungsweg: "\\(F(x) = \\frac{1}{3}x^3 + x - 2\\). Einsetzen: \\(F(3) = 9 + 3 - 2 = 10\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 6 — Stammfunktionen von Kombinationen
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 31, level: 6, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = 2e^x + 3\\cos(x)\\). Berechne \\(F(0)\\) (ohne Konstante).",
+        loesung: 2, toleranz: 0.01,
+        tipp: "\\(F(x) = 2e^x + 3\\sin(x)\\). Einsetzen: \\(e^0 = 1\\), \\(\\sin(0) = 0\\).",
+        loesungsweg: "\\(F(x) = 2e^x + 3\\sin(x)\\). \\(F(0) = 2 \\cdot 1 + 3 \\cdot 0 = 2\\)."
+    },
+    {
+        id: 32, level: 6, typ: "mc",
+        frage: "Welche Funktion ist eine Stammfunktion von \\(f(x) = x^2 - \\sin(x) + e^x\\)?",
+        optionen: [
+            "\\(F(x) = \\frac{1}{3}x^3 + \\cos(x) + e^x\\)",
+            "\\(F(x) = \\frac{1}{3}x^3 - \\cos(x) + e^x\\)",
+            "\\(F(x) = 2x + \\cos(x) + e^x\\)",
+            "\\(F(x) = \\frac{1}{3}x^3 + \\sin(x) + e^x\\)"
+        ],
+        korrekt: 0,
+        tipp: "Aufleiten: \\(x^2 \\to \\frac{1}{3}x^3\\), \\(-\\sin(x) \\to \\cos(x)\\), \\(e^x \\to e^x\\).",
+        loesungsweg: "\\(F(x) = \\frac{1}{3}x^3 + \\cos(x) + e^x\\). Probe: \\(F'(x) = x^2 - \\sin(x) + e^x = f(x)\\). \\(\\checkmark\\)"
+    },
+    {
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = 6x^2 + \\cos(x) - e^x\\). Berechne \\(F(0)\\) (ohne Konstante).",
+        loesung: -1, toleranz: 0.01,
+        tipp: "\\(F(x) = 2x^3 + \\sin(x) - e^x\\). Einsetzen: \\(F(0) = 0 + 0 - 1\\).",
+        loesungsweg: "\\(F(x) = 2x^3 + \\sin(x) - e^x\\). \\(F(0) = 0 + 0 - 1 = -1\\)."
+    },
+    {
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Bestimme \\(F\\) von \\(f(x) = e^x - 2\\sin(x)\\) mit \\(F(0) = 0\\). Berechne \\(F(\\pi)\\). <br>Runde auf zwei Dezimalstellen.",
+        loesung: 18.14, toleranz: 0.05,
+        tipp: "\\(F(x) = e^x + 2\\cos(x) + C\\). \\(F(0) = 1 + 2 + C = 0\\), also \\(C = -3\\).",
+        loesungsweg: "\\(F(x) = e^x + 2\\cos(x) - 3\\). \\(F(\\pi) = e^\\pi + 2\\cos(\\pi) - 3 = e^\\pi + 2 \\cdot (-1) - 3 = e^\\pi - 5 \\approx 23{,}14 - 5 = 18{,}14\\)."
+    },
+    {
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = x^3 - 3x + 2e^x\\). Berechne \\(F(0)\\) (ohne Konstante).",
+        loesung: 2, toleranz: 0.01,
+        tipp: "\\(F(x) = \\frac{1}{4}x^4 - \\frac{3}{2}x^2 + 2e^x\\). Einsetzen!",
+        loesungsweg: "\\(F(x) = \\frac{1}{4}x^4 - \\frac{3}{2}x^2 + 2e^x\\). \\(F(0) = 0 - 0 + 2 \\cdot 1 = 2\\)."
+    },
+    {
+        id: 36, level: 6, typ: "mc",
+        frage: "Wie viele Stammfunktionen hat \\(f(x) = x^2 + 1\\)?",
+        optionen: [
+            "Unendlich viele (sie unterscheiden sich um eine Konstante \\(C\\))",
+            "Genau eine",
+            "Genau zwei",
+            "Keine"
+        ],
+        korrekt: 0,
+        tipp: "Jede Stammfunktion kann um eine beliebige Konstante \\(C\\) verschoben werden.",
+        loesungsweg: "Jede stetige Funktion hat unendlich viele Stammfunktionen: \\(F(x) = \\frac{1}{3}x^3 + x + C\\) mit \\(C \\in \\mathbb{R}\\)."
+    }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,709 @@
+/* spirale.css — Shared CSS for the adaptive math practice app (Spirale/DifferenzierungsEngine)
+   Color variables are set per theme in each HTML file:
+   --spirale-primary, --spirale-secondary, --spirale-correct, --spirale-wrong, --spirale-lk-badge
+*/
+
+/* ===== Reset & Base ===== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--spirale-primary) 0%, var(--spirale-secondary) 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.spirale-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* ===== Header ===== */
+
+header {
+    text-align: center;
+    color: white;
+    margin-bottom: 24px;
+}
+
+header h1 {
+    font-size: 2rem;
+    margin-bottom: 5px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.back-link {
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-top: 6px;
+    transition: color 0.2s;
+}
+
+.back-link:hover {
+    color: white;
+}
+
+/* ===== Level-Anzeige ===== */
+
+.level-anzeige {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.level-segment {
+    width: 40px;
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.25);
+    transition: background 0.4s, box-shadow 0.4s;
+}
+
+.level-segment.completed {
+    background: rgba(34, 197, 94, 0.6);
+}
+
+.level-segment.active {
+    background: white;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.level-label {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.level-segment.flash-up {
+    animation: flashGreen 0.6s ease;
+}
+
+.level-segment.flash-down {
+    animation: flashRed 0.6s ease;
+}
+
+/* ===== Stats-Leiste ===== */
+
+.stats-leiste {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    color: white;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+}
+
+.stats-leiste span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.stat-richtig {
+    color: #86efac;
+    font-weight: 600;
+}
+
+.stat-falsch {
+    color: #fca5a5;
+    font-weight: 600;
+}
+
+.stat-fortschritt {
+    opacity: 0.85;
+}
+
+/* ===== Aufgabe-Karte ===== */
+
+.aufgabe-karte {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    min-height: 250px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.aufgabe-text {
+    font-size: 1.3rem;
+    color: #1f2937;
+    text-align: center;
+    line-height: 1.7;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* KaTeX inside task card */
+.aufgabe-text .katex {
+    font-size: 1.3em;
+}
+
+.aufgabe-text .katex-display {
+    margin: 10px 0;
+}
+
+/* LK badge */
+.lk-badge {
+    display: inline-block;
+    background: var(--spirale-lk-badge, #8B5CF6);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
+    margin-left: 6px;
+}
+
+/* ===== Eingabe-Bereich (Text Input) ===== */
+
+.eingabe-bereich {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#antwortInput {
+    width: 100%;
+    max-width: 400px;
+    font-size: 1.2rem;
+    padding: 14px 18px;
+    border: 2px solid #d1d5db;
+    border-radius: 12px;
+    outline: none;
+    text-align: center;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#antwortInput:focus {
+    border-color: var(--spirale-primary);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+.btn-pruefen {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 12px 36px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, var(--spirale-primary), var(--spirale-secondary));
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    min-height: 44px;
+}
+
+.btn-pruefen:hover {
+    transform: scale(1.03);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn-pruefen:active {
+    transform: scale(0.98);
+}
+
+/* ===== MC-Bereich (Multiple Choice) ===== */
+
+.mc-bereich {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.mc-option {
+    width: 100%;
+    text-align: left;
+    padding: 14px 20px;
+    font-size: 1.05rem;
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    color: #1f2937;
+    line-height: 1.5;
+    min-height: 44px;
+}
+
+.mc-option:hover {
+    border-color: var(--spirale-primary);
+    background: rgba(102, 126, 234, 0.04);
+    transform: translateX(4px);
+}
+
+.mc-option.selected {
+    border-color: var(--spirale-primary);
+    background: rgba(102, 126, 234, 0.08);
+}
+
+.mc-option.correct {
+    border-color: var(--spirale-correct);
+    background: #dcfce7;
+    color: #166534;
+}
+
+.mc-option.wrong {
+    border-color: var(--spirale-wrong);
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.mc-option.correct,
+.mc-option.wrong {
+    pointer-events: none;
+}
+
+/* KaTeX in MC options */
+.mc-option .katex {
+    font-size: 1.05em;
+}
+
+/* ===== Feedback ===== */
+
+.feedback {
+    margin-top: 20px;
+    border-radius: 16px;
+    padding: 24px;
+    animation: slideUp 0.35s ease-out;
+}
+
+.feedback-richtig {
+    background: #dcfce7;
+    border: 2px solid var(--spirale-correct);
+}
+
+.feedback-falsch {
+    background: #fee2e2;
+    border: 2px solid var(--spirale-wrong);
+}
+
+.feedback-icon {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.feedback-richtig .feedback-icon {
+    color: #166534;
+}
+
+.feedback-falsch .feedback-icon {
+    color: #991b1b;
+}
+
+.loesungsweg {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 16px;
+    margin-top: 12px;
+    line-height: 1.7;
+    color: #374151;
+    font-size: 0.95rem;
+}
+
+.loesungsweg .katex {
+    font-size: 1.1em;
+}
+
+.loesungsweg .katex-display {
+    margin: 8px 0;
+}
+
+.btn-weiter {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 12px 36px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, var(--spirale-primary), var(--spirale-secondary));
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    min-height: 44px;
+}
+
+.btn-weiter:hover {
+    transform: scale(1.03);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn-weiter:active {
+    transform: scale(0.98);
+}
+
+/* ===== Tipp-Box & Button ===== */
+
+.btn-tipp {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    min-height: 44px;
+}
+
+.btn-tipp:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.tipp-box {
+    display: none;
+    background: #fef3c7;
+    border-left: 4px solid #f59e0b;
+    padding: 15px 18px;
+    border-radius: 0 10px 10px 0;
+    margin-top: 16px;
+    line-height: 1.6;
+    color: #92400e;
+    font-size: 0.95rem;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.tipp-box.visible {
+    display: block;
+}
+
+.tipp-box .katex {
+    font-size: 1.05em;
+}
+
+/* ===== Level-Nachrichten (Toast) ===== */
+
+.level-nachricht {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    color: white;
+    z-index: 1000;
+    animation: slideUp 0.4s ease-out;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    pointer-events: none;
+}
+
+.level-nachricht.level-up {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+.level-nachricht.level-down {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+}
+
+.level-nachricht.fade-out {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+/* ===== Reset Button ===== */
+
+.btn-reset {
+    display: block;
+    margin: 30px auto 0;
+    padding: 8px 18px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    min-height: 44px;
+}
+
+.btn-reset:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+/* ===== Keyboard Hints ===== */
+
+.keyboard-hint {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 0.75rem;
+    margin-top: 14px;
+}
+
+.keyboard-hint kbd {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-family: inherit;
+    font-size: 0.75rem;
+}
+
+/* ===== Completion Screen ===== */
+
+.completion {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    padding: 40px 30px;
+    text-align: center;
+    color: #1f2937;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.completion h2 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    color: var(--spirale-primary);
+}
+
+.completion .stats-summary {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 24px 0;
+}
+
+.completion .stat-block {
+    text-align: center;
+}
+
+.completion .stat-block .stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.completion .stat-block .stat-label {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-top: 4px;
+}
+
+.completion .stat-block.correct .stat-value {
+    color: var(--spirale-correct);
+}
+
+.completion .stat-block.wrong .stat-value {
+    color: var(--spirale-wrong);
+}
+
+.completion .btn-restart {
+    display: inline-block;
+    margin-top: 24px;
+    padding: 14px 40px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, var(--spirale-primary), var(--spirale-secondary));
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    min-height: 44px;
+}
+
+.completion .btn-restart:hover {
+    transform: scale(1.03);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== Animations ===== */
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes flashGreen {
+    0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+    50% { box-shadow: 0 0 14px 4px rgba(34, 197, 94, 0.5); background: #22c55e; }
+    100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+@keyframes flashRed {
+    0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+    50% { box-shadow: 0 0 14px 4px rgba(239, 68, 68, 0.5); background: #ef4444; }
+    100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Level-nachricht specific: slideUp needs translateX preserved */
+.level-nachricht {
+    animation: toastIn 0.4s ease-out;
+}
+
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* ===== Responsive (max-width: 600px) ===== */
+
+@media (max-width: 600px) {
+    body {
+        padding: 12px;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    header p {
+        font-size: 0.95rem;
+    }
+
+    .aufgabe-karte {
+        padding: 20px;
+        border-radius: 16px;
+        min-height: 200px;
+    }
+
+    .aufgabe-text {
+        font-size: 1.1rem;
+    }
+
+    #antwortInput {
+        font-size: 1rem;
+        padding: 12px 14px;
+        max-width: 100%;
+    }
+
+    .btn-pruefen,
+    .btn-weiter,
+    .completion .btn-restart {
+        width: 100%;
+        padding: 14px 24px;
+        font-size: 1rem;
+    }
+
+    .mc-option {
+        padding: 12px 16px;
+        font-size: 0.95rem;
+    }
+
+    .mc-option:hover {
+        transform: none;
+    }
+
+    .stats-leiste {
+        gap: 14px;
+        font-size: 0.85rem;
+    }
+
+    .level-anzeige {
+        gap: 4px;
+    }
+
+    .level-segment {
+        width: 32px;
+    }
+
+    .feedback {
+        padding: 18px;
+    }
+
+    .completion {
+        padding: 28px 20px;
+    }
+
+    .completion .stats-summary {
+        gap: 18px;
+    }
+
+    .completion .stat-block .stat-value {
+        font-size: 1.5rem;
+    }
+
+    .keyboard-hint {
+        display: none;
+    }
+}
+
+/* ===== Accessibility: Reduced Motion ===== */
+
+@media (prefers-reduced-motion: reduce) {
+    .feedback,
+    .tipp-box,
+    .completion,
+    .level-nachricht {
+        animation: none;
+    }
+
+    .level-segment.flash-up,
+    .level-segment.flash-down {
+        animation: none;
+    }
+
+    .btn-pruefen:hover,
+    .btn-weiter:hover,
+    .completion .btn-restart:hover {
+        transform: none;
+    }
+
+    .mc-option:hover {
+        transform: none;
+    }
+
+    #antwortInput {
+        transition: none;
+    }
+
+    .level-segment {
+        transition: none;
+    }
+
+    .mc-option,
+    .btn-tipp,
+    .btn-reset,
+    .back-link {
+        transition: none;
+    }
+
+    .level-nachricht.fade-out {
+        transition: none;
+    }
+}

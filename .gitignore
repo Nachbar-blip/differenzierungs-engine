@@ -1,0 +1,4 @@
+docs/
+*.tmp
+.DS_Store
+Thumbs.db
