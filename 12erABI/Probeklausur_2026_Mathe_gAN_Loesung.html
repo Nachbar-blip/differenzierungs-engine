@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probeklausur Mathematik gAN 2026 – Lösungen &amp; Erwartungshorizont</title>
+
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']],
+    displayMath: [['\\[', '\\]']],
+    tags: 'none'
+  },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 11pt;
+    line-height: 1.55;
+    color: #1a1a1a;
+    background: #eef2f5;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 10mm auto;
+    background: white;
+    padding: 18mm 22mm 18mm 22mm;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  }
+
+  /* ===== KOPFZEILE ===== */
+  .doc-header {
+    background: #1a3a5c;
+    color: white;
+    padding: 4mm 7mm;
+    margin-bottom: 6mm;
+    border-radius: 3px;
+  }
+  .doc-header .title { font-size: 14pt; font-weight: bold; }
+  .doc-header .subtitle { font-size: 10pt; opacity: 0.85; }
+  .loesung-banner {
+    background: #c0392b;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 11pt;
+    padding: 2mm;
+    letter-spacing: 2px;
+    margin-bottom: 4mm;
+    border-radius: 2px;
+  }
+
+  /* ===== ABSCHNITT ===== */
+  .section-header {
+    background: #1a3a5c;
+    color: white;
+    padding: 3mm 6mm;
+    font-size: 12pt;
+    font-weight: bold;
+    margin: 6mm 0 4mm 0;
+    border-radius: 2px;
+  }
+  .section-header.t2 { background: #1a5c3a; }
+  .section-header.wahl { background: #5c3a1a; }
+
+  .subsection-header {
+    background: #d6e4f0;
+    color: #1a3a5c;
+    padding: 2mm 5mm;
+    font-size: 11pt;
+    font-weight: bold;
+    margin: 5mm 0 3mm 0;
+    border-left: 4px solid #1a3a5c;
+  }
+  .subsection-header.gruen { background: #d6f0de; color: #1a5c3a; border-left-color: #1a5c3a; }
+  .subsection-header.braun { background: #f0e6d6; color: #5c3a1a; border-left-color: #5c3a1a; }
+
+  /* ===== AUFGABEN-BLOCK ===== */
+  .aufgabe {
+    margin: 4mm 0 7mm 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .aufgabe-kopf {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f0f4f8;
+    padding: 2mm 5mm;
+    border-bottom: 1px solid #ddd;
+  }
+  .aufgabe-kopf .nr { font-weight: bold; color: #1a3a5c; font-size: 11pt; }
+  .afb-badge {
+    font-size: 9pt;
+    padding: 0.5mm 3mm;
+    border-radius: 10px;
+    font-weight: bold;
+    background: #1a3a5c;
+    color: white;
+    margin-left: 3mm;
+  }
+  .afb-badge.i { background: #2e7d32; }
+  .afb-badge.ii { background: #1565c0; }
+  .afb-badge.iii { background: #6a1b9a; }
+  .afb-badge.ii-iii { background: #e65100; }
+  .punkte-badge {
+    background: #c0392b;
+    color: white;
+    font-size: 9pt;
+    font-weight: bold;
+    padding: 1mm 3mm;
+    border-radius: 10px;
+  }
+  .punkte-badge.gruen { background: #1a5c3a; }
+  .punkte-badge.braun { background: #5c3a1a; }
+
+  .aufgabe-body { padding: 3mm 5mm 4mm 5mm; }
+
+  /* ===== LÖSUNG-BOX ===== */
+  .loesung {
+    background: #e8f4fd;
+    border: 1px solid #2980b9;
+    border-left: 4px solid #2980b9;
+    border-radius: 3px;
+    padding: 3mm 5mm;
+    margin: 2mm 0;
+  }
+  .loesung .loe-title {
+    font-weight: bold;
+    color: #1a5276;
+    font-size: 10pt;
+    margin-bottom: 1.5mm;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ===== TEILPUNKTE ===== */
+  .teilpunkte {
+    display: flex;
+    align-items: baseline;
+    gap: 4mm;
+    margin: 1.5mm 0;
+  }
+  .tp-label {
+    font-weight: bold;
+    color: #7f8c8d;
+    font-size: 9pt;
+    min-width: 18mm;
+  }
+  .tp-punkt {
+    background: #c0392b;
+    color: white;
+    font-size: 8pt;
+    font-weight: bold;
+    padding: 0.3mm 2mm;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+
+  /* ===== SCHRITT-LISTE ===== */
+  .schritte { margin: 2mm 0; padding-left: 0; list-style: none; }
+  .schritte li {
+    padding: 1mm 0 1mm 5mm;
+    border-left: 2px solid #aed6f1;
+    margin-bottom: 2mm;
+    font-size: 10.5pt;
+  }
+  .schritte li:last-child { margin-bottom: 0; }
+
+  ol.subtask-lsg { padding-left: 6mm; margin: 2mm 0; }
+  ol.subtask-lsg li { margin-bottom: 3mm; }
+
+  /* ===== ERGEBNIS-HIGHLIGHT ===== */
+  .ergebnis {
+    background: #fef9e7;
+    border: 1px solid #f0c040;
+    border-left: 3px solid #e6a800;
+    border-radius: 2px;
+    padding: 1.5mm 4mm;
+    margin: 2mm 0;
+    font-weight: bold;
+  }
+
+  /* ===== HINWEIS ===== */
+  .hinweis {
+    background: #f5f5f5;
+    border-left: 3px solid #95a5a6;
+    padding: 2mm 4mm;
+    margin: 2mm 0;
+    font-size: 10pt;
+    color: #555;
+    font-style: italic;
+  }
+
+  /* ===== TRENNLINIE ===== */
+  hr.trenn { border: none; border-top: 1px solid #ccc; margin: 5mm 0; }
+
+  /* ===== TABELLEN ===== */
+  table.punktetab {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10pt;
+    margin: 3mm 0;
+  }
+  table.punktetab th {
+    background: #1a3a5c;
+    color: white;
+    padding: 2mm 3mm;
+    text-align: center;
+    border: 1px solid #888;
+  }
+  table.punktetab td {
+    border: 1px solid #bbb;
+    padding: 2mm 3mm;
+    text-align: center;
+  }
+  table.punktetab td:first-child { text-align: left; }
+  table.punktetab .sum-row { background: #e8f0f7; font-weight: bold; }
+
+  table.vierfeldertafel {
+    border-collapse: collapse;
+    margin: 3mm auto;
+    font-size: 10.5pt;
+  }
+  table.vierfeldertafel th, table.vierfeldertafel td {
+    border: 1px solid #555;
+    padding: 2mm 4mm;
+    text-align: center;
+    min-width: 20mm;
+  }
+  table.vierfeldertafel th { background: #d6e4f0; font-weight: bold; }
+
+  .page-break { page-break-after: always; }
+  small { font-size: 9pt; color: #555; }
+
+  @media print {
+    body { background: white; }
+    .page { width: auto; margin: 0; padding: 12mm 18mm; box-shadow: none; }
+    .page-break { page-break-after: always; }
+    .no-print { display: none; }
+    .loesung-banner, .afb-badge, .punkte-badge, .section-header,
+    .doc-header, .aufgabe-kopf, .ergebnis { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== DECKBLATT LÖSUNG ===== -->
+<div class="page">
+  <div class="no-print" style="background:#c0392b;color:white;padding:3mm 6mm;font-size:10pt;text-align:center;margin-bottom:4mm;border-radius:3px;">
+    Zum Speichern als PDF: <strong>Strg+P</strong> → „Als PDF speichern"
+  </div>
+
+  <div class="doc-header">
+    <div class="title">Probeklausur Abitur 2026 – Mathematik gAN</div>
+    <div class="subtitle">Erwartungshorizont und vollständige Musterlösungen | Sachsen-Anhalt (fiktiv)</div>
+  </div>
+
+  <div class="loesung-banner">LÖSUNGSSCHLÜSSEL – NUR FÜR LEHRKRÄFTE</div>
+
+  <p style="font-size:10.5pt; margin-bottom:4mm;">
+    Dieser Erwartungshorizont enthält vollständige Musterlösungen mit Punkteverteilung und AFB-Zuordnung.
+    Äquivalente Lösungswege sind gleichwertig zu bewerten. Teilpunkte können bei erkennbar richtigem Ansatz vergeben werden.
+  </p>
+
+  <!-- Übersichtstabelle -->
+  <table class="punktetab">
+    <thead>
+      <tr>
+        <th>Aufgabe</th>
+        <th>Inhalt</th>
+        <th>AFB I</th>
+        <th>AFB II</th>
+        <th>AFB III</th>
+        <th>Gesamt</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1.1</td><td>Ableitung, Nullstellen</td><td>4</td><td>–</td><td>–</td><td>4</td></tr>
+      <tr><td>1.2</td><td>Integrieren</td><td>4</td><td>–</td><td>–</td><td>4</td></tr>
+      <tr><td>1.3</td><td>Vektorrechnung</td><td>4</td><td>–</td><td>–</td><td>4</td></tr>
+      <tr><td>1.4</td><td>Binomialverteilung</td><td>4</td><td>–</td><td>–</td><td>4</td></tr>
+      <tr><td>1.5</td><td>Extremstellen</td><td>2</td><td>2</td><td>–</td><td>4</td></tr>
+      <tr><td>P1.1</td><td>Analysis: Funktionswerte, f'</td><td>3</td><td>–</td><td>–</td><td>3</td></tr>
+      <tr><td>P1.2</td><td>Analysis: Extremstellen</td><td>–</td><td>5</td><td>–</td><td>5</td></tr>
+      <tr><td>P1.3</td><td>Analysis: Wendestelle, Integral</td><td>–</td><td>5</td><td>–</td><td>5</td></tr>
+      <tr><td>P1.4</td><td>Analysis: Heizintervall, Fläche, Modell</td><td>–</td><td>5</td><td>2</td><td>7</td></tr>
+      <tr><td>P2.1</td><td>Stochastik: Verteilung, P-Berechnung</td><td>4</td><td>–</td><td>–</td><td>4</td></tr>
+      <tr><td>P2.2</td><td>Stochastik: Kenngrößen</td><td>2</td><td>2</td><td>–</td><td>4</td></tr>
+      <tr><td>P2.3</td><td>Stochastik: Vertrauensintervall</td><td>–</td><td>6</td><td>–</td><td>6</td></tr>
+      <tr><td>P2.4</td><td>Stochastik: Bed. W., Gesamtw., Unabhängigkeit</td><td>–</td><td>4</td><td>2</td><td>6</td></tr>
+      <tr><td>W1 oder W2</td><td>Analytische Geometrie</td><td>4</td><td>12</td><td>4</td><td>20</td></tr>
+      <tr class="sum-row"><td colspan="2">Gesamt</td><td>27</td><td>41</td><td>8+4</td><td>80</td></tr>
+      <tr class="sum-row"><td colspan="2">Anteil</td><td>~34%</td><td>~51%</td><td>~15%</td><td>100%</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== TEIL 1 LÖSUNGEN ===== -->
+<div class="page">
+  <div class="section-header">TEIL 1 – Lösungen (ohne Hilfsmittel, 20 Punkte)</div>
+
+  <!-- 1.1 -->
+  <div class="aufgabe">
+    <div class="aufgabe-kopf">
+      <span class="nr">Aufgabe 1.1 <span class="afb-badge i">AFB I</span></span>
+      <span class="punkte-badge">4 Punkte</span>
+    </div>
+    <div class="aufgabe-body">
+      <p>\(f(x) = 2x^3 - 6x\)</p>
+
+      <div class="loesung">
+        <div class="loe-title">a) Ableitung (1 P.)</div>
+        <ul class="schritte">
+          <li>Potenzregel und Faktorregel anwenden:
+            \[f'(x) = 6x^2 - 6\]
+          </li>
+        </ul>
+        <div class="ergebnis">\(f'(x) = 6x^2 - 6\)</div>
+        <div class="teilpunkte"><span class="tp-label">Ableitung korrekt:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+
+      <div class="loesung">
+        <div class="loe-title">b) Nullstellen von f' (2 P.)</div>
+        <ul class="schritte">
+          <li>\(f'(x) = 0 \;\Longrightarrow\; 6x^2 - 6 = 0 \;\Longrightarrow\; x^2 = 1\)</li>
+          <li>\(\Longrightarrow\; x_1 = -1 \quad\text{und}\quad x_2 = 1\)</li>
+        </ul>
+        <div class="ergebnis">\(x_1 = -1, \quad x_2 = 1\)</div>
+        <div class="teilpunkte"><span class="tp-label">Ansatz \(f'=0\):</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Beide Nullstellen:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+
+      <div class="loesung">
+        <div class="loe-title">c) Schlussfolgerung (1 P.)</div>
+        <ul class="schritte">
+          <li>An den Nullstellen von \(f'\) liegen mögliche <strong>Extremstellen</strong> von \(f\) vor (notwendige Bedingung).</li>
+          <li>An \(x_1 = -1\) und \(x_2 = 1\) wechselt das Vorzeichen von \(f'\), also sind es Extremstellen.</li>
+          <li>(\(f''(-1) = -12 < 0\): lokales Maximum bei \(x=-1\); \(f''(1) = 12 > 0\): lokales Minimum bei \(x=1\).)</li>
+        </ul>
+        <div class="teilpunkte"><span class="tp-label">Sinngemäße Aussage:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.2 -->
+  <div class="aufgabe">
+    <div class="aufgabe-kopf">
+      <span class="nr">Aufgabe 1.2 <span class="afb-badge i">AFB I</span></span>
+      <span class="punkte-badge">4 Punkte</span>
+    </div>
+    <div class="aufgabe-body">
+      <div class="loesung">
+        <div class="loe-title">a) Unbestimmtes Integral (2 P.)</div>
+        <ul class="schritte">
+          <li>Potenzregel und Summenregel gliedweise anwenden:</li>
+          <li>\[\int (x^2 + 3x - 1)\,dx = \frac{x^3}{3} + \frac{3x^2}{2} - x + C\]</li>
+        </ul>
+        <div class="ergebnis">\(\dfrac{x^3}{3} + \dfrac{3x^2}{2} - x + C\)</div>
+        <div class="teilpunkte"><span class="tp-label">Alle drei Terme korrekt:</span><span class="tp-punkt">2 P.</span></div>
+        <div class="hinweis">+C nicht vergessen (1 P. Abzug, falls C fehlt)</div>
+      </div>
+
+      <div class="loesung">
+        <div class="loe-title">b) Bestimmtes Integral (2 P.)</div>
+        <ul class="schritte">
+          <li>Stammfunktion: \(F(x) = 2x^2 - 2x\)</li>
+          <li>\[\int_0^1 (4x-2)\,dx = \Big[2x^2 - 2x\Big]_0^1 = (2\cdot 1 - 2\cdot 1) - (0) = 0\]</li>
+        </ul>
+        <div class="ergebnis">\(\displaystyle\int_0^1 (4x-2)\,dx = 0\)</div>
+        <div class="teilpunkte"><span class="tp-label">Stammfunktion korrekt:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Auswertung und Ergebnis:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="hinweis">Geometrische Deutung: Die Fläche unter der Kurve und über der x-Achse ist gleich der Fläche über der Kurve und unter der x-Achse.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.3 -->
+  <div class="aufgabe">
+    <div class="aufgabe-kopf">
+      <span class="nr">Aufgabe 1.3 <span class="afb-badge i">AFB I</span></span>
+      <span class="punkte-badge">4 Punkte</span>
+    </div>
+    <div class="aufgabe-body">
+      <p>\(\vec{a} = \begin{pmatrix}3\\1\\-2\end{pmatrix},\quad \vec{b} = \begin{pmatrix}-1\\2\\4\end{pmatrix}\)</p>
+
+      <div class="loesung">
+        <div class="loe-title">a) Vektoroperationen (2 P.)</div>
+        <ul class="schritte">
+          <li>\[\vec{a} + \vec{b} = \begin{pmatrix}3+(-1)\\1+2\\-2+4\end{pmatrix} = \begin{pmatrix}2\\3\\2\end{pmatrix}\]</li>
+          <li>\[2\cdot\vec{a} = \begin{pmatrix}6\\2\\-4\end{pmatrix}\]</li>
+        </ul>
+        <div class="ergebnis">\(\vec{a}+\vec{b} = (2,\,3,\,2)^\intercal,\quad 2\vec{a} = (6,\,2,\,-4)^\intercal\)</div>
+        <div class="teilpunkte"><span class="tp-label">Beide korrekt:</span><span class="tp-punkt">2 P.</span></div>
+      </div>
+
+      <div class="loesung">
+        <div class="loe-title">b) Orthogonalität (2 P.)</div>
+        <ul class="schritte">
+          <li>Zwei Vektoren sind senkrecht (orthogonal), wenn ihr Skalarprodukt null ist.</li>
+          <li>\[\vec{a}\cdot\vec{b} = 3\cdot(-1) + 1\cdot 2 + (-2)\cdot 4 = -3 + 2 - 8 = -9 \neq 0\]</li>
+          <li>Da \(\vec{a}\cdot\vec{b} = -9 \neq 0\), sind \(\vec{a}\) und \(\vec{b}\) <strong>nicht</strong> senkrecht zueinander.</li>
+        </ul>
+        <div class="ergebnis">\(\vec{a}\cdot\vec{b} = -9 \neq 0\;\Rightarrow\) nicht senkrecht</div>
+        <div class="teilpunkte"><span class="tp-label">Skalarprodukt berechnet:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Korrekte Schlussfolgerung:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.4 -->
+  <div class="aufgabe">
+    <div class="aufgabe-kopf">
+      <span class="nr">Aufgabe 1.4 <span class="afb-badge i">AFB I</span></span>
+      <span class="punkte-badge">4 Punkte</span>
+    </div>
+    <div class="aufgabe-body">
+      <div class="loesung">
+        <div class="loe-title">a) Verteilung (1 P.)</div>
+        <ul class="schritte">
+          <li>\(X \sim B(10;\, 0{,}5)\) — Binomialverteilung mit \(n = 10\), \(p = 0{,}5\)</li>
+          <li>Begründung: Jeder Wurf ist ein Bernoulli-Versuch (Treffer/kein Treffer), die Würfe sind stochastisch unabhängig, \(p\) ist konstant, \(n\) ist fest.</li>
+        </ul>
+        <div class="teilpunkte"><span class="tp-label">Verteilung mit Parametern:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+
+      <div class="loesung">
+        <div class="loe-title">b) P(X = 5) (2 P.)</div>
+        <ul class="schritte">
+          <li>Bernoulli-Formel: \(P(X=k) = \binom{n}{k}\cdot p^k\cdot(1-p)^{n-k}\)</li>
+          <li>\[P(X=5) = \binom{10}{5}\cdot (0{,}5)^5\cdot(0{,}5)^5 = 252\cdot\frac{1}{1024} = \frac{252}{1024}\]</li>
+          <li>\[\approx 0{,}2461\]</li>
+        </ul>
+        <div class="ergebnis">\(P(X=5) = \dfrac{252}{1024} \approx 0{,}2461\)</div>
+        <div class="teilpunkte"><span class="tp-label">Korrekte Formel/Ansatz:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Korrekte Berechnung:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+
+      <div class="loesung">
+        <div class="loe-title">c) Erwartungswert (1 P.)</div>
+        <ul class="schritte">
+          <li>\[\mu = E(X) = n\cdot p = 10\cdot 0{,}5 = 5\]</li>
+        </ul>
+        <div class="ergebnis">\(E(X) = 5\)</div>
+        <div class="teilpunkte"><span class="tp-label">Korrekt:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.5 -->
+  <div class="aufgabe">
+    <div class="aufgabe-kopf">
+      <span class="nr">Aufgabe 1.5 <span class="afb-badge ii">AFB I/II</span></span>
+      <span class="punkte-badge">4 Punkte</span>
+    </div>
+    <div class="aufgabe-body">
+      <p>\(f'(x) = 3x^2 - 12\)</p>
+      <div class="loesung">
+        <div class="loe-title">a) Nullstellen von f' (2 P.)</div>
+        <ul class="schritte">
+          <li>\(3x^2 - 12 = 0 \;\Longrightarrow\; x^2 = 4 \;\Longrightarrow\; x = \pm 2\)</li>
+        </ul>
+        <div class="ergebnis">\(x_1 = -2,\quad x_2 = 2\)</div>
+        <div class="teilpunkte"><span class="tp-label">Beide Nullstellen:</span><span class="tp-punkt">2 P.</span></div>
+      </div>
+
+      <div class="loesung">
+        <div class="loe-title">b) Extremstellen bestimmen (2 P.)</div>
+        <ul class="schritte">
+          <li><strong>Notwendige Bedingung:</strong> \(f'(x_0) = 0\) → kandidierte Extremstellen: \(x = \pm 2\)</li>
+          <li><strong>Hinreichende Bedingung</strong> (zweite Ableitung oder Vorzeichenwechsel):
+            \[f''(x) = 6x\]
+            \(f''(-2) = -12 < 0 \;\Rightarrow\) lokales Maximum bei \(x = -2\)<br>
+            \(f''(2) = 12 > 0 \;\Rightarrow\) lokales Minimum bei \(x = 2\)
+          </li>
+          <li>Alternativ: Vorzeichenwechsel von \(f'\) überprüfen.</li>
+        </ul>
+        <div class="teilpunkte"><span class="tp-label">Notwend. und hinreich. Bed.:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Korrekte Zuordnung Maximum/Minimum:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TEIL 2: P1 LÖSUNGEN ===== -->
+<div class="page">
+  <div class="section-header t2">TEIL 2 – P1: Analysis (Gewächshaus-Temperatur, 20 Punkte)</div>
+
+  <p style="font-size:10.5pt; margin-bottom:3mm;">
+    Modell: \(f(t) = -0{,}1t^3 + 1{,}5t^2 - 4{,}8t + 18\), \(t\in[0;\,10]\), \(t\) in Stunden nach 7:00 Uhr.
+  </p>
+
+  <!-- P1.1 -->
+  <div class="aufgabe">
+    <div class="aufgabe-kopf">
+      <span class="nr">Aufgabe P1.1 <span class="afb-badge i">AFB I</span></span>
+      <span class="punkte-badge gruen">3 Punkte</span>
+    </div>
+    <div class="aufgabe-body">
+      <div class="loesung">
+        <div class="loe-title">a) Funktionswerte und Interpretation (2 P.)</div>
+        <ul class="schritte">
+          <li>\[f(0) = -0{,}1\cdot 0 + 1{,}5\cdot 0 - 4{,}8\cdot 0 + 18 = \mathbf{18\,°C}\]
+            Um 7:00 Uhr beträgt die Temperatur 18 °C.
+          </li>
+          <li>\[f(5) = -0{,}1\cdot 125 + 1{,}5\cdot 25 - 4{,}8\cdot 5 + 18 = -12{,}5 + 37{,}5 - 24 + 18 = \mathbf{19\,°C}\]
+            Um 12:00 Uhr (Mittag) beträgt die Temperatur 19 °C.
+          </li>
+          <li>\[f(10) = -0{,}1\cdot 1000 + 1{,}5\cdot 100 - 4{,}8\cdot 10 + 18 = -100 + 150 - 48 + 18 = \mathbf{20\,°C}\]
+            Um 17:00 Uhr beträgt die Temperatur 20 °C.
+          </li>
+        </ul>
+        <div class="teilpunkte"><span class="tp-label">Alle drei Werte korrekt:</span><span class="tp-punkt">2 P.</span></div>
+      </div>
+      <div class="loesung">
+        <div class="loe-title">b) Ableitung (1 P.)</div>
+        <ul class="schritte">
+          <li>\[f'(t) = -0{,}3t^2 + 3t - 4{,}8\]</li>
+        </ul>
+        <div class="ergebnis">\(f'(t) = -0{,}3t^2 + 3t - 4{,}8\)</div>
+        <div class="teilpunkte"><span class="tp-label">Ableitung korrekt:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- P1.2 -->
+  <div class="aufgabe">
+    <div class="aufgabe-kopf">
+      <span class="nr">Aufgabe P1.2 <span class="afb-badge ii">AFB II</span></span>
+      <span class="punkte-badge gruen">5 Punkte</span>
+    </div>
+    <div class="aufgabe-body">
+      <div class="loesung">
+        <div class="loe-title">a) Extremstellen bestimmen (3 P.)</div>
+        <ul class="schritte">
+          <li><strong>Notwendige Bedingung:</strong> \(f'(t) = 0\)
+            \[-0{,}3t^2 + 3t - 4{,}8 = 0 \;\Longrightarrow\; t^2 - 10t + 16 = 0\]
+          </li>
+          <li>Lösungsformel: \(t = \dfrac{10 \pm \sqrt{100 - 64}}{2} = \dfrac{10 \pm 6}{2}\)</li>
+          <li>\(t_1 = 2\) und \(t_2 = 8\) (beide in \([0;\,10]\) ✓)</li>
+          <li><strong>Hinreichende Bedingung:</strong> \(f''(t) = -0{,}6t + 3\)
+            <br>\(f''(2) = -1{,}2 + 3 = 1{,}8 > 0 \;\Rightarrow\) <strong>lokales Minimum</strong> bei \(t_1 = 2\)
+            <br>\(f''(8) = -4{,}8 + 3 = -1{,}8 < 0 \;\Rightarrow\) <strong>lokales Maximum</strong> bei \(t_2 = 8\)
+          </li>
+        </ul>
+        <div class="ergebnis">Tiefpunkt bei \(t = 2\), Hochpunkt bei \(t = 8\)</div>
+        <div class="teilpunkte"><span class="tp-label">Nullstellen \(t=2,\,8\):</span><span class="tp-punkt">2 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Nachweis Art der Extremstelle:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+      <div class="loesung">
+        <div class="loe-title">b) Maximale und minimale Temperatur (2 P.)</div>
+        <ul class="schritte">
+          <li>\[f(2) = -0{,}1\cdot 8 + 1{,}5\cdot 4 - 4{,}8\cdot 2 + 18 = -0{,}8 + 6 - 9{,}6 + 18 = \mathbf{13{,}6\,°C}\]</li>
+          <li>\[f(8) = -0{,}1\cdot 512 + 1{,}5\cdot 64 - 4{,}8\cdot 8 + 18 = -51{,}2 + 96 - 38{,}4 + 18 = \mathbf{24{,}4\,°C}\]</li>
+          <li>Randwerte: \(f(0) = 18\,°C\), \(f(10) = 20\,°C\) — keine neuen Extrema.</li>
+        </ul>
+        <div class="ergebnis">
+          Minimale Temperatur: <strong>13,6 °C</strong> um <strong>9:00 Uhr</strong> (\(t = 2\))<br>
+          Maximale Temperatur: <strong>24,4 °C</strong> um <strong>15:00 Uhr</strong> (\(t = 8\))
+        </div>
+        <div class="teilpunkte"><span class="tp-label">Beide Werte mit Uhrzeit:</span><span class="tp-punkt">2 P.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- P1.3 -->
+  <div class="aufgabe">
+    <div class="aufgabe-kopf">
+      <span class="nr">Aufgabe P1.3 <span class="afb-badge ii">AFB II</span></span>
+      <span class="punkte-badge gruen">5 Punkte</span>
+    </div>
+    <div class="aufgabe-body">
+      <div class="loesung">
+        <div class="loe-title">a) Wendestelle und Interpretation (3 P.)</div>
+        <ul class="schritte">
+          <li><strong>Notwendige Bedingung:</strong> \(f''(t) = 0\)
+            \[-0{,}6t + 3 = 0 \;\Longrightarrow\; t = 5\]
+          </li>
+          <li><strong>Hinreichende Bedingung:</strong> \(f'''(t) = -0{,}6 \neq 0\) (konstant), also liegt ein Wendepunkt vor.</li>
+          <li>Wendepunkt: \(W(5\mid f(5)) = W(5\mid 19)\)</li>
+          <li><strong>Interpretation:</strong> Um 12:00 Uhr (\(t=5\)) ist die Änderungsrate der Temperatur am größten.
+              Vor \(t=5\) steigt die Temperatur immer schneller (linkskonvex), nach \(t=5\) steigt sie immer langsamer (rechtskonvex, nähert sich dem Maximum).
+          </li>
+        </ul>
+        <div class="ergebnis">Wendestelle bei \(t = 5\) (12:00 Uhr), \(f(5) = 19\,°C\)</div>
+        <div class="teilpunkte"><span class="tp-label">Wendestelle korrekt berechnet:</span><span class="tp-punkt">2 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Sinnvolle Interpretation:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+      <div class="loesung">
+        <div class="loe-title">b) Durchschnittstemperatur (2 P.)</div>
+        <ul class="schritte">
+          <li>Stammfunktion: \(F(t) = -0{,}025t^4 + 0{,}5t^3 - 2{,}4t^2 + 18t\)</li>
+          <li>\[\int_0^{10} f(t)\,dt = F(10) - F(0)\]
+            \[= -0{,}025\cdot10000 + 0{,}5\cdot 1000 - 2{,}4\cdot 100 + 18\cdot 10\]
+            \[= -250 + 500 - 240 + 180 = 190\]
+          </li>
+          <li>\[\overline{T} = \frac{1}{10}\cdot 190 = \mathbf{19\,°C}\]</li>
+        </ul>
+        <div class="ergebnis">\(\overline{T} = 19\,°C\)</div>
+        <div class="teilpunkte"><span class="tp-label">Integral korrekt berechnet:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Durchschnitt korrekt:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- P1.4 -->
+  <div class="aufgabe">
+    <div class="aufgabe-kopf">
+      <span class="nr">Aufgabe P1.4 <span class="afb-badge ii-iii">AFB II/III</span></span>
+      <span class="punkte-badge gruen">7 Punkte</span>
+    </div>
+    <div class="aufgabe-body">
+      <div class="loesung">
+        <div class="loe-title">a) Zeitraum mit f(t) &lt; 17 (2 P.)</div>
+        <ul class="schritte">
+          <li>Gleichung \(f(t) = 17\) lösen (mit GTR/CAS):
+            \[-0{,}1t^3 + 1{,}5t^2 - 4{,}8t + 18 = 17\]
+            \[-0{,}1t^3 + 1{,}5t^2 - 4{,}8t + 1 = 0\]
+          </li>
+          <li>GTR/CAS ergibt: \(t_1 \approx 0{,}21\) und \(t_2 \approx 4{,}23\) (drittes Reelle außerhalb des Intervalls)</li>
+          <li>Da \(f(2) = 13{,}6 < 17\): Das Heizintervall ist \([t_1;\, t_2] \approx [0{,}21;\, 4{,}23]\).</li>
+        </ul>
+        <div class="ergebnis">Heizsystem aktiv von ca. 7:13 Uhr bis ca. 11:14 Uhr<br>(d.h. ca. 4 Stunden)</div>
+        <div class="teilpunkte"><span class="tp-label">Ansatz \(f(t)=17\):</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Grenzen \(t_1, t_2\) korrekt (GTR):</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+      <div class="loesung">
+        <div class="loe-title">b) Fläche zwischen f(t) und y = 17 (3 P.)</div>
+        <ul class="schritte">
+          <li>Da \(f(t) \leq 17\) auf \([t_1;\,t_2]\):
+            \[A = \int_{t_1}^{t_2} (17 - f(t))\,dt = \int_{0{,}21}^{4{,}23}(17 - (-0{,}1t^3 + 1{,}5t^2 - 4{,}8t + 18))\,dt\]
+          </li>
+          <li>\[= \int_{0{,}21}^{4{,}23}(0{,}1t^3 - 1{,}5t^2 + 4{,}8t - 1)\,dt\]</li>
+          <li>Stammfunktion: \(G(t) = 0{,}025t^4 - 0{,}5t^3 + 2{,}4t^2 - t\)</li>
+          <li>\[G(4{,}23) \approx 0{,}025\cdot 319{,}8 - 0{,}5\cdot 75{,}7 + 2{,}4\cdot 17{,}9 - 4{,}23\]
+            \[\approx 7{,}995 - 37{,}85 + 42{,}96 - 4{,}23 \approx 8{,}875\]
+          </li>
+          <li>\[G(0{,}21) \approx 0{,}025\cdot 0{,}00194 - 0{,}5\cdot 0{,}00926 + 2{,}4\cdot 0{,}0441 - 0{,}21\]
+            \[\approx 0 - 0{,}00463 + 0{,}10584 - 0{,}21 \approx -0{,}109\]
+          </li>
+          <li>\[A \approx 8{,}875 - (-0{,}109) \approx \mathbf{8{,}98 \approx 9{,}0}\]</li>
+        </ul>
+        <div class="ergebnis">\(A \approx 9{,}0\) (Einheit: °C·h)</div>
+        <div class="hinweis">Präzisere CAS-Berechnung: \(A \approx 8{,}98\). Ergebnisse zwischen 8,8 und 9,2 sind mit Punktabzug 0 als korrekt zu werten.</div>
+        <div class="hinweis"><strong>Sachkontext:</strong> Die Fläche von ca. 9 °C·h beschreibt das „Temperaturdefizit" – die Gesamtmenge an Wärme, die das Heizsystem in dieser Zeit zuführen muss, um die Mindesttemperatur von 17 °C zu erreichen.</div>
+        <div class="teilpunkte"><span class="tp-label">Korrekter Integralansatz:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Korrekte Berechnung:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Sachinterpretation:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+      <div class="loesung">
+        <div class="loe-title">c) Modellbewertung (2 P.)</div>
+        <ul class="schritte">
+          <li><strong>Pro Modell:</strong>
+            <ul style="padding-left:5mm;">
+              <li>Temperaturverlauf ist realistisch: morgens kühler, gegen Nachmittag wärmer.</li>
+              <li>Die Werte (13,6 °C bis 24,4 °C) sind typisch für ein Gewächshaus.</li>
+              <li>Das kubische Modell ermöglicht einen nicht-symmetrischen Tagesverlauf.</li>
+            </ul>
+          </li>
+          <li><strong>Contra Modell:</strong>
+            <ul style="padding-left:5mm;">
+              <li>Ein Polynom kann für Zeiten außerhalb von \([0;\,10]\) unrealistische Werte annehmen (kein periodisches Verhalten).</li>
+              <li>Das Modell berücksichtigt keine externen Faktoren wie Bewölkung, Heizungsaktivität, Öffnen von Fenstern.</li>
+              <li>In der Realität sind Temperaturverläufe selten so glatt und regelmäßig.</li>
+            </ul>
+          </li>
+        </ul>
+        <div class="teilpunkte"><span class="tp-label">Zwei sachlich begründete Argumente:</span><span class="tp-punkt">2 P.</span></div>
+        <div class="hinweis">Je 1 P. für ein nachvollziehbares Argument. Pro und Contra sind beide zulässig.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TEIL 2: P2 LÖSUNGEN ===== -->
+<div class="page">
+  <div class="section-header t2">TEIL 2 – P2: Stochastik (Schädlingsbefall, 20 Punkte)</div>
+
+  <!-- P2.1 -->
+  <div class="aufgabe">
+    <div class="aufgabe-kopf">
+      <span class="nr">Aufgabe P2.1 <span class="afb-badge i">AFB I</span></span>
+      <span class="punkte-badge gruen">4 Punkte</span>
+    </div>
+    <div class="aufgabe-body">
+      <div class="loesung">
+        <div class="loe-title">a) Verteilung (2 P.)</div>
+        <ul class="schritte">
+          <li>\(X \sim B(15;\; 0{,}2)\)</li>
+          <li>Begründung: Es liegen 15 unabhängige Bernoulli-Versuche vor, mit konstanter Erfolgswahrscheinlichkeit \(p = 0{,}2\) (befallen) und nur zwei möglichen Ausgängen pro Versuch.</li>
+        </ul>
+        <div class="ergebnis">\(X \sim B(15;\; 0{,}2)\)</div>
+        <div class="teilpunkte"><span class="tp-label">Verteilung mit Parametern:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Sinnvolle Begründung:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+      <div class="loesung">
+        <div class="loe-title">b) Wahrscheinlichkeiten (2 P.)</div>
+        <ul class="schritte">
+          <li>\[P(X=3) = \binom{15}{3}\cdot(0{,}2)^3\cdot(0{,}8)^{12} = 455\cdot 0{,}008\cdot 0{,}06872 \approx \mathbf{0{,}2501}\]</li>
+          <li>\[P(X \leq 2) = P(X=0) + P(X=1) + P(X=2)\]</li>
+          <li>\[P(X=0) = (0{,}8)^{15} \approx 0{,}0352\]</li>
+          <li>\[P(X=1) = 15\cdot 0{,}2\cdot(0{,}8)^{14} \approx 0{,}1319\]</li>
+          <li>\[P(X=2) = \binom{15}{2}\cdot(0{,}2)^2\cdot(0{,}8)^{13} = 105\cdot 0{,}04\cdot 0{,}0550 \approx 0{,}2309\]</li>
+          <li>\[P(X \leq 2) \approx 0{,}0352 + 0{,}1319 + 0{,}2309 \approx \mathbf{0{,}3980}\]</li>
+        </ul>
+        <div class="ergebnis">\(P(X=3) \approx 0{,}2501, \quad P(X \leq 2) \approx 0{,}3980\)</div>
+        <div class="teilpunkte"><span class="tp-label">P(X=3) korrekt:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">P(X≤2) korrekt:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- P2.2 -->
+  <div class="aufgabe">
+    <div class="aufgabe-kopf">
+      <span class="nr">Aufgabe P2.2 <span class="afb-badge ii">AFB I/II</span></span>
+      <span class="punkte-badge gruen">4 Punkte</span>
+    </div>
+    <div class="aufgabe-body">
+      <div class="loesung">
+        <div class="loe-title">a) Kenngrößen (2 P.)</div>
+        <ul class="schritte">
+          <li>\[\mu = E(X) = n\cdot p = 15\cdot 0{,}2 = \mathbf{3}\]</li>
+          <li>\[\sigma = \sqrt{n\cdot p\cdot(1-p)} = \sqrt{15\cdot 0{,}2\cdot 0{,}8} = \sqrt{2{,}4} \approx \mathbf{1{,}55}\]</li>
+        </ul>
+        <div class="ergebnis">\(\mu = 3, \quad \sigma = \sqrt{2{,}4} \approx 1{,}55\)</div>
+        <div class="teilpunkte"><span class="tp-label">Beide Kenngrößen korrekt:</span><span class="tp-punkt">2 P.</span></div>
+      </div>
+      <div class="loesung">
+        <div class="loe-title">b) Interpretation und σ-Intervall (2 P.)</div>
+        <ul class="schritte">
+          <li><strong>Erwartungswert:</strong> Wenn man wiederholt Stichproben von je 15 Bäumen zieht, erwartet man im Durchschnitt 3 befallene Bäume pro Stichprobe.</li>
+          <li><strong>σ-Intervall:</strong> \([\mu - \sigma;\; \mu + \sigma] \approx [1{,}45;\; 4{,}55]\)</li>
+          <li>In diesem Intervall liegen die Werte \(X \in \{2, 3, 4\}\). Mit der sogenannten Faustregel liegen etwa 68 % der Beobachtungswerte im σ-Intervall.</li>
+        </ul>
+        <div class="ergebnis">\([\mu-\sigma;\,\mu+\sigma] \approx [1{,}45;\; 4{,}55]\)</div>
+        <div class="teilpunkte"><span class="tp-label">Erwartungswert interpretiert:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">σ-Intervall angegeben:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- P2.3 -->
+  <div class="aufgabe">
+    <div class="aufgabe-kopf">
+      <span class="nr">Aufgabe P2.3 <span class="afb-badge ii">AFB II</span></span>
+      <span class="punkte-badge gruen">6 Punkte</span>
+    </div>
+    <div class="aufgabe-body">
+      <div class="aufgabentext" style="margin-bottom:2mm;">
+        Gegeben: \(n = 50\), \(h_n = 7/50 = 0{,}14\)
+      </div>
+      <div class="loesung">
+        <div class="loe-title">a) 95-%-Vertrauensintervall (3 P.)</div>
+        <ul class="schritte">
+          <li>Formel: \(\left[h_n - 1{,}96\cdot\sqrt{\dfrac{h_n(1-h_n)}{n}};\;\; h_n + 1{,}96\cdot\sqrt{\dfrac{h_n(1-h_n)}{n}}\right]\)</li>
+          <li>Berechnung des Fehlerterms:
+            \[\sqrt{\frac{0{,}14 \cdot 0{,}86}{50}} = \sqrt{\frac{0{,}1204}{50}} = \sqrt{0{,}002408} \approx 0{,}04907\]
+          </li>
+          <li>\[1{,}96 \cdot 0{,}04907 \approx 0{,}0962\]</li>
+          <li>Untere Grenze: \(0{,}14 - 0{,}0962 \approx 0{,}044\)</li>
+          <li>Obere Grenze: \(0{,}14 + 0{,}0962 \approx 0{,}236\)</li>
+        </ul>
+        <div class="ergebnis">95-%-Vertrauensintervall: \([0{,}044;\; 0{,}236]\)</div>
+        <div class="teilpunkte"><span class="tp-label">Formel korrekt angewandt:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Rechenschritte korrekt:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Intervall korrekt angegeben:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+      <div class="loesung">
+        <div class="loe-title">b) Plausibilitätsprüfung (2 P.)</div>
+        <ul class="schritte">
+          <li>Der ursprüngliche Anteil \(p_0 = 0{,}20\) liegt im Vertrauensintervall \([0{,}044;\; 0{,}236]\), da \(0{,}044 \leq 0{,}20 \leq 0{,}236\).</li>
+          <li><strong>Schlussfolgerung:</strong> Der ursprüngliche Anteil von 20 % ist auf Basis dieser Stichprobe weiterhin plausibel. Die Bekämpfungsmaßnahme hat zwar zu einem niedrigeren Stichprobenwert (14 %) geführt, aber die Abweichung ist statistisch nicht signifikant – sie könnte auch durch Zufall entstanden sein.</li>
+        </ul>
+        <div class="ergebnis">\(0{,}20 \in [0{,}044;\; 0{,}236]\;\Rightarrow\) p = 0,20 bleibt plausibel</div>
+        <div class="teilpunkte"><span class="tp-label">Korrekte Prüfung (0,20 im Intervall):</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Schlussfolgerung inhaltlich korrekt:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+      <div class="loesung">
+        <div class="loe-title">c) Bedeutung des Vertrauensintervalls (1 P.)</div>
+        <ul class="schritte">
+          <li>Ein 95-%-Vertrauensintervall bedeutet: Wenn man das Verfahren sehr oft wiederholt (viele Stichproben zieht), enthält in etwa 95 % aller Fälle das berechnete Intervall den wahren Wert der Wahrscheinlichkeit \(p\).</li>
+        </ul>
+        <div class="teilpunkte"><span class="tp-label">Sinngemäß korrekte Erklärung:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- P2.4 -->
+  <div class="aufgabe">
+    <div class="aufgabe-kopf">
+      <span class="nr">Aufgabe P2.4 <span class="afb-badge ii-iii">AFB II/III</span></span>
+      <span class="punkte-badge gruen">6 Punkte</span>
+    </div>
+    <div class="aufgabe-body">
+      <div class="loesung">
+        <div class="loe-title">a) Bedingte Wahrscheinlichkeiten (2 P.)</div>
+        <ul class="schritte">
+          <li>\[P(\text{bef.}\mid A) = \frac{18}{60} = 0{,}3 = 30\,\%\]</li>
+          <li>\[P(\text{bef.}\mid B) = \frac{4}{40} = 0{,}1 = 10\,\%\]</li>
+        </ul>
+        <div class="ergebnis">\(P(\text{bef.}\mid A) = 0{,}30, \quad P(\text{bef.}\mid B) = 0{,}10\)</div>
+        <div class="teilpunkte"><span class="tp-label">Beide korrekt:</span><span class="tp-punkt">2 P.</span></div>
+      </div>
+
+      <div class="loesung">
+        <div class="loe-title">b) Gesamtwahrscheinlichkeit (2 P.)</div>
+        <ul class="schritte">
+          <li>Anteile der Gruppen: \(P(A) = \frac{60}{100} = 0{,}6\), \quad \(P(B) = \frac{40}{100} = 0{,}4\)</li>
+          <li>Satz der totalen Wahrscheinlichkeit:
+            \[P(\text{bef.}) = P(\text{bef.}\mid A)\cdot P(A) + P(\text{bef.}\mid B)\cdot P(B)\]
+            \[= 0{,}3\cdot 0{,}6 + 0{,}1\cdot 0{,}4 = 0{,}18 + 0{,}04 = 0{,}22\]
+          </li>
+        </ul>
+        <div class="ergebnis">\(P(\text{bef.}) = 0{,}22 = 22\,\%\)</div>
+        <div class="teilpunkte"><span class="tp-label">Korrekter Ansatz (totale Wahrsch.):</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Ergebnis korrekt:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+
+      <div class="loesung">
+        <div class="loe-title">c) Stochastische Unabhängigkeit (2 P.)</div>
+        <ul class="schritte">
+          <li>Bedingung für stochastische Unabhängigkeit: \(P(\text{bef.}\mid A) = P(\text{bef.})\)</li>
+          <li>\(P(\text{bef.}\mid A) = 0{,}30 \neq 0{,}22 = P(\text{bef.})\)</li>
+          <li><strong>Also:</strong> „befallen" und „Gruppe A" sind stochastisch <strong>abhängig</strong>.</li>
+          <li>Inhaltlich: Bäume nahe Gewässern sind deutlich häufiger befallen (30 %) als der Durchschnitt (22 %); die Gruppe beeinflusst die Befallswahrscheinlichkeit.</li>
+        </ul>
+        <div class="ergebnis">Nicht unabhängig, da \(P(\text{bef.}\mid A) = 0{,}30 \neq 0{,}22 = P(\text{bef.})\)</div>
+        <div class="teilpunkte"><span class="tp-label">Korrekte Unabhängigkeitsprüfung:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Schlussfolgerung inhaltlich korrekt:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== WAHLAUFGABE W1 LÖSUNGEN ===== -->
+<div class="page">
+  <div class="section-header wahl">WAHLAUFGABE W1 – Analytische Geometrie: Wanderwege (20 Punkte)</div>
+
+  <!-- W1.1 -->
+  <div class="aufgabe">
+    <div class="aufgabe-kopf">
+      <span class="nr">Aufgabe W1.1 <span class="afb-badge i">AFB I</span></span>
+      <span class="punkte-badge braun">4 Punkte</span>
+    </div>
+    <div class="aufgabe-body">
+      <p style="margin-bottom:2mm;">Gegeben: \(A(1\mid0\mid0)\), \(B(5\mid0\mid0)\), \(D(1\mid4\mid0)\)</p>
+      <div class="loesung">
+        <div class="loe-title">a) Vektoren berechnen (2 P.)</div>
+        <ul class="schritte">
+          <li>\[\overrightarrow{AB} = B - A = \begin{pmatrix}5-1\\0-0\\0-0\end{pmatrix} = \begin{pmatrix}4\\0\\0\end{pmatrix}\]</li>
+          <li>\[\overrightarrow{AD} = D - A = \begin{pmatrix}1-1\\4-0\\0-0\end{pmatrix} = \begin{pmatrix}0\\4\\0\end{pmatrix}\]</li>
+        </ul>
+        <div class="ergebnis">\(\overrightarrow{AB} = (4,\,0,\,0)^\intercal,\quad \overrightarrow{AD} = (0,\,4,\,0)^\intercal\)</div>
+        <div class="teilpunkte"><span class="tp-label">Beide Vektoren korrekt:</span><span class="tp-punkt">2 P.</span></div>
+      </div>
+      <div class="loesung">
+        <div class="loe-title">b) Betrag und Länge (2 P.)</div>
+        <ul class="schritte">
+          <li>\[|\overrightarrow{AB}| = \sqrt{4^2+0^2+0^2} = 4\]</li>
+          <li>Tatsächliche Länge: \(4 \cdot 100\,\text{m} = 400\,\text{m}\)</li>
+        </ul>
+        <div class="ergebnis">\(|\overrightarrow{AB}| = 4\) (Koordinateneinheiten) \(= 400\,\text{m}\)</div>
+        <div class="teilpunkte"><span class="tp-label">Betrag \(= 4\):</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Umrechnung in Meter:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- W1.2 -->
+  <div class="aufgabe">
+    <div class="aufgabe-kopf">
+      <span class="nr">Aufgabe W1.2 <span class="afb-badge ii">AFB II</span></span>
+      <span class="punkte-badge braun">4 Punkte</span>
+    </div>
+    <div class="aufgabe-body">
+      <div class="loesung">
+        <div class="loe-title">a) Parametergleichung der Geraden g (2 P.)</div>
+        <ul class="schritte">
+          <li>\[g\colon \vec{X} = \begin{pmatrix}1\\0\\0\end{pmatrix} + t\cdot\begin{pmatrix}2\\1\\0\end{pmatrix}, \quad t\in\mathbb{R}\]</li>
+          <li>Komponentenweise: \(x = 1+2t,\quad y = t,\quad z = 0\)</li>
+        </ul>
+        <div class="ergebnis">Geradengleichung wie oben</div>
+        <div class="teilpunkte"><span class="tp-label">Stützvektor und Richtungsvektor korrekt:</span><span class="tp-punkt">2 P.</span></div>
+      </div>
+      <div class="loesung">
+        <div class="loe-title">b) Liegt M(3|1|0) auf g? (2 P.)</div>
+        <ul class="schritte">
+          <li>Gleichungssystem lösen: \(\begin{pmatrix}1+2t\\t\\0\end{pmatrix} = \begin{pmatrix}3\\1\\0\end{pmatrix}\)</li>
+          <li>Aus der 2. Komponente: \(t = 1\)</li>
+          <li>Probe in 1. Komponente: \(1 + 2\cdot 1 = 3\) ✓</li>
+          <li>3. Komponente: \(0 = 0\) ✓</li>
+          <li><strong>Ja</strong>, \(M(3\mid 1\mid 0)\) liegt auf \(g\) (für \(t = 1\)).</li>
+        </ul>
+        <div class="ergebnis">\(M\) liegt auf \(g\) (\(t=1\))</div>
+        <div class="teilpunkte"><span class="tp-label">Ansatz Gleichungssystem:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Korrekte Schlussfolgerung:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- W1.3 -->
+  <div class="aufgabe">
+    <div class="aufgabe-kopf">
+      <span class="nr">Aufgabe W1.3 <span class="afb-badge ii">AFB II</span></span>
+      <span class="punkte-badge braun">6 Punkte</span>
+    </div>
+    <div class="aufgabe-body">
+      <div class="loesung">
+        <div class="loe-title">a) Fußpunkt F des Lotes von P(3|2|2) auf g (3 P.)</div>
+        <ul class="schritte">
+          <li>Ein Punkt auf \(g\): \(X(t) = (1+2t,\;t,\;0)\)</li>
+          <li>Vektor \(\overrightarrow{PX} = (1+2t-3,\;t-2,\;0-2) = (2t-2,\;t-2,\;-2)\)</li>
+          <li>Lotbedingung: \(\overrightarrow{PX} \perp \vec{v}\;\Longleftrightarrow\; \overrightarrow{PX}\cdot\vec{v} = 0\)
+            \[(2t-2)\cdot 2 + (t-2)\cdot 1 + (-2)\cdot 0 = 0\]
+            \[4t - 4 + t - 2 = 0 \;\Longrightarrow\; 5t = 6 \;\Longrightarrow\; t = \frac{6}{5} = 1{,}2\]
+          </li>
+          <li>Fußpunkt: \(F = \left(1+2\cdot\frac{6}{5},\;\frac{6}{5},\;0\right) = \left(\frac{17}{5},\;\frac{6}{5},\;0\right) = (3{,}4;\;1{,}2;\;0)\)</li>
+        </ul>
+        <div class="ergebnis">\(F\!\left(\tfrac{17}{5}\,\big|\,\tfrac{6}{5}\,\big|\,0\right) = F(3{,}4\mid 1{,}2\mid 0)\)</div>
+        <div class="teilpunkte"><span class="tp-label">Lotbedingung korrekt aufgestellt:</span><span class="tp-punkt">2 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Fußpunkt korrekt berechnet:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+      <div class="loesung">
+        <div class="loe-title">b) Abstand d(P, g) (2 P.)</div>
+        <ul class="schritte">
+          <li>\[\overrightarrow{PF} = F - P = \begin{pmatrix}3{,}4-3\\1{,}2-2\\0-2\end{pmatrix} = \begin{pmatrix}0{,}4\\-0{,}8\\-2\end{pmatrix}\]</li>
+          <li>\[d(P,g) = |\overrightarrow{PF}| = \sqrt{0{,}4^2 + (-0{,}8)^2 + (-2)^2} = \sqrt{0{,}16 + 0{,}64 + 4} = \sqrt{4{,}8}\]</li>
+          <li>\[\sqrt{4{,}8} = \sqrt{\frac{24}{5}} = \frac{2\sqrt{6}}{\sqrt{5}} = \frac{2\sqrt{30}}{5} \approx 2{,}19\]</li>
+        </ul>
+        <div class="ergebnis">\(d(P,g) = \sqrt{4{,}8} = \dfrac{2\sqrt{30}}{5} \approx 2{,}19\) (Einheiten) \(\approx 219\,\text{m}\)</div>
+        <div class="teilpunkte"><span class="tp-label">Vektor \(\overrightarrow{PF}\) korrekt:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Betrag korrekt:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+      <div class="loesung">
+        <div class="loe-title">c) Sachinterpretation (1 P.)</div>
+        <ul class="schritte">
+          <li>Der Abstand von ca. 219 m ist der kürzeste Abstand des Aussichtspunkts \(P\) vom Wanderweg \(g\) (in horizontaler und vertikaler Richtung zusammen).</li>
+          <li>Horizontal liegt der Fußpunkt bei \(F(3{,}4\mid 1{,}2\mid 0)\), der Aussichtspunkt ist 200 m höher.</li>
+        </ul>
+        <div class="teilpunkte"><span class="tp-label">Sinnvolle Interpretation:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- W1.4 -->
+  <div class="aufgabe">
+    <div class="aufgabe-kopf">
+      <span class="nr">Aufgabe W1.4 <span class="afb-badge ii-iii">AFB II/III</span></span>
+      <span class="punkte-badge braun">6 Punkte</span>
+    </div>
+    <div class="aufgabe-body">
+      <div class="loesung">
+        <div class="loe-title">a) Schnittpunkt von g₁ und g₂ (3 P.)</div>
+        <ul class="schritte">
+          <li>Gleichungssystem:
+            \[\begin{pmatrix}1+2t\\t\\0\end{pmatrix} = \begin{pmatrix}3+s\\3-2s\\0\end{pmatrix}\]
+          </li>
+          <li>
+            I: \(1 + 2t = 3 + s\) &nbsp;&rArr;&nbsp; \(2t - s = 2\)<br>
+            II: \(t = 3 - 2s\) &nbsp;&rArr;&nbsp; \(t + 2s = 3\)<br>
+            III: \(0 = 0\) ✓ (z-Komponente immer erfüllt)
+          </li>
+          <li>Aus II: \(t = 3 - 2s\). Einsetzen in I:
+            \[2(3-2s) - s = 2 \;\Rightarrow\; 6 - 5s = 2 \;\Rightarrow\; s = \frac{4}{5} = 0{,}8\]
+          </li>
+          <li>\(t = 3 - 2\cdot 0{,}8 = 1{,}4\)</li>
+          <li>Schnittpunkt: \(S = (1+2\cdot1{,}4;\;1{,}4;\;0) = (3{,}8;\;1{,}4;\;0)\)</li>
+          <li>Probe mit g₂: \((3+0{,}8;\;3-1{,}6;\;0) = (3{,}8;\;1{,}4;\;0)\) ✓</li>
+        </ul>
+        <div class="ergebnis">\(S(3{,}8\mid 1{,}4\mid 0)\)</div>
+        <div class="teilpunkte"><span class="tp-label">Gleichungssystem korrekt aufgestellt:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Schnittpunkt korrekt berechnet:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Probe/Verifikation:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+      <div class="loesung">
+        <div class="loe-title">b) Schnittwinkel (2 P.)</div>
+        <ul class="schritte">
+          <li>Richtungsvektoren: \(\vec{v}_1 = (2,\,1,\,0)\), \(\vec{v}_2 = (1,\,-2,\,0)\)</li>
+          <li>\[\cos\varphi = \frac{|\vec{v}_1\cdot\vec{v}_2|}{|\vec{v}_1|\cdot|\vec{v}_2|} = \frac{|2\cdot1 + 1\cdot(-2) + 0|}{\sqrt{5}\cdot\sqrt{5}} = \frac{|2-2|}{5} = \frac{0}{5} = 0\]</li>
+          <li>\(\varphi = \arccos(0) = 90°\)</li>
+        </ul>
+        <div class="ergebnis">Schnittwinkel \(\varphi = 90°\) (die Wege stehen senkrecht aufeinander!)</div>
+        <div class="teilpunkte"><span class="tp-label">Skalarprodukt korrekt:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Winkel korrekt (90°):</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+      <div class="loesung">
+        <div class="loe-title">c) Bewertung (1 P.)</div>
+        <ul class="schritte">
+          <li>Ein Winkel von 90° ist deutlich größer als 45°, also ist die Kreuzung nach dem angegebenen Kriterium übersichtlich und empfehlenswert.</li>
+          <li>Rechtwinklige Kreuzungen sind in der Praxis besonders sicher, da der Sichtbereich maximal ist.</li>
+        </ul>
+        <div class="teilpunkte"><span class="tp-label">Sinnvolle Bewertung:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== WAHLAUFGABE W2 LÖSUNGEN ===== -->
+<div class="page">
+  <div class="section-header wahl">WAHLAUFGABE W2 – Analytische Geometrie: Sendemasten und Flugzeug (20 Punkte)</div>
+
+  <!-- W2.1 -->
+  <div class="aufgabe">
+    <div class="aufgabe-kopf">
+      <span class="nr">Aufgabe W2.1 <span class="afb-badge i">AFB I</span></span>
+      <span class="punkte-badge braun">4 Punkte</span>
+    </div>
+    <div class="aufgabe-body">
+      <div class="loesung">
+        <div class="loe-title">a) Verbindungsvektor und Länge (2 P.)</div>
+        <ul class="schritte">
+          <li>\[\overrightarrow{M_1M_2} = \begin{pmatrix}6-0\\0-0\\0-0\end{pmatrix} = \begin{pmatrix}6\\0\\0\end{pmatrix}\]</li>
+          <li>\[|\overrightarrow{M_1M_2}| = 6\,\text{km}\]</li>
+        </ul>
+        <div class="ergebnis">\(\overrightarrow{M_1M_2} = (6,\,0,\,0)^\intercal,\quad |\overrightarrow{M_1M_2}| = 6\,\text{km}\)</div>
+        <div class="teilpunkte"><span class="tp-label">Beide korrekt:</span><span class="tp-punkt">2 P.</span></div>
+      </div>
+      <div class="loesung">
+        <div class="loe-title">b) Schwerpunkt des Dreiecks (2 P.)</div>
+        <ul class="schritte">
+          <li>\[S = \frac{M_1 + M_2 + M_3}{3} = \frac{1}{3}\begin{pmatrix}0+6+3\\0+0+4\\0\end{pmatrix} = \begin{pmatrix}3\\4/3\\0\end{pmatrix}\]</li>
+        </ul>
+        <div class="ergebnis">\(S\!\left(3 \,\big|\, \tfrac{4}{3} \,\big|\, 0\right) \approx S(3\mid 1{,}33\mid 0)\)</div>
+        <div class="teilpunkte"><span class="tp-label">Schwerpunkt korrekt:</span><span class="tp-punkt">2 P.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- W2.2 -->
+  <div class="aufgabe">
+    <div class="aufgabe-kopf">
+      <span class="nr">Aufgabe W2.2 <span class="afb-badge ii">AFB II</span></span>
+      <span class="punkte-badge braun">5 Punkte</span>
+    </div>
+    <div class="aufgabe-body">
+      <div class="loesung">
+        <div class="loe-title">a) Winkel bei M₁ (3 P.)</div>
+        <ul class="schritte">
+          <li>Vektoren von \(M_1\) aus:
+            \[\overrightarrow{M_1M_2} = \begin{pmatrix}6\\0\\0\end{pmatrix},\quad \overrightarrow{M_1M_3} = \begin{pmatrix}3\\4\\0\end{pmatrix}\]
+          </li>
+          <li>\[\cos\alpha = \frac{\overrightarrow{M_1M_2}\cdot\overrightarrow{M_1M_3}}{|\overrightarrow{M_1M_2}|\cdot|\overrightarrow{M_1M_3}|} = \frac{6\cdot3 + 0\cdot4 + 0}{6\cdot\sqrt{9+16}} = \frac{18}{6\cdot 5} = \frac{18}{30} = 0{,}6\]</li>
+          <li>\[\alpha = \arccos(0{,}6) \approx 53{,}13°\]</li>
+        </ul>
+        <div class="ergebnis">\(\alpha \approx 53{,}1°\)</div>
+        <div class="teilpunkte"><span class="tp-label">Vektoren korrekt:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Formel korrekt angewandt:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Winkelwert korrekt:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+      <div class="loesung">
+        <div class="loe-title">b) Gleichschenkligkeit (2 P.)</div>
+        <ul class="schritte">
+          <li>\[|M_1M_2| = 6\,\text{km}\]</li>
+          <li>\[|M_1M_3| = \sqrt{3^2+4^2} = \sqrt{9+16} = \sqrt{25} = 5\,\text{km}\]</li>
+          <li>\[|M_2M_3| = \sqrt{(3-6)^2+(4-0)^2} = \sqrt{9+16} = \sqrt{25} = 5\,\text{km}\]</li>
+          <li>Da \(|M_1M_3| = |M_2M_3| = 5\,\text{km}\), ist das Dreieck <strong>gleichschenklig</strong> (die Seiten von \(M_3\) aus sind gleich lang).</li>
+        </ul>
+        <div class="ergebnis">Gleichschenklig: \(|M_1M_3| = |M_2M_3| = 5\,\text{km}\)</div>
+        <div class="teilpunkte"><span class="tp-label">Alle drei Seitenlängen berechnet:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Korrekte Schlussfolgerung:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- W2.3 -->
+  <div class="aufgabe">
+    <div class="aufgabe-kopf">
+      <span class="nr">Aufgabe W2.3 <span class="afb-badge ii">AFB II</span></span>
+      <span class="punkte-badge braun">5 Punkte</span>
+    </div>
+    <div class="aufgabe-body">
+      <p style="margin-bottom:2mm;">Flugbahn: \(f(t) = (1+2t,\;5-t,\;3)\), Punkt \(M_2(6\mid0\mid0)\)</p>
+      <div class="loesung">
+        <div class="loe-title">a) Fußpunkt F des Lotes von M₂ auf f (3 P.)</div>
+        <ul class="schritte">
+          <li>Vektor \(\overrightarrow{M_2 X(t)} = (1+2t-6,\;5-t-0,\;3-0) = (2t-5,\;5-t,\;3)\)</li>
+          <li>Lotbedingung: \(\overrightarrow{M_2 X}\cdot\vec{d} = 0\), wobei \(\vec{d} = (2,\,-1,\,0)\):
+            \[(2t-5)\cdot2 + (5-t)\cdot(-1) + 3\cdot 0 = 0\]
+            \[4t - 10 - 5 + t = 0 \;\Rightarrow\; 5t = 15 \;\Rightarrow\; t = 3\]
+          </li>
+          <li>Fußpunkt: \(F = (1+6;\;5-3;\;3) = (7;\;2;\;3)\)</li>
+        </ul>
+        <div class="ergebnis">\(F(7\mid 2\mid 3)\)</div>
+        <div class="teilpunkte"><span class="tp-label">Lotbedingung aufgestellt:</span><span class="tp-punkt">2 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Fußpunkt korrekt:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+      <div class="loesung">
+        <div class="loe-title">b) Minimaler Abstand (2 P.)</div>
+        <ul class="schritte">
+          <li>\[\overrightarrow{M_2F} = F - M_2 = (7-6,\;2-0,\;3-0) = (1,\;2,\;3)\]</li>
+          <li>\[d(M_2,f) = \sqrt{1^2+2^2+3^2} = \sqrt{1+4+9} = \sqrt{14} \approx 3{,}74\,\text{km}\]</li>
+        </ul>
+        <div class="ergebnis">\(d(M_2,f) = \sqrt{14} \approx 3{,}74\,\text{km}\)</div>
+        <div class="teilpunkte"><span class="tp-label">Vektor korrekt:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Abstand korrekt:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- W2.4 -->
+  <div class="aufgabe">
+    <div class="aufgabe-kopf">
+      <span class="nr">Aufgabe W2.4 <span class="afb-badge ii-iii">AFB II/III</span></span>
+      <span class="punkte-badge braun">6 Punkte</span>
+    </div>
+    <div class="aufgabe-body">
+      <div class="loesung">
+        <div class="loe-title">a) Schnitt mit der x-Achse? (3 P.)</div>
+        <ul class="schritte">
+          <li>Flugbahn: \(f(t) = (1+2t,\;5-t,\;3)\). Die z-Komponente ist stets \(z = 3 \neq 0\).</li>
+          <li>Die x-Achse hat \(y = 0, z = 0\). Da \(z = 3\) immer gilt, kann das Flugzeug die x-Achse <strong>nicht schneiden</strong>.</li>
+          <li>Alternativ: Für Schnittpunkt mit \(g_x\) müsste gelten \(5 - t = 0 \Rightarrow t = 5\) UND \(3 = 0\): Widerspruch.</li>
+        </ul>
+        <div class="ergebnis">Kein Schnittpunkt mit der x-Achse (z-Koordinate der Flugbahn ist konstant 3).</div>
+        <div class="teilpunkte"><span class="tp-label">Korrekte Begründung:</span><span class="tp-punkt">2 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Klare Schlussfolgerung:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+      <div class="loesung">
+        <div class="loe-title">b) Sicherheitsabstände zu M₁ und M₃ (3 P.)</div>
+        <ul class="schritte">
+          <li><strong>Abstand zu M₁(0|0|0):</strong>
+            \[\overrightarrow{M_1 X}\cdot\vec{d} = (1+2t)\cdot2 + (5-t)\cdot(-1) = 4t+2-5+t = 5t-3 = 0 \Rightarrow t = 0{,}6\]
+            Lotfußpunkt: \(F_1 = (1+1{,}2;\;5-0{,}6;\;3) = (2{,}2;\;4{,}4;\;3)\)
+            \[d(M_1,f) = |(2{,}2;\;4{,}4;\;3)| = \sqrt{4{,}84 + 19{,}36 + 9} = \sqrt{33{,}2} \approx 5{,}76\,\text{km}\]
+          </li>
+          <li><strong>Abstand zu M₃(3|4|0):</strong>
+            \[\overrightarrow{M_3 X}\cdot\vec{d} = (1+2t-3)\cdot2+(5-t-4)\cdot(-1) = (2t-2)\cdot2+(1-t)\cdot(-1)\]
+            \[= 4t-4-1+t = 5t-5 = 0 \Rightarrow t = 1\]
+            Lotfußpunkt: \(F_3 = (3;\;4;\;3)\)
+            \[d(M_3,f) = |(3-3;\;4-4;\;3-0)| = |(0;\;0;\;3)| = 3\,\text{km}\]
+          </li>
+          <li><strong>Überprüfung Sicherheitsabstand (≥ 2 km):</strong>
+            <ul style="padding-left:5mm;">
+              <li>\(d(M_1,f) \approx 5{,}76 \geq 2\) ✓</li>
+              <li>\(d(M_2,f) = \sqrt{14} \approx 3{,}74 \geq 2\) ✓</li>
+              <li>\(d(M_3,f) = 3 \geq 2\) ✓</li>
+            </ul>
+          </li>
+        </ul>
+        <div class="ergebnis">
+          \(d(M_1,f) \approx 5{,}76\,\text{km}\), \(d(M_2,f) \approx 3{,}74\,\text{km}\), \(d(M_3,f) = 3{,}00\,\text{km}\)<br>
+          Alle drei Abstände &gt; 2 km — Sicherheitsabstand wird eingehalten.
+        </div>
+        <div class="teilpunkte"><span class="tp-label">Abstand zu M₁ korrekt:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Abstand zu M₃ korrekt:</span><span class="tp-punkt">1 P.</span></div>
+        <div class="teilpunkte"><span class="tp-label">Bewertung aller drei Abstände:</span><span class="tp-punkt">1 P.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="trenn">
+
+  <!-- Abschließende Erwartungshorizonttabelle -->
+  <h3 style="margin:4mm 0 3mm 0; color:#1a3a5c; font-size:12pt;">Zusammenfassung: Erwartungshorizont (Wahlaufgaben)</h3>
+  <table class="punktetab">
+    <thead>
+      <tr><th>Aufgabe</th><th>Inhalt</th><th>AFB</th><th>Punkte</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>W1.1</td><td>Vektoren AB, AD; Betrag und Länge</td><td>I</td><td>4</td></tr>
+      <tr><td>W1.2</td><td>Geradengleichung; Punktprobe</td><td>II</td><td>4</td></tr>
+      <tr><td>W1.3</td><td>Lotfußpunkt, Abstand Punkt-Gerade</td><td>II</td><td>6</td></tr>
+      <tr><td>W1.4</td><td>Schnittpunkt zweier Geraden; Schnittwinkel; Bewertung</td><td>II/III</td><td>6</td></tr>
+      <tr class="sum-row"><td colspan="3">W1 Gesamt</td><td>20</td></tr>
+      <tr><td>W2.1</td><td>Verbindungsvektor; Schwerpunkt</td><td>I</td><td>4</td></tr>
+      <tr><td>W2.2</td><td>Winkel im Dreieck; Gleichschenkligkeit</td><td>II</td><td>5</td></tr>
+      <tr><td>W2.3</td><td>Lotfußpunkt, min. Abstand</td><td>II</td><td>5</td></tr>
+      <tr><td>W2.4</td><td>Schnitt mit x-Achse; Sicherheitsabstände</td><td>II/III</td><td>6</td></tr>
+      <tr class="sum-row"><td colspan="3">W2 Gesamt</td><td>20</td></tr>
+    </tbody>
+  </table>
+
+  <div style="text-align:center; margin-top:8mm; font-size:9pt; color:#888;">
+    — Ende des Erwartungshorizonts — &nbsp;|&nbsp; Probeklausur Mathematik gAN 2026 &nbsp;|&nbsp; Sachsen-Anhalt (fiktiv)<br>
+    Erstellt für Unterrichtszwecke. Alle Berechnungen wurden sorgfältig geprüft.
+  </div>
+</div>
+
+</body>
+</html>

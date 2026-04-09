@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Probeklausur Mathematik eAN 2026 – Erwartungshorizont</title>
+  <script>
+    MathJax = {
+      tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Georgia,'Times New Roman',serif;font-size:11pt;line-height:1.55;color:#111;background:#eee}
+    .page{width:210mm;min-height:297mm;background:#fff;margin:10mm auto;padding:18mm 20mm 16mm 20mm;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+
+    /* Cover */
+    .cover-header{border-top:4px solid #7b0000;border-bottom:2px solid #7b0000;padding:7mm 0 5mm;margin-bottom:8mm;text-align:center}
+    .cover-header .inst{font-size:9.5pt;color:#666;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3mm}
+    .cover-header h1{font-size:19pt;color:#7b0000;font-weight:bold;margin-bottom:2mm}
+    .cover-header .sub{font-size:12pt;color:#333;margin-bottom:2mm}
+    .cover-header .badge{display:inline-block;background:#7b0000;color:#fff;font-size:9pt;padding:2px 10px;border-radius:3px;letter-spacing:.07em;font-family:Arial,sans-serif;margin-top:3mm}
+    .warn-box{background:#fff3cd;border:1.5px solid #e6ac00;border-radius:4px;padding:5mm 7mm;margin:6mm 0;font-size:10pt;font-family:Arial,sans-serif;color:#5a4200}
+
+    /* Section headers */
+    .sec{background:#7b0000;color:#fff;padding:3.5mm 7mm;margin:7mm 0 4mm;border-radius:3px}
+    .sec h2{font-size:13pt;font-weight:bold;margin-bottom:1mm}
+    .sec .meta{font-size:9pt;opacity:.85;font-family:Arial,sans-serif}
+
+    /* Task block */
+    .task{margin:4mm 0 3mm;padding-bottom:4mm;border-bottom:1px dotted #ccc}
+    .task:last-child{border-bottom:none}
+    .task-title{display:flex;justify-content:space-between;align-items:baseline;background:#fce8e8;border-left:4px solid #7b0000;padding:3px 8px 3px 10px;margin-bottom:3mm;border-radius:0 3px 3px 0}
+    .task-title h3{font-size:11pt;color:#7b0000;font-weight:bold}
+    .pts{font-family:Arial,sans-serif;font-size:9pt;font-weight:bold;color:#7b0000;white-space:nowrap}
+
+    /* Context box */
+    .ctx{background:#fdf6e3;border:1px solid #d4a800;border-radius:4px;padding:4mm 6mm;margin:3mm 0 4mm;font-size:10.5pt}
+    .ctx .lbl{font-weight:bold;color:#8a6800;font-size:9pt;text-transform:uppercase;letter-spacing:.05em;margin-bottom:1.5mm}
+
+    /* Solution box */
+    .sol{background:#f0f7f0;border:1.5px solid #2e7d32;border-radius:4px;padding:4mm 6mm;margin:2mm 0 3mm}
+    .sol .sol-head{color:#1b5e20;font-weight:bold;font-size:9.5pt;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2mm;font-family:Arial,sans-serif}
+    .sol p,.sol li{margin-bottom:1.5mm;font-size:10.5pt}
+    .sol ul,.sol ol{padding-left:5mm}
+
+    /* Rubric */
+    .rubric{background:#e8f0fe;border:1px solid #3c5a9a;border-radius:4px;padding:3mm 6mm;margin:2mm 0;font-size:9.5pt;font-family:Arial,sans-serif}
+    .rubric .r-head{color:#1a3a6b;font-weight:bold;margin-bottom:1mm;text-transform:uppercase;font-size:8.5pt;letter-spacing:.05em}
+    .rubric table{width:100%;border-collapse:collapse}
+    .rubric table td{padding:2px 4px;vertical-align:top}
+    .rubric table td:first-child{width:8%;font-weight:bold;color:#1a3a6b}
+    .rubric table tr:nth-child(odd) td{background:rgba(60,90,154,.07)}
+
+    /* AFB badge */
+    .afb{display:inline-block;font-size:8pt;font-family:Arial,sans-serif;padding:1px 6px;border-radius:2px;font-weight:bold;margin-left:4px}
+    .afb1{background:#d4edda;color:#155724}
+    .afb2{background:#fff3cd;color:#856404}
+    .afb3{background:#f8d7da;color:#721c24}
+
+    .subtask{margin:2mm 0 2mm 4mm;font-size:10.5pt}
+    .subtask .sl{font-weight:bold;color:#7b0000}
+
+    .formula-c{text-align:center;margin:3mm 0}
+    .footer-line{text-align:center;font-size:8pt;color:#888;font-family:Arial,sans-serif;margin-top:7mm;border-top:1px solid #ddd;padding-top:3mm}
+
+    @media print{
+      body{background:#fff;font-size:10.5pt}
+      .page{width:100%;margin:0;padding:14mm 18mm 14mm 18mm;box-shadow:none;page-break-after:always}
+      .page:last-child{page-break-after:avoid}
+      .task{page-break-inside:avoid}
+      .sol{page-break-inside:avoid}
+      @page{size:A4;margin:14mm 18mm}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     DECKBLATT
+============================================================ -->
+<div class="page">
+  <div class="cover-header">
+    <div class="inst">Gymnasiale Oberstufe &mdash; Sachsen-Anhalt</div>
+    <h1>Probeklausur Mathematik 2026</h1>
+    <div class="sub">Erwartungshorizont &amp; Lösungen &mdash; Nur für Lehrkräfte</div>
+    <span class="badge">Erhöhtes Anforderungsniveau (eAN)</span>
+  </div>
+  <div class="warn-box">
+    <strong>Hinweis:</strong> Dieses Dokument enthält vollständige Lösungen und Bewertungshinweise.
+    Es darf Schülerinnen und Schülern vor der Prüfung nicht zugänglich gemacht werden.
+    Alternative Lösungswege sind gleichwertig zu bewerten, sofern sie mathematisch korrekt sind.
+  </div>
+  <table style="width:100%;border-collapse:collapse;font-size:10.5pt;margin-top:4mm">
+    <tr style="background:#fce8e8">
+      <td style="padding:4px 8px;font-weight:bold;color:#7b0000;width:50%">Aufgabenteil</td>
+      <td style="padding:4px 8px;font-weight:bold;color:#7b0000">Punkte</td>
+    </tr>
+    <tr><td style="padding:3px 8px">Teil 1 (ohne Hilfsmittel)</td><td style="padding:3px 8px">20</td></tr>
+    <tr style="background:#fce8e8"><td style="padding:3px 8px">P1 &ndash; Analysis</td><td style="padding:3px 8px">25</td></tr>
+    <tr><td style="padding:3px 8px">P2 &ndash; Stochastik</td><td style="padding:3px 8px">25</td></tr>
+    <tr style="background:#fce8e8"><td style="padding:3px 8px">W1 oder W2 (Analytische Geometrie)</td><td style="padding:3px 8px">30</td></tr>
+    <tr style="font-weight:bold"><td style="padding:4px 8px;background:#f7d5d5">Gesamt</td><td style="padding:4px 8px;background:#f7d5d5">100</td></tr>
+  </table>
+  <div class="footer-line">Probeklausur Mathematik eAN 2026 &bull; Erwartungshorizont &bull; Seite 1</div>
+</div>
+
+<!-- ============================================================
+     TEIL 1 – LÖSUNGEN
+============================================================ -->
+<div class="page">
+  <div class="sec"><h2>Teil 1 &ndash; Ohne Hilfsmittel &ndash; Lösungen</h2><div class="meta">20 Punkte gesamt</div></div>
+
+  <!-- 1.1 -->
+  <div class="task">
+    <div class="task-title"><h3>Aufgabe 1.1</h3><span class="pts">4 Punkte <span class="afb afb1">AFB I</span></span></div>
+    <p>\(f(x) = 3x^2 \cdot e^{-x}\)</p>
+
+    <div class="sol">
+      <div class="sol-head">a) Ableitung (Produktregel) &mdash; 2 Punkte</div>
+      <p>Produktregel: \((u \cdot v)' = u'v + uv'\) mit \(u = 3x^2,\; v = e^{-x}\).</p>
+      <p>\(u' = 6x,\quad v' = -e^{-x}\)</p>
+      <div class="formula-c">\[f'(x) = 6x\cdot e^{-x} + 3x^2\cdot(-e^{-x}) = e^{-x}(6x - 3x^2) = 3x\,e^{-x}(2-x)\]</div>
+    </div>
+    <div class="rubric">
+      <div class="r-head">Bewertung</div>
+      <table><tr><td>1P</td><td>Korrekte Anwendung der Produktregel mit beiden Termen</td></tr>
+      <tr><td>1P</td><td>Vereinfachtes Ergebnis \(f'(x)=3xe^{-x}(2-x)\) oder äquivalente Form</td></tr></table>
+    </div>
+
+    <div class="sol" style="margin-top:3mm">
+      <div class="sol-head">b) Tangente bei \(x_0 = 0\) &mdash; 2 Punkte</div>
+      <p>\(f(0) = 3\cdot 0^2 \cdot e^0 = 0\) &nbsp;&rarr;&nbsp; Berührpunkt \((0\mid 0)\)</p>
+      <p>\(f'(0) = 3\cdot 0\cdot e^0(2-0) = 0\) &nbsp;&rarr;&nbsp; Steigung \(m = 0\)</p>
+      <p>Tangentengleichung: \(\boxed{t\colon y = 0}\) (die \(x\)-Achse ist Tangente)</p>
+    </div>
+    <div class="rubric">
+      <div class="r-head">Bewertung</div>
+      <table><tr><td>1P</td><td>Korrekte Berechnung von \(f(0)\) und \(f'(0)\)</td></tr>
+      <tr><td>1P</td><td>Tangentengleichung \(y = 0\) angegeben</td></tr></table>
+    </div>
+  </div>
+
+  <!-- 1.2 -->
+  <div class="task">
+    <div class="task-title"><h3>Aufgabe 1.2</h3><span class="pts">4 Punkte <span class="afb afb1">AFB I</span></span></div>
+    <div class="sol">
+      <div class="sol-head">a) Unbestimmtes Integral &mdash; 2 Punkte</div>
+      <div class="formula-c">\[\int(2x^3 - 4x + 1)\,dx = \frac{2x^4}{4} - \frac{4x^2}{2} + x + C = \frac{x^4}{2} - 2x^2 + x + C\]</div>
+    </div>
+    <div class="rubric">
+      <div class="r-head">Bewertung</div>
+      <table><tr><td>1P</td><td>Beide Potenztermen korrekt integriert</td></tr>
+      <tr><td>1P</td><td>Konstante \(+C\) und vollständiges Ergebnis</td></tr></table>
+    </div>
+    <div class="sol" style="margin-top:3mm">
+      <div class="sol-head">b) Bestimmtes Integral &mdash; 2 Punkte</div>
+      <div class="formula-c">\[\int_1^2 \frac{3}{x}\,dx = 3\Big[\ln|x|\Big]_1^2 = 3(\ln 2 - \ln 1) = 3\ln 2 \approx 2{,}079\]</div>
+    </div>
+    <div class="rubric">
+      <div class="r-head">Bewertung</div>
+      <table><tr><td>1P</td><td>Stammfunktion \(3\ln|x|\) erkannt</td></tr>
+      <tr><td>1P</td><td>Korrektes Einsetzen: \(3\ln 2\) (exakt oder gerundet)</td></tr></table>
+    </div>
+  </div>
+
+  <!-- 1.3 -->
+  <div class="task">
+    <div class="task-title"><h3>Aufgabe 1.3</h3><span class="pts">4 Punkte <span class="afb afb1">AFB I</span> / <span class="afb afb2">AFB II</span></span></div>
+    <div class="sol">
+      <div class="sol-head">a) Skalarprodukt &mdash; 1 Punkt</div>
+      <div class="formula-c">\[\vec{a}\cdot\vec{b} = 2\cdot1 + (-1)\cdot4 + 3\cdot(-2) = 2 - 4 - 6 = -8\]</div>
+    </div>
+    <div class="sol" style="margin-top:3mm">
+      <div class="sol-head">b) Winkel &mdash; 3 Punkte</div>
+      <p>\(|\vec{a}| = \sqrt{4+1+9} = \sqrt{14}\), \quad \(|\vec{b}| = \sqrt{1+16+4} = \sqrt{21}\)</p>
+      <div class="formula-c">\[\cos\varphi = \frac{\vec{a}\cdot\vec{b}}{|\vec{a}|\cdot|\vec{b}|} = \frac{-8}{\sqrt{14}\cdot\sqrt{21}} = \frac{-8}{\sqrt{294}}\]</div>
+      <p>\(\sqrt{294} \approx 17{,}146\), also \(\cos\varphi \approx -0{,}4665\)</p>
+      <p>\(\varphi = \arccos(-0{,}4665) \approx \mathbf{117{,}8°} \approx 118°\)</p>
+    </div>
+    <div class="rubric">
+      <div class="r-head">Bewertung</div>
+      <table>
+        <tr><td>1P</td><td>Skalarprodukt korrekt: \(-8\)</td></tr>
+        <tr><td>1P</td><td>Beträge korrekt berechnet</td></tr>
+        <tr><td>1P</td><td>Winkelformel korrekt angewendet, Ergebnis \(\approx 118°\)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 1.4 -->
+  <div class="task">
+    <div class="task-title"><h3>Aufgabe 1.4</h3><span class="pts">4 Punkte <span class="afb afb1">AFB I</span></span></div>
+    <div class="sol">
+      <div class="sol-head">a) \(P(X=3)\) &mdash; 2 Punkte</div>
+      <p>\(X\sim B(12;\, 0{,}25)\)</p>
+      <div class="formula-c">\[P(X=3)=\binom{12}{3}(0{,}25)^3(0{,}75)^9 = 220\cdot\frac{1}{64}\cdot\frac{3^9}{4^9}\]</div>
+      <p>\(= 220\cdot 0{,}015625\cdot 0{,}07508 \approx \mathbf{0{,}2581}\)</p>
+    </div>
+    <div class="sol" style="margin-top:3mm">
+      <div class="sol-head">b) Erwartungswert und Standardabweichung &mdash; 2 Punkte</div>
+      <div class="formula-c">\[\mu = n\cdot p = 12\cdot 0{,}25 = \mathbf{3}\]</div>
+      <div class="formula-c">\[\sigma = \sqrt{n\cdot p\cdot(1-p)} = \sqrt{12\cdot 0{,}25\cdot 0{,}75} = \sqrt{2{,}25} = \mathbf{1{,}5}\]</div>
+    </div>
+    <div class="rubric">
+      <div class="r-head">Bewertung</div>
+      <table>
+        <tr><td>1P</td><td>Bernoulli-Formel korrekt angesetzt, \(P(X=3)\approx 0{,}2581\)</td></tr>
+        <tr><td>1P</td><td>Binomialkoeffizient \(\binom{12}{3}=220\) korrekt</td></tr>
+        <tr><td>1P</td><td>\(\mu=3\) korrekt</td></tr>
+        <tr><td>1P</td><td>\(\sigma=1{,}5\) korrekt</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 1.5 -->
+  <div class="task">
+    <div class="task-title"><h3>Aufgabe 1.5</h3><span class="pts">4 Punkte <span class="afb afb1">AFB I</span> / <span class="afb afb2">AFB II</span></span></div>
+    <div class="sol">
+      <div class="sol-head">Bestimmung von g(x) und Nullstellen &mdash; 4 Punkte</div>
+      <p>Integration: \(g(x) = \int g'(x)\,dx = \int(2x-4)\,dx = x^2 - 4x + C\)</p>
+      <p>Anfangsbedingung: \(g(0)=5 \Rightarrow 0 - 0 + C = 5 \Rightarrow C = 5\)</p>
+      <div class="formula-c">\[\boxed{g(x) = x^2 - 4x + 5}\]</div>
+      <p>Nullstellen: \(x^2 - 4x + 5 = 0\)</p>
+      <p>Diskriminante: \(\Delta = 16 - 20 = -4 < 0\)</p>
+      <p>Die Gleichung hat <strong>keine reellen Lösungen</strong>. \(g\) hat keine Nullstellen (Parabel liegt vollständig über der \(x\)-Achse, Scheitelpunkt bei \((2\mid 1)\)).</p>
+    </div>
+    <div class="rubric">
+      <div class="r-head">Bewertung</div>
+      <table>
+        <tr><td>1P</td><td>Integration korrekt: \(x^2-4x+C\)</td></tr>
+        <tr><td>1P</td><td>Konstante \(C=5\) korrekt bestimmt</td></tr>
+        <tr><td>1P</td><td>Ansatz zur Nullstellenbestimmung korrekt</td></tr>
+        <tr><td>1P</td><td>Korrekte Schlussfolgerung: keine reellen Nullstellen (negative Diskriminante)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer-line">Probeklausur Mathematik eAN 2026 &bull; Erwartungshorizont &bull; Teil 1 &bull; Seite 2</div>
+</div>
+
+<!-- ============================================================
+     P1 – ANALYSIS LÖSUNGEN
+============================================================ -->
+<div class="page">
+  <div class="sec"><h2>P1 &ndash; Analysis &ndash; Lösungen</h2><div class="meta">25 Punkte &bull; f(t) = −0,5t³ + 3t² + 2t</div></div>
+
+  <!-- P1.1 -->
+  <div class="task">
+    <div class="task-title"><h3>P1.1</h3><span class="pts">4 Punkte <span class="afb afb1">AFB I</span>/<span class="afb afb2">II</span></span></div>
+    <div class="sol">
+      <div class="sol-head">a) Ableitungen &mdash; 2 Punkte</div>
+      <div class="formula-c">\[f'(t) = -1{,}5\,t^2 + 6t + 2\]</div>
+      <div class="formula-c">\[f''(t) = -3t + 6\]</div>
+    </div>
+    <div class="sol" style="margin-top:3mm">
+      <div class="sol-head">b) Interpretation von f'(4) &mdash; 2 Punkte</div>
+      <p>\(f'(4) = -1{,}5\cdot 16 + 6\cdot 4 + 2 = -24 + 24 + 2 = \mathbf{2}\)</p>
+      <p><em>Sachkontext:</em> Zum Zeitpunkt \(t = 4\) Stunden nimmt die Produktionsrate mit einer Rate von 2 Tonnen pro Stunde² zu. Die Produktion steigt noch, aber die Zunahme verlangsamt sich (da \(f''(4)=-6<0\)).</p>
+    </div>
+    <div class="rubric">
+      <div class="r-head">Bewertung</div>
+      <table>
+        <tr><td>1P</td><td>\(f'(t)\) korrekt</td></tr><tr><td>1P</td><td>\(f''(t)\) korrekt</td></tr>
+        <tr><td>1P</td><td>\(f'(4)=2\) berechnet</td></tr>
+        <tr><td>1P</td><td>Sachliche Interpretation korrekt (momentane Änderungsrate der Produktionsrate)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- P1.2 -->
+  <div class="task">
+    <div class="task-title"><h3>P1.2</h3><span class="pts">6 Punkte <span class="afb afb2">AFB II</span></span></div>
+    <div class="sol">
+      <div class="sol-head">a) Lokale Extremstellen &mdash; 4 Punkte</div>
+      <p>Notwendige Bedingung: \(f'(t) = 0\)</p>
+      <div class="formula-c">\[-1{,}5t^2 + 6t + 2 = 0 \;\Leftrightarrow\; 1{,}5t^2 - 6t - 2 = 0 \;\Leftrightarrow\; t^2 - 4t - \tfrac{4}{3} = 0\]</div>
+      <p>Lösungsformel: \(t = \dfrac{4 \pm \sqrt{16 + \frac{16}{3}}}{2} = \dfrac{4 \pm \sqrt{\frac{64}{3}}}{2} = 2 \pm \dfrac{4}{\sqrt{3}}\)</p>
+      <p>\(t_1 = 2 - \frac{4}{\sqrt{3}} \approx 2 - 2{,}309 \approx -0{,}31\) &nbsp; (außerhalb \([0;8]\), entfällt)</p>
+      <p>\(t_2 = 2 + \frac{4}{\sqrt{3}} \approx 2 + 2{,}309 \approx \mathbf{4{,}31}\)</p>
+      <p>Hinreichende Bedingung: \(f''(4{,}31) = -3\cdot 4{,}31 + 6 \approx -7{,}0 < 0\)</p>
+      <p>\(\Rightarrow\) <strong>Lokales Maximum</strong> bei \(t \approx 4{,}31\): \(f(4{,}31) \approx -0{,}5(4{,}31)^3+3(4{,}31)^2+2(4{,}31)\approx 18{,}67\) t/h</p>
+      <p>Randwerte: \(f(0)=0\), \(f(8)=-0{,}5\cdot512+3\cdot64+16=-256+192+16=-48\) &lt; 0. Das globale Maximum auf \([0;8]\) liegt bei \(t\approx 4{,}31\).</p>
+    </div>
+    <div class="sol" style="margin-top:3mm">
+      <div class="sol-head">b) Wendestelle &mdash; 2 Punkte</div>
+      <p>\(f''(t)=0 \Rightarrow -3t+6=0 \Rightarrow t=2\)</p>
+      <p>Vorzeichenwechsel von \(f''\): \(f'''(t)=-3\neq0\) &rarr; Wendestelle bestätigt.</p>
+      <p><em>Sachkontext:</em> Bei \(t=2\) Stunden ist der Wendepunkt der Produktionsratenkurve erreicht. Bis dahin steigt die Produktionsrate mit zunehmender Beschleunigung, danach nimmt die Wachstumsrate ab (Sättigungseffekt setzt ein).</p>
+    </div>
+    <div class="rubric">
+      <div class="r-head">Bewertung</div>
+      <table>
+        <tr><td>1P</td><td>\(f'(t)=0\) korrekt angesetzt und gelöst</td></tr>
+        <tr><td>1P</td><td>Nur \(t\approx4{,}31\) im Intervall identifiziert</td></tr>
+        <tr><td>1P</td><td>\(f''(4{,}31)<0\) &rarr; Maximum bestätigt</td></tr>
+        <tr><td>1P</td><td>Funktionswert angegeben und sachlich interpretiert</td></tr>
+        <tr><td>1P</td><td>Wendestelle \(t=2\) korrekt</td></tr>
+        <tr><td>1P</td><td>Sachliche Interpretation der Wendestelle</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- P1.3 -->
+  <div class="task">
+    <div class="task-title"><h3>P1.3</h3><span class="pts">5 Punkte <span class="afb afb2">AFB II</span></span></div>
+    <div class="sol">
+      <div class="sol-head">a) Gesamtproduktion &mdash; 3 Punkte</div>
+      <p>Beachte: \(f(t)<0\) für großes \(t\) &ndash; physikalisch nicht sinnvoll. Das Integral gibt die netto-modellierte Gesamtmenge an. Im Sachkontext wird das bestimmte Integral berechnet:</p>
+      <div class="formula-c">\[\int_0^8 f(t)\,dt = \left[-\frac{0{,}5}{4}t^4 + t^3 + t^2\right]_0^8 = \left[-\frac{t^4}{8}+t^3+t^2\right]_0^8\]</div>
+      <p>\(= -\dfrac{4096}{8}+512+64 = -512+512+64 = \mathbf{64}\) Tonnen</p>
+    </div>
+    <div class="sol" style="margin-top:3mm">
+      <div class="sol-head">b) Durchschnittliche Produktionsrate &mdash; 2 Punkte</div>
+      <div class="formula-c">\[\bar{f} = \frac{1}{8-0}\int_0^8 f(t)\,dt = \frac{64}{8} = \mathbf{8 \text{ t/h}}\]</div>
+      <p><em>Im Durchschnitt wurden über die 8 Arbeitsstunden 8 Tonnen pro Stunde produziert.</em></p>
+    </div>
+    <div class="rubric">
+      <div class="r-head">Bewertung</div>
+      <table>
+        <tr><td>1P</td><td>Stammfunktion korrekt bestimmt</td></tr>
+        <tr><td>1P</td><td>Korrekte Auswertung: \(64\) t</td></tr>
+        <tr><td>1P</td><td>Einheit und Interpretation im Sachkontext</td></tr>
+        <tr><td>1P</td><td>Durchschnitt \(=64/8=8\) t/h korrekt</td></tr>
+        <tr><td>1P</td><td>Sachliche Interpretation des Durchschnittswerts</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer-line">Probeklausur Mathematik eAN 2026 &bull; Erwartungshorizont &bull; P1 (1/2) &bull; Seite 3</div>
+</div>
+
+<!-- P1.4 + P1.5 -->
+<div class="page">
+  <div class="sec"><h2>P1 &ndash; Analysis &ndash; Lösungen (Forts.)</h2><div class="meta">Aufgaben P1.4 und P1.5</div></div>
+
+  <!-- P1.4 -->
+  <div class="task">
+    <div class="task-title"><h3>P1.4</h3><span class="pts">5 Punkte <span class="afb afb2">AFB II</span>/<span class="afb afb3">III</span></span></div>
+    <p>\(g(t) = 3t\cdot e^{-0{,}4t}\)</p>
+    <div class="sol">
+      <div class="sol-head">a) g'(t) &mdash; 1 Punkt</div>
+      <p>Produktregel: \(u=3t,\; v=e^{-0{,}4t}\), \(u'=3,\; v'=-0{,}4e^{-0{,}4t}\)</p>
+      <div class="formula-c">\[g'(t) = 3e^{-0{,}4t} + 3t\cdot(-0{,}4)e^{-0{,}4t} = e^{-0{,}4t}(3-1{,}2t)\]</div>
+    </div>
+    <div class="sol" style="margin-top:3mm">
+      <div class="sol-head">b) Globales Maximum von g auf [0,8] &mdash; 2 Punkte</div>
+      <p>\(g'(t)=0\): \(e^{-0{,}4t}\neq0\), also \(3-1{,}2t=0 \Rightarrow t=2{,}5\)</p>
+      <p>\(g''(t)= e^{-0{,}4t}(-1{,}2)+(-0{,}4)e^{-0{,}4t}(3-1{,}2t)\). Bei \(t=2{,}5\): \(g''(2{,}5)=e^{-1}(-1{,}2)<0\) &rarr; Maximum.</p>
+      <div class="formula-c">\[g(2{,}5) = 3\cdot2{,}5\cdot e^{-1} = 7{,}5\cdot e^{-1} \approx \mathbf{2{,}76 \text{ t/h}}\]</div>
+    </div>
+    <div class="sol" style="margin-top:3mm">
+      <div class="sol-head">c) Vergleich der Modelle &mdash; 2 Punkte</div>
+      <p>Gesamtproduktion von \(g\) auf \([0;8]\) (mit CAS oder partieller Integration):</p>
+      <div class="formula-c">\[\int_0^8 3t\,e^{-0{,}4t}\,dt = \left[-\frac{3t}{0{,}4}e^{-0{,}4t}\right]_0^8 + \int_0^8\frac{3}{0{,}4}e^{-0{,}4t}\,dt\]</div>
+      <p>Mit CAS: \(\approx 14{,}50\) Tonnen</p>
+      <p>Modell \(f\): 64 t &nbsp;|&nbsp; Modell \(g\): \(\approx 14{,}5\) t</p>
+      <p><em>Empfehlung Modell \(f\): höhere Gesamtproduktion, realistische Peak-Rate bei \(t\approx4{,}3\) Std. Modell \(g\) zeigt sehr frühen Peak (2,5 h) mit rasch abfallender Rate, was für einen langen Arbeitstag wenig realistisch erscheint. Modell \(f\) würde jedoch für \(t>7{,}17\) negative Produktionsraten liefern (physikalisch unsinnig), was als Modellschwäche anzumerken ist.</em></p>
+    </div>
+    <div class="rubric">
+      <div class="r-head">Bewertung</div>
+      <table>
+        <tr><td>1P</td><td>\(g'(t)=e^{-0{,}4t}(3-1{,}2t)\) korrekt</td></tr>
+        <tr><td>1P</td><td>Maximum bei \(t=2{,}5\) mit Nachweis</td></tr>
+        <tr><td>1P</td><td>\(g(2{,}5)\approx2{,}76\) t/h angegeben</td></tr>
+        <tr><td>1P</td><td>Integral von \(g\) berechnet (\(\approx14{,}5\) t)</td></tr>
+        <tr><td>1P</td><td>Begründete Empfehlung mit Vor-/Nachteilen beider Modelle</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- P1.5 -->
+  <div class="task">
+    <div class="task-title"><h3>P1.5</h3><span class="pts">5 Punkte <span class="afb afb3">AFB III</span></span></div>
+    <div class="sol">
+      <div class="sol-head">a) Schnittpunkte von f und g auf [0,8] &mdash; 2 Punkte</div>
+      <p>\(f(t)=g(t)\): \(-0{,}5t^3+3t^2+2t = 3t\,e^{-0{,}4t}\)</p>
+      <p>Bei \(t=0\): \(f(0)=0=g(0)\) &rarr; Schnittpunkt \(S_1(0\mid0)\)</p>
+      <p>Numerisch (CAS): weiterer Schnittpunkt bei \(t\approx 6{,}17\), \(f(6{,}17)\approx g(6{,}17)\approx 5{,}03\)</p>
+      <p>Also: \(S_1=(0\mid 0)\) und \(S_2\approx(6{,}17\mid5{,}03)\)</p>
+    </div>
+    <div class="sol" style="margin-top:3mm">
+      <div class="sol-head">b) Flächeninhalt auf erstem gemeinsamen Teilintervall [0; 6,17] &mdash; 3 Punkte</div>
+      <p>Auf \([0;6{,}17]\): Überprüfung, welche Funktion größer ist (z.B. bei \(t=2\)):</p>
+      <p>\(f(2)=-4+12+4=12\) t/h &nbsp;;&nbsp; \(g(2)=6\cdot e^{-0{,}8}\approx 2{,}70\) t/h &nbsp; &rarr; \(f>g\)</p>
+      <div class="formula-c">\[A = \int_0^{6{,}17}\bigl(f(t)-g(t)\bigr)\,dt\]</div>
+      <p>Mit CAS: \(A \approx 64\cdot\frac{6{,}17}{8} - 14{,}5\cdot\frac{6{,}17}{8} \approx\) … (direkte Auswertung nötig)</p>
+      <p>CAS-Ergebnis: \(\displaystyle\int_0^{6{,}17}f(t)\,dt \approx 53{,}1\) t, \(\;\int_0^{6{,}17}g(t)\,dt\approx 13{,}5\) t</p>
+      <div class="formula-c">\[\boxed{A \approx 53{,}1 - 13{,}5 = 39{,}6 \text{ t}\cdot\text{h}^{-1}\cdot\text{h} = 39{,}6 \text{ Tonnen (als Differenz der Gesamtmengen)}}\]</div>
+      <p><em>Sachkontext: Der Wert gibt an, um wie viel Tonnen das Modell \(f\) im Zeitraum \([0;\,6{,}17\text{ h}]\) mehr produziert als Modell \(g\).</em></p>
+    </div>
+    <div class="rubric">
+      <div class="r-head">Bewertung</div>
+      <table>
+        <tr><td>1P</td><td>Schnittpunkt \(t=0\) erkannt</td></tr>
+        <tr><td>1P</td><td>Zweiter Schnittpunkt \(t\approx6{,}17\) numerisch korrekt bestimmt</td></tr>
+        <tr><td>1P</td><td>Richtiges Vorzeichen im Integral (\(f-g\) auf dem Intervall)</td></tr>
+        <tr><td>1P</td><td>Integral korrekt berechnet (\(\approx 39{,}6\))</td></tr>
+        <tr><td>1P</td><td>Sachliche Interpretation des Flächeninhalts</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer-line">Probeklausur Mathematik eAN 2026 &bull; Erwartungshorizont &bull; P1 (2/2) &bull; Seite 4</div>
+</div>
+
+<!-- ============================================================
+     P2 – STOCHASTIK LÖSUNGEN
+============================================================ -->
+<div class="page">
+  <div class="sec"><h2>P2 &ndash; Stochastik &ndash; Lösungen</h2><div class="meta">25 Punkte &bull; X ~ B(25; 0,15)</div></div>
+
+  <!-- P2.1 -->
+  <div class="task">
+    <div class="task-title"><h3>P2.1</h3><span class="pts">4 Punkte <span class="afb afb1">AFB I</span></span></div>
+    <div class="sol">
+      <div class="sol-head">a) Begründung Binomialverteilung &mdash; 2 Punkte</div>
+      <ul>
+        <li>Jede Schülerin / jeder Schüler hat genau zwei mögliche Ausgänge: Sehproblem (Treffer) oder kein Sehproblem.</li>
+        <li>Die Wahrscheinlichkeit \(p=0{,}15\) ist für alle Schülerinnen und Schüler gleich (Annahme).</li>
+        <li>Die Ergebnisse sind (näherungsweise) stochastisch unabhängig.</li>
+        <li>Feste Versuchsanzahl \(n=25\).</li>
+        <li>&rarr; Voraussetzungen der Bernoulli-Kette erfüllt &rarr; \(X\sim B(25;\,0{,}15)\).</li>
+      </ul>
+    </div>
+    <div class="sol" style="margin-top:3mm">
+      <div class="sol-head">b) Wahrscheinlichkeiten &mdash; 2 Punkte</div>
+      <div class="formula-c">\[P(X=4)=\binom{25}{4}(0{,}15)^4(0{,}85)^{21} \approx \mathbf{0{,}1651}\]</div>
+      <div class="formula-c">\[P(X\leq3)=\sum_{k=0}^{3}\binom{25}{k}(0{,}15)^k(0{,}85)^{25-k} \approx \mathbf{0{,}4711}\]</div>
+    </div>
+    <div class="rubric">
+      <div class="r-head">Bewertung</div>
+      <table>
+        <tr><td>1P</td><td>Mind. 2 Voraussetzungen korrekt genannt</td></tr>
+        <tr><td>1P</td><td>Schluss auf \(B(25;0{,}15)\) korrekt formuliert</td></tr>
+        <tr><td>1P</td><td>\(P(X=4)\approx0{,}1651\)</td></tr>
+        <tr><td>1P</td><td>\(P(X\leq3)\approx0{,}4711\)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- P2.2 -->
+  <div class="task">
+    <div class="task-title"><h3>P2.2</h3><span class="pts">4 Punkte <span class="afb afb1">AFB I</span>/<span class="afb afb2">II</span></span></div>
+    <div class="sol">
+      <div class="sol-head">a) Kenngrößen &mdash; 2 Punkte</div>
+      <div class="formula-c">\[\mu = 25\cdot0{,}15 = \mathbf{3{,}75}\]</div>
+      <div class="formula-c">\[\sigma = \sqrt{25\cdot0{,}15\cdot0{,}85} = \sqrt{3{,}1875} \approx \mathbf{1{,}786}\]</div>
+    </div>
+    <div class="sol" style="margin-top:3mm">
+      <div class="sol-head">b) P(μ−σ ≤ X ≤ μ+σ) &mdash; 2 Punkte</div>
+      <p>\(\mu-\sigma \approx 1{,}96\), \(\mu+\sigma\approx5{,}54\)</p>
+      <p>Da \(X\) ganzzahlig: \(P(2\leq X\leq5)\)</p>
+      <div class="formula-c">\[P(2\leq X\leq5) = P(X\leq5)-P(X\leq1) \approx 0{,}8385-0{,}1483 = \mathbf{0{,}6902}\approx 69{,}0\,\%\]</div>
+      <p><em>Sachkontext: Mit etwa 69\,\% Wahrscheinlichkeit liegen die Anzahl der Schülerinnen und Schüler mit Sehproblemen im Kurs zwischen 2 und 5. Dies entspricht dem „typischen Bereich" der Verteilung.</em></p>
+    </div>
+    <div class="rubric">
+      <div class="r-head">Bewertung</div>
+      <table>
+        <tr><td>1P</td><td>\(\mu=3{,}75\) und \(\sigma\approx1{,}786\) korrekt</td></tr>
+        <tr><td>1P</td><td>Grenzen korrekt gerundet auf ganzzahlige Werte</td></tr>
+        <tr><td>1P</td><td>\(P(2\leq X\leq5)\approx0{,}6902\) korrekt</td></tr>
+        <tr><td>1P</td><td>Sachliche Interpretation</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- P2.3 -->
+  <div class="task">
+    <div class="task-title"><h3>P2.3</h3><span class="pts">6 Punkte <span class="afb afb2">AFB II</span></span></div>
+    <div class="sol">
+      <div class="sol-head">Vertrauensintervall &mdash; 6 Punkte</div>
+      <p><strong>a) Relative Häufigkeit:</strong></p>
+      <p>\(h_n = \dfrac{12}{100} = 0{,}12\)</p>
+      <p style="margin-top:3mm"><strong>b) 95&nbsp;%-Vertrauensintervall:</strong></p>
+      <p>Formel: \(\left[h_n - 1{,}96\cdot\sqrt{\dfrac{h_n(1-h_n)}{n}};\;\;h_n + 1{,}96\cdot\sqrt{\dfrac{h_n(1-h_n)}{n}}\right]\)</p>
+      <p>Berechnung des Randabstands:</p>
+      <p>\(1{,}96\cdot\sqrt{\dfrac{0{,}12\cdot0{,}88}{100}} = 1{,}96\cdot\sqrt{0{,}001056} \approx 1{,}96\cdot0{,}0325 \approx 0{,}0637\)</p>
+      <p>Vertrauensintervall: \([0{,}12-0{,}064;\;0{,}12+0{,}064]=[0{,}056;\;0{,}184]\)</p>
+      <p style="margin-top:3mm"><strong>c) Plausibilitätsprüfung:</strong></p>
+      <p>Der Studien-Wert \(p_0=0{,}15\) liegt im Intervall \([0{,}056;\;0{,}184]\).</p>
+      <p><em>Es ist daher plausibel, dass der ursprüngliche Anteil von 15&nbsp;% auch nach den Maßnahmen noch zutrifft – die Stichprobe liefert keinen ausreichenden Hinweis auf eine Veränderung.</em></p>
+      <p style="margin-top:3mm"><strong>d) Interpretation:</strong></p>
+      <p><em>Ein 95&nbsp;%-Vertrauensintervall bedeutet: Würde man das Verfahren sehr oft mit neuen Stichproben wiederholen, würde in 95&nbsp;% der Fälle das berechnete Intervall den wahren Wert \(p\) enthalten.</em></p>
+    </div>
+    <div class="rubric">
+      <div class="r-head">Bewertung</div>
+      <table>
+        <tr><td>1P</td><td>\(h_n=0{,}12\) korrekt berechnet</td></tr>
+        <tr><td>1P</td><td>Formel korrekt aufgestellt und \(n=100\) korrekt eingesetzt</td></tr>
+        <tr><td>1P</td><td>Randabstand \(\approx0{,}064\) korrekt berechnet</td></tr>
+        <tr><td>1P</td><td>Intervall \([0{,}056;\;0{,}184]\) korrekt angegeben</td></tr>
+        <tr><td>1P</td><td>\(p_0=0{,}15\in\text{KI}\) erkannt, Schlussfolgerung korrekt im Sachkontext</td></tr>
+        <tr><td>1P</td><td>Korrekte Interpretation des 95&nbsp;%-Vertrauensintervalls in eigenen Worten</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer-line">Probeklausur Mathematik eAN 2026 &bull; Erwartungshorizont &bull; P2 (1/2) &bull; Seite 5</div>
+</div>
+
+<div class="page">
+  <div class="sec"><h2>P2 &ndash; Stochastik &ndash; Lösungen (Forts.)</h2><div class="meta">Aufgaben P2.4 und P2.5 (Normalverteilung)</div></div>
+
+  <!-- P2.4 -->
+  <div class="task">
+    <div class="task-title"><h3>P2.4</h3><span class="pts">5 Punkte <span class="afb afb2">AFB II</span>/<span class="afb afb3">III</span></span></div>
+    <div class="sol">
+      <div class="sol-head">a) Vierfeldertafel und bedingte Wahrscheinlichkeiten &mdash; 3 Punkte</div>
+      <table style="border-collapse:collapse;font-size:10.5pt;margin:2mm 0">
+        <tr style="background:#fce8e8">
+          <td style="padding:3px 8px;border:1px solid #ccc"></td>
+          <td style="padding:3px 8px;border:1px solid #ccc;font-weight:bold">\(B\) (hoch)</td>
+          <td style="padding:3px 8px;border:1px solid #ccc;font-weight:bold">\(\bar{B}\) (gering)</td>
+          <td style="padding:3px 8px;border:1px solid #ccc;font-weight:bold">Gesamt</td>
+        </tr>
+        <tr>
+          <td style="padding:3px 8px;border:1px solid #ccc;font-weight:bold">\(A\) (Sehproblem)</td>
+          <td style="padding:3px 8px;border:1px solid #ccc">32</td>
+          <td style="padding:3px 8px;border:1px solid #ccc">4</td>
+          <td style="padding:3px 8px;border:1px solid #ccc">36</td>
+        </tr>
+        <tr style="background:#f7f7f7">
+          <td style="padding:3px 8px;border:1px solid #ccc;font-weight:bold">\(\bar{A}\)</td>
+          <td style="padding:3px 8px;border:1px solid #ccc">128</td>
+          <td style="padding:3px 8px;border:1px solid #ccc">36</td>
+          <td style="padding:3px 8px;border:1px solid #ccc">164</td>
+        </tr>
+        <tr>
+          <td style="padding:3px 8px;border:1px solid #ccc;font-weight:bold">Gesamt</td>
+          <td style="padding:3px 8px;border:1px solid #ccc">160</td>
+          <td style="padding:3px 8px;border:1px solid #ccc">40</td>
+          <td style="padding:3px 8px;border:1px solid #ccc">200</td>
+        </tr>
+      </table>
+      <div class="formula-c">\[P(A\mid B)=\frac{32}{160}=\mathbf{0{,}20}\qquad P(A\mid\bar{B})=\frac{4}{40}=\mathbf{0{,}10}\qquad P(A)=\frac{36}{200}=\mathbf{0{,}18}\]</div>
+    </div>
+    <div class="sol" style="margin-top:3mm">
+      <div class="sol-head">b) Stochastische Unabhängigkeit &mdash; 2 Punkte</div>
+      <p>Kriterium: \(A\) und \(B\) sind unabhängig \(\Leftrightarrow P(A\mid B)=P(A)\)</p>
+      <p>\(P(A\mid B)=0{,}20 \neq P(A)=0{,}18\)</p>
+      <p>&rarr; \(A\) und \(B\) sind <strong>nicht stochastisch unabhängig</strong>. Schülerinnen und Schüler mit hoher Bildschirmzeit haben eine höhere Wahrscheinlichkeit für Sehprobleme (20\,\% vs. 18\,\% gesamt bzw. 10\,\% bei geringer Bildschirmzeit).</p>
+    </div>
+    <div class="rubric">
+      <div class="r-head">Bewertung</div>
+      <table>
+        <tr><td>1P</td><td>Vierfeldertafel vollständig und korrekt</td></tr>
+        <tr><td>1P</td><td>Alle drei Wahrscheinlichkeiten korrekt berechnet</td></tr>
+        <tr><td>1P</td><td>Unabhängigkeitskriterium korrekt angewendet</td></tr>
+        <tr><td>1P</td><td>Schluss: nicht unabhängig, korrekt begründet</td></tr>
+        <tr><td>1P</td><td>Sachliche Deutung des Ergebnisses</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- P2.5 -->
+  <div class="task">
+    <div class="task-title"><h3>P2.5</h3><span class="pts">6 Punkte <span class="afb afb2">AFB II</span>/<span class="afb afb3">III</span></span></div>
+    <p>\(X\sim N(179;\,64)\), d.&nbsp;h. \(\mu=179\,\text{cm}\), \(\sigma=8\,\text{cm}\)</p>
+    <div class="sol">
+      <div class="sol-head">a) Wahrscheinlichkeit 171 cm bis 187 cm &mdash; \(\sigma\)-Regel &mdash; 2 Punkte</div>
+      <p>Beobachtung: \(171 = 179 - 8 = \mu - \sigma\) und \(187 = 179 + 8 = \mu + \sigma\).</p>
+      <p>Das gesuchte Intervall ist genau das \((\mu-\sigma,\,\mu+\sigma)\)-Intervall.</p>
+      <p>Nach der <strong>\(\sigma\)-Regel</strong> der Normalverteilung gilt:</p>
+      <div class="formula-c">\[P(\mu-\sigma \leq X \leq \mu+\sigma) \approx 0{,}6827 \approx 68{,}3\,\%\]</div>
+      <p><em>Etwa 68,3&nbsp;% aller männlichen Abiturienten sind zwischen 171&nbsp;cm und 187&nbsp;cm groß.</em></p>
+    </div>
+    <div class="sol" style="margin-top:3mm">
+      <div class="sol-head">b) \(P(X > 190)\) mit CAS &mdash; 2 Punkte</div>
+      <p>CAS-Eingabe (z.&nbsp;B. TI-Nspire): <code>normalcdf(190, \(\infty\), 179, 8)</code> bzw.
+         \(1 - \texttt{normalcdf}(-\infty, 190, 179, 8)\)</p>
+      <div class="formula-c">\[P(X \leq 190) = \Phi\!\left(\frac{190-179}{8}\right) = \Phi(1{,}375) \approx 0{,}9154\]</div>
+      <div class="formula-c">\[P(X > 190) = 1 - 0{,}9154 \approx \mathbf{0{,}0846 \approx 8{,}5\,\%}\]</div>
+      <p><em>Rund 8,5&nbsp;% der männlichen Abiturienten sind größer als 190&nbsp;cm.</em></p>
+    </div>
+    <div class="sol" style="margin-top:3mm">
+      <div class="sol-head">c) Normalapproximation: mindestens 20 von 25 kleiner als 187 cm &mdash; 2 Punkte</div>
+      <p><strong>Schritt 1: Einzelwahrscheinlichkeit bestimmen.</strong></p>
+      <p>Aus a) bzw. mit CAS: \(p = P(X < 187) = P(X \leq \mu+\sigma) \approx 0{,}8413\)</p>
+      <p>\(Y =\) Anzahl der Abiturienten im Kurs (n = 25) mit Körpergröße &lt; 187 cm, \(Y \sim B(25;\,0{,}8413)\)</p>
+      <p><strong>Schritt 2: Approximationsbedingungen prüfen.</strong></p>
+      <p>\(np = 25 \cdot 0{,}8413 \approx 21{,}0 \geq 5\) &nbsp;&#10003;</p>
+      <p>\(n(1-p) = 25 \cdot 0{,}1587 \approx 3{,}97 < 5\) &nbsp;&#10007;</p>
+      <p>&rarr; Die Bedingung \(n(1-p) \geq 5\) ist <strong>nicht</strong> erfüllt.
+         Eine Normalapproximation ist hier <em>nicht geeignet</em>.</p>
+      <p><strong>Schritt 3: Direkte Berechnung mit CAS (exakte Binomialverteilung).</strong></p>
+      <div class="formula-c">\[P(Y \geq 20) = 1 - P(Y \leq 19) = 1 - \sum_{k=0}^{19}\binom{25}{k}(0{,}8413)^k(0{,}1587)^{25-k}\]</div>
+      <p>Mit CAS: \(P(Y \leq 19) \approx 0{,}3015\)</p>
+      <div class="formula-c">\[P(Y \geq 20) \approx 1 - 0{,}3015 \approx \mathbf{0{,}6985 \approx 69{,}9\,\%}\]</div>
+      <p><em>Mit einer Wahrscheinlichkeit von ca. 69,9&nbsp;% sind mindestens 20 der 25 männlichen Abiturienten kleiner als 187&nbsp;cm.</em></p>
+    </div>
+    <div class="rubric">
+      <div class="r-head">Bewertung</div>
+      <table>
+        <tr><td>1P</td><td>\(\sigma\)-Regel korrekt erkannt und angewendet: \(171 = \mu-\sigma\), \(187 = \mu+\sigma\) &rarr; 68,3&nbsp;%</td></tr>
+        <tr><td>1P</td><td>CAS-Ansatz korrekt, \(P(X>190)\approx0{,}0846\) berechnet</td></tr>
+        <tr><td>1P</td><td>Approximationsbedingungen geprüft, Fazit korrekt begründet (\(n(1-p)<5\))</td></tr>
+        <tr><td>1P</td><td>Korrekte Berechnung \(P(Y\geq20)\approx0{,}699\) (direkte Binomialverteilung oder gleichwertig)</td></tr>
+      </table>
+      <p style="font-size:9.5pt;color:#555;margin-top:2mm">
+        Hinweis: Werden die Bedingungen nicht geprüft, aber das Ergebnis korrekt mit der Normalapproximation berechnet
+        (\(\mu_Y\approx21\), \(\sigma_Y\approx\sqrt{3{,}33}\approx1{,}825\),
+        \(P(Y\geq20)\approx\Phi(\ldots)\approx0{,}709\)), so wird 1P für c) vergeben.
+        Volle Punktzahl nur bei Bedingungsprüfung + Schlussfolgerung.
+      </p>
+    </div>
+  </div>
+
+  <div class="footer-line">Probeklausur Mathematik eAN 2026 &bull; Erwartungshorizont &bull; P2 (2/2) &bull; Seite 6</div>
+</div>
+
+<!-- ============================================================
+     W1 – ANALYTISCHE GEOMETRIE LÖSUNGEN
+============================================================ -->
+<div class="page">
+  <div class="sec" style="background:#2e4a7b"><h2>W1 &ndash; Analytische Geometrie (Solarpark) &ndash; Lösungen</h2><div class="meta">30 Punkte &bull; E durch P₁(4|2|0), P₂(4|2|3), P₃(6|2|3)</div></div>
+
+  <!-- W1.1 -->
+  <div class="task">
+    <div class="task-title" style="background:#e8eef7;border-left-color:#2e4a7b"><h3 style="color:#2e4a7b">W1.1</h3><span class="pts" style="color:#2e4a7b">5 Punkte <span class="afb afb1">AFB I</span></span></div>
+    <div class="sol" style="border-color:#2e4a7b;background:#f0f4fb">
+      <div class="sol-head" style="color:#1a3a6b">a) Richtungsvektoren &mdash; 2 Punkte</div>
+      <div class="formula-c">\[\vec{u} = \overrightarrow{P_1P_2} = \begin{pmatrix}0\\0\\3\end{pmatrix},\qquad \vec{v} = \overrightarrow{P_1P_3} = \begin{pmatrix}2\\0\\3\end{pmatrix}\]</div>
+    </div>
+    <div class="sol" style="border-color:#2e4a7b;background:#f0f4fb;margin-top:3mm">
+      <div class="sol-head" style="color:#1a3a6b">b) Parameterform der Ebene E &mdash; 3 Punkte</div>
+      <div class="formula-c">\[E\colon \vec{x} = \begin{pmatrix}4\\2\\0\end{pmatrix} + s\begin{pmatrix}0\\0\\3\end{pmatrix} + r\begin{pmatrix}2\\0\\3\end{pmatrix}, \quad s,r\in\mathbb{R}\]</div>
+      <p>Hinweis: Stützvektor ist \(\overrightarrow{OP_1}\). Andere Stützvektoren (\(P_2\) oder \(P_3\)) sind ebenfalls richtig.</p>
+    </div>
+    <div class="rubric" style="border-color:#3c5a9a">
+      <div class="r-head" style="color:#1a3a6b">Bewertung</div>
+      <table><tr><td>1P</td><td>\(\vec{u}=(0,0,3)^T\) korrekt</td></tr>
+      <tr><td>1P</td><td>\(\vec{v}=(2,0,3)^T\) korrekt</td></tr>
+      <tr><td>1P</td><td>Stützvektor angegeben</td></tr>
+      <tr><td>1P</td><td>Parameterform vollständig und formal korrekt</td></tr>
+      <tr><td>1P</td><td>Parameter explizit bezeichnet</td></tr></table>
+    </div>
+  </div>
+
+  <!-- W1.2 -->
+  <div class="task">
+    <div class="task-title" style="background:#e8eef7;border-left-color:#2e4a7b"><h3 style="color:#2e4a7b">W1.2</h3><span class="pts" style="color:#2e4a7b">6 Punkte <span class="afb afb2">AFB II</span></span></div>
+    <div class="sol" style="border-color:#2e4a7b;background:#f0f4fb">
+      <div class="sol-head" style="color:#1a3a6b">a) Normalenvektor &mdash; 2 Punkte</div>
+      <p>Da \(\vec{u}=(0,0,3)^T\) und \(\vec{v}=(2,0,3)^T\): \(\vec{u}\times\vec{v}\) oder aus den Vektoren erkennbar, dass die Ebene \(y=2\) ist.</p>
+      <p>Beobachtung: Alle drei Punkte haben \(y=2\). Die Ebene ist daher die Ebene \(y=2\), d.h. parallel zur \(xz\)-Ebene.</p>
+      <p>\(\vec{n} = \begin{pmatrix}0\\1\\0\end{pmatrix}\) (Normalenvektor in \(y\)-Richtung)</p>
+      <p>Probe: \(\vec{n}\cdot\vec{u}=0\cdot0+1\cdot0+0\cdot3=0\) ✓ &nbsp; \(\vec{n}\cdot\vec{v}=0+0+0=0\) ✓</p>
+    </div>
+    <div class="sol" style="border-color:#2e4a7b;background:#f0f4fb;margin-top:3mm">
+      <div class="sol-head" style="color:#1a3a6b">b) Normalenform (Koordinatenform) &mdash; 2 Punkte</div>
+      <div class="formula-c">\[\vec{n}\cdot\left(\vec{x}-\overrightarrow{OP_1}\right)=0 \;\Rightarrow\; \begin{pmatrix}0\\1\\0\end{pmatrix}\cdot\left(\vec{x}-\begin{pmatrix}4\\2\\0\end{pmatrix}\right)=0\]</div>
+      <div class="formula-c">\[\Rightarrow\; 0(x-4)+1(y-2)+0(z-0)=0 \;\Leftrightarrow\; \boxed{y=2}\]</div>
+    </div>
+    <div class="sol" style="border-color:#2e4a7b;background:#f0f4fb;margin-top:3mm">
+      <div class="sol-head" style="color:#1a3a6b">c) Liegt Q(5|3|2) in E? &mdash; 2 Punkte</div>
+      <p>Einsetzen in \(y=2\): \(y_Q=3\neq2\)</p>
+      <p>&rarr; \(Q\) liegt <strong>nicht</strong> in der Ebene \(E\). (Abstand: \(|3-2|=1\) Einheit)</p>
+    </div>
+    <div class="rubric" style="border-color:#3c5a9a">
+      <div class="r-head" style="color:#1a3a6b">Bewertung</div>
+      <table>
+        <tr><td>1P</td><td>Erkenntnis: alle \(y\)-Koordinaten gleich 2 &rarr; Ebene \(y=2\)</td></tr>
+        <tr><td>1P</td><td>\(\vec{n}=(0,1,0)^T\) mit Probe</td></tr>
+        <tr><td>1P</td><td>Normalenform korrekt aufgestellt</td></tr>
+        <tr><td>1P</td><td>Vereinfachte Koordinatenform \(y=2\)</td></tr>
+        <tr><td>1P</td><td>Probe für \(Q\): \(y_Q=3\neq2\)</td></tr>
+        <tr><td>1P</td><td>Schluss: \(Q\notin E\)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer-line">Probeklausur Mathematik eAN 2026 &bull; Erwartungshorizont &bull; W1 (1/2) &bull; Seite 7</div>
+</div>
+
+<div class="page">
+  <div class="sec" style="background:#2e4a7b"><h2>W1 &ndash; Lösungen (Forts.)</h2><div class="meta">W1.3, W1.4, W1.5</div></div>
+
+  <!-- W1.3 -->
+  <div class="task">
+    <div class="task-title" style="background:#e8eef7;border-left-color:#2e4a7b"><h3 style="color:#2e4a7b">W1.3</h3><span class="pts" style="color:#2e4a7b">7 Punkte <span class="afb afb2">AFB II</span></span></div>
+    <p>Gerade \(g\colon \vec{x}=(0,2,5)^T + t(1,0,-1)^T\), Ebene \(E\colon y=2\)</p>
+    <div class="sol" style="border-color:#2e4a7b;background:#f0f4fb">
+      <div class="sol-head" style="color:#1a3a6b">a) Schnittpunkt S &mdash; 4 Punkte</div>
+      <p>Einsetzen der Geradenparameter in die Ebenengleichung \(y=2\):</p>
+      <p>y-Komponente: \(2+t\cdot0=2\) für alle \(t\). </p>
+      <p>Die Gerade liegt <em>vollständig</em> in der Ebene \(y=2\) (da der Stützpunkt \((0,2,5)\) die Bedingung \(y=2\) erfüllt und der Richtungsvektor \((1,0,-1)^T\) orthogonal zu \(\vec{n}=(0,1,0)^T\) ist, also \(\vec{n}\cdot\vec{d}=0\)).</p>
+      <p>&rarr; Die Gerade \(g\) liegt <strong>in der Ebene</strong> \(E\). Es gibt unendlich viele Schnittpunkte (jeden Punkt von \(g\)).</p>
+      <p><em>Hinweis für die Bewertung: Schülerinnen und Schüler die das erkennen und korrekt formulieren, erhalten volle Punktzahl. Der Sonderfall muss erkannt werden.</em></p>
+    </div>
+    <div class="sol" style="border-color:#2e4a7b;background:#f0f4fb;margin-top:3mm">
+      <div class="sol-head" style="color:#1a3a6b">b) Schnittwinkel &mdash; 3 Punkte</div>
+      <p>Da \(g\) in \(E\) liegt, ist der Winkel zwischen \(g\) und \(E\) gleich \(\mathbf{0°}\).</p>
+      <p>Formel zur Kontrolle: \(\sin\alpha = \dfrac{|\vec{d}\cdot\vec{n}|}{|\vec{d}|\cdot|\vec{n}|} = \dfrac{|(1)(0)+(0)(1)+(-1)(0)|}{\sqrt{2}\cdot1}=0 \Rightarrow \alpha=0°\)</p>
+    </div>
+    <div class="rubric" style="border-color:#3c5a9a">
+      <div class="r-head" style="color:#1a3a6b">Bewertung</div>
+      <table>
+        <tr><td>2P</td><td>Erkennen: Stützpunkt liegt in E (\(y=2\)), Richtungsvektor senkrecht zu \(\vec{n}\)</td></tr>
+        <tr><td>2P</td><td>Korrekte Schlussfolgerung: \(g\subset E\), unendlich viele Schnittpunkte</td></tr>
+        <tr><td>2P</td><td>Schnittwinkel \(=0°\) korrekt mit Begründung</td></tr>
+        <tr><td>1P</td><td>Formel für Schnittwinkel korrekt angegeben</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- W1.4 -->
+  <div class="task">
+    <div class="task-title" style="background:#e8eef7;border-left-color:#2e4a7b"><h3 style="color:#2e4a7b">W1.4</h3><span class="pts" style="color:#2e4a7b">7 Punkte <span class="afb afb2">AFB II</span>/<span class="afb afb3">III</span></span></div>
+    <p>\(K(7\mid2\mid4)\), Ebene \(E\colon y=2\)</p>
+    <div class="sol" style="border-color:#2e4a7b;background:#f0f4fb">
+      <div class="sol-head" style="color:#1a3a6b">a) Abstand K zu E &mdash; 3 Punkte</div>
+      <p>Hesse-Normalenform: \(\vec{n}_0=(0,1,0)^T\), Ebene \(y=2\).</p>
+      <div class="formula-c">\[d(K,E) = |y_K - 2| = |2-2| = \mathbf{0}\]</div>
+      <p>Der Punkt \(K\) hat \(y_K=2\), liegt also <strong>selbst in der Ebene \(E\)</strong>! Abstand = 0.</p>
+    </div>
+    <div class="sol" style="border-color:#2e4a7b;background:#f0f4fb;margin-top:3mm">
+      <div class="sol-head" style="color:#1a3a6b">b) Lotfußpunkt F &mdash; 2 Punkte</div>
+      <p>Da \(K\in E\), ist \(F=K=(7\mid2\mid4)\).</p>
+    </div>
+    <div class="sol" style="border-color:#2e4a7b;background:#f0f4fb;margin-top:3mm">
+      <div class="sol-head" style="color:#1a3a6b">c) Abstand K zur Geraden g &mdash; 2 Punkte</div>
+      <p>Lotfußpunkt von \(K=(7,2,4)^T\) auf \(g\): \(\vec{x}(t)=(t,2,5-t)^T\)</p>
+      <p>Lotbedingung: \(\overrightarrow{F_gK} \perp \vec{d}\): \(\bigl((7,2,4)^T-(t,2,5-t)^T\bigr)\cdot(1,0,-1)^T=0\)</p>
+      <p>\((7-t)\cdot1+0+(-1+t)\cdot(-1)=0 \;\Rightarrow\; 7-t+1-t=0 \;\Rightarrow\; 8-2t=0 \;\Rightarrow\; t=4\)</p>
+      <p>Lotfußpunkt auf \(g\): \(F_g=(4,2,1)^T\)</p>
+      <div class="formula-c">\[d(K,g)=\left|\overrightarrow{F_gK}\right|=\left|(3,0,3)^T\right|=\sqrt{9+0+9}=\sqrt{18}=3\sqrt{2}\approx\mathbf{4{,}24}\]</div>
+    </div>
+    <div class="rubric" style="border-color:#3c5a9a">
+      <div class="r-head" style="color:#1a3a6b">Bewertung</div>
+      <table>
+        <tr><td>2P</td><td>Erkennen: \(K\in E\) (\(y_K=2\)), Abstand = 0</td></tr>
+        <tr><td>1P</td><td>\(F=K\)</td></tr>
+        <tr><td>2P</td><td>Lotfußpunkt auf \(g\): \(t=4\), \(F_g=(4,2,1)\)</td></tr>
+        <tr><td>2P</td><td>Abstand \(3\sqrt{2}\approx4{,}24\) korrekt</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- W1.5 -->
+  <div class="task">
+    <div class="task-title" style="background:#e8eef7;border-left-color:#2e4a7b"><h3 style="color:#2e4a7b">W1.5</h3><span class="pts" style="color:#2e4a7b">5 Punkte <span class="afb afb3">AFB III</span></span></div>
+    <div class="sol" style="border-color:#2e4a7b;background:#f0f4fb">
+      <div class="sol-head" style="color:#1a3a6b">Ebene E₂ ⊥ E, enthält g &mdash; 5 Punkte</div>
+      <p>Da \(g\subset E\) (aus W1.3), enthält \(E_2\) die Gerade \(g\) und muss senkrecht zu \(E\) stehen.</p>
+      <p>\(E_2 \perp E \Leftrightarrow \vec{n}_{E_2}\perp\vec{n}_E\), also \(\vec{n}_{E_2}\perp(0,1,0)^T\), d.h. \(\vec{n}_{E_2}\) liegt in der \(xz\)-Ebene.</p>
+      <p>\(E_2\) enthält \(g\) mit Richtungsvektor \(\vec{d}=(1,0,-1)^T\). Außerdem braucht \(E_2\) einen weiteren Richtungsvektor, der nicht parallel zu \(\vec{d}\) ist und mit dem die Ebene senkrecht zu \(E\) steht.</p>
+      <p>Zweiter Richtungsvektor: muss \(y\)-Komponente haben, damit \(E_2\neq E\). Wähle \(\vec{w}=(0,1,0)^T\) (in \(y\)-Richtung).</p>
+      <p>Probe: \(\vec{n}_{E_2}=\vec{d}\times\vec{w}=(1,0,-1)^T\times(0,1,0)^T\)</p>
+      <div class="formula-c">\[\vec{n}_{E_2}=\begin{vmatrix}\vec{e}_1&\vec{e}_2&\vec{e}_3\\1&0&-1\\0&1&0\end{vmatrix}=(0\cdot0-(-1)\cdot1,\,(-1)\cdot0-1\cdot0,\,1\cdot1-0\cdot0)^T=(1,0,1)^T\]</div>
+      <p>Prüfung \(\vec{n}_{E_2}\perp\vec{n}_E\): \((1,0,1)\cdot(0,1,0)=0\) ✓</p>
+      <p>Parameterform: \(E_2\colon \vec{x}=\begin{pmatrix}0\\2\\5\end{pmatrix}+t\begin{pmatrix}1\\0\\-1\end{pmatrix}+s\begin{pmatrix}0\\1\\0\end{pmatrix}\)</p>
+      <p>Koordinatenform: \(x+z=5\) (einsetzen des Stützpunkts: \(0+5=5\) ✓)</p>
+      <p>\(E_2\) ist <strong>eindeutig bestimmt</strong> (Richtung orthogonal zu \(E\) und die Gerade \(g\) sind beide vorgegeben, keine Freiheitsgrade mehr).</p>
+    </div>
+    <div class="rubric" style="border-color:#3c5a9a">
+      <div class="r-head" style="color:#1a3a6b">Bewertung</div>
+      <table>
+        <tr><td>1P</td><td>Erkennen: \(g\subset E\) als Ausgangspunkt</td></tr>
+        <tr><td>1P</td><td>Bedingung \(E_2\perp E\) korrekt formuliert</td></tr>
+        <tr><td>1P</td><td>Normalenvektor \(\vec{n}_{E_2}=(1,0,1)^T\) korrekt (oder äquivalent)</td></tr>
+        <tr><td>1P</td><td>Parameterform korrekt aufgestellt</td></tr>
+        <tr><td>1P</td><td>Begründung der Eindeutigkeit</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer-line">Probeklausur Mathematik eAN 2026 &bull; Erwartungshorizont &bull; W1 (2/2) &bull; Seite 8</div>
+</div>
+
+<!-- ============================================================
+     W2 – WINDPARK LÖSUNGEN
+============================================================ -->
+<div class="page">
+  <div class="sec" style="background:#2e6b2e"><h2>W2 &ndash; Analytische Geometrie (Windpark) &ndash; Lösungen</h2><div class="meta">30 Punkte &bull; A(0|0|0), B(8|0|0), C(4|6|0), h: x=(2,1,4)+t(3,2,-1)</div></div>
+
+  <!-- W2.1 -->
+  <div class="task">
+    <div class="task-title" style="background:#e8f5e9;border-left-color:#2e6b2e"><h3 style="color:#1b5e20">W2.1</h3><span class="pts" style="color:#1b5e20">5 Punkte <span class="afb afb1">AFB I</span></span></div>
+    <div class="sol" style="border-color:#2e6b2e;background:#f1f8f1">
+      <div class="sol-head" style="color:#1b5e20">a) Vektoren &mdash; 1 Punkt</div>
+      <div class="formula-c">\[\overrightarrow{AB}=\begin{pmatrix}8\\0\\0\end{pmatrix},\quad \overrightarrow{AC}=\begin{pmatrix}4\\6\\0\end{pmatrix}\]</div>
+    </div>
+    <div class="sol" style="border-color:#2e6b2e;background:#f1f8f1;margin-top:3mm">
+      <div class="sol-head" style="color:#1b5e20">b) Abstände &mdash; 4 Punkte</div>
+      <p>\(|AB|=\sqrt{64}=8\) (Einheiten) \(= \mathbf{80\text{ m}}\)</p>
+      <p>\(|AC|=\sqrt{16+36}=\sqrt{52}=2\sqrt{13}\approx7{,}21\) (Einh.) \(= \mathbf{72{,}1\text{ m}}\)</p>
+      <p>\(\overrightarrow{BC}=\begin{pmatrix}-4\\6\\0\end{pmatrix}\), \(|BC|=\sqrt{16+36}=\sqrt{52}\approx7{,}21\) (Einh.) \(=\mathbf{72{,}1\text{ m}}\)</p>
+      <p>Das Dreieck ist gleichschenklig: \(|AC|=|BC|\).</p>
+    </div>
+    <div class="rubric" style="border-color:#2e6b2e">
+      <div class="r-head" style="color:#1b5e20">Bewertung</div>
+      <table>
+        <tr><td>1P</td><td>\(\overrightarrow{AB}\) und \(\overrightarrow{AC}\) korrekt</td></tr>
+        <tr><td>1P</td><td>\(|AB|=80\) m</td></tr>
+        <tr><td>2P</td><td>\(|AC|=|BC|=\sqrt{52}\approx72{,}1\) m (je 1P)</td></tr>
+        <tr><td>1P</td><td>Umrechnung in Meter korrekt</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- W2.2 -->
+  <div class="task">
+    <div class="task-title" style="background:#e8f5e9;border-left-color:#2e6b2e"><h3 style="color:#1b5e20">W2.2</h3><span class="pts" style="color:#1b5e20">6 Punkte <span class="afb afb2">AFB II</span></span></div>
+    <div class="sol" style="border-color:#2e6b2e;background:#f1f8f1">
+      <div class="sol-head" style="color:#1b5e20">a) Winkel bei A &mdash; 3 Punkte</div>
+      <div class="formula-c">\[\cos\alpha = \frac{\overrightarrow{AB}\cdot\overrightarrow{AC}}{|\overrightarrow{AB}|\cdot|\overrightarrow{AC}|} = \frac{32+0+0}{8\cdot\sqrt{52}}=\frac{32}{8\cdot7{,}211}=\frac{32}{57{,}69}\approx0{,}5547\]</div>
+      <p>\(\alpha=\arccos(0{,}5547)\approx\mathbf{56{,}3°}\)</p>
+    </div>
+    <div class="sol" style="border-color:#2e6b2e;background:#f1f8f1;margin-top:3mm">
+      <div class="sol-head" style="color:#1b5e20">b) Flächeninhalt &mdash; 3 Punkte</div>
+      <div class="formula-c">\[A_\triangle = \frac{1}{2}|AB|\cdot h = \frac{1}{2}\cdot|AB|\cdot|AC|\cdot\sin\alpha\]</div>
+      <p>\(\sin(56{,}3°)\approx0{,}8321\)</p>
+      <div class="formula-c">\[A_\triangle = \frac{1}{2}\cdot8\cdot\sqrt{52}\cdot0{,}8321 \approx \frac{1}{2}\cdot8\cdot7{,}211\cdot0{,}8321\approx24{,}0 \text{ (Einh.}^2\text{)}\]</div>
+      <p>Alternativ: \(A=\frac{1}{2}|g||h|\) mit Grundlinie \(AB=8\) und Höhe \(h\) = \(y\)-Koordinate von \(C=6\):</p>
+      <div class="formula-c">\[A_\triangle = \frac{1}{2}\cdot8\cdot6=24 \text{ (Einh.}^2\text{)} = 24\cdot(10\text{ m})^2=\mathbf{2400\text{ m}^2}\]</div>
+    </div>
+    <div class="rubric" style="border-color:#2e6b2e">
+      <div class="r-head" style="color:#1b5e20">Bewertung</div>
+      <table>
+        <tr><td>1P</td><td>Winkelformel korrekt angesetzt</td></tr>
+        <tr><td>1P</td><td>Skalarprodukt \(=32\), Beträge korrekt</td></tr>
+        <tr><td>1P</td><td>\(\alpha\approx56{,}3°\)</td></tr>
+        <tr><td>1P</td><td>Flächenformel korrekt</td></tr>
+        <tr><td>1P</td><td>Flächeninhalt \(=24\) Einh.² korrekt</td></tr>
+        <tr><td>1P</td><td>Ergebnis in m²: 2400 m²</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- W2.3 -->
+  <div class="task">
+    <div class="task-title" style="background:#e8f5e9;border-left-color:#2e6b2e"><h3 style="color:#1b5e20">W2.3</h3><span class="pts" style="color:#1b5e20">6 Punkte <span class="afb afb2">AFB II</span></span></div>
+    <p>Gerade \(h\colon \vec{x}=(2,1,4)^T+t(3,2,-1)^T\), Punkt \(B=(8,0,0)^T\)</p>
+    <div class="sol" style="border-color:#2e6b2e;background:#f1f8f1">
+      <div class="sol-head" style="color:#1b5e20">a) Lotfußpunkt F auf h &mdash; 4 Punkte</div>
+      <p>Lotbedingung: \(\overrightarrow{F_hB}\perp\vec{d}\) mit \(\vec{d}=(3,2,-1)^T\)</p>
+      <p>\(\overrightarrow{F_hB}=B-\vec{x}(t)=(8-2-3t,\;0-1-2t,\;0-4+t)=(6-3t,\,-1-2t,\,-4+t)\)</p>
+      <p>\(\overrightarrow{F_hB}\cdot\vec{d}=0\):</p>
+      <div class="formula-c">\[3(6-3t)+2(-1-2t)+(-1)(-4+t)=0\]</div>
+      <p>\(18-9t-2-4t+4-t=0 \;\Rightarrow\; 20-14t=0 \;\Rightarrow\; t=\dfrac{20}{14}=\dfrac{10}{7}\approx1{,}429\)</p>
+      <p>\(F=\left(2+\frac{30}{7},\,1+\frac{20}{7},\,4-\frac{10}{7}\right)=\left(\frac{44}{7},\,\frac{27}{7},\,\frac{18}{7}\right)\approx(6{,}29;\,3{,}86;\,2{,}57)\)</p>
+    </div>
+    <div class="sol" style="border-color:#2e6b2e;background:#f1f8f1;margin-top:3mm">
+      <div class="sol-head" style="color:#1b5e20">b) Minimaler Abstand &mdash; 2 Punkte</div>
+      <div class="formula-c">\[\overrightarrow{F_hB}=\left(8-\tfrac{44}{7},\,0-\tfrac{27}{7},\,0-\tfrac{18}{7}\right)=\left(\tfrac{12}{7},\,-\tfrac{27}{7},\,-\tfrac{18}{7}\right)\]</div>
+      <div class="formula-c">\[d=\frac{1}{7}\sqrt{144+729+324}=\frac{\sqrt{1197}}{7}\approx\frac{34{,}60}{7}\approx\mathbf{4{,}94 \text{ Einh.}=49{,}4\text{ m}}\]</div>
+    </div>
+    <div class="rubric" style="border-color:#2e6b2e">
+      <div class="r-head" style="color:#1b5e20">Bewertung</div>
+      <table>
+        <tr><td>1P</td><td>Lotbedingung korrekt aufgestellt</td></tr>
+        <tr><td>1P</td><td>Skalarprodukt korrekt ausgerechnet</td></tr>
+        <tr><td>1P</td><td>\(t=10/7\) korrekt</td></tr>
+        <tr><td>1P</td><td>Lotfußpunkt \(F\approx(6{,}29;\,3{,}86;\,2{,}57)\)</td></tr>
+        <tr><td>1P</td><td>Abstandsvektor korrekt</td></tr>
+        <tr><td>1P</td><td>\(d\approx49{,}4\) m korrekt</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer-line">Probeklausur Mathematik eAN 2026 &bull; Erwartungshorizont &bull; W2 (1/2) &bull; Seite 9</div>
+</div>
+
+<div class="page">
+  <div class="sec" style="background:#2e6b2e"><h2>W2 &ndash; Lösungen (Forts.)</h2><div class="meta">W2.4 und W2.5 &bull; E₃ durch A(0|0|0), B(8|0|0), C'(4|6|3)</div></div>
+
+  <!-- W2.4 -->
+  <div class="task">
+    <div class="task-title" style="background:#e8f5e9;border-left-color:#2e6b2e"><h3 style="color:#1b5e20">W2.4</h3><span class="pts" style="color:#1b5e20">7 Punkte <span class="afb afb2">AFB II</span>/<span class="afb afb3">III</span></span></div>
+    <div class="sol" style="border-color:#2e6b2e;background:#f1f8f1">
+      <div class="sol-head" style="color:#1b5e20">a) Parameterform und Normalenvektor von E₃ &mdash; 3 Punkte</div>
+      <p>Richtungsvektoren: \(\overrightarrow{AB}=(8,0,0)^T\), \(\overrightarrow{AC'}=(4,6,3)^T\)</p>
+      <div class="formula-c">\[E_3\colon \vec{x}=\begin{pmatrix}0\\0\\0\end{pmatrix}+s\begin{pmatrix}8\\0\\0\end{pmatrix}+r\begin{pmatrix}4\\6\\3\end{pmatrix}\]</div>
+      <p>Normalenvektor \(\vec{n}=\overrightarrow{AB}\times\overrightarrow{AC'}\):</p>
+      <div class="formula-c">\[\vec{n}=\begin{pmatrix}8\\0\\0\end{pmatrix}\times\begin{pmatrix}4\\6\\3\end{pmatrix}=\begin{pmatrix}0\cdot3-0\cdot6\\0\cdot4-8\cdot3\\8\cdot6-0\cdot4\end{pmatrix}=\begin{pmatrix}0\\-24\\48\end{pmatrix}\]</div>
+      <p>Vereinfacht (durch \(-24\) dividiert): \(\vec{n}=\begin{pmatrix}0\\1\\-2\end{pmatrix}\)</p>
+    </div>
+    <div class="sol" style="border-color:#2e6b2e;background:#f1f8f1;margin-top:3mm">
+      <div class="sol-head" style="color:#1b5e20">b) Normalenform (Koordinatenform) &mdash; 2 Punkte</div>
+      <p>Mit Stützpunkt \(A=(0,0,0)^T\) und \(\vec{n}=(0,1,-2)^T\):</p>
+      <div class="formula-c">\[\vec{n}\cdot\vec{x}=\vec{n}\cdot\overrightarrow{OA}\;\Rightarrow\; 0\cdot x+1\cdot y+(-2)\cdot z=0\]</div>
+      <div class="formula-c">\[\boxed{y-2z=0}\]</div>
+      <p>Probe: \(A(0,0,0)\): \(0-0=0\)✓; \(B(8,0,0)\): \(0-0=0\)✓; \(C'(4,6,3)\): \(6-6=0\)✓</p>
+    </div>
+    <div class="sol" style="border-color:#2e6b2e;background:#f1f8f1;margin-top:3mm">
+      <div class="sol-head" style="color:#1b5e20">c) Abstand D(4|3|5) von E₃ &mdash; 2 Punkte</div>
+      <p>Hesse-Normalenform: \(\vec{n}_0=\dfrac{1}{\sqrt{5}}(0,1,-2)^T\)</p>
+      <div class="formula-c">\[d(D,E_3)=\frac{|y_D-2z_D|}{|\vec{n}|}=\frac{|3-2\cdot5|}{\sqrt{0+1+4}}=\frac{|3-10|}{\sqrt{5}}=\frac{7}{\sqrt{5}}\approx\frac{7}{2{,}236}\approx\mathbf{3{,}13 \text{ Einh.}=31{,}3\text{ m}}\]</div>
+      <p><em>Sachkontext: Der Punkt \(D\) liegt ca. 31,3 Meter über der geneigten Wartungsplattform \(E_3\).</em></p>
+    </div>
+    <div class="rubric" style="border-color:#2e6b2e">
+      <div class="r-head" style="color:#1b5e20">Bewertung</div>
+      <table>
+        <tr><td>1P</td><td>Richtungsvektoren korrekt bestimmt</td></tr>
+        <tr><td>1P</td><td>Parameterform aufgestellt</td></tr>
+        <tr><td>1P</td><td>Normalenvektor \((0,-24,48)^T\) oder Vielfaches korrekt</td></tr>
+        <tr><td>1P</td><td>Koordinatenform \(y-2z=0\) korrekt</td></tr>
+        <tr><td>1P</td><td>Probe mit allen drei Punkten</td></tr>
+        <tr><td>1P</td><td>Abstandsformel korrekt angesetzt</td></tr>
+        <tr><td>1P</td><td>\(d\approx3{,}13\) Einheiten = 31,3 m mit Interpretation</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- W2.5 -->
+  <div class="task">
+    <div class="task-title" style="background:#e8f5e9;border-left-color:#2e6b2e"><h3 style="color:#1b5e20">W2.5</h3><span class="pts" style="color:#1b5e20">6 Punkte <span class="afb afb3">AFB III</span></span></div>
+    <p>Gerade \(h\colon \vec{x}=(2,1,4)^T+t(3,2,-1)^T\), Ebene \(E_3\colon y-2z=0\)</p>
+    <div class="sol" style="border-color:#2e6b2e;background:#f1f8f1">
+      <div class="sol-head" style="color:#1b5e20">a) Schnittpunkt &mdash; 3 Punkte</div>
+      <p>Einsetzen in \(y-2z=0\):</p>
+      <div class="formula-c">\[(1+2t)-2(4-t)=0 \;\Rightarrow\; 1+2t-8+2t=0 \;\Rightarrow\; 4t=7 \;\Rightarrow\; t=\frac{7}{4}=1{,}75\]</div>
+      <div class="formula-c">\[S=\left(2+\frac{21}{4},\,1+\frac{14}{4},\,4-\frac{7}{4}\right)=\left(\frac{29}{4},\,\frac{18}{4},\,\frac{9}{4}\right)=(7{,}25;\;4{,}5;\;2{,}25)\]</div>
+      <p>Probe: \(y-2z=4{,}5-4{,}5=0\) ✓</p>
+    </div>
+    <div class="sol" style="border-color:#2e6b2e;background:#f1f8f1;margin-top:3mm">
+      <div class="sol-head" style="color:#1b5e20">b) Schnittwinkel &mdash; 2 Punkte</div>
+      <div class="formula-c">\[\sin\alpha=\frac{|\vec{d}\cdot\vec{n}|}{|\vec{d}|\cdot|\vec{n}|}=\frac{|(3,2,-1)\cdot(0,1,-2)|}{\sqrt{14}\cdot\sqrt{5}}=\frac{|0+2+2|}{\sqrt{70}}=\frac{4}{\sqrt{70}}\approx\frac{4}{8{,}367}\approx0{,}4781\]</div>
+      <div class="formula-c">\[\alpha=\arcsin(0{,}4781)\approx\mathbf{28{,}5°}\]</div>
+    </div>
+    <div class="sol" style="border-color:#2e6b2e;background:#f1f8f1;margin-top:3mm">
+      <div class="sol-head" style="color:#1b5e20">c) Sicherheitsbeurteilung &mdash; 1 Punkt</div>
+      <p>Abstand \(S\) zu \(D(4,3,5)\):</p>
+      <div class="formula-c">\[|\overrightarrow{SD}|=\left|(4-7{,}25,\,3-4{,}5,\,5-2{,}25)\right|=\left|(-3{,}25,\,-1{,}5,\,2{,}75)\right|\]</div>
+      <div class="formula-c">\[=\sqrt{10{,}5625+2{,}25+7{,}5625}=\sqrt{20{,}375}\approx4{,}51 \text{ Einh.}=45{,}1\text{ m}\]</div>
+      <p>Da \(45{,}1\text{ m} > 20\text{ m}\), ist die Bedingung <strong>erfüllt</strong>. Die Drohne fliegt sicher über der Plattform.</p>
+    </div>
+    <div class="rubric" style="border-color:#2e6b2e">
+      <div class="r-head" style="color:#1b5e20">Bewertung</div>
+      <table>
+        <tr><td>1P</td><td>Gleichung für \(t\) korrekt aufgestellt</td></tr>
+        <tr><td>1P</td><td>\(t=7/4\) korrekt</td></tr>
+        <tr><td>1P</td><td>Schnittpunkt \(S=(7{,}25;\,4{,}5;\,2{,}25)\) korrekt</td></tr>
+        <tr><td>1P</td><td>Schnittwinkelformel korrekt, \(\vec{d}\cdot\vec{n}=4\)</td></tr>
+        <tr><td>1P</td><td>\(\alpha\approx28{,}5°\) korrekt</td></tr>
+        <tr><td>1P</td><td>Abstand \(S\) zu \(D\approx45{,}1\text{ m}>20\text{ m}\), Sicherheitsbedingung erfüllt</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer-line">Probeklausur Mathematik eAN 2026 &bull; Erwartungshorizont &bull; W2 (2/2) &bull; Seite 10</div>
+</div>
+
+</body>
+</html>

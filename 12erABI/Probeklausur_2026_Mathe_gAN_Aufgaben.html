@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probeklausur Mathematik gAN 2026 – Aufgaben</title>
+
+<!-- MathJax 3 -->
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']],
+    displayMath: [['\\[', '\\]']],
+    tags: 'none'
+  },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+<style>
+  /* ===== ALLGEMEINES LAYOUT ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 11pt;
+    line-height: 1.55;
+    color: #1a1a1a;
+    background: #f5f5f5;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 10mm auto;
+    background: white;
+    padding: 20mm 22mm 20mm 22mm;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  }
+
+  /* ===== DECKBLATT ===== */
+  .cover {
+    text-align: center;
+    padding-top: 20mm;
+  }
+  .cover .institution {
+    font-size: 10pt;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8mm;
+  }
+  .cover .exam-title {
+    font-size: 20pt;
+    font-weight: bold;
+    color: #1a3a5c;
+    margin-bottom: 4mm;
+  }
+  .cover .exam-subtitle {
+    font-size: 14pt;
+    color: #2c5f8a;
+    margin-bottom: 10mm;
+  }
+  .cover .year-badge {
+    display: inline-block;
+    background: #1a3a5c;
+    color: white;
+    font-size: 18pt;
+    font-weight: bold;
+    padding: 4mm 12mm;
+    border-radius: 4px;
+    margin-bottom: 12mm;
+  }
+  .cover-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8mm 0;
+    font-size: 11pt;
+  }
+  .cover-table td {
+    border: 1px solid #999;
+    padding: 3mm 5mm;
+    text-align: left;
+  }
+  .cover-table td:first-child {
+    font-weight: bold;
+    background: #f0f4f8;
+    width: 45%;
+  }
+  .cover-note {
+    background: #fff8e1;
+    border: 1px solid #f0c040;
+    border-left: 4px solid #e6a800;
+    padding: 4mm 6mm;
+    font-size: 10pt;
+    text-align: left;
+    margin-top: 8mm;
+    border-radius: 2px;
+  }
+  .cover-note strong { color: #7a5500; }
+
+  .cover-info-box {
+    background: #e8f0f7;
+    border: 1px solid #2c5f8a;
+    border-radius: 4px;
+    padding: 5mm 8mm;
+    margin-top: 10mm;
+    font-size: 10pt;
+    text-align: left;
+  }
+
+  /* ===== ABSCHNITTSKOPF ===== */
+  .section-header {
+    background: #1a3a5c;
+    color: white;
+    padding: 3mm 6mm;
+    font-size: 13pt;
+    font-weight: bold;
+    margin: 6mm 0 4mm 0;
+    border-radius: 2px;
+  }
+  .section-header.teil2 { background: #1a5c3a; }
+  .section-header.wahl { background: #5c3a1a; }
+
+  .subsection-header {
+    background: #d6e4f0;
+    color: #1a3a5c;
+    padding: 2mm 5mm;
+    font-size: 11pt;
+    font-weight: bold;
+    margin: 5mm 0 3mm 0;
+    border-left: 4px solid #1a3a5c;
+  }
+  .subsection-header.gruen { background: #d6f0de; color: #1a5c3a; border-left-color: #1a5c3a; }
+  .subsection-header.braun { background: #f0e6d6; color: #5c3a1a; border-left-color: #5c3a1a; }
+
+  /* ===== AUFGABEN ===== */
+  .aufgabe {
+    margin: 4mm 0 6mm 0;
+    padding: 3mm 0;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .aufgabe:last-child { border-bottom: none; }
+
+  .aufgabe-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2mm;
+  }
+  .aufgabe-nr {
+    font-size: 11pt;
+    font-weight: bold;
+    color: #1a3a5c;
+  }
+  .punkte-badge {
+    background: #1a3a5c;
+    color: white;
+    font-size: 9pt;
+    font-weight: bold;
+    padding: 1mm 3mm;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+  .punkte-badge.gruen { background: #1a5c3a; }
+  .punkte-badge.braun { background: #5c3a1a; }
+
+  .aufgabentext { margin-bottom: 2mm; }
+
+  ol.subtask { padding-left: 6mm; margin: 2mm 0; }
+  ol.subtask li { margin-bottom: 2mm; }
+
+  ul.hinweis { padding-left: 5mm; list-style: disc; }
+  ul.hinweis li { font-size: 10pt; color: #444; margin-bottom: 1mm; }
+
+  .kontext-box {
+    background: #f0f6ff;
+    border: 1px solid #b0c8e8;
+    border-left: 4px solid #2c5f8a;
+    border-radius: 3px;
+    padding: 3mm 5mm;
+    margin: 3mm 0 4mm 0;
+    font-size: 10.5pt;
+  }
+  .kontext-box .kx-title {
+    font-weight: bold;
+    font-size: 10pt;
+    text-transform: uppercase;
+    color: #2c5f8a;
+    margin-bottom: 1.5mm;
+    letter-spacing: 0.5px;
+  }
+
+  .hinweisbox {
+    background: #fffbe6;
+    border: 1px solid #e0c060;
+    border-left: 4px solid #c09000;
+    border-radius: 3px;
+    padding: 2mm 5mm;
+    margin: 2mm 0;
+    font-size: 10pt;
+    color: #5a4000;
+  }
+
+  .formel-line {
+    display: block;
+    text-align: center;
+    margin: 3mm 0;
+  }
+
+  /* ===== PUNKTE-TABELLE (Deckblatt) ===== */
+  .punkte-tabelle {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10pt;
+    margin-top: 6mm;
+  }
+  .punkte-tabelle th {
+    background: #1a3a5c;
+    color: white;
+    padding: 2mm 3mm;
+    text-align: center;
+    border: 1px solid #999;
+  }
+  .punkte-tabelle td {
+    border: 1px solid #ccc;
+    padding: 2mm 3mm;
+    text-align: center;
+  }
+  .punkte-tabelle td:first-child { text-align: left; font-weight: bold; }
+  .punkte-tabelle .gesamt { background: #e8f0f7; font-weight: bold; }
+
+  /* ===== TRENNLINIE ===== */
+  .trennlinie {
+    border: none;
+    border-top: 2px solid #ccc;
+    margin: 6mm 0;
+  }
+
+  .page-break { page-break-after: always; }
+
+  /* ===== HINWEIS-STREIFEN ===== */
+  .hinweis-streifen {
+    background: #eaf6ea;
+    border: 1px solid #5a9e5a;
+    border-radius: 3px;
+    padding: 2mm 5mm;
+    font-size: 10pt;
+    color: #2a5a2a;
+    margin: 3mm 0;
+  }
+
+  /* ===== WAHLAUFGABEN-CONTAINER ===== */
+  .wahl-container {
+    border: 2px solid #5c3a1a;
+    border-radius: 6px;
+    padding: 4mm 6mm;
+    margin: 4mm 0;
+  }
+
+  /* ===== LEERZEILEN FÜR ANTWORTEN ===== */
+  .antwortfeld {
+    border-bottom: 1px dotted #aaa;
+    min-height: 8mm;
+    margin: 1mm 0 3mm 0;
+  }
+
+  small { font-size: 9pt; color: #666; }
+
+  /* ===== DRUCK ===== */
+  @media print {
+    body { background: white; font-size: 10.5pt; }
+    .page {
+      width: auto;
+      margin: 0;
+      padding: 15mm 20mm;
+      box-shadow: none;
+    }
+    .page-break { page-break-after: always; }
+    .no-print { display: none; }
+    .punkte-badge, .section-header, .subsection-header,
+    .cover .year-badge { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== DECKBLATT ===== -->
+<div class="page">
+  <div class="no-print" style="background:#1a3a5c;color:white;padding:3mm 6mm;font-size:10pt;text-align:center;margin-bottom:4mm;border-radius:3px;">
+    Zum Speichern als PDF: <strong>Strg+P</strong> → „Als PDF speichern" | Empfehlung: A4, Ränder: Standard
+  </div>
+
+  <div class="cover">
+    <div class="institution">Gymnasium – Sachsen-Anhalt</div>
+    <div class="exam-title">Probeklausur Abitur 2026</div>
+    <div class="exam-subtitle">Mathematik · Grundlegendes Anforderungsniveau (gAN)</div>
+    <div class="year-badge">2026</div>
+
+    <table class="cover-table">
+      <tr><td>Datum</td><td>2026</td></tr>
+      <tr><td>Bearbeitungszeit gesamt</td><td>240 Minuten (+ 30 Min. Lesezeit)</td></tr>
+      <tr><td>Teil 1 (ohne Hilfsmittel)</td><td>45 Minuten</td></tr>
+      <tr><td>Teil 2 (mit Hilfsmitteln)</td><td>195 Minuten</td></tr>
+      <tr><td>Erlaubte Hilfsmittel (Teil 2)</td><td>CAS-Rechner / GTR, Formelsammlung</td></tr>
+      <tr><td>Hilfsmittel (Teil 1)</td><td>Keine</td></tr>
+      <tr><td>Maximale Punktzahl</td><td>80 Punkte</td></tr>
+    </table>
+
+    <div class="cover-info-box">
+      <strong>Struktur der Prüfung:</strong><br>
+      Teil 1 (20 P.): Aufgaben 1.1 – 1.5 (alle Pflicht, ohne Hilfsmittel)<br>
+      Teil 2 (60 P.): P1 Analysis (20 P.) + P2 Stochastik (20 P.) + Wahlaufgabe W1 oder W2 (20 P.)<br><br>
+      <strong>Wahlaufgabe:</strong> Bearbeiten Sie entweder <em>W1</em> (Stadtpark – Wanderwege) oder <em>W2</em> (Sendemasten – Flugzeug). Kennzeichnen Sie Ihre Wahl auf dem Deckblatt.
+    </div>
+
+    <div class="cover-note">
+      <strong>Hinweise:</strong> Alle Lösungswege sind vollständig und nachvollziehbar darzustellen.
+      Ergebnisse ohne Lösungsweg werden nicht bewertet.
+      Runden Sie Zwischenergebnisse nicht vorzeitig; geben Sie Endergebnisse auf zwei Dezimalstellen gerundet an, sofern nicht anders gefordert.
+    </div>
+  </div>
+
+  <hr class="trennlinie">
+
+  <div style="font-size:10pt;"><strong>Gewählte Wahlaufgabe:</strong> &nbsp;&nbsp; &#9744; W1 – Wanderwege &nbsp;&nbsp;&nbsp; &#9744; W2 – Sendemasten</div>
+
+  <table class="punkte-tabelle" style="margin-top:5mm;">
+    <thead>
+      <tr>
+        <th>Aufgabenteil</th>
+        <th>Max. Punkte</th>
+        <th>Erreichte Punkte</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Teil 1 (Aufgaben 1.1 – 1.5)</td><td>20</td><td></td></tr>
+      <tr><td>P1 – Analysis</td><td>20</td><td></td></tr>
+      <tr><td>P2 – Stochastik</td><td>20</td><td></td></tr>
+      <tr><td>Wahlaufgabe (W1 oder W2)</td><td>20</td><td></td></tr>
+      <tr class="gesamt"><td>Gesamt</td><td>80</td><td></td></tr>
+      <tr class="gesamt"><td>Note</td><td colspan="2"></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== TEIL 1 ===== -->
+<div class="page">
+  <div class="section-header">TEIL 1 &nbsp;|&nbsp; Ohne Hilfsmittel &nbsp;|&nbsp; 45 Minuten &nbsp;|&nbsp; 20 Punkte</div>
+
+  <div class="hinweis-streifen">
+    Legen Sie alle Hilfsmittel (Taschenrechner, Formelsammlung) weg. Zeigen Sie alle Rechenwege.
+  </div>
+
+  <!-- 1.1 -->
+  <div class="aufgabe">
+    <div class="aufgabe-header">
+      <span class="aufgabe-nr">Aufgabe 1.1</span>
+      <span class="punkte-badge">4 Punkte</span>
+    </div>
+    <div class="aufgabentext">
+      Gegeben ist die Funktion \(f(x) = 2x^3 - 6x\).
+    </div>
+    <ol class="subtask" type="a">
+      <li>Berechnen Sie \(f'(x)\). <small>(1 P.)</small></li>
+      <li>Bestimmen Sie alle Nullstellen von \(f'(x)\). <small>(2 P.)</small></li>
+      <li>Was können Sie aus den Nullstellen von \(f'\) über die Funktion \(f\) schlussfolgern? <small>(1 P.)</small></li>
+    </ol>
+  </div>
+
+  <!-- 1.2 -->
+  <div class="aufgabe">
+    <div class="aufgabe-header">
+      <span class="aufgabe-nr">Aufgabe 1.2</span>
+      <span class="punkte-badge">4 Punkte</span>
+    </div>
+    <div class="aufgabentext">
+      Berechnen Sie:
+    </div>
+    <ol class="subtask" type="a">
+      <li>
+        \(\displaystyle\int \left(x^2 + 3x - 1\right) dx\)
+        <small>(2 P.)</small>
+      </li>
+      <li>
+        \(\displaystyle\int_0^1 (4x - 2)\, dx\)
+        <small>(2 P.)</small>
+      </li>
+    </ol>
+  </div>
+
+  <!-- 1.3 -->
+  <div class="aufgabe">
+    <div class="aufgabe-header">
+      <span class="aufgabe-nr">Aufgabe 1.3</span>
+      <span class="punkte-badge">4 Punkte</span>
+    </div>
+    <div class="aufgabentext">
+      Gegeben sind die Vektoren
+      \(\vec{a} = \begin{pmatrix}3\\1\\-2\end{pmatrix}\) und
+      \(\vec{b} = \begin{pmatrix}-1\\2\\4\end{pmatrix}\).
+    </div>
+    <ol class="subtask" type="a">
+      <li>Berechnen Sie \(\vec{a} + \vec{b}\) und \(2\cdot\vec{a}\). <small>(2 P.)</small></li>
+      <li>Sind \(\vec{a}\) und \(\vec{b}\) senkrecht zueinander? Begründen Sie Ihre Antwort rechnerisch. <small>(2 P.)</small></li>
+    </ol>
+  </div>
+
+  <!-- 1.4 -->
+  <div class="aufgabe">
+    <div class="aufgabe-header">
+      <span class="aufgabe-nr">Aufgabe 1.4</span>
+      <span class="punkte-badge">4 Punkte</span>
+    </div>
+    <div class="aufgabentext">
+      Eine faire Münze wird 10-mal geworfen. Die Zufallsgröße \(X\) gibt die Anzahl der Treffer (Kopf) an.
+    </div>
+    <ol class="subtask" type="a">
+      <li>Welche Verteilung hat \(X\)? Geben Sie alle Parameter an und begründen Sie kurz. <small>(1 P.)</small></li>
+      <li>Berechnen Sie \(P(X = 5)\). <small>(2 P.)</small></li>
+      <li>Bestimmen Sie den Erwartungswert \(\mu = E(X)\). <small>(1 P.)</small></li>
+    </ol>
+  </div>
+
+  <!-- 1.5 -->
+  <div class="aufgabe">
+    <div class="aufgabe-header">
+      <span class="aufgabe-nr">Aufgabe 1.5</span>
+      <span class="punkte-badge">4 Punkte</span>
+    </div>
+    <div class="aufgabentext">
+      Eine differenzierbare Funktion \(f\) hat die Ableitung \(f'(x) = 3x^2 - 12\).
+    </div>
+    <ol class="subtask" type="a">
+      <li>Für welche \(x\)-Werte gilt \(f'(x) = 0\)? <small>(2 P.)</small></li>
+      <li>Erläutern Sie, wie man mithilfe dieser Nullstellen die Extremstellen von \(f\) bestimmt.
+          Welche zusätzliche Bedingung muss dazu geprüft werden? <small>(2 P.)</small></li>
+    </ol>
+  </div>
+
+</div>
+
+<!-- ===== TEIL 2: PFLICHTAUFGABE P1 ===== -->
+<div class="page">
+  <div class="section-header teil2">TEIL 2 &nbsp;|&nbsp; Mit Hilfsmitteln &nbsp;|&nbsp; 195 Minuten &nbsp;|&nbsp; 60 Punkte</div>
+  <div class="hinweis-streifen">
+    Ab hier dürfen CAS-Rechner / GTR und Formelsammlung verwendet werden.
+  </div>
+
+  <div class="subsection-header gruen">P1 – Pflichtaufgabe: Analysis &nbsp;|&nbsp; 20 Punkte</div>
+
+  <div class="kontext-box">
+    <div class="kx-title">Kontext: Temperatur im Gewächshaus</div>
+    Die Temperatur (in °C) in einem Gewächshaus wird an einem 10-Stunden-Tag durch das Modell
+    \[
+      f(t) = -0{,}1t^3 + 1{,}5t^2 - 4{,}8t + 18, \quad t \in [0;\, 10]
+    \]
+    beschrieben, wobei \(t\) die Zeit in Stunden nach 7:00 Uhr ist (\(t = 0\) entspricht 7:00 Uhr, \(t = 10\) entspricht 17:00 Uhr).
+  </div>
+
+  <!-- P1.1 -->
+  <div class="aufgabe">
+    <div class="aufgabe-header">
+      <span class="aufgabe-nr">Aufgabe P1.1</span>
+      <span class="punkte-badge gruen">3 Punkte &nbsp;|&nbsp; AFB I</span>
+    </div>
+    <ol class="subtask" type="a">
+      <li>Berechnen Sie \(f(0)\), \(f(5)\) und \(f(10)\). Interpretieren Sie jeden Wert im Sachkontext. <small>(2 P.)</small></li>
+      <li>Berechnen Sie \(f'(t)\). <small>(1 P.)</small></li>
+    </ol>
+  </div>
+
+  <!-- P1.2 -->
+  <div class="aufgabe">
+    <div class="aufgabe-header">
+      <span class="aufgabe-nr">Aufgabe P1.2</span>
+      <span class="punkte-badge gruen">5 Punkte &nbsp;|&nbsp; AFB II</span>
+    </div>
+    <ol class="subtask" type="a">
+      <li>Bestimmen Sie alle Extremstellen von \(f\) auf dem Intervall \([0;\, 10]\) und begründen Sie mithilfe der zweiten Ableitung, welche Art von Extremstelle vorliegt. <small>(3 P.)</small></li>
+      <li>Geben Sie die maximale und minimale Temperatur auf \([0;\, 10]\) an und nennen Sie die zugehörige Uhrzeit. <small>(2 P.)</small></li>
+    </ol>
+  </div>
+
+  <!-- P1.3 -->
+  <div class="aufgabe">
+    <div class="aufgabe-header">
+      <span class="aufgabe-nr">Aufgabe P1.3</span>
+      <span class="punkte-badge gruen">5 Punkte &nbsp;|&nbsp; AFB II</span>
+    </div>
+    <ol class="subtask" type="a">
+      <li>Bestimmen Sie die Wendestelle von \(f\) und interpretieren Sie diese im Sachkontext des Gewächshauses. <small>(3 P.)</small></li>
+      <li>Berechnen Sie die durchschnittliche Temperatur \(\overline{T}\) über den gesamten Zeitraum \([0;\, 10]\):
+        \[
+          \overline{T} = \frac{1}{10}\int_0^{10} f(t)\, dt
+        \]
+        <small>(2 P.)</small>
+      </li>
+    </ol>
+  </div>
+
+  <!-- P1.4 -->
+  <div class="aufgabe">
+    <div class="aufgabe-header">
+      <span class="aufgabe-nr">Aufgabe P1.4</span>
+      <span class="punkte-badge gruen">7 Punkte &nbsp;|&nbsp; AFB II/III</span>
+    </div>
+    <div class="aufgabentext">
+      Das Heizsystem des Gewächshauses schaltet sich ein, sobald die Temperatur unter 17 °C fällt.
+    </div>
+    <ol class="subtask" type="a">
+      <li>Bestimmen Sie mithilfe Ihres Rechners (GTR/CAS), in welchem Zeitraum \(f(t) < 17\) gilt. Runden Sie die Grenzzeiten auf zwei Dezimalstellen. <small>(2 P.)</small></li>
+      <li>Berechnen Sie die Fläche zwischen dem Graphen von \(f\) und der Geraden \(y = 17\) in dem unter (a) bestimmten Zeitraum.
+          <div class="hinweisbox">Hinweis: Die Fläche zwischen zwei Kurven \(f\) und \(g\) auf \([a;\,b]\) berechnet sich als \(\displaystyle\int_a^b |f(t) - g(t)|\, dt\).</div>
+          Interpretieren Sie das Ergebnis im Sachkontext. <small>(3 P.)</small>
+      </li>
+      <li>Bewerten Sie das Modell: Ist es für ein Gewächshaus realistisch? Nennen Sie <strong>zwei</strong> Argumente (pro oder contra). <small>(2 P.)</small></li>
+    </ol>
+  </div>
+</div>
+
+<!-- ===== TEIL 2: PFLICHTAUFGABE P2 ===== -->
+<div class="page">
+  <div class="subsection-header gruen">P2 – Pflichtaufgabe: Stochastik &nbsp;|&nbsp; 20 Punkte</div>
+
+  <div class="kontext-box">
+    <div class="kx-title">Kontext: Schädlingsbefall an Bäumen</div>
+    In einer Gemeinde werden Bäume auf Schädlingsbefall untersucht. Aus langjähriger Erfahrung ist bekannt, dass im Durchschnitt 20 % der Bäume befallen sind.
+    Eine Stichprobe von \(n = 15\) Bäumen wird zufällig ausgewählt.
+    Die Zufallsgröße \(X\) beschreibt die Anzahl der befallenen Bäume in der Stichprobe.
+  </div>
+
+  <!-- P2.1 -->
+  <div class="aufgabe">
+    <div class="aufgabe-header">
+      <span class="aufgabe-nr">Aufgabe P2.1</span>
+      <span class="punkte-badge gruen">4 Punkte &nbsp;|&nbsp; AFB I</span>
+    </div>
+    <ol class="subtask" type="a">
+      <li>Nennen Sie die Verteilung von \(X\) mit allen Parametern und begründen Sie in einem Satz, warum diese Verteilung hier geeignet ist. <small>(2 P.)</small></li>
+      <li>Berechnen Sie \(P(X = 3)\) und \(P(X \leq 2)\). Runden Sie auf vier Dezimalstellen. <small>(2 P.)</small></li>
+    </ol>
+  </div>
+
+  <!-- P2.2 -->
+  <div class="aufgabe">
+    <div class="aufgabe-header">
+      <span class="aufgabe-nr">Aufgabe P2.2</span>
+      <span class="punkte-badge gruen">4 Punkte &nbsp;|&nbsp; AFB I/II</span>
+    </div>
+    <ol class="subtask" type="a">
+      <li>Berechnen Sie den Erwartungswert \(\mu = E(X)\) und die Standardabweichung \(\sigma\). <small>(2 P.)</small></li>
+      <li>Interpretieren Sie den Erwartungswert im Sachkontext. Geben Sie außerdem das \(\sigma\)-Intervall \([\mu - \sigma;\; \mu + \sigma]\) an und beschreiben Sie dessen Bedeutung. <small>(2 P.)</small></li>
+    </ol>
+  </div>
+
+  <!-- P2.3 -->
+  <div class="aufgabe">
+    <div class="aufgabe-header">
+      <span class="aufgabe-nr">Aufgabe P2.3</span>
+      <span class="punkte-badge gruen">6 Punkte &nbsp;|&nbsp; AFB II</span>
+    </div>
+    <div class="aufgabentext">
+      Nach einer Bekämpfungsmaßnahme wurden in einer Stichprobe von \(n = 50\) Bäumen 7 befallene Bäume gefunden (relative Häufigkeit \(h_n = \frac{7}{50} = 0{,}14\)).
+    </div>
+    <ol class="subtask" type="a">
+      <li>Berechnen Sie ein 95-%-Vertrauensintervall für die tatsächliche Befallswahrscheinlichkeit \(p\) mithilfe der Formel:
+        \[
+          \left[h_n - 1{,}96\cdot\sqrt{\frac{h_n(1-h_n)}{n}};\;\; h_n + 1{,}96\cdot\sqrt{\frac{h_n(1-h_n)}{n}}\right]
+        \]
+        <small>(3 P.)</small>
+      </li>
+      <li>Ist es auf Basis dieses Vertrauensintervalls plausibel, dass der ursprüngliche Anteil von \(p = 0{,}20\) nach der Bekämpfungsmaßnahme weiterhin gilt? Begründen Sie Ihre Antwort. <small>(2 P.)</small></li>
+      <li>Was bedeutet ein 95-%-Vertrauensintervall? Erläutern Sie in eigenen Worten. <small>(1 P.)</small></li>
+    </ol>
+  </div>
+
+  <!-- P2.4 -->
+  <div class="aufgabe">
+    <div class="aufgabe-header">
+      <span class="aufgabe-nr">Aufgabe P2.4</span>
+      <span class="punkte-badge gruen">6 Punkte &nbsp;|&nbsp; AFB II/III</span>
+    </div>
+    <div class="aufgabentext">
+      In einer weiteren Untersuchung wurden Bäume nach ihrer Lage gruppiert:
+      <ul class="hinweis" style="margin-top:1mm;">
+        <li><strong>Gruppe A:</strong> Bäume nahe Gewässern (60 Bäume, davon 18 befallen)</li>
+        <li><strong>Gruppe B:</strong> Bäume weit von Gewässern entfernt (40 Bäume, davon 4 befallen)</li>
+      </ul>
+    </div>
+    <ol class="subtask" type="a">
+      <li>Berechnen Sie \(P(\text{befallen} \mid \text{Gruppe A})\) und \(P(\text{befallen} \mid \text{Gruppe B})\). <small>(2 P.)</small></li>
+      <li>Berechnen Sie die Gesamtwahrscheinlichkeit \(P(\text{befallen})\) für einen zufällig ausgewählten Baum aus beiden Gruppen zusammen. <small>(2 P.)</small></li>
+      <li>Untersuchen Sie, ob das Ereignis „befallen" stochastisch unabhängig von der Gruppe ist. Begründen Sie rechnerisch. <small>(2 P.)</small></li>
+    </ol>
+  </div>
+</div>
+
+<!-- ===== WAHLAUFGABEN ===== -->
+<div class="page">
+  <div class="section-header wahl">WAHLAUFGABEN &nbsp;|&nbsp; Wählen Sie genau eine Aufgabe: W1 oder W2 &nbsp;|&nbsp; 20 Punkte</div>
+  <div class="hinweis-streifen">
+    Bearbeiten Sie entweder <strong>W1</strong> (Wanderwege im Stadtpark) oder <strong>W2</strong> (Sendemasten und Flugzeug).
+    Kennzeichnen Sie Ihre Wahl deutlich.
+  </div>
+
+  <!-- W1 -->
+  <div class="wahl-container">
+    <div class="subsection-header braun">W1 – Analytische Geometrie: Wanderwege im Stadtpark &nbsp;|&nbsp; 20 Punkte</div>
+
+    <div class="kontext-box">
+      <div class="kx-title">Kontext</div>
+      Im Stadtpark sollen neue Wanderwege geplant werden. Die Einheit im Koordinatensystem entspricht 100 Metern.
+      Die Ecken einer Rasenfläche sind gegeben durch:
+      \(A(1\mid 0\mid 0)\), \(B(5\mid 0\mid 0)\), \(C(5\mid 4\mid 0)\), \(D(1\mid 4\mid 0)\).
+      Ein erhöhter Aussichtspunkt befindet sich bei \(P(3\mid 2\mid 2)\).
+    </div>
+
+    <div class="aufgabe">
+      <div class="aufgabe-header">
+        <span class="aufgabe-nr">Aufgabe W1.1</span>
+        <span class="punkte-badge braun">4 Punkte &nbsp;|&nbsp; AFB I</span>
+      </div>
+      <ol class="subtask" type="a">
+        <li>Berechnen Sie \(\overrightarrow{AB}\) und \(\overrightarrow{AD}\). <small>(2 P.)</small></li>
+        <li>Berechnen Sie den Betrag \(|\overrightarrow{AB}|\). Geben Sie die tatsächliche Länge der Strecke \(AB\) in Metern an. <small>(2 P.)</small></li>
+      </ol>
+    </div>
+
+    <div class="aufgabe">
+      <div class="aufgabe-header">
+        <span class="aufgabe-nr">Aufgabe W1.2</span>
+        <span class="punkte-badge braun">4 Punkte &nbsp;|&nbsp; AFB II</span>
+      </div>
+      <div class="aufgabentext">
+        Ein gerader Wanderweg beginnt in \(A(1\mid 0\mid 0)\) und verläuft in Richtung \(\vec{v} = \begin{pmatrix}2\\1\\0\end{pmatrix}\).
+      </div>
+      <ol class="subtask" type="a">
+        <li>Stellen Sie die Parametergleichung der Geraden \(g\) auf. <small>(2 P.)</small></li>
+        <li>Liegt der Punkt \(M(3\mid 1\mid 0)\) auf der Geraden \(g\)? Begründen Sie rechnerisch. <small>(2 P.)</small></li>
+      </ol>
+    </div>
+
+    <div class="aufgabe">
+      <div class="aufgabe-header">
+        <span class="aufgabe-nr">Aufgabe W1.3</span>
+        <span class="punkte-badge braun">6 Punkte &nbsp;|&nbsp; AFB II</span>
+      </div>
+      <ol class="subtask" type="a">
+        <li>Bestimmen Sie den Fußpunkt \(F\) des Lotes von \(P(3\mid 2\mid 2)\) auf die Gerade \(g\). <small>(3 P.)</small></li>
+        <li>Berechnen Sie den Abstand \(d(P, g)\). <small>(2 P.)</small></li>
+        <li>Interpretieren Sie diesen Abstand im Sachkontext des Stadtparks. <small>(1 P.)</small></li>
+      </ol>
+    </div>
+
+    <div class="aufgabe">
+      <div class="aufgabe-header">
+        <span class="aufgabe-nr">Aufgabe W1.4</span>
+        <span class="punkte-badge braun">6 Punkte &nbsp;|&nbsp; AFB II/III</span>
+      </div>
+      <div class="aufgabentext">
+        Zwei Wanderwege verlaufen auf den Geraden:
+        \[
+          g_1\colon \vec{X} = \begin{pmatrix}1\\0\\0\end{pmatrix} + t\cdot\begin{pmatrix}2\\1\\0\end{pmatrix}, \quad
+          g_2\colon \vec{X} = \begin{pmatrix}3\\3\\0\end{pmatrix} + s\cdot\begin{pmatrix}1\\-2\\0\end{pmatrix}
+        \]
+      </div>
+      <ol class="subtask" type="a">
+        <li>Bestimmen Sie den Schnittpunkt \(S\) von \(g_1\) und \(g_2\). <small>(3 P.)</small></li>
+        <li>Berechnen Sie den Schnittwinkel \(\varphi\) zwischen den beiden Wegen. <small>(2 P.)</small></li>
+        <li>Bewerten Sie: Ein Kreuzungswinkel von mehr als 45° gilt als übersichtlich und sicher. Ist diese Kreuzung empfehlenswert? <small>(1 P.)</small></li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<!-- W2 -->
+<div class="page">
+  <div class="wahl-container">
+    <div class="subsection-header braun">W2 – Analytische Geometrie: Sendemasten und Flugzeug &nbsp;|&nbsp; 20 Punkte</div>
+
+    <div class="kontext-box">
+      <div class="kx-title">Kontext</div>
+      Drei Sendemasten stehen an den Positionen (Grundfläche, Einheit: km):
+      \(M_1(0\mid 0\mid 0)\), \(M_2(6\mid 0\mid 0)\), \(M_3(3\mid 4\mid 0)\).
+      <br>
+      Ein Flugzeug bewegt sich entlang der Geraden:
+      \[
+        f\colon \vec{X} = \begin{pmatrix}1\\5\\3\end{pmatrix} + t\cdot\begin{pmatrix}2\\-1\\0\end{pmatrix}
+      \]
+    </div>
+
+    <div class="aufgabe">
+      <div class="aufgabe-header">
+        <span class="aufgabe-nr">Aufgabe W2.1</span>
+        <span class="punkte-badge braun">4 Punkte &nbsp;|&nbsp; AFB I</span>
+      </div>
+      <ol class="subtask" type="a">
+        <li>Berechnen Sie \(\overrightarrow{M_1M_2}\) und \(|\overrightarrow{M_1M_2}|\). Geben Sie den Abstand in km an. <small>(2 P.)</small></li>
+        <li>Berechnen Sie den Schwerpunkt (Mittelpunkt) \(S\) des Dreiecks \(M_1 M_2 M_3\). <small>(2 P.)</small></li>
+      </ol>
+    </div>
+
+    <div class="aufgabe">
+      <div class="aufgabe-header">
+        <span class="aufgabe-nr">Aufgabe W2.2</span>
+        <span class="punkte-badge braun">5 Punkte &nbsp;|&nbsp; AFB II</span>
+      </div>
+      <ol class="subtask" type="a">
+        <li>Berechnen Sie den Winkel \(\alpha\) im Dreieck \(M_1 M_2 M_3\) bei \(M_1\). <small>(3 P.)</small></li>
+        <li>Überprüfen Sie, ob das Dreieck \(M_1 M_2 M_3\) gleichschenklig ist. Begründen Sie rechnerisch. <small>(2 P.)</small></li>
+      </ol>
+    </div>
+
+    <div class="aufgabe">
+      <div class="aufgabe-header">
+        <span class="aufgabe-nr">Aufgabe W2.3</span>
+        <span class="punkte-badge braun">5 Punkte &nbsp;|&nbsp; AFB II</span>
+      </div>
+      <div class="aufgabentext">
+        Das Flugzeug soll den Sendemasten \(M_2(6\mid 0\mid 0)\) möglichst nahe überqueren.
+      </div>
+      <ol class="subtask" type="a">
+        <li>Bestimmen Sie den Fußpunkt \(F\) des Lotes von \(M_2\) auf die Gerade \(f\). <small>(3 P.)</small></li>
+        <li>Berechnen Sie den minimalen Abstand \(d(M_2, f)\). <small>(2 P.)</small></li>
+      </ol>
+    </div>
+
+    <div class="aufgabe">
+      <div class="aufgabe-header">
+        <span class="aufgabe-nr">Aufgabe W2.4</span>
+        <span class="punkte-badge braun">6 Punkte &nbsp;|&nbsp; AFB II/III</span>
+      </div>
+      <ol class="subtask" type="a">
+        <li>Bestimmen Sie, ob die Flugbahn \(f\) die \(x\)-Achse (Gerade \(g_x\colon \vec{X} = t\cdot(1\mid 0\mid 0)\)) schneidet. Falls ja: Berechnen Sie den Schnittpunkt und den Schnittwinkel. <small>(3 P.)</small></li>
+        <li>Ein Sicherheitsabstand von mindestens 2 km (= 2 Einheiten) zu jedem Sendemast ist vorgeschrieben.
+            Berechnen Sie den Abstand des Flugzeugs zu \(M_1\) und \(M_3\) <em>am Punkt der größten Annäherung</em> (Lotfußpunkt).
+            Wird der Sicherheitsabstand zu allen drei Masten eingehalten? <small>(3 P.)</small></li>
+      </ol>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:10mm;font-size:9pt;color:#888;">
+    — Ende der Prüfung — &nbsp;|&nbsp; Probeklausur Mathematik gAN 2026 &nbsp;|&nbsp; Sachsen-Anhalt (fiktiv)
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Probeklausur Mathematik eAN 2026 – Aufgaben</title>
+
+  <!-- MathJax 3 -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+        tags: 'none'
+      },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
+  <style>
+    /* ============================================================
+       BASE STYLES
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 11.5pt;
+      line-height: 1.55;
+      color: #1a1a1a;
+      background: #f4f4f4;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: white;
+      margin: 12mm auto;
+      padding: 20mm 22mm 18mm 22mm;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+
+    /* ============================================================
+       PRINT-TO-PDF NOTE
+    ============================================================ */
+    .pdf-note {
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 4px;
+      padding: 8px 14px;
+      margin-bottom: 10mm;
+      font-size: 10pt;
+      font-family: Arial, sans-serif;
+      color: #555;
+    }
+
+    /* ============================================================
+       HEADER / COVER
+    ============================================================ */
+    .cover-header {
+      border-top: 4px solid #1a3a6b;
+      border-bottom: 2px solid #1a3a6b;
+      padding: 8mm 0 6mm 0;
+      margin-bottom: 10mm;
+      text-align: center;
+    }
+    .cover-header .institution {
+      font-size: 10pt;
+      color: #555;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 4mm;
+    }
+    .cover-header h1 {
+      font-size: 20pt;
+      color: #1a3a6b;
+      font-weight: bold;
+      letter-spacing: 0.02em;
+      margin-bottom: 3mm;
+    }
+    .cover-header .subtitle {
+      font-size: 13pt;
+      color: #333;
+      margin-bottom: 2mm;
+    }
+    .cover-header .badge {
+      display: inline-block;
+      background: #1a3a6b;
+      color: white;
+      font-size: 9.5pt;
+      padding: 2px 10px;
+      border-radius: 3px;
+      letter-spacing: 0.08em;
+      font-family: Arial, sans-serif;
+      margin-top: 3mm;
+    }
+
+    /* Info table on cover */
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 7mm 0;
+      font-size: 10.5pt;
+    }
+    .info-table td {
+      padding: 4px 8px;
+      vertical-align: top;
+    }
+    .info-table td:first-child {
+      font-weight: bold;
+      width: 42%;
+      color: #1a3a6b;
+    }
+    .info-table tr:nth-child(odd) td {
+      background: #f0f4fa;
+    }
+
+    .instructions-box {
+      border: 1.5px solid #1a3a6b;
+      border-radius: 4px;
+      padding: 6mm 8mm;
+      margin: 6mm 0;
+      background: #f7f9fd;
+    }
+    .instructions-box h3 {
+      color: #1a3a6b;
+      font-size: 10.5pt;
+      margin-bottom: 3mm;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .instructions-box ul {
+      padding-left: 5mm;
+      font-size: 10.5pt;
+    }
+    .instructions-box ul li {
+      margin-bottom: 1.5mm;
+    }
+
+    /* ============================================================
+       SECTION HEADERS
+    ============================================================ */
+    .section-header {
+      background: #1a3a6b;
+      color: white;
+      padding: 4mm 7mm;
+      margin: 8mm 0 5mm 0;
+      border-radius: 3px;
+    }
+    .section-header h2 {
+      font-size: 13.5pt;
+      font-weight: bold;
+      margin-bottom: 1mm;
+    }
+    .section-header .section-meta {
+      font-size: 9.5pt;
+      opacity: 0.85;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Sub-section (Aufgabe) */
+    .aufgabe-block {
+      margin: 5mm 0 4mm 0;
+      padding-bottom: 4mm;
+      border-bottom: 1px dotted #ccc;
+    }
+    .aufgabe-block:last-child {
+      border-bottom: none;
+    }
+
+    .aufgabe-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      background: #e8eef7;
+      border-left: 4px solid #1a3a6b;
+      padding: 3px 8px 3px 10px;
+      margin-bottom: 3mm;
+      border-radius: 0 3px 3px 0;
+    }
+    .aufgabe-title h3 {
+      font-size: 11.5pt;
+      color: #1a3a6b;
+      font-weight: bold;
+    }
+    .points-badge {
+      font-family: Arial, sans-serif;
+      font-size: 9.5pt;
+      font-weight: bold;
+      color: #1a3a6b;
+      white-space: nowrap;
+    }
+
+    /* Kontext box */
+    .kontext-box {
+      background: #fdf6e3;
+      border: 1px solid #d4a800;
+      border-radius: 4px;
+      padding: 4mm 6mm;
+      margin: 3mm 0 4mm 0;
+      font-size: 10.5pt;
+    }
+    .kontext-box .kontext-label {
+      font-weight: bold;
+      color: #8a6800;
+      font-size: 9.5pt;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5mm;
+    }
+
+    /* Subtask */
+    .subtask {
+      margin: 2.5mm 0 2.5mm 4mm;
+      font-size: 11pt;
+    }
+    .subtask-letter {
+      font-weight: bold;
+      color: #1a3a6b;
+    }
+
+    /* Answer line area */
+    .answer-lines {
+      margin: 3mm 0 2mm 0;
+    }
+    .answer-line {
+      border-bottom: 1px solid #bbb;
+      margin: 5mm 0;
+      height: 0;
+    }
+
+    /* Wahlaufgabe note */
+    .choice-note {
+      background: #e8f5e9;
+      border: 1.5px solid #388e3c;
+      border-radius: 4px;
+      padding: 3mm 6mm;
+      margin: 5mm 0;
+      font-size: 10.5pt;
+      color: #1b5e20;
+      font-family: Arial, sans-serif;
+    }
+
+    /* ============================================================
+       PAGE BREAK
+    ============================================================ */
+    .page-break-hint {
+      display: none;
+    }
+
+    /* ============================================================
+       PRINT STYLES
+    ============================================================ */
+    @media print {
+      body {
+        background: white;
+        font-size: 11pt;
+      }
+      .pdf-note { display: none; }
+      .page {
+        width: 100%;
+        margin: 0;
+        padding: 15mm 20mm 15mm 20mm;
+        box-shadow: none;
+        page-break-after: always;
+      }
+      .page:last-child { page-break-after: avoid; }
+      .section-header { page-break-after: avoid; }
+      .aufgabe-block { page-break-inside: avoid; }
+      .kontext-box { page-break-inside: avoid; }
+      .page-break { page-break-before: always; }
+      .page-break-hint { display: block; page-break-before: always; }
+
+      @page {
+        size: A4;
+        margin: 15mm 20mm;
+      }
+      @page :first {
+        margin-top: 10mm;
+      }
+    }
+
+    .formula-display {
+      text-align: center;
+      margin: 3mm 0;
+      font-size: 11pt;
+    }
+
+    .hint {
+      font-size: 9.5pt;
+      color: #666;
+      font-style: italic;
+      font-family: Arial, sans-serif;
+      margin-top: 1mm;
+    }
+
+    hr.section-divider {
+      border: none;
+      border-top: 2px solid #1a3a6b;
+      margin: 8mm 0;
+    }
+
+    .footer-line {
+      text-align: center;
+      font-size: 8.5pt;
+      color: #888;
+      font-family: Arial, sans-serif;
+      margin-top: 8mm;
+      border-top: 1px solid #ddd;
+      padding-top: 3mm;
+    }
+  </style>
+</head>
+<body>
+
+<!-- PDF Note (screen only) -->
+<div class="pdf-note">
+  <strong>Hinweis zum Speichern als PDF:</strong> Datei &rarr; Drucken &rarr; Als PDF speichern&nbsp;&nbsp;(Strg+P)
+</div>
+
+<!-- ================================================================
+     SEITE 1: DECKBLATT
+================================================================ -->
+<div class="page" id="cover">
+
+  <div class="cover-header">
+    <div class="institution">Gymnasiale Oberstufe &mdash; Sachsen-Anhalt</div>
+    <h1>Probeklausur Mathematik 2026</h1>
+    <div class="subtitle">Abiturprüfung &ndash; Fiktive Aufgaben</div>
+    <span class="badge">Erhöhtes Anforderungsniveau (eAN)</span>
+  </div>
+
+  <table class="info-table">
+    <tr>
+      <td>Prüfungsdatum:</td>
+      <td>__________________________</td>
+    </tr>
+    <tr>
+      <td>Name / Vorname:</td>
+      <td>__________________________</td>
+    </tr>
+    <tr>
+      <td>Kurs / Schule:</td>
+      <td>__________________________</td>
+    </tr>
+    <tr>
+      <td>Gesamtbearbeitungszeit:</td>
+      <td>300 Minuten (5 Stunden)<br>
+        <em style="font-size:9.5pt;color:#555">Teil 1: 45 Min. (ohne Hilfsmittel) &bull; Teil 2: 255 Min. (mit CAS/GTR)</em>
+      </td>
+    </tr>
+    <tr>
+      <td>Erlaubte Hilfsmittel:</td>
+      <td>Teil 1: keine &mdash; Teil 2: CAS-Rechner / GTR, Formelsammlung</td>
+    </tr>
+    <tr>
+      <td>Gesamtpunktzahl:</td>
+      <td><strong>100 Punkte</strong><br>
+        <em style="font-size:9.5pt;color:#555">Teil 1: 20 P. &bull; P1 (Analysis): 25 P. &bull; P2 (Stochastik): 25 P. &bull; Wahlaufgabe: 30 P.</em>
+      </td>
+    </tr>
+  </table>
+
+  <div class="instructions-box">
+    <h3>Allgemeine Hinweise</h3>
+    <ul>
+      <li>Schreiben Sie Ihren Namen auf alle Lösungsblätter.</li>
+      <li><strong>Teil 1</strong> wird ohne Hilfsmittel bearbeitet (45 Minuten). Geben Sie Teil 1 ab, bevor Sie Teil 2 beginnen.</li>
+      <li><strong>Teil 2</strong> wird mit CAS-Rechner oder GTR sowie Formelsammlung bearbeitet (255 Minuten).</li>
+      <li>In <strong>Teil 2</strong> sind die <strong>Pflichtaufgaben P1 und P2</strong> vollständig zu bearbeiten.</li>
+      <li>Bei den <strong>Wahlaufgaben</strong> wählen Sie <em>genau eine</em> der Aufgaben W1 oder W2. Kennzeichnen Sie Ihre Wahl.</li>
+      <li>Lösungswege müssen vollständig und nachvollziehbar dargestellt werden.</li>
+      <li>Ergebnisse sind mit angemessener Genauigkeit (in der Regel auf zwei Dezimalstellen) anzugeben.</li>
+      <li>Bei Sachaufgaben sind Ergebnisse stets im Sachkontext zu interpretieren.</li>
+    </ul>
+  </div>
+
+  <table class="info-table" style="margin-top:6mm;">
+    <tr>
+      <td colspan="2" style="font-weight:bold;color:#1a3a6b;background:#e8eef7;">Punkteübersicht (vom Prüfer auszufüllen)</td>
+    </tr>
+    <tr>
+      <td>Teil 1 (ohne Hilfsmittel)</td>
+      <td>_______ / 20 Punkte</td>
+    </tr>
+    <tr>
+      <td>P1 &ndash; Analysis</td>
+      <td>_______ / 25 Punkte</td>
+    </tr>
+    <tr>
+      <td>P2 &ndash; Stochastik</td>
+      <td>_______ / 25 Punkte</td>
+    </tr>
+    <tr>
+      <td>Wahlaufgabe W1 / W2</td>
+      <td>_______ / 30 Punkte</td>
+    </tr>
+    <tr style="font-weight:bold;background:#e8eef7;">
+      <td>Gesamt</td>
+      <td>_______ / 100 Punkte</td>
+    </tr>
+  </table>
+
+  <div class="footer-line">
+    Probeklausur Mathematik eAN 2026 &bull; Fiktive Aufgaben &bull; Seite 1
+  </div>
+</div>
+
+
+<!-- ================================================================
+     SEITE 2: TEIL 1 – OHNE HILFSMITTEL
+================================================================ -->
+<div class="page" id="teil1">
+
+  <div class="section-header">
+    <h2>Teil 1 &ndash; Ohne Hilfsmittel</h2>
+    <div class="section-meta">45 Minuten &bull; 20 Punkte &bull; Kein Taschenrechner, keine Formelsammlung</div>
+  </div>
+
+  <p style="font-size:10.5pt;color:#444;margin-bottom:5mm;font-family:Arial,sans-serif;">
+    <em>Lösen Sie alle fünf Aufgaben. Notieren Sie alle Rechenschritte vollständig. Keine Hilfsmittel erlaubt.</em>
+  </p>
+
+  <!-- Aufgabe 1.1 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe 1.1</h3>
+      <span class="points-badge">4 Punkte</span>
+    </div>
+    <p>Gegeben ist die Funktion \(f\) mit \(f(x) = 3x^2 \cdot e^{-x}\).</p>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      Berechnen Sie \(f'(x)\). Geben Sie auch die verwendete Ableitungsregel an.
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      Bestimmen Sie die Gleichung der Tangente an den Graphen von \(f\) im Punkt \(x_0 = 0\).
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <!-- Aufgabe 1.2 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe 1.2</h3>
+      <span class="points-badge">4 Punkte</span>
+    </div>
+    <p>Berechnen Sie die folgenden Integrale. Der Rechenweg muss erkennbar sein.</p>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      \(\displaystyle\int \!\left(2x^3 - 4x + 1\right)dx\)
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      \(\displaystyle\int_1^{2} \frac{3}{x}\,dx\)
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <!-- Aufgabe 1.3 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe 1.3</h3>
+      <span class="points-badge">4 Punkte</span>
+    </div>
+    <p>Gegeben sind die Vektoren
+      \(\vec{a} = \begin{pmatrix}2\\-1\\3\end{pmatrix}\) und
+      \(\vec{b} = \begin{pmatrix}1\\4\\-2\end{pmatrix}\).
+    </p>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      Berechnen Sie das Skalarprodukt \(\vec{a} \cdot \vec{b}\).
+      <span class="points-badge" style="float:right;">(1 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      Bestimmen Sie den Winkel \(\varphi\) zwischen \(\vec{a}\) und \(\vec{b}\). Geben Sie das Ergebnis auf ganze Grad gerundet an.
+      <span class="points-badge" style="float:right;">(3 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <!-- Aufgabe 1.4 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe 1.4</h3>
+      <span class="points-badge">4 Punkte</span>
+    </div>
+    <p>Eine Zufallsvariable \(X\) ist binomialverteilt mit den Parametern \(n = 12\) und \(p = 0{,}25\).</p>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      Berechnen Sie \(P(X = 3)\). Geben Sie den exakten Bruch oder eine auf vier Dezimalstellen gerundete Dezimalzahl an.
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      Geben Sie den Erwartungswert \(\mu\) und die Standardabweichung \(\sigma\) von \(X\) an. Berechnen Sie die Werte ohne Taschenrechner.
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <!-- Aufgabe 1.5 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe 1.5</h3>
+      <span class="points-badge">4 Punkte</span>
+    </div>
+    <p>Von einer Funktion \(g\) ist bekannt:</p>
+    <div class="formula-display">
+      \(g'(x) = 2x - 4 \quad \text{und} \quad g(0) = 5\)
+    </div>
+    <p>Bestimmen Sie \(g(x)\). Berechnen Sie anschließend alle Nullstellen von \(g\).</p>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <div class="footer-line">
+    Probeklausur Mathematik eAN 2026 &bull; Teil 1 (ohne Hilfsmittel) &bull; Seite 2
+  </div>
+</div>
+
+
+<!-- ================================================================
+     SEITE 3: P1 – ANALYSIS
+================================================================ -->
+<div class="page" id="p1">
+
+  <div class="section-header">
+    <h2>Pflichtaufgabe P1 &ndash; Analysis</h2>
+    <div class="section-meta">Teil 2 (mit Hilfsmitteln) &bull; 25 Punkte</div>
+  </div>
+
+  <div class="kontext-box">
+    <div class="kontext-label">Sachkontext</div>
+    Ein Produktionsbetrieb modelliert die tägliche Produktionsrate (in Tonnen pro Stunde) über
+    einen Arbeitstag von 8 Stunden mithilfe der Funktion
+    \[f(t) = -0{,}5\,t^3 + 3\,t^2 + 2\,t, \quad t \in [0;\,8],\]
+    wobei \(t\) die seit Produktionsbeginn verstrichene Zeit in Stunden bezeichnet.
+    Der Wert \(f(t)\) gibt an, wie viele Tonnen pro Stunde zum Zeitpunkt \(t\) produziert werden.
+  </div>
+
+  <!-- P1.1 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe P1.1</h3>
+      <span class="points-badge">4 Punkte &nbsp;|&nbsp; AFB I / II</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      Bestimmen Sie \(f'(t)\) und \(f''(t)\).
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      Berechnen Sie \(f'(4)\) und interpretieren Sie diesen Wert im Sachkontext.
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <!-- P1.2 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe P1.2</h3>
+      <span class="points-badge">6 Punkte &nbsp;|&nbsp; AFB II</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      Bestimmen Sie alle lokalen Extremstellen von \(f\) auf \([0;\,8]\). Überprüfen Sie das Vorzeichen der zweiten Ableitung und beurteilen Sie die Art der Extremstelle.
+      <span class="points-badge" style="float:right;">(4 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      Bestimmen Sie die Wendestelle von \(f\) und interpretieren Sie sie im Sachkontext.
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <!-- P1.3 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe P1.3</h3>
+      <span class="points-badge">5 Punkte &nbsp;|&nbsp; AFB II</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      Berechnen Sie die Gesamtproduktionsmenge im Zeitraum \([0;\,8]\). Geben Sie das Ergebnis mit einer sinnvollen Einheit an.
+      <span class="points-badge" style="float:right;">(3 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      Berechnen Sie die durchschnittliche Produktionsrate pro Stunde im gesamten Zeitraum. Interpretieren Sie das Ergebnis.
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <!-- P1.4 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe P1.4</h3>
+      <span class="points-badge">5 Punkte &nbsp;|&nbsp; AFB II / III</span>
+    </div>
+    <p>Ein alternatives Produktionsmodell verwendet die Funktion
+      \(g(t) = 3t \cdot e^{-0{,}4t}\) für \(t \in [0;\,8]\).
+    </p>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      Berechnen Sie \(g'(t)\).
+      <span class="points-badge" style="float:right;">(1 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      Bestimmen Sie das globale Maximum von \(g\) auf \([0;\,8]\). Geben Sie den Zeitpunkt und den Maximalwert an.
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">c)</span>
+      Vergleichen Sie die Gesamtproduktion beider Modelle auf \([0;\,8]\). Welches Modell würden Sie dem Unternehmen empfehlen, und warum? Begründen Sie Ihre Antwort mathematisch und sachlich.
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <!-- P1.5 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe P1.5</h3>
+      <span class="points-badge">5 Punkte &nbsp;|&nbsp; AFB III</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      Bestimmen Sie alle Schnittpunkte der Graphen von \(f\) und \(g\) im Intervall \([0;\,8]\).
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      Berechnen Sie den Flächeninhalt der Fläche, die von den Graphen von \(f\) und \(g\) auf dem ersten gemeinsamen Teilintervall eingeschlossen wird.
+      Interpretieren Sie den Wert im Sachkontext.
+      <span class="points-badge" style="float:right;">(3 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <div class="footer-line">
+    Probeklausur Mathematik eAN 2026 &bull; Pflichtaufgabe P1 (Analysis) &bull; Seite 3
+  </div>
+</div>
+
+
+<!-- ================================================================
+     SEITE 4: P2 – STOCHASTIK
+================================================================ -->
+<div class="page" id="p2">
+
+  <div class="section-header">
+    <h2>Pflichtaufgabe P2 &ndash; Stochastik</h2>
+    <div class="section-meta">Teil 2 (mit Hilfsmitteln) &bull; 25 Punkte</div>
+  </div>
+
+  <div class="kontext-box">
+    <div class="kontext-label">Sachkontext</div>
+    Eine ophthalmologische Studie stellt fest, dass 15&nbsp;% aller Schülerinnen und Schüler
+    an Sehproblemen leiden, die eine Brille erfordern. Ein Kurs an einer Schule hat 25 Schülerinnen
+    und Schüler. Die Zufallsvariable \(X\) beschreibt die Anzahl der Schülerinnen und Schüler
+    in diesem Kurs, die Sehprobleme haben.
+  </div>
+
+  <!-- P2.1 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe P2.1</h3>
+      <span class="points-badge">4 Punkte &nbsp;|&nbsp; AFB I</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      Begründen Sie kurz, warum \(X\) näherungsweise als binomialverteilt mit \(n = 25\) und \(p = 0{,}15\) modelliert werden kann. Nennen Sie die dafür notwendigen Voraussetzungen.
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      Berechnen Sie \(P(X = 4)\) und \(P(X \leq 3)\).
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <!-- P2.2 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe P2.2</h3>
+      <span class="points-badge">4 Punkte &nbsp;|&nbsp; AFB I / II</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      Berechnen Sie den Erwartungswert \(\mu\) und die Standardabweichung \(\sigma\) von \(X\).
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      Berechnen Sie \(P(\mu - \sigma \leq X \leq \mu + \sigma)\) und interpretieren Sie das Ergebnis im Sachkontext.
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <!-- P2.3 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe P2.3</h3>
+      <span class="points-badge">6 Punkte &nbsp;|&nbsp; AFB II</span>
+    </div>
+    <p>
+      Nach der Einführung ergonomischer Maßnahmen werden an der Schule \(n = 100\)
+      Schülerinnen und Schüler zufällig befragt. Davon geben 12 an, Sehprobleme zu haben,
+      die eine Brille erfordern.
+    </p>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      Berechnen Sie die relative Häufigkeit \(h_n\) der Schülerinnen und Schüler mit Sehproblemen in der Stichprobe.
+      <span class="points-badge" style="float:right;">(1 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      Berechnen Sie ein 95&nbsp;%-Vertrauensintervall für den tatsächlichen Anteil \(p\) mithilfe der Formel:
+      \[
+        \left[h_n - 1{,}96\cdot\sqrt{\frac{h_n(1-h_n)}{n}};\;\; h_n + 1{,}96\cdot\sqrt{\frac{h_n(1-h_n)}{n}}\right]
+      \]
+      <span class="points-badge" style="float:right;">(3 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">c)</span>
+      Ist es auf Basis dieses Vertrauensintervalls plausibel, dass der ursprüngliche Studien-Anteil \(p_0 = 0{,}15\)
+      auch nach den Maßnahmen noch gilt? Begründen Sie Ihre Antwort.
+      <span class="points-badge" style="float:right;">(1 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">d)</span>
+      Was bedeutet „95&nbsp;%-Vertrauensintervall"? Erläutern Sie in eigenen Worten.
+      <span class="points-badge" style="float:right;">(1 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <!-- P2.4 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe P2.4</h3>
+      <span class="points-badge">5 Punkte &nbsp;|&nbsp; AFB II / III</span>
+    </div>
+    <p>
+      In einer weiteren Untersuchung werden 200 Schülerinnen und Schüler befragt.
+      Dabei ergibt sich folgendes Bild:
+    </p>
+    <ul style="margin: 3mm 0 3mm 8mm; font-size:10.5pt;">
+      <li>160 Schülerinnen und Schüler haben eine tägliche Bildschirmzeit von mehr als 4 Stunden (Ereignis \(B\)).</li>
+      <li>Von diesen 160 haben 32 Sehprobleme (Ereignis \(A\)).</li>
+      <li>Von den 40 Schülerinnen und Schülern mit geringer Bildschirmzeit (\(\bar{B}\)) haben 4 Sehprobleme.</li>
+    </ul>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      Stellen Sie eine Vierfeldertafel auf. Bestimmen Sie \(P(A \mid B)\), \(P(A \mid \bar{B})\) und \(P(A)\).
+      <span class="points-badge" style="float:right;">(3 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      Untersuchen Sie, ob die Ereignisse \(A\) und \(B\) stochastisch unabhängig sind. Begründen Sie Ihre Antwort.
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <!-- P2.5 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe P2.5</h3>
+      <span class="points-badge">6 Punkte &nbsp;|&nbsp; AFB II / III</span>
+    </div>
+    <p>
+      In einer großen Abituruntersuchung wird die Körpergröße der Abiturienten als normalverteilt
+      angenommen. Für männliche Abiturienten gilt: \(\mu = 179\,\text{cm}\), \(\sigma = 8\,\text{cm}\),
+      d.&nbsp;h. \(X \sim N(179;\,64)\). Für weibliche Abiturienten gilt entsprechend
+      \(\mu = 166\,\text{cm}\), \(\sigma = 7\,\text{cm}\).
+    </p>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      Mit welcher Wahrscheinlichkeit ist ein zufällig ausgewählter männlicher Abiturient zwischen
+      171&nbsp;cm und 187&nbsp;cm groß? Begründen Sie <em>zunächst ohne CAS</em> mithilfe der
+      \(\sigma\)-Regel.
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      Berechnen Sie \(P(X > 190)\) für männliche Abiturienten mithilfe des CAS-Rechners.
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">c)</span>
+      In einem Kurs befinden sich 25 männliche Abiturienten. Schätzen Sie mithilfe der
+      <strong>Normalapproximation der Binomialverteilung</strong>: Mit welcher Wahrscheinlichkeit
+      sind <em>mindestens 20</em> der 25 Abiturienten kleiner als 187&nbsp;cm?
+      Prüfen Sie zuvor die Approximationsbedingungen und ziehen Sie eine begründete Schlussfolgerung.
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <div class="footer-line">
+    Probeklausur Mathematik eAN 2026 &bull; Pflichtaufgabe P2 (Stochastik) &bull; Seite 4
+  </div>
+</div>
+
+
+<!-- ================================================================
+     SEITE 5: WAHLAUFGABE W1 – Analytische Geometrie (Solarpark)
+================================================================ -->
+<div class="page" id="w1">
+
+  <div class="choice-note">
+    <strong>Wahlaufgaben:</strong> Bearbeiten Sie genau <em>eine</em> der folgenden Aufgaben W1 oder W2.
+    Bitte kennzeichnen Sie Ihre Wahl deutlich auf dem Lösungsblatt.
+  </div>
+
+  <div class="section-header">
+    <h2>Wahlaufgabe W1 &ndash; Analytische Geometrie: Solarpark</h2>
+    <div class="section-meta">Teil 2 (mit Hilfsmitteln) &bull; 30 Punkte</div>
+  </div>
+
+  <div class="kontext-box">
+    <div class="kontext-label">Sachkontext</div>
+    In einem Solarpark werden Spiegel auf einem Gelände positioniert.
+    Im verwendeten Koordinatensystem entspricht 1 Einheit = 10 Meter.
+    Ein Spiegel liegt in der Ebene \(E\), die durch die drei Punkte
+    \(P_1(4\mid 2\mid 0)\), \(P_2(4\mid 2\mid 3)\) und \(P_3(6\mid 2\mid 3)\)
+    definiert ist.
+  </div>
+
+  <!-- W1.1 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe W1.1</h3>
+      <span class="points-badge">5 Punkte &nbsp;|&nbsp; AFB I</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      Bestimmen Sie zwei Richtungsvektoren der Ebene \(E\).
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      Stellen Sie die Parameterform der Ebene \(E\) auf.
+      <span class="points-badge" style="float:right;">(3 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <!-- W1.2 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe W1.2</h3>
+      <span class="points-badge">6 Punkte &nbsp;|&nbsp; AFB II</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      Bestimmen Sie einen Normalenvektor \(\vec{n}\) der Ebene \(E\).
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      Stellen Sie die Normalenform (Hesse-Normalenform) der Ebene \(E\) auf.
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">c)</span>
+      Prüfen Sie, ob der Punkt \(Q(5\mid 3\mid 2)\) in der Ebene \(E\) liegt.
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <!-- W1.3 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe W1.3</h3>
+      <span class="points-badge">7 Punkte &nbsp;|&nbsp; AFB II</span>
+    </div>
+    <p>
+      Ein Laserstrahl verläuft entlang der Geraden
+      \[g\colon \vec{x} = \begin{pmatrix}0\\2\\5\end{pmatrix} + t \cdot \begin{pmatrix}1\\0\\-1\end{pmatrix}, \quad t \in \mathbb{R}.\]
+    </p>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      Bestimmen Sie den Schnittpunkt \(S\) von \(g\) mit der Ebene \(E\).
+      <span class="points-badge" style="float:right;">(4 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      Berechnen Sie den Schnittwinkel \(\alpha\) zwischen \(g\) und \(E\). Geben Sie das Ergebnis auf eine Dezimalstelle gerundet an.
+      <span class="points-badge" style="float:right;">(3 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <!-- W1.4 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe W1.4</h3>
+      <span class="points-badge">7 Punkte &nbsp;|&nbsp; AFB II / III</span>
+    </div>
+    <p>Ein Beobachtungspunkt liegt bei \(K(7\mid 2\mid 4)\).</p>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      Bestimmen Sie den Abstand von \(K\) zur Ebene \(E\).
+      <span class="points-badge" style="float:right;">(3 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      Bestimmen Sie den Lotfußpunkt \(F\) des Lotes von \(K\) auf \(E\).
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">c)</span>
+      Berechnen Sie den Abstand von \(K\) zum nächstgelegenen Punkt auf der Geraden \(g\).
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <!-- W1.5 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe W1.5</h3>
+      <span class="points-badge">5 Punkte &nbsp;|&nbsp; AFB III</span>
+    </div>
+    <p>
+      Eine zweite Spiegelebene \(E_2\) soll senkrecht zur Ebene \(E\) sein und gleichzeitig die Gerade \(g\) enthalten.
+    </p>
+    <div class="subtask">
+      Untersuchen Sie, ob \(E_2\) eindeutig bestimmt ist. Begründen Sie Ihre Antwort.
+      Falls \(E_2\) eindeutig bestimmt ist: Stellen Sie \(E_2\) in Parameterform auf.
+      Falls nicht: Erläutern Sie, was fehlt.
+      <span class="points-badge" style="float:right;">(5 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <div class="footer-line">
+    Probeklausur Mathematik eAN 2026 &bull; Wahlaufgabe W1 (Analytische Geometrie) &bull; Seite 5
+  </div>
+</div>
+
+
+<!-- ================================================================
+     SEITE 6: WAHLAUFGABE W2 – Analytische Geometrie (Windpark)
+================================================================ -->
+<div class="page" id="w2">
+
+  <div class="section-header" style="background:#2e6b2e;">
+    <h2>Wahlaufgabe W2 &ndash; Analytische Geometrie: Windpark</h2>
+    <div class="section-meta">Teil 2 (mit Hilfsmitteln) &bull; 30 Punkte</div>
+  </div>
+
+  <div class="kontext-box">
+    <div class="kontext-label">Sachkontext</div>
+    Drei Windräder stehen in einem Windpark an den Positionen
+    \(A(0\mid 0\mid 0)\), \(B(8\mid 0\mid 0)\) und \(C(4\mid 6\mid 0)\).
+    Eine Wartungsdrohne fliegt entlang der Geraden
+    \[h\colon \vec{x} = \begin{pmatrix}2\\1\\4\end{pmatrix} + t\cdot\begin{pmatrix}3\\2\\-1\end{pmatrix}, \quad t \in \mathbb{R}.\]
+    1 Einheit im Koordinatensystem entspricht 10 Metern.
+  </div>
+
+  <!-- W2.1 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe W2.1</h3>
+      <span class="points-badge">5 Punkte &nbsp;|&nbsp; AFB I</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      Berechnen Sie \(\overrightarrow{AB}\) und \(\overrightarrow{AC}\).
+      <span class="points-badge" style="float:right;">(1 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      Berechnen Sie die Abstände \(|AB|\) und \(|AC|\) sowie den Abstand \(|BC|\). Geben Sie die Ergebnisse in Metern an.
+      <span class="points-badge" style="float:right;">(4 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <!-- W2.2 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe W2.2</h3>
+      <span class="points-badge">6 Punkte &nbsp;|&nbsp; AFB II</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      Berechnen Sie den Winkel \(\alpha = \angle BAC\) (den Winkel im Dreieck \(ABC\) bei \(A\)). Geben Sie das Ergebnis in Grad an.
+      <span class="points-badge" style="float:right;">(3 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      Berechnen Sie den Flächeninhalt des Dreiecks \(ABC\). Geben Sie das Ergebnis in m² an.
+      <span class="points-badge" style="float:right;">(3 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <!-- W2.3 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe W2.3</h3>
+      <span class="points-badge">6 Punkte &nbsp;|&nbsp; AFB II</span>
+    </div>
+    <p>Die Wartungsdrohne soll den Windrad-Standort \(B(8\mid 0\mid 0)\) möglichst nahe passieren.</p>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      Bestimmen Sie den Lotfußpunkt \(F\) des Lotes von \(B\) auf die Gerade \(h\).
+      <span class="points-badge" style="float:right;">(4 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      Berechnen Sie den minimalen Abstand der Drohne von \(B\) in Metern.
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <!-- W2.4 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe W2.4</h3>
+      <span class="points-badge">7 Punkte &nbsp;|&nbsp; AFB II / III</span>
+    </div>
+    <p>
+      Eine geneigte Wartungsplattform liegt in der Ebene \(E_3\), die durch die
+      drei Punkte \(A(0\mid 0\mid 0)\), \(B(8\mid 0\mid 0)\) und \(C'(4\mid 6\mid 3)\) aufgespannt wird.
+    </p>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      Stellen Sie die Parameterform der Ebene \(E_3\) auf und bestimmen Sie einen Normalenvektor \(\vec{n}\).
+      <span class="points-badge" style="float:right;">(3 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      Stellen Sie die Normalenform (Hesse-Normalenform) der Ebene \(E_3\) auf.
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">c)</span>
+      Berechnen Sie den Abstand des Punktes \(D(4\mid 3\mid 5)\) von der Ebene \(E_3\). Interpretieren Sie das Ergebnis im Sachkontext.
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <!-- W2.5 -->
+  <div class="aufgabe-block">
+    <div class="aufgabe-title">
+      <h3>Aufgabe W2.5</h3>
+      <span class="points-badge">6 Punkte &nbsp;|&nbsp; AFB III</span>
+    </div>
+    <p>Die Drohne fliegt auf der Geraden \(h\).</p>
+    <div class="subtask">
+      <span class="subtask-letter">a)</span>
+      Bestimmen Sie, ob die Drohne die Ebene \(E_3\) schneidet, und wenn ja, wo (Schnittpunkt \(S\)).
+      <span class="points-badge" style="float:right;">(3 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">b)</span>
+      Berechnen Sie den Schnittwinkel zwischen \(h\) und \(E_3\).
+      <span class="points-badge" style="float:right;">(2 P)</span>
+    </div>
+    <div class="subtask">
+      <span class="subtask-letter">c)</span>
+      Beurteilen Sie: Der Abstand des Schnittpunktes \(S\) von \(D(4\mid 3\mid 5)\) soll mindestens 2 Einheiten (= 20 m) betragen, damit die Drohne sicher über der Plattform fliegt. Ist diese Bedingung erfüllt?
+      <span class="points-badge" style="float:right;">(1 P)</span>
+    </div>
+    <div class="answer-lines">
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+      <div class="answer-line"></div>
+    </div>
+  </div>
+
+  <div class="footer-line">
+    Probeklausur Mathematik eAN 2026 &bull; Wahlaufgabe W2 (Analytische Geometrie) &bull; Seite 6
+  </div>
+</div>
+
+</body>
+</html>

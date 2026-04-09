@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MathAbi 2026</title>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},startup:{typeset:false}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+:root{--bg:#0f0f1a;--card:#1a1a2e;--card2:#16213e;--acc:#6c63ff;--acc2:#00d4aa;--tx:#e2e8f0;--dim:#94a3b8;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--tx);font-family:system-ui,sans-serif;font-size:15px;}
+#lvl-bar{display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--card2);border-bottom:1px solid #2a2a4a;}
+.lvl-btn{padding:4px 14px;border:1px solid var(--acc);background:transparent;color:var(--tx);border-radius:20px;cursor:pointer;font-size:13px;}
+.lvl-btn.active{background:var(--acc);color:#fff;}
+#tabs{display:flex;gap:4px;padding:10px 16px;background:var(--card);}
+.tab{padding:8px 18px;border:none;background:var(--card2);color:var(--dim);border-radius:8px;cursor:pointer;font-size:14px;}
+.tab.active{background:var(--acc);color:#fff;}
+.panel{display:none;padding:16px;}
+.panel.active{display:block;}
+.mcard{background:var(--card);border-radius:10px;margin-bottom:10px;overflow:hidden;border:1px solid #2a2a4a;}
+.mhead{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;user-select:none;}
+.mhead:hover{background:var(--card2);}
+.mtitle{font-weight:600;flex:1;}
+.badge{font-size:12px;padding:2px 8px;border-radius:10px;background:#2a2a4a;}
+.badge.both{color:var(--ok);}
+.badge.ean{color:#60a5fa;}
+.chevron{font-size:12px;transition:transform .2s;}
+.mcard.open .chevron{transform:rotate(180deg);}
+.mbody{display:none;padding:14px 16px;border-top:1px solid #2a2a4a;}
+.mcard.open .mbody{display:block;}
+.steps{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;}
+.step{display:flex;align-items:flex-start;gap:10px;}
+.sn{background:var(--acc);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:1px;}
+.fbox{background:#1e1e38;border-left:3px solid var(--acc2);padding:8px 12px;border-radius:4px;margin:8px 0;font-size:14px;}
+.mistakes{background:#1e1a0e;border-left:3px solid var(--warn);padding:8px 12px;border-radius:4px;margin:8px 0;font-size:14px;}
+.mistakes ul{margin-left:16px;margin-top:4px;}
+.ex{background:#0e1e18;border-left:3px solid var(--ok);padding:8px 12px;border-radius:4px;margin-top:8px;font-size:14px;}
+.fcont{padding:8px 0;}
+.ffilters{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.ffilter{padding:5px 14px;border:1px solid #2a2a4a;background:var(--card2);color:var(--dim);border-radius:20px;cursor:pointer;font-size:13px;}
+.ffilter.active{border-color:var(--acc);color:var(--acc);}
+.prog-wrap{background:var(--card2);border-radius:8px;padding:10px 14px;margin-bottom:14px;}
+.prog-bar-bg{background:#2a2a4a;border-radius:4px;height:8px;margin-top:6px;}
+#prog-bar{background:var(--ok);height:8px;border-radius:4px;width:0%;transition:width .3s;}
+.fcgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+.fc{perspective:800px;}
+.fc[data-status="ok"]{opacity:.6;}
+.fc[data-status="rep"]{outline:2px solid var(--warn);}
+.fcard{position:relative;transform-style:preserve-3d;transition:transform .4s;cursor:pointer;height:160px;}
+.fcard.flipped{transform:rotateY(180deg);}
+.ff,.fb{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;padding:14px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
+.ff{background:var(--card);border:1px solid #2a2a4a;}
+.fb{background:var(--card2);border:1px solid var(--acc);transform:rotateY(180deg);}
+.ftag{font-size:10px;letter-spacing:1px;color:var(--dim);margin-bottom:8px;text-transform:uppercase;}
+.ff p{font-weight:600;font-size:15px;}
+.fb p{font-size:14px;}
+.fbtn-row{display:flex;gap:8px;margin-top:10px;}
+.fbtn-row button{border:none;background:#2a2a4a;border-radius:6px;padding:4px 10px;cursor:pointer;font-size:16px;}
+.fbtn-row button:hover{background:#3a3a5a;}
+h2{font-size:1.1em;color:var(--acc2);margin-bottom:12px;}
+</style>
+</head>
+<body>
+<div id="lvl-bar">
+<span>Niveau:</span>
+<button id="btn-gan" class="lvl-btn active" onclick="setLevel('gAN')">gAN</button>
+<button id="btn-ean" class="lvl-btn" onclick="setLevel('eAN')">eAN</button>
+<span id="lvl-hint" style="font-size:0.8em;color:var(--dim)">gAN: nur 🟢 Inhalte sichtbar</span>
+</div>
+<nav id="tabs">
+<button class="tab active" onclick="showTab('methoden',event)">📚 Methoden</button>
+<button class="tab" onclick="showTab('formeln',event)">🗃️ Formeln</button>
+<button class="tab" onclick="showTab('aufgaben',event)">✏️ Aufgaben</button>
+</nav>
+
+<div id="methoden" class="panel active">
+<h2>Methodentrainer</h2>
+
+<div class="mcard" data-lvl="both">
+<div class="mhead" onclick="toggleM(this)">
+<span class="mtitle">Kurvendiskussion</span>
+<span class="badge both">🟢 gAN+eAN</span>
+<span class="chevron">▼</span>
+</div>
+<div class="mbody">
+<div class="steps">
+<div class="step"><span class="sn">1</span><div>\(f'(x)\) berechnen</div></div>
+<div class="step"><span class="sn">2</span><div>\(f'(x)=0\) lösen → Kandidaten</div></div>
+<div class="step"><span class="sn">3</span><div>VZW von \(f'\) prüfen (oder \(f''\))</div></div>
+<div class="step"><span class="sn">4</span><div>\(f''(x_w)=0\) + VZW → Wendepunkt</div></div>
+<div class="step"><span class="sn">5</span><div>Verhalten für \(x\to\pm\infty\)</div></div>
+</div>
+<div class="fbox">\(f'(x_0)=0\) nötig; \(f''(x_0)\neq0\) hinreichend für Extremstelle</div>
+<div class="mistakes"><b>⚠️ Typische Fehler:</b><ul><li>VZW von \(f'\) vergessen zu prüfen</li><li>Wendepunkt ohne VZW von \(f''\) angeben</li></ul></div>
+<div class="ex"><b>Beispiel:</b> \(f(x)=x^3-6x^2+9x\): \(f'(x)=3x^2-12x+9=0\) → \(x=1\) (HP), \(x=3\) (TP)</div>
+</div>
+</div>
+
+<div class="mcard" data-lvl="both">
+<div class="mhead" onclick="toggleM(this)">
+<span class="mtitle">Integralrechnung: Fläche</span>
+<span class="badge both">🟢 gAN+eAN</span>
+<span class="chevron">▼</span>
+</div>
+<div class="mbody">
+<div class="steps">
+<div class="step"><span class="sn">1</span><div>Nullstellen von \(f\) bestimmen</div></div>
+<div class="step"><span class="sn">2</span><div>Stammfunktion \(F\) berechnen</div></div>
+<div class="step"><span class="sn">3</span><div>\(F(b)-F(a)\) auswerten</div></div>
+<div class="step"><span class="sn">4</span><div>Absolutbetrag (Fläche ist immer positiv)</div></div>
+</div>
+<div class="fbox">\(A=\left|\int_a^b f(x)\,dx\right|\) — bei Vorzeichenwechsel: Teilintegrale!</div>
+<div class="mistakes"><b>⚠️ Typische Fehler:</b><ul><li>Negatives Vorzeichen ignorieren</li><li>Nullstellen nicht als Teilungspunkte nutzen</li></ul></div>
+<div class="ex"><b>Beispiel:</b> \(f(x)=x^2-4\), \([-2,2]\): \(A=2\cdot\left|\left[-\frac{8}{3}+8\right]\right|=\frac{32}{3}\)</div>
+</div>
+</div>
+
+<div class="mcard" data-lvl="both">
+<div class="mhead" onclick="toggleM(this)">
+<span class="mtitle">Tangente und Normale</span>
+<span class="badge both">🟢 gAN+eAN</span>
+<span class="chevron">▼</span>
+</div>
+<div class="mbody">
+<div class="steps">
+<div class="step"><span class="sn">1</span><div>\(f(x_0)\) berechnen (Berührpunkt)</div></div>
+<div class="step"><span class="sn">2</span><div>Steigung \(m=f'(x_0)\)</div></div>
+<div class="step"><span class="sn">3</span><div>Tangentengleichung aufstellen</div></div>
+<div class="step"><span class="sn">4</span><div>Normale: \(m_n=-\frac{1}{m}\)</div></div>
+</div>
+<div class="fbox">\(t: y = f'(x_0)(x-x_0)+f(x_0)\)</div>
+<div class="mistakes"><b>⚠️ Typische Fehler:</b><ul><li>\(f(x_0)\) nicht einsetzen</li><li>Normale: Kehrwert negativ vergessen</li></ul></div>
+<div class="ex"><b>Beispiel:</b> \(f(x)=x^2\), \(x_0=2\): \(m=4\), \(t: y=4x-4\)</div>
+</div>
+</div>
+
+<div class="mcard" data-lvl="both">
+<div class="mhead" onclick="toggleM(this)">
+<span class="mtitle">Exponentialfunktionen</span>
+<span class="badge both">🟢 gAN+eAN</span>
+<span class="chevron">▼</span>
+</div>
+<div class="mbody">
+<div class="steps">
+<div class="step"><span class="sn">1</span><div>Modell: \(f(t)=f_0\cdot e^{kt}\) aufstellen</div></div>
+<div class="step"><span class="sn">2</span><div>Anfangswert \(f_0=f(0)\) ablesen</div></div>
+<div class="step"><span class="sn">3</span><div>Bedingung einsetzen, \(k\) berechnen: \(k=\frac{\ln(\ldots)}{t}\)</div></div>
+<div class="step"><span class="sn">4</span><div>HWZ/Verdopplungszeit aus \(k\)</div></div>
+</div>
+<div class="fbox">\(f(t)=f_0\cdot e^{kt}\), \(\quad T_{1/2}=\frac{\ln 2}{|k|}\), \(\quad(e^{kx})'=k\cdot e^{kx}\)</div>
+<div class="mistakes"><b>⚠️ Typische Fehler:</b><ul><li>\(\ln\) statt \(\log_{10}\) verwenden</li><li>Vorzeichen von \(k\) bei Zerfall</li></ul></div>
+<div class="ex"><b>Beispiel:</b> \(f(0)=100\), \(f(5)=50\): \(k=\frac{\ln 0{,}5}{5}\approx-0{,}139\)</div>
+</div>
+</div>
+
+<div class="mcard" data-lvl="ean">
+<div class="mhead" onclick="toggleM(this)">
+<span class="mtitle">Rotationskörper</span>
+<span class="badge ean">🔵 eAN</span>
+<span class="chevron">▼</span>
+</div>
+<div class="mbody">
+<div class="steps">
+<div class="step"><span class="sn">1</span><div>Grenzen \(a, b\) festlegen</div></div>
+<div class="step"><span class="sn">2</span><div>\([f(x)]^2\) berechnen</div></div>
+<div class="step"><span class="sn">3</span><div>Integral auswerten, mit \(\pi\) multiplizieren</div></div>
+</div>
+<div class="fbox">\(V=\pi\int_a^b [f(x)]^2\,dx\)</div>
+<div class="mistakes"><b>⚠️ Typische Fehler:</b><ul><li>\(\pi\) vergessen</li><li>\(f(x)\) nicht quadrieren</li></ul></div>
+<div class="ex"><b>Beispiel:</b> \(f(x)=\sqrt{x}\), \([0,4]\): \(V=\pi\left[\frac{x^2}{2}\right]_0^4=8\pi\)</div>
+</div>
+</div>
+
+<div class="mcard" data-lvl="both">
+<div class="mhead" onclick="toggleM(this)">
+<span class="mtitle">Vektoren: Winkel und Abstand</span>
+<span class="badge both">🟢 gAN+eAN</span>
+<span class="chevron">▼</span>
+</div>
+<div class="mbody">
+<div class="steps">
+<div class="step"><span class="sn">1</span><div>Skalarprodukt \(\vec{a}\cdot\vec{b}\) berechnen</div></div>
+<div class="step"><span class="sn">2</span><div>Beträge \(|\vec{a}|\), \(|\vec{b}|\) berechnen</div></div>
+<div class="step"><span class="sn">3</span><div>\(\cos\alpha\) einsetzen, Winkel bestimmen</div></div>
+</div>
+<div class="fbox">\(\cos\alpha=\dfrac{\vec{a}\cdot\vec{b}}{|\vec{a}||\vec{b}|}\), senkrecht: \(\vec{a}\cdot\vec{b}=0\)</div>
+<div class="mistakes"><b>⚠️ Typische Fehler:</b><ul><li>Betrag vergessen (nur Skalarprodukt angeben)</li><li>Winkel nicht mit arccos umrechnen</li></ul></div>
+<div class="ex"><b>Beispiel:</b> \(\vec{a}=(1,2,2)\), \(\vec{b}=(2,1,-2)\): \(\vec{a}\cdot\vec{b}=2+2-4=0\) → senkrecht</div>
+</div>
+</div>
+
+<div class="mcard" data-lvl="both">
+<div class="mhead" onclick="toggleM(this)">
+<span class="mtitle">Gerade im Raum</span>
+<span class="badge both">🟢 gAN+eAN</span>
+<span class="chevron">▼</span>
+</div>
+<div class="mbody">
+<div class="steps">
+<div class="step"><span class="sn">1</span><div>Stützpunkt \(P\) und Richtungsvektor \(\vec{v}\) bestimmen</div></div>
+<div class="step"><span class="sn">2</span><div>Gerade aufstellen: \(g: \vec{x}=\vec{p}+t\cdot\vec{v}\)</div></div>
+<div class="step"><span class="sn">3</span><div>Punkt prüfen: \(t\) lösen (alle 3 Komponenten)</div></div>
+<div class="step"><span class="sn">4</span><div>Schnittpunkt: LGS aufstellen, lösen</div></div>
+</div>
+<div class="fbox">\(\vec{x}=\vec{p}+t\cdot\vec{v}\)</div>
+<div class="mistakes"><b>⚠️ Typische Fehler:</b><ul><li>Windschief vs. parallel verwechseln</li><li>Kein eindeutiges \(t\) → kein Schnittpunkt</li></ul></div>
+<div class="ex"><b>Beispiel:</b> \(P(1|0|2)\), \(\vec{v}=(2,1,0)\): \(g:\vec{x}=(1,0,2)+t(2,1,0)\)</div>
+</div>
+</div>
+
+<div class="mcard" data-lvl="both">
+<div class="mhead" onclick="toggleM(this)">
+<span class="mtitle">Ebene und Normalenvektor</span>
+<span class="badge both">🟢 gAN+eAN</span>
+<span class="chevron">▼</span>
+</div>
+<div class="mbody">
+<div class="steps">
+<div class="step"><span class="sn">1</span><div>2 Richtungsvektoren aus 3 Punkten bestimmen</div></div>
+<div class="step"><span class="sn">2</span><div>Normalenvektor \(\vec{n}=\vec{u}\times\vec{v}\) (Kreuzprodukt)</div></div>
+<div class="step"><span class="sn">3</span><div>Normalenform aufstellen</div></div>
+<div class="step"><span class="sn">4</span><div>Koordinatenform ableiten</div></div>
+</div>
+<div class="fbox">\(E: \vec{n}\cdot(\vec{x}-\vec{p})=0\)</div>
+<div class="mistakes"><b>⚠️ Typische Fehler:</b><ul><li>Kreuzprodukt falsch berechnet</li><li>Falschen Stützpunkt eingesetzt</li></ul></div>
+<div class="ex"><b>Beispiel:</b> 3 Punkte → 2 Richtungsvektoren → Kreuzprodukt → \(\vec{n}\) → Normalenform</div>
+</div>
+</div>
+
+<div class="mcard" data-lvl="both">
+<div class="mhead" onclick="toggleM(this)">
+<span class="mtitle">Binomialverteilung</span>
+<span class="badge both">🟢 gAN+eAN</span>
+<span class="chevron">▼</span>
+</div>
+<div class="mbody">
+<div class="steps">
+<div class="step"><span class="sn">1</span><div>Bedingungen prüfen: \(n\) unabh. Versuche, \(p\) konstant</div></div>
+<div class="step"><span class="sn">2</span><div>\(P(X=k)\) mit Formel berechnen</div></div>
+<div class="step"><span class="sn">3</span><div>Erwartungswert \(\mu=np\), Std. \(\sigma=\sqrt{npq}\)</div></div>
+</div>
+<div class="fbox">\(P(X=k)=\binom{n}{k}p^k(1-p)^{n-k}\), \(\mu=np\), \(\sigma=\sqrt{np(1-p)}\)</div>
+<div class="mistakes"><b>⚠️ Typische Fehler:</b><ul><li>\(P(X\leq k)\) vs. \(P(X=k)\) verwechseln</li><li>\(q=1-p\) vergessen</li></ul></div>
+<div class="ex"><b>Beispiel:</b> \(n=10\), \(p=0{,}3\), \(P(X=3)=\binom{10}{3}(0{,}3)^3(0{,}7)^7\approx0{,}267\)</div>
+</div>
+</div>
+
+<div class="mcard" data-lvl="both">
+<div class="mhead" onclick="toggleM(this)">
+<span class="mtitle">Beurteilende Statistik / Vertrauensintervall</span>
+<span class="badge both">🟢 gAN+eAN</span>
+<span class="chevron">▼</span>
+</div>
+<div class="mbody">
+<div class="steps">
+<div class="step"><span class="sn">1</span><div>Relative Häufigkeit bestimmen: \(h_n = \frac{X}{n}\)</div></div>
+<div class="step"><span class="sn">2</span><div>95 %-Vertrauensintervall berechnen: \(\left[h_n - 1{,}96\cdot\sqrt{\frac{h_n(1-h_n)}{n}};\;h_n + 1{,}96\cdot\sqrt{\frac{h_n(1-h_n)}{n}}\right]\)</div></div>
+<div class="step"><span class="sn">3</span><div>Plausibilitätsfrage: Liegt \(p_0\) im Intervall?</div></div>
+<div class="step"><span class="sn">4</span><div>Ergebnis im Sachkontext formulieren</div></div>
+</div>
+<div class="fbox">\(c=1{,}96\) für 95 %-Vertrauenswahrscheinlichkeit; \(h_n\) = relative Häufigkeit der Stichprobe</div>
+<div class="mistakes"><b>⚠️ Typische Fehler:</b><ul><li>\(p_0\) statt \(h_n\) in die Formel einsetzen</li><li>Interpretation vergessen: Intervall enthält wahres \(p\) mit 95 % Wahrscheinlichkeit</li></ul></div>
+<div class="ex"><b>Beispiel:</b> \(n=100\), \(X=18\) → \(h_n=0{,}18\); KI: \([0{,}105;\;0{,}255]\) → \(p_0=0{,}15\) plausibel ✓</div>
+</div>
+</div>
+
+<div class="mcard" data-lvl="ean">
+  <div class="mhead" onclick="toggleM(this)">
+    <span class="mtitle">Normalverteilung</span>
+    <span class="badge ean">🔵 nur eAN</span>
+    <span class="chevron">▼</span>
+  </div>
+  <div class="mbody">
+    <div class="steps">
+      <div class="step"><span class="sn">1</span><div>Prüfen: X~N(μ,σ²) – ist die Verteilung normalverteilt? (Aufgabe gibt es an oder Approximation der Binomialverteilung)</div></div>
+      <div class="step"><span class="sn">2</span><div>σ-Umgebungen kennen: P(μ-σ≤X≤μ+σ)≈68,3%, P(μ-2σ≤X≤μ+2σ)≈95,4%, P(μ-3σ≤X≤μ+3σ)≈99,7%</div></div>
+      <div class="step"><span class="sn">3</span><div>Wahrscheinlichkeiten mit CAS berechnen: normalcdf(a,b,μ,σ)</div></div>
+      <div class="step"><span class="sn">4</span><div>Bei Approximation B(n,p)≈N(μ,σ²): μ=np, σ²=npq, nur wenn np≥5 und nq≥5</div></div>
+    </div>
+    <div class="fbox">
+      \( X \sim N(\mu, \sigma^2) \) | \( \varphi(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2} \)<br>
+      σ-Regel: \( P(\mu - k\sigma \leq X \leq \mu + k\sigma) \)<br>
+      k=1: ≈68,3% | k=2: ≈95,4% | k=3: ≈99,7%
+    </div>
+    <div class="mistakes"><b>⚠️ Typische Fehler:</b><ul><li>Approximationsbedingungen (np≥5, nq≥5) nicht prüfen</li><li>σ² und σ verwechseln beim Eingeben in CAS</li><li>Stetigkeitskorrektur vergessen (SA: nicht gefordert)</li></ul></div>
+    <div class="ex"><b>Beispiel:</b> X~N(50,16). P(46≤X≤54)=P(μ-σ≤X≤μ+σ)≈68,3%. Für P(X≤55): normalcdf(-∞,55,50,4)≈0,894.</div>
+  </div>
+</div>
+</div>
+
+<div id="formeln" class="panel">
+<h2>Formelkartei</h2>
+<div class="prog-wrap">
+<div id="prog-text" style="font-size:13px;color:var(--dim)">0 von 44 Karten sitzen</div>
+<div class="prog-bar-bg"><div id="prog-bar"></div></div>
+</div>
+<div class="ffilters">
+<button class="ffilter active" data-cat="all" onclick="filterCards('all')">Alle</button>
+<button class="ffilter" data-cat="analysis" onclick="filterCards('analysis')">Analysis</button>
+<button class="ffilter" data-cat="stochastik" onclick="filterCards('stochastik')">Stochastik</button>
+<button class="ffilter" data-cat="geo" onclick="filterCards('geo')">Geometrie</button>
+</div>
+<div class="fcgrid">
+
+<div class="fc" data-cat="analysis" data-lvl="both" data-id="fc1">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">ANALYSIS</span><p>Potenzregel \((x^n)'\)</p></div>
+<div class="fb"><p>\((x^n)' = n\cdot x^{n-1}\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="analysis" data-lvl="both" data-id="fc2">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">ANALYSIS</span><p>Produktregel</p></div>
+<div class="fb"><p>\((u\cdot v)' = u'v + uv'\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="analysis" data-lvl="both" data-id="fc3">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">ANALYSIS</span><p>Kettenregel</p></div>
+<div class="fb"><p>\((f(g(x)))' = f'(g(x))\cdot g'(x)\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="analysis" data-lvl="both" data-id="fc4">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">ANALYSIS</span><p>Quotientenregel</p></div>
+<div class="fb"><p>\(\left(\frac{u}{v}\right)' = \frac{u'v - uv'}{v^2}\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="analysis" data-lvl="both" data-id="fc5">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">ANALYSIS</span><p>e-Funktion ableiten</p></div>
+<div class="fb"><p>\((e^x)'=e^x\), \((e^{f(x)})'=f'(x)\cdot e^{f(x)}\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="analysis" data-lvl="both" data-id="fc6">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">ANALYSIS</span><p>ln-Funktion ableiten</p></div>
+<div class="fb"><p>\((\ln x)' = \dfrac{1}{x}\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="analysis" data-lvl="both" data-id="fc7">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">ANALYSIS</span><p>Stammfunktion Potenz</p></div>
+<div class="fb"><p>\(\int x^n\,dx = \dfrac{x^{n+1}}{n+1} + C\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="analysis" data-lvl="both" data-id="fc8">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">ANALYSIS</span><p>Stammfunktion \(e^x\)</p></div>
+<div class="fb"><p>\(\int e^x\,dx = e^x + C\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="analysis" data-lvl="both" data-id="fc9">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">ANALYSIS</span><p>Stammfunktion \(1/x\)</p></div>
+<div class="fb"><p>\(\int \dfrac{1}{x}\,dx = \ln|x| + C\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="analysis" data-lvl="both" data-id="fc10">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">ANALYSIS</span><p>Hauptsatz der Diff.- u. Integralrechnung</p></div>
+<div class="fb"><p>\(\int_a^b f(x)\,dx = F(b)-F(a)\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="analysis" data-lvl="both" data-id="fc11">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">ANALYSIS</span><p>Extremstelle (notwendig)</p></div>
+<div class="fb"><p>\(f'(x_0) = 0\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="analysis" data-lvl="both" data-id="fc12">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">ANALYSIS</span><p>Extremstelle (hinreichend)</p></div>
+<div class="fb"><p>\(f''(x_0)&lt;0\) → Max; \(f''(x_0)&gt;0\) → Min</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="analysis" data-lvl="both" data-id="fc13">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">ANALYSIS</span><p>Wendepunkt</p></div>
+<div class="fb"><p>\(f''(x_w)=0\) und VZW von \(f''\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="analysis" data-lvl="both" data-id="fc14">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">ANALYSIS</span><p>Tangentengleichung</p></div>
+<div class="fb"><p>\(t: y = f'(x_0)(x-x_0)+f(x_0)\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="analysis" data-lvl="both" data-id="fc15">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">ANALYSIS</span><p>Fläche unter Kurve</p></div>
+<div class="fb"><p>\(A = \left|\int_a^b f(x)\,dx\right|\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="analysis" data-lvl="both" data-id="fc16">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">ANALYSIS</span><p>Fläche zwischen Kurven</p></div>
+<div class="fb"><p>\(A = \int_a^b |f(x)-g(x)|\,dx\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="analysis" data-lvl="ean" data-id="fc17">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">ANALYSIS 🔵</span><p>Rotationsvolumen</p></div>
+<div class="fb"><p>\(V = \pi\int_a^b [f(x)]^2\,dx\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="analysis" data-lvl="both" data-id="fc18">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">ANALYSIS</span><p>Exponentielles Wachstum</p></div>
+<div class="fb"><p>\(f(t)=f_0\cdot e^{kt}\), \(T_{1/2}=\dfrac{\ln 2}{|k|}\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="stochastik" data-lvl="both" data-id="fc19">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">STOCHASTIK</span><p>Laplace-Wahrscheinlichkeit</p></div>
+<div class="fb"><p>\(P(A) = \dfrac{|A|}{|\Omega|}\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="stochastik" data-lvl="both" data-id="fc20">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">STOCHASTIK</span><p>Komplementregel</p></div>
+<div class="fb"><p>\(P(\bar{A}) = 1 - P(A)\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="stochastik" data-lvl="both" data-id="fc21">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">STOCHASTIK</span><p>Additionssatz</p></div>
+<div class="fb"><p>\(P(A\cup B)=P(A)+P(B)-P(A\cap B)\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="stochastik" data-lvl="both" data-id="fc22">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">STOCHASTIK</span><p>Multiplikationssatz</p></div>
+<div class="fb"><p>\(P(A\cap B)=P(A)\cdot P(B|A)\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="stochastik" data-lvl="both" data-id="fc23">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">STOCHASTIK</span><p>Bedingte Wahrscheinlichkeit</p></div>
+<div class="fb"><p>\(P(A|B) = \dfrac{P(A\cap B)}{P(B)}\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="stochastik" data-lvl="both" data-id="fc24">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">STOCHASTIK</span><p>Stochastische Unabhängigkeit</p></div>
+<div class="fb"><p>\(P(A\cap B) = P(A)\cdot P(B)\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="stochastik" data-lvl="both" data-id="fc25">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">STOCHASTIK</span><p>Satz der totalen Wahrscheinlichkeit</p></div>
+<div class="fb"><p>\(P(B)=P(B|A)\cdot P(A)+P(B|\bar{A})\cdot P(\bar{A})\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="stochastik" data-lvl="both" data-id="fc26">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">STOCHASTIK</span><p>Binomialkoeffizient</p></div>
+<div class="fb"><p>\(\binom{n}{k} = \dfrac{n!}{k!(n-k)!}\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="stochastik" data-lvl="both" data-id="fc27">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">STOCHASTIK</span><p>Binomialverteilung P(X=k)</p></div>
+<div class="fb"><p>\(P(X=k)=\binom{n}{k}p^k(1-p)^{n-k}\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="stochastik" data-lvl="both" data-id="fc28">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">STOCHASTIK</span><p>Erwartungswert B(n,p)</p></div>
+<div class="fb"><p>\(\mu = n\cdot p\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="stochastik" data-lvl="both" data-id="fc29">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">STOCHASTIK</span><p>Standardabweichung B(n,p)</p></div>
+<div class="fb"><p>\(\sigma = \sqrt{n\cdot p\cdot(1-p)}\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="stochastik" data-lvl="both" data-id="fc30">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">STOCHASTIK</span><p>Punktschätzung</p></div>
+<div class="fb"><p>Beste Schätzung für unbekanntes \(p\): \(\hat{p}=h_n=\frac{X}{n}\) (relative Häufigkeit der Stichprobe)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="stochastik" data-lvl="both" data-id="fc31">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">STOCHASTIK</span><p>Interpretation: 95&nbsp;%-Vertrauensintervall</p></div>
+<div class="fb"><p>In 95&nbsp;% aller möglichen Stichproben enthält das berechnete Intervall den wahren Wert \(p\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="geo" data-lvl="both" data-id="fc32">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">GEOMETRIE</span><p>Betrag eines Vektors</p></div>
+<div class="fb"><p>\(|\vec{v}| = \sqrt{v_1^2+v_2^2+v_3^2}\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="geo" data-lvl="both" data-id="fc33">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">GEOMETRIE</span><p>Skalarprodukt</p></div>
+<div class="fb"><p>\(\vec{a}\cdot\vec{b} = a_1b_1+a_2b_2+a_3b_3\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="geo" data-lvl="both" data-id="fc34">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">GEOMETRIE</span><p>Winkel zwischen Vektoren</p></div>
+<div class="fb"><p>\(\cos\alpha = \dfrac{\vec{a}\cdot\vec{b}}{|\vec{a}||\vec{b}|}\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="geo" data-lvl="both" data-id="fc35">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">GEOMETRIE</span><p>Senkrecht-Bedingung</p></div>
+<div class="fb"><p>\(\vec{a}\perp\vec{b} \Leftrightarrow \vec{a}\cdot\vec{b}=0\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="geo" data-lvl="both" data-id="fc36">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">GEOMETRIE</span><p>Gerade (Parameterform)</p></div>
+<div class="fb"><p>\(g: \vec{x}=\vec{p}+t\cdot\vec{v}\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="geo" data-lvl="ean" data-id="fc37">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">GEOMETRIE 🔵</span><p>Ebene (Parameterform)</p></div>
+<div class="fb"><p>\(E: \vec{x}=\vec{p}+r\vec{u}+s\vec{v}\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="geo" data-lvl="ean" data-id="fc38">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">GEOMETRIE 🔵</span><p>Normalenform Ebene</p></div>
+<div class="fb"><p>\(E: \vec{n}\cdot(\vec{x}-\vec{p})=0\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="geo" data-lvl="both" data-id="fc39">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">GEOMETRIE</span><p>Abstand Punkt–Gerade</p></div>
+<div class="fb"><p>Lotfußpunkt: \(t_0\) aus \(\overrightarrow{AP_0}\cdot\vec{v}=0\) → \(d=|\overrightarrow{AP_0}|\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="geo" data-lvl="ean" data-id="fc40">
+<div class="fcard" onclick="flipCard(this)">
+<div class="ff"><span class="ftag">GEOMETRIE 🔵</span><p>Abstand Punkt–Ebene</p></div>
+<div class="fb"><p>\(d = \dfrac{|\vec{n}\cdot\overrightarrow{AP}|}{|\vec{n}|}\)</p><div class="fbtn-row"><button onclick="rate(this,'ok');event.stopPropagation()">✅</button><button onclick="rate(this,'rep');event.stopPropagation()">🔄</button><button onclick="rate(this,'no');event.stopPropagation()">❌</button></div></div>
+</div></div>
+
+<div class="fc" data-cat="stochastik" data-lvl="ean" data-id="fc41">
+  <div class="fcard" onclick="flipCard(this)">
+    <div class="ff"><span class="ftag">STOCHASTIK</span><p>Normalverteilung – Definition</p><span class="badge ean">🔵 eAN</span></div>
+    <div class="fb">
+      <p>\( X \sim N(\mu, \sigma^2) \)</p>
+      <p>μ: Erwartungswert, σ²: Varianz, σ: Standardabweichung</p>
+      <p>Gaußsche Dichtefunktion: \( \varphi(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}} \)</p>
+      <div class="fbtn-row">
+        <button onclick="rate(this,'ok');event.stopPropagation()">✅</button>
+        <button onclick="rate(this,'rep');event.stopPropagation()">🔄</button>
+        <button onclick="rate(this,'no');event.stopPropagation()">❌</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" data-cat="stochastik" data-lvl="ean" data-id="fc42">
+  <div class="fcard" onclick="flipCard(this)">
+    <div class="ff"><span class="ftag">STOCHASTIK</span><p>σ-Regel der Normalverteilung</p><span class="badge ean">🔵 eAN</span></div>
+    <div class="fb">
+      <p>\( P(\mu - \sigma \leq X \leq \mu + \sigma) \approx 0{,}683 \)</p>
+      <p>\( P(\mu - 2\sigma \leq X \leq \mu + 2\sigma) \approx 0{,}954 \)</p>
+      <p>\( P(\mu - 3\sigma \leq X \leq \mu + 3\sigma) \approx 0{,}997 \)</p>
+      <div class="fbtn-row">
+        <button onclick="rate(this,'ok');event.stopPropagation()">✅</button>
+        <button onclick="rate(this,'rep');event.stopPropagation()">🔄</button>
+        <button onclick="rate(this,'no');event.stopPropagation()">❌</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" data-cat="stochastik" data-lvl="ean" data-id="fc43">
+  <div class="fcard" onclick="flipCard(this)">
+    <div class="ff"><span class="ftag">STOCHASTIK</span><p>Normalapproximation der Binomialverteilung</p><span class="badge ean">🔵 eAN</span></div>
+    <div class="fb">
+      <p>Bedingung: \( np \geq 5 \) und \( n(1-p) \geq 5 \)</p>
+      <p>\( B(n;p) \approx N(\mu, \sigma^2) \)</p>
+      <p>\( \mu = np \), \( \sigma^2 = np(1-p) \)</p>
+      <div class="fbtn-row">
+        <button onclick="rate(this,'ok');event.stopPropagation()">✅</button>
+        <button onclick="rate(this,'rep');event.stopPropagation()">🔄</button>
+        <button onclick="rate(this,'no');event.stopPropagation()">❌</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="fc" data-cat="stochastik" data-lvl="both" data-id="fc44">
+  <div class="fcard" onclick="flipCard(this)">
+    <div class="ff"><span class="ftag">STOCHASTIK</span><p>Vertrauensintervall (KI)</p><span class="badge both">🟢 gAN+eAN</span></div>
+    <div class="fb">
+      <p>95%-Konfidenzintervall für unbekanntes p:</p>
+      <p>\( \left[ h_n - 1{,}96 \cdot \sqrt{\frac{h_n(1-h_n)}{n}} \;;\; h_n + 1{,}96 \cdot \sqrt{\frac{h_n(1-h_n)}{n}} \right] \)</p>
+      <p>hₙ = beobachtete relative Häufigkeit</p>
+      <div class="fbtn-row">
+        <button onclick="rate(this,'ok');event.stopPropagation()">✅</button>
+        <button onclick="rate(this,'rep');event.stopPropagation()">🔄</button>
+        <button onclick="rate(this,'no');event.stopPropagation()">❌</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<div id="aufgaben" class="panel">
+<style>
+.aufg-controls{display:flex;gap:8px;flex-wrap:wrap;padding:12px;}
+.aufg-controls select{background:var(--card2,#16213e);color:var(--tx,#e2e8f0);border:1px solid #444;padding:6px;border-radius:4px;}
+#aufg-progress{padding:8px 12px;}
+.aufg-card{background:var(--card,#1a1a2e);border-radius:8px;margin:8px;padding:12px;border-left:3px solid var(--acc,#6c63ff);}
+.aufg-card[data-status="ok"]{border-left-color:var(--ok,#22c55e);}
+.aufg-card[data-status="no"]{border-left-color:var(--err,#ef4444);}
+.aufg-header{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
+.aufg-id{font-weight:bold;font-size:1.1em;}
+.aufg-marks{margin-left:auto;display:flex;gap:6px;}
+.aufg-marks button{padding:4px 8px;border-radius:4px;border:1px solid #444;background:transparent;color:var(--tx,#e2e8f0);cursor:pointer;}
+.aufg-marks button.active{background:var(--acc,#6c63ff);}
+.aufg-text{margin:8px 0;line-height:1.6;}
+.aufg-actions{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0;}
+.aufg-actions button{padding:6px 12px;border-radius:4px;border:none;cursor:pointer;background:var(--card2,#16213e);color:var(--tx,#e2e8f0);}
+.hint,.solution{display:none;margin-top:8px;padding:10px;border-radius:6px;}
+.hint{background:#1e293b;border-left:3px solid var(--warn,#f59e0b);}
+.solution{background:#0d2618;border-left:3px solid var(--ok,#22c55e);}
+.hint.visible,.solution.visible{display:block;}
+.pbar{background:#333;border-radius:4px;height:8px;margin-top:4px;}
+.pbar>div{background:var(--acc,#6c63ff);height:100%;border-radius:4px;transition:width 0.3s;}
+.afb-badge{font-size:0.75em;padding:2px 6px;border-radius:10px;background:#2d3748;}
+</style>
+
+<div class="aufg-controls">
+  <select id="fil-niveau" onchange="filterAufg()">
+    <option value="all">Alle Niveaus</option>
+    <option value="gAN">gAN</option>
+    <option value="eAN">eAN</option>
+  </select>
+  <select id="fil-thema" onchange="filterAufg()">
+    <option value="all">Alle Themen</option>
+    <option value="analysis">Analysis</option>
+    <option value="stochastik">Stochastik</option>
+    <option value="geometrie">Geometrie</option>
+  </select>
+  <select id="fil-afb" onchange="filterAufg()">
+    <option value="all">Alle AFB</option>
+    <option value="1">AFB I</option>
+    <option value="2">AFB II</option>
+    <option value="3">AFB III</option>
+  </select>
+</div>
+<div id="aufg-progress">
+  <span id="aufg-prog-text">0 von 0 Aufgaben geschafft</span>
+  <div class="pbar"><div id="aufg-prog-bar" style="width:0%"></div></div>
+</div>
+<div id="aufg-list">
+
+  <!-- A1 -->
+  <div class="aufg-card" id="aufg-A1" data-id="A1" data-niveau="gAN" data-thema="analysis" data-afb="1">
+    <div class="aufg-header">
+      <span class="aufg-id">A1</span>
+      <span class="badge">🟢 gAN</span>
+      <span class="afb-badge">AFB I</span>
+      <div class="aufg-marks">
+        <button id="ok-A1" onclick="markAufg('A1','ok')">✅ Geschafft</button>
+        <button id="no-A1" onclick="markAufg('A1','no')">❌ Nicht geschafft</button>
+      </div>
+    </div>
+    <div class="aufg-text">
+      <p><b>Analysis | Kurvendiskussion</b></p>
+      <p>Gegeben ist \( f(x) = 2x^3 - 9x^2 + 12x - 4 \).<br>
+      a) Berechnen Sie alle Extremstellen und klassifizieren Sie diese.<br>
+      b) Bestimmen Sie die Wendestelle.</p>
+    </div>
+    <div class="aufg-actions">
+      <button onclick="toggleTipp('A1',1)">💡 Tipp 1</button>
+      <button onclick="toggleTipp('A1',2)">💡 Tipp 2</button>
+      <button onclick="toggleLoesung('A1')">✅ Musterlösung</button>
+    </div>
+    <div id="tipp1-A1" class="hint">Berechnen Sie \(f'(x)\) und lösen Sie \(f'(x)=0\).</div>
+    <div id="tipp2-A1" class="hint">\(f'(x) = 6x^2 - 18x + 12 = 6(x-1)(x-2)\) &rarr; \(x_1=1,\; x_2=2\)</div>
+    <div id="loe-A1" class="solution">
+      <p>\(f'(x) = 6x^2 - 18x + 12\), Nullstellen: \(x=1,\; x=2\)</p>
+      <p>\(f''(x) = 12x - 18\):<br>
+      \(f''(1) = -6 < 0\) &rarr; lokales Maximum \(H(1\,|\,1)\)<br>
+      \(f''(2) = 6 > 0\) &rarr; lokales Minimum \(T(2\,|\,0)\)</p>
+      <p>b) \(f''(x)=0:\; 12x=18,\; x=1{,}5\). \(f'''(x)=12\neq 0\) &rarr; Wendepunkt \(W(1{,}5\,|\,0{,}5)\)</p>
+    </div>
+  </div>
+
+  <!-- A2 -->
+  <div class="aufg-card" id="aufg-A2" data-id="A2" data-niveau="gAN" data-thema="analysis" data-afb="2">
+    <div class="aufg-header">
+      <span class="aufg-id">A2</span>
+      <span class="badge">🟢 gAN</span>
+      <span class="afb-badge">AFB II</span>
+      <div class="aufg-marks">
+        <button id="ok-A2" onclick="markAufg('A2','ok')">✅ Geschafft</button>
+        <button id="no-A2" onclick="markAufg('A2','no')">❌ Nicht geschafft</button>
+      </div>
+    </div>
+    <div class="aufg-text">
+      <p><b>Analysis | e-Funktion &amp; Tangente</b></p>
+      <p>Gegeben ist \( f(x) = x \cdot e^{-0{,}5x} \) auf \([0;\,6]\).<br>
+      a) Berechnen Sie \(f'(x)\).<br>
+      b) Bestimmen Sie die Extremstelle und klassifizieren Sie diese.<br>
+      c) Geben Sie die Tangentengleichung im Extrempunkt an.</p>
+    </div>
+    <div class="aufg-actions">
+      <button onclick="toggleTipp('A2',1)">💡 Tipp 1</button>
+      <button onclick="toggleTipp('A2',2)">💡 Tipp 2</button>
+      <button onclick="toggleLoesung('A2')">✅ Musterlösung</button>
+    </div>
+    <div id="tipp1-A2" class="hint">Produktregel: \(f'(x)=1\cdot e^{-0{,}5x}+x\cdot(-0{,}5)\cdot e^{-0{,}5x}\)</div>
+    <div id="tipp2-A2" class="hint">\(f'(x)=e^{-0{,}5x}(1-0{,}5x)=0\) &rarr; \(x=2\)</div>
+    <div id="loe-A2" class="solution">
+      <p>a) \(f'(x)=e^{-0{,}5x}(1-0{,}5x)\)</p>
+      <p>b) Nullstelle bei \(x=2\).<br>
+      \(f''(x)=e^{-0{,}5x}(-1+0{,}25x)\).<br>
+      \(f''(2)=e^{-1}\cdot(-0{,}5)<0\) &rarr; lokales Maximum \(H\!\left(2\,\Big|\,2e^{-1}\right)\approx H(2\,|\,0{,}736)\)</p>
+      <p>c) Steigung im Maximum: \(f'(2)=0\). Tangente ist waagerecht:<br>
+      \(y = 2e^{-1} \approx 0{,}736\)</p>
+    </div>
+  </div>
+
+  <!-- A3 -->
+  <div class="aufg-card" id="aufg-A3" data-id="A3" data-niveau="eAN" data-thema="analysis" data-afb="2">
+    <div class="aufg-header">
+      <span class="aufg-id">A3</span>
+      <span class="badge">🔵 eAN</span>
+      <span class="afb-badge">AFB II</span>
+      <div class="aufg-marks">
+        <button id="ok-A3" onclick="markAufg('A3','ok')">✅ Geschafft</button>
+        <button id="no-A3" onclick="markAufg('A3','no')">❌ Nicht geschafft</button>
+      </div>
+    </div>
+    <div class="aufg-text">
+      <p><b>Analysis | Integralrechnung</b></p>
+      <p>Berechnen Sie das bestimmte Integral:
+      \[ \int_1^4 \!\left(\sqrt{x} - \frac{1}{x}\right)dx \]</p>
+    </div>
+    <div class="aufg-actions">
+      <button onclick="toggleTipp('A3',1)">💡 Tipp 1</button>
+      <button onclick="toggleTipp('A3',2)">💡 Tipp 2</button>
+      <button onclick="toggleLoesung('A3')">✅ Musterlösung</button>
+    </div>
+    <div id="tipp1-A3" class="hint">Stammfunktionen: \(\int\!\sqrt{x}\,dx = \tfrac{2}{3}x^{3/2},\quad \int\!\tfrac{1}{x}\,dx = \ln|x|\)</div>
+    <div id="tipp2-A3" class="hint">\(F(x) = \dfrac{2}{3}x^{3/2} - \ln(x)\)</div>
+    <div id="loe-A3" class="solution">
+      <p>\(F(x) = \dfrac{2}{3}x^{3/2} - \ln x\)</p>
+      <p>\(\bigl[F(x)\bigr]_1^4 = \Bigl(\tfrac{2}{3}\cdot 8 - \ln 4\Bigr) - \Bigl(\tfrac{2}{3}\cdot 1 - \ln 1\Bigr)\)
+      \(= \tfrac{16}{3} - \ln 4 - \tfrac{2}{3} - 0 = \dfrac{14}{3} - \ln 4 \approx 4{,}667 - 1{,}386 \approx 3{,}28\)</p>
+    </div>
+  </div>
+
+  <!-- A4 -->
+  <div class="aufg-card" id="aufg-A4" data-id="A4" data-niveau="eAN" data-thema="analysis" data-afb="3">
+    <div class="aufg-header">
+      <span class="aufg-id">A4</span>
+      <span class="badge">🔵 eAN</span>
+      <span class="afb-badge">AFB III</span>
+      <div class="aufg-marks">
+        <button id="ok-A4" onclick="markAufg('A4','ok')">✅ Geschafft</button>
+        <button id="no-A4" onclick="markAufg('A4','no')">❌ Nicht geschafft</button>
+      </div>
+    </div>
+    <div class="aufg-text">
+      <p><b>Analysis | Flächenberechnung (partielle Integration)</b></p>
+      <p>Gegeben sind \( f(x) = (x^2-1)\cdot e^{-x} \) und \( g(x)=0 \).<br>
+      a) Bestimmen Sie die Schnittpunkte von \(f\) mit der \(x\)-Achse.<br>
+      b) Berechnen Sie die Fläche zwischen \(f\) und der \(x\)-Achse auf \([-1;\,1]\).</p>
+    </div>
+    <div class="aufg-actions">
+      <button onclick="toggleTipp('A4',1)">💡 Tipp 1</button>
+      <button onclick="toggleTipp('A4',2)">💡 Tipp 2</button>
+      <button onclick="toggleLoesung('A4')">✅ Musterlösung</button>
+    </div>
+    <div id="tipp1-A4" class="hint">\(f(x)=0\) &rarr; \(x^2-1=0\) &rarr; \(x=\pm 1\)</div>
+    <div id="tipp2-A4" class="hint">Auf \((-1,\,1)\): \(f(x)\le 0\), also \(A=\left|\int_{-1}^{1}f(x)\,dx\right|\). Partielle Integration nötig.</div>
+    <div id="loe-A4" class="solution">
+      <p>a) \(f(x)=0\Rightarrow x=\pm 1\). Nullstellen: \(N_1(-1\,|\,0)\) und \(N_2(1\,|\,0)\).</p>
+      <p>b) \(f(x)\le 0\) auf \((-1,1)\).<br>
+      Stammfunktion per partieller Integration:<br>
+      Setze \(u=x^2-1,\; v'=e^{-x}\) &rarr; \(u'=2x,\; v=-e^{-x}\).<br>
+      \(\int(x^2-1)e^{-x}dx = -(x^2-1)e^{-x}+2\int x e^{-x}dx\)<br>
+      Erneut IBP: \(\int xe^{-x}dx = -xe^{-x}-e^{-x}\).<br>
+      Also: \(F(x)=-(x^2-1)e^{-x}+2(-xe^{-x}-e^{-x})=-(x^2+2x+1)e^{-x}=-(x+1)^2e^{-x}\)</p>
+      <p>\(F(1)=-4e^{-1},\quad F(-1)=0\)<br>
+      \(A = |F(1)-F(-1)| = \dfrac{4}{e} \approx 1{,}472\)</p>
+    </div>
+  </div>
+
+  <!-- S1 -->
+  <div class="aufg-card" id="aufg-S1" data-id="S1" data-niveau="gAN" data-thema="stochastik" data-afb="1">
+    <div class="aufg-header">
+      <span class="aufg-id">S1</span>
+      <span class="badge">🟢 gAN</span>
+      <span class="afb-badge">AFB I</span>
+      <div class="aufg-marks">
+        <button id="ok-S1" onclick="markAufg('S1','ok')">✅ Geschafft</button>
+        <button id="no-S1" onclick="markAufg('S1','no')">❌ Nicht geschafft</button>
+      </div>
+    </div>
+    <div class="aufg-text">
+      <p><b>Stochastik | Binomialverteilung – Kenngrößen</b></p>
+      <p>Sei \(X\sim B(20;\,0{,}3)\). Berechnen Sie:<br>
+      a) \(P(X=6)\)<br>
+      b) \(P(X\le 4)\)<br>
+      c) Erwartungswert \(\mu\) und Standardabweichung \(\sigma\)</p>
+    </div>
+    <div class="aufg-actions">
+      <button onclick="toggleTipp('S1',1)">💡 Tipp 1</button>
+      <button onclick="toggleTipp('S1',2)">💡 Tipp 2</button>
+      <button onclick="toggleLoesung('S1')">✅ Musterlösung</button>
+    </div>
+    <div id="tipp1-S1" class="hint">\(P(X=k)=\binom{20}{k}\cdot 0{,}3^k\cdot 0{,}7^{20-k}\)</div>
+    <div id="tipp2-S1" class="hint">\(\binom{20}{6}=38760\)</div>
+    <div id="loe-S1" class="solution">
+      <p>a) \(P(X=6)=38760\cdot 0{,}3^6\cdot 0{,}7^{14}\approx 0{,}1916\)</p>
+      <p>b) \(P(X\le 4)\approx 0{,}2375\) (Tabelle/CAS)</p>
+      <p>c) \(\mu = n\cdot p = 20\cdot 0{,}3 = 6\)<br>
+      \(\sigma = \sqrt{n\cdot p\cdot q} = \sqrt{20\cdot 0{,}3\cdot 0{,}7} = \sqrt{4{,}2}\approx 2{,}049\)</p>
+    </div>
+  </div>
+
+  <!-- S2 -->
+  <div class="aufg-card" id="aufg-S2" data-id="S2" data-niveau="gAN" data-thema="stochastik" data-afb="2">
+    <div class="aufg-header">
+      <span class="aufg-id">S2</span>
+      <span class="badge">🟢 gAN</span>
+      <span class="afb-badge">AFB II</span>
+      <div class="aufg-marks">
+        <button id="ok-S2" onclick="markAufg('S2','ok')">✅ Geschafft</button>
+        <button id="no-S2" onclick="markAufg('S2','no')">❌ Nicht geschafft</button>
+      </div>
+    </div>
+    <div class="aufg-text">
+      <p><b>Stochastik | Binomialverteilung – Wahrscheinlichkeiten</b></p>
+      <p>In einer Klasse (\(n=30\)) löst jeder Schüler unabhängig mit \(p=0{,}4\) eine Aufgabe richtig. \(X\) = Anzahl richtiger Lösungen.<br>
+      a) Berechnen Sie \(P(X\ge 15)\).<br>
+      b) Mit welcher Wahrscheinlichkeit lösen genau 12 Schüler richtig?</p>
+    </div>
+    <div class="aufg-actions">
+      <button onclick="toggleTipp('S2',1)">💡 Tipp 1</button>
+      <button onclick="toggleTipp('S2',2)">💡 Tipp 2</button>
+      <button onclick="toggleLoesung('S2')">✅ Musterlösung</button>
+    </div>
+    <div id="tipp1-S2" class="hint">\(P(X\ge 15)=1-P(X\le 14)\)</div>
+    <div id="tipp2-S2" class="hint">\(P(X\le 14)\approx 0{,}8245\) (aus Tabelle/CAS)</div>
+    <div id="loe-S2" class="solution">
+      <p>\(\mu = 30\cdot 0{,}4 = 12\)</p>
+      <p>a) \(P(X\ge 15)=1-P(X\le 14)\approx 1-0{,}8245=0{,}1755\)</p>
+      <p>b) \(P(X=12)=\binom{30}{12}\cdot 0{,}4^{12}\cdot 0{,}6^{18}\approx 0{,}1152\)</p>
+    </div>
+  </div>
+
+  <!-- S3 -->
+  <div class="aufg-card" id="aufg-S3" data-id="S3" data-niveau="both" data-thema="stochastik" data-afb="2">
+    <div class="aufg-header">
+      <span class="aufg-id">S3</span>
+      <span class="badge">🟢 gAN+eAN</span>
+      <span class="afb-badge">AFB II</span>
+      <div class="aufg-marks">
+        <button id="ok-S3" onclick="markAufg('S3','ok')">✅ Geschafft</button>
+        <button id="no-S3" onclick="markAufg('S3','no')">❌ Nicht geschafft</button>
+      </div>
+    </div>
+    <div class="aufg-text">
+      <p><b>Stochastik | Vertrauensintervall</b></p>
+      <p>In einer Schule wurden \(n=100\) Schülerinnen und Schüler zufällig befragt.
+      Dabei gaben 18 an, Sehprobleme zu haben, die eine Brille erfordern.<br>
+      a) Berechnen Sie ein 95 %-Vertrauensintervall für den tatsächlichen Anteil \(p\).<br>
+      b) Ist es plausibel, dass der in einer Studie ermittelte Wert \(p_0=0{,}15\) auch auf diese Schule zutrifft? Begründen Sie.</p>
+    </div>
+    <div class="aufg-actions">
+      <button onclick="toggleTipp('S3',1)">💡 Tipp 1</button>
+      <button onclick="toggleTipp('S3',2)">💡 Tipp 2</button>
+      <button onclick="toggleLoesung('S3')">✅ Musterlösung</button>
+    </div>
+    <div id="tipp1-S3" class="hint">Berechnen Sie zuerst \(h_n = \frac{18}{100}\). Dann einsetzen in \(h_n \pm 1{,}96\cdot\sqrt{\frac{h_n(1-h_n)}{n}}\).</div>
+    <div id="tipp2-S3" class="hint">\(\sqrt{\frac{0{,}18\cdot0{,}82}{100}}\approx0{,}0384\); also \(1{,}96\cdot0{,}0384\approx0{,}075\)</div>
+    <div id="loe-S3" class="solution">
+      <p><b>a)</b> \(h_n=\frac{18}{100}=0{,}18\)<br>
+      \(1{,}96\cdot\sqrt{\frac{0{,}18\cdot0{,}82}{100}}\approx1{,}96\cdot0{,}0384\approx0{,}075\)<br>
+      95 %-KI: \([0{,}18-0{,}075;\;0{,}18+0{,}075]=[0{,}105;\;0{,}255]\)</p>
+      <p><b>b)</b> Da \(p_0=0{,}15\in[0{,}105;\;0{,}255]\), ist der Studien-Wert <b>plausibel</b>.</p>
+    </div>
+  </div>
+
+  <!-- S4 -->
+  <div class="aufg-card" id="aufg-S4" data-id="S4" data-niveau="eAN" data-thema="stochastik" data-afb="3">
+    <div class="aufg-header">
+      <span class="aufg-id">S4</span>
+      <span class="badge">🔵 eAN</span>
+      <span class="afb-badge">AFB III</span>
+      <div class="aufg-marks">
+        <button id="ok-S4" onclick="markAufg('S4','ok')">✅ Geschafft</button>
+        <button id="no-S4" onclick="markAufg('S4','no')">❌ Nicht geschafft</button>
+      </div>
+    </div>
+    <div class="aufg-text">
+      <p><b>Stochastik | Totale Wahrscheinlichkeit &amp; Bayes</b></p>
+      <p>In einer Fabrik produziert Maschine A 60 % und Maschine B 40 % der Produkte.<br>
+      \(P(\text{Defekt}\mid A)=0{,}03\), \quad \(P(\text{Defekt}\mid B)=0{,}05\).<br>
+      a) Wie groß ist die Wahrscheinlichkeit, dass ein zufällig gewähltes Produkt defekt ist?<br>
+      b) Ein defektes Produkt wird gefunden. Mit welcher Wahrscheinlichkeit stammt es von Maschine A?</p>
+    </div>
+    <div class="aufg-actions">
+      <button onclick="toggleTipp('S4',1)">💡 Tipp 1</button>
+      <button onclick="toggleTipp('S4',2)">💡 Tipp 2</button>
+      <button onclick="toggleLoesung('S4')">✅ Musterlösung</button>
+    </div>
+    <div id="tipp1-S4" class="hint">Totale Wahrscheinlichkeit: \(P(D)=P(D\mid A)\cdot P(A)+P(D\mid B)\cdot P(B)\)</div>
+    <div id="tipp2-S4" class="hint">\(P(D)=0{,}03\cdot 0{,}6+0{,}05\cdot 0{,}4=0{,}018+0{,}020=0{,}038\)</div>
+    <div id="loe-S4" class="solution">
+      <p>a) \(P(D)=0{,}038\) (3,8 % aller Produkte sind defekt)</p>
+      <p>b) Satz von Bayes:<br>
+      \(P(A\mid D)=\dfrac{P(D\mid A)\cdot P(A)}{P(D)}=\dfrac{0{,}018}{0{,}038}\approx 0{,}474\)<br>
+      Mit Wahrscheinlichkeit ca. 47,4 % stammt das defekte Produkt von Maschine A.</p>
+    </div>
+  </div>
+
+  <!-- G1 -->
+  <div class="aufg-card" id="aufg-G1" data-id="G1" data-niveau="gAN" data-thema="geometrie" data-afb="1">
+    <div class="aufg-header">
+      <span class="aufg-id">G1</span>
+      <span class="badge">🟢 gAN</span>
+      <span class="afb-badge">AFB I</span>
+      <div class="aufg-marks">
+        <button id="ok-G1" onclick="markAufg('G1','ok')">✅ Geschafft</button>
+        <button id="no-G1" onclick="markAufg('G1','no')">❌ Nicht geschafft</button>
+      </div>
+    </div>
+    <div class="aufg-text">
+      <p><b>Analytische Geometrie | Vektoren</b></p>
+      <p>Gegeben: \(A(2\,|\,1\,|\,3)\) und \(B(5\,|\,3\,|\,1)\).<br>
+      a) Berechnen Sie den Verbindungsvektor \(\overrightarrow{AB}\).<br>
+      b) Berechnen Sie \(|\overrightarrow{AB}|\).<br>
+      c) Bestimmen Sie den Mittelpunkt \(M\) von \(AB\).</p>
+    </div>
+    <div class="aufg-actions">
+      <button onclick="toggleTipp('G1',1)">💡 Tipp 1</button>
+      <button onclick="toggleTipp('G1',2)">💡 Tipp 2</button>
+      <button onclick="toggleLoesung('G1')">✅ Musterlösung</button>
+    </div>
+    <div id="tipp1-G1" class="hint">\(\overrightarrow{AB}=B-A\)</div>
+    <div id="tipp2-G1" class="hint">\(\overrightarrow{AB}=\begin{pmatrix}3\\2\\-2\end{pmatrix}\)</div>
+    <div id="loe-G1" class="solution">
+      <p>a) \(\overrightarrow{AB}=B-A=\begin{pmatrix}3\\2\\-2\end{pmatrix}\)</p>
+      <p>b) \(|\overrightarrow{AB}|=\sqrt{3^2+2^2+(-2)^2}=\sqrt{9+4+4}=\sqrt{17}\approx 4{,}123\)</p>
+      <p>c) \(M=\left(\dfrac{2+5}{2}\,\Big|\,\dfrac{1+3}{2}\,\Big|\,\dfrac{3+1}{2}\right)=(3{,}5\,|\,2\,|\,2)\)</p>
+    </div>
+  </div>
+
+  <!-- G2 -->
+  <div class="aufg-card" id="aufg-G2" data-id="G2" data-niveau="gAN" data-thema="geometrie" data-afb="2">
+    <div class="aufg-header">
+      <span class="aufg-id">G2</span>
+      <span class="badge">🟢 gAN</span>
+      <span class="afb-badge">AFB II</span>
+      <div class="aufg-marks">
+        <button id="ok-G2" onclick="markAufg('G2','ok')">✅ Geschafft</button>
+        <button id="no-G2" onclick="markAufg('G2','no')">❌ Nicht geschafft</button>
+      </div>
+    </div>
+    <div class="aufg-text">
+      <p><b>Analytische Geometrie | Geraden</b></p>
+      <p>Gegeben: \(g\colon\vec{x}=\begin{pmatrix}1\\2\\0\end{pmatrix}+t\cdot\begin{pmatrix}2\\-1\\3\end{pmatrix}\)<br>
+      a) Liegt \(P(5\,|\,0\,|\,6)\) auf \(g\)?<br>
+      b) Berechnen Sie den Schnittpunkt von \(g\) mit der \(xy\)-Ebene (\(z=0\)).</p>
+    </div>
+    <div class="aufg-actions">
+      <button onclick="toggleTipp('G2',1)">💡 Tipp 1</button>
+      <button onclick="toggleTipp('G2',2)">💡 Tipp 2</button>
+      <button onclick="toggleLoesung('G2')">✅ Musterlösung</button>
+    </div>
+    <div id="tipp1-G2" class="hint">Einsetzen von \(P\) in \(g\): \(5=1+2t\Rightarrow t=2\). Probe in alle Koordinaten.</div>
+    <div id="tipp2-G2" class="hint">Für Schnittpunkt mit \(z=0\): \(0=0+3t\Rightarrow t=0\)</div>
+    <div id="loe-G2" class="solution">
+      <p>a) \(t=2\): \(x=1+4=5\,\checkmark\), \(y=2-2=0\,\checkmark\), \(z=0+6=6\,\checkmark\)<br>
+      &rarr; \(P\) liegt auf \(g\).</p>
+      <p>b) \(z=0\Rightarrow 0+3t=0\Rightarrow t=0\)<br>
+      Schnittpunkt: \(\vec{x}=\begin{pmatrix}1\\2\\0\end{pmatrix}\), also \(S(1\,|\,2\,|\,0)\)</p>
+    </div>
+  </div>
+
+  <!-- G3 -->
+  <div class="aufg-card" id="aufg-G3" data-id="G3" data-niveau="eAN" data-thema="geometrie" data-afb="2">
+    <div class="aufg-header">
+      <span class="aufg-id">G3</span>
+      <span class="badge">🔵 eAN</span>
+      <span class="afb-badge">AFB II</span>
+      <div class="aufg-marks">
+        <button id="ok-G3" onclick="markAufg('G3','ok')">✅ Geschafft</button>
+        <button id="no-G3" onclick="markAufg('G3','no')">❌ Nicht geschafft</button>
+      </div>
+    </div>
+    <div class="aufg-text">
+      <p><b>Analytische Geometrie | Ebene &amp; Abstand</b></p>
+      <p>Gegeben: Ebene \(E\colon 2x-y+3z=6\) und Punkt \(Q(1\,|\,1\,|\,1)\).<br>
+      a) Liegt \(Q\) in \(E\)?<br>
+      b) Berechnen Sie den Abstand von \(Q\) zu \(E\).<br>
+      c) Bestimmen Sie den Fußpunkt \(F\) des Lotes von \(Q\) auf \(E\).</p>
+    </div>
+    <div class="aufg-actions">
+      <button onclick="toggleTipp('G3',1)">💡 Tipp 1</button>
+      <button onclick="toggleTipp('G3',2)">💡 Tipp 2</button>
+      <button onclick="toggleLoesung('G3')">✅ Musterlösung</button>
+    </div>
+    <div id="tipp1-G3" class="hint">Einsetzen: \(2\cdot1-1+3\cdot1=4\neq6\) &rarr; \(Q\) nicht in \(E\). Normalenvektor: \(\vec{n}=\begin{pmatrix}2\\-1\\3\end{pmatrix}\)</div>
+    <div id="tipp2-G3" class="hint">\(d=\dfrac{|2\cdot1-1+3\cdot1-6|}{\sqrt{4+1+9}}=\dfrac{|4-6|}{\sqrt{14}}=\dfrac{2}{\sqrt{14}}\)</div>
+    <div id="loe-G3" class="solution">
+      <p>a) \(2\cdot1-1+3\cdot1=4\neq6\) &rarr; \(Q\) liegt <b>nicht</b> in \(E\).</p>
+      <p>b) \(d=\dfrac{|2-1+3-6|}{\sqrt{4+1+9}}=\dfrac{2}{\sqrt{14}}=\dfrac{\sqrt{14}}{7}\approx 0{,}535\)</p>
+      <p>c) Lotgerade durch \(Q\) mit Richtung \(\vec{n}\):<br>
+      \(\vec{x}=\begin{pmatrix}1\\1\\1\end{pmatrix}+t\begin{pmatrix}2\\-1\\3\end{pmatrix}\)<br>
+      Einsetzen in \(E\): \(2(1+2t)-(1-t)+3(1+3t)=6\)<br>
+      \(2+4t-1+t+3+9t=6\Rightarrow 14t+4=6\Rightarrow t=-\tfrac{1}{7}\)<br>
+      \(F=\left(\tfrac{5}{7}\,\Big|\,\tfrac{8}{7}\,\Big|\,\tfrac{4}{7}\right)\)</p>
+    </div>
+  </div>
+
+  <!-- G4 -->
+  <div class="aufg-card" id="aufg-G4" data-id="G4" data-niveau="eAN" data-thema="geometrie" data-afb="3">
+    <div class="aufg-header">
+      <span class="aufg-id">G4</span>
+      <span class="badge">🔵 eAN</span>
+      <span class="afb-badge">AFB III</span>
+      <div class="aufg-marks">
+        <button id="ok-G4" onclick="markAufg('G4','ok')">✅ Geschafft</button>
+        <button id="no-G4" onclick="markAufg('G4','no')">❌ Nicht geschafft</button>
+      </div>
+    </div>
+    <div class="aufg-text">
+      <p><b>Analytische Geometrie | Lage Gerade–Ebene &amp; Spiegelpunkt</b></p>
+      <p>Gegeben: \(g\colon\vec{x}=\begin{pmatrix}0\\3\\2\end{pmatrix}+t\cdot\begin{pmatrix}1\\0\\1\end{pmatrix}\) und \(E\colon x+2y-z=4\).<br>
+      a) Untersuchen Sie die Lage von \(g\) und \(E\) (Schnittpunkt oder andere Lage?).<br>
+      b) Welchen Winkel schließt \(g\) mit \(E\) ein?<br>
+      c) Bestimmen Sie den Spiegelpunkt von \(A(0\,|\,3\,|\,2)\) an \(E\).</p>
+    </div>
+    <div class="aufg-actions">
+      <button onclick="toggleTipp('G4',1)">💡 Tipp 1</button>
+      <button onclick="toggleTipp('G4',2)">💡 Tipp 2</button>
+      <button onclick="toggleLoesung('G4')">✅ Musterlösung</button>
+    </div>
+    <div id="tipp1-G4" class="hint">Einsetzen: \((0+t)+2\cdot3-(2+t)=4\Rightarrow t+6-2-t=4\Rightarrow 4=4\) (immer wahr!)</div>
+    <div id="tipp2-G4" class="hint">\(\vec{n}=\begin{pmatrix}1\\2\\-1\end{pmatrix}\), \(\vec{v}=\begin{pmatrix}1\\0\\1\end{pmatrix}\): \(\vec{n}\cdot\vec{v}=1+0-1=0\) &rarr; \(g\perp\vec{n}\). Probe: \(A\) in \(E\): \(0+6-2=4\,\checkmark\) &rarr; \(g\subset E\)</div>
+    <div id="loe-G4" class="solution">
+      <p>a) Einsetzen der Geradengleichung in \(E\) ergibt \(4=4\) (identisch wahr).<br>
+      Zusätzlich: \(\vec{n}\cdot\vec{v}=0\) und \(A(0|3|2)\in E\) (da \(0+6-2=4\)).<br>
+      &rarr; Die Gerade \(g\) liegt <b>vollständig in der Ebene \(E\)</b> (\(g\subset E\)).</p>
+      <p>b) Da \(g\subset E\), beträgt der Winkel zwischen \(g\) und \(E\) genau \(\mathbf{0°}\) (Gerade liegt in der Ebene).</p>
+      <p>c) Da \(A(0|3|2)\in E\) (Probe: \(0+6-2=4\,\checkmark\)), liegt \(A\) bereits in der Ebene.<br>
+      &rarr; Der Spiegelpunkt von \(A\) an \(E\) ist \(A\) selbst: \(A'=(0\,|\,3\,|\,2)\).</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function filterAufg(){
+  const n=document.getElementById('fil-niveau').value;
+  const t=document.getElementById('fil-thema').value;
+  const a=document.getElementById('fil-afb').value;
+  document.querySelectorAll('.aufg-card').forEach(c=>{
+    const show=(n==='all'||c.dataset.niveau===n)&&
+               (t==='all'||c.dataset.thema===t)&&
+               (a==='all'||c.dataset.afb===a);
+    c.style.display=show?'':'none';
+  });
+}
+
+function toggleTipp(id,num){
+  document.getElementById('tipp'+num+'-'+id).classList.toggle('visible');
+}
+function toggleLoesung(id){
+  document.getElementById('loe-'+id).classList.toggle('visible');
+}
+function markAufg(id,status){
+  localStorage.setItem('aufg-'+id,status);
+  document.getElementById('aufg-'+id).dataset.status=status;
+  const ok=document.getElementById('ok-'+id);
+  const no=document.getElementById('no-'+id);
+  if(ok&&no){
+    ok.classList.toggle('active',status==='ok');
+    no.classList.toggle('active',status==='no');
+  }
+  updateAufgProgress();
+}
+function updateAufgProgress(){
+  const all=document.querySelectorAll('.aufg-card');
+  let done=0;
+  all.forEach(c=>{if(localStorage.getItem('aufg-'+c.dataset.id)==='ok')done++;});
+  const el=document.getElementById('aufg-prog-text');
+  if(el)el.textContent=done+' von '+all.length+' Aufgaben geschafft';
+  const bar=document.getElementById('aufg-prog-bar');
+  if(bar)bar.style.width=(all.length>0?done/all.length*100:0)+'%';
+}
+function restoreAufgState(){
+  document.querySelectorAll('.aufg-card').forEach(c=>{
+    const s=localStorage.getItem('aufg-'+c.dataset.id);
+    if(s){
+      c.dataset.status=s;
+      const ok=document.getElementById('ok-'+c.dataset.id);
+      const no=document.getElementById('no-'+c.dataset.id);
+      if(ok&&no){ok.classList.toggle('active',s==='ok');no.classList.toggle('active',s==='no');}
+    }
+  });
+  updateAufgProgress();
+}
+window.addEventListener('DOMContentLoaded',restoreAufgState);
+</script>
+
+</div>
+
+<script>
+let level=localStorage.getItem('lvl')||'gAN';
+function setLevel(l){
+level=l;
+localStorage.setItem('lvl',l);
+document.querySelectorAll('[data-lvl="ean"]').forEach(e=>{
+e.style.display=(l==='eAN')?'':'none';
+});
+document.getElementById('btn-gan').classList.toggle('active',l==='gAN');
+document.getElementById('btn-ean').classList.toggle('active',l==='eAN');
+document.getElementById('lvl-hint').textContent=l==='gAN'?'gAN: nur 🟢 Inhalte':'eAN: alle Inhalte sichtbar';
+if(window.MathJax)MathJax.typesetPromise();
+updateProgress();
+}
+function showTab(id,ev){
+document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+(ev?ev.target:document.querySelector('.tab')).classList.add('active');
+if(window.MathJax)MathJax.typesetPromise();
+}
+function toggleM(el){el.parentElement.classList.toggle('open');}
+function flipCard(el){el.classList.toggle('flipped');}
+function rate(btn,status){
+const card=btn.closest('.fc');
+const id=card.dataset.id;
+localStorage.setItem('fc-'+id,status);
+card.dataset.status=status;
+updateProgress();
+}
+function filterCards(cat){
+document.querySelectorAll('.fc').forEach(c=>{
+const show=(cat==='all'||c.dataset.cat===cat);
+const levelOk=(level==='eAN'||c.dataset.lvl!=='ean');
+c.style.display=(show&&levelOk)?'':'none';
+});
+document.querySelectorAll('.ffilter').forEach(b=>b.classList.toggle('active',b.dataset.cat===cat));
+}
+function updateProgress(){
+const all=document.querySelectorAll('.fc');
+let ok=0;
+all.forEach(c=>{if(localStorage.getItem('fc-'+c.dataset.id)==='ok')ok++;});
+const el=document.getElementById('prog-text');
+if(el)el.textContent=ok+' von '+all.length+' Karten sitzen';
+const bar=document.getElementById('prog-bar');
+if(bar)bar.style.width=(ok/all.length*100)+'%';
+}
+function restoreState(){
+setLevel(level);
+document.querySelectorAll('.fc').forEach(c=>{
+const s=localStorage.getItem('fc-'+c.dataset.id);
+if(s)c.dataset.status=s;
+});
+updateProgress();
+}
+window.addEventListener('DOMContentLoaded',restoreState);
+</script>
+</body>
+</html>
