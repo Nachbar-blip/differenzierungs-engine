@@ -5,3 +5,12 @@ Mathe/
 ~$*
 .DS_Store
 Thumbs.db
+
+# Urheberrechtlich geschütztes Quellenmaterial darf nie ins GitHub-Repo gelangen.
+# Material/ liegt nach dem Umzug ohnehin außerhalb dieses Ordners als Geschwister,
+# aber diese Einträge schützen vor versehentlich hineinkopierten Quellen.
+Material/
+material/
+quellen-raw/
+*.mdb
+*.ctf

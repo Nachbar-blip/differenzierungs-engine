@@ -404,83 +404,78 @@
 
       // ═══════════════════════════════════════════════════════════
       // LEVEL 6 — Experte (IDs 31–36)
-      // e-Funktionen, parameterabhängige Analyse, vollständige KD
+      // Vollständige Kurvendiskussion ganzrationaler Funktionen Grad 4, Anwendung
       // ═══════════════════════════════════════════════════════════
 
       {
         id: 31,
         level: 6,
         typ: 'numerisch',
-        frage: 'Gegeben ist \\(f(x) = (x^2 - 1) \\cdot e^{-x}\\). Bestimme die Anzahl der Nullstellen.',
-        loesung: 2,
+        frage: 'Vollständige Kurvendiskussion von \\(f(x) = x^4 - 4x^2 + 3\\). Bestimme die Anzahl der Nullstellen von \\(f\\).',
+        loesung: 4,
         toleranz: 0,
-        tipp: '\\(e^{-x} > 0\\) für alle \\(x\\). Wann wird \\(x^2 - 1 = 0\\)?',
-        loesungsweg: '\\(f(x) = 0 \\Leftrightarrow x^2 - 1 = 0\\) (da \\(e^{-x} \\neq 0\\)). \\(x^2 = 1 \\Rightarrow x = \\pm 1\\). Also 2 Nullstellen.'
+        tipp: 'Substituiere \\(u = x^2\\): \\(u^2 - 4u + 3 = 0\\). Welche \\(u\\)-Werte ergeben sich?',
+        loesungsweg: 'Substitution \\(u = x^2\\): \\(u^2 - 4u + 3 = (u-1)(u-3) = 0 \\Rightarrow u_1 = 1,\\; u_2 = 3\\). Rücksubstitution: \\(x^2 = 1 \\Rightarrow x = \\pm 1\\) und \\(x^2 = 3 \\Rightarrow x = \\pm\\sqrt{3}\\). Also 4 Nullstellen: \\(x_{1,2} = \\pm 1,\\; x_{3,4} = \\pm\\sqrt{3}\\).'
       },
       {
         id: 32,
         level: 6,
-        typ: 'numerisch',
-        frage: 'Gegeben ist \\(f(x) = x \\cdot e^{-x}\\). Bestimme die \\(x\\)-Koordinate des Hochpunkts.',
-        loesung: 1,
-        toleranz: 0,
-        tipp: 'Produktregel: \\(f\'(x) = e^{-x} + x \\cdot (-e^{-x}) = e^{-x}(1 - x)\\).',
-        loesungsweg: '\\(f\'(x) = e^{-x}(1-x) = 0 \\Rightarrow x = 1\\) (da \\(e^{-x} \\neq 0\\)). \\(f\'\'(x) = e^{-x}(x-2)\\). \\(f\'\'(1) = e^{-1}(-1) < 0 \\Rightarrow\\) Hochpunkt bei \\(x = 1\\).'
+        typ: 'mc',
+        frage: 'Vollständige Kurvendiskussion von \\(f(x) = x^4 - 4x^2 + 3\\). Welche Symmetrieeigenschaft hat \\(f\\) und wie verhält sich \\(f\\) für \\(x \\to \\pm\\infty\\)?',
+        optionen: [
+          'Punktsymmetrisch zum Ursprung; \\(f(x) \\to -\\infty\\)',
+          'Achsensymmetrisch zur \\(y\\)-Achse; \\(f(x) \\to +\\infty\\)',
+          'Achsensymmetrisch zur \\(y\\)-Achse; \\(f(x) \\to -\\infty\\)',
+          'Keine Symmetrie; \\(f(x) \\to +\\infty\\)'
+        ],
+        korrekt: 1,
+        tipp: 'Alle Exponenten in \\(f(x) = x^4 - 4x^2 + 3\\) sind gerade. Grad 4, Leitkoeffizient \\(+1\\).',
+        loesungsweg: '\\(f(-x) = (-x)^4 - 4(-x)^2 + 3 = x^4 - 4x^2 + 3 = f(x)\\) — achsensymmetrisch zur \\(y\\)-Achse. Grad 4 (gerade) mit Leitkoeffizient \\(+1 > 0\\): \\(f(x) \\to +\\infty\\) für \\(x \\to \\pm\\infty\\).'
       },
       {
         id: 33,
         level: 6,
-        typ: 'mc',
-        frage: 'Gegeben ist \\(f(x) = x \\cdot e^{-x}\\). Wie verhält sich \\(f\\) für \\(x \\to +\\infty\\)?',
-        optionen: [
-          '\\(f(x) \\to +\\infty\\)',
-          '\\(f(x) \\to -\\infty\\)',
-          '\\(f(x) \\to 0\\)',
-          '\\(f(x) \\to 1\\)'
-        ],
-        korrekt: 2,
-        tipp: 'Die Exponentialfunktion wächst schneller als jedes Polynom.',
-        loesungsweg: 'Für \\(x \\to +\\infty\\) dominiert \\(e^{-x} \\to 0\\) über das lineare Wachstum von \\(x\\). Also \\(f(x) = \\frac{x}{e^x} \\to 0\\).'
+        typ: 'numerisch',
+        frage: 'Vollständige Kurvendiskussion von \\(f(x) = x^4 - 4x^2 + 3\\). Bestimme die Anzahl der lokalen Extremstellen.',
+        loesung: 3,
+        toleranz: 0,
+        tipp: '\\(f\'(x) = 4x^3 - 8x = 4x(x^2 - 2)\\). Wie viele reelle Nullstellen hat \\(f\'\\)?',
+        loesungsweg: '\\(f\'(x) = 4x^3 - 8x = 4x(x^2 - 2) = 0 \\Rightarrow x_1 = 0,\\; x_{2,3} = \\pm\\sqrt{2}\\). \\(f\'\'(x) = 12x^2 - 8\\). \\(f\'\'(0) = -8 < 0\\) (Hochpunkt), \\(f\'\'(\\pm\\sqrt{2}) = 24-8 = 16 > 0\\) (Tiefpunkte). Also 3 Extremstellen.'
       },
       {
         id: 34,
         level: 6,
         typ: 'numerisch',
-        frage: 'Gegeben ist \\(f(x) = x^2 \\cdot e^{-x}\\). Bestimme die \\(x\\)-Koordinate des Wendepunkts mit \\(x > 0\\) (auf eine Dezimalstelle gerundet).',
-        loesung: 3.4,
-        toleranz: 0.1,
-        tipp: '\\(f\'(x) = e^{-x}(2x - x^2)\\). Bilde \\(f\'\'(x)\\) und setze gleich Null.',
-        loesungsweg: '\\(f\'(x) = e^{-x}(2x-x^2)\\). \\(f\'\'(x) = e^{-x}(x^2 - 4x + 2) = 0 \\Rightarrow x^2 - 4x + 2 = 0 \\Rightarrow x = 2 \\pm \\sqrt{2}\\). Der positive Wendepunkt mit \\(x > 2\\) ist \\(x = 2 + \\sqrt{2} \\approx 3{,}4\\).'
+        frage: 'Vollständige Kurvendiskussion von \\(f(x) = x^4 - 4x^2 + 3\\). Berechne den \\(y\\)-Wert des Hochpunkts.',
+        loesung: 3,
+        toleranz: 0,
+        tipp: 'Der Hochpunkt liegt bei \\(x = 0\\). Setze in \\(f(x)\\) ein.',
+        loesungsweg: 'Hochpunkt bei \\(x = 0\\): \\(f(0) = 0 - 0 + 3 = 3\\). Der Hochpunkt ist \\((0 \\mid 3)\\). Die Tiefpunkte liegen bei \\(f(\\pm\\sqrt{2}) = 4 - 8 + 3 = -1\\), also \\((\\pm\\sqrt{2} \\mid -1)\\).'
       },
       {
         id: 35,
         level: 6,
-        typ: 'mc',
-        frage: 'Die Funktionenschar \\(f_a(x) = x^3 - 3a^2 x\\) mit \\(a > 0\\) hat Extremstellen. Welche Aussage ist korrekt?',
-        optionen: [
-          'Die Extremstellen liegen bei \\(x = \\pm a\\) und der Abstand wächst mit \\(a\\)',
-          'Die Extremstellen liegen immer bei \\(x = \\pm 1\\)',
-          'Für \\(a > 1\\) gibt es keine Extremstellen',
-          'Der Wendepunkt verschiebt sich mit wachsendem \\(a\\) nach rechts'
-        ],
-        korrekt: 0,
-        tipp: '\\(f_a\'(x) = 3x^2 - 3a^2 = 3(x^2 - a^2) = 0\\). Löse nach \\(x\\) auf.',
-        loesungsweg: '\\(f_a\'(x) = 3(x-a)(x+a) = 0 \\Rightarrow x = \\pm a\\). Der Abstand der Extremstellen ist \\(2a\\), wächst also mit \\(a\\). Der Wendepunkt \\(f_a\'\'(x)=6x=0\\) liegt immer bei \\(x=0\\).'
+        typ: 'numerisch',
+        frage: 'Eine Produktionsfunktion beschreibt den Gewinn (in Tsd. €): \\(G(x) = -x^4 + 8x^2 - 7\\) für \\(x \\in [0, 3]\\) (\\(x\\) in Tsd. Stück). Bestimme die Produktionsmenge \\(x\\) (in Tsd. Stück), bei der der Gewinn maximal ist.',
+        loesung: 2,
+        toleranz: 0,
+        tipp: '\\(G\'(x) = -4x^3 + 16x = -4x(x^2 - 4)\\). Setze \\(G\'(x) = 0\\) und prüfe welche Lösung im Intervall \\([0,3]\\) ein Maximum liefert.',
+        loesungsweg: '\\(G\'(x) = -4x^3 + 16x = -4x(x^2 - 4) = 0 \\Rightarrow x = 0\\) oder \\(x = \\pm 2\\). Im Intervall \\([0,3]\\) kommt \\(x = 2\\) in Frage. \\(G\'\'(x) = -12x^2 + 16\\). \\(G\'\'(2) = -48 + 16 = -32 < 0 \\Rightarrow\\) Maximum. \\(G(2) = -16 + 32 - 7 = 9\\) Tsd. €. Maximaler Gewinn bei \\(x = 2\\) Tsd. Stück.'
       },
       {
         id: 36,
         level: 6,
         typ: 'mc',
-        frage: 'Gegeben ist \\(f(x) = (x-2)^2 \\cdot e^x\\). Welche der folgenden Aussagen zur vollständigen Kurvendiskussion ist korrekt?',
+        frage: 'Vollständige Kurvendiskussion von \\(f(x) = x^4 - 4x^2 + 3\\). Welche Aussage über die Wendepunkte ist korrekt?',
         optionen: [
-          '\\(f\\) hat einen Hochpunkt bei \\(x = 0\\) und einen Tiefpunkt bei \\(x = 2\\)',
-          '\\(f\\) hat einen Tiefpunkt bei \\(x = 0\\) und einen Hochpunkt bei \\(x = 2\\)',
-          '\\(f\\) hat einen Tiefpunkt bei \\(x = 0\\) und bei \\(x = 2\\) eine Nullstelle mit VZW',
-          '\\(f\\) hat keine Extremstellen'
+          '\\(f\\) hat keine Wendepunkte',
+          '\\(f\\) hat genau einen Wendepunkt bei \\(x = 0\\)',
+          '\\(f\\) hat zwei Wendepunkte; ihre \\(x\\)-Koordinaten erfüllen \\(x^2 = \\frac{2}{3}\\)',
+          '\\(f\\) hat drei Wendepunkte bei \\(x = 0,\\; \\pm 1\\)'
         ],
-        korrekt: 0,
-        tipp: '\\(f\'(x) = e^x[(x-2)^2 + 2(x-2)] = e^x(x-2)(x+0) = e^x \\cdot x(x-2)\\). Setze \\(f\'(x) = 0\\).',
-        loesungsweg: '\\(f\'(x) = e^x[2(x-2) + (x-2)^2] = e^x(x-2)(x) = 0 \\Rightarrow x_1 = 0,\\; x_2 = 2\\). \\(f\'\'(x) = e^x(x^2 - 2)\\). \\(f\'\'(0) = -2 < 0 \\Rightarrow\\) HP bei \\(x = 0\\). \\(f\'\'(2) = 2e^2 > 0 \\Rightarrow\\) TP bei \\(x = 2\\).'
+        korrekt: 2,
+        tipp: '\\(f\'\'(x) = 12x^2 - 8 = 0\\). Wie viele reelle Lösungen hat diese Gleichung?',
+        loesungsweg: '\\(f\'\'(x) = 12x^2 - 8 = 0 \\Rightarrow x^2 = \\frac{2}{3} \\Rightarrow x = \\pm\\sqrt{\\frac{2}{3}} \\approx \\pm 0{,}82\\). \\(f\'\'\'(x) = 24x \\neq 0\\) an beiden Stellen \\(\\Rightarrow\\) Vorzeichenwechsel von \\(f\'\'\\) liegt vor. Also genau 2 Wendepunkte. Der \\(y\\)-Wert ist \\(f\\!\\left(\\sqrt{\\frac{2}{3}}\\right) = \\frac{4}{9} - \\frac{8}{3} + 3 = \\frac{7}{9}\\).'
       }
 
     ];

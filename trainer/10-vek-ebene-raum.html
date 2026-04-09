@@ -128,7 +128,7 @@
     },
 
     // ══════════════════════════════════════════════════════════════
-    // LEVEL 3 — Betrag (Länge) eines Vektors
+    // LEVEL 3 — Betrag und Einheitsvektor (Normierung)
     // ══════════════════════════════════════════════════════════════
     {
         id: 13, level: 3, typ: "numerisch",
@@ -145,33 +145,51 @@
         loesungsweg: "\\(|\\vec{v}| = \\sqrt{36+64} = \\sqrt{100} = 10\\)."
     },
     {
-        id: 15, level: 3, typ: "numerisch",
-        frage: "Berechne den Betrag des Vektors \\(\\vec{v} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 2 \\end{pmatrix}\\).",
-        loesung: 3, toleranz: 0.01,
-        tipp: "Im Raum: \\(|\\vec{v}| = \\sqrt{v_1^2 + v_2^2 + v_3^2}\\).",
-        loesungsweg: "\\(|\\vec{v}| = \\sqrt{1+4+4} = \\sqrt{9} = 3\\)."
-    },
-    {
-        id: 16, level: 3, typ: "numerisch",
-        frage: "Berechne den Betrag des Vektors \\(\\vec{v} = \\begin{pmatrix} 2 \\\\ 3 \\\\ 6 \\end{pmatrix}\\).",
-        loesung: 7, toleranz: 0.01,
-        tipp: "Quadrate aufaddieren, dann die Wurzel ziehen.",
-        loesungsweg: "\\(|\\vec{v}| = \\sqrt{4+9+36} = \\sqrt{49} = 7\\)."
-    },
-    {
-        id: 17, level: 3, typ: "mc",
-        frage: "Wie lang ist der Vektor \\(\\vec{a} = \\begin{pmatrix} -3 \\\\ 0 \\\\ 4 \\end{pmatrix}\\)?",
-        optionen: ["\\(5\\)", "\\(7\\)", "\\(25\\)", "\\(\\sqrt{7}\\)"],
+        id: 15, level: 3, typ: "mc",
+        frage: "Was kennzeichnet einen Einheitsvektor?",
+        optionen: [
+            "Er hat den Betrag \\(1\\).",
+            "Er zeigt in \\(x\\)-Richtung.",
+            "Alle seine Komponenten sind gleich.",
+            "Er hat den Betrag \\(0\\)."
+        ],
         korrekt: 0,
-        tipp: "Negative Komponenten werden beim Quadrieren positiv.",
-        loesungsweg: "\\(|\\vec{a}| = \\sqrt{(-3)^2 + 0^2 + 4^2} = \\sqrt{9+0+16} = \\sqrt{25} = 5\\)."
+        tipp: "Der Name Einheitsvektor gibt den entscheidenden Hinweis: Welche Länge hat die Einheit?",
+        loesungsweg: "Ein Einheitsvektor \\(\\vec{e}\\) ist definiert durch \\(|\\vec{e}| = 1\\). Er gibt eine Richtung an, ohne eine bestimmte Länge zu haben."
+    },
+    {
+        id: 16, level: 3, typ: "mc",
+        frage: "Welcher der folgenden Vektoren ist ein Einheitsvektor?",
+        optionen: [
+            "\\(\\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\)",
+            "\\(\\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix}\\)",
+            "\\(\\begin{pmatrix} 2 \\\\ 0 \\\\ 0 \\end{pmatrix}\\)",
+            "\\(\\begin{pmatrix} \\frac{1}{2} \\\\ \\frac{1}{2} \\\\ \\frac{1}{2} \\end{pmatrix}\\)"
+        ],
+        korrekt: 0,
+        tipp: "Berechne den Betrag jedes Vektors. Welcher ergibt \\(1\\)?",
+        loesungsweg: "\\(\\left|\\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\right| = \\sqrt{0+1+0} = 1\\). Dies ist der Standardeinheitsvektor \\(\\vec{e}_2\\) (auch \\(\\vec{j}\\) genannt). Die anderen Vektoren haben die Beträge \\(\\sqrt{2}\\), \\(2\\) und \\(\\frac{\\sqrt{3}}{2} \\neq 1\\)."
+    },
+    {
+        id: 17, level: 3, typ: "numerisch",
+        frage: "Gegeben ist \\(\\vec{v} = \\begin{pmatrix} 3 \\\\ 4 \\end{pmatrix}\\). Berechne die erste Komponente des zugehörigen Einheitsvektors \\(\\vec{e}_v = \\frac{\\vec{v}}{|\\vec{v}|}\\). Gib das Ergebnis als Dezimalzahl an.",
+        loesung: 0.6, toleranz: 0.01,
+        tipp: "Erst den Betrag berechnen: \\(|\\vec{v}| = \\sqrt{3^2+4^2} = 5\\). Dann jede Komponente durch \\(5\\) teilen.",
+        loesungsweg: "\\(|\\vec{v}| = 5\\). Normierung: \\(\\vec{e}_v = \\frac{1}{5}\\begin{pmatrix} 3 \\\\ 4 \\end{pmatrix} = \\begin{pmatrix} \\frac{3}{5} \\\\ \\frac{4}{5} \\end{pmatrix} = \\begin{pmatrix} 0{,}6 \\\\ 0{,}8 \\end{pmatrix}\\). Die erste Komponente ist \\(0{,}6\\)."
     },
     {
         id: 18, level: 3, typ: "numerisch",
-        frage: "Gegeben sind \\(A(1|2)\\) und \\(B(4|6)\\). Wie lang ist die Strecke \\(\\overline{AB}\\), also \\(|\\overrightarrow{AB}|\\)?",
-        loesung: 5, toleranz: 0.01,
-        tipp: "Erst \\(\\overrightarrow{AB} = \\vec{b} - \\vec{a}\\) berechnen, dann den Betrag.",
-        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 3 \\\\ 4 \\end{pmatrix}\\), also \\(|\\overrightarrow{AB}| = \\sqrt{9+16} = \\sqrt{25} = 5\\)."
+        frage: "Gegeben ist \\(\\vec{v} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 2 \\end{pmatrix}\\). Berechne die zweite Komponente des Einheitsvektors \\(\\vec{e}_v\\). Gib das Ergebnis als Dezimalzahl an.",
+        loesung: 0.667, toleranz: 0.01,
+        tipp: "Berechne zuerst \\(|\\vec{v}| = \\sqrt{1^2+2^2+2^2}\\).",
+        loesungsweg: "\\(|\\vec{v}| = \\sqrt{1+4+4} = \\sqrt{9} = 3\\). Normierung: \\(\\vec{e}_v = \\frac{1}{3}\\begin{pmatrix} 1 \\\\ 2 \\\\ 2 \\end{pmatrix} = \\begin{pmatrix} \\frac{1}{3} \\\\ \\frac{2}{3} \\\\ \\frac{2}{3} \\end{pmatrix}\\). Die zweite Komponente ist \\(\\frac{2}{3} \\approx 0{,}667\\)."
+    },
+    {
+        id: "18b", level: 3, typ: "numerisch",
+        frage: "Ein Vektor soll die Länge \\(10\\) haben und in Richtung \\(\\vec{v} = \\begin{pmatrix} 3 \\\\ 4 \\end{pmatrix}\\) zeigen. Berechne die erste Komponente dieses Vektors.",
+        loesung: 6, toleranz: 0.01,
+        tipp: "Bilde zuerst den Einheitsvektor \\(\\vec{e}_v\\), dann multipliziere mit der gewünschten Länge: \\(\\vec{w} = 10 \\cdot \\vec{e}_v\\).",
+        loesungsweg: "\\(|\\vec{v}| = 5\\), also \\(\\vec{e}_v = \\begin{pmatrix} 0{,}6 \\\\ 0{,}8 \\end{pmatrix}\\). Der gesuchte Vektor ist \\(\\vec{w} = 10 \\cdot \\begin{pmatrix} 0{,}6 \\\\ 0{,}8 \\end{pmatrix} = \\begin{pmatrix} 6 \\\\ 8 \\end{pmatrix}\\). Die erste Komponente ist \\(6\\)."
     },
 
     // ══════════════════════════════════════════════════════════════

@@ -292,85 +292,79 @@
     },
 
     // ══════════════════════════════════════════════════════════════
-    // LEVEL 5 — Drei Vektoren im R³: (un)abhängig, einfache Fälle
+    // LEVEL 5 — Komplanarität: drei Vektoren im R³
     // ══════════════════════════════════════════════════════════════
     {
         id: 25, level: 5, typ: "mc",
-        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}\\) linear abhängig?",
+        frage: "Drei Vektoren \\(\\vec{a}, \\vec{b}, \\vec{c}\\) im \\(\\mathbb{R}^3\\) heißen <strong>komplanar</strong>, wenn …",
         optionen: [
-            "Nein, sie sind die Standardbasis des \\(\\mathbb{R}^3\\).",
-            "Ja, weil ihre Summe nicht \\(\\vec{0}\\) ist.",
-            "Ja, weil alle drei orthogonal sind.",
-            "Ja, denn drei Vektoren sind immer abhängig."
+            "… sich \\(\\vec{c}\\) als Linearkombination \\(\\vec{c} = r\\vec{a} + s\\vec{b}\\) schreiben lässt.",
+            "… alle drei gleich lang sind.",
+            "… ihre Summe der Nullvektor ist.",
+            "… je zwei von ihnen kollinear sind."
         ],
         korrekt: 0,
-        tipp: "Kann man einen von ihnen durch die anderen darstellen?",
-        loesungsweg: "Die Standardbasisvektoren \\(\\vec{e}_1, \\vec{e}_2, \\vec{e}_3\\) sind linear unabhängig — keiner lässt sich als Linearkombination der anderen ausdrücken. Sie spannen den gesamten \\(\\mathbb{R}^3\\) auf."
+        tipp: "Komplanar bedeutet: alle drei liegen in einer gemeinsamen Ebene.",
+        loesungsweg: "Drei Vektoren sind komplanar, wenn der dritte als Linearkombination der beiden anderen darstellbar ist: \\(\\vec{c} = r\\vec{a} + s\\vec{b}\\). Das ist gleichbedeutend damit, dass alle drei mit gemeinsamem Ursprung in einer Ebene liegen."
     },
     {
         id: 26, level: 5, typ: "mc",
-        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 2 \\\\ 3 \\\\ 0 \\end{pmatrix}\\) linear abhängig?",
+        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 3 \\\\ -2 \\\\ 0 \\end{pmatrix}\\) komplanar?",
         optionen: [
-            "Ja, denn \\(\\vec{c} = 2\\vec{a} + 3\\vec{b}\\).",
-            "Nein, keine zwei sind Vielfache voneinander.",
-            "Ja, denn alle haben 0 in der dritten Komponente.",
-            "Kann man nicht entscheiden."
+            "Ja, denn \\(\\vec{c} = 3\\vec{a} - 2\\vec{b}\\) und alle drei liegen in der \\(xy\\)-Ebene.",
+            "Nein, denn keine zwei sind Vielfache voneinander.",
+            "Nein, denn \\(\\vec{c}\\) hat andere Vorzeichen als \\(\\vec{a}\\) und \\(\\vec{b}\\).",
+            "Ja, aber nur weil ihre Summe \\(\\begin{pmatrix}4\\\\-1\\\\0\\end{pmatrix}\\) ist."
         ],
         korrekt: 0,
-        tipp: "Versuche, \\(\\vec{c}\\) aus \\(\\vec{a}\\) und \\(\\vec{b}\\) zusammenzusetzen.",
-        loesungsweg: "\\(2\\vec{a} + 3\\vec{b} = \\begin{pmatrix} 2 \\\\ 0 \\\\ 0 \\end{pmatrix} + \\begin{pmatrix} 0 \\\\ 3 \\\\ 0 \\end{pmatrix} = \\begin{pmatrix} 2 \\\\ 3 \\\\ 0 \\end{pmatrix} = \\vec{c}\\). Die Vektoren sind linear abhängig — sie liegen alle in der \\(xy\\)-Ebene."
+        tipp: "Prüfe, ob \\(\\vec{c} = r\\vec{a} + s\\vec{b}\\) lösbar ist. Was liefert die dritte Komponente?",
+        loesungsweg: "Ansatz \\(\\vec{c} = r\\vec{a} + s\\vec{b}\\): 1. Komp. \\(r = 3\\), 2. Komp. \\(s = -2\\), 3. Komp. \\(0 = 0\\) ✓. Die Lösung \\(r=3, s=-2\\) existiert — die Vektoren sind komplanar (alle in der \\(xy\\)-Ebene)."
     },
     {
         id: 27, level: 5, typ: "mc",
-        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 2 \\\\ 4 \\\\ 6 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\) linear abhängig?",
+        frage: "Zwei der drei Vektoren \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 2 \\\\ 4 \\\\ 6 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 5 \\end{pmatrix}\\) sind kollinear. Was folgt daraus?",
         optionen: [
-            "Ja, denn \\(\\vec{b} = 2\\vec{a}\\).",
-            "Nein, \\(\\vec{c}\\) ist von den anderen unabhängig.",
-            "Nein, alle drei sind verschieden.",
-            "Ja, denn sie liegen in einer Ebene."
+            "Alle drei sind komplanar, denn kollineare Vektoren liegen in jeder Ebene durch \\(\\vec{a}\\).",
+            "Alle drei sind linear unabhängig.",
+            "Nur \\(\\vec{a}\\) und \\(\\vec{b}\\) sind komplanar, \\(\\vec{c}\\) nicht.",
+            "Nichts — Kollinearität sagt nichts über Komplanarität aus."
         ],
         korrekt: 0,
-        tipp: "Wenn schon zwei der drei Vektoren linear abhängig sind, ist die ganze Menge abhängig.",
-        loesungsweg: "\\(\\vec{b} = 2\\vec{a}\\), also sind \\(\\vec{a}\\) und \\(\\vec{b}\\) kollinear. Damit ist die gesamte Menge \\(\\{\\vec{a}, \\vec{b}, \\vec{c}\\}\\) linear abhängig — egal was \\(\\vec{c}\\) ist."
+        tipp: "Wenn \\(\\vec{b} = 2\\vec{a}\\), gilt \\(\\vec{b} = 2\\vec{a} + 0\\vec{c}\\). Schreibe dann \\(\\vec{c}\\) als Linearkombination.",
+        loesungsweg: "Es gilt \\(\\vec{b} = 2\\vec{a}\\) (kollinear). Die Ebene durch \\(\\vec{a}\\) und \\(\\vec{c}\\) enthält damit automatisch auch \\(\\vec{b}\\). Drei Vektoren, von denen zwei kollinear sind, sind stets komplanar."
     },
     {
         id: 28, level: 5, typ: "mc",
-        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 1 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 2 \\\\ 1 \\\\ 1 \\end{pmatrix}\\) linear abhängig?",
+        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 1 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 1 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 2 \\\\ 3 \\\\ 5 \\end{pmatrix}\\) komplanar?",
         optionen: [
-            "Ja, denn \\(\\vec{c} = \\vec{a} + \\vec{b}\\).",
-            "Nein, die Vektoren sind alle verschieden.",
-            "Ja, denn sie haben gemeinsame Einträge.",
-            "Nein, sie bilden eine Basis des \\(\\mathbb{R}^3\\)."
+            "Ja, denn das LGS \\(\\vec{c} = r\\vec{a} + s\\vec{b}\\) liefert \\(r = 2, s = 3\\).",
+            "Nein, denn \\(\\vec{c}\\) ist länger als \\(\\vec{a}\\) und \\(\\vec{b}\\).",
+            "Nein, denn keine zwei Vektoren sind kollinear.",
+            "Ja, denn alle Komponenten sind positiv."
         ],
         korrekt: 0,
-        tipp: "Addiere \\(\\vec{a}\\) und \\(\\vec{b}\\) und vergleiche mit \\(\\vec{c}\\).",
-        loesungsweg: "\\(\\vec{a} + \\vec{b} = \\begin{pmatrix} 1+1 \\\\ 1+0 \\\\ 0+1 \\end{pmatrix} = \\begin{pmatrix} 2 \\\\ 1 \\\\ 1 \\end{pmatrix} = \\vec{c}\\). Also gilt \\(\\vec{c} = \\vec{a} + \\vec{b}\\) — linear abhängig."
+        tipp: "Stelle das LGS auf: I: \\(r = 2\\), II: \\(s = 3\\), III: \\(r + s = 5\\). Ist es lösbar?",
+        loesungsweg: "Aus I: \\(r = 2\\), aus II: \\(s = 3\\). Probe in III: \\(2 + 3 = 5\\) ✓. Das LGS ist lösbar — die Vektoren sind komplanar."
     },
     {
         id: 29, level: 5, typ: "mc",
-        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 1 \\\\ 1 \\\\ 1 \\end{pmatrix}\\) linear abhängig?",
+        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}\\) komplanar?",
         optionen: [
-            "Nein, die Vektoren sind linear unabhängig und bilden eine Basis.",
-            "Ja, denn \\(\\vec{c} = \\vec{a} + \\vec{b}\\).",
-            "Ja, denn sie enthalten alle eine 1 an erster Stelle.",
-            "Ja, denn die Summe ist nicht \\(\\vec{0}\\)."
+            "Nein, denn das LGS \\(\\vec{c} = r\\vec{a} + s\\vec{b}\\) führt auf \\(0 = 1\\) — widersprüchlich.",
+            "Ja, denn sie sind die Standardbasisvektoren.",
+            "Ja, denn keine zwei sind kollinear.",
+            "Ja, denn \\(\\vec{c} = \\vec{a} + \\vec{b} - \\begin{pmatrix}1\\\\1\\\\-1\\end{pmatrix}\\)."
         ],
         korrekt: 0,
-        tipp: "Versuche \\(\\vec{c} = r\\vec{a} + s\\vec{b}\\) — geht das mit der dritten Komponente?",
-        loesungsweg: "Aus der dritten Komponente: \\(r \\cdot 0 + s \\cdot 0 = 1\\) — unmöglich! \\(\\vec{c}\\) liegt nicht in der Ebene von \\(\\vec{a}\\) und \\(\\vec{b}\\). Die drei Vektoren sind linear unabhängig."
+        tipp: "Schreibe \\(r\\vec{a} + s\\vec{b}\\) aus und vergleiche Komponente für Komponente mit \\(\\vec{c}\\).",
+        loesungsweg: "Ansatz \\(r\\vec{a} + s\\vec{b} = \\begin{pmatrix} r \\\\ s \\\\ 0 \\end{pmatrix} \\stackrel{!}{=} \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}\\). Die dritte Komponente liefert \\(0 = 1\\) — Widerspruch. Das LGS hat keine Lösung: die Standardbasisvektoren sind <em>nicht</em> komplanar."
     },
     {
-        id: 30, level: 5, typ: "mc",
-        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ 0 \\\\ 1 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 3 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 4 \\\\ 3 \\\\ 2 \\end{pmatrix}\\) linear abhängig?",
-        optionen: [
-            "Ja, denn \\(\\vec{c} = 2\\vec{a} + \\vec{b}\\).",
-            "Nein, \\(\\vec{a}\\) und \\(\\vec{b}\\) sind orthogonal.",
-            "Nein, keine zwei sind Vielfache.",
-            "Ja, denn alle Einträge sind ganzzahlig."
-        ],
-        korrekt: 0,
-        tipp: "Rate \\(r = 2\\) (aus der ersten Komponente) und \\(s = 1\\) (aus der zweiten) und prüfe die dritte.",
-        loesungsweg: "\\(2\\vec{a} + \\vec{b} = \\begin{pmatrix} 4 \\\\ 0 \\\\ 2 \\end{pmatrix} + \\begin{pmatrix} 0 \\\\ 3 \\\\ 0 \\end{pmatrix} = \\begin{pmatrix} 4 \\\\ 3 \\\\ 2 \\end{pmatrix} = \\vec{c}\\) ✓. Die Vektoren sind linear abhängig."
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Für welches \\(k\\) sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 3 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 2 \\\\ k \\\\ 6 \\end{pmatrix}\\) komplanar?",
+        loesung: 5, toleranz: 0,
+        tipp: "Stelle \\(\\vec{c} = r\\vec{a} + s\\vec{b}\\) auf. Aus den Komponenten I und III folgen \\(r\\) und \\(s\\). Dann Komponente II auswerten.",
+        loesungsweg: "LGS: I: \\(r = 2\\), II: \\(2r + s = k\\), III: \\(3s = 6 \\Rightarrow s = 2\\). Einsetzen in II: \\(2 \\cdot 2 + 2 = 6 \\neq k\\) — warte: \\(k = 2r + s = 4 + 2 = \\mathbf{5}\\). Für \\(k = 5\\) ist das LGS lösbar und die Vektoren sind komplanar."
     },
 
     // ══════════════════════════════════════════════════════════════

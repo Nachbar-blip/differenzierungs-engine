@@ -129,197 +129,182 @@
     },
 
     // ═══════════════════════════════════════════════════════════════
-    // Level 3: Definitionsbereich und Asymptoten
+    // Level 3: Termvereinfachung mit mehreren Potenzgesetzen
     // ═══════════════════════════════════════════════════════════════
 
     {
         "id": 13, "level": 3, "typ": "mc",
-        "frage": "Wie lautet der Definitionsbereich von \\(f(x) = \\frac{1}{x^2}\\)?",
-        "optionen": [
-            "\\(\\mathbb{R}\\)",
-            "\\(\\mathbb{R} \\setminus \\{0\\}\\)",
-            "\\(\\mathbb{R}^+\\)",
-            "\\(\\mathbb{R} \\setminus \\{1\\}\\)"
-        ],
-        "korrekt": 1,
-        "tipp": "Der Nenner darf nicht 0 sein. Wann ist \\(x^2 = 0\\)?",
-        "loesungsweg": "Der Nenner \\(x^2\\) wird 0 genau dann, wenn \\(x = 0\\). Daher: \\(D = \\mathbb{R} \\setminus \\{0\\}\\)."
+        "frage": "Vereinfache: \\(x^3 \\cdot x^{-5}\\).",
+        "optionen": ["\\(x^{-2}\\)", "\\(x^{-15}\\)", "\\(x^{8}\\)", "\\(x^{2}\\)"],
+        "korrekt": 0,
+        "tipp": "Gleiche Basis: Exponenten addieren.",
+        "loesungsweg": "\\(x^3 \\cdot x^{-5} = x^{3+(-5)} = x^{-2}\\)."
     },
     {
         "id": 14, "level": 3, "typ": "mc",
-        "frage": "Welche Asymptoten hat \\(f(x) = \\frac{1}{x}\\)?",
-        "optionen": [
-            "\\(x = 0\\) und \\(y = 0\\)",
-            "\\(x = 1\\) und \\(y = 0\\)",
-            "nur \\(y = 0\\)",
-            "keine Asymptoten"
-        ],
-        "korrekt": 0,
-        "tipp": "Denke an die Standard-Hyperbel. Wo geht der Graph gegen unendlich, wo gegen Null?",
-        "loesungsweg": "Senkrechte Asymptote bei \\(x = 0\\) (Definitionslücke, Pol). Waagerechte Asymptote bei \\(y = 0\\), weil \\(\\frac{1}{x} \\to 0\\) für \\(x \\to \\pm\\infty\\)."
+        "frage": "Vereinfache: \\(\\frac{x^4}{x^{-2}}\\).",
+        "optionen": ["\\(x^2\\)", "\\(x^{-8}\\)", "\\(x^6\\)", "\\(x^{-2}\\)"],
+        "korrekt": 2,
+        "tipp": "Division: Exponenten subtrahieren. \\(x^a : x^b = x^{a-b}\\).",
+        "loesungsweg": "\\(\\frac{x^4}{x^{-2}} = x^{4-(-2)} = x^{4+2} = x^6\\)."
     },
     {
         "id": 15, "level": 3, "typ": "mc",
-        "frage": "Was ist die senkrechte Asymptote von \\(f(x) = \\frac{1}{x^3}\\)?",
-        "optionen": ["\\(x = 1\\)", "\\(x = 0\\)", "\\(x = 3\\)", "\\(x = -3\\)"],
+        "frage": "Vereinfache: \\((x^{-3})^2\\).",
+        "optionen": ["\\(x^{-1}\\)", "\\(x^{-6}\\)", "\\(x^{6}\\)", "\\(x^{-5}\\)"],
         "korrekt": 1,
-        "tipp": "Senkrechte Asymptoten entstehen bei Definitionslücken.",
-        "loesungsweg": "Der Nenner \\(x^3\\) wird 0 bei \\(x = 0\\). Dort liegt eine Polstelle und damit die senkrechte Asymptote \\(x = 0\\)."
+        "tipp": "Potenz einer Potenz: Exponenten multiplizieren.",
+        "loesungsweg": "\\((x^{-3})^2 = x^{-3 \\cdot 2} = x^{-6}\\)."
     },
     {
         "id": 16, "level": 3, "typ": "mc",
-        "frage": "Wo liegt die Definitionslücke von \\(f(x) = x^{-4}\\)?",
-        "optionen": ["\\(x = 4\\)", "\\(x = -4\\)", "\\(x = 0\\)", "keine Definitionslücke"],
-        "korrekt": 2,
-        "tipp": "\\(x^{-4} = \\frac{1}{x^4}\\). Nenner \\(= 0\\)?",
-        "loesungsweg": "\\(f(x) = \\frac{1}{x^4}\\) ist an \\(x = 0\\) nicht definiert."
+        "frage": "Vereinfache: \\(\\frac{a^5 \\cdot a^{-2}}{a^4}\\).",
+        "optionen": ["\\(a^{-1}\\)", "\\(a^{3}\\)", "\\(a^{7}\\)", "\\(a^{-3}\\)"],
+        "korrekt": 0,
+        "tipp": "Zähler erst zusammenfassen, dann dividieren.",
+        "loesungsweg": "Zähler: \\(a^5 \\cdot a^{-2} = a^{3}\\). Dann: \\(\\frac{a^3}{a^4} = a^{3-4} = a^{-1}\\)."
     },
     {
         "id": 17, "level": 3, "typ": "mc",
-        "frage": "Welche waagerechte Asymptote hat \\(f(x) = \\frac{1}{x^2}\\)?",
-        "optionen": ["\\(y = 1\\)", "\\(y = 0\\)", "\\(y = 2\\)", "keine"],
+        "frage": "Vereinfache: \\((2x^{-1})^3\\).",
+        "optionen": ["\\(6x^{-3}\\)", "\\(8x^{-3}\\)", "\\(2x^{-3}\\)", "\\(8x^{3}\\)"],
         "korrekt": 1,
-        "tipp": "Was passiert mit \\(\\frac{1}{x^2}\\) für \\(x \\to \\pm\\infty\\)?",
-        "loesungsweg": "Für \\(x \\to \\pm\\infty\\) strebt \\(\\frac{1}{x^2} \\to 0\\). Waagerechte Asymptote: \\(y = 0\\)."
+        "tipp": "\\((a \\cdot b)^n = a^n \\cdot b^n\\). Beide Faktoren werden potenziert.",
+        "loesungsweg": "\\((2x^{-1})^3 = 2^3 \\cdot (x^{-1})^3 = 8 \\cdot x^{-3} = 8x^{-3}\\)."
     },
     {
         "id": 18, "level": 3, "typ": "mc",
-        "frage": "Welche Aussage über \\(f(x) = \\frac{1}{x^n}\\) mit \\(n \\in \\mathbb{N}\\) ist korrekt?",
+        "frage": "Welcher Ausdruck ist gleich \\(x^{-2} \\cdot x^{-3}\\)?",
         "optionen": [
-            "Definitionsbereich ist \\(\\mathbb{R}\\)",
-            "Senkrechte Asymptote bei \\(x = n\\)",
-            "Senkrechte Asymptote bei \\(x = 0\\), waagerechte bei \\(y = 0\\)",
-            "Waagerechte Asymptote bei \\(y = n\\)"
+            "\\(\\frac{1}{x^5}\\)",
+            "\\(\\frac{1}{x^6}\\)",
+            "\\(x^{5}\\)",
+            "\\(\\frac{1}{x^{-5}}\\)"
         ],
-        "korrekt": 2,
-        "tipp": "Alle Funktionen dieser Familie haben dieselben Asymptoten.",
-        "loesungsweg": "Für alle \\(n \\in \\mathbb{N}\\) gilt: Definitionslücke und senkrechte Asymptote bei \\(x = 0\\), waagerechte Asymptote bei \\(y = 0\\)."
+        "korrekt": 0,
+        "tipp": "Erst Exponenten addieren, dann in Bruchschreibweise umformen.",
+        "loesungsweg": "\\(x^{-2} \\cdot x^{-3} = x^{-5} = \\frac{1}{x^5}\\)."
     },
 
     // ═══════════════════════════════════════════════════════════════
-    // Level 4: Grenzwertverhalten
+    // Level 4: Zehnerpotenzen, wissenschaftliche Notation, Anwendung
     // ═══════════════════════════════════════════════════════════════
 
     {
         "id": 19, "level": 4, "typ": "mc",
-        "frage": "Was ist \\(\\lim_{x \\to \\infty} \\frac{1}{x^2}\\)?",
-        "optionen": ["\\(+\\infty\\)", "\\(1\\)", "\\(0\\)", "\\(-\\infty\\)"],
-        "korrekt": 2,
-        "tipp": "Je größer \\(x\\), desto kleiner wird der Bruch.",
-        "loesungsweg": "Für \\(x \\to \\infty\\) wird der Nenner beliebig groß, also \\(\\frac{1}{x^2} \\to 0\\)."
+        "frage": "Schreibe \\(0{,}000 \\, 01\\) als Zehnerpotenz.",
+        "optionen": ["\\(10^{-4}\\)", "\\(10^{-5}\\)", "\\(10^{5}\\)", "\\(10^{-6}\\)"],
+        "korrekt": 1,
+        "tipp": "Zähle, wie viele Stellen du das Komma nach rechts verschieben musst.",
+        "loesungsweg": "\\(0{,}00001 = \\frac{1}{100\\,000} = \\frac{1}{10^5} = 10^{-5}\\)."
     },
     {
-        "id": 20, "level": 4, "typ": "mc",
-        "frage": "Was ist \\(\\lim_{x \\to -\\infty} \\frac{1}{x^3}\\)?",
-        "optionen": ["\\(+\\infty\\)", "\\(0\\)", "\\(-\\infty\\)", "\\(1\\)"],
-        "korrekt": 1,
-        "tipp": "Betrachte: \\(x^3 \\to -\\infty\\) für \\(x \\to -\\infty\\), also wird der Kehrwert …",
-        "loesungsweg": "Für \\(x \\to -\\infty\\) gilt \\(x^3 \\to -\\infty\\), also \\(\\frac{1}{x^3} \\to 0\\) (von unten)."
+        "id": 20, "level": 4, "typ": "numerisch",
+        "frage": "Berechne: \\(10^{-3} \\cdot 10^{5}\\). Gib den Exponenten der Zehnerpotenz als ganze Zahl an.",
+        "loesung": 2,
+        "toleranz": 0,
+        "tipp": "Gleiche Basis: Exponenten addieren.",
+        "loesungsweg": "\\(10^{-3} \\cdot 10^{5} = 10^{-3+5} = 10^{2}\\). Der Exponent ist 2."
     },
     {
         "id": 21, "level": 4, "typ": "mc",
-        "frage": "Was ist \\(\\lim_{x \\to 0^+} \\frac{1}{x^2}\\)?",
-        "optionen": ["\\(0\\)", "\\(+\\infty\\)", "\\(-\\infty\\)", "\\(1\\)"],
+        "frage": "Welche der folgenden Zahlen ist in wissenschaftlicher Notation korrekt geschrieben?",
+        "optionen": [
+            "\\(34{,}5 \\cdot 10^{3}\\)",
+            "\\(3{,}45 \\cdot 10^{4}\\)",
+            "\\(0{,}345 \\cdot 10^{5}\\)",
+            "\\(345 \\cdot 10^{2}\\)"
+        ],
         "korrekt": 1,
-        "tipp": "Der Nenner wird sehr klein und positiv. Was passiert mit dem Kehrwert?",
-        "loesungsweg": "Für \\(x \\to 0^+\\) wird \\(x^2\\) sehr klein und positiv, also strebt \\(\\frac{1}{x^2} \\to +\\infty\\)."
+        "tipp": "Bei wissenschaftlicher Notation steht genau eine Stelle vor dem Komma (1–9).",
+        "loesungsweg": "\\(3{,}45 \\cdot 10^{4} = 34\\,500\\). Nur diese Form hat genau eine Stelle (3) vor dem Komma."
     },
     {
         "id": 22, "level": 4, "typ": "mc",
-        "frage": "Was ist \\(\\lim_{x \\to 0^-} \\frac{1}{x}\\)?",
-        "optionen": ["\\(+\\infty\\)", "\\(-\\infty\\)", "\\(0\\)", "\\(1\\)"],
-        "korrekt": 1,
-        "tipp": "\\(x\\) nähert sich 0 von links, ist also klein und negativ.",
-        "loesungsweg": "Für \\(x \\to 0^-\\) ist \\(x\\) negativ und betragsmäßig klein, also \\(\\frac{1}{x} \\to -\\infty\\)."
+        "frage": "Was ist größer: \\(2^{-3}\\) oder \\(3^{-2}\\)?",
+        "optionen": [
+            "\\(2^{-3}\\), weil \\(\\frac{1}{8} > \\frac{1}{9}\\)",
+            "\\(3^{-2}\\), weil \\(\\frac{1}{9} > \\frac{1}{8}\\)",
+            "Beide sind gleich",
+            "\\(2^{-3}\\), weil \\(-3 < -2\\)"
+        ],
+        "korrekt": 0,
+        "tipp": "Rechne beide Werte als Brüche aus und vergleiche.",
+        "loesungsweg": "\\(2^{-3} = \\frac{1}{8} \\approx 0{,}125\\) und \\(3^{-2} = \\frac{1}{9} \\approx 0{,}111\\). Da \\(\\frac{1}{8} > \\frac{1}{9}\\), ist \\(2^{-3}\\) größer."
     },
     {
-        "id": 23, "level": 4, "typ": "mc",
-        "frage": "Wie verhält sich \\(f(x) = \\frac{1}{x^2}\\) bei Annäherung an \\(x = 0\\) (von beiden Seiten)?",
-        "optionen": [
-            "Links \\(-\\infty\\), rechts \\(+\\infty\\)",
-            "Beidseitig \\(+\\infty\\)",
-            "Beidseitig \\(-\\infty\\)",
-            "Beidseitig \\(0\\)"
-        ],
-        "korrekt": 1,
-        "tipp": "\\(x^2\\) ist immer positiv (außer bei \\(x = 0\\)).",
-        "loesungsweg": "Da \\(x^2 > 0\\) für alle \\(x \\neq 0\\), gilt \\(\\frac{1}{x^2} > 0\\). Für \\(x \\to 0\\) strebt der Wert von beiden Seiten gegen \\(+\\infty\\)."
+        "id": 23, "level": 4, "typ": "numerisch",
+        "frage": "Ein Bakterium hat einen Durchmesser von \\(2 \\cdot 10^{-6}\\,\\text{m}\\). Wie viele Bakterien passen nebeneinander auf \\(1\\,\\text{mm} = 10^{-3}\\,\\text{m}\\)? Gib die Antwort als ganze Zahl an.",
+        "loesung": 500,
+        "toleranz": 0,
+        "tipp": "Dividiere: \\(\\frac{10^{-3}}{2 \\cdot 10^{-6}}\\).",
+        "loesungsweg": "\\(\\frac{10^{-3}}{2 \\cdot 10^{-6}} = \\frac{1}{2} \\cdot 10^{-3-(-6)} = 0{,}5 \\cdot 10^{3} = 500\\)."
     },
     {
         "id": 24, "level": 4, "typ": "mc",
-        "frage": "Wie verhält sich \\(f(x) = \\frac{1}{x^3}\\) bei Annäherung an \\(x = 0\\)?",
-        "optionen": [
-            "Beidseitig \\(+\\infty\\)",
-            "Beidseitig \\(-\\infty\\)",
-            "Links \\(-\\infty\\), rechts \\(+\\infty\\)",
-            "Links \\(+\\infty\\), rechts \\(-\\infty\\)"
-        ],
-        "korrekt": 2,
-        "tipp": "Ungerader Exponent: \\(x^3\\) hat dasselbe Vorzeichen wie \\(x\\).",
-        "loesungsweg": "Für \\(x \\to 0^-\\) ist \\(x^3 < 0\\), also \\(\\frac{1}{x^3} \\to -\\infty\\). Für \\(x \\to 0^+\\) ist \\(x^3 > 0\\), also \\(\\frac{1}{x^3} \\to +\\infty\\)."
+        "frage": "Vereinfache: \\(\\frac{6x^{-2} \\cdot x^3}{3x}\\).",
+        "optionen": ["\\(2x^{-2}\\)", "\\(2\\)", "\\(2x\\)", "\\(6x^{-1}\\)"],
+        "korrekt": 1,
+        "tipp": "Zähler zusammenfassen, dann kürzen.",
+        "loesungsweg": "Zähler: \\(6x^{-2} \\cdot x^3 = 6x^{1}\\). Dann: \\(\\frac{6x}{3x} = 2\\)."
     },
 
     // ═══════════════════════════════════════════════════════════════
-    // Level 5: Verschobene/gestreckte Hyperbeln
+    // Level 5: Gleichungen lösen und komplexe Termvereinfachungen
     // ═══════════════════════════════════════════════════════════════
 
     {
         "id": 25, "level": 5, "typ": "numerisch",
-        "frage": "Wo liegt die senkrechte Asymptote von \\(f(x) = \\frac{1}{x - 3}\\)? Gib den \\(x\\)-Wert an.",
+        "frage": "Löse: \\(x^{-2} = \\frac{1}{9}\\). Gib eine positive Lösung an.",
         "loesung": 3,
         "toleranz": 0,
-        "tipp": "Nenner = 0 setzen: \\(x - 3 = 0\\).",
-        "loesungsweg": "\\(x - 3 = 0 \\Rightarrow x = 3\\). Die senkrechte Asymptote ist \\(x = 3\\)."
+        "tipp": "Schreibe \\(x^{-2} = \\frac{1}{x^2}\\) und löse \\(x^2 = 9\\).",
+        "loesungsweg": "\\(x^{-2} = \\frac{1}{x^2} = \\frac{1}{9}\\) ergibt \\(x^2 = 9\\), also \\(x = 3\\) (positive Lösung)."
     },
     {
         "id": 26, "level": 5, "typ": "numerisch",
-        "frage": "Welche waagerechte Asymptote hat \\(f(x) = \\frac{2}{x} + 5\\)? Gib den \\(y\\)-Wert an.",
-        "loesung": 5,
-        "toleranz": 0,
-        "tipp": "Die Verschiebung um \\(+5\\) hebt die Asymptote \\(y = 0\\) um 5 Einheiten an.",
-        "loesungsweg": "Für \\(x \\to \\pm\\infty\\) gilt \\(\\frac{2}{x} \\to 0\\), also \\(f(x) \\to 0 + 5 = 5\\). Waagerechte Asymptote: \\(y = 5\\)."
+        "frage": "Löse: \\(2x^{-1} = 8\\). Gib den Wert von \\(x\\) an.",
+        "loesung": 0.25,
+        "toleranz": 0.001,
+        "tipp": "Schreibe \\(\\frac{2}{x} = 8\\) und löse nach \\(x\\) auf.",
+        "loesungsweg": "\\(\\frac{2}{x} = 8 \\Rightarrow x = \\frac{2}{8} = \\frac{1}{4} = 0{,}25\\)."
     },
     {
         "id": 27, "level": 5, "typ": "mc",
-        "frage": "Welche Asymptoten hat \\(f(x) = \\frac{1}{x - 2} + 4\\)?",
-        "optionen": [
-            "\\(x = 2\\) und \\(y = 4\\)",
-            "\\(x = -2\\) und \\(y = 4\\)",
-            "\\(x = 2\\) und \\(y = 0\\)",
-            "\\(x = 4\\) und \\(y = 2\\)"
-        ],
+        "frage": "Vereinfache vollständig: \\(\\frac{(x^2)^{-3} \\cdot x^4}{x^{-2}}\\).",
+        "optionen": ["\\(x^{0} = 1\\)", "\\(x^{-2}\\)", "\\(x^{2}\\)", "\\(x^{-8}\\)"],
         "korrekt": 0,
-        "tipp": "Form \\(\\frac{a}{x - d} + e\\): senkrechte Asymptote bei \\(x = d\\), waagerechte bei \\(y = e\\).",
-        "loesungsweg": "Nenner null: \\(x - 2 = 0 \\Rightarrow x = 2\\) (senkrechte Asymptote). Für \\(x \\to \\pm\\infty\\): \\(\\frac{1}{x-2} \\to 0\\), also \\(f(x) \\to 4\\) (waagerechte Asymptote \\(y = 4\\))."
+        "tipp": "Schritt 1: \\((x^2)^{-3} = x^{-6}\\). Dann Exponenten im Zähler addieren, danach dividieren.",
+        "loesungsweg": "Schritt 1: \\((x^2)^{-3} = x^{-6}\\). Schritt 2 (Zähler): \\(x^{-6} \\cdot x^4 = x^{-2}\\). Schritt 3 (Division): \\(\\frac{x^{-2}}{x^{-2}} = x^{-2-(-2)} = x^{0} = 1\\)."
     },
     {
-        "id": 28, "level": 5, "typ": "numerisch",
-        "frage": "Berechne \\(f(3)\\) für \\(f(x) = \\frac{2}{x - 1} + 1\\).",
-        "loesung": 2,
-        "toleranz": 0,
-        "tipp": "Setze \\(x = 3\\) ein und rechne Schritt für Schritt.",
-        "loesungsweg": "\\(f(3) = \\frac{2}{3 - 1} + 1 = \\frac{2}{2} + 1 = 1 + 1 = 2\\)."
+        "id": 28, "level": 5, "typ": "mc",
+        "frage": "Löse die Gleichung \\(x^{-3} = -\\frac{1}{27}\\).",
+        "optionen": ["\\(x = 3\\)", "\\(x = -3\\)", "\\(x = \\frac{1}{3}\\)", "keine Lösung"],
+        "korrekt": 1,
+        "tipp": "Schreibe \\(\\frac{1}{x^3} = -\\frac{1}{27}\\). Welches \\(x^3\\) ergibt \\(-27\\)?",
+        "loesungsweg": "\\(\\frac{1}{x^3} = -\\frac{1}{27} \\Rightarrow x^3 = -27 \\Rightarrow x = -3\\)."
     },
     {
         "id": 29, "level": 5, "typ": "mc",
-        "frage": "Gegeben: \\(f(x) = \\frac{3}{x + 2} - 1\\). Welche Aussage stimmt?",
+        "frage": "Vereinfache: \\(\\left(\\frac{x^{-2}}{y^3}\\right)^{-1}\\).",
         "optionen": [
-            "Senkrechte Asymptote \\(x = 2\\), waagerechte \\(y = 1\\)",
-            "Senkrechte Asymptote \\(x = -2\\), waagerechte \\(y = -1\\)",
-            "Senkrechte Asymptote \\(x = -2\\), waagerechte \\(y = 3\\)",
-            "Senkrechte Asymptote \\(x = 3\\), waagerechte \\(y = -1\\)"
+            "\\(\\frac{x^2}{y^3}\\)",
+            "\\(\\frac{y^3}{x^2}\\)",
+            "\\(x^2 y^3\\)",
+            "\\(\\frac{x^{-2}}{y^{-3}}\\)"
         ],
-        "korrekt": 1,
-        "tipp": "\\(x + 2 = 0\\) liefert \\(x = -2\\). Die Verschiebung \\(-1\\) zieht die waagerechte Asymptote nach unten.",
-        "loesungsweg": "Nenner null: \\(x + 2 = 0 \\Rightarrow x = -2\\). Für \\(x \\to \\pm\\infty\\): \\(\\frac{3}{x+2} \\to 0\\), also \\(f(x) \\to -1\\). Asymptoten: \\(x = -2\\) und \\(y = -1\\)."
+        "korrekt": 2,
+        "tipp": "Exponent \\(-1\\) bedeutet Kehrwert bilden: Zähler und Nenner tauschen, dann Vorzeichen der Exponenten wechseln.",
+        "loesungsweg": "\\(\\left(\\frac{x^{-2}}{y^3}\\right)^{-1} = \\frac{y^3}{x^{-2}} = y^3 \\cdot x^{2} = x^2 y^3\\)."
     },
     {
         "id": 30, "level": 5, "typ": "numerisch",
-        "frage": "Bestimme den Definitionsbereich von \\(f(x) = \\frac{5}{x + 4}\\): Welcher \\(x\\)-Wert muss ausgeschlossen werden?",
-        "loesung": -4,
+        "frage": "Berechne: \\(\\frac{4^{-2} \\cdot 4^5}{4^2}\\). Gib den Exponenten der Viererpotenz als ganze Zahl an.",
+        "loesung": 1,
         "toleranz": 0,
-        "tipp": "Nenner gleich 0 setzen.",
-        "loesungsweg": "\\(x + 4 = 0 \\Rightarrow x = -4\\). Also \\(D = \\mathbb{R} \\setminus \\{-4\\}\\)."
+        "tipp": "Zähler: Exponenten addieren. Dann vom Nenner subtrahieren.",
+        "loesungsweg": "\\(4^{-2} \\cdot 4^5 = 4^{3}\\). Dann: \\(\\frac{4^3}{4^2} = 4^{3-2} = 4^1\\). Exponent = 1."
     },
 
     // ═══════════════════════════════════════════════════════════════
@@ -373,16 +358,16 @@
     },
     {
         "id": 36, "level": 6, "typ": "mc",
-        "frage": "Für ein Gas im Behälter gilt \\(p(V) = \\frac{k}{V}\\). Was passiert mit dem Druck, wenn das Volumen gegen 0 geht (\\(V \\to 0^+\\))?",
+        "frage": "Welche der folgenden Aussagen über \\(f(x) = \\frac{a}{x^n}\\) mit \\(a \\neq 0\\) und \\(n \\in \\mathbb{N}\\) ist falsch?",
         "optionen": [
-            "Der Druck geht gegen 0",
-            "Der Druck geht gegen \\(+\\infty\\)",
-            "Der Druck bleibt konstant \\(k\\)",
-            "Der Druck wird negativ"
+            "\\(f(x) = a \\cdot x^{-n}\\)",
+            "\\(f(-x) = f(x)\\) gilt für alle geraden \\(n\\)",
+            "\\(f(x)\\) ist für \\(x = 0\\) nicht definiert",
+            "\\(f(x) = a \\cdot x^{-n}\\) ist dasselbe wie \\(f(x) = a \\cdot (-x)^n\\)"
         ],
-        "korrekt": 1,
-        "tipp": "Kleiner Nenner (positiv) bedeutet sehr großer Bruchwert.",
-        "loesungsweg": "Für \\(V \\to 0^+\\) strebt \\(\\frac{k}{V} \\to +\\infty\\). Physikalisch: Wird ein Gas auf ein sehr kleines Volumen komprimiert, steigt der Druck stark an."
+        "korrekt": 3,
+        "tipp": "Prüfe jede Aussage mit der Definition \\(x^{-n} = \\frac{1}{x^n}\\). Bei Option D: Vergleiche \\(x^{-n}\\) und \\((-x)^n\\).",
+        "loesungsweg": "A: korrekt (Definition negativer Exponent). B: korrekt, da \\((-x)^n = x^n\\) für gerades \\(n\\), also \\(f(-x) = \\frac{a}{(-x)^n} = \\frac{a}{x^n} = f(x)\\). C: korrekt, Nenner \\(x^n = 0\\) bei \\(x = 0\\). D: falsch — \\(x^{-n} = \\frac{1}{x^n}\\), aber \\((-x)^n = x^n\\) (für gerades \\(n\\)) oder \\(-x^n\\) (für ungerades \\(n\\)) — das ist nicht dasselbe wie \\(x^{-n}\\)."
     }
 
     ];

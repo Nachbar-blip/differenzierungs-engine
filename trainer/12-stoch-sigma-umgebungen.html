@@ -22,7 +22,7 @@
     // ══════════════════════════════════════════════════════════════
     {
         id: 1, level: 1, typ: "mc",
-        frage: "Wie viel Prozent aller Werte einer normalverteilten Zufallsgröße liegen im Intervall \\([\\mu - \\sigma;\\; \\mu + \\sigma]\\)?",
+        frage: "Wie viel Prozent aller Ergebnisse einer binomialverteilten Zufallsgröße liegen näherungsweise im 1-σ-Intervall \\([\\mu - \\sigma;\\; \\mu + \\sigma]\\)?",
         optionen: [
             "ca. \\(68{,}3\\,\\%\\)",
             "ca. \\(95{,}4\\,\\%\\)",
@@ -61,7 +61,7 @@
     },
     {
         id: 4, level: 1, typ: "mc",
-        frage: "Eine normalverteilte Zufallsgröße hat \\(\\mu = 50\\) und \\(\\sigma = 5\\). Welches Intervall enthält ca. \\(68{,}3\\,\\%\\) der Werte?",
+        frage: "Eine binomialverteilte Zufallsgröße hat \\(\\mu = 50\\) und \\(\\sigma = 5\\). Welches Intervall enthält ca. \\(68{,}3\\,\\%\\) der Werte?",
         optionen: [
             "\\([45;\\; 55]\\)",
             "\\([40;\\; 60]\\)",
@@ -87,7 +87,7 @@
     },
     {
         id: 6, level: 1, typ: "mc",
-        frage: "Eine Zufallsgröße ist annähernd normalverteilt mit \\(\\mu = 100\\) und \\(\\sigma = 10\\). Im Intervall \\([70;\\; 130]\\) liegen ca. …",
+        frage: "Eine binomialverteilte Zufallsgröße hat \\(\\mu = 100\\) und \\(\\sigma = 10\\). Im Intervall \\([70;\\; 130]\\) liegen ca. …",
         optionen: [
             "\\(68{,}3\\,\\%\\) der Werte",
             "\\(95{,}4\\,\\%\\) der Werte",
@@ -224,7 +224,7 @@
         ],
         korrekt: 0,
         tipp: "\\(63 > 60\\), also liegt der Wert außerhalb des Intervalls.",
-        loesungsweg: "\\(63 \\notin [40;\\; 60]\\). Das Ergebnis liegt außerhalb der 2-σ-Umgebung. Die Annahme \\(p = 0{,}5\\) kann auf dem \\(95{,}4\\,\\%\\)-Niveau abgelehnt werden."
+        loesungsweg: "\\(63 \\notin [40;\\; 60]\\). Das Ergebnis liegt außerhalb der 2-σ-Umgebung. Bei einem fairen Münzwurf wäre dieses Ergebnis ungewöhnlich — die Annahme \\(p = 0{,}5\\) ist fragwürdig."
     },
     {
         id: 21, level: 4, typ: "numerisch",
@@ -242,16 +242,16 @@
     },
     {
         id: 23, level: 4, typ: "mc",
-        frage: "Bei einem Hypothesentest mit \\(n = 200\\) und \\(p_0 = 0{,}3\\) ist die 2-σ-Umgebung \\([47;\\; 73]\\) (ganzzahlig gerundet). Man beobachtet \\(X = 74\\). Wie ist zu entscheiden?",
+        frage: "Bei einer Binomialverteilung mit \\(n = 200\\) und \\(p = 0{,}3\\) ist die 2-σ-Umgebung \\([47;\\; 73]\\) (ganzzahlig gerundet). Man beobachtet \\(X = 74\\). Was lässt sich folgern?",
         optionen: [
-            "\\(H_0\\) wird abgelehnt, da \\(74 \\notin [47;\\; 73]\\)",
-            "\\(H_0\\) wird beibehalten, da \\(74\\) nahe an \\(73\\) liegt",
+            "\\(X = 74\\) liegt außerhalb der 2-σ-Umgebung — der beobachtete Wert ist ungewöhnlich für \\(p = 0{,}3\\)",
+            "\\(X = 74\\) liegt noch innerhalb, da \\(74\\) nahe an \\(73\\) liegt",
             "Man kann keine Aussage treffen",
-            "\\(H_0\\) wird bestätigt"
+            "Der Wert ist typisch für diese Verteilung"
         ],
         korrekt: 0,
-        tipp: "Liegt \\(74\\) im Intervall \\([47;\\; 73]\\)? Nein, \\(74 > 73\\).",
-        loesungsweg: "\\(74 \\notin [47;\\; 73]\\), daher wird \\(H_0: p = 0{,}3\\) auf dem \\(\\approx 95{,}4\\,\\%\\)-Niveau abgelehnt."
+        tipp: "Prüfe: Liegt \\(74\\) im Intervall \\([47;\\; 73]\\)? Nein, \\(74 > 73\\).",
+        loesungsweg: "\\(\\mu = 200 \\cdot 0{,}3 = 60\\), \\(\\sigma = \\sqrt{200 \\cdot 0{,}3 \\cdot 0{,}7} \\approx 6{,}48\\). Die 2-σ-Umgebung \\([47;\\; 73]\\) enthält ca. \\(95{,}4\\,\\%\\) aller typischen Ergebnisse. Da \\(74 \\notin [47;\\; 73]\\), liegt der beobachtete Wert außerhalb — er ist für \\(p = 0{,}3\\) ungewöhnlich."
     },
     {
         id: 24, level: 4, typ: "numerisch",
@@ -327,7 +327,7 @@
         ],
         korrekt: 0,
         tipp: "\\(\\mu = 180\\), \\(\\sigma = \\sqrt{200 \\cdot 0{,}9 \\cdot 0{,}1} = \\sqrt{18} \\approx 4{,}24\\). Ist \\(168\\) im Intervall?",
-        loesungsweg: "\\(\\mu = 180\\), \\(\\sigma \\approx 4{,}24\\). Intervall: \\([180 - 8{,}49;\\; 180 + 8{,}49] = [171{,}52;\\; 188{,}48]\\). Da \\(168 < 171{,}52\\), wird die Behauptung auf dem \\(95{,}4\\,\\%\\)-Niveau abgelehnt."
+        loesungsweg: "\\(\\mu = 180\\), \\(\\sigma \\approx 4{,}24\\). Intervall: \\([180 - 8{,}49;\\; 180 + 8{,}49] = [171{,}52;\\; 188{,}48]\\). Da \\(168 < 171{,}52\\), liegt der beobachtete Wert außerhalb der 2-σ-Umgebung — die Behauptung des Herstellers ist fragwürdig."
     },
     {
         id: 32, level: 6, typ: "numerisch",
@@ -343,7 +343,7 @@
             "Ja, \\(592 \\in [522;\\; 598]\\) (gerundet) — das Ergebnis ist mit \\(p = 0{,}35\\) vereinbar",
             "Nein, \\(592\\) liegt deutlich über dem Erwartungswert",
             "Nein, die Prognose ist sicher falsch",
-            "Ja, aber nur auf dem \\(68{,}3\\,\\%\\)-Niveau"
+            "Ja, aber der Wert liegt außerhalb der 1-σ-Umgebung"
         ],
         korrekt: 0,
         tipp: "\\(\\mu = 560\\), \\(\\sigma = \\sqrt{1600 \\cdot 0{,}35 \\cdot 0{,}65} \\approx 19{,}08\\). Liegt \\(592\\) im 2-σ-Intervall?",

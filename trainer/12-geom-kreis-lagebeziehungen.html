@@ -160,184 +160,184 @@
     },
     {
         id: 18, level: 3, typ: "numerisch",
-        frage: "Kreis: \\(x^2 + y^2 = 25\\), Gerade: \\(y = \\frac{3}{4}x + \\frac{25}{4}\\). Berechne die \\(x\\)-Koordinate des Berührpunkts.",
-        loesung: -3, toleranz: 0,
-        tipp: "Einsetzen und vereinfachen. Wenn \\(D = 0\\), gibt es genau eine Lösung.",
-        loesungsweg: "\\(x^2 + \\left(\\frac{3x+25}{4}\\right)^2 = 25\\). \\(16x^2 + 9x^2 + 150x + 625 = 400\\). \\(25x^2 + 150x + 225 = 0\\). \\(x^2 + 6x + 9 = (x+3)^2 = 0\\). \\(x = -3\\)."
+        frage: "Kreis: \\(x^2 + y^2 = 26\\), Gerade: \\(y = x + 2\\). Berechne die Sehnenlänge zwischen den beiden Schnittpunkten. (Runde auf eine Dezimalstelle.)",
+        loesung: 9.8, toleranz: 0.1,
+        tipp: "Einsetzen: \\(x^2 + (x+2)^2 = 26\\), also \\(2x^2 + 4x - 22 = 0\\), \\(x^2 + 2x - 11 = 0\\). Löse mit der Lösungsformel, dann Abstand.",
+        loesungsweg: "\\(x^2 + 2x - 11 = 0\\). \\(x = -1 \\pm \\sqrt{12}\\). Schnittpunkte: \\(S_1(-1 - 2\\sqrt{3},\\, 1 - 2\\sqrt{3})\\), \\(S_2(-1 + 2\\sqrt{3},\\, 1 + 2\\sqrt{3})\\). Sehnenlänge: \\(|S_1 S_2| = \\sqrt{(4\\sqrt{3})^2 + (4\\sqrt{3})^2} = \\sqrt{96} = 4\\sqrt{6} \\approx 9{,}8\\)."
     },
 
     // ══════════════════════════════════════════════════════════════
-    // LEVEL 4 — Tangente an Kreis (D=0 Bedingung)
+    // LEVEL 4 — Kreisgleichung aufstellen aus Bedingungen
     // ══════════════════════════════════════════════════════════════
     {
         id: 19, level: 4, typ: "numerisch",
-        frage: "Bestimme den Wert von \\(t > 0\\), sodass \\(y = x + t\\) Tangente an \\(x^2 + y^2 = 8\\) ist.",
-        loesung: 4, toleranz: 0,
-        tipp: "Einsetzen: \\(x^2 + (x+t)^2 = 8\\), also \\(2x^2 + 2tx + t^2 - 8 = 0\\). Setze \\(D = 0\\).",
-        loesungsweg: "\\(D = 4t^2 - 4 \\cdot 2 \\cdot (t^2 - 8) = 4t^2 - 8t^2 + 64 = -4t^2 + 64 = 0\\). \\(t^2 = 16\\), \\(t = 4\\) (da \\(t > 0\\))."
+        frage: "Ein Kreis hat Mittelpunkt \\(M(2 \\mid -1)\\) und verläuft durch \\(P(5 \\mid 3)\\). Berechne den Radius \\(r\\) (auf eine Dezimalstelle genau).",
+        loesung: 5, toleranz: 0,
+        tipp: "\\(r = |MP| = \\sqrt{(5-2)^2 + (3-(-1))^2}\\).",
+        loesungsweg: "\\(r = \\sqrt{3^2 + 4^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5\\). Kreisgleichung: \\((x-2)^2 + (y+1)^2 = 25\\)."
     },
     {
-        id: 20, level: 4, typ: "numerisch",
-        frage: "Die Gerade \\(y = 2x + c\\) soll Tangente an \\(x^2 + y^2 = 5\\) sein. Berechne \\(c > 0\\).",
-        loesung: 5, toleranz: 0,
-        tipp: "Einsetzen: \\(x^2 + (2x+c)^2 = 5\\), also \\(5x^2 + 4cx + c^2 - 5 = 0\\). Setze \\(D = 0\\).",
-        loesungsweg: "\\(D = 16c^2 - 20(c^2 - 5) = 16c^2 - 20c^2 + 100 = -4c^2 + 100 = 0\\). \\(c^2 = 25\\), \\(c = 5\\)."
+        id: 20, level: 4, typ: "mc",
+        frage: "Ein Kreis verläuft durch \\(A(0 \\mid 0)\\), \\(B(4 \\mid 0)\\) und \\(C(0 \\mid 6)\\). Welche Kreisgleichung passt?",
+        optionen: [
+            "\\((x-2)^2 + (y-3)^2 = 13\\)",
+            "\\((x-2)^2 + (y-3)^2 = 25\\)",
+            "\\(x^2 + y^2 = 52\\)",
+            "\\((x-4)^2 + (y-6)^2 = 52\\)"
+        ],
+        korrekt: 0,
+        tipp: "Der Mittelpunkt \\(M(a,b)\\) hat gleichen Abstand zu allen drei Punkten. Aus \\(|MA|^2 = |MB|^2\\) folgt \\(a = 2\\), aus \\(|MA|^2 = |MC|^2\\) folgt \\(b = 3\\).",
+        loesungsweg: "\\(a^2 + b^2 = (a-4)^2 + b^2 \\Rightarrow a = 2\\). \\(a^2 + b^2 = a^2 + (b-6)^2 \\Rightarrow b = 3\\). \\(r^2 = 4 + 9 = 13\\). Kreisgleichung: \\((x-2)^2 + (y-3)^2 = 13\\)."
     },
     {
         id: 21, level: 4, typ: "numerisch",
-        frage: "Die Tangente an \\(x^2 + y^2 = 25\\) im Punkt \\(P(3 \\mid 4)\\) hat die Gleichung \\(3x + 4y = 25\\). Berechne den \\(y\\)-Achsenabschnitt dieser Tangente.",
-        loesung: 6.25, toleranz: 0.01,
-        tipp: "Stelle die Gleichung nach \\(y\\) um: \\(y = -\\frac{3}{4}x + \\frac{25}{4}\\).",
-        loesungsweg: "\\(4y = -3x + 25\\), \\(y = -\\frac{3}{4}x + \\frac{25}{4}\\). \\(y\\)-Achsenabschnitt: \\(\\frac{25}{4} = 6{,}25\\)."
+        frage: "Ein Kreis hat Mittelpunkt \\(M(3 \\mid 4)\\) und berührt die \\(x\\)-Achse. Berechne \\(r\\).",
+        loesung: 4, toleranz: 0,
+        tipp: "Der Abstand von \\(M\\) zur \\(x\\)-Achse (\\(y = 0\\)) ist der \\(y\\)-Wert des Mittelpunkts.",
+        loesungsweg: "Der Abstand von \\(M(3, 4)\\) zur \\(x\\)-Achse beträgt \\(4\\). Also \\(r = 4\\). Kreisgleichung: \\((x-3)^2 + (y-4)^2 = 16\\)."
     },
     {
-        id: 22, level: 4, typ: "mc",
-        frage: "Die Tangente an \\(x^2 + y^2 = r^2\\) im Punkt \\(P(x_0 \\mid y_0)\\) hat die Gleichung:",
-        optionen: [
-            "\\(x_0 \\cdot x + y_0 \\cdot y = r^2\\)",
-            "\\(x_0 \\cdot x - y_0 \\cdot y = r^2\\)",
-            "\\(\\frac{x}{x_0} + \\frac{y}{y_0} = r^2\\)",
-            "\\(y - y_0 = -\\frac{x_0}{y_0}(x - x_0)\\)"
-        ],
-        korrekt: 0,
-        tipp: "Die Tangentengleichung im Punkt \\(P(x_0, y_0)\\) auf dem Kreis \\(x^2 + y^2 = r^2\\) lautet \\(x_0 x + y_0 y = r^2\\).",
-        loesungsweg: "Die Tangente steht senkrecht auf dem Radiusvektor \\(\\overrightarrow{OP}\\). Mit der Steigung \\(-\\frac{x_0}{y_0}\\) und dem Punkt \\(P\\) folgt: \\(x_0 x + y_0 y = x_0^2 + y_0^2 = r^2\\)."
+        id: 22, level: 4, typ: "numerisch",
+        frage: "Ein Kreis hat Mittelpunkt \\(M(-1 \\mid 2)\\) und berührt die \\(y\\)-Achse. Berechne \\(r^2\\).",
+        loesung: 1, toleranz: 0,
+        tipp: "Der Abstand von \\(M\\) zur \\(y\\)-Achse (\\(x = 0\\)) ist der Betrag des \\(x\\)-Werts des Mittelpunkts.",
+        loesungsweg: "Abstand zur \\(y\\)-Achse: \\(|-1| = 1\\). Also \\(r = 1\\), \\(r^2 = 1\\). Kreisgleichung: \\((x+1)^2 + (y-2)^2 = 1\\)."
     },
     {
         id: 23, level: 4, typ: "numerisch",
-        frage: "Bestimme \\(c > 0\\), sodass \\(y = -x + c\\) Tangente an \\((x-1)^2 + (y-2)^2 = 8\\) ist.",
-        loesung: 7, toleranz: 0,
-        tipp: "Abstandsformel: Der Abstand des Mittelpunkts \\(M(1,2)\\) von der Geraden muss gleich \\(r = 2\\sqrt{2}\\) sein. Gerade: \\(x + y - c = 0\\).",
-        loesungsweg: "Abstand: \\(d = \\frac{|1 + 2 - c|}{\\sqrt{2}} = 2\\sqrt{2}\\). \\(|3 - c| = 4\\). \\(c = 7\\) oder \\(c = -1\\). Da \\(c > 0\\): \\(c = 7\\)."
+        frage: "Drei Punkte: \\(P_1(1 \\mid 5)\\), \\(P_2(5 \\mid 1)\\), \\(P_3(5 \\mid 5)\\). Berechne den Radius des durch sie bestimmten Kreises (auf zwei Dezimalstellen).",
+        loesung: 2.83, toleranz: 0.02,
+        tipp: "Stelle drei Gleichungen \\((a - x_i)^2 + (b - y_i)^2 = r^2\\) auf. Aus (2)–(1) und (3)–(1) erhältst du ein LGS für \\(a\\) und \\(b\\).",
+        loesungsweg: "Aus \\((a-1)^2 + (b-5)^2 = (a-5)^2 + (b-1)^2\\): \\(-2a + 1 - 10b + 25 = -10a + 25 - 2b + 1\\), \\(8a - 8b = 0\\), \\(a = b\\). Aus \\((a-5)^2 + (b-1)^2 = (a-5)^2 + (b-5)^2\\): \\(b = 3\\). Also \\(a = b = 3\\), \\(r^2 = (3-1)^2 + (3-5)^2 = 4 + 4 = 8\\), \\(r = 2\\sqrt{2} \\approx 2{,}83\\)."
     },
     {
-        id: 24, level: 4, typ: "numerisch",
-        frage: "Kreis: \\(x^2 + y^2 = 9\\). Die Tangente im Punkt \\(P(0 \\mid 3)\\) hat die Steigung \\(m\\). Berechne \\(m\\).",
-        loesung: 0, toleranz: 0,
-        tipp: "Der Radiusvektor zu \\(P(0,3)\\) zeigt in \\(y\\)-Richtung. Die Tangente steht senkrecht dazu.",
-        loesungsweg: "Tangentengleichung: \\(0 \\cdot x + 3 \\cdot y = 9\\), also \\(y = 3\\). Das ist eine horizontale Gerade mit Steigung \\(m = 0\\)."
+        id: 24, level: 4, typ: "mc",
+        frage: "Ein Kreis hat den Durchmesser \\(AB\\) mit \\(A(1 \\mid 1)\\) und \\(B(7 \\mid 5)\\). Was ist die Kreisgleichung?",
+        optionen: [
+            "\\((x-4)^2 + (y-3)^2 = 13\\)",
+            "\\((x-4)^2 + (y-3)^2 = 26\\)",
+            "\\((x-3)^2 + (y-4)^2 = 13\\)",
+            "\\(x^2 + y^2 = 13\\)"
+        ],
+        korrekt: 0,
+        tipp: "Mittelpunkt = Mittelpunkt von \\(AB\\). Radius = halbe Länge von \\(AB\\).",
+        loesungsweg: "\\(M = \\left(\\frac{1+7}{2}, \\frac{1+5}{2}\\right) = (4, 3)\\). \\(r = \\frac{|AB|}{2} = \\frac{\\sqrt{36+16}}{2} = \\frac{\\sqrt{52}}{2}\\). \\(r^2 = \\frac{52}{4} = 13\\). Kreisgleichung: \\((x-4)^2 + (y-3)^2 = 13\\)."
     },
 
     // ══════════════════════════════════════════════════════════════
-    // LEVEL 5 — Passante/Tangente/Sekante für Geradenscharen
+    // LEVEL 5 — Kreisgleichung aus komplexeren Bedingungen / Sehnenlänge
     // ══════════════════════════════════════════════════════════════
     {
         id: 25, level: 5, typ: "numerisch",
-        frage: "Für welchen Wert \\(t > 0\\) ist \\(y = 2x + t\\) Tangente an \\(x^2 + y^2 = 20\\)?",
-        loesung: 10, toleranz: 0,
-        tipp: "Einsetzen: \\(x^2 + (2x+t)^2 = 20\\), also \\(5x^2 + 4tx + t^2 - 20 = 0\\). \\(D = 0\\).",
-        loesungsweg: "\\(D = 16t^2 - 20(t^2 - 20) = -4t^2 + 400 = 0\\). \\(t^2 = 100\\), \\(t = 10\\)."
+        frage: "Ein Kreis verläuft durch \\(P(0 \\mid 0)\\), \\(Q(6 \\mid 0)\\) und \\(R(6 \\mid 4)\\). Berechne \\(r^2\\).",
+        loesung: 13, toleranz: 0,
+        tipp: "Aus \\(|MA|^2 = |MB|^2\\) und \\(|MB|^2 = |MC|^2\\) erhältst du \\(a = 3\\) und \\(b = 2\\).",
+        loesungsweg: "\\(a^2 + b^2 = (a-6)^2 + b^2 \\Rightarrow a = 3\\). \\((a-6)^2 + b^2 = (a-6)^2 + (b-4)^2 \\Rightarrow b = 2\\). \\(r^2 = 9 + 4 = 13\\). Kreisgleichung: \\((x-3)^2 + (y-2)^2 = 13\\)."
     },
     {
         id: 26, level: 5, typ: "mc",
-        frage: "Geradenschar \\(y = tx + 1\\), Kreis \\(x^2 + y^2 = 1\\). Für welche \\(t\\)-Werte ist die Gerade Sekante?",
+        frage: "Ein Kreis hat Mittelpunkt auf der \\(x\\)-Achse, verläuft durch \\(A(1 \\mid 3)\\) und \\(B(5 \\mid 3)\\). Welche Kreisgleichung ist korrekt?",
         optionen: [
-            "Für kein \\(t\\) (die Gerade geht immer durch \\((0,1)\\) auf dem Kreis)",
-            "Für \\(|t| < 1\\)",
-            "Für \\(|t| > 1\\)",
-            "Für alle \\(t \\in \\mathbb{R}\\)"
+            "\\((x-3)^2 + y^2 = 13\\)",
+            "\\((x-3)^2 + y^2 = 9\\)",
+            "\\((x-3)^2 + (y-3)^2 = 4\\)",
+            "\\((x-1)^2 + y^2 = 9\\)"
         ],
         korrekt: 0,
-        tipp: "Jede Gerade der Schar geht durch \\((0, 1)\\), also durch einen Punkt auf dem Kreis. Prüfe: Gibt es einen zweiten Schnittpunkt?",
-        loesungsweg: "\\((0,1)\\) liegt auf \\(x^2+y^2=1\\). Einsetzen: \\(x^2 + (tx+1)^2 = 1\\), \\(x^2(1+t^2) + 2tx = 0\\), \\(x((1+t^2)x + 2t) = 0\\). Für \\(t \\neq 0\\): zweiter Schnittpunkt bei \\(x = \\frac{-2t}{1+t^2} \\neq 0\\). Für \\(t = 0\\): \\(y = 1\\) ist Tangente. Also: Sekante für \\(t \\neq 0\\), Tangente für \\(t = 0\\). Die Gerade geht immer durch \\((0,1)\\)."
+        tipp: "Mittelpunkt \\(M(a, 0)\\). Aus \\(|MA| = |MB|\\) folgt \\(a = 3\\). Dann \\(r^2 = (3-1)^2 + 9 = 13\\).",
+        loesungsweg: "\\(M(a, 0)\\): \\((a-1)^2 + 9 = (a-5)^2 + 9 \\Rightarrow a = 3\\). \\(r^2 = (3-1)^2 + 3^2 = 4 + 9 = 13\\). Kreisgleichung: \\((x-3)^2 + y^2 = 13\\)."
     },
     {
         id: 27, level: 5, typ: "numerisch",
-        frage: "Geradenschar \\(g_t: y = x + t\\). Für welches \\(t > 0\\) ist \\(g_t\\) Tangente an \\(x^2 + y^2 = 18\\)?",
+        frage: "Kreis: \\(x^2 + y^2 = 25\\), Gerade: \\(y = 4\\). Berechne die Sehnenlänge zwischen den Schnittpunkten.",
         loesung: 6, toleranz: 0,
-        tipp: "\\(D = 0\\) liefert \\(t^2 = 36\\).",
-        loesungsweg: "\\(x^2 + (x+t)^2 = 18\\), \\(2x^2 + 2tx + t^2 - 18 = 0\\). \\(D = 4t^2 - 8(t^2 - 18) = -4t^2 + 144 = 0\\). \\(t^2 = 36\\), \\(t = 6\\)."
+        tipp: "Einsetzen: \\(x^2 + 16 = 25\\), \\(x = \\pm 3\\). Abstand der Schnittpunkte?",
+        loesungsweg: "\\(x^2 = 9\\), \\(x = \\pm 3\\). Schnittpunkte: \\(S_1(-3, 4)\\) und \\(S_2(3, 4)\\). Sehnenlänge: \\(|S_1 S_2| = 6\\)."
     },
     {
         id: 28, level: 5, typ: "numerisch",
-        frage: "Kreis: \\((x-3)^2 + (y-1)^2 = 5\\), Geradenschar: \\(y = 2x + c\\). Berechne den größeren Wert von \\(c\\), für den die Gerade Tangente ist.",
+        frage: "Kreis: \\((x-2)^2 + (y-1)^2 = 20\\), Gerade: \\(y = -x + 5\\). Berechne die \\(x\\)-Koordinate des kleineren Schnittpunkts.",
         loesung: 0, toleranz: 0,
-        tipp: "Abstand von \\(M(3,1)\\) zur Geraden \\(2x - y + c = 0\\): \\(d = \\frac{|6 - 1 + c|}{\\sqrt{5}} = \\sqrt{5}\\).",
-        loesungsweg: "\\(|5 + c| = 5\\). \\(c = 0\\) oder \\(c = -10\\). Der größere Wert ist \\(c = 0\\)."
+        tipp: "Einsetzen: \\((x-2)^2 + (-x+4)^2 = 20\\). Ausmultiplizieren und vereinfachen.",
+        loesungsweg: "\\((x-2)^2 + (4-x)^2 = 20\\). \\(x^2 - 4x + 4 + x^2 - 8x + 16 = 20\\). \\(2x^2 - 12x = 0\\). \\(2x(x-6) = 0\\). \\(x = 0\\) oder \\(x = 6\\). Kleiner Wert: \\(x = 0\\)."
     },
     {
         id: 29, level: 5, typ: "mc",
-        frage: "Kreis \\(x^2 + y^2 = r^2\\), Gerade \\(y = mx + c\\). Wann ist die Gerade eine Passante?",
+        frage: "Ein Kreis hat Mittelpunkt \\(M(2 \\mid 3)\\) und Radius \\(r = 5\\). Die Gerade \\(g: 4x + 3y = 0\\) ist ...",
         optionen: [
-            "Wenn \\(c^2 > r^2(1 + m^2)\\)",
-            "Wenn \\(c^2 = r^2(1 + m^2)\\)",
-            "Wenn \\(c^2 < r^2(1 + m^2)\\)",
-            "Wenn \\(m > r\\)"
+            "Sekante (schneidet den Kreis in zwei Punkten)",
+            "Tangente (berührt den Kreis)",
+            "Passante (kein Schnittpunkt)",
+            "Durch den Mittelpunkt"
         ],
         korrekt: 0,
-        tipp: "Der Abstand des Ursprungs von der Geraden ist \\(d = \\frac{|c|}{\\sqrt{1+m^2}}\\). Passante: \\(d > r\\).",
-        loesungsweg: "\\(\\frac{|c|}{\\sqrt{1+m^2}} > r \\Leftrightarrow |c| > r\\sqrt{1+m^2} \\Leftrightarrow c^2 > r^2(1+m^2)\\)."
+        tipp: "Berechne den Abstand von \\(M(2,3)\\) zur Geraden \\(4x + 3y = 0\\) mit der HNF: \\(d = \\frac{|4 \\cdot 2 + 3 \\cdot 3|}{\\sqrt{16+9}}\\).",
+        loesungsweg: "\\(d = \\frac{|8 + 9|}{\\sqrt{25}} = \\frac{17}{5} = 3{,}4 < 5 = r\\). Da \\(d < r\\): Sekante."
     },
     {
         id: 30, level: 5, typ: "numerisch",
-        frage: "Für welches \\(t > 0\\) ist \\(y = -\\frac{1}{2}x + t\\) Tangente an \\(x^2 + y^2 = 5\\)?",
-        loesung: 2.5, toleranz: 0.01,
-        tipp: "Abstand vom Ursprung: \\(d = \\frac{|t|}{\\sqrt{1 + \\frac{1}{4}}} = \\frac{t}{\\frac{\\sqrt{5}}{2}} = \\frac{2t}{\\sqrt{5}}\\). Setze \\(d = \\sqrt{5}\\).",
-        loesungsweg: "\\(\\frac{2t}{\\sqrt{5}} = \\sqrt{5}\\), \\(2t = 5\\), \\(t = 2{,}5\\)."
+        frage: "Kreis: \\(x^2 + y^2 = 25\\), Gerade: \\(g: 3x + 4y = 0\\). Berechne den Abstand des Mittelpunkts \\(O(0 \\mid 0)\\) von der Geraden.",
+        loesung: 0, toleranz: 0,
+        tipp: "HNF: \\(d = \\frac{|3 \\cdot 0 + 4 \\cdot 0|}{\\sqrt{9 + 16}}\\).",
+        loesungsweg: "\\(d = \\frac{|0|}{5} = 0\\). Der Mittelpunkt liegt auf der Geraden: Die Gerade ist ein Durchmesser — Sekante durch den Mittelpunkt."
     },
 
     // ══════════════════════════════════════════════════════════════
-    // LEVEL 6 — Gemeinsame Tangenten zweier Kreise
+    // LEVEL 6 — Anwendungen & Verknüpfungen
     // ══════════════════════════════════════════════════════════════
     {
         id: 31, level: 6, typ: "numerisch",
-        frage: "Zwei Kreise: \\(k_1: x^2 + y^2 = 4\\) und \\(k_2: (x-5)^2 + y^2 = 1\\). Berechne den Abstand der Mittelpunkte.",
-        loesung: 5, toleranz: 0,
-        tipp: "\\(M_1(0,0)\\), \\(M_2(5,0)\\). \\(d = |M_1 M_2|\\).",
-        loesungsweg: "\\(d = \\sqrt{(5-0)^2 + 0^2} = 5\\). Da \\(d = 5 > r_1 + r_2 = 3\\): Die Kreise liegen außerhalb voneinander."
+        frage: "Ein Objekt bewegt sich auf der Kreisbahn \\((x-3)^2 + (y-2)^2 = 25\\). Ein Sensor liegt bei \\(S(8 \\mid 6)\\). Liegt der Sensor innerhalb oder außerhalb der Bahn? Berechne \\(d^2\\) von \\(S\\) zum Mittelpunkt.",
+        loesung: 41, toleranz: 0,
+        tipp: "\\(d^2 = (8-3)^2 + (6-2)^2\\).",
+        loesungsweg: "\\(d^2 = 25 + 16 = 41 > 25 = r^2\\). Der Sensor liegt außerhalb der Kreisbahn."
     },
     {
-        id: 32, level: 6, typ: "mc",
-        frage: "Zwei Kreise mit \\(r_1 = 2\\), \\(r_2 = 1\\) und Mittelpunktsabstand \\(d = 5\\). Wie viele gemeinsame Tangenten gibt es?",
-        optionen: [
-            "4 (2 äußere, 2 innere)",
-            "3",
-            "2",
-            "1"
-        ],
-        korrekt: 0,
-        tipp: "\\(d > r_1 + r_2\\) (die Kreise liegen getrennt). Dann gibt es 4 gemeinsame Tangenten.",
-        loesungsweg: "\\(d = 5 > r_1 + r_2 = 3\\). Getrennte Kreise haben 4 gemeinsame Tangenten: 2 äußere und 2 innere."
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Kreisgleichung aus drei Punkten: \\(A(0 \\mid 4)\\), \\(B(4 \\mid 4)\\), \\(C(4 \\mid 0)\\). Berechne \\(r^2\\).",
+        loesung: 8, toleranz: 0,
+        tipp: "Aus \\(|MA|^2 = |MB|^2\\): \\(a = 2\\). Aus \\(|MB|^2 = |MC|^2\\): \\(b = 2\\). Dann \\(r^2 = ?\\)",
+        loesungsweg: "\\(a^2 + (b-4)^2 = (a-4)^2 + (b-4)^2 \\Rightarrow a = 2\\). \\((a-4)^2 + (b-4)^2 = (a-4)^2 + b^2 \\Rightarrow b = 2\\). \\(r^2 = (2-0)^2 + (2-4)^2 = 4 + 4 = 8\\)."
     },
     {
         id: 33, level: 6, typ: "mc",
-        frage: "Zwei Kreise mit \\(r_1 = 3\\), \\(r_2 = 2\\) und \\(d = 5\\). Wie viele gemeinsame Tangenten gibt es?",
+        frage: "Kreis \\(k: (x-1)^2 + (y-2)^2 = 9\\) und Gerade \\(g: x + y = 8\\). Wie ist die Lagebeziehung? (Abstand \\(M\\) zu \\(g\\) berechnen!)",
         optionen: [
-            "3 (die Kreise berühren sich äußerlich)",
-            "4",
-            "2",
-            "1"
+            "Passante (kein Schnittpunkt)",
+            "Tangente (ein Berührpunkt)",
+            "Sekante (zwei Schnittpunkte)",
+            "Die Gerade geht durch den Mittelpunkt"
         ],
         korrekt: 0,
-        tipp: "\\(d = r_1 + r_2 = 5\\). Bei äußerer Berührung gibt es 3 gemeinsame Tangenten.",
-        loesungsweg: "\\(d = r_1 + r_2\\): äußere Berührung. Es gibt 2 äußere Tangenten und 1 gemeinsame Tangente am Berührpunkt, also 3 insgesamt."
+        tipp: "Abstand von \\(M(1,2)\\) zur Geraden \\(x + y - 8 = 0\\): \\(d = \\frac{|1 + 2 - 8|}{\\sqrt{1^2+1^2}}\\). Vergleiche mit \\(r = 3\\).",
+        loesungsweg: "\\(d = \\frac{|-5|}{\\sqrt{2}} = \\frac{5}{\\sqrt{2}} = \\frac{5\\sqrt{2}}{2} \\approx 3{,}54 > 3 = r\\). Da \\(d > r\\): Passante (kein Schnittpunkt)."
     },
     {
         id: 34, level: 6, typ: "numerisch",
-        frage: "Äußere Tangente an \\(k_1: x^2 + y^2 = 4\\) und \\(k_2: (x-6)^2 + y^2 = 4\\): Die Tangente hat die Form \\(y = c\\). Berechne \\(c > 0\\).",
-        loesung: 2, toleranz: 0,
-        tipp: "Gleiche Radien \\(\\Rightarrow\\) die äußeren Tangenten sind parallel zur Verbindungsgeraden. Horizontale Tangenten: \\(y = \\pm r\\).",
-        loesungsweg: "Beide Kreise haben \\(r = 2\\). Die äußeren Tangenten parallel zur \\(x\\)-Achse sind \\(y = 2\\) und \\(y = -2\\). Für \\(c > 0\\): \\(c = 2\\)."
+        frage: "Kreis: \\(x^2 + y^2 = 45\\), Gerade: \\(y = -2x + 15\\). Berechne die \\(x\\)-Koordinate des Schnittpunkts.",
+        loesung: 6, toleranz: 0,
+        tipp: "Einsetzen: \\(x^2 + (-2x+15)^2 = 45\\), ausmultiplizieren und vereinfachen.",
+        loesungsweg: "\\(x^2 + 4x^2 - 60x + 225 = 45\\). \\(5x^2 - 60x + 180 = 0\\). \\(x^2 - 12x + 36 = 0\\). \\((x-6)^2 = 0\\). \\(x = 6\\), \\(y = 3\\). Einziger Schnittpunkt (Tangente!): \\(x = 6\\)."
     },
     {
         id: 35, level: 6, typ: "numerisch",
-        frage: "Innere Tangenten: \\(k_1: x^2 + y^2 = 4\\), \\(k_2: (x-5)^2 + y^2 = 1\\). Die inneren Tangenten schneiden die Verbindungsstrecke im Verhältnis \\(r_1 : r_2\\). Berechne die \\(x\\)-Koordinate dieses Teilpunkts.",
-        loesung: 3.33, toleranz: 0.02,
-        tipp: "Der innere Ähnlichkeitspunkt teilt \\(\\overline{M_1 M_2}\\) innen im Verhältnis \\(r_1 : r_2 = 2 : 1\\).",
-        loesungsweg: "\\(x = \\frac{2 \\cdot 5 + 1 \\cdot 0}{2 + 1} = \\frac{10}{3} \\approx 3{,}33\\)."
+        frage: "Kreis: \\(x^2 + y^2 = 10\\), Gerade: \\(y = 3x - 10\\). Berechne die Summe der \\(x\\)-Koordinaten der Schnittpunkte.",
+        loesung: 6, toleranz: 0,
+        tipp: "Einsetzen: \\(x^2 + (3x-10)^2 = 10\\). Vereinfachen, dann Vieta anwenden.",
+        loesungsweg: "\\(x^2 + 9x^2 - 60x + 100 = 10\\). \\(10x^2 - 60x + 90 = 0\\). \\(x^2 - 6x + 9 = 0\\). \\((x-3)^2 = 0\\). \\(x = 3\\) (Tangente). Summe \\(= 3 + 3 = 6\\)."
     },
     {
         id: 36, level: 6, typ: "mc",
-        frage: "Zwei Kreise mit \\(r_1 = 5\\), \\(r_2 = 3\\) und \\(d = 1\\). Wie viele gemeinsame Tangenten gibt es?",
+        frage: "Ein Kreis soll durch \\(P(2 \\mid 0)\\) und \\(Q(-2 \\mid 0)\\) verlaufen und Mittelpunkt auf der \\(y\\)-Achse haben. Welche Kreisschar beschreibt dies?",
         optionen: [
-            "0 (ein Kreis liegt vollständig im anderen)",
-            "1 (innere Berührung)",
-            "2",
-            "4"
+            "\\(x^2 + (y - b)^2 = 4 + b^2\\) für beliebiges \\(b \\in \\mathbb{R}\\)",
+            "\\(x^2 + y^2 = 4\\) (nur ein Kreis möglich)",
+            "\\((x-2)^2 + y^2 = b^2\\)",
+            "\\(x^2 + (y-b)^2 = b^2\\)"
         ],
         korrekt: 0,
-        tipp: "Prüfe: \\(d = 1 < |r_1 - r_2| = 2\\). Ein Kreis liegt vollständig im anderen.",
-        loesungsweg: "\\(d = 1 < |r_1 - r_2| = |5 - 3| = 2\\). Der kleinere Kreis liegt vollständig im größeren, ohne Berührung. Es gibt 0 gemeinsame Tangenten."
+        tipp: "Mittelpunkt \\(M(0, b)\\). \\(r^2 = |MP|^2 = (2-0)^2 + (0-b)^2 = 4 + b^2\\).",
+        loesungsweg: "\\(M(0, b)\\), \\(r^2 = 4 + b^2\\). Kreisgleichung: \\(x^2 + (y-b)^2 = 4 + b^2\\). Für jedes \\(b\\) entsteht ein Kreis durch \\(P\\) und \\(Q\\) mit Mittelpunkt auf der \\(y\\)-Achse."
     }
 
     ];

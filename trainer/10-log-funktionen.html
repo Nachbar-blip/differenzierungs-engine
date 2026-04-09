@@ -71,114 +71,144 @@
     },
 
     // ═══════════════════════════════════════════════════════════════
-    // Level 2: Definition log_b(x) = y ⇔ b^y = x, Definitionsbereich
+    // Level 2: Graph der Logarithmusfunktion — D, W, Asymptote, Nullstelle, Monotonie
     // ═══════════════════════════════════════════════════════════════
 
     {
         "id": 7, "level": 2, "typ": "mc",
-        "frage": "Welche Aussage ist äquivalent zu \\(\\log_b(x) = y\\)?",
-        "optionen": ["\\(x^b = y\\)", "\\(b^y = x\\)", "\\(y^x = b\\)", "\\(b \\cdot y = x\\)"],
+        "frage": "Was ist der Definitionsbereich der Funktion \\(f(x) = \\log_2(x)\\)?",
+        "optionen": ["\\(D = \\mathbb{R}\\)", "\\(D = (0, \\infty)\\)", "\\(D = [0, \\infty)\\)", "\\(D = (-\\infty, 0)\\)"],
         "korrekt": 1,
-        "tipp": "Der Logarithmus ist die Umkehrfunktion der Exponentialfunktion.",
-        "loesungsweg": "Definition: \\(\\log_b(x) = y \\Leftrightarrow b^y = x\\). Man sucht den Exponenten, mit dem man \\(b\\) potenzieren muss, um \\(x\\) zu erhalten."
+        "tipp": "Überlege: Für welche \\(x\\)-Werte ist \\(\\log_2(x)\\) definiert? Was passiert bei \\(x = 0\\)?",
+        "loesungsweg": "Der Logarithmus ist nur für positive Argumente definiert: \\(x > 0\\). Daher \\(D = (0, \\infty)\\). Der Wert \\(x = 0\\) ist ausgeschlossen, da \\(\\log_2(0)\\) nicht existiert."
     },
     {
         "id": 8, "level": 2, "typ": "mc",
-        "frage": "Was ist der Definitionsbereich der Funktion \\(f(x) = \\log_2(x)\\)?",
-        "optionen": ["\\(\\mathbb{R}\\)", "\\(x > 0\\)", "\\(x \\geq 0\\)", "\\(x \\neq 0\\)"],
-        "korrekt": 1,
-        "tipp": "Logarithmen sind nur für positive Argumente definiert.",
-        "loesungsweg": "Der Logarithmus \\(\\log_b(x)\\) ist nur für \\(x > 0\\) definiert. Also \\(D = (0, \\infty)\\)."
+        "frage": "Was ist der Wertebereich der Funktion \\(f(x) = \\log_2(x)\\)?",
+        "optionen": ["\\(W = (0, \\infty)\\)", "\\(W = [0, \\infty)\\)", "\\(W = \\mathbb{R}\\)", "\\(W = (-1, 1)\\)"],
+        "korrekt": 2,
+        "tipp": "Kann \\(f(x)\\) beliebig groß werden? Kann \\(f(x)\\) auch negative Werte annehmen?",
+        "loesungsweg": "Die Logarithmusfunktion nimmt alle reellen Werte an: für \\(x \\to \\infty\\) geht \\(f(x) \\to \\infty\\), für \\(x \\to 0^+\\) geht \\(f(x) \\to -\\infty\\). Daher \\(W = \\mathbb{R}\\)."
     },
     {
         "id": 9, "level": 2, "typ": "mc",
-        "frage": "Welcher Wert ist \\(\\log_b(1)\\) für jede Basis \\(b > 0\\), \\(b \\neq 1\\)?",
-        "optionen": ["\\(0\\)", "\\(1\\)", "\\(b\\)", "undefiniert"],
-        "korrekt": 0,
-        "tipp": "\\(b\\) hoch wie viel ergibt \\(1\\)?",
-        "loesungsweg": "Für jede Basis \\(b\\) gilt \\(b^0 = 1\\), also \\(\\log_b(1) = 0\\)."
+        "frage": "Welche Aussage zur Asymptote von \\(f(x) = \\log_2(x)\\) ist korrekt?",
+        "optionen": [
+            "Die \\(x\\)-Achse (\\(y = 0\\)) ist eine waagerechte Asymptote.",
+            "Die \\(y\\)-Achse (\\(x = 0\\)) ist eine senkrechte Asymptote.",
+            "Die Gerade \\(y = x\\) ist eine Asymptote.",
+            "Die Funktion hat keine Asymptote."
+        ],
+        "korrekt": 1,
+        "tipp": "Was passiert mit \\(f(x)\\), wenn \\(x\\) sich \\(0\\) von rechts nähert?",
+        "loesungsweg": "Für \\(x \\to 0^+\\) gilt \\(\\log_2(x) \\to -\\infty\\). Die Funktion nähert sich der \\(y\\)-Achse, berührt sie aber nie. Die \\(y\\)-Achse (\\(x = 0\\)) ist eine senkrechte Asymptote."
     },
     {
         "id": 10, "level": 2, "typ": "mc",
-        "frage": "Was ist \\(\\ln(e)\\)?",
-        "optionen": ["\\(0\\)", "\\(1\\)", "\\(e\\)", "undefiniert"],
-        "korrekt": 1,
-        "tipp": "\\(\\ln\\) ist der Logarithmus zur Basis \\(e\\).",
-        "loesungsweg": "\\(\\ln(e) = \\log_e(e) = 1\\), denn \\(e^1 = e\\)."
+        "frage": "Wo hat die Funktion \\(f(x) = \\log_a(x)\\) (mit \\(a > 0\\), \\(a \\neq 1\\)) ihre Nullstelle?",
+        "optionen": ["Bei \\(x = 0\\)", "Bei \\(x = a\\)", "Bei \\(x = 1\\)", "Sie hat keine Nullstelle."],
+        "korrekt": 2,
+        "tipp": "Für welchen \\(x\\)-Wert gilt \\(\\log_a(x) = 0\\)?",
+        "loesungsweg": "\\(\\log_a(x) = 0 \\Leftrightarrow a^0 = x \\Leftrightarrow x = 1\\). Jede Logarithmusfunktion (unabhängig von der Basis) hat eine Nullstelle bei \\(x = 1\\), denn \\(\\log_a(1) = 0\\)."
     },
     {
-        "id": 11, "level": 2, "typ": "numerisch",
-        "frage": "Schreibe \\(2^5 = 32\\) als Logarithmus und gib \\(\\log_2(32)\\) an.",
-        "loesung": 5,
-        "toleranz": 0,
-        "tipp": "\\(b^y = x \\Leftrightarrow \\log_b(x) = y\\).",
-        "loesungsweg": "Aus \\(2^5 = 32\\) folgt \\(\\log_2(32) = 5\\)."
+        "id": 11, "level": 2, "typ": "mc",
+        "frage": "Wie verhält sich \\(f(x) = \\log_2(x)\\) mit Basis \\(a = 2 > 1\\)?",
+        "optionen": [
+            "streng monoton fallend auf \\(D = (0, \\infty)\\)",
+            "streng monoton wachsend auf \\(D = (0, \\infty)\\)",
+            "erst fallend, dann wachsend",
+            "konstant"
+        ],
+        "korrekt": 1,
+        "tipp": "Vergleiche: \\(\\log_2(1) = 0\\), \\(\\log_2(2) = 1\\), \\(\\log_2(4) = 2\\). Was passiert mit dem Funktionswert?",
+        "loesungsweg": "Für Basis \\(a > 1\\) ist die Logarithmusfunktion streng monoton wachsend: je größer \\(x\\), desto größer \\(f(x)\\). Für \\(0 < a < 1\\) wäre sie streng monoton fallend."
     },
     {
         "id": 12, "level": 2, "typ": "mc",
-        "frage": "Welche Gleichung ist äquivalent zu \\(\\log_3(81) = 4\\)?",
-        "optionen": ["\\(3^{81} = 4\\)", "\\(4^3 = 81\\)", "\\(3^4 = 81\\)", "\\(81^4 = 3\\)"],
+        "frage": "Ein Graph geht durch \\((1; 0)\\), hat eine senkrechte Asymptote bei \\(x = 0\\) und ist für \\(x > 1\\) positiv. Welche Funktion passt?",
+        "optionen": [
+            "\\(f(x) = 2^x\\)",
+            "\\(f(x) = \\log_{0{,}5}(x)\\)",
+            "\\(f(x) = \\log_3(x)\\)",
+            "\\(f(x) = x^2\\)"
+        ],
         "korrekt": 2,
-        "tipp": "\\(\\log_b(x) = y \\Leftrightarrow b^y = x\\).",
-        "loesungsweg": "\\(\\log_3(81) = 4\\) bedeutet \\(3^4 = 81\\). Probe: \\(3 \\cdot 3 \\cdot 3 \\cdot 3 = 81\\) ✓"
+        "tipp": "Welche Funktion hat Nullstelle bei \\(x = 1\\) und Asymptote \\(x = 0\\)?",
+        "loesungsweg": "\\(f(x) = \\log_3(x)\\): Nullstelle \\(x = 1\\) ✓, Asymptote \\(x = 0\\) ✓, wächst für \\(x > 1\\) (da Basis \\(3 > 1\\)) ✓. Die Funktion \\(\\log_{0{,}5}(x)\\) hätte die Nullstelle, wäre aber fallend."
     },
 
     // ═══════════════════════════════════════════════════════════════
-    // Level 3: Logarithmusgesetze
+    // Level 3: Transformationen — Verschiebungen und Spiegelungen
     // ═══════════════════════════════════════════════════════════════
 
     {
         "id": 13, "level": 3, "typ": "mc",
-        "frage": "Welche Formel ist korrekt?",
+        "frage": "Der Graph von \\(f(x) = \\log_2(x - 3)\\) entsteht aus \\(g(x) = \\log_2(x)\\) durch …",
         "optionen": [
-            "\\(\\log(a \\cdot b) = \\log(a) \\cdot \\log(b)\\)",
-            "\\(\\log(a \\cdot b) = \\log(a) + \\log(b)\\)",
-            "\\(\\log(a + b) = \\log(a) + \\log(b)\\)",
-            "\\(\\log(a \\cdot b) = \\log(a) - \\log(b)\\)"
+            "Verschiebung um \\(3\\) nach links",
+            "Verschiebung um \\(3\\) nach rechts",
+            "Verschiebung um \\(3\\) nach oben",
+            "Streckung mit Faktor \\(3\\)"
         ],
         "korrekt": 1,
-        "tipp": "Produkte im Argument werden zu Summen der Logarithmen.",
-        "loesungsweg": "Das Produktgesetz: \\(\\log(a \\cdot b) = \\log(a) + \\log(b)\\)."
+        "tipp": "Ersetzt man \\(x\\) durch \\(x - c\\), verschiebt sich der Graph in \\(x\\)-Richtung. In welche Richtung?",
+        "loesungsweg": "\\(f(x) = \\log_2(x - 3)\\): Das Argument \\(x - 3\\) bedeutet eine Verschiebung um \\(3\\) nach rechts. Die neue Asymptote liegt bei \\(x = 3\\), die Nullstelle bei \\(x = 4\\) (statt \\(x = 1\\))."
     },
     {
-        "id": 14, "level": 3, "typ": "numerisch",
-        "frage": "Vereinfache \\(\\log_2(4) + \\log_2(8)\\).",
-        "loesung": 5,
-        "toleranz": 0,
-        "tipp": "Nutze \\(\\log(a) + \\log(b) = \\log(a \\cdot b)\\) oder berechne beide Werte einzeln.",
-        "loesungsweg": "\\(\\log_2(4) + \\log_2(8) = \\log_2(4 \\cdot 8) = \\log_2(32) = 5\\). Alternativ: \\(2 + 3 = 5\\)."
+        "id": 14, "level": 3, "typ": "mc",
+        "frage": "Wo liegt die senkrechte Asymptote von \\(f(x) = \\log_2(x + 5)\\)?",
+        "optionen": ["\\(x = 5\\)", "\\(x = -5\\)", "\\(x = 0\\)", "\\(y = 5\\)"],
+        "korrekt": 1,
+        "tipp": "Die Asymptote liegt dort, wo das Argument des Logarithmus gleich \\(0\\) wird.",
+        "loesungsweg": "Das Argument \\(x + 5 = 0\\) ergibt \\(x = -5\\). Die senkrechte Asymptote liegt bei \\(x = -5\\). Der Definitionsbereich ist \\(D = (-5, \\infty)\\)."
     },
     {
-        "id": 15, "level": 3, "typ": "numerisch",
-        "frage": "Berechne \\(\\log_3(27) - \\log_3(3)\\).",
-        "loesung": 2,
-        "toleranz": 0,
-        "tipp": "\\(\\log(a) - \\log(b) = \\log\\left(\\frac{a}{b}\\right)\\).",
-        "loesungsweg": "\\(\\log_3(27) - \\log_3(3) = \\log_3\\left(\\frac{27}{3}\\right) = \\log_3(9) = 2\\). Alternativ: \\(3 - 1 = 2\\)."
+        "id": 15, "level": 3, "typ": "mc",
+        "frage": "Der Graph von \\(f(x) = \\log_2(x) + 4\\) entsteht aus \\(g(x) = \\log_2(x)\\) durch …",
+        "optionen": [
+            "Verschiebung um \\(4\\) nach rechts",
+            "Verschiebung um \\(4\\) nach links",
+            "Verschiebung um \\(4\\) nach oben",
+            "Verschiebung um \\(4\\) nach unten"
+        ],
+        "korrekt": 2,
+        "tipp": "Eine Addition außerhalb des Logarithmus wirkt auf die \\(y\\)-Werte.",
+        "loesungsweg": "\\(+4\\) außerhalb des Logarithmus verschiebt den gesamten Graphen um \\(4\\) nach oben. Die Asymptote bleibt bei \\(x = 0\\), die Nullstelle verschiebt sich."
     },
     {
-        "id": 16, "level": 3, "typ": "numerisch",
-        "frage": "Berechne \\(\\log_2(4^5)\\) mit Hilfe des Potenzgesetzes.",
-        "loesung": 10,
-        "toleranz": 0,
-        "tipp": "\\(\\log(a^n) = n \\cdot \\log(a)\\).",
-        "loesungsweg": "\\(\\log_2(4^5) = 5 \\cdot \\log_2(4) = 5 \\cdot 2 = 10\\)."
+        "id": 16, "level": 3, "typ": "mc",
+        "frage": "Welche Funktion entsteht, wenn man \\(f(x) = \\log_3(x)\\) an der \\(x\\)-Achse spiegelt?",
+        "optionen": [
+            "\\(g(x) = \\log_3(-x)\\)",
+            "\\(g(x) = -\\log_3(x)\\)",
+            "\\(g(x) = \\log_3(x + 1)\\)",
+            "\\(g(x) = \\frac{1}{\\log_3(x)}\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Spiegelung an der \\(x\\)-Achse: alle \\(y\\)-Werte werden mit \\(-1\\) multipliziert.",
+        "loesungsweg": "Spiegelung an der \\(x\\)-Achse: \\(y \\to -y\\). Aus \\(f(x) = \\log_3(x)\\) wird \\(g(x) = -\\log_3(x)\\). Die Funktion ist jetzt streng monoton fallend."
     },
     {
         "id": 17, "level": 3, "typ": "mc",
-        "frage": "Vereinfache \\(\\lg(20) + \\lg(5)\\).",
-        "optionen": ["\\(\\lg(25)\\)", "\\(\\lg(100) = 2\\)", "\\(\\lg(4) \\approx 0{,}6\\)", "\\(25\\)"],
+        "frage": "Der Graph \\(f(x) = \\log_2(x - 2) + 1\\) hat seine Nullstelle bei …",
+        "optionen": ["\\(x = 2\\)", "\\(x = 2{,}5\\)", "\\(x = 3\\)", "\\(x = 4\\)"],
         "korrekt": 1,
-        "tipp": "Produktgesetz: \\(\\lg(a) + \\lg(b) = \\lg(a \\cdot b)\\).",
-        "loesungsweg": "\\(\\lg(20) + \\lg(5) = \\lg(20 \\cdot 5) = \\lg(100) = 2\\)."
+        "tipp": "Setze \\(f(x) = 0\\) und löse: \\(\\log_2(x - 2) = -1\\).",
+        "loesungsweg": "\\(f(x) = 0 \\Rightarrow \\log_2(x-2) = -1 \\Rightarrow x - 2 = 2^{-1} = \\tfrac{1}{2} \\Rightarrow x = 2{,}5\\). Die Asymptote liegt bei \\(x = 2\\), die Nullstelle bei \\(x = 2{,}5\\)."
     },
     {
-        "id": 18, "level": 3, "typ": "numerisch",
-        "frage": "Berechne \\(\\log_2(16) - \\log_2(2) + \\log_2(4)\\).",
-        "loesung": 5,
-        "toleranz": 0,
-        "tipp": "Berechne jeden Logarithmus einzeln und addiere/subtrahiere.",
-        "loesungsweg": "\\(\\log_2(16) = 4\\), \\(\\log_2(2) = 1\\), \\(\\log_2(4) = 2\\). Ergebnis: \\(4 - 1 + 2 = 5\\)."
+        "id": 18, "level": 3, "typ": "mc",
+        "frage": "Welche Transformation beschreibt \\(f(x) = \\log_2(-x)\\) gegenüber \\(g(x) = \\log_2(x)\\)?",
+        "optionen": [
+            "Verschiebung nach links",
+            "Spiegelung an der \\(y\\)-Achse",
+            "Spiegelung an der \\(x\\)-Achse",
+            "Streckung in \\(x\\)-Richtung"
+        ],
+        "korrekt": 1,
+        "tipp": "Wird \\(x\\) durch \\(-x\\) ersetzt, wirkt das auf die \\(x\\)-Werte.",
+        "loesungsweg": "Ersetzt man \\(x\\) durch \\(-x\\), werden alle \\(x\\)-Werte gespiegelt: Spiegelung an der \\(y\\)-Achse. Der neue Definitionsbereich ist \\(D = (-\\infty, 0)\\)."
     },
 
     // ═══════════════════════════════════════════════════════════════
@@ -235,61 +265,81 @@
     },
 
     // ═══════════════════════════════════════════════════════════════
-    // Level 5: Exponentialgleichungen mit Hilfe des Logarithmus lösen
+    // Level 5: Umkehrfunktion — Logarithmus ↔ Exponentialfunktion
     // ═══════════════════════════════════════════════════════════════
 
     {
-        "id": 25, "level": 5, "typ": "numerisch",
-        "frage": "Löse die Exponentialgleichung \\(2^x = 32\\).",
-        "loesung": 5,
-        "toleranz": 0,
-        "tipp": "Schreibe \\(32\\) als Zweierpotenz oder wende \\(\\log_2\\) an.",
-        "loesungsweg": "\\(2^x = 32 = 2^5 \\Rightarrow x = 5\\). Alternativ: \\(x = \\log_2(32) = 5\\)."
+        "id": 25, "level": 5, "typ": "mc",
+        "frage": "Welche Funktion ist die Umkehrfunktion von \\(f(x) = 2^x\\)?",
+        "optionen": [
+            "\\(f^{-1}(x) = x^2\\)",
+            "\\(f^{-1}(x) = \\frac{x}{2}\\)",
+            "\\(f^{-1}(x) = \\log_2(x)\\)",
+            "\\(f^{-1}(x) = 2 \\cdot x\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Die Umkehrfunktion macht die Rechenoperation rückgängig. Welche Funktion kehrt das Potenzieren um?",
+        "loesungsweg": "Die Umkehrfunktion von \\(f(x) = 2^x\\) ist \\(f^{-1}(x) = \\log_2(x)\\). Allgemein: Die Umkehrfunktion von \\(f(x) = a^x\\) ist \\(f^{-1}(x) = \\log_a(x)\\)."
     },
     {
-        "id": 26, "level": 5, "typ": "numerisch",
-        "frage": "Löse \\(3^x = 81\\).",
-        "loesung": 4,
-        "toleranz": 0,
-        "tipp": "Welche Potenz von \\(3\\) ergibt \\(81\\)?",
-        "loesungsweg": "\\(3^4 = 81\\), also \\(x = \\log_3(81) = 4\\)."
+        "id": 26, "level": 5, "typ": "mc",
+        "frage": "Wie entsteht der Graph von \\(f^{-1}(x) = \\log_2(x)\\) aus dem Graphen von \\(f(x) = 2^x\\)?",
+        "optionen": [
+            "Durch Verschiebung nach rechts",
+            "Durch Spiegelung an der \\(x\\)-Achse",
+            "Durch Spiegelung an der Geraden \\(y = x\\)",
+            "Durch Streckung mit Faktor \\(2\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Umkehrfunktionen entstehen immer durch eine bestimmte Spiegelung.",
+        "loesungsweg": "Der Graph der Umkehrfunktion entsteht durch Spiegelung an der Winkelhalbierenden \\(y = x\\). Dabei werden \\(x\\)- und \\(y\\)-Koordinaten aller Punkte vertauscht."
     },
     {
-        "id": 27, "level": 5, "typ": "numerisch",
-        "frage": "Löse \\(10^x = 1000\\).",
-        "loesung": 3,
-        "toleranz": 0,
-        "tipp": "Nutze \\(\\lg\\) auf beiden Seiten.",
-        "loesungsweg": "\\(10^x = 1000 \\Leftrightarrow x = \\lg(1000) = 3\\), denn \\(10^3 = 1000\\)."
+        "id": 27, "level": 5, "typ": "mc",
+        "frage": "Der Graph von \\(f(x) = 2^x\\) geht durch den Punkt \\((3; 8)\\). Durch welchen Punkt geht der Graph von \\(f^{-1}(x) = \\log_2(x)\\)?",
+        "optionen": ["\\((3; 8)\\)", "\\((8; 3)\\)", "\\((-3; 8)\\)", "\\((3; -8)\\)"],
+        "korrekt": 1,
+        "tipp": "Bei der Umkehrfunktion werden \\(x\\)- und \\(y\\)-Koordinaten vertauscht.",
+        "loesungsweg": "Spiegelung an \\(y = x\\): aus \\((3; 8)\\) wird \\((8; 3)\\). Probe: \\(\\log_2(8) = 3\\) ✓"
     },
     {
-        "id": 28, "level": 5, "typ": "numerisch",
-        "frage": "Löse \\(2^x = 10\\). Runde auf zwei Nachkommastellen.",
-        "loesung": 3.32,
-        "toleranz": 0.01,
-        "tipp": "\\(x = \\log_2(10) = \\frac{\\lg(10)}{\\lg(2)} = \\frac{1}{\\lg(2)}\\).",
-        "loesungsweg": "\\(x = \\log_2(10) = \\frac{\\lg(10)}{\\lg(2)} = \\frac{1}{0{,}30103} \\approx 3{,}32\\)."
+        "id": 28, "level": 5, "typ": "mc",
+        "frage": "Welche Aussage beschreibt den Unterschied zwischen \\(f(x) = e^x\\) und \\(g(x) = \\ln(x)\\) korrekt?",
+        "optionen": [
+            "Beide Funktionen haben denselben Graphen.",
+            "\\(g(x) = \\ln(x)\\) ist die Umkehrfunktion von \\(f(x) = e^x\\); ihre Graphen sind an \\(y = x\\) gespiegelt.",
+            "\\(g(x) = \\ln(x)\\) entsteht aus \\(f(x) = e^x\\) durch Verschiebung.",
+            "\\(f\\) hat Wertebereich \\(\\mathbb{R}\\), \\(g\\) hat Wertebereich \\((0, \\infty)\\)."
+        ],
+        "korrekt": 1,
+        "tipp": "\\(\\ln(x) = \\log_e(x)\\). Wie hängen Exponentialfunktion und Logarithmus zusammen?",
+        "loesungsweg": "\\(g(x) = \\ln(x)\\) ist genau die Umkehrfunktion von \\(f(x) = e^x\\). Die Graphen sind Spiegelbilder an der Geraden \\(y = x\\). \\(f\\) hat \\(D = \\mathbb{R}\\), \\(W = (0,\\infty)\\); bei \\(g\\) ist es umgekehrt: \\(D = (0,\\infty)\\), \\(W = \\mathbb{R}\\)."
     },
     {
         "id": 29, "level": 5, "typ": "mc",
-        "frage": "Welcher Ausdruck löst die Gleichung \\(5^x = 20\\)?",
+        "frage": "Die Funktion \\(f(x) = 3^x\\) hat den Definitionsbereich \\(\\mathbb{R}\\) und Wertebereich \\((0, \\infty)\\). Was gilt für die Umkehrfunktion \\(f^{-1}(x) = \\log_3(x)\\)?",
         "optionen": [
-            "\\(x = \\frac{20}{5} = 4\\)",
-            "\\(x = \\log_5(20)\\)",
-            "\\(x = \\log_{20}(5)\\)",
-            "\\(x = 20 - 5 = 15\\)"
+            "\\(D = \\mathbb{R}\\), \\(W = (0, \\infty)\\)",
+            "\\(D = (0, \\infty)\\), \\(W = \\mathbb{R}\\)",
+            "\\(D = (0, \\infty)\\), \\(W = (0, \\infty)\\)",
+            "\\(D = \\mathbb{R}\\), \\(W = \\mathbb{R}\\)"
         ],
         "korrekt": 1,
-        "tipp": "Wende \\(\\log_5\\) auf beide Seiten an.",
-        "loesungsweg": "\\(5^x = 20 \\Rightarrow x = \\log_5(20) \\approx 1{,}86\\). Numerisch über die Basiswechselformel berechenbar."
+        "tipp": "Bei der Umkehrfunktion werden Definitionsbereich und Wertebereich vertauscht.",
+        "loesungsweg": "Bei der Umkehrfunktion tauschen Definitionsbereich und Wertebereich: \\(f\\) hat \\(D = \\mathbb{R}\\), \\(W = (0,\\infty)\\) → \\(f^{-1}\\) hat \\(D = (0,\\infty)\\), \\(W = \\mathbb{R}\\)."
     },
     {
-        "id": 30, "level": 5, "typ": "numerisch",
-        "frage": "Löse \\(3 \\cdot 2^x = 48\\).",
-        "loesung": 4,
-        "toleranz": 0,
-        "tipp": "Isoliere zuerst die Exponentialfunktion (durch \\(3\\) teilen).",
-        "loesungsweg": "\\(3 \\cdot 2^x = 48 \\Leftrightarrow 2^x = 16 \\Leftrightarrow x = \\log_2(16) = 4\\)."
+        "id": 30, "level": 5, "typ": "mc",
+        "frage": "Welche der folgenden Gleichungen gilt für alle \\(x > 0\\)?",
+        "optionen": [
+            "\\(\\log_2(2^x) = 2x\\)",
+            "\\(2^{\\log_2(x)} = x\\)",
+            "\\(\\log_2(2^x) = x^2\\)",
+            "\\(2^{\\log_2(x)} = 2x\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Was passiert, wenn man eine Funktion und ihre Umkehrfunktion hintereinander anwendet?",
+        "loesungsweg": "\\(2^{\\log_2(x)} = x\\) gilt für alle \\(x > 0\\): Exponentialfunktion und Logarithmus als Umkehrfunktionen heben sich gegenseitig auf. Ebenso gilt \\(\\log_2(2^x) = x\\) für alle \\(x \\in \\mathbb{R}\\)."
     },
 
     // ═══════════════════════════════════════════════════════════════

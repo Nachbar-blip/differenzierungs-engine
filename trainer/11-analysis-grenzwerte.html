@@ -124,48 +124,48 @@
     },
 
     // ═══════════════════════════════════════════════════════════════
-    // Level 3: Hebbare Lücken und einfache Stetigkeitsfragen
+    // Level 3: Verhalten einfacher Funktionen, Annäherung per Wertetabelle
     // ═══════════════════════════════════════════════════════════════
 
     {
-        "id": 13, "level": 3, "typ": "numerisch",
-        "frage": "Berechne \\(\\lim_{x \\to 2} \\frac{x^2 - 4}{x - 2}\\).",
-        "loesung": 4,
-        "toleranz": 0,
-        "tipp": "Faktorisiere den Zähler: \\(x^2 - 4 = (x-2)(x+2)\\), dann kürze.",
-        "loesungsweg": "\\(\\frac{x^2 - 4}{x - 2} = \\frac{(x-2)(x+2)}{x-2} = x + 2\\) für \\(x \\neq 2\\). Also: \\(\\lim_{x \\to 2} (x+2) = 4\\)."
+        "id": 13, "level": 3, "typ": "mc",
+        "frage": "Setze für \\(f(x) = \\frac{5}{x}\\) die Werte \\(x = 10, 100, 1000\\) ein. Was vermutest du für \\(\\lim_{x \\to \\infty} f(x)\\)?",
+        "optionen": ["\\(+\\infty\\)", "\\(5\\)", "\\(0\\)", "\\(1\\)"],
+        "korrekt": 2,
+        "tipp": "Rechne: \\(f(10) = 0{,}5\\), \\(f(100) = 0{,}05\\), \\(f(1000) = 0{,}005\\). Wohin entwickeln sich die Werte?",
+        "loesungsweg": "\\(f(10) = 0{,}5\\), \\(f(100) = 0{,}05\\), \\(f(1000) = 0{,}005\\). Die Werte werden immer kleiner und nähern sich der 0. Also: \\(\\lim_{x \\to \\infty} \\frac{5}{x} = 0\\)."
     },
     {
-        "id": 14, "level": 3, "typ": "numerisch",
-        "frage": "Berechne \\(\\lim_{x \\to 3} \\frac{x^2 - 9}{x - 3}\\).",
-        "loesung": 6,
-        "toleranz": 0,
-        "tipp": "Dritte binomische Formel: \\(x^2 - 9 = (x-3)(x+3)\\).",
-        "loesungsweg": "\\(\\frac{x^2-9}{x-3} = \\frac{(x-3)(x+3)}{x-3} = x+3\\) für \\(x \\neq 3\\). Also: \\(\\lim_{x \\to 3}(x+3) = 6\\)."
+        "id": 14, "level": 3, "typ": "mc",
+        "frage": "Setze für \\(g(x) = \\frac{3}{x^2}\\) die Werte \\(x = 10, 100, 1000\\) ein. Was vermutest du für \\(\\lim_{x \\to \\infty} g(x)\\)?",
+        "optionen": ["\\(3\\)", "\\(\\infty\\)", "\\(0\\)", "\\(-3\\)"],
+        "korrekt": 2,
+        "tipp": "Rechne: \\(g(10) = 0{,}03\\), \\(g(100) = 0{,}0003\\). Wohin geht das?",
+        "loesungsweg": "\\(g(10) = 0{,}03\\), \\(g(100) = 0{,}0003\\), \\(g(1000) = 0{,}000003\\). Die Werte nähern sich immer mehr der 0. Also: \\(\\lim_{x \\to \\infty} \\frac{3}{x^2} = 0\\)."
     },
     {
-        "id": 15, "level": 3, "typ": "numerisch",
-        "frage": "Berechne \\(\\lim_{x \\to 1} \\frac{x^2 - 1}{x - 1}\\).",
-        "loesung": 2,
-        "toleranz": 0,
-        "tipp": "Nutze \\(x^2 - 1 = (x-1)(x+1)\\) und kürze \\((x-1)\\).",
-        "loesungsweg": "\\(\\frac{x^2-1}{x-1} = \\frac{(x-1)(x+1)}{x-1} = x+1\\). Also: \\(\\lim_{x \\to 1} (x+1) = 2\\)."
+        "id": 15, "level": 3, "typ": "mc",
+        "frage": "Der Graph von \\(f\\) nähert sich für \\(x \\to \\infty\\) immer mehr der Geraden \\(y = 2\\), ohne sie zu erreichen. Was ist \\(\\lim_{x \\to \\infty} f(x)\\)?",
+        "optionen": ["\\(0\\)", "\\(\\infty\\)", "\\(2\\)", "existiert nicht"],
+        "korrekt": 2,
+        "tipp": "Wenn sich ein Graph einer waagerechten Linie nähert, ist diese Linie der Grenzwert.",
+        "loesungsweg": "Wenn der Graph sich der Geraden \\(y = 2\\) immer weiter annähert, bedeutet das: \\(\\lim_{x \\to \\infty} f(x) = 2\\). Die Gerade \\(y = 2\\) heißt waagerechte Asymptote."
     },
     {
         "id": 16, "level": 3, "typ": "mc",
-        "frage": "Ist die Funktion \\(f(x) = \\frac{x^2 - 4}{x - 2}\\) an der Stelle \\(x = 2\\) stetig?",
-        "optionen": ["Ja, sie ist stetig", "Nein, hebbare Lücke", "Nein, Polstelle", "Nein, Sprungstelle"],
+        "frage": "Bei \\(f(x) = \\frac{1}{x - 3}\\): Was passiert, wenn \\(x\\) von rechts gegen 3 geht (z.B. \\(x = 3{,}1\\), \\(x = 3{,}01\\))?",
+        "optionen": ["\\(f(x) \\to 0\\)", "\\(f(x) \\to +\\infty\\)", "\\(f(x) \\to -\\infty\\)", "\\(f(x) \\to 3\\)"],
         "korrekt": 1,
-        "tipp": "Was passiert bei \\(x = 2\\)? Der Nenner wird 0 — aber lässt sich die Lücke beheben?",
-        "loesungsweg": "Für \\(x \\neq 2\\) gilt \\(f(x) = x + 2\\), also existiert \\(\\lim_{x \\to 2} f(x) = 4\\). Aber \\(f(2)\\) ist nicht definiert. Es liegt eine hebbare Lücke vor."
+        "tipp": "Rechne: \\(f(3{,}1) = \\frac{1}{0{,}1} = 10\\), \\(f(3{,}01) = \\frac{1}{0{,}01} = 100\\). Was passiert mit den Werten?",
+        "loesungsweg": "\\(f(3{,}1) = 10\\), \\(f(3{,}01) = 100\\), \\(f(3{,}001) = 1000\\). Die Funktionswerte wachsen unbegrenzt. Also: \\(\\lim_{x \\to 3^+} \\frac{1}{x-3} = +\\infty\\). Bei \\(x = 3\\) liegt eine senkrechte Asymptote vor."
     },
     {
-        "id": 17, "level": 3, "typ": "numerisch",
-        "frage": "Berechne \\(\\lim_{x \\to -1} \\frac{x^2 + 3x + 2}{x + 1}\\).",
-        "loesung": 1,
-        "toleranz": 0,
-        "tipp": "Faktorisiere den Zähler: Welche Zahlen ergeben Produkt 2 und Summe 3?",
-        "loesungsweg": "\\(x^2 + 3x + 2 = (x+1)(x+2)\\). Also: \\(\\frac{(x+1)(x+2)}{x+1} = x+2\\). \\(\\lim_{x \\to -1} (x+2) = 1\\)."
+        "id": 17, "level": 3, "typ": "mc",
+        "frage": "Wie verhält sich \\(f(x) = \\frac{1}{x - 3}\\) für \\(x \\to \\infty\\)?",
+        "optionen": ["\\(f(x) \\to 3\\)", "\\(f(x) \\to +\\infty\\)", "\\(f(x) \\to 0\\)", "\\(f(x) \\to 1\\)"],
+        "korrekt": 2,
+        "tipp": "Setze große \\(x\\)-Werte ein: \\(x = 100\\), \\(x = 1000\\). Was passiert mit \\(\\frac{1}{x-3}\\)?",
+        "loesungsweg": "\\(f(100) = \\frac{1}{97} \\approx 0{,}01\\), \\(f(1000) = \\frac{1}{997} \\approx 0{,}001\\). Der Nenner wird immer größer, der Bruch immer kleiner. Also: \\(\\lim_{x \\to \\infty} \\frac{1}{x-3} = 0\\). Die \\(x\\)-Achse ist waagerechte Asymptote."
     },
     {
         "id": 18, "level": 3, "typ": "mc",
@@ -181,52 +181,52 @@
     // ═══════════════════════════════════════════════════════════════
 
     {
-        "id": 19, "level": 4, "typ": "numerisch",
-        "frage": "Berechne \\(\\lim_{x \\to \\infty} \\frac{3x^2 + 1}{x^2 - 5}\\).",
-        "loesung": 3,
-        "toleranz": 0,
-        "tipp": "Dividiere Zähler und Nenner durch \\(x^2\\) (höchste Potenz im Nenner).",
-        "loesungsweg": "\\(\\frac{3x^2+1}{x^2-5} = \\frac{3 + \\frac{1}{x^2}}{1 - \\frac{5}{x^2}} \\xrightarrow{x \\to \\infty} \\frac{3+0}{1-0} = 3\\). Waagerechte Asymptote bei \\(y = 3\\)."
+        "id": 19, "level": 4, "typ": "mc",
+        "frage": "Welche waagerechte Asymptote hat \\(f(x) = \\frac{3x^2 + 1}{x^2 - 5}\\)?",
+        "optionen": ["\\(y = 0\\)", "\\(y = 1\\)", "\\(y = 3\\)", "keine waagerechte Asymptote"],
+        "korrekt": 2,
+        "tipp": "Zähler und Nenner haben den gleichen Grad (2). Schau auf die führenden Koeffizienten: \\(3x^2\\) oben, \\(x^2\\) unten.",
+        "loesungsweg": "Zählergrad = Nennergrad = 2. Da die Grade gleich sind, bestimmen die führenden Koeffizienten den Grenzwert: \\(\\frac{3}{1} = 3\\). Waagerechte Asymptote: \\(y = 3\\)."
     },
     {
         "id": 20, "level": 4, "typ": "numerisch",
-        "frage": "Berechne \\(\\lim_{x \\to \\infty} \\frac{5x - 3}{2x + 7}\\).",
+        "frage": "Bestimme die waagerechte Asymptote von \\(f(x) = \\frac{5x - 3}{2x + 7}\\). Gib den \\(y\\)-Wert an.",
         "loesung": 2.5,
         "toleranz": 0.01,
-        "tipp": "Zähler und Nenner durch \\(x\\) teilen, dann \\(x \\to \\infty\\) betrachten.",
-        "loesungsweg": "\\(\\frac{5x-3}{2x+7} = \\frac{5 - \\frac{3}{x}}{2 + \\frac{7}{x}} \\xrightarrow{x \\to \\infty} \\frac{5}{2} = 2{,}5\\)."
+        "tipp": "Zähler und Nenner haben den gleichen Grad (1). Schau nur auf die führenden Koeffizienten: 5 oben, 2 unten.",
+        "loesungsweg": "Zählergrad = Nennergrad = 1. Die führenden Koeffizienten sind 5 und 2. Also: waagerechte Asymptote bei \\(y = \\frac{5}{2} = 2{,}5\\)."
     },
     {
         "id": 21, "level": 4, "typ": "mc",
         "frage": "Welche waagerechte Asymptote hat \\(f(x) = \\frac{4x^3 + x}{2x^3 - 1}\\)?",
         "optionen": ["\\(y = 0\\)", "\\(y = 2\\)", "\\(y = 4\\)", "keine waagerechte Asymptote"],
         "korrekt": 1,
-        "tipp": "Zähler- und Nennergrad sind gleich. Bilde den Quotienten der führenden Koeffizienten.",
-        "loesungsweg": "Zählergrad = Nennergrad = 3. Quotient der führenden Koeffizienten: \\(\\frac{4}{2} = 2\\). Waagerechte Asymptote: \\(y = 2\\)."
+        "tipp": "Zähler- und Nennergrad sind gleich (beide 3). Die führenden Koeffizienten sind 4 (oben) und 2 (unten).",
+        "loesungsweg": "Zählergrad = Nennergrad = 3. Wenn die Grade gleich sind, ist der Grenzwert der Quotient der führenden Koeffizienten: \\(\\frac{4}{2} = 2\\). Waagerechte Asymptote: \\(y = 2\\)."
     },
     {
         "id": 22, "level": 4, "typ": "mc",
         "frage": "Was gilt für \\(\\lim_{x \\to \\infty} \\frac{x^2 + 1}{x^3 + x}\\)?",
         "optionen": ["\\(+\\infty\\)", "\\(1\\)", "\\(0\\)", "\\(-\\infty\\)"],
         "korrekt": 2,
-        "tipp": "Vergleiche den Grad von Zähler und Nenner. Was passiert, wenn der Nennergrad größer ist?",
-        "loesungsweg": "Zählergrad (2) < Nennergrad (3). Dann gilt: \\(\\lim_{x \\to \\infty} \\frac{x^2+1}{x^3+x} = 0\\). Waagerechte Asymptote bei \\(y = 0\\)."
+        "tipp": "Vergleiche die Grade: Zähler hat Grad 2, Nenner hat Grad 3. Was passiert, wenn der Nenner schneller wächst?",
+        "loesungsweg": "Zählergrad (2) ist kleiner als Nennergrad (3). Wenn der Nenner schneller wächst als der Zähler, wird der Bruch immer kleiner: \\(\\lim_{x \\to \\infty} \\frac{x^2+1}{x^3+x} = 0\\). Waagerechte Asymptote bei \\(y = 0\\) (die \\(x\\)-Achse)."
     },
     {
         "id": 23, "level": 4, "typ": "mc",
         "frage": "Welches Verhalten zeigt \\(f(x) = \\frac{2x^3}{x^2 + 1}\\) für \\(x \\to \\infty\\)?",
         "optionen": ["\\(f(x) \\to 0\\)", "\\(f(x) \\to 2\\)", "\\(f(x) \\to +\\infty\\)", "\\(f(x) \\to -\\infty\\)"],
         "korrekt": 2,
-        "tipp": "Der Zählergrad ist größer als der Nennergrad. Was bedeutet das für den Grenzwert?",
-        "loesungsweg": "Zählergrad (3) > Nennergrad (2). Für \\(x \\to \\infty\\) wächst der Bruch unbeschränkt: \\(\\frac{2x^3}{x^2+1} \\approx 2x \\to +\\infty\\). Keine waagerechte Asymptote."
+        "tipp": "Zählergrad (3) ist größer als Nennergrad (2). Wächst der Zähler oder der Nenner schneller?",
+        "loesungsweg": "Zählergrad (3) > Nennergrad (2): Der Zähler wächst schneller als der Nenner. Für \\(x \\to \\infty\\) wird der Bruch unbeschränkt groß. Es gibt keine waagerechte Asymptote: \\(f(x) \\to +\\infty\\)."
     },
     {
         "id": 24, "level": 4, "typ": "numerisch",
         "frage": "Bestimme die waagerechte Asymptote von \\(f(x) = \\frac{-6x + 1}{3x + 4}\\). Gib den \\(y\\)-Wert an.",
         "loesung": -2,
         "toleranz": 0,
-        "tipp": "Gleicher Grad bei Zähler und Nenner → Quotient der führenden Koeffizienten.",
-        "loesungsweg": "\\(\\lim_{x \\to \\infty} \\frac{-6x+1}{3x+4} = \\frac{-6}{3} = -2\\). Waagerechte Asymptote: \\(y = -2\\)."
+        "tipp": "Zähler und Nenner haben den gleichen Grad (1). Führende Koeffizienten: \\(-6\\) oben, \\(3\\) unten.",
+        "loesungsweg": "Zählergrad = Nennergrad = 1. Die führenden Koeffizienten sind \\(-6\\) und \\(3\\). Quotient: \\(\\frac{-6}{3} = -2\\). Waagerechte Asymptote: \\(y = -2\\)."
     },
 
     // ═══════════════════════════════════════════════════════════════
@@ -296,19 +296,19 @@
     },
     {
         "id": 32, "level": 6, "typ": "mc",
-        "frage": "Gegeben: \\(f(x) = \\begin{cases} \\frac{x^2 - 4}{x - 2} & x \\neq 2 \\\\ c & x = 2 \\end{cases}\\). Für welchen Wert von \\(c\\) ist \\(f\\) stetig?",
+        "frage": "Gegeben: \\(f(x) = \\begin{cases} x + 2 & x \\neq 2 \\\\ c & x = 2 \\end{cases}\\). Für welchen Wert von \\(c\\) ist \\(f\\) stetig?",
         "optionen": ["\\(c = 0\\)", "\\(c = 2\\)", "\\(c = 4\\)", "\\(c = -4\\)"],
         "korrekt": 2,
-        "tipp": "Berechne \\(\\lim_{x \\to 2} \\frac{x^2 - 4}{x - 2}\\) durch Faktorisierung.",
-        "loesungsweg": "\\(\\frac{x^2-4}{x-2} = x + 2\\), also \\(\\lim_{x \\to 2} f(x) = 4\\). Stetigkeit erfordert \\(f(2) = c = 4\\)."
+        "tipp": "Für Stetigkeit muss \\(f(2) = \\lim_{x \\to 2} f(x)\\) gelten. Was ergibt \\(x + 2\\) für \\(x \\to 2\\)?",
+        "loesungsweg": "\\(\\lim_{x \\to 2} (x + 2) = 4\\). Damit \\(f\\) stetig ist, muss der definierte Wert \\(f(2) = c\\) gleich dem Grenzwert sein: \\(c = 4\\)."
     },
     {
         "id": 33, "level": 6, "typ": "numerisch",
-        "frage": "Gegeben: \\(f(x) = \\begin{cases} ax + 2 & x < 0 \\\\ bx^2 + 2 & x \\geq 0 \\end{cases}\\). Für Stetigkeit und Differenzierbarkeit bei \\(x = 0\\): Bestimme \\(a\\).",
+        "frage": "Gegeben: \\(f(x) = \\begin{cases} ax + 3 & x < 1 \\\\ 2x + 1 & x \\geq 1 \\end{cases}\\). Bestimme \\(a\\), sodass \\(f\\) bei \\(x = 1\\) stetig ist.",
         "loesung": 0,
         "toleranz": 0,
-        "tipp": "Stetigkeit: Beide Teile stimmen bei \\(x=0\\) überein (automatisch: beide = 2). Differenzierbarkeit: Ableitungen links und rechts müssen gleich sein.",
-        "loesungsweg": "Stetigkeit: \\(a \\cdot 0 + 2 = b \\cdot 0 + 2 = 2\\) ✓ (für alle \\(a, b\\)). Differenzierbarkeit: \\(f'(x) = a\\) (links), \\(f'(x) = 2bx\\) (rechts). Bei \\(x = 0\\): \\(a = 0\\)."
+        "tipp": "Stetigkeit: linksseitiger Grenzwert = Funktionswert bei \\(x = 1\\). Rechne \\(f(1)\\) mit dem zweiten Teil, dann setze gleich.",
+        "loesungsweg": "\\(f(1) = 2 \\cdot 1 + 1 = 3\\). Linksseitiger Grenzwert: \\(\\lim_{x \\to 1^-} (ax+3) = a + 3\\). Stetigkeit: \\(a + 3 = 3 \\Rightarrow a = 0\\)."
     },
     {
         "id": 34, "level": 6, "typ": "mc",
@@ -320,11 +320,11 @@
     },
     {
         "id": 35, "level": 6, "typ": "numerisch",
-        "frage": "Gegeben: \\(f(x) = \\begin{cases} \\frac{x^3 - 8}{x - 2} & x \\neq 2 \\\\ k & x = 2 \\end{cases}\\). Bestimme \\(k\\) für Stetigkeit.",
+        "frage": "Gegeben: \\(f(x) = \\begin{cases} x^2 + 2x + 4 & x \\neq 2 \\\\ k & x = 2 \\end{cases}\\). Bestimme \\(k\\) für Stetigkeit.",
         "loesung": 12,
         "toleranz": 0,
-        "tipp": "Faktorisiere \\(x^3 - 8 = (x-2)(x^2 + 2x + 4)\\) (dritte binomische Formel).",
-        "loesungsweg": "\\(\\frac{x^3-8}{x-2} = \\frac{(x-2)(x^2+2x+4)}{x-2} = x^2 + 2x + 4\\). \\(\\lim_{x \\to 2} (x^2+2x+4) = 4+4+4 = 12\\). Also \\(k = 12\\)."
+        "tipp": "Für Stetigkeit muss \\(f(2) = \\lim_{x \\to 2} f(x)\\) gelten. Setze \\(x = 2\\) in den Term \\(x^2 + 2x + 4\\) ein.",
+        "loesungsweg": "\\(\\lim_{x \\to 2} (x^2 + 2x + 4) = 4 + 4 + 4 = 12\\). Damit \\(f\\) stetig ist, muss \\(f(2) = k = 12\\) gelten."
     },
     {
         "id": 36, "level": 6, "typ": "mc",
