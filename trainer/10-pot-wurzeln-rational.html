@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wurzelfunktionen & rationale Exponenten - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '10-pot-wurzeln-rational';
+    const THEMA_CONFIG = { name: 'Wurzelfunktionen', bereich: 'analysis' };
+    const AUFGABEN = [
+      // ========== LEVEL 1 — babyleicht (6 Aufgaben) ==========
+      {
+        "id": 1,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Berechne \\(\\sqrt{16}\\).",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "Welche nicht-negative Zahl ergibt quadriert 16?",
+        "loesungsweg": "Gesucht ist die nicht-negative Zahl \\(a\\) mit \\(a^2 = 16\\). Wegen \\(4^2 = 16\\) gilt: $$\\sqrt{16} = 4$$"
+      },
+      {
+        "id": 2,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Berechne \\(\\sqrt{81}\\).",
+        "loesung": 9,
+        "toleranz": 0,
+        "tipp": "Suche die Zahl, deren Quadrat 81 ist.",
+        "loesungsweg": "Wegen \\(9^2 = 81\\) gilt: $$\\sqrt{81} = 9$$"
+      },
+      {
+        "id": 3,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Was ist der Definitionsbereich der Funktion \\(f(x) = \\sqrt{x}\\)?",
+        "optionen": [
+          "\\(\\mathbb{D} = \\mathbb{R}\\)",
+          "\\(\\mathbb{D} = \\mathbb{R} \\setminus \\{0\\}\\)",
+          "\\(\\mathbb{D} = [0; \\infty)\\)",
+          "\\(\\mathbb{D} = (0; \\infty)\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Aus welchen Zahlen kann man im Reellen die Wurzel ziehen?",
+        "loesungsweg": "Die Quadratwurzel ist im Reellen nur für \\(x \\geq 0\\) definiert (es gibt keine reelle Zahl, deren Quadrat negativ ist). Die Null ist erlaubt, denn \\(\\sqrt{0} = 0\\). Also: $$\\mathbb{D} = [0; \\infty)$$"
+      },
+      {
+        "id": 4,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Berechne \\(\\sqrt{49}\\).",
+        "loesung": 7,
+        "toleranz": 0,
+        "tipp": "Welche Zahl mit sich selbst multipliziert ergibt 49?",
+        "loesungsweg": "Wegen \\(7 \\cdot 7 = 49\\) gilt: $$\\sqrt{49} = 7$$"
+      },
+      {
+        "id": 5,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Welcher Wert ist \\(\\sqrt{-4}\\) im Bereich der reellen Zahlen?",
+        "optionen": [
+          "\\(-2\\)",
+          "\\(2\\)",
+          "\\(4\\)",
+          "Nicht definiert"
+        ],
+        "korrekt": 3,
+        "tipp": "Kann das Quadrat einer reellen Zahl negativ sein?",
+        "loesungsweg": "Für jede reelle Zahl \\(a\\) gilt \\(a^2 \\geq 0\\). Daher gibt es keine reelle Zahl, deren Quadrat \\(-4\\) ist. \\(\\sqrt{-4}\\) ist also im Reellen **nicht definiert**."
+      },
+      {
+        "id": 6,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Berechne \\(\\sqrt{100}\\).",
+        "loesung": 10,
+        "toleranz": 0,
+        "tipp": "Welche Zahl ergibt quadriert 100?",
+        "loesungsweg": "Wegen \\(10^2 = 100\\) gilt: $$\\sqrt{100} = 10$$"
+      },
+
+      // ========== LEVEL 2 — leicht (6 Aufgaben) ==========
+      {
+        "id": 7,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(x^3 \\cdot x^4\\).",
+        "optionen": [
+          "\\(x^7\\)",
+          "\\(x^{12}\\)",
+          "\\(x^1\\)",
+          "\\(2x^7\\)"
+        ],
+        "korrekt": 0,
+        "tipp": "Bei gleicher Basis werden die Exponenten addiert: \\(x^a \\cdot x^b = x^{a+b}\\).",
+        "loesungsweg": "Regel: \\(x^a \\cdot x^b = x^{a+b}\\). Also: $$x^3 \\cdot x^4 = x^{3+4} = x^7$$"
+      },
+      {
+        "id": 8,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Vereinfache: \\((x^2)^5\\).",
+        "optionen": [
+          "\\(x^7\\)",
+          "\\(x^{10}\\)",
+          "\\(x^{25}\\)",
+          "\\(2x^5\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Bei Potenz einer Potenz werden die Exponenten multipliziert: \\((x^a)^b = x^{a \\cdot b}\\).",
+        "loesungsweg": "Regel: \\((x^a)^b = x^{a \\cdot b}\\). Also: $$(x^2)^5 = x^{2 \\cdot 5} = x^{10}$$"
+      },
+      {
+        "id": 9,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Berechne den Exponenten \\(n\\) in \\(x^5 \\cdot x^3 = x^n\\).",
+        "loesung": 8,
+        "toleranz": 0,
+        "tipp": "Exponenten bei gleicher Basis addieren.",
+        "loesungsweg": "Es gilt \\(x^a \\cdot x^b = x^{a+b}\\). Daraus: $$x^5 \\cdot x^3 = x^{5+3} = x^8$$ Also \\(n = 8\\)."
+      },
+      {
+        "id": 10,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(\\dfrac{x^7}{x^2}\\) (mit \\(x \\neq 0\\)).",
+        "optionen": [
+          "\\(x^{9}\\)",
+          "\\(x^{14}\\)",
+          "\\(x^{5}\\)",
+          "\\(x^{3{,}5}\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Bei der Division wird subtrahiert: \\(x^a / x^b = x^{a-b}\\).",
+        "loesungsweg": "Regel: \\(\\dfrac{x^a}{x^b} = x^{a-b}\\). Also: $$\\dfrac{x^7}{x^2} = x^{7-2} = x^5$$"
+      },
+      {
+        "id": 11,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Berechne den Exponenten \\(n\\) in \\((x^3)^4 = x^n\\).",
+        "loesung": 12,
+        "toleranz": 0,
+        "tipp": "Exponenten multiplizieren.",
+        "loesungsweg": "Regel: \\((x^a)^b = x^{a \\cdot b}\\). Also: $$(x^3)^4 = x^{3 \\cdot 4} = x^{12}$$ Also \\(n = 12\\)."
+      },
+      {
+        "id": 12,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(x^{-3} \\cdot x^{5}\\).",
+        "optionen": [
+          "\\(x^{-15}\\)",
+          "\\(x^{8}\\)",
+          "\\(x^{2}\\)",
+          "\\(x^{-2}\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Auch negative Exponenten werden addiert.",
+        "loesungsweg": "Regel: \\(x^a \\cdot x^b = x^{a+b}\\). Also: $$x^{-3} \\cdot x^{5} = x^{-3+5} = x^{2}$$"
+      },
+
+      // ========== LEVEL 3 — mittel (6 Aufgaben) ==========
+      {
+        "id": 13,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Schreibe \\(\\sqrt{x}\\) als Potenz.",
+        "optionen": [
+          "\\(x^{2}\\)",
+          "\\(x^{1/2}\\)",
+          "\\(x^{-2}\\)",
+          "\\(x^{-1/2}\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Die \\(n\\)-te Wurzel entspricht dem Exponenten \\(\\tfrac{1}{n}\\).",
+        "loesungsweg": "Definition: \\(\\sqrt[n]{x} = x^{1/n}\\). Speziell für die Quadratwurzel (\\(n = 2\\)): $$\\sqrt{x} = x^{1/2}$$"
+      },
+      {
+        "id": 14,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Schreibe \\(\\sqrt[3]{x}\\) als Potenz.",
+        "optionen": [
+          "\\(x^{3}\\)",
+          "\\(x^{1/3}\\)",
+          "\\(x^{-3}\\)",
+          "\\(x^{2/3}\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Die dritte Wurzel hat den Exponenten \\(\\tfrac{1}{3}\\).",
+        "loesungsweg": "Allgemein gilt \\(\\sqrt[n]{x} = x^{1/n}\\). Also: $$\\sqrt[3]{x} = x^{1/3}$$"
+      },
+      {
+        "id": 15,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Schreibe \\(x^{1/4}\\) als Wurzel.",
+        "optionen": [
+          "\\(\\sqrt{x}\\)",
+          "\\(\\sqrt[3]{x}\\)",
+          "\\(\\sqrt[4]{x}\\)",
+          "\\(x^4\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Der Nenner des Bruchs wird zum Wurzelexponenten.",
+        "loesungsweg": "Umkehrung der Regel \\(\\sqrt[n]{x} = x^{1/n}\\): $$x^{1/4} = \\sqrt[4]{x}$$"
+      },
+      {
+        "id": 16,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Berechne \\(16^{1/2}\\).",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "\\(x^{1/2}\\) ist dasselbe wie \\(\\sqrt{x}\\).",
+        "loesungsweg": "Es gilt \\(x^{1/2} = \\sqrt{x}\\). Daher: $$16^{1/2} = \\sqrt{16} = 4$$"
+      },
+      {
+        "id": 17,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Berechne \\(64^{1/3}\\).",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "\\(x^{1/3} = \\sqrt[3]{x}\\). Welche Zahl hoch 3 ergibt 64?",
+        "loesungsweg": "Es gilt \\(64^{1/3} = \\sqrt[3]{64}\\). Wegen \\(4^3 = 64\\) folgt: $$64^{1/3} = 4$$"
+      },
+      {
+        "id": 18,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Welche Schreibweise ist gleichbedeutend mit \\(\\sqrt[5]{x^2}\\)?",
+        "optionen": [
+          "\\(x^{5/2}\\)",
+          "\\(x^{2/5}\\)",
+          "\\(x^{10}\\)",
+          "\\(x^{-2/5}\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "\\(\\sqrt[n]{x^m} = x^{m/n}\\).",
+        "loesungsweg": "Allgemeine Regel: \\(\\sqrt[n]{x^m} = x^{m/n}\\). Mit \\(m = 2\\) und \\(n = 5\\) folgt: $$\\sqrt[5]{x^2} = x^{2/5}$$"
+      },
+
+      // ========== LEVEL 4 — mittelschwer (6 Aufgaben) ==========
+      {
+        "id": 19,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Berechne \\(8^{2/3}\\).",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "Umformen: \\(8^{2/3} = (8^{1/3})^2 = (\\sqrt[3]{8})^2\\).",
+        "loesungsweg": "Wir spalten den Exponenten auf: $$8^{2/3} = (8^{1/3})^2 = (\\sqrt[3]{8})^2$$ Wegen \\(2^3 = 8\\) ist \\(\\sqrt[3]{8} = 2\\). Also: $$8^{2/3} = 2^2 = 4$$"
+      },
+      {
+        "id": 20,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Berechne \\(27^{2/3}\\).",
+        "loesung": 9,
+        "toleranz": 0,
+        "tipp": "\\(27^{2/3} = (\\sqrt[3]{27})^2\\).",
+        "loesungsweg": "Zerlegung: $$27^{2/3} = (27^{1/3})^2 = (\\sqrt[3]{27})^2$$ Wegen \\(3^3 = 27\\) gilt \\(\\sqrt[3]{27} = 3\\). Also: $$27^{2/3} = 3^2 = 9$$"
+      },
+      {
+        "id": 21,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Berechne \\(16^{3/4}\\).",
+        "loesung": 8,
+        "toleranz": 0,
+        "tipp": "\\(16^{3/4} = (\\sqrt[4]{16})^3\\).",
+        "loesungsweg": "Zerlegung: $$16^{3/4} = (16^{1/4})^3 = (\\sqrt[4]{16})^3$$ Wegen \\(2^4 = 16\\) ist \\(\\sqrt[4]{16} = 2\\). Also: $$16^{3/4} = 2^3 = 8$$"
+      },
+      {
+        "id": 22,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Berechne \\(9^{3/2}\\).",
+        "loesung": 27,
+        "toleranz": 0,
+        "tipp": "\\(9^{3/2} = (\\sqrt{9})^3\\).",
+        "loesungsweg": "Zerlegung: $$9^{3/2} = (9^{1/2})^3 = (\\sqrt{9})^3$$ Wegen \\(\\sqrt{9} = 3\\) gilt: $$9^{3/2} = 3^3 = 27$$"
+      },
+      {
+        "id": 23,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Was ist \\(32^{2/5}\\)?",
+        "optionen": [
+          "\\(2\\)",
+          "\\(4\\)",
+          "\\(8\\)",
+          "\\(16\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "\\(32 = 2^5\\). Nutze \\((2^5)^{2/5}\\).",
+        "loesungsweg": "Es ist \\(32 = 2^5\\). Damit: $$32^{2/5} = (2^5)^{2/5} = 2^{5 \\cdot 2/5} = 2^2 = 4$$"
+      },
+      {
+        "id": 24,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Berechne \\(25^{-1/2}\\) als Dezimalzahl.",
+        "loesung": 0.2,
+        "toleranz": 0.001,
+        "tipp": "Negativer Exponent: \\(x^{-a} = \\tfrac{1}{x^a}\\).",
+        "loesungsweg": "Umformung: $$25^{-1/2} = \\dfrac{1}{25^{1/2}} = \\dfrac{1}{\\sqrt{25}} = \\dfrac{1}{5} = 0{,}2$$"
+      },
+
+      // ========== LEVEL 5 — schwer (6 Aufgaben) ==========
+      {
+        "id": 25,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Bestimme den Definitionsbereich von \\(f(x) = \\sqrt{x - 3}\\).",
+        "optionen": [
+          "\\(\\mathbb{D} = \\mathbb{R}\\)",
+          "\\(\\mathbb{D} = [0; \\infty)\\)",
+          "\\(\\mathbb{D} = [3; \\infty)\\)",
+          "\\(\\mathbb{D} = (-\\infty; 3]\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Der Radikand muss \\(\\geq 0\\) sein, also \\(x - 3 \\geq 0\\).",
+        "loesungsweg": "Der Term unter der Wurzel (Radikand) muss nicht-negativ sein: $$x - 3 \\geq 0 \\Leftrightarrow x \\geq 3$$ Damit ist \\(\\mathbb{D} = [3; \\infty)\\)."
+      },
+      {
+        "id": 26,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Gegeben ist \\(f(x) = 2\\sqrt{x - 1} + 3\\). Berechne \\(f(5)\\).",
+        "loesung": 7,
+        "toleranz": 0,
+        "tipp": "Setze \\(x = 5\\) ein und arbeite von innen nach außen.",
+        "loesungsweg": "Einsetzen: $$f(5) = 2\\sqrt{5 - 1} + 3 = 2\\sqrt{4} + 3 = 2 \\cdot 2 + 3 = 4 + 3 = 7$$"
+      },
+      {
+        "id": 27,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Welcher Definitionsbereich gehört zu \\(f(x) = \\sqrt{2x + 6}\\)?",
+        "optionen": [
+          "\\(\\mathbb{D} = [-6; \\infty)\\)",
+          "\\(\\mathbb{D} = [-3; \\infty)\\)",
+          "\\(\\mathbb{D} = [3; \\infty)\\)",
+          "\\(\\mathbb{D} = [0; \\infty)\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Löse die Ungleichung \\(2x + 6 \\geq 0\\) nach \\(x\\) auf.",
+        "loesungsweg": "Der Radikand muss \\(\\geq 0\\) sein: $$2x + 6 \\geq 0 \\Leftrightarrow 2x \\geq -6 \\Leftrightarrow x \\geq -3$$ Also: \\(\\mathbb{D} = [-3; \\infty)\\)."
+      },
+      {
+        "id": 28,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Die Funktion \\(f(x) = \\sqrt{x - 4} + 2\\) ist gegenüber \\(g(x) = \\sqrt{x}\\) verschoben. Um wie viele Einheiten wurde der Graph nach rechts verschoben?",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "Bei \\(\\sqrt{x - d}\\) erfolgt eine Verschiebung um \\(d\\) nach rechts.",
+        "loesungsweg": "Allgemeine Form: \\(f(x) = \\sqrt{x - d} + e\\) ist der Graph von \\(g(x) = \\sqrt{x}\\), verschoben um \\(d\\) nach rechts und \\(e\\) nach oben. Hier: \\(d = 4\\), \\(e = 2\\). Der Graph wurde also um **4** Einheiten nach rechts verschoben."
+      },
+      {
+        "id": 29,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Berechne \\(f(10)\\) für \\(f(x) = 3\\sqrt{x - 1} - 4\\).",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Erst Radikand ausrechnen, dann Wurzel, dann multiplizieren und addieren.",
+        "loesungsweg": "Einsetzen: $$f(10) = 3\\sqrt{10 - 1} - 4 = 3\\sqrt{9} - 4 = 3 \\cdot 3 - 4 = 9 - 4 = 5$$"
+      },
+      {
+        "id": 30,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Welchen Definitionsbereich hat \\(f(x) = \\sqrt{9 - x}\\)?",
+        "optionen": [
+          "\\(\\mathbb{D} = [9; \\infty)\\)",
+          "\\(\\mathbb{D} = (-\\infty; 9]\\)",
+          "\\(\\mathbb{D} = [-9; 9]\\)",
+          "\\(\\mathbb{D} = \\mathbb{R}\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Der Radikand \\(9 - x\\) muss nicht-negativ sein.",
+        "loesungsweg": "Bedingung: $$9 - x \\geq 0 \\Leftrightarrow 9 \\geq x \\Leftrightarrow x \\leq 9$$ Also: \\(\\mathbb{D} = (-\\infty; 9]\\)."
+      },
+
+      // ========== LEVEL 6 — sehr schwer (6 Aufgaben) ==========
+      {
+        "id": 31,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Gegeben ist \\(f(x) = x^2\\) mit \\(x \\geq 0\\). Wie lautet die Umkehrfunktion \\(f^{-1}\\)?",
+        "optionen": [
+          "\\(f^{-1}(x) = x^2\\)",
+          "\\(f^{-1}(x) = \\sqrt{x}\\)",
+          "\\(f^{-1}(x) = \\dfrac{1}{x^2}\\)",
+          "\\(f^{-1}(x) = -\\sqrt{x}\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Tausche \\(x\\) und \\(y\\) in \\(y = x^2\\) und löse nach \\(y\\) auf (mit \\(y \\geq 0\\)).",
+        "loesungsweg": "Ansatz \\(y = x^2\\), Variablen tauschen: \\(x = y^2\\). Auflösen nach \\(y\\) mit \\(y \\geq 0\\): $$y = \\sqrt{x}$$ Die Umkehrfunktion ist also \\(f^{-1}(x) = \\sqrt{x}\\). Die Wurzelfunktion ist die Umkehrung der Quadratfunktion auf \\([0; \\infty)\\)."
+      },
+      {
+        "id": 32,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Die Seitenlänge eines Quadrats mit Flächeninhalt \\(A = 144\\,\\text{cm}^2\\) beträgt \\(s = \\sqrt{A}\\). Berechne \\(s\\) in cm.",
+        "loesung": 12,
+        "toleranz": 0,
+        "tipp": "Setze \\(A = 144\\) in \\(s = \\sqrt{A}\\) ein.",
+        "loesungsweg": "Einsetzen: $$s = \\sqrt{144} = 12$$ (denn \\(12^2 = 144\\)). Die Seitenlänge beträgt \\(s = 12\\) cm."
+      },
+      {
+        "id": 33,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Für welches \\(x > 0\\) gilt \\(x^{3/2} = 8\\)?",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "Beide Seiten hoch \\(\\tfrac{2}{3}\\) nehmen.",
+        "loesungsweg": "Ausgangsgleichung: \\(x^{3/2} = 8\\). Beide Seiten hoch \\(\\tfrac{2}{3}\\): $$(x^{3/2})^{2/3} = 8^{2/3}$$ Links: \\(x^{(3/2)\\cdot(2/3)} = x^1 = x\\). Rechts: \\(8^{2/3} = (\\sqrt[3]{8})^2 = 2^2 = 4\\). Also: $$x = 4$$ Kontrolle: \\(4^{3/2} = (\\sqrt{4})^3 = 2^3 = 8\\) \\(\\checkmark\\)"
+      },
+      {
+        "id": 34,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Welche Funktion ist die Umkehrfunktion von \\(f(x) = x^3\\)?",
+        "optionen": [
+          "\\(f^{-1}(x) = \\sqrt{x}\\)",
+          "\\(f^{-1}(x) = \\sqrt[3]{x}\\)",
+          "\\(f^{-1}(x) = x^{-3}\\)",
+          "\\(f^{-1}(x) = 3x\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Die Umkehrung des Potenzierens mit \\(n\\) ist das Ziehen der \\(n\\)-ten Wurzel.",
+        "loesungsweg": "Ansatz \\(y = x^3\\), Variablen tauschen: \\(x = y^3\\). Auflösen nach \\(y\\): $$y = \\sqrt[3]{x} = x^{1/3}$$ Die Umkehrfunktion von \\(f(x) = x^3\\) ist also \\(f^{-1}(x) = \\sqrt[3]{x}\\). Diese ist auf ganz \\(\\mathbb{R}\\) definiert, weil man aus jeder reellen Zahl die dritte Wurzel ziehen kann."
+      },
+      {
+        "id": 35,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Ein Würfel hat das Volumen \\(V = 125\\,\\text{cm}^3\\). Die Kantenlänge ist \\(a = V^{1/3}\\). Berechne \\(a\\) in cm.",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "\\(V^{1/3} = \\sqrt[3]{V}\\). Welche Zahl hoch 3 ergibt 125?",
+        "loesungsweg": "Die Kantenlänge ist $$a = V^{1/3} = 125^{1/3} = \\sqrt[3]{125}$$ Wegen \\(5^3 = 125\\) gilt: $$a = 5 \\text{ cm}$$"
+      },
+      {
+        "id": 36,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Vereinfache \\(\\dfrac{x^{5/6} \\cdot x^{1/3}}{x^{1/2}}\\) und gib den Exponenten von \\(x\\) als Dezimalzahl an.",
+        "loesung": 0.6666666666666666,
+        "toleranz": 0.01,
+        "tipp": "Zähler-Exponenten addieren, dann Nenner-Exponenten subtrahieren.",
+        "loesungsweg": "Zähler: \\(x^{5/6} \\cdot x^{1/3} = x^{5/6 + 2/6} = x^{7/6}\\). Dann dividieren: $$\\dfrac{x^{7/6}}{x^{1/2}} = x^{7/6 - 3/6} = x^{4/6} = x^{2/3}$$ Der Exponent ist \\(\\tfrac{2}{3} \\approx 0{,}6667\\)."
+      }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Potenzfunktionen (ganzz. Exp.) - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '10-pot-ganzzahlige-exp';
+    const THEMA_CONFIG = { name: 'Potenzfunktionen (ganzz. Exp.)', bereich: 'analysis' };
+    const AUFGABEN = [
+
+    // ═══════════════════════════════════════════════════════════════
+    // Level 1: Negative Exponenten umschreiben
+    // ═══════════════════════════════════════════════════════════════
+
+    {
+        "id": 1, "level": 1, "typ": "mc",
+        "frage": "Welcher Term ist gleich \\(x^{-2}\\)?",
+        "optionen": ["\\(-x^2\\)", "\\(\\frac{1}{x^2}\\)", "\\(\\frac{1}{2x}\\)", "\\(-\\frac{1}{x^2}\\)"],
+        "korrekt": 1,
+        "tipp": "Definition: \\(x^{-n} = \\frac{1}{x^n}\\) für \\(x \\neq 0\\).",
+        "loesungsweg": "\\(x^{-2} = \\frac{1}{x^2}\\). Ein negativer Exponent bedeutet Kehrwert, nicht Vorzeichenwechsel."
+    },
+    {
+        "id": 2, "level": 1, "typ": "mc",
+        "frage": "Schreibe \\(x^{-3}\\) als Bruch.",
+        "optionen": ["\\(\\frac{1}{x^3}\\)", "\\(\\frac{3}{x}\\)", "\\(-x^3\\)", "\\(\\frac{1}{3x}\\)"],
+        "korrekt": 0,
+        "tipp": "Regel: \\(x^{-n} = \\frac{1}{x^n}\\).",
+        "loesungsweg": "\\(x^{-3} = \\frac{1}{x^3}\\)."
+    },
+    {
+        "id": 3, "level": 1, "typ": "mc",
+        "frage": "Welcher Term entspricht \\(\\frac{1}{x^4}\\)?",
+        "optionen": ["\\(x^4\\)", "\\(x^{1/4}\\)", "\\(x^{-4}\\)", "\\(-x^4\\)"],
+        "korrekt": 2,
+        "tipp": "Umkehrung von \\(x^{-n} = \\frac{1}{x^n}\\).",
+        "loesungsweg": "\\(\\frac{1}{x^4} = x^{-4}\\)."
+    },
+    {
+        "id": 4, "level": 1, "typ": "mc",
+        "frage": "Wie lautet \\(2x^{-1}\\) als Bruch?",
+        "optionen": ["\\(\\frac{1}{2x}\\)", "\\(\\frac{2}{x}\\)", "\\(-2x\\)", "\\(\\frac{x}{2}\\)"],
+        "korrekt": 1,
+        "tipp": "Nur das \\(x\\) bekommt den Kehrwert, der Faktor 2 bleibt oben.",
+        "loesungsweg": "\\(2x^{-1} = 2 \\cdot \\frac{1}{x} = \\frac{2}{x}\\)."
+    },
+    {
+        "id": 5, "level": 1, "typ": "mc",
+        "frage": "Welcher Ausdruck ist gleich \\(\\frac{5}{x^2}\\)?",
+        "optionen": ["\\(5x^2\\)", "\\(5x^{-2}\\)", "\\(\\frac{1}{5x^2}\\)", "\\((5x)^{-2}\\)"],
+        "korrekt": 1,
+        "tipp": "Der Faktor 5 steht vor der Potenz mit negativem Exponenten.",
+        "loesungsweg": "\\(\\frac{5}{x^2} = 5 \\cdot \\frac{1}{x^2} = 5 \\cdot x^{-2} = 5x^{-2}\\)."
+    },
+    {
+        "id": 6, "level": 1, "typ": "mc",
+        "frage": "Welche Umformung ist korrekt?",
+        "optionen": [
+            "\\(x^{-5} = -x^5\\)",
+            "\\(x^{-5} = \\frac{1}{x^5}\\)",
+            "\\(x^{-5} = \\frac{1}{x^{-5}}\\)",
+            "\\(x^{-5} = x^5\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Ein negativer Exponent bildet den Kehrwert.",
+        "loesungsweg": "Nach der Definition gilt \\(x^{-n} = \\frac{1}{x^n}\\), also \\(x^{-5} = \\frac{1}{x^5}\\)."
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // Level 2: Funktionswerte berechnen
+    // ═══════════════════════════════════════════════════════════════
+
+    {
+        "id": 7, "level": 2, "typ": "numerisch",
+        "frage": "Berechne \\(f(2)\\) für \\(f(x) = \\frac{1}{x^2}\\).",
+        "loesung": 0.25,
+        "toleranz": 0.001,
+        "tipp": "Setze \\(x = 2\\) ein: \\(\\frac{1}{2^2}\\).",
+        "loesungsweg": "\\(f(2) = \\frac{1}{2^2} = \\frac{1}{4} = 0{,}25\\)."
+    },
+    {
+        "id": 8, "level": 2, "typ": "numerisch",
+        "frage": "Berechne \\(f(-2)\\) für \\(f(x) = \\frac{1}{x^3}\\).",
+        "loesung": -0.125,
+        "toleranz": 0.001,
+        "tipp": "\\((-2)^3 = -8\\). Danach Kehrwert bilden.",
+        "loesungsweg": "\\(f(-2) = \\frac{1}{(-2)^3} = \\frac{1}{-8} = -0{,}125\\)."
+    },
+    {
+        "id": 9, "level": 2, "typ": "numerisch",
+        "frage": "Berechne \\(f(4)\\) für \\(f(x) = x^{-1}\\).",
+        "loesung": 0.25,
+        "toleranz": 0.001,
+        "tipp": "\\(x^{-1} = \\frac{1}{x}\\).",
+        "loesungsweg": "\\(f(4) = 4^{-1} = \\frac{1}{4} = 0{,}25\\)."
+    },
+    {
+        "id": 10, "level": 2, "typ": "numerisch",
+        "frage": "Berechne \\(f(5)\\) für \\(f(x) = \\frac{1}{x^2}\\). (Runde auf 2 Nachkommastellen.)",
+        "loesung": 0.04,
+        "toleranz": 0.005,
+        "tipp": "\\(5^2 = 25\\), dann Kehrwert.",
+        "loesungsweg": "\\(f(5) = \\frac{1}{5^2} = \\frac{1}{25} = 0{,}04\\)."
+    },
+    {
+        "id": 11, "level": 2, "typ": "numerisch",
+        "frage": "Berechne \\(f(0{,}5)\\) für \\(f(x) = \\frac{1}{x^2}\\).",
+        "loesung": 4,
+        "toleranz": 0.01,
+        "tipp": "\\((0{,}5)^2 = 0{,}25\\). Kehrwert von \\(0{,}25\\) ist …?",
+        "loesungsweg": "\\(f(0{,}5) = \\frac{1}{(0{,}5)^2} = \\frac{1}{0{,}25} = 4\\)."
+    },
+    {
+        "id": 12, "level": 2, "typ": "numerisch",
+        "frage": "Berechne \\(f(-1)\\) für \\(f(x) = \\frac{1}{x^4}\\).",
+        "loesung": 1,
+        "toleranz": 0,
+        "tipp": "\\((-1)^4 = 1\\), weil der Exponent gerade ist.",
+        "loesungsweg": "\\(f(-1) = \\frac{1}{(-1)^4} = \\frac{1}{1} = 1\\)."
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // Level 3: Definitionsbereich und Asymptoten
+    // ═══════════════════════════════════════════════════════════════
+
+    {
+        "id": 13, "level": 3, "typ": "mc",
+        "frage": "Wie lautet der Definitionsbereich von \\(f(x) = \\frac{1}{x^2}\\)?",
+        "optionen": [
+            "\\(\\mathbb{R}\\)",
+            "\\(\\mathbb{R} \\setminus \\{0\\}\\)",
+            "\\(\\mathbb{R}^+\\)",
+            "\\(\\mathbb{R} \\setminus \\{1\\}\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Der Nenner darf nicht 0 sein. Wann ist \\(x^2 = 0\\)?",
+        "loesungsweg": "Der Nenner \\(x^2\\) wird 0 genau dann, wenn \\(x = 0\\). Daher: \\(D = \\mathbb{R} \\setminus \\{0\\}\\)."
+    },
+    {
+        "id": 14, "level": 3, "typ": "mc",
+        "frage": "Welche Asymptoten hat \\(f(x) = \\frac{1}{x}\\)?",
+        "optionen": [
+            "\\(x = 0\\) und \\(y = 0\\)",
+            "\\(x = 1\\) und \\(y = 0\\)",
+            "nur \\(y = 0\\)",
+            "keine Asymptoten"
+        ],
+        "korrekt": 0,
+        "tipp": "Denke an die Standard-Hyperbel. Wo geht der Graph gegen unendlich, wo gegen Null?",
+        "loesungsweg": "Senkrechte Asymptote bei \\(x = 0\\) (Definitionslücke, Pol). Waagerechte Asymptote bei \\(y = 0\\), weil \\(\\frac{1}{x} \\to 0\\) für \\(x \\to \\pm\\infty\\)."
+    },
+    {
+        "id": 15, "level": 3, "typ": "mc",
+        "frage": "Was ist die senkrechte Asymptote von \\(f(x) = \\frac{1}{x^3}\\)?",
+        "optionen": ["\\(x = 1\\)", "\\(x = 0\\)", "\\(x = 3\\)", "\\(x = -3\\)"],
+        "korrekt": 1,
+        "tipp": "Senkrechte Asymptoten entstehen bei Definitionslücken.",
+        "loesungsweg": "Der Nenner \\(x^3\\) wird 0 bei \\(x = 0\\). Dort liegt eine Polstelle und damit die senkrechte Asymptote \\(x = 0\\)."
+    },
+    {
+        "id": 16, "level": 3, "typ": "mc",
+        "frage": "Wo liegt die Definitionslücke von \\(f(x) = x^{-4}\\)?",
+        "optionen": ["\\(x = 4\\)", "\\(x = -4\\)", "\\(x = 0\\)", "keine Definitionslücke"],
+        "korrekt": 2,
+        "tipp": "\\(x^{-4} = \\frac{1}{x^4}\\). Nenner \\(= 0\\)?",
+        "loesungsweg": "\\(f(x) = \\frac{1}{x^4}\\) ist an \\(x = 0\\) nicht definiert."
+    },
+    {
+        "id": 17, "level": 3, "typ": "mc",
+        "frage": "Welche waagerechte Asymptote hat \\(f(x) = \\frac{1}{x^2}\\)?",
+        "optionen": ["\\(y = 1\\)", "\\(y = 0\\)", "\\(y = 2\\)", "keine"],
+        "korrekt": 1,
+        "tipp": "Was passiert mit \\(\\frac{1}{x^2}\\) für \\(x \\to \\pm\\infty\\)?",
+        "loesungsweg": "Für \\(x \\to \\pm\\infty\\) strebt \\(\\frac{1}{x^2} \\to 0\\). Waagerechte Asymptote: \\(y = 0\\)."
+    },
+    {
+        "id": 18, "level": 3, "typ": "mc",
+        "frage": "Welche Aussage über \\(f(x) = \\frac{1}{x^n}\\) mit \\(n \\in \\mathbb{N}\\) ist korrekt?",
+        "optionen": [
+            "Definitionsbereich ist \\(\\mathbb{R}\\)",
+            "Senkrechte Asymptote bei \\(x = n\\)",
+            "Senkrechte Asymptote bei \\(x = 0\\), waagerechte bei \\(y = 0\\)",
+            "Waagerechte Asymptote bei \\(y = n\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Alle Funktionen dieser Familie haben dieselben Asymptoten.",
+        "loesungsweg": "Für alle \\(n \\in \\mathbb{N}\\) gilt: Definitionslücke und senkrechte Asymptote bei \\(x = 0\\), waagerechte Asymptote bei \\(y = 0\\)."
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // Level 4: Grenzwertverhalten
+    // ═══════════════════════════════════════════════════════════════
+
+    {
+        "id": 19, "level": 4, "typ": "mc",
+        "frage": "Was ist \\(\\lim_{x \\to \\infty} \\frac{1}{x^2}\\)?",
+        "optionen": ["\\(+\\infty\\)", "\\(1\\)", "\\(0\\)", "\\(-\\infty\\)"],
+        "korrekt": 2,
+        "tipp": "Je größer \\(x\\), desto kleiner wird der Bruch.",
+        "loesungsweg": "Für \\(x \\to \\infty\\) wird der Nenner beliebig groß, also \\(\\frac{1}{x^2} \\to 0\\)."
+    },
+    {
+        "id": 20, "level": 4, "typ": "mc",
+        "frage": "Was ist \\(\\lim_{x \\to -\\infty} \\frac{1}{x^3}\\)?",
+        "optionen": ["\\(+\\infty\\)", "\\(0\\)", "\\(-\\infty\\)", "\\(1\\)"],
+        "korrekt": 1,
+        "tipp": "Betrachte: \\(x^3 \\to -\\infty\\) für \\(x \\to -\\infty\\), also wird der Kehrwert …",
+        "loesungsweg": "Für \\(x \\to -\\infty\\) gilt \\(x^3 \\to -\\infty\\), also \\(\\frac{1}{x^3} \\to 0\\) (von unten)."
+    },
+    {
+        "id": 21, "level": 4, "typ": "mc",
+        "frage": "Was ist \\(\\lim_{x \\to 0^+} \\frac{1}{x^2}\\)?",
+        "optionen": ["\\(0\\)", "\\(+\\infty\\)", "\\(-\\infty\\)", "\\(1\\)"],
+        "korrekt": 1,
+        "tipp": "Der Nenner wird sehr klein und positiv. Was passiert mit dem Kehrwert?",
+        "loesungsweg": "Für \\(x \\to 0^+\\) wird \\(x^2\\) sehr klein und positiv, also strebt \\(\\frac{1}{x^2} \\to +\\infty\\)."
+    },
+    {
+        "id": 22, "level": 4, "typ": "mc",
+        "frage": "Was ist \\(\\lim_{x \\to 0^-} \\frac{1}{x}\\)?",
+        "optionen": ["\\(+\\infty\\)", "\\(-\\infty\\)", "\\(0\\)", "\\(1\\)"],
+        "korrekt": 1,
+        "tipp": "\\(x\\) nähert sich 0 von links, ist also klein und negativ.",
+        "loesungsweg": "Für \\(x \\to 0^-\\) ist \\(x\\) negativ und betragsmäßig klein, also \\(\\frac{1}{x} \\to -\\infty\\)."
+    },
+    {
+        "id": 23, "level": 4, "typ": "mc",
+        "frage": "Wie verhält sich \\(f(x) = \\frac{1}{x^2}\\) bei Annäherung an \\(x = 0\\) (von beiden Seiten)?",
+        "optionen": [
+            "Links \\(-\\infty\\), rechts \\(+\\infty\\)",
+            "Beidseitig \\(+\\infty\\)",
+            "Beidseitig \\(-\\infty\\)",
+            "Beidseitig \\(0\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "\\(x^2\\) ist immer positiv (außer bei \\(x = 0\\)).",
+        "loesungsweg": "Da \\(x^2 > 0\\) für alle \\(x \\neq 0\\), gilt \\(\\frac{1}{x^2} > 0\\). Für \\(x \\to 0\\) strebt der Wert von beiden Seiten gegen \\(+\\infty\\)."
+    },
+    {
+        "id": 24, "level": 4, "typ": "mc",
+        "frage": "Wie verhält sich \\(f(x) = \\frac{1}{x^3}\\) bei Annäherung an \\(x = 0\\)?",
+        "optionen": [
+            "Beidseitig \\(+\\infty\\)",
+            "Beidseitig \\(-\\infty\\)",
+            "Links \\(-\\infty\\), rechts \\(+\\infty\\)",
+            "Links \\(+\\infty\\), rechts \\(-\\infty\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Ungerader Exponent: \\(x^3\\) hat dasselbe Vorzeichen wie \\(x\\).",
+        "loesungsweg": "Für \\(x \\to 0^-\\) ist \\(x^3 < 0\\), also \\(\\frac{1}{x^3} \\to -\\infty\\). Für \\(x \\to 0^+\\) ist \\(x^3 > 0\\), also \\(\\frac{1}{x^3} \\to +\\infty\\)."
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // Level 5: Verschobene/gestreckte Hyperbeln
+    // ═══════════════════════════════════════════════════════════════
+
+    {
+        "id": 25, "level": 5, "typ": "numerisch",
+        "frage": "Wo liegt die senkrechte Asymptote von \\(f(x) = \\frac{1}{x - 3}\\)? Gib den \\(x\\)-Wert an.",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "Nenner = 0 setzen: \\(x - 3 = 0\\).",
+        "loesungsweg": "\\(x - 3 = 0 \\Rightarrow x = 3\\). Die senkrechte Asymptote ist \\(x = 3\\)."
+    },
+    {
+        "id": 26, "level": 5, "typ": "numerisch",
+        "frage": "Welche waagerechte Asymptote hat \\(f(x) = \\frac{2}{x} + 5\\)? Gib den \\(y\\)-Wert an.",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Die Verschiebung um \\(+5\\) hebt die Asymptote \\(y = 0\\) um 5 Einheiten an.",
+        "loesungsweg": "Für \\(x \\to \\pm\\infty\\) gilt \\(\\frac{2}{x} \\to 0\\), also \\(f(x) \\to 0 + 5 = 5\\). Waagerechte Asymptote: \\(y = 5\\)."
+    },
+    {
+        "id": 27, "level": 5, "typ": "mc",
+        "frage": "Welche Asymptoten hat \\(f(x) = \\frac{1}{x - 2} + 4\\)?",
+        "optionen": [
+            "\\(x = 2\\) und \\(y = 4\\)",
+            "\\(x = -2\\) und \\(y = 4\\)",
+            "\\(x = 2\\) und \\(y = 0\\)",
+            "\\(x = 4\\) und \\(y = 2\\)"
+        ],
+        "korrekt": 0,
+        "tipp": "Form \\(\\frac{a}{x - d} + e\\): senkrechte Asymptote bei \\(x = d\\), waagerechte bei \\(y = e\\).",
+        "loesungsweg": "Nenner null: \\(x - 2 = 0 \\Rightarrow x = 2\\) (senkrechte Asymptote). Für \\(x \\to \\pm\\infty\\): \\(\\frac{1}{x-2} \\to 0\\), also \\(f(x) \\to 4\\) (waagerechte Asymptote \\(y = 4\\))."
+    },
+    {
+        "id": 28, "level": 5, "typ": "numerisch",
+        "frage": "Berechne \\(f(3)\\) für \\(f(x) = \\frac{2}{x - 1} + 1\\).",
+        "loesung": 2,
+        "toleranz": 0,
+        "tipp": "Setze \\(x = 3\\) ein und rechne Schritt für Schritt.",
+        "loesungsweg": "\\(f(3) = \\frac{2}{3 - 1} + 1 = \\frac{2}{2} + 1 = 1 + 1 = 2\\)."
+    },
+    {
+        "id": 29, "level": 5, "typ": "mc",
+        "frage": "Gegeben: \\(f(x) = \\frac{3}{x + 2} - 1\\). Welche Aussage stimmt?",
+        "optionen": [
+            "Senkrechte Asymptote \\(x = 2\\), waagerechte \\(y = 1\\)",
+            "Senkrechte Asymptote \\(x = -2\\), waagerechte \\(y = -1\\)",
+            "Senkrechte Asymptote \\(x = -2\\), waagerechte \\(y = 3\\)",
+            "Senkrechte Asymptote \\(x = 3\\), waagerechte \\(y = -1\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "\\(x + 2 = 0\\) liefert \\(x = -2\\). Die Verschiebung \\(-1\\) zieht die waagerechte Asymptote nach unten.",
+        "loesungsweg": "Nenner null: \\(x + 2 = 0 \\Rightarrow x = -2\\). Für \\(x \\to \\pm\\infty\\): \\(\\frac{3}{x+2} \\to 0\\), also \\(f(x) \\to -1\\). Asymptoten: \\(x = -2\\) und \\(y = -1\\)."
+    },
+    {
+        "id": 30, "level": 5, "typ": "numerisch",
+        "frage": "Bestimme den Definitionsbereich von \\(f(x) = \\frac{5}{x + 4}\\): Welcher \\(x\\)-Wert muss ausgeschlossen werden?",
+        "loesung": -4,
+        "toleranz": 0,
+        "tipp": "Nenner gleich 0 setzen.",
+        "loesungsweg": "\\(x + 4 = 0 \\Rightarrow x = -4\\). Also \\(D = \\mathbb{R} \\setminus \\{-4\\}\\)."
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // Level 6: Textaufgaben (umgekehrte Proportionalität)
+    // ═══════════════════════════════════════════════════════════════
+
+    {
+        "id": 31, "level": 6, "typ": "numerisch",
+        "frage": "Bei konstanter Temperatur gilt für ein Gas das Gesetz \\(p \\cdot V = 120\\) (in passenden Einheiten). Wie groß ist der Druck \\(p\\), wenn \\(V = 4\\)?",
+        "loesung": 30,
+        "toleranz": 0,
+        "tipp": "Löse die Gleichung \\(p \\cdot V = 120\\) nach \\(p\\) auf.",
+        "loesungsweg": "\\(p = \\frac{120}{V} = \\frac{120}{4} = 30\\). Der Druck beträgt 30 Einheiten."
+    },
+    {
+        "id": 32, "level": 6, "typ": "numerisch",
+        "frage": "Ein Gas erfüllt \\(p \\cdot V = 60\\). Bei welchem Volumen \\(V\\) beträgt der Druck \\(p = 12\\)?",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Aus \\(p \\cdot V = 60\\) folgt \\(V = \\frac{60}{p}\\).",
+        "loesungsweg": "\\(V = \\frac{60}{p} = \\frac{60}{12} = 5\\)."
+    },
+    {
+        "id": 33, "level": 6, "typ": "mc",
+        "frage": "Druck \\(p\\) und Volumen \\(V\\) sind bei konstanter Temperatur umgekehrt proportional. Welche Funktionsgleichung beschreibt diesen Zusammenhang?",
+        "optionen": [
+            "\\(p(V) = k \\cdot V\\)",
+            "\\(p(V) = \\frac{k}{V}\\)",
+            "\\(p(V) = V^2\\)",
+            "\\(p(V) = k + V\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Umgekehrte Proportionalität heißt: Produkt ist konstant.",
+        "loesungsweg": "Umgekehrte Proportionalität: \\(p \\cdot V = k\\), also \\(p(V) = \\frac{k}{V}\\). Das ist eine Hyperbel."
+    },
+    {
+        "id": 34, "level": 6, "typ": "numerisch",
+        "frage": "Für ein Gas gilt \\(p(V) = \\frac{200}{V}\\). Verdoppelt man das Volumen von \\(V = 10\\) auf \\(V = 20\\), wie groß ist der neue Druck?",
+        "loesung": 10,
+        "toleranz": 0,
+        "tipp": "Setze \\(V = 20\\) in die Formel ein.",
+        "loesungsweg": "\\(p(20) = \\frac{200}{20} = 10\\). Bei Verdopplung des Volumens halbiert sich der Druck (von 20 auf 10)."
+    },
+    {
+        "id": 35, "level": 6, "typ": "numerisch",
+        "frage": "6 Arbeiter benötigen für eine Aufgabe 12 Stunden. Wie viele Stunden brauchen 8 Arbeiter (bei gleicher Arbeitsleistung)?",
+        "loesung": 9,
+        "toleranz": 0,
+        "tipp": "Umgekehrte Proportionalität: Arbeiter-Anzahl mal Stunden = konstant.",
+        "loesungsweg": "Konstante: \\(6 \\cdot 12 = 72\\) Arbeiterstunden. Für 8 Arbeiter: \\(t = \\frac{72}{8} = 9\\) Stunden."
+    },
+    {
+        "id": 36, "level": 6, "typ": "mc",
+        "frage": "Für ein Gas im Behälter gilt \\(p(V) = \\frac{k}{V}\\). Was passiert mit dem Druck, wenn das Volumen gegen 0 geht (\\(V \\to 0^+\\))?",
+        "optionen": [
+            "Der Druck geht gegen 0",
+            "Der Druck geht gegen \\(+\\infty\\)",
+            "Der Druck bleibt konstant \\(k\\)",
+            "Der Druck wird negativ"
+        ],
+        "korrekt": 1,
+        "tipp": "Kleiner Nenner (positiv) bedeutet sehr großer Bruchwert.",
+        "loesungsweg": "Für \\(V \\to 0^+\\) strebt \\(\\frac{k}{V} \\to +\\infty\\). Physikalisch: Wird ein Gas auf ein sehr kleines Volumen komprimiert, steigt der Druck stark an."
+    }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

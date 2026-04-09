@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exponentialfunktionen - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '10-exp-funktionen';
+    const THEMA_CONFIG = { name: 'Exponentialfunktionen', bereich: 'analysis' };
+    const AUFGABEN = [
+      // ========== LEVEL 1 — babyleicht (6 Aufgaben) ==========
+      {
+        "id": 1,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Berechne \\(f(3)\\) für \\(f(x) = 2^x\\).",
+        "optionen": [
+          "\\(6\\)",
+          "\\(8\\)",
+          "\\(9\\)",
+          "\\(16\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Setze \\(x = 3\\) ein: \\(2^3 = 2 \\cdot 2 \\cdot 2\\).",
+        "loesungsweg": "$$f(3) = 2^3 = 2 \\cdot 2 \\cdot 2 = 8$$"
+      },
+      {
+        "id": 2,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Berechne \\(f(4)\\) für \\(f(x) = 2^x\\).",
+        "loesung": 16,
+        "toleranz": 0,
+        "tipp": "\\(2^4 = 2 \\cdot 2 \\cdot 2 \\cdot 2\\).",
+        "loesungsweg": "$$f(4) = 2^4 = 16$$"
+      },
+      {
+        "id": 3,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Berechne \\(f(0)\\) für \\(f(x) = 5^x\\).",
+        "optionen": [
+          "\\(0\\)",
+          "\\(1\\)",
+          "\\(5\\)",
+          "undefiniert"
+        ],
+        "korrekt": 1,
+        "tipp": "Jede Zahl hoch 0 ergibt 1.",
+        "loesungsweg": "Für jede Basis \\(b \\neq 0\\) gilt \\(b^0 = 1\\). Also: $$f(0) = 5^0 = 1$$"
+      },
+      {
+        "id": 4,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Berechne \\(f(2)\\) für \\(f(x) = 3^x\\).",
+        "loesung": 9,
+        "toleranz": 0,
+        "tipp": "\\(3^2 = 3 \\cdot 3\\).",
+        "loesungsweg": "$$f(2) = 3^2 = 9$$"
+      },
+      {
+        "id": 5,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Berechne \\(f(-1)\\) für \\(f(x) = 2^x\\).",
+        "optionen": [
+          "\\(-2\\)",
+          "\\(0{,}5\\)",
+          "\\(-0{,}5\\)",
+          "\\(2\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Ein negativer Exponent bedeutet Kehrwert: \\(2^{-1} = \\frac{1}{2}\\).",
+        "loesungsweg": "Negativer Exponent = Kehrwert: $$f(-1) = 2^{-1} = \\frac{1}{2^1} = \\frac{1}{2} = 0{,}5$$"
+      },
+      {
+        "id": 6,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Berechne \\(f(3)\\) für \\(f(x) = 10^x\\).",
+        "loesung": 1000,
+        "toleranz": 0,
+        "tipp": "\\(10^3 = 10 \\cdot 10 \\cdot 10\\).",
+        "loesungsweg": "$$f(3) = 10^3 = 1000$$"
+      },
+
+      // ========== LEVEL 2 — leicht (6 Aufgaben) ==========
+      {
+        "id": 7,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Beschreibt \\(f(x) = 3^x\\) Wachstum oder Zerfall?",
+        "optionen": [
+          "Wachstum, weil die Basis größer als 1 ist",
+          "Zerfall, weil die Basis größer als 1 ist",
+          "Wachstum, weil die Basis kleiner als 1 ist",
+          "Es ist weder Wachstum noch Zerfall"
+        ],
+        "korrekt": 0,
+        "tipp": "Für \\(b > 1\\) wächst \\(b^x\\), für \\(0 < b < 1\\) fällt \\(b^x\\).",
+        "loesungsweg": "Die Basis ist \\(b = 3 > 1\\). Daher liegt **exponentielles Wachstum** vor."
+      },
+      {
+        "id": 8,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Beschreibt \\(f(x) = 0{,}5^x\\) Wachstum oder Zerfall?",
+        "optionen": [
+          "Wachstum",
+          "Zerfall",
+          "Konstant",
+          "Lineare Abnahme"
+        ],
+        "korrekt": 1,
+        "tipp": "Ist die Basis zwischen 0 und 1?",
+        "loesungsweg": "Die Basis ist \\(b = 0{,}5\\), also \\(0 < b < 1\\). Daher liegt **exponentieller Zerfall** vor."
+      },
+      {
+        "id": 9,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Welche der folgenden Funktionen beschreibt exponentielles Wachstum?",
+        "optionen": [
+          "\\(f(x) = 0{,}8^x\\)",
+          "\\(f(x) = 0{,}25^x\\)",
+          "\\(f(x) = 1{,}2^x\\)",
+          "\\(f(x) = \\left(\\frac{1}{3}\\right)^x\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Suche die Funktion mit Basis \\(b > 1\\).",
+        "loesungsweg": "Nur \\(f(x) = 1{,}2^x\\) hat eine Basis größer als 1 (\\(1{,}2 > 1\\)). Die anderen haben Basen zwischen 0 und 1 und beschreiben Zerfall."
+      },
+      {
+        "id": 10,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Welche Gerade ist die waagerechte Asymptote von \\(f(x) = 2^x\\)?",
+        "optionen": [
+          "\\(y = 2\\)",
+          "\\(y = 1\\)",
+          "\\(y = 0\\)",
+          "\\(x = 0\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Für \\(x \\to -\\infty\\) nähert sich \\(2^x\\) welchem Wert?",
+        "loesungsweg": "Für \\(x \\to -\\infty\\) gilt \\(2^x \\to 0\\). Der Graph nähert sich der \\(x\\)-Achse. Die waagerechte Asymptote ist \\(y = 0\\)."
+      },
+      {
+        "id": 11,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Durch welchen Punkt verläuft jeder Graph der Form \\(f(x) = b^x\\) (mit \\(b > 0\\))?",
+        "optionen": [
+          "\\((0 \\mid 0)\\)",
+          "\\((0 \\mid 1)\\)",
+          "\\((1 \\mid 0)\\)",
+          "\\((1 \\mid 1)\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Berechne \\(f(0)\\). Was ergibt \\(b^0\\)?",
+        "loesungsweg": "Für jede Basis \\(b > 0\\) gilt: \\(f(0) = b^0 = 1\\). Also verläuft jeder Graph durch \\((0 \\mid 1)\\)."
+      },
+      {
+        "id": 12,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Welche Funktion beschreibt radioaktiven Zerfall?",
+        "optionen": [
+          "\\(f(t) = 100 \\cdot 1{,}05^t\\)",
+          "\\(f(t) = 100 \\cdot 0{,}95^t\\)",
+          "\\(f(t) = 100 + 0{,}95 t\\)",
+          "\\(f(t) = 100 \\cdot t^{0{,}95}\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Zerfall benötigt eine Basis zwischen 0 und 1 in einer Exponentialfunktion.",
+        "loesungsweg": "Zerfall liegt vor, wenn die Basis \\(b\\) einer Exponentialfunktion zwischen 0 und 1 liegt. Nur \\(f(t) = 100 \\cdot 0{,}95^t\\) erfüllt dies (Basis \\(0{,}95 < 1\\))."
+      },
+
+      // ========== LEVEL 3 — mittel (6 Aufgaben) ==========
+      {
+        "id": 13,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Gegeben: \\(f(x) = 5 \\cdot 2^x\\). Bestimme den \\(y\\)-Achsenabschnitt.",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Der \\(y\\)-Achsenabschnitt ist \\(f(0)\\). Bei \\(f(x) = a \\cdot b^x\\) gilt \\(f(0) = a\\).",
+        "loesungsweg": "$$f(0) = 5 \\cdot 2^0 = 5 \\cdot 1 = 5$$ Allgemein: Bei \\(f(x) = a \\cdot b^x\\) ist der \\(y\\)-Achsenabschnitt immer gleich \\(a\\)."
+      },
+      {
+        "id": 14,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Berechne \\(f(2)\\) für \\(f(x) = 3 \\cdot 2^x\\).",
+        "loesung": 12,
+        "toleranz": 0,
+        "tipp": "Erst \\(2^2\\) ausrechnen, dann mit 3 multiplizieren.",
+        "loesungsweg": "$$f(2) = 3 \\cdot 2^2 = 3 \\cdot 4 = 12$$"
+      },
+      {
+        "id": 15,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Der Graph einer Funktion \\(f(x) = a \\cdot b^x\\) schneidet die \\(y\\)-Achse bei \\(y = 7\\) und hat die Basis \\(b = 3\\). Wie lautet die Funktionsgleichung?",
+        "optionen": [
+          "\\(f(x) = 3 \\cdot 7^x\\)",
+          "\\(f(x) = 7 \\cdot 3^x\\)",
+          "\\(f(x) = 7 + 3^x\\)",
+          "\\(f(x) = 21^x\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Der \\(y\\)-Achsenabschnitt entspricht \\(a\\).",
+        "loesungsweg": "Bei \\(f(x) = a \\cdot b^x\\) ist der \\(y\\)-Achsenabschnitt \\(f(0) = a\\). Also \\(a = 7\\) und \\(b = 3\\): $$f(x) = 7 \\cdot 3^x$$"
+      },
+      {
+        "id": 16,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Liegt der Punkt \\(P(2 \\mid 36)\\) auf dem Graphen von \\(f(x) = 4 \\cdot 3^x\\)? Antworte mit 1 für ja, 0 für nein.",
+        "loesung": 1,
+        "toleranz": 0,
+        "tipp": "Setze \\(x = 2\\) in die Funktion ein und vergleiche mit dem \\(y\\)-Wert.",
+        "loesungsweg": "$$f(2) = 4 \\cdot 3^2 = 4 \\cdot 9 = 36$$ Der berechnete Wert stimmt mit dem \\(y\\)-Wert des Punktes überein. **Ja, der Punkt liegt auf dem Graphen.**"
+      },
+      {
+        "id": 17,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Berechne \\(f(3)\\) für \\(f(x) = 2 \\cdot 5^x\\).",
+        "loesung": 250,
+        "toleranz": 0,
+        "tipp": "Erst \\(5^3\\) berechnen, dann mit 2 multiplizieren.",
+        "loesungsweg": "$$f(3) = 2 \\cdot 5^3 = 2 \\cdot 125 = 250$$"
+      },
+      {
+        "id": 18,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Für \\(f(x) = a \\cdot b^x\\) gilt \\(f(0) = 4\\) und \\(f(1) = 12\\). Wie lauten \\(a\\) und \\(b\\)?",
+        "optionen": [
+          "\\(a = 4\\), \\(b = 3\\)",
+          "\\(a = 3\\), \\(b = 4\\)",
+          "\\(a = 4\\), \\(b = 8\\)",
+          "\\(a = 12\\), \\(b = 4\\)"
+        ],
+        "korrekt": 0,
+        "tipp": "Aus \\(f(0) = a\\) folgt \\(a\\). Dann ergibt sich \\(b\\) aus \\(f(1) = a \\cdot b\\).",
+        "loesungsweg": "Aus \\(f(0) = a \\cdot b^0 = a = 4\\) folgt \\(a = 4\\). Aus \\(f(1) = a \\cdot b^1 = 4b = 12\\) folgt \\(b = 3\\). Also: \\(f(x) = 4 \\cdot 3^x\\)."
+      },
+
+      // ========== LEVEL 4 — anspruchsvoll (6 Aufgaben) ==========
+      {
+        "id": 19,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Eine Exponentialfunktion \\(f(x) = a \\cdot b^x\\) hat \\(a = 3\\) und verläuft durch \\(P(2 \\mid 27)\\). Bestimme \\(b\\).",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "Setze den Punkt ein: \\(27 = 3 \\cdot b^2\\). Löse nach \\(b\\) auf.",
+        "loesungsweg": "Einsetzen: $$27 = 3 \\cdot b^2$$ Durch 3 teilen: $$b^2 = 9$$ Wurzel ziehen (\\(b > 0\\)): $$b = 3$$"
+      },
+      {
+        "id": 20,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Eine Exponentialfunktion \\(f(x) = a \\cdot b^x\\) hat \\(a = 5\\) und verläuft durch \\(P(3 \\mid 40)\\). Bestimme \\(b\\).",
+        "loesung": 2,
+        "toleranz": 0,
+        "tipp": "\\(40 = 5 \\cdot b^3 \\Rightarrow b^3 = 8\\). Welche Zahl hoch 3 ergibt 8?",
+        "loesungsweg": "Einsetzen: $$40 = 5 \\cdot b^3$$ Durch 5 teilen: $$b^3 = 8$$ Dritte Wurzel: $$b = \\sqrt[3]{8} = 2$$"
+      },
+      {
+        "id": 21,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Eine Exponentialfunktion \\(f(x) = a \\cdot b^x\\) hat \\(a = 100\\) und verläuft durch \\(P(2 \\mid 25)\\). Bestimme \\(b\\).",
+        "loesung": 0.5,
+        "toleranz": 0.01,
+        "tipp": "\\(25 = 100 \\cdot b^2\\). Berechne \\(b^2\\) und ziehe die Wurzel.",
+        "loesungsweg": "Einsetzen: $$25 = 100 \\cdot b^2$$ Durch 100 teilen: $$b^2 = 0{,}25$$ Wurzel ziehen: $$b = 0{,}5$$ Es liegt also Zerfall vor."
+      },
+      {
+        "id": 22,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Für \\(f(x) = a \\cdot b^x\\) gilt \\(f(0) = 2\\) und \\(f(3) = 16\\). Wie lautet \\(b\\)?",
+        "optionen": [
+          "\\(b = 2\\)",
+          "\\(b = 4\\)",
+          "\\(b = 8\\)",
+          "\\(b = \\sqrt{8}\\)"
+        ],
+        "korrekt": 0,
+        "tipp": "Erst \\(a = f(0) = 2\\). Dann \\(2 \\cdot b^3 = 16\\).",
+        "loesungsweg": "Aus \\(f(0) = a = 2\\). Einsetzen des zweiten Punktes: $$2 \\cdot b^3 = 16 \\Rightarrow b^3 = 8 \\Rightarrow b = 2$$"
+      },
+      {
+        "id": 23,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Eine Exponentialfunktion \\(f(x) = a \\cdot b^x\\) hat \\(a = 2\\) und verläuft durch \\(P(4 \\mid 162)\\). Bestimme \\(b\\).",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "\\(162 = 2 \\cdot b^4 \\Rightarrow b^4 = 81\\). Welche Zahl hoch 4 ergibt 81?",
+        "loesungsweg": "Einsetzen: $$162 = 2 \\cdot b^4$$ Durch 2 teilen: $$b^4 = 81$$ Vierte Wurzel: $$b = \\sqrt[4]{81} = 3$$ (da \\(3^4 = 81\\))"
+      },
+      {
+        "id": 24,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Der Graph von \\(f(x) = a \\cdot b^x\\) verläuft durch \\(P_1(0 \\mid 8)\\) und \\(P_2(2 \\mid 2)\\). Bestimme \\(b\\).",
+        "loesung": 0.5,
+        "toleranz": 0.01,
+        "tipp": "Aus \\(P_1\\) folgt \\(a = 8\\). Dann: \\(2 = 8 \\cdot b^2\\).",
+        "loesungsweg": "Aus \\(f(0) = a = 8\\). Zweiten Punkt einsetzen: $$2 = 8 \\cdot b^2 \\Rightarrow b^2 = \\frac{1}{4} \\Rightarrow b = \\frac{1}{2} = 0{,}5$$"
+      },
+
+      // ========== LEVEL 5 — schwer (6 Aufgaben) ==========
+      {
+        "id": 25,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Gegeben: \\(f(x) = 2^x + 3\\). Bestimme den \\(y\\)-Wert der waagerechten Asymptote.",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "Für \\(x \\to -\\infty\\) geht \\(2^x \\to 0\\). Was bleibt übrig?",
+        "loesungsweg": "Für \\(x \\to -\\infty\\) strebt \\(2^x \\to 0\\). Daher: $$f(x) \\to 0 + 3 = 3$$ Die waagerechte Asymptote ist \\(y = 3\\)."
+      },
+      {
+        "id": 26,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Wie lautet die waagerechte Asymptote von \\(f(x) = 3 \\cdot 0{,}5^x - 2\\)?",
+        "optionen": [
+          "\\(y = 3\\)",
+          "\\(y = 0\\)",
+          "\\(y = -2\\)",
+          "\\(y = 0{,}5\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Bei \\(f(x) = a \\cdot b^x + c\\) ist die Asymptote immer \\(y = c\\).",
+        "loesungsweg": "Für \\(x \\to \\infty\\) gilt \\(0{,}5^x \\to 0\\), also \\(3 \\cdot 0{,}5^x \\to 0\\). Damit: \\(f(x) \\to 0 - 2 = -2\\). Die waagerechte Asymptote ist \\(y = -2\\)."
+      },
+      {
+        "id": 27,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Berechne \\(f(2)\\) für \\(f(x) = 3 \\cdot 2^x - 5\\).",
+        "loesung": 7,
+        "toleranz": 0,
+        "tipp": "Erst \\(2^2 = 4\\), dann mit 3 multiplizieren und 5 abziehen.",
+        "loesungsweg": "$$f(2) = 3 \\cdot 2^2 - 5 = 3 \\cdot 4 - 5 = 12 - 5 = 7$$"
+      },
+      {
+        "id": 28,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Der Graph von \\(f(x) = 2^x + c\\) hat die waagerechte Asymptote \\(y = -4\\). Bestimme \\(c\\).",
+        "loesung": -4,
+        "toleranz": 0,
+        "tipp": "Bei \\(f(x) = b^x + c\\) ist die Asymptote \\(y = c\\).",
+        "loesungsweg": "Für \\(x \\to -\\infty\\) gilt \\(2^x \\to 0\\), also \\(f(x) \\to c\\). Da die Asymptote \\(y = -4\\) ist, folgt: $$c = -4$$"
+      },
+      {
+        "id": 29,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Berechne den \\(y\\)-Achsenabschnitt von \\(f(x) = 4 \\cdot 3^x - 1\\).",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "Der \\(y\\)-Achsenabschnitt ist \\(f(0)\\). Bedenke: \\(3^0 = 1\\).",
+        "loesungsweg": "$$f(0) = 4 \\cdot 3^0 - 1 = 4 \\cdot 1 - 1 = 4 - 1 = 3$$"
+      },
+      {
+        "id": 30,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Welche Eigenschaften hat der Graph von \\(f(x) = 2 \\cdot 0{,}5^x + 3\\)?",
+        "optionen": [
+          "Fallend; Asymptote \\(y = 3\\); \\(y\\)-Achsenabschnitt 5",
+          "Steigend; Asymptote \\(y = 0\\); \\(y\\)-Achsenabschnitt 2",
+          "Fallend; Asymptote \\(y = 0\\); \\(y\\)-Achsenabschnitt 3",
+          "Steigend; Asymptote \\(y = 3\\); \\(y\\)-Achsenabschnitt 5"
+        ],
+        "korrekt": 0,
+        "tipp": "Basis \\(0{,}5 < 1\\) bedeutet Zerfall. Asymptote = \\(c\\). \\(f(0) = a + c\\).",
+        "loesungsweg": "Basis \\(0{,}5 < 1 \\Rightarrow\\) fallend (Zerfall). Asymptote: \\(y = 3\\) (da \\(c = 3\\)). \\(y\\)-Achsenabschnitt: $$f(0) = 2 \\cdot 0{,}5^0 + 3 = 2 + 3 = 5$$"
+      },
+
+      // ========== LEVEL 6 — Experte (6 Aufgaben) ==========
+      {
+        "id": 31,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Eine Bakterienkultur startet mit 100 Bakterien und verdoppelt sich stündlich. Wie viele Bakterien gibt es nach 4 Stunden? (Formel: \\(N(t) = 100 \\cdot 2^t\\))",
+        "loesung": 1600,
+        "toleranz": 0,
+        "tipp": "Setze \\(t = 4\\) in \\(N(t) = 100 \\cdot 2^t\\) ein.",
+        "loesungsweg": "$$N(4) = 100 \\cdot 2^4 = 100 \\cdot 16 = 1600$$ Nach 4 Stunden gibt es **1600 Bakterien**."
+      },
+      {
+        "id": 32,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Ein Kapital von 1000 € wird mit 5 % jährlich verzinst (Zinseszins). Wie hoch ist das Kapital nach 2 Jahren? (Formel: \\(K(t) = 1000 \\cdot 1{,}05^t\\))",
+        "loesung": 1102.5,
+        "toleranz": 0.01,
+        "tipp": "Berechne \\(1{,}05^2\\) und multipliziere mit 1000.",
+        "loesungsweg": "$$K(2) = 1000 \\cdot 1{,}05^2 = 1000 \\cdot 1{,}1025 = 1102{,}50$$ Nach 2 Jahren beträgt das Kapital **1102,50 €**."
+      },
+      {
+        "id": 33,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Ein radioaktives Präparat zerfällt mit \\(N(t) = 80 \\cdot 0{,}5^t\\) (in Gramm, \\(t\\) in Halbwertszeiten). Wie viel Gramm sind nach 3 Halbwertszeiten übrig?",
+        "loesung": 10,
+        "toleranz": 0,
+        "tipp": "\\(0{,}5^3 = \\frac{1}{8}\\). Berechne dann \\(80 \\cdot \\frac{1}{8}\\).",
+        "loesungsweg": "$$N(3) = 80 \\cdot 0{,}5^3 = 80 \\cdot \\frac{1}{8} = 10$$ Nach 3 Halbwertszeiten sind noch **10 g** übrig."
+      },
+      {
+        "id": 34,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Eine Bakterienkultur wird durch \\(N(t) = 50 \\cdot 3^t\\) beschrieben (\\(t\\) in Stunden). Nach wie vielen Stunden sind 450 Bakterien vorhanden?",
+        "loesung": 2,
+        "toleranz": 0,
+        "tipp": "Setze \\(N(t) = 450\\) und löse: \\(3^t = 9\\). Welche Potenz von 3 ergibt 9?",
+        "loesungsweg": "Gleichung aufstellen: $$50 \\cdot 3^t = 450$$ Durch 50 teilen: $$3^t = 9$$ Da \\(3^2 = 9\\), folgt \\(t = 2\\). Nach **2 Stunden** sind es 450 Bakterien. (Bei komplexeren Aufgaben benötigt man den Logarithmus: \\(t = \\log_3 9\\).)"
+      },
+      {
+        "id": 35,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Ein Auto ist heute 20.000 € wert und verliert jährlich 20 % an Wert. Wie viel ist es nach 2 Jahren wert? (Formel: \\(W(t) = 20000 \\cdot 0{,}8^t\\))",
+        "loesung": 12800,
+        "toleranz": 0.01,
+        "tipp": "\\(0{,}8^2 = 0{,}64\\). Dann mit 20000 multiplizieren.",
+        "loesungsweg": "Bei jährlichem Wertverlust von 20 % bleiben jeweils 80 % übrig, also Basis \\(b = 0{,}8\\). $$W(2) = 20000 \\cdot 0{,}8^2 = 20000 \\cdot 0{,}64 = 12800$$ Das Auto ist nach 2 Jahren **12.800 €** wert."
+      },
+      {
+        "id": 36,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Eine Population wächst gemäß \\(N(t) = 200 \\cdot b^t\\). Nach 3 Jahren beträgt sie 1600 Individuen. Bestimme die Wachstumsbasis \\(b\\).",
+        "loesung": 2,
+        "toleranz": 0.01,
+        "tipp": "\\(1600 = 200 \\cdot b^3 \\Rightarrow b^3 = 8\\). Ziehe die dritte Wurzel.",
+        "loesungsweg": "Gleichung aufstellen: $$200 \\cdot b^3 = 1600$$ Durch 200 teilen: $$b^3 = 8$$ Dritte Wurzel ziehen: $$b = \\sqrt[3]{8} = 2$$ Die Population verdoppelt sich also jährlich (\\(b = 2\\), d. h. +100 % pro Jahr)."
+      }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

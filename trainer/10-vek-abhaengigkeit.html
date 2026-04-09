@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lineare Abhängigkeit - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #70AD47; --spirale-secondary: #548235; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '10-vek-abhaengigkeit';
+    const THEMA_CONFIG = { name: 'Lineare (Un)Abhängigkeit', bereich: 'geometrie' };
+    const AUFGABEN = [
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 1 — Begriff: Vielfaches eines Vektors erkennen
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 1, level: 1, typ: "numerisch",
+        frage: "Mit welchem Faktor \\(k\\) muss \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\end{pmatrix}\\) multipliziert werden, um \\(\\vec{b} = \\begin{pmatrix} 3 \\\\ 6 \\end{pmatrix}\\) zu erhalten?",
+        loesung: 3, toleranz: 0,
+        tipp: "Vergleiche die erste Komponente: \\(1 \\cdot k = 3\\). Prüfe dann die zweite Komponente mit diesem \\(k\\).",
+        loesungsweg: "Aus \\(1 \\cdot k = 3\\) folgt \\(k = 3\\). Kontrolle: \\(2 \\cdot 3 = 6\\) ✓. Also \\(\\vec{b} = 3\\vec{a}\\)."
+    },
+    {
+        id: 2, level: 1, typ: "numerisch",
+        frage: "Mit welchem Faktor \\(k\\) muss \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ -3 \\end{pmatrix}\\) multipliziert werden, um \\(\\vec{b} = \\begin{pmatrix} 4 \\\\ -6 \\end{pmatrix}\\) zu erhalten?",
+        loesung: 2, toleranz: 0,
+        tipp: "Erste Komponente: \\(2k = 4\\).",
+        loesungsweg: "Aus \\(2k = 4\\) folgt \\(k = 2\\). Kontrolle: \\((-3) \\cdot 2 = -6\\) ✓. Also \\(\\vec{b} = 2\\vec{a}\\)."
+    },
+    {
+        id: 3, level: 1, typ: "mc",
+        frage: "Welcher der folgenden Vektoren ist ein Vielfaches von \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ 5 \\end{pmatrix}\\)?",
+        optionen: [
+            "\\(\\begin{pmatrix} 4 \\\\ 10 \\end{pmatrix}\\)",
+            "\\(\\begin{pmatrix} 4 \\\\ 7 \\end{pmatrix}\\)",
+            "\\(\\begin{pmatrix} 3 \\\\ 5 \\end{pmatrix}\\)",
+            "\\(\\begin{pmatrix} 5 \\\\ 2 \\end{pmatrix}\\)"
+        ],
+        korrekt: 0,
+        tipp: "Suche einen Vektor, der durch Multiplikation mit einer Zahl aus \\(\\vec{a}\\) entsteht.",
+        loesungsweg: "\\(\\begin{pmatrix} 4 \\\\ 10 \\end{pmatrix} = 2 \\cdot \\begin{pmatrix} 2 \\\\ 5 \\end{pmatrix}\\). Beide Komponenten wurden mit dem gleichen Faktor \\(2\\) multipliziert."
+    },
+    {
+        id: 4, level: 1, typ: "numerisch",
+        frage: "Mit welchem Faktor \\(k\\) muss \\(\\vec{a} = \\begin{pmatrix} 3 \\\\ 4 \\end{pmatrix}\\) multipliziert werden, um \\(\\vec{b} = \\begin{pmatrix} -6 \\\\ -8 \\end{pmatrix}\\) zu erhalten?",
+        loesung: -2, toleranz: 0,
+        tipp: "\\(3k = -6\\) liefert ein negatives \\(k\\).",
+        loesungsweg: "Aus \\(3k = -6\\) folgt \\(k = -2\\). Kontrolle: \\(4 \\cdot (-2) = -8\\) ✓. Also \\(\\vec{b} = -2\\vec{a}\\)."
+    },
+    {
+        id: 5, level: 1, typ: "mc",
+        frage: "Welche Aussage ist richtig? Zwei Vektoren \\(\\vec{a}\\) und \\(\\vec{b}\\) heißen kollinear, wenn …",
+        optionen: [
+            "… es eine Zahl \\(k\\) gibt mit \\(\\vec{b} = k \\cdot \\vec{a}\\).",
+            "… sie gleich lang sind.",
+            "… ihre Summe der Nullvektor ist.",
+            "… sie senkrecht aufeinander stehen."
+        ],
+        korrekt: 0,
+        tipp: "Kollinear bedeutet: parallel oder antiparallel — also auf einer gemeinsamen Geraden.",
+        loesungsweg: "Zwei Vektoren sind kollinear (linear abhängig), wenn der eine ein Vielfaches des anderen ist: \\(\\vec{b} = k \\cdot \\vec{a}\\)."
+    },
+    {
+        id: 6, level: 1, typ: "numerisch",
+        frage: "Mit welchem Faktor \\(k\\) muss \\(\\vec{a} = \\begin{pmatrix} 4 \\\\ 6 \\end{pmatrix}\\) multipliziert werden, um \\(\\vec{b} = \\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix}\\) zu erhalten?",
+        loesung: 0.5, toleranz: 0.01,
+        tipp: "\\(4k = 2\\) ergibt einen Bruch.",
+        loesungsweg: "Aus \\(4k = 2\\) folgt \\(k = \\tfrac{1}{2} = 0{,}5\\). Kontrolle: \\(6 \\cdot 0{,}5 = 3\\) ✓. Also \\(\\vec{b} = \\tfrac{1}{2}\\vec{a}\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 2 — Zwei Vektoren im R²: kollinear ja/nein
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 7, level: 2, typ: "mc",
+        frage: "Sind die Vektoren \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 2 \\\\ 4 \\end{pmatrix}\\) linear abhängig?",
+        optionen: [
+            "Ja, denn \\(\\vec{b} = 2\\vec{a}\\).",
+            "Nein, denn sie zeigen in verschiedene Richtungen.",
+            "Ja, denn sie haben verschiedene Längen.",
+            "Nein, denn die Komponenten sind verschieden."
+        ],
+        korrekt: 0,
+        tipp: "Prüfe, ob ein gemeinsamer Faktor existiert: \\(2/1 = 2\\) und \\(4/2 = 2\\).",
+        loesungsweg: "\\(\\tfrac{2}{1} = 2\\) und \\(\\tfrac{4}{2} = 2\\). Die Verhältnisse sind gleich, also \\(\\vec{b} = 2\\vec{a}\\) — die Vektoren sind linear abhängig (kollinear)."
+    },
+    {
+        id: 8, level: 2, typ: "mc",
+        frage: "Sind die Vektoren \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 3 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 2 \\\\ 5 \\end{pmatrix}\\) linear abhängig?",
+        optionen: [
+            "Ja, beide sind Vielfache voneinander.",
+            "Nein, denn \\(\\tfrac{2}{1} \\neq \\tfrac{5}{3}\\).",
+            "Ja, weil beide Komponenten positiv sind.",
+            "Das lässt sich nicht entscheiden."
+        ],
+        korrekt: 1,
+        tipp: "Bilde die Verhältnisse der Komponenten und vergleiche.",
+        loesungsweg: "\\(\\tfrac{2}{1} = 2\\), aber \\(\\tfrac{5}{3} \\approx 1{,}67\\). Die Verhältnisse sind verschieden, also gibt es kein \\(k\\) mit \\(\\vec{b} = k\\vec{a}\\). Die Vektoren sind linear unabhängig."
+    },
+    {
+        id: 9, level: 2, typ: "mc",
+        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 3 \\\\ -6 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} -1 \\\\ 2 \\end{pmatrix}\\) linear abhängig?",
+        optionen: [
+            "Ja, \\(\\vec{a} = -3\\vec{b}\\).",
+            "Nein, unterschiedliche Vorzeichen.",
+            "Ja, \\(\\vec{a} = 3\\vec{b}\\).",
+            "Nein, es gibt keinen gemeinsamen Faktor."
+        ],
+        korrekt: 0,
+        tipp: "Teste \\(k = -3\\): \\(-3 \\cdot (-1) = 3\\) und \\(-3 \\cdot 2 = -6\\).",
+        loesungsweg: "\\(-3 \\cdot \\vec{b} = -3 \\cdot \\begin{pmatrix} -1 \\\\ 2 \\end{pmatrix} = \\begin{pmatrix} 3 \\\\ -6 \\end{pmatrix} = \\vec{a}\\) ✓. Die Vektoren sind linear abhängig."
+    },
+    {
+        id: 10, level: 2, typ: "mc",
+        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 4 \\\\ 6 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 6 \\\\ 9 \\end{pmatrix}\\) linear abhängig?",
+        optionen: [
+            "Ja, denn \\(\\vec{b} = \\tfrac{3}{2}\\vec{a}\\).",
+            "Nein, es gibt keinen passenden Faktor.",
+            "Ja, denn \\(\\vec{b} = 2\\vec{a}\\).",
+            "Nein, die Verhältnisse sind ungleich."
+        ],
+        korrekt: 0,
+        tipp: "\\(\\tfrac{6}{4} = \\tfrac{3}{2}\\). Prüfe, ob dies auch für die zweite Komponente stimmt.",
+        loesungsweg: "\\(\\tfrac{6}{4} = \\tfrac{3}{2}\\) und \\(\\tfrac{9}{6} = \\tfrac{3}{2}\\). Die Verhältnisse stimmen überein, also \\(\\vec{b} = \\tfrac{3}{2}\\vec{a}\\) — linear abhängig."
+    },
+    {
+        id: 11, level: 2, typ: "mc",
+        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ 5 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 4 \\\\ 9 \\end{pmatrix}\\) linear abhängig?",
+        optionen: [
+            "Ja, \\(\\vec{b} = 2\\vec{a}\\).",
+            "Nein, \\(\\tfrac{4}{2} = 2\\), aber \\(\\tfrac{9}{5} \\neq 2\\).",
+            "Ja, beide zeigen in die erste Quadrant-Richtung.",
+            "Das hängt vom Koordinatensystem ab."
+        ],
+        korrekt: 1,
+        tipp: "Teste den Faktor \\(k = 2\\) aus der ersten Komponente an der zweiten.",
+        loesungsweg: "Aus \\(2k = 4\\) folgt \\(k = 2\\). Aber: \\(5 \\cdot 2 = 10 \\neq 9\\). Der Faktor stimmt nicht in beiden Komponenten — die Vektoren sind linear unabhängig."
+    },
+    {
+        id: 12, level: 2, typ: "numerisch",
+        frage: "Für welchen Wert von \\(t\\) sind \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 6 \\\\ t \\end{pmatrix}\\) linear abhängig?",
+        loesung: 9, toleranz: 0,
+        tipp: "Aus \\(\\vec{b} = k\\vec{a}\\) mit der ersten Komponente \\(2k = 6\\) folgt \\(k = 3\\). Dann muss \\(t = 3 \\cdot 3\\) sein.",
+        loesungsweg: "\\(2k = 6 \\Rightarrow k = 3\\). Für lineare Abhängigkeit muss auch \\(t = 3 \\cdot k = 3 \\cdot 3 = 9\\) gelten. Also \\(t = 9\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 3 — Zwei Vektoren im R³: kollinear prüfen, Faktor finden
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 13, level: 3, typ: "numerisch",
+        frage: "Welcher Faktor \\(k\\) erfüllt \\(\\vec{b} = k\\vec{a}\\) für \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 2 \\\\ 4 \\\\ 6 \\end{pmatrix}\\)?",
+        loesung: 2, toleranz: 0,
+        tipp: "Teste denselben Faktor in allen drei Komponenten.",
+        loesungsweg: "\\(\\tfrac{2}{1} = 2\\), \\(\\tfrac{4}{2} = 2\\), \\(\\tfrac{6}{3} = 2\\). In allen drei Komponenten ist der Faktor \\(k = 2\\) — die Vektoren sind linear abhängig."
+    },
+    {
+        id: 14, level: 3, typ: "mc",
+        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ -2 \\\\ 3 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} -3 \\\\ 6 \\\\ -9 \\end{pmatrix}\\) linear abhängig?",
+        optionen: [
+            "Ja, \\(\\vec{b} = -3\\vec{a}\\).",
+            "Nein, die Vorzeichen passen nicht.",
+            "Ja, \\(\\vec{b} = 3\\vec{a}\\).",
+            "Nein, kein gemeinsamer Faktor."
+        ],
+        korrekt: 0,
+        tipp: "Teste \\(k = -3\\).",
+        loesungsweg: "\\(-3 \\cdot \\begin{pmatrix} 1 \\\\ -2 \\\\ 3 \\end{pmatrix} = \\begin{pmatrix} -3 \\\\ 6 \\\\ -9 \\end{pmatrix} = \\vec{b}\\) ✓. Die Vektoren sind linear abhängig mit \\(k = -3\\)."
+    },
+    {
+        id: 15, level: 3, typ: "mc",
+        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ 1 \\\\ 4 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 4 \\\\ 2 \\\\ 6 \\end{pmatrix}\\) linear abhängig?",
+        optionen: [
+            "Ja, \\(\\vec{b} = 2\\vec{a}\\).",
+            "Nein, die dritte Komponente passt nicht (\\(4 \\cdot 2 = 8 \\neq 6\\)).",
+            "Ja, alle Komponenten sind gerade.",
+            "Kann man nicht entscheiden."
+        ],
+        korrekt: 1,
+        tipp: "Aus den ersten beiden Komponenten ergibt sich \\(k = 2\\). Prüfe die dritte.",
+        loesungsweg: "Mit \\(k = 2\\): erste \\(2 \\cdot 2 = 4\\) ✓, zweite \\(1 \\cdot 2 = 2\\) ✓, dritte \\(4 \\cdot 2 = 8 \\neq 6\\) ✗. Kein einheitlicher Faktor — linear unabhängig."
+    },
+    {
+        id: 16, level: 3, typ: "numerisch",
+        frage: "Welcher Faktor \\(k\\) erfüllt \\(\\vec{b} = k\\vec{a}\\) für \\(\\vec{a} = \\begin{pmatrix} 3 \\\\ -6 \\\\ 9 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 1 \\\\ -2 \\\\ 3 \\end{pmatrix}\\)?",
+        loesung: 0.3333, toleranz: 0.01,
+        tipp: "\\(3k = 1\\) ergibt einen Bruch. Gib die Dezimalzahl ein (ca. 0{,}33).",
+        loesungsweg: "Aus \\(3k = 1\\) folgt \\(k = \\tfrac{1}{3} \\approx 0{,}33\\). Kontrolle: \\(-6 \\cdot \\tfrac{1}{3} = -2\\) ✓, \\(9 \\cdot \\tfrac{1}{3} = 3\\) ✓. Also \\(\\vec{b} = \\tfrac{1}{3}\\vec{a}\\)."
+    },
+    {
+        id: 17, level: 3, typ: "numerisch",
+        frage: "Für welchen Wert von \\(t\\) sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 4 \\\\ 8 \\\\ t \\end{pmatrix}\\) linear abhängig?",
+        loesung: 12, toleranz: 0,
+        tipp: "Der Faktor muss aus den ersten beiden Komponenten ablesbar sein.",
+        loesungsweg: "Aus \\(1 \\cdot k = 4\\) folgt \\(k = 4\\). Kontrolle zweite: \\(2 \\cdot 4 = 8\\) ✓. Für lineare Abhängigkeit muss \\(t = 3 \\cdot 4 = 12\\) gelten."
+    },
+    {
+        id: 18, level: 3, typ: "mc",
+        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ 4 \\\\ -2 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} -3 \\\\ -6 \\\\ 3 \\end{pmatrix}\\) linear abhängig?",
+        optionen: [
+            "Ja, \\(\\vec{b} = -\\tfrac{3}{2}\\vec{a}\\).",
+            "Nein, Vorzeichenwechsel verhindern Abhängigkeit.",
+            "Ja, \\(\\vec{b} = -\\tfrac{2}{3}\\vec{a}\\).",
+            "Nein, die dritte Komponente passt nicht."
+        ],
+        korrekt: 0,
+        tipp: "Teste \\(k = -\\tfrac{3}{2}\\).",
+        loesungsweg: "\\(-\\tfrac{3}{2} \\cdot 2 = -3\\) ✓, \\(-\\tfrac{3}{2} \\cdot 4 = -6\\) ✓, \\(-\\tfrac{3}{2} \\cdot (-2) = 3\\) ✓. Also \\(\\vec{b} = -\\tfrac{3}{2}\\vec{a}\\) — linear abhängig."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 4 — Drei Vektoren im R²: immer linear abhängig
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 19, level: 4, typ: "mc",
+        frage: "Warum sind drei Vektoren im \\(\\mathbb{R}^2\\) immer linear abhängig?",
+        optionen: [
+            "Weil die Ebene nur zwei unabhängige Richtungen besitzt.",
+            "Weil ihre Summe der Nullvektor ist.",
+            "Weil sie sich in einem Punkt schneiden.",
+            "Weil sie gleich lang sein müssen."
+        ],
+        korrekt: 0,
+        tipp: "Denke daran, wie viele Basisvektoren die Ebene aufspannen.",
+        loesungsweg: "Die Ebene \\(\\mathbb{R}^2\\) wird von 2 Basisvektoren (z.B. \\(\\vec{e}_1, \\vec{e}_2\\)) aufgespannt. Jeder weitere Vektor lässt sich als Linearkombination dieser beiden darstellen — drei Vektoren in \\(\\mathbb{R}^2\\) sind also stets linear abhängig."
+    },
+    {
+        id: 20, level: 4, typ: "mc",
+        frage: "Sind die drei Vektoren \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 1 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix}\\) linear abhängig?",
+        optionen: [
+            "Ja, denn \\(\\vec{c} = 2\\vec{a} + 3\\vec{b}\\).",
+            "Nein, keine zwei sind Vielfache voneinander.",
+            "Ja, denn alle haben positive Einträge.",
+            "Nein, \\(\\vec{a}\\) und \\(\\vec{b}\\) sind orthogonal."
+        ],
+        korrekt: 0,
+        tipp: "Drei Vektoren im \\(\\mathbb{R}^2\\) sind immer linear abhängig — drücke \\(\\vec{c}\\) mit \\(\\vec{a}\\) und \\(\\vec{b}\\) aus.",
+        loesungsweg: "\\(2 \\cdot \\begin{pmatrix} 1 \\\\ 0 \\end{pmatrix} + 3 \\cdot \\begin{pmatrix} 0 \\\\ 1 \\end{pmatrix} = \\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix} = \\vec{c}\\). Die drei Vektoren sind linear abhängig."
+    },
+    {
+        id: 21, level: 4, typ: "mc",
+        frage: "Welche Aussage ist für drei beliebige Vektoren im \\(\\mathbb{R}^2\\) immer wahr?",
+        optionen: [
+            "Sie sind linear abhängig.",
+            "Sie sind linear unabhängig, wenn keine zwei gleich sind.",
+            "Sie spannen den Raum \\(\\mathbb{R}^3\\) auf.",
+            "Sie bilden ein Dreieck."
+        ],
+        korrekt: 0,
+        tipp: "Die Dimension des \\(\\mathbb{R}^2\\) beträgt 2.",
+        loesungsweg: "Die maximale Anzahl linear unabhängiger Vektoren im \\(\\mathbb{R}^2\\) ist 2. Jede Menge mit drei oder mehr Vektoren im \\(\\mathbb{R}^2\\) ist daher linear abhängig."
+    },
+    {
+        id: 22, level: 4, typ: "numerisch",
+        frage: "Stelle \\(\\vec{c} = \\begin{pmatrix} 5 \\\\ 4 \\end{pmatrix}\\) als \\(r \\cdot \\begin{pmatrix} 1 \\\\ 0 \\end{pmatrix} + s \\cdot \\begin{pmatrix} 0 \\\\ 1 \\end{pmatrix}\\) dar. Wie groß ist \\(r\\)?",
+        loesung: 5, toleranz: 0,
+        tipp: "Vergleiche die Komponenten: \\(r \\cdot 1 + s \\cdot 0 = 5\\).",
+        loesungsweg: "Die erste Komponente liefert \\(r = 5\\), die zweite \\(s = 4\\). Also \\(\\vec{c} = 5\\vec{e}_1 + 4\\vec{e}_2\\) — die drei Vektoren sind linear abhängig."
+    },
+    {
+        id: 23, level: 4, typ: "mc",
+        frage: "Welche Menge von Vektoren ist im \\(\\mathbb{R}^2\\) \\(\\underline{\\text{sicher}}\\) linear abhängig?",
+        optionen: [
+            "\\(\\{\\vec{a}, \\vec{b}, \\vec{c}\\}\\) mit drei beliebigen Vektoren im \\(\\mathbb{R}^2\\).",
+            "\\(\\{\\vec{a}, \\vec{b}\\}\\) mit \\(\\vec{a} \\neq \\vec{b}\\).",
+            "\\(\\{\\vec{a}\\}\\) mit \\(\\vec{a} \\neq \\vec{0}\\).",
+            "\\(\\{\\vec{e}_1, \\vec{e}_2\\}\\)."
+        ],
+        korrekt: 0,
+        tipp: "Ab wie vielen Vektoren ist die lineare Abhängigkeit im \\(\\mathbb{R}^2\\) automatisch?",
+        loesungsweg: "Im \\(\\mathbb{R}^2\\) können höchstens 2 Vektoren linear unabhängig sein. Drei Vektoren sind also immer linear abhängig."
+    },
+    {
+        id: 24, level: 4, typ: "mc",
+        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 7 \\\\ 4 \\end{pmatrix}\\) linear abhängig?",
+        optionen: [
+            "Ja, denn drei Vektoren im \\(\\mathbb{R}^2\\) sind stets linear abhängig.",
+            "Nein, je zwei Vektoren sind nicht parallel.",
+            "Nein, die Komponenten sind alle verschieden.",
+            "Nur wenn \\(\\vec{c} = \\vec{a} + \\vec{b}\\)."
+        ],
+        korrekt: 0,
+        tipp: "Nutze die Dimensionsregel.",
+        loesungsweg: "Im \\(\\mathbb{R}^2\\) sind drei Vektoren immer linear abhängig. (Tatsächlich gilt hier sogar \\(\\vec{c} = \\vec{a} + 2\\vec{b}\\): \\(1+6=7\\) ✓, \\(2+2=4\\) ✓.)"
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 5 — Drei Vektoren im R³: (un)abhängig, einfache Fälle
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 25, level: 5, typ: "mc",
+        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}\\) linear abhängig?",
+        optionen: [
+            "Nein, sie sind die Standardbasis des \\(\\mathbb{R}^3\\).",
+            "Ja, weil ihre Summe nicht \\(\\vec{0}\\) ist.",
+            "Ja, weil alle drei orthogonal sind.",
+            "Ja, denn drei Vektoren sind immer abhängig."
+        ],
+        korrekt: 0,
+        tipp: "Kann man einen von ihnen durch die anderen darstellen?",
+        loesungsweg: "Die Standardbasisvektoren \\(\\vec{e}_1, \\vec{e}_2, \\vec{e}_3\\) sind linear unabhängig — keiner lässt sich als Linearkombination der anderen ausdrücken. Sie spannen den gesamten \\(\\mathbb{R}^3\\) auf."
+    },
+    {
+        id: 26, level: 5, typ: "mc",
+        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 2 \\\\ 3 \\\\ 0 \\end{pmatrix}\\) linear abhängig?",
+        optionen: [
+            "Ja, denn \\(\\vec{c} = 2\\vec{a} + 3\\vec{b}\\).",
+            "Nein, keine zwei sind Vielfache voneinander.",
+            "Ja, denn alle haben 0 in der dritten Komponente.",
+            "Kann man nicht entscheiden."
+        ],
+        korrekt: 0,
+        tipp: "Versuche, \\(\\vec{c}\\) aus \\(\\vec{a}\\) und \\(\\vec{b}\\) zusammenzusetzen.",
+        loesungsweg: "\\(2\\vec{a} + 3\\vec{b} = \\begin{pmatrix} 2 \\\\ 0 \\\\ 0 \\end{pmatrix} + \\begin{pmatrix} 0 \\\\ 3 \\\\ 0 \\end{pmatrix} = \\begin{pmatrix} 2 \\\\ 3 \\\\ 0 \\end{pmatrix} = \\vec{c}\\). Die Vektoren sind linear abhängig — sie liegen alle in der \\(xy\\)-Ebene."
+    },
+    {
+        id: 27, level: 5, typ: "mc",
+        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 2 \\\\ 4 \\\\ 6 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\) linear abhängig?",
+        optionen: [
+            "Ja, denn \\(\\vec{b} = 2\\vec{a}\\).",
+            "Nein, \\(\\vec{c}\\) ist von den anderen unabhängig.",
+            "Nein, alle drei sind verschieden.",
+            "Ja, denn sie liegen in einer Ebene."
+        ],
+        korrekt: 0,
+        tipp: "Wenn schon zwei der drei Vektoren linear abhängig sind, ist die ganze Menge abhängig.",
+        loesungsweg: "\\(\\vec{b} = 2\\vec{a}\\), also sind \\(\\vec{a}\\) und \\(\\vec{b}\\) kollinear. Damit ist die gesamte Menge \\(\\{\\vec{a}, \\vec{b}, \\vec{c}\\}\\) linear abhängig — egal was \\(\\vec{c}\\) ist."
+    },
+    {
+        id: 28, level: 5, typ: "mc",
+        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 1 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 2 \\\\ 1 \\\\ 1 \\end{pmatrix}\\) linear abhängig?",
+        optionen: [
+            "Ja, denn \\(\\vec{c} = \\vec{a} + \\vec{b}\\).",
+            "Nein, die Vektoren sind alle verschieden.",
+            "Ja, denn sie haben gemeinsame Einträge.",
+            "Nein, sie bilden eine Basis des \\(\\mathbb{R}^3\\)."
+        ],
+        korrekt: 0,
+        tipp: "Addiere \\(\\vec{a}\\) und \\(\\vec{b}\\) und vergleiche mit \\(\\vec{c}\\).",
+        loesungsweg: "\\(\\vec{a} + \\vec{b} = \\begin{pmatrix} 1+1 \\\\ 1+0 \\\\ 0+1 \\end{pmatrix} = \\begin{pmatrix} 2 \\\\ 1 \\\\ 1 \\end{pmatrix} = \\vec{c}\\). Also gilt \\(\\vec{c} = \\vec{a} + \\vec{b}\\) — linear abhängig."
+    },
+    {
+        id: 29, level: 5, typ: "mc",
+        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 1 \\\\ 1 \\\\ 1 \\end{pmatrix}\\) linear abhängig?",
+        optionen: [
+            "Nein, die Vektoren sind linear unabhängig und bilden eine Basis.",
+            "Ja, denn \\(\\vec{c} = \\vec{a} + \\vec{b}\\).",
+            "Ja, denn sie enthalten alle eine 1 an erster Stelle.",
+            "Ja, denn die Summe ist nicht \\(\\vec{0}\\)."
+        ],
+        korrekt: 0,
+        tipp: "Versuche \\(\\vec{c} = r\\vec{a} + s\\vec{b}\\) — geht das mit der dritten Komponente?",
+        loesungsweg: "Aus der dritten Komponente: \\(r \\cdot 0 + s \\cdot 0 = 1\\) — unmöglich! \\(\\vec{c}\\) liegt nicht in der Ebene von \\(\\vec{a}\\) und \\(\\vec{b}\\). Die drei Vektoren sind linear unabhängig."
+    },
+    {
+        id: 30, level: 5, typ: "mc",
+        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ 0 \\\\ 1 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 3 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 4 \\\\ 3 \\\\ 2 \\end{pmatrix}\\) linear abhängig?",
+        optionen: [
+            "Ja, denn \\(\\vec{c} = 2\\vec{a} + \\vec{b}\\).",
+            "Nein, \\(\\vec{a}\\) und \\(\\vec{b}\\) sind orthogonal.",
+            "Nein, keine zwei sind Vielfache.",
+            "Ja, denn alle Einträge sind ganzzahlig."
+        ],
+        korrekt: 0,
+        tipp: "Rate \\(r = 2\\) (aus der ersten Komponente) und \\(s = 1\\) (aus der zweiten) und prüfe die dritte.",
+        loesungsweg: "\\(2\\vec{a} + \\vec{b} = \\begin{pmatrix} 4 \\\\ 0 \\\\ 2 \\end{pmatrix} + \\begin{pmatrix} 0 \\\\ 3 \\\\ 0 \\end{pmatrix} = \\begin{pmatrix} 4 \\\\ 3 \\\\ 2 \\end{pmatrix} = \\vec{c}\\) ✓. Die Vektoren sind linear abhängig."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 6 — Anwendung: Liegen drei Punkte auf einer Geraden?
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 31, level: 6, typ: "mc",
+        frage: "Liegen die Punkte \\(A(1|2)\\), \\(B(3|6)\\), \\(C(5|10)\\) auf einer Geraden?",
+        optionen: [
+            "Ja, denn \\(\\overrightarrow{AC} = 2 \\cdot \\overrightarrow{AB}\\).",
+            "Nein, sie bilden ein Dreieck.",
+            "Ja, weil alle Koordinaten positiv sind.",
+            "Das hängt von der Orientierung ab."
+        ],
+        korrekt: 0,
+        tipp: "Berechne \\(\\overrightarrow{AB}\\) und \\(\\overrightarrow{AC}\\) und prüfe, ob sie kollinear sind.",
+        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 2 \\\\ 4 \\end{pmatrix}\\), \\(\\overrightarrow{AC} = \\begin{pmatrix} 4 \\\\ 8 \\end{pmatrix} = 2 \\cdot \\overrightarrow{AB}\\). Die beiden Vektoren sind linear abhängig, also liegen \\(A, B, C\\) auf einer Geraden."
+    },
+    {
+        id: 32, level: 6, typ: "mc",
+        frage: "Liegen \\(A(1|1)\\), \\(B(2|3)\\), \\(C(4|6)\\) auf einer Geraden?",
+        optionen: [
+            "Nein, denn \\(\\overrightarrow{AC}\\) ist kein Vielfaches von \\(\\overrightarrow{AB}\\).",
+            "Ja, denn beide Vektoren zeigen nach oben.",
+            "Ja, denn \\(C = 3B - 2A\\).",
+            "Kann man nicht entscheiden."
+        ],
+        korrekt: 0,
+        tipp: "Berechne \\(\\overrightarrow{AB} = \\begin{pmatrix} 1 \\\\ 2 \\end{pmatrix}\\) und \\(\\overrightarrow{AC} = \\begin{pmatrix} 3 \\\\ 5 \\end{pmatrix}\\) und vergleiche die Verhältnisse.",
+        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 1 \\\\ 2 \\end{pmatrix}\\), \\(\\overrightarrow{AC} = \\begin{pmatrix} 3 \\\\ 5 \\end{pmatrix}\\). \\(\\tfrac{3}{1} = 3\\), aber \\(\\tfrac{5}{2} = 2{,}5\\). Die Verhältnisse sind verschieden — die Punkte liegen nicht auf einer Geraden."
+    },
+    {
+        id: 33, level: 6, typ: "mc",
+        frage: "Liegen \\(A(1|0|2)\\), \\(B(3|2|4)\\), \\(C(5|4|6)\\) auf einer Geraden?",
+        optionen: [
+            "Ja, denn \\(\\overrightarrow{AC} = 2 \\cdot \\overrightarrow{AB}\\).",
+            "Nein, die Vektoren sind nicht parallel.",
+            "Ja, weil die \\(z\\)-Koordinate gleich zunimmt.",
+            "Nein, im \\(\\mathbb{R}^3\\) liegen drei Punkte nie auf einer Geraden."
+        ],
+        korrekt: 0,
+        tipp: "Berechne beide Verbindungsvektoren und prüfe auf Kollinearität.",
+        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 2 \\\\ 2 \\\\ 2 \\end{pmatrix}\\), \\(\\overrightarrow{AC} = \\begin{pmatrix} 4 \\\\ 4 \\\\ 4 \\end{pmatrix} = 2 \\cdot \\overrightarrow{AB}\\). Die Vektoren sind kollinear — \\(A, B, C\\) liegen auf einer Geraden."
+    },
+    {
+        id: 34, level: 6, typ: "mc",
+        frage: "Liegen \\(A(0|1|2)\\), \\(B(2|3|5)\\), \\(C(4|5|7)\\) auf einer Geraden?",
+        optionen: [
+            "Nein, denn in der \\(z\\)-Komponente passt der Faktor nicht.",
+            "Ja, denn die ersten beiden Komponenten verhalten sich gleich.",
+            "Ja, \\(\\overrightarrow{AC} = 2\\overrightarrow{AB}\\).",
+            "Nein, \\(A\\) liegt nicht im Ursprung."
+        ],
+        korrekt: 0,
+        tipp: "Berechne \\(\\overrightarrow{AB} = \\begin{pmatrix} 2 \\\\ 2 \\\\ 3 \\end{pmatrix}\\) und \\(\\overrightarrow{AC} = \\begin{pmatrix} 4 \\\\ 4 \\\\ 5 \\end{pmatrix}\\).",
+        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 2 \\\\ 2 \\\\ 3 \\end{pmatrix}\\), \\(\\overrightarrow{AC} = \\begin{pmatrix} 4 \\\\ 4 \\\\ 5 \\end{pmatrix}\\). Erste Komponenten: Faktor \\(2\\), aber \\(3 \\cdot 2 = 6 \\neq 5\\). Also liegen die Punkte nicht auf einer Geraden."
+    },
+    {
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Für welchen Wert von \\(t\\) liegen die Punkte \\(A(1|1)\\), \\(B(3|4)\\), \\(C(7|t)\\) auf einer Geraden?",
+        loesung: 10, toleranz: 0,
+        tipp: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix}\\), \\(\\overrightarrow{AC} = \\begin{pmatrix} 6 \\\\ t-1 \\end{pmatrix}\\). Aus der ersten Komponente folgt der Faktor.",
+        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix}\\), \\(\\overrightarrow{AC} = \\begin{pmatrix} 6 \\\\ t-1 \\end{pmatrix}\\). Aus \\(2k = 6\\) folgt \\(k = 3\\). Für Kollinearität: \\(t - 1 = 3 \\cdot 3 = 9\\), also \\(t = 10\\)."
+    },
+    {
+        id: 36, level: 6, typ: "mc",
+        frage: "Liegen die Punkte \\(P(-1|2|1)\\), \\(Q(1|6|3)\\), \\(R(4|12|6)\\) auf einer Geraden?",
+        optionen: [
+            "Ja, denn \\(\\overrightarrow{PR} = \\tfrac{5}{2} \\cdot \\overrightarrow{PQ}\\).",
+            "Nein, die Vektoren sind nicht parallel.",
+            "Ja, denn alle Koordinaten sind positiv.",
+            "Nein, \\(P\\) hat eine negative \\(x\\)-Koordinate."
+        ],
+        korrekt: 0,
+        tipp: "\\(\\overrightarrow{PQ} = \\begin{pmatrix} 2 \\\\ 4 \\\\ 2 \\end{pmatrix}\\), \\(\\overrightarrow{PR} = \\begin{pmatrix} 5 \\\\ 10 \\\\ 5 \\end{pmatrix}\\). Prüfe das Verhältnis in jeder Komponente.",
+        loesungsweg: "\\(\\overrightarrow{PQ} = \\begin{pmatrix} 2 \\\\ 4 \\\\ 2 \\end{pmatrix}\\), \\(\\overrightarrow{PR} = \\begin{pmatrix} 5 \\\\ 10 \\\\ 5 \\end{pmatrix}\\). \\(\\tfrac{5}{2} = 2{,}5\\), \\(\\tfrac{10}{4} = 2{,}5\\), \\(\\tfrac{5}{2} = 2{,}5\\) — alle gleich. Also \\(\\overrightarrow{PR} = \\tfrac{5}{2} \\overrightarrow{PQ}\\) und die Punkte liegen auf einer Geraden."
+    }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

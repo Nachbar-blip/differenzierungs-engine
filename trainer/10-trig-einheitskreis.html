@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Einheitskreis & Bogenmaß - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '10-trig-einheitskreis';
+    const THEMA_CONFIG = { name: 'Einheitskreis & Bogenmaß', bereich: 'analysis' };
+    const AUFGABEN = [
+      // ========== LEVEL 1 — Einheitskreis-Grundlagen (6 Aufgaben) ==========
+      {
+        "id": 1,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Welchen Radius hat der Einheitskreis?",
+        "optionen": [
+          "\\(r = 0\\)",
+          "\\(r = 1\\)",
+          "\\(r = 2\\)",
+          "\\(r = \\pi\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Der Name verrät es bereits.",
+        "loesungsweg": "Der Einheitskreis ist per Definition der Kreis um den Ursprung mit Radius \\(r = 1\\)."
+      },
+      {
+        "id": 2,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Ein Punkt \\(P\\) liegt auf dem Einheitskreis und gehört zum Winkel \\(\\alpha\\). Welche Koordinaten hat \\(P\\)?",
+        "optionen": [
+          "\\(P(\\sin\\alpha \\mid \\cos\\alpha)\\)",
+          "\\(P(\\cos\\alpha \\mid \\sin\\alpha)\\)",
+          "\\(P(\\tan\\alpha \\mid 1)\\)",
+          "\\(P(\\alpha \\mid \\alpha)\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Die \\(x\\)-Koordinate am Einheitskreis ist der Kosinus.",
+        "loesungsweg": "Am Einheitskreis gilt: \\(x = \\cos\\alpha\\) und \\(y = \\sin\\alpha\\). Also \\(P(\\cos\\alpha \\mid \\sin\\alpha)\\)."
+      },
+      {
+        "id": 3,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Berechne \\(\\sin(0°)\\).",
+        "loesung": 0,
+        "toleranz": 0,
+        "tipp": "Bei \\(\\alpha = 0°\\) liegt der Punkt auf der \\(x\\)-Achse bei \\((1\\mid 0)\\).",
+        "loesungsweg": "Bei \\(\\alpha = 0°\\) ist der Punkt am Einheitskreis \\(P(1\\mid 0)\\). Der Sinus ist die \\(y\\)-Koordinate, also \\(\\sin(0°) = 0\\)."
+      },
+      {
+        "id": 4,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Berechne \\(\\cos(90°)\\).",
+        "loesung": 0,
+        "toleranz": 0,
+        "tipp": "Bei \\(\\alpha = 90°\\) liegt der Punkt auf der \\(y\\)-Achse bei \\((0\\mid 1)\\).",
+        "loesungsweg": "Bei \\(\\alpha = 90°\\) ist der Punkt am Einheitskreis \\(P(0\\mid 1)\\). Der Kosinus ist die \\(x\\)-Koordinate, also \\(\\cos(90°) = 0\\)."
+      },
+      {
+        "id": 5,
+        "level": 1,
+        "typ": "mc",
+        "frage": "In welchem Quadranten liegt der Winkel \\(\\alpha = 120°\\)?",
+        "optionen": [
+          "I. Quadrant",
+          "II. Quadrant",
+          "III. Quadrant",
+          "IV. Quadrant"
+        ],
+        "korrekt": 1,
+        "tipp": "Der II. Quadrant umfasst Winkel von \\(90°\\) bis \\(180°\\).",
+        "loesungsweg": "Die Quadranten sind: I: \\(0°\\) bis \\(90°\\), II: \\(90°\\) bis \\(180°\\), III: \\(180°\\) bis \\(270°\\), IV: \\(270°\\) bis \\(360°\\). Da \\(90° < 120° < 180°\\), liegt \\(\\alpha\\) im **II. Quadranten**."
+      },
+      {
+        "id": 6,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Berechne \\(\\sin(180°)\\).",
+        "loesung": 0,
+        "toleranz": 0,
+        "tipp": "Bei \\(\\alpha = 180°\\) liegt der Punkt auf der \\(x\\)-Achse bei \\((-1\\mid 0)\\).",
+        "loesungsweg": "Bei \\(\\alpha = 180°\\) ist der Punkt am Einheitskreis \\(P(-1\\mid 0)\\). Der Sinus ist die \\(y\\)-Koordinate, also \\(\\sin(180°) = 0\\)."
+      },
+
+      // ========== LEVEL 2 — Grad & Bogenmaß (6 Aufgaben) ==========
+      {
+        "id": 7,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Welchem Bogenmaß entspricht \\(180°\\)?",
+        "optionen": [
+          "\\(\\frac{\\pi}{2}\\)",
+          "\\(\\pi\\)",
+          "\\(2\\pi\\)",
+          "\\(\\frac{\\pi}{4}\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Der volle Kreis hat den Umfang \\(2\\pi\\) bei Radius 1.",
+        "loesungsweg": "Der volle Kreis entspricht \\(360° = 2\\pi\\). Daraus folgt: $$180° = \\pi$$"
+      },
+      {
+        "id": 8,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Welchem Bogenmaß entspricht \\(90°\\)?",
+        "optionen": [
+          "\\(\\frac{\\pi}{4}\\)",
+          "\\(\\frac{\\pi}{3}\\)",
+          "\\(\\frac{\\pi}{2}\\)",
+          "\\(\\pi\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "\\(90°\\) ist ein Viertel des Vollkreises.",
+        "loesungsweg": "\\(90°\\) entspricht einem Viertel des Vollkreises: $$90° = \\frac{1}{4} \\cdot 2\\pi = \\frac{\\pi}{2}$$"
+      },
+      {
+        "id": 9,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Welchem Bogenmaß entspricht \\(60°\\)?",
+        "optionen": [
+          "\\(\\frac{\\pi}{6}\\)",
+          "\\(\\frac{\\pi}{4}\\)",
+          "\\(\\frac{\\pi}{3}\\)",
+          "\\(\\frac{\\pi}{2}\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Umrechnung: \\(\\alpha_{\\text{rad}} = \\alpha_{\\text{Grad}} \\cdot \\frac{\\pi}{180°}\\).",
+        "loesungsweg": "$$60° = 60 \\cdot \\frac{\\pi}{180} = \\frac{60\\pi}{180} = \\frac{\\pi}{3}$$"
+      },
+      {
+        "id": 10,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Welchem Winkel in Grad entspricht \\(\\frac{\\pi}{4}\\)?",
+        "optionen": [
+          "\\(30°\\)",
+          "\\(45°\\)",
+          "\\(60°\\)",
+          "\\(90°\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Umrechnung: \\(\\alpha_{\\text{Grad}} = \\alpha_{\\text{rad}} \\cdot \\frac{180°}{\\pi}\\).",
+        "loesungsweg": "$$\\frac{\\pi}{4} \\cdot \\frac{180°}{\\pi} = \\frac{180°}{4} = 45°$$"
+      },
+      {
+        "id": 11,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Rechne \\(30°\\) ins Bogenmaß um. Gib den Wert als Dezimalzahl an (z. B. \\(\\pi/6 \\approx 0{,}5236\\)).",
+        "loesung": 0.5236,
+        "toleranz": 0.01,
+        "tipp": "\\(30° = \\frac{\\pi}{6} \\approx 0{,}5236\\).",
+        "loesungsweg": "$$30° = 30 \\cdot \\frac{\\pi}{180} = \\frac{\\pi}{6} \\approx 0{,}5236$$"
+      },
+      {
+        "id": 12,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Rechne \\(45°\\) ins Bogenmaß um. Gib den Wert als Dezimalzahl an.",
+        "loesung": 0.7854,
+        "toleranz": 0.01,
+        "tipp": "\\(45° = \\frac{\\pi}{4} \\approx 0{,}7854\\).",
+        "loesungsweg": "$$45° = 45 \\cdot \\frac{\\pi}{180} = \\frac{\\pi}{4} \\approx 0{,}7854$$"
+      },
+
+      // ========== LEVEL 3 — Exakte Werte Standardwinkel (6 Aufgaben) ==========
+      {
+        "id": 13,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Welchen exakten Wert hat \\(\\sin\\left(\\frac{\\pi}{6}\\right)\\)?",
+        "optionen": [
+          "\\(\\frac{1}{2}\\)",
+          "\\(\\frac{\\sqrt{2}}{2}\\)",
+          "\\(\\frac{\\sqrt{3}}{2}\\)",
+          "\\(1\\)"
+        ],
+        "korrekt": 0,
+        "tipp": "\\(\\frac{\\pi}{6}\\) entspricht \\(30°\\).",
+        "loesungsweg": "\\(\\frac{\\pi}{6} = 30°\\). Aus der Werte-Tabelle: $$\\sin(30°) = \\frac{1}{2}$$"
+      },
+      {
+        "id": 14,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Welchen exakten Wert hat \\(\\cos\\left(\\frac{\\pi}{4}\\right)\\)?",
+        "optionen": [
+          "\\(\\frac{1}{2}\\)",
+          "\\(\\frac{\\sqrt{2}}{2}\\)",
+          "\\(\\frac{\\sqrt{3}}{2}\\)",
+          "\\(1\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "\\(\\frac{\\pi}{4}\\) entspricht \\(45°\\). Bei \\(45°\\) gilt \\(\\sin = \\cos\\).",
+        "loesungsweg": "\\(\\frac{\\pi}{4} = 45°\\). Es gilt: $$\\cos(45°) = \\frac{\\sqrt{2}}{2} = \\frac{1}{\\sqrt{2}}$$"
+      },
+      {
+        "id": 15,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Welchen exakten Wert hat \\(\\sin\\left(\\frac{\\pi}{3}\\right)\\)?",
+        "optionen": [
+          "\\(\\frac{1}{2}\\)",
+          "\\(\\frac{\\sqrt{2}}{2}\\)",
+          "\\(\\frac{\\sqrt{3}}{2}\\)",
+          "\\(1\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "\\(\\frac{\\pi}{3}\\) entspricht \\(60°\\).",
+        "loesungsweg": "\\(\\frac{\\pi}{3} = 60°\\). Aus der Werte-Tabelle: $$\\sin(60°) = \\frac{\\sqrt{3}}{2}$$"
+      },
+      {
+        "id": 16,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Berechne \\(\\cos\\left(\\frac{\\pi}{2}\\right)\\).",
+        "loesung": 0,
+        "toleranz": 0,
+        "tipp": "\\(\\frac{\\pi}{2}\\) entspricht \\(90°\\). Der Punkt am Einheitskreis ist \\((0 \\mid 1)\\).",
+        "loesungsweg": "\\(\\frac{\\pi}{2} = 90°\\). Am Einheitskreis: \\(P(0\\mid 1)\\). Kosinus = \\(x\\)-Koordinate: $$\\cos\\left(\\frac{\\pi}{2}\\right) = 0$$"
+      },
+      {
+        "id": 17,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Welchen exakten Wert hat \\(\\tan\\left(\\frac{\\pi}{4}\\right)\\)?",
+        "optionen": [
+          "\\(0\\)",
+          "\\(\\frac{1}{2}\\)",
+          "\\(1\\)",
+          "\\(\\sqrt{3}\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "\\(\\tan\\alpha = \\frac{\\sin\\alpha}{\\cos\\alpha}\\). Bei \\(45°\\) gilt \\(\\sin = \\cos\\).",
+        "loesungsweg": "$$\\tan\\left(\\frac{\\pi}{4}\\right) = \\frac{\\sin(\\pi/4)}{\\cos(\\pi/4)} = \\frac{\\sqrt{2}/2}{\\sqrt{2}/2} = 1$$"
+      },
+      {
+        "id": 18,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Berechne \\(\\sin(\\pi)\\).",
+        "loesung": 0,
+        "toleranz": 0,
+        "tipp": "\\(\\pi\\) entspricht \\(180°\\). Der Punkt am Einheitskreis ist \\((-1 \\mid 0)\\).",
+        "loesungsweg": "\\(\\pi = 180°\\). Am Einheitskreis: \\(P(-1\\mid 0)\\). Sinus = \\(y\\)-Koordinate: $$\\sin(\\pi) = 0$$"
+      },
+
+      // ========== LEVEL 4 — Vorzeichen & Symmetrien (6 Aufgaben) ==========
+      {
+        "id": 19,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Welches Vorzeichen hat \\(\\sin(\\alpha)\\) im III. Quadranten (\\(180° < \\alpha < 270°\\))?",
+        "optionen": [
+          "positiv",
+          "negativ",
+          "immer 0",
+          "hängt von \\(\\alpha\\) ab"
+        ],
+        "korrekt": 1,
+        "tipp": "Im III. Quadranten ist die \\(y\\)-Koordinate negativ.",
+        "loesungsweg": "Im III. Quadranten liegt der Punkt unterhalb der \\(x\\)-Achse, die \\(y\\)-Koordinate ist negativ. Da \\(\\sin\\alpha\\) die \\(y\\)-Koordinate am Einheitskreis ist, ist \\(\\sin\\alpha < 0\\)."
+      },
+      {
+        "id": 20,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Welches Vorzeichen hat \\(\\cos(\\alpha)\\) im II. Quadranten (\\(90° < \\alpha < 180°\\))?",
+        "optionen": [
+          "positiv",
+          "negativ",
+          "immer 0",
+          "immer 1"
+        ],
+        "korrekt": 1,
+        "tipp": "Im II. Quadranten ist die \\(x\\)-Koordinate negativ.",
+        "loesungsweg": "Im II. Quadranten liegt der Punkt links der \\(y\\)-Achse, die \\(x\\)-Koordinate ist negativ. Da \\(\\cos\\alpha\\) die \\(x\\)-Koordinate ist, gilt \\(\\cos\\alpha < 0\\)."
+      },
+      {
+        "id": 21,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Welche Beziehung gilt allgemein für den Sinus?",
+        "optionen": [
+          "\\(\\sin(-x) = \\sin(x)\\)",
+          "\\(\\sin(-x) = -\\sin(x)\\)",
+          "\\(\\sin(-x) = \\cos(x)\\)",
+          "\\(\\sin(-x) = 1 - \\sin(x)\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Der Sinus ist eine ungerade Funktion (punktsymmetrisch zum Ursprung).",
+        "loesungsweg": "Der Sinus ist **punktsymmetrisch** zum Ursprung (ungerade Funktion). Daher: $$\\sin(-x) = -\\sin(x)$$"
+      },
+      {
+        "id": 22,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Welche Beziehung gilt allgemein für den Kosinus?",
+        "optionen": [
+          "\\(\\cos(-x) = -\\cos(x)\\)",
+          "\\(\\cos(-x) = \\cos(x)\\)",
+          "\\(\\cos(-x) = \\sin(x)\\)",
+          "\\(\\cos(-x) = 1 - \\cos(x)\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Der Kosinus ist eine gerade Funktion (achsensymmetrisch zur \\(y\\)-Achse).",
+        "loesungsweg": "Der Kosinus ist **achsensymmetrisch** zur \\(y\\)-Achse (gerade Funktion). Daher: $$\\cos(-x) = \\cos(x)$$"
+      },
+      {
+        "id": 23,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Welcher Wert ist gleich \\(\\cos(\\pi - x)\\)?",
+        "optionen": [
+          "\\(\\cos(x)\\)",
+          "\\(-\\cos(x)\\)",
+          "\\(\\sin(x)\\)",
+          "\\(-\\sin(x)\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Bei Spiegelung an der \\(y\\)-Achse (\\(\\pi - x\\)) ändert die \\(x\\)-Koordinate ihr Vorzeichen.",
+        "loesungsweg": "Der Winkel \\(\\pi - x\\) entsteht durch Spiegelung von \\(x\\) an der \\(y\\)-Achse. Dabei bleibt die \\(y\\)-Koordinate gleich, die \\(x\\)-Koordinate wechselt das Vorzeichen. Also: $$\\cos(\\pi - x) = -\\cos(x)$$"
+      },
+      {
+        "id": 24,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Berechne \\(\\sin(210°)\\) als Dezimalzahl.",
+        "loesung": -0.5,
+        "toleranz": 0.01,
+        "tipp": "\\(210° = 180° + 30°\\), also III. Quadrant. Sinus ist dort negativ.",
+        "loesungsweg": "\\(210°\\) liegt im III. Quadranten. Referenzwinkel zur \\(x\\)-Achse: \\(210° - 180° = 30°\\). Da der Sinus im III. Quadranten negativ ist: $$\\sin(210°) = -\\sin(30°) = -\\frac{1}{2} = -0{,}5$$"
+      },
+
+      // ========== LEVEL 5 — Grundbeziehung sin²+cos²=1 (6 Aufgaben) ==========
+      {
+        "id": 25,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Welche Gleichung ist die trigonometrische Grundbeziehung?",
+        "optionen": [
+          "\\(\\sin x + \\cos x = 1\\)",
+          "\\(\\sin^2 x + \\cos^2 x = 1\\)",
+          "\\(\\sin^2 x - \\cos^2 x = 1\\)",
+          "\\(\\sin x \\cdot \\cos x = 1\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Pythagoras am Einheitskreis: \\(x^2 + y^2 = 1\\).",
+        "loesungsweg": "Am Einheitskreis liegen alle Punkte \\((x\\mid y)\\) auf dem Kreis mit \\(x^2 + y^2 = 1\\). Mit \\(x = \\cos\\alpha\\) und \\(y = \\sin\\alpha\\): $$\\sin^2\\alpha + \\cos^2\\alpha = 1$$"
+      },
+      {
+        "id": 26,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Gegeben: \\(\\sin\\alpha = 0{,}6\\) und \\(\\alpha\\) liegt im I. Quadranten. Bestimme \\(\\cos\\alpha\\).",
+        "loesung": 0.8,
+        "toleranz": 0.01,
+        "tipp": "Aus \\(\\sin^2\\alpha + \\cos^2\\alpha = 1\\) folgt \\(\\cos\\alpha = \\sqrt{1 - \\sin^2\\alpha}\\). Im I. Quadranten ist der Kosinus positiv.",
+        "loesungsweg": "Aus der Grundbeziehung: $$\\cos^2\\alpha = 1 - \\sin^2\\alpha = 1 - 0{,}36 = 0{,}64$$ Da \\(\\alpha\\) im I. Quadranten liegt, ist \\(\\cos\\alpha > 0\\): $$\\cos\\alpha = \\sqrt{0{,}64} = 0{,}8$$"
+      },
+      {
+        "id": 27,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Gegeben: \\(\\cos\\alpha = 0{,}8\\) und \\(\\alpha\\) liegt im IV. Quadranten. Bestimme \\(\\sin\\alpha\\).",
+        "loesung": -0.6,
+        "toleranz": 0.01,
+        "tipp": "Im IV. Quadranten ist der Sinus negativ.",
+        "loesungsweg": "Aus der Grundbeziehung: $$\\sin^2\\alpha = 1 - \\cos^2\\alpha = 1 - 0{,}64 = 0{,}36$$ Im IV. Quadranten ist \\(\\sin\\alpha < 0\\): $$\\sin\\alpha = -\\sqrt{0{,}36} = -0{,}6$$"
+      },
+      {
+        "id": 28,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Ein Punkt \\(P\\) liegt auf dem Einheitskreis mit \\(x\\)-Koordinate \\(\\frac{1}{2}\\) im I. Quadranten. Welche \\(y\\)-Koordinate hat \\(P\\)?",
+        "optionen": [
+          "\\(\\frac{1}{2}\\)",
+          "\\(\\frac{\\sqrt{3}}{2}\\)",
+          "\\(\\frac{\\sqrt{2}}{2}\\)",
+          "\\(1\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Aus \\(x^2 + y^2 = 1\\) folgt \\(y^2 = 1 - x^2\\).",
+        "loesungsweg": "Mit \\(x = \\frac{1}{2}\\): $$y^2 = 1 - \\left(\\frac{1}{2}\\right)^2 = 1 - \\frac{1}{4} = \\frac{3}{4}$$ Im I. Quadranten ist \\(y > 0\\): $$y = \\sqrt{\\frac{3}{4}} = \\frac{\\sqrt{3}}{2}$$"
+      },
+      {
+        "id": 29,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Gegeben: \\(\\sin\\alpha = \\frac{3}{5}\\) und \\(\\alpha\\) im II. Quadranten. Bestimme \\(\\cos\\alpha\\) als Dezimalzahl.",
+        "loesung": -0.8,
+        "toleranz": 0.01,
+        "tipp": "Im II. Quadranten ist der Kosinus negativ.",
+        "loesungsweg": "$$\\cos^2\\alpha = 1 - \\sin^2\\alpha = 1 - \\frac{9}{25} = \\frac{16}{25}$$ Im II. Quadranten ist \\(\\cos\\alpha < 0\\): $$\\cos\\alpha = -\\sqrt{\\frac{16}{25}} = -\\frac{4}{5} = -0{,}8$$"
+      },
+      {
+        "id": 30,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Berechne den Wert von \\(\\sin^2(37°) + \\cos^2(37°)\\).",
+        "loesung": 1,
+        "toleranz": 0,
+        "tipp": "Denke an die trigonometrische Grundbeziehung — für jeden Winkel.",
+        "loesungsweg": "Die trigonometrische Grundbeziehung gilt für **jeden** Winkel: $$\\sin^2\\alpha + \\cos^2\\alpha = 1$$ Also auch für \\(\\alpha = 37°\\): $$\\sin^2(37°) + \\cos^2(37°) = 1$$"
+      },
+
+      // ========== LEVEL 6 — Winkel aus Wert bestimmen (6 Aufgaben) ==========
+      {
+        "id": 31,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Für welche Winkel \\(x \\in [0, 2\\pi]\\) gilt \\(\\sin x = \\frac{1}{2}\\)?",
+        "optionen": [
+          "nur \\(\\frac{\\pi}{6}\\)",
+          "\\(\\frac{\\pi}{6}\\) und \\(\\frac{5\\pi}{6}\\)",
+          "\\(\\frac{\\pi}{6}\\) und \\(\\frac{7\\pi}{6}\\)",
+          "\\(\\frac{\\pi}{3}\\) und \\(\\frac{2\\pi}{3}\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Sinus ist positiv in den ersten beiden Quadranten. Zweite Lösung: \\(\\pi - x_1\\).",
+        "loesungsweg": "Der Sinus ist positiv im I. und II. Quadranten. Erste Lösung: \\(x_1 = \\frac{\\pi}{6}\\) (entspricht \\(30°\\)). Zweite Lösung: $$x_2 = \\pi - \\frac{\\pi}{6} = \\frac{6\\pi - \\pi}{6} = \\frac{5\\pi}{6}$$ (entspricht \\(150°\\))."
+      },
+      {
+        "id": 32,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Für welche Winkel \\(x \\in [0, 2\\pi]\\) gilt \\(\\cos x = \\frac{1}{2}\\)?",
+        "optionen": [
+          "\\(\\frac{\\pi}{3}\\) und \\(\\frac{2\\pi}{3}\\)",
+          "\\(\\frac{\\pi}{3}\\) und \\(\\frac{5\\pi}{3}\\)",
+          "\\(\\frac{\\pi}{6}\\) und \\(\\frac{11\\pi}{6}\\)",
+          "\\(\\frac{\\pi}{4}\\) und \\(\\frac{7\\pi}{4}\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Kosinus ist positiv in den Quadranten I und IV. Zweite Lösung: \\(2\\pi - x_1\\).",
+        "loesungsweg": "Der Kosinus ist positiv im I. und IV. Quadranten. Erste Lösung: \\(x_1 = \\frac{\\pi}{3}\\) (\\(60°\\)). Zweite Lösung: $$x_2 = 2\\pi - \\frac{\\pi}{3} = \\frac{6\\pi - \\pi}{3} = \\frac{5\\pi}{3}$$ (\\(300°\\))."
+      },
+      {
+        "id": 33,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Für welche Winkel \\(x \\in [0, 2\\pi]\\) gilt \\(\\sin x = -\\frac{\\sqrt{2}}{2}\\)?",
+        "optionen": [
+          "\\(\\frac{\\pi}{4}\\) und \\(\\frac{3\\pi}{4}\\)",
+          "\\(\\frac{5\\pi}{4}\\) und \\(\\frac{7\\pi}{4}\\)",
+          "\\(\\frac{\\pi}{4}\\) und \\(\\frac{7\\pi}{4}\\)",
+          "nur \\(\\frac{3\\pi}{2}\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Sinus ist negativ im III. und IV. Quadranten. Referenzwinkel: \\(\\frac{\\pi}{4}\\).",
+        "loesungsweg": "Der Sinus ist negativ im III. und IV. Quadranten. Referenzwinkel: \\(\\frac{\\pi}{4}\\) (da \\(\\sin(\\pi/4) = \\frac{\\sqrt{2}}{2}\\)). III. Quadrant: $$x_1 = \\pi + \\frac{\\pi}{4} = \\frac{5\\pi}{4}$$ IV. Quadrant: $$x_2 = 2\\pi - \\frac{\\pi}{4} = \\frac{7\\pi}{4}$$"
+      },
+      {
+        "id": 34,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Bestimme den kleinsten positiven Winkel \\(x\\) (im Bogenmaß) mit \\(\\cos x = 0\\). Gib das Ergebnis als Dezimalzahl an.",
+        "loesung": 1.5708,
+        "toleranz": 0.01,
+        "tipp": "\\(\\cos x = 0\\) an der Stelle \\(x = \\frac{\\pi}{2}\\).",
+        "loesungsweg": "Der Kosinus wird 0, wenn der Punkt am Einheitskreis auf der \\(y\\)-Achse liegt. Kleinster positiver Wert: $$x = \\frac{\\pi}{2} \\approx 1{,}5708$$"
+      },
+      {
+        "id": 35,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Für welche Winkel \\(x \\in [0, 2\\pi]\\) gilt \\(\\cos x = -1\\)?",
+        "optionen": [
+          "nur \\(x = 0\\)",
+          "nur \\(x = \\pi\\)",
+          "nur \\(x = \\frac{\\pi}{2}\\)",
+          "\\(x = \\pi\\) und \\(x = 2\\pi\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Der Kosinus erreicht den Wert \\(-1\\) am Punkt \\((-1\\mid 0)\\) des Einheitskreises.",
+        "loesungsweg": "Der Kosinus ist die \\(x\\)-Koordinate am Einheitskreis. Der Wert \\(-1\\) wird nur am Punkt \\((-1\\mid 0)\\) erreicht, also bei \\(x = \\pi\\). Im Intervall \\([0, 2\\pi]\\) gibt es nur diese eine Lösung."
+      },
+      {
+        "id": 36,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Bestimme die Anzahl der Lösungen der Gleichung \\(\\sin x = 0\\) im Intervall \\([0, 2\\pi]\\).",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "Der Sinus ist 0 an allen Nulldurchgängen auf der \\(x\\)-Achse. Denke an \\(x = 0\\), \\(\\pi\\) und \\(2\\pi\\).",
+        "loesungsweg": "Der Sinus ist die \\(y\\)-Koordinate am Einheitskreis und wird 0, wenn der Punkt auf der \\(x\\)-Achse liegt. Im Intervall \\([0, 2\\pi]\\) gilt das für: $$x_1 = 0,\\quad x_2 = \\pi,\\quad x_3 = 2\\pi$$ Das sind **3 Lösungen**."
+      }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

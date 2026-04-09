@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trigonometrie im rechtwinkligen Dreieck - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '10-trig-rechtwinkliges-dreieck';
+    const THEMA_CONFIG = { name: 'Trigonometrie im rechtwinkligen Dreieck', bereich: 'analysis' };
+    const AUFGABEN = [
+        // ===== LEVEL 1: Grundbegriffe =====
+        {
+            id: 1,
+            level: 1,
+            typ: "mc",
+            frage: "Wie heißt die längste Seite in einem rechtwinkligen Dreieck?",
+            optionen: ["Hypotenuse", "Ankathete", "Gegenkathete", "Kathete"],
+            korrekt: 0,
+            tipp: "Sie liegt dem rechten Winkel gegenüber.",
+            loesungsweg: "Die **Hypotenuse** ist immer die längste Seite und liegt dem rechten Winkel (90°) gegenüber. Die beiden anderen Seiten heißen Katheten."
+        },
+        {
+            id: 2,
+            level: 1,
+            typ: "mc",
+            frage: "Was ist die Gegenkathete eines Winkels \\(\\alpha\\) im rechtwinkligen Dreieck?",
+            optionen: ["Die Seite, die dem Winkel \\(\\alpha\\) gegenüberliegt", "Die längste Seite", "Die Seite am Winkel \\(\\alpha\\)", "Die Seite am rechten Winkel"],
+            korrekt: 0,
+            tipp: "Gegen = gegenüber.",
+            loesungsweg: "Die **Gegenkathete** von \\(\\alpha\\) liegt dem Winkel \\(\\alpha\\) gegenüber. Die **Ankathete** hingegen liegt am Winkel \\(\\alpha\\) an."
+        },
+        {
+            id: 3,
+            level: 1,
+            typ: "mc",
+            frage: "Welche Formel beschreibt den Sinus eines Winkels \\(\\alpha\\)?",
+            optionen: ["\\(\\sin(\\alpha) = \\frac{\\text{Gegenkathete}}{\\text{Hypotenuse}}\\)", "\\(\\sin(\\alpha) = \\frac{\\text{Ankathete}}{\\text{Hypotenuse}}\\)", "\\(\\sin(\\alpha) = \\frac{\\text{Gegenkathete}}{\\text{Ankathete}}\\)", "\\(\\sin(\\alpha) = \\frac{\\text{Hypotenuse}}{\\text{Gegenkathete}}\\)"],
+            korrekt: 0,
+            tipp: "Merkspruch: SOH — Sinus = Gegenkathete / Hypotenuse.",
+            loesungsweg: "**SOH-CAH-TOA:** \\(\\sin(\\alpha) = \\dfrac{\\text{Gegenkathete}}{\\text{Hypotenuse}}\\), \\(\\cos(\\alpha) = \\dfrac{\\text{Ankathete}}{\\text{Hypotenuse}}\\), \\(\\tan(\\alpha) = \\dfrac{\\text{Gegenkathete}}{\\text{Ankathete}}\\)."
+        },
+        {
+            id: 4,
+            level: 1,
+            typ: "mc",
+            frage: "In einem rechtwinkligen Dreieck mit rechtem Winkel bei C: Welche Seite ist die Hypotenuse?",
+            optionen: ["Die Seite c (gegenüber von C)", "Die Seite a", "Die Seite b", "Alle sind gleich lang"],
+            korrekt: 0,
+            tipp: "Die Hypotenuse liegt dem rechten Winkel gegenüber.",
+            loesungsweg: "Da der rechte Winkel bei C ist, liegt die Seite **c** gegenüber (sie verbindet A und B). Also ist c die Hypotenuse."
+        },
+        {
+            id: 5,
+            level: 1,
+            typ: "mc",
+            frage: "Welcher Wert kann für \\(\\sin(\\alpha)\\) bei einem spitzen Winkel NIEMALS auftreten?",
+            optionen: ["1,5", "0,5", "0,707", "0,866"],
+            korrekt: 0,
+            tipp: "Sinus ist ein Verhältnis von Gegenkathete zu Hypotenuse — und die Hypotenuse ist die längste Seite.",
+            loesungsweg: "Da die Hypotenuse immer die längste Seite ist, gilt \\(0 < \\sin(\\alpha) \\leq 1\\) für spitze Winkel. **1,5** ist unmöglich."
+        },
+        {
+            id: 6,
+            level: 1,
+            typ: "mc",
+            frage: "Welche Formel ist der Tangens?",
+            optionen: ["\\(\\tan(\\alpha) = \\frac{\\text{Gegenkathete}}{\\text{Ankathete}}\\)", "\\(\\tan(\\alpha) = \\frac{\\text{Ankathete}}{\\text{Gegenkathete}}\\)", "\\(\\tan(\\alpha) = \\frac{\\sin(\\alpha)}{\\text{Hypotenuse}}\\)", "\\(\\tan(\\alpha) = \\frac{\\text{Hypotenuse}}{\\text{Ankathete}}\\)"],
+            korrekt: 0,
+            tipp: "TOA: Tangens = Opposite / Adjacent.",
+            loesungsweg: "\\(\\tan(\\alpha) = \\dfrac{\\text{Gegenkathete}}{\\text{Ankathete}} = \\dfrac{\\sin(\\alpha)}{\\cos(\\alpha)}\\)."
+        },
+
+        // ===== LEVEL 2: sin/cos/tan berechnen (Seiten gegeben) =====
+        {
+            id: 7,
+            level: 2,
+            typ: "numerisch",
+            frage: "In einem rechtwinkligen Dreieck ist die Gegenkathete von \\(\\alpha\\) gleich 3 cm und die Hypotenuse 5 cm. Berechne \\(\\sin(\\alpha)\\).",
+            loesung: 0.6,
+            toleranz: 0.01,
+            tipp: "\\(\\sin(\\alpha) = \\dfrac{\\text{Gegenkathete}}{\\text{Hypotenuse}}\\)",
+            loesungsweg: "\\(\\sin(\\alpha) = \\dfrac{3}{5} = 0{,}6\\)"
+        },
+        {
+            id: 8,
+            level: 2,
+            typ: "numerisch",
+            frage: "Im rechtwinkligen Dreieck sind Ankathete = 4 cm und Hypotenuse = 5 cm gegeben. Berechne \\(\\cos(\\alpha)\\).",
+            loesung: 0.8,
+            toleranz: 0.01,
+            tipp: "\\(\\cos(\\alpha) = \\dfrac{\\text{Ankathete}}{\\text{Hypotenuse}}\\)",
+            loesungsweg: "\\(\\cos(\\alpha) = \\dfrac{4}{5} = 0{,}8\\)"
+        },
+        {
+            id: 9,
+            level: 2,
+            typ: "numerisch",
+            frage: "Gegenkathete = 6 cm, Ankathete = 8 cm. Berechne \\(\\tan(\\alpha)\\).",
+            loesung: 0.75,
+            toleranz: 0.01,
+            tipp: "\\(\\tan(\\alpha) = \\dfrac{\\text{Gegenkathete}}{\\text{Ankathete}}\\)",
+            loesungsweg: "\\(\\tan(\\alpha) = \\dfrac{6}{8} = 0{,}75\\)"
+        },
+        {
+            id: 10,
+            level: 2,
+            typ: "mc",
+            frage: "In einem rechtwinkligen Dreieck ist \\(a = 7\\) cm (Gegenkathete von \\(\\alpha\\)) und \\(c = 25\\) cm (Hypotenuse). Welcher Wert hat \\(\\sin(\\alpha)\\)?",
+            optionen: ["0,28", "0,96", "3,57", "0,29"],
+            korrekt: 0,
+            tipp: "\\(\\sin(\\alpha) = \\dfrac{a}{c}\\)",
+            loesungsweg: "\\(\\sin(\\alpha) = \\dfrac{7}{25} = 0{,}28\\)"
+        },
+        {
+            id: 11,
+            level: 2,
+            typ: "numerisch",
+            frage: "Die Hypotenuse eines rechtwinkligen Dreiecks ist 13 cm lang, die Ankathete von \\(\\alpha\\) misst 12 cm. Wie groß ist \\(\\cos(\\alpha)\\)? Gib das Ergebnis auf zwei Nachkommastellen genau an.",
+            loesung: 0.92,
+            toleranz: 0.01,
+            tipp: "\\(\\cos(\\alpha) = \\dfrac{\\text{Ankathete}}{\\text{Hypotenuse}} = \\dfrac{12}{13}\\)",
+            loesungsweg: "\\(\\cos(\\alpha) = \\dfrac{12}{13} \\approx 0{,}923\\)"
+        },
+        {
+            id: 12,
+            level: 2,
+            typ: "numerisch",
+            frage: "Gegeben: Gegenkathete \\(= 5\\) cm, Ankathete \\(= 12\\) cm. Berechne \\(\\tan(\\alpha)\\) auf drei Nachkommastellen.",
+            loesung: 0.417,
+            toleranz: 0.005,
+            tipp: "\\(\\tan(\\alpha) = \\dfrac{5}{12}\\)",
+            loesungsweg: "\\(\\tan(\\alpha) = \\dfrac{5}{12} \\approx 0{,}417\\)"
+        },
+
+        // ===== LEVEL 3: Winkel mit Umkehrfunktion =====
+        {
+            id: 13,
+            level: 3,
+            typ: "numerisch",
+            frage: "Es gilt \\(\\sin(\\alpha) = 0{,}5\\). Wie groß ist \\(\\alpha\\) in Grad?",
+            loesung: 30,
+            toleranz: 0.5,
+            tipp: "Nutze \\(\\alpha = \\arcsin(0{,}5)\\) bzw. die \\(\\sin^{-1}\\)-Taste am Taschenrechner.",
+            loesungsweg: "\\(\\alpha = \\arcsin(0{,}5) = 30°\\) (einer der Standardwinkel)."
+        },
+        {
+            id: 14,
+            level: 3,
+            typ: "numerisch",
+            frage: "Berechne den Winkel \\(\\alpha\\), wenn \\(\\cos(\\alpha) = 0{,}5\\).",
+            loesung: 60,
+            toleranz: 0.5,
+            tipp: "\\(\\alpha = \\arccos(0{,}5)\\)",
+            loesungsweg: "\\(\\alpha = \\arccos(0{,}5) = 60°\\)"
+        },
+        {
+            id: 15,
+            level: 3,
+            typ: "numerisch",
+            frage: "Berechne \\(\\alpha\\) in Grad, wenn \\(\\tan(\\alpha) = 1\\).",
+            loesung: 45,
+            toleranz: 0.5,
+            tipp: "\\(\\alpha = \\arctan(1)\\)",
+            loesungsweg: "\\(\\alpha = \\arctan(1) = 45°\\), weil im gleichschenklig-rechtwinkligen Dreieck Gegenkathete = Ankathete."
+        },
+        {
+            id: 16,
+            level: 3,
+            typ: "numerisch",
+            frage: "Im rechtwinkligen Dreieck ist die Gegenkathete 4 cm, die Hypotenuse 8 cm. Wie groß ist \\(\\alpha\\) in Grad?",
+            loesung: 30,
+            toleranz: 0.5,
+            tipp: "Berechne zuerst \\(\\sin(\\alpha) = \\dfrac{4}{8}\\) und dann \\(\\arcsin\\).",
+            loesungsweg: "\\(\\sin(\\alpha) = \\dfrac{4}{8} = 0{,}5\\). Also \\(\\alpha = \\arcsin(0{,}5) = 30°\\)."
+        },
+        {
+            id: 17,
+            level: 3,
+            typ: "numerisch",
+            frage: "Ein rechtwinkliges Dreieck hat die Ankathete 6 cm und die Gegenkathete 6 cm. Wie groß ist der Winkel \\(\\alpha\\) in Grad?",
+            loesung: 45,
+            toleranz: 0.5,
+            tipp: "\\(\\tan(\\alpha) = \\dfrac{6}{6}\\)",
+            loesungsweg: "\\(\\tan(\\alpha) = \\dfrac{6}{6} = 1 \\Rightarrow \\alpha = 45°\\)."
+        },
+        {
+            id: 18,
+            level: 3,
+            typ: "numerisch",
+            frage: "Gegeben: Ankathete = 5 cm, Hypotenuse = 10 cm. Berechne \\(\\alpha\\) in Grad.",
+            loesung: 60,
+            toleranz: 0.5,
+            tipp: "\\(\\cos(\\alpha) = \\dfrac{5}{10}\\)",
+            loesungsweg: "\\(\\cos(\\alpha) = 0{,}5 \\Rightarrow \\alpha = \\arccos(0{,}5) = 60°\\)."
+        },
+
+        // ===== LEVEL 4: Fehlende Seite berechnen =====
+        {
+            id: 19,
+            level: 4,
+            typ: "numerisch",
+            frage: "In einem rechtwinkligen Dreieck ist die Hypotenuse \\(c = 10\\) cm und \\(\\alpha = 30°\\). Wie lang ist die Gegenkathete von \\(\\alpha\\)?",
+            loesung: 5,
+            toleranz: 0.05,
+            tipp: "\\(\\sin(\\alpha) = \\dfrac{a}{c}\\), also \\(a = c \\cdot \\sin(\\alpha)\\).",
+            loesungsweg: "\\(a = 10 \\cdot \\sin(30°) = 10 \\cdot 0{,}5 = 5\\) cm."
+        },
+        {
+            id: 20,
+            level: 4,
+            typ: "numerisch",
+            frage: "Die Hypotenuse misst \\(c = 12\\) cm und \\(\\alpha = 60°\\). Berechne die Ankathete von \\(\\alpha\\) in cm (zwei Nachkommastellen).",
+            loesung: 6,
+            toleranz: 0.1,
+            tipp: "\\(\\cos(\\alpha) = \\dfrac{b}{c}\\), also \\(b = c \\cdot \\cos(\\alpha)\\).",
+            loesungsweg: "\\(b = 12 \\cdot \\cos(60°) = 12 \\cdot 0{,}5 = 6\\) cm."
+        },
+        {
+            id: 21,
+            level: 4,
+            typ: "numerisch",
+            frage: "In einem rechtwinkligen Dreieck ist die Ankathete \\(b = 8\\) cm und \\(\\alpha = 45°\\). Wie lang ist die Gegenkathete \\(a\\)?",
+            loesung: 8,
+            toleranz: 0.1,
+            tipp: "\\(\\tan(\\alpha) = \\dfrac{a}{b}\\), also \\(a = b \\cdot \\tan(\\alpha)\\).",
+            loesungsweg: "\\(a = 8 \\cdot \\tan(45°) = 8 \\cdot 1 = 8\\) cm."
+        },
+        {
+            id: 22,
+            level: 4,
+            typ: "numerisch",
+            frage: "Gegeben: Gegenkathete \\(a = 7\\) cm und \\(\\alpha = 30°\\). Wie lang ist die Hypotenuse \\(c\\)?",
+            loesung: 14,
+            toleranz: 0.1,
+            tipp: "Aus \\(\\sin(\\alpha) = \\dfrac{a}{c}\\) folgt \\(c = \\dfrac{a}{\\sin(\\alpha)}\\).",
+            loesungsweg: "\\(c = \\dfrac{7}{\\sin(30°)} = \\dfrac{7}{0{,}5} = 14\\) cm."
+        },
+        {
+            id: 23,
+            level: 4,
+            typ: "numerisch",
+            frage: "Berechne die Ankathete \\(b\\), wenn die Hypotenuse 20 cm und \\(\\alpha = 40°\\) beträgt. Ergebnis in cm, zwei Nachkommastellen.",
+            loesung: 15.32,
+            toleranz: 0.05,
+            tipp: "\\(b = c \\cdot \\cos(\\alpha)\\)",
+            loesungsweg: "\\(b = 20 \\cdot \\cos(40°) \\approx 20 \\cdot 0{,}766 \\approx 15{,}32\\) cm."
+        },
+        {
+            id: 24,
+            level: 4,
+            typ: "mc",
+            frage: "Die Hypotenuse ist 15 cm lang, \\(\\alpha = 50°\\). Welche Länge hat die Gegenkathete (gerundet)?",
+            optionen: ["11,49 cm", "9,64 cm", "17,88 cm", "12,21 cm"],
+            korrekt: 0,
+            tipp: "\\(a = c \\cdot \\sin(\\alpha)\\)",
+            loesungsweg: "\\(a = 15 \\cdot \\sin(50°) \\approx 15 \\cdot 0{,}766 \\approx 11{,}49\\) cm."
+        },
+
+        // ===== LEVEL 5: Anwendungsaufgaben =====
+        {
+            id: 25,
+            level: 5,
+            typ: "numerisch",
+            frage: "Eine 5 m lange Leiter lehnt in einem Winkel von \\(70°\\) zum Boden an einer Wand. In welcher Höhe berührt sie die Wand? (in m, zwei Nachkommastellen)",
+            loesung: 4.7,
+            toleranz: 0.05,
+            tipp: "Höhe = Gegenkathete des Winkels am Boden. Nutze \\(\\sin\\).",
+            loesungsweg: "\\(h = 5 \\cdot \\sin(70°) \\approx 5 \\cdot 0{,}9397 \\approx 4{,}70\\) m."
+        },
+        {
+            id: 26,
+            level: 5,
+            typ: "numerisch",
+            frage: "Ein Turm wirft aus \\(30\\) m Entfernung unter einem Sehwinkel von \\(35°\\) (gemessen vom Boden zur Turmspitze) einen Schatten. Wie hoch ist der Turm? (in m, zwei Nachkommastellen)",
+            loesung: 21.01,
+            toleranz: 0.1,
+            tipp: "Höhe = Gegenkathete, Abstand = Ankathete. Nutze \\(\\tan\\).",
+            loesungsweg: "\\(h = 30 \\cdot \\tan(35°) \\approx 30 \\cdot 0{,}7002 \\approx 21{,}01\\) m."
+        },
+        {
+            id: 27,
+            level: 5,
+            typ: "numerisch",
+            frage: "Eine Straße steigt auf 100 m horizontaler Entfernung um 12 m an. Wie groß ist der Steigungswinkel in Grad (eine Nachkommastelle)?",
+            loesung: 6.8,
+            toleranz: 0.2,
+            tipp: "\\(\\tan(\\alpha) = \\dfrac{\\text{Höhe}}{\\text{horizontale Strecke}} = \\dfrac{12}{100}\\)",
+            loesungsweg: "\\(\\tan(\\alpha) = 0{,}12 \\Rightarrow \\alpha = \\arctan(0{,}12) \\approx 6{,}84°\\)."
+        },
+        {
+            id: 28,
+            level: 5,
+            typ: "numerisch",
+            frage: "Ein Böschungswinkel beträgt \\(25°\\). Die Böschung (Hypotenuse) ist 8 m lang. Wie hoch ist die Böschung (Gegenkathete) in m, zwei Nachkommastellen?",
+            loesung: 3.38,
+            toleranz: 0.05,
+            tipp: "\\(h = 8 \\cdot \\sin(25°)\\)",
+            loesungsweg: "\\(h = 8 \\cdot \\sin(25°) \\approx 8 \\cdot 0{,}4226 \\approx 3{,}38\\) m."
+        },
+        {
+            id: 29,
+            level: 5,
+            typ: "numerisch",
+            frage: "Von einem Leuchtturm (Höhe 40 m) sieht man ein Schiff unter einem Tiefenwinkel von \\(20°\\). Wie weit ist das Schiff vom Fuß des Leuchtturms entfernt? (in m, eine Nachkommastelle)",
+            loesung: 109.9,
+            toleranz: 0.5,
+            tipp: "Der Tiefenwinkel liegt oben am Turm. Der Abstand ist die Ankathete des \\(20°\\)-Winkels, die Höhe die Gegenkathete. Also \\(\\tan(20°) = \\dfrac{40}{x}\\).",
+            loesungsweg: "\\(x = \\dfrac{40}{\\tan(20°)} \\approx \\dfrac{40}{0{,}364} \\approx 109{,}9\\) m."
+        },
+        {
+            id: 30,
+            level: 5,
+            typ: "mc",
+            frage: "Eine 6 m lange Leiter steht 1,5 m von der Wand entfernt. Welchen Winkel bildet sie mit dem Boden (gerundet)?",
+            optionen: ["75,5°", "14,5°", "60°", "78,5°"],
+            korrekt: 0,
+            tipp: "\\(\\cos(\\alpha) = \\dfrac{1{,}5}{6}\\)",
+            loesungsweg: "\\(\\cos(\\alpha) = \\dfrac{1{,}5}{6} = 0{,}25 \\Rightarrow \\alpha = \\arccos(0{,}25) \\approx 75{,}52°\\)."
+        },
+
+        // ===== LEVEL 6: Zwei-Schritt-Probleme =====
+        {
+            id: 31,
+            level: 6,
+            typ: "numerisch",
+            frage: "In einem rechtwinkligen Dreieck ist \\(\\alpha = 35°\\) und die Hypotenuse \\(c = 20\\) cm. Berechne zuerst die Gegenkathete \\(a\\), dann die Ankathete \\(b\\). Gib die Summe \\(a + b\\) in cm auf eine Nachkommastelle an.",
+            loesung: 27.9,
+            toleranz: 0.2,
+            tipp: "\\(a = 20 \\cdot \\sin(35°)\\), \\(b = 20 \\cdot \\cos(35°)\\).",
+            loesungsweg: "\\(a \\approx 20 \\cdot 0{,}5736 \\approx 11{,}47\\) cm, \\(b \\approx 20 \\cdot 0{,}8192 \\approx 16{,}38\\) cm. Summe: \\(a+b \\approx 27{,}86 \\approx 27{,}9\\) cm."
+        },
+        {
+            id: 32,
+            level: 6,
+            typ: "numerisch",
+            frage: "Ein Dreieck hat \\(\\alpha = 40°\\) und die Gegenkathete \\(a = 6\\) cm. Berechne die Ankathete \\(b\\) in cm (zwei Nachkommastellen).",
+            loesung: 7.15,
+            toleranz: 0.05,
+            tipp: "\\(\\tan(\\alpha) = \\dfrac{a}{b}\\), also \\(b = \\dfrac{a}{\\tan(\\alpha)}\\).",
+            loesungsweg: "\\(b = \\dfrac{6}{\\tan(40°)} \\approx \\dfrac{6}{0{,}8391} \\approx 7{,}15\\) cm."
+        },
+        {
+            id: 33,
+            level: 6,
+            typ: "numerisch",
+            frage: "Vom Fuß eines Berges misst man den Höhenwinkel zur Bergspitze: \\(25°\\). Nach 200 m näher am Berg misst man wieder und erhält \\(35°\\). Wie hoch ist der Berg (in m, eine Nachkommastelle)?",
+            loesung: 279.2,
+            toleranz: 2,
+            tipp: "Ansatz: Sei \\(h\\) die Berghöhe und \\(x\\) der Abstand des zweiten Messpunktes vom Fuß des Berges. Dann gilt \\(\\tan(35°) = \\dfrac{h}{x}\\) und \\(\\tan(25°) = \\dfrac{h}{x+200}\\).",
+            loesungsweg: "Aus \\(\\tan(35°) = \\dfrac{h}{x}\\): \\(x = \\dfrac{h}{\\tan(35°)}\\). Einsetzen in die zweite Gleichung: \\(\\tan(25°) \\cdot \\left(\\dfrac{h}{\\tan(35°)} + 200\\right) = h\\). Umformen: \\(h = \\dfrac{200 \\cdot \\tan(25°) \\cdot \\tan(35°)}{\\tan(35°) - \\tan(25°)} \\approx \\dfrac{200 \\cdot 0{,}4663 \\cdot 0{,}7002}{0{,}7002 - 0{,}4663} \\approx \\dfrac{65{,}31}{0{,}2339} \\approx 279{,}2\\) m."
+        },
+        {
+            id: 34,
+            level: 6,
+            typ: "numerisch",
+            frage: "In einem rechtwinkligen Dreieck gilt \\(\\tan(\\alpha) = \\dfrac{3}{4}\\). Wie groß ist \\(\\sin(\\alpha)\\)?",
+            loesung: 0.6,
+            toleranz: 0.01,
+            tipp: "Gegenkathete = 3, Ankathete = 4. Berechne die Hypotenuse mit Pythagoras.",
+            loesungsweg: "Pythagoras: \\(c = \\sqrt{3^2 + 4^2} = \\sqrt{25} = 5\\). Also \\(\\sin(\\alpha) = \\dfrac{3}{5} = 0{,}6\\)."
+        },
+        {
+            id: 35,
+            level: 6,
+            typ: "mc",
+            frage: "In einem gleichschenkligen Dreieck beträgt die Basis 10 cm und der Basiswinkel \\(70°\\). Wie hoch ist das Dreieck (Höhe auf die Basis)?",
+            optionen: ["13,74 cm", "9,40 cm", "3,64 cm", "18,79 cm"],
+            korrekt: 0,
+            tipp: "Die Höhe halbiert die Basis. Betrachte das halbe Dreieck: Ankathete = 5 cm, Winkel \\(70°\\), Höhe = Gegenkathete. Nutze \\(\\tan(70°) = \\dfrac{h}{5}\\).",
+            loesungsweg: "\\(h = 5 \\cdot \\tan(70°) \\approx 5 \\cdot 2{,}7475 \\approx 13{,}74\\) cm."
+        },
+        {
+            id: 36,
+            level: 6,
+            typ: "numerisch",
+            frage: "Ein Flugzeug fliegt in \\(2000\\) m Höhe. Der Pilot sieht einen Flughafen unter einem Tiefenwinkel von \\(15°\\). Wie viele Kilometer (Luftlinie, horizontal) ist der Flughafen noch entfernt? Runde auf eine Nachkommastelle.",
+            loesung: 7.5,
+            toleranz: 0.2,
+            tipp: "Die \\(2000\\) m sind die Gegenkathete, der horizontale Abstand die Ankathete des \\(15°\\)-Winkels. \\(\\tan(15°) = \\dfrac{2000}{x}\\).",
+            loesungsweg: "\\(x = \\dfrac{2000}{\\tan(15°)} \\approx \\dfrac{2000}{0{,}2679} \\approx 7463{,}1\\) m \\(\\approx 7{,}5\\) km."
+        }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Potenzfunktionen (nat. Exp.) - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '10-pot-natuerliche-exp';
+    const THEMA_CONFIG = { name: 'Potenzfunktionen (nat. Exp.)', bereich: 'analysis' };
+    const AUFGABEN = [
+      // ========== LEVEL 1 — babyleicht: f(x) = x^n an einer Stelle berechnen ==========
+      {
+        "id": 1,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Gegeben ist \\(f(x) = x^2\\). Welchen Wert hat \\(f(3)\\)?",
+        "optionen": ["\\(6\\)", "\\(9\\)", "\\(5\\)", "\\(8\\)"],
+        "korrekt": 1,
+        "tipp": "Setze \\(x = 3\\) in \\(x^2\\) ein.",
+        "loesungsweg": "$$f(3) = 3^2 = 3 \\cdot 3 = 9$$"
+      },
+      {
+        "id": 2,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Gegeben ist \\(f(x) = x^3\\). Welchen Wert hat \\(f(2)\\)?",
+        "optionen": ["\\(6\\)", "\\(9\\)", "\\(8\\)", "\\(4\\)"],
+        "korrekt": 2,
+        "tipp": "Setze \\(x = 2\\) in \\(x^3\\) ein.",
+        "loesungsweg": "$$f(2) = 2^3 = 2 \\cdot 2 \\cdot 2 = 8$$"
+      },
+      {
+        "id": 3,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Gegeben ist \\(f(x) = x^4\\). Berechne \\(f(2)\\).",
+        "loesung": 16,
+        "toleranz": 0,
+        "tipp": "Viermal die 2 miteinander multiplizieren.",
+        "loesungsweg": "$$f(2) = 2^4 = 2 \\cdot 2 \\cdot 2 \\cdot 2 = 16$$"
+      },
+      {
+        "id": 4,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Gegeben ist \\(f(x) = x^3\\). Welchen Wert hat \\(f(-2)\\)?",
+        "optionen": ["\\(8\\)", "\\(-8\\)", "\\(6\\)", "\\(-6\\)"],
+        "korrekt": 1,
+        "tipp": "Denke daran: Ungerade Potenz einer negativen Zahl bleibt negativ.",
+        "loesungsweg": "$$f(-2) = (-2)^3 = (-2) \\cdot (-2) \\cdot (-2) = -8$$"
+      },
+      {
+        "id": 5,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Gegeben ist \\(f(x) = x^2\\). Berechne \\(f(-5)\\).",
+        "loesung": 25,
+        "toleranz": 0,
+        "tipp": "Gerade Potenz einer negativen Zahl ist positiv.",
+        "loesungsweg": "$$f(-5) = (-5)^2 = 25$$"
+      },
+      {
+        "id": 6,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Gegeben ist \\(f(x) = x^5\\). Berechne \\(f(2)\\).",
+        "loesung": 32,
+        "toleranz": 0,
+        "tipp": "\\(2^5 = 2 \\cdot 2 \\cdot 2 \\cdot 2 \\cdot 2\\)",
+        "loesungsweg": "$$f(2) = 2^5 = 32$$"
+      },
+
+      // ========== LEVEL 2 — leicht: Symmetrie (gerade/ungerade) ==========
+      {
+        "id": 7,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Welche Symmetrie besitzt der Graph von \\(f(x) = x^2\\)?",
+        "optionen": [
+          "Achsensymmetrisch zur \\(y\\)-Achse",
+          "Punktsymmetrisch zum Ursprung",
+          "Achsensymmetrisch zur \\(x\\)-Achse",
+          "Keine Symmetrie"
+        ],
+        "korrekt": 0,
+        "tipp": "Gerader Exponent \\(\\Rightarrow\\) Achsensymmetrie zur \\(y\\)-Achse.",
+        "loesungsweg": "Der Exponent 2 ist gerade. Es gilt \\(f(-x) = (-x)^2 = x^2 = f(x)\\). Der Graph ist **achsensymmetrisch zur \\(y\\)-Achse**."
+      },
+      {
+        "id": 8,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Welche Symmetrie besitzt der Graph von \\(f(x) = x^3\\)?",
+        "optionen": [
+          "Achsensymmetrisch zur \\(y\\)-Achse",
+          "Punktsymmetrisch zum Ursprung",
+          "Achsensymmetrisch zur \\(x\\)-Achse",
+          "Keine Symmetrie"
+        ],
+        "korrekt": 1,
+        "tipp": "Ungerader Exponent \\(\\Rightarrow\\) Punktsymmetrie zum Ursprung.",
+        "loesungsweg": "Der Exponent 3 ist ungerade. Es gilt \\(f(-x) = (-x)^3 = -x^3 = -f(x)\\). Der Graph ist **punktsymmetrisch zum Ursprung**."
+      },
+      {
+        "id": 9,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Welche Symmetrie besitzt der Graph von \\(f(x) = x^{10}\\)?",
+        "optionen": [
+          "Achsensymmetrisch zur \\(y\\)-Achse",
+          "Punktsymmetrisch zum Ursprung",
+          "Keine Symmetrie",
+          "Beide Symmetrien"
+        ],
+        "korrekt": 0,
+        "tipp": "Ist der Exponent 10 gerade oder ungerade?",
+        "loesungsweg": "Der Exponent 10 ist gerade, also gilt \\(f(-x) = (-x)^{10} = x^{10} = f(x)\\). Der Graph ist **achsensymmetrisch zur \\(y\\)-Achse**."
+      },
+      {
+        "id": 10,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Welche der folgenden Funktionen ist punktsymmetrisch zum Ursprung?",
+        "optionen": [
+          "\\(f(x) = x^4\\)",
+          "\\(f(x) = x^6\\)",
+          "\\(f(x) = x^7\\)",
+          "\\(f(x) = x^2\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Punktsymmetrie zum Ursprung \\(\\Leftrightarrow\\) ungerader Exponent.",
+        "loesungsweg": "Nur \\(x^7\\) hat einen ungeraden Exponenten. Damit gilt \\(f(-x) = -f(x)\\), der Graph ist **punktsymmetrisch zum Ursprung**."
+      },
+      {
+        "id": 11,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Für welchen Exponenten \\(n\\) ist \\(f(x) = x^n\\) achsensymmetrisch zur \\(y\\)-Achse?",
+        "optionen": [
+          "Für jedes \\(n\\)",
+          "Für gerade \\(n\\)",
+          "Für ungerade \\(n\\)",
+          "Für \\(n = 0\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Prüfe \\((-x)^n\\) für gerade und ungerade \\(n\\).",
+        "loesungsweg": "Für gerade \\(n\\) gilt \\((-x)^n = x^n\\), also \\(f(-x) = f(x)\\) — das ist genau die Bedingung für Achsensymmetrie zur \\(y\\)-Achse."
+      },
+      {
+        "id": 12,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Welche Aussage über \\(f(x) = x^5\\) ist richtig?",
+        "optionen": [
+          "Der Graph verläuft nur im 1. und 2. Quadranten",
+          "Der Graph verläuft im 1. und 3. Quadranten",
+          "Der Graph ist achsensymmetrisch zur \\(y\\)-Achse",
+          "Die Funktion hat zwei Nullstellen"
+        ],
+        "korrekt": 1,
+        "tipp": "Ungerade Potenzfunktionen verlaufen durch 1. und 3. Quadranten.",
+        "loesungsweg": "Für \\(x > 0\\) ist \\(x^5 > 0\\) (1. Quadrant), für \\(x < 0\\) ist \\(x^5 < 0\\) (3. Quadrant). Der Graph verläuft also im **1. und 3. Quadranten**."
+      },
+
+      // ========== LEVEL 3 — mittel: Vergleich x², x³, x⁴ und Verhalten im Unendlichen ==========
+      {
+        "id": 13,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Wie verhält sich \\(f(x) = x^4\\) für \\(x \\to -\\infty\\)?",
+        "optionen": [
+          "\\(f(x) \\to +\\infty\\)",
+          "\\(f(x) \\to -\\infty\\)",
+          "\\(f(x) \\to 0\\)",
+          "\\(f(x) \\to 1\\)"
+        ],
+        "korrekt": 0,
+        "tipp": "Gerader Exponent: Funktionswerte werden immer positiv (für \\(|x|\\) groß).",
+        "loesungsweg": "Für \\(x \\to -\\infty\\) wird \\(|x|\\) beliebig groß. Da \\(x^4 = (x^2)^2 \\geq 0\\), folgt \\(x^4 \\to +\\infty\\)."
+      },
+      {
+        "id": 14,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Wie verhält sich \\(f(x) = x^3\\) für \\(x \\to -\\infty\\)?",
+        "optionen": [
+          "\\(f(x) \\to +\\infty\\)",
+          "\\(f(x) \\to -\\infty\\)",
+          "\\(f(x) \\to 0\\)",
+          "\\(f(x) \\to 3\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Ungerader Exponent: Vorzeichen bleibt erhalten.",
+        "loesungsweg": "Für ungerade \\(n\\) gilt: \\(x \\to -\\infty \\Rightarrow x^n \\to -\\infty\\). Also \\(x^3 \\to -\\infty\\)."
+      },
+      {
+        "id": 15,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Welche Aussage zum Vergleich von \\(x^2\\) und \\(x^4\\) auf dem Intervall \\((0;1)\\) ist richtig?",
+        "optionen": [
+          "Es gilt \\(x^4 > x^2\\)",
+          "Es gilt \\(x^4 < x^2\\)",
+          "Es gilt \\(x^4 = x^2\\)",
+          "Die Ungleichung wechselt"
+        ],
+        "korrekt": 1,
+        "tipp": "Probiere \\(x = 0{,}5\\): Was ist größer, \\(0{,}25\\) oder \\(0{,}0625\\)?",
+        "loesungsweg": "Für \\(0 < x < 1\\) wird die Potenz bei höherem Exponenten **kleiner**. Beispiel \\(x = 0{,}5\\): \\(0{,}5^2 = 0{,}25\\), \\(0{,}5^4 = 0{,}0625\\). Also \\(x^4 < x^2\\) auf \\((0;1)\\)."
+      },
+      {
+        "id": 16,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Welche Funktion wächst für \\(x \\to +\\infty\\) am schnellsten?",
+        "optionen": [
+          "\\(f(x) = x^2\\)",
+          "\\(f(x) = x^3\\)",
+          "\\(f(x) = x^5\\)",
+          "\\(f(x) = x\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Je höher der Exponent, desto schneller das Wachstum (für \\(x > 1\\)).",
+        "loesungsweg": "Für \\(x > 1\\) gilt: \\(x < x^2 < x^3 < x^5\\). Die Funktion mit dem höchsten Exponenten wächst am schnellsten, also **\\(x^5\\)**."
+      },
+      {
+        "id": 17,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Für wie viele \\(x\\)-Werte gilt \\(x^2 = x^4\\)? (Anzahl der Lösungen)",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "Umformen zu \\(x^4 - x^2 = 0\\) und ausklammern.",
+        "loesungsweg": "$$x^4 - x^2 = 0 \\Leftrightarrow x^2(x^2 - 1) = 0 \\Leftrightarrow x^2(x-1)(x+1) = 0$$ Lösungen: \\(x = 0\\), \\(x = 1\\), \\(x = -1\\). Das sind **3 Lösungen**."
+      },
+      {
+        "id": 18,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Welche Eigenschaft haben alle Funktionen \\(f(x) = x^n\\) mit \\(n \\in \\mathbb{N}\\) gemeinsam?",
+        "optionen": [
+          "Sie sind alle achsensymmetrisch",
+          "Sie verlaufen alle durch \\((0|0)\\) und \\((1|1)\\)",
+          "Sie haben alle zwei Nullstellen",
+          "Sie verlaufen alle nur im 1. Quadranten"
+        ],
+        "korrekt": 1,
+        "tipp": "Setze \\(x = 0\\) und \\(x = 1\\) ein.",
+        "loesungsweg": "Für jedes \\(n \\in \\mathbb{N}\\) gilt \\(0^n = 0\\) und \\(1^n = 1\\). Damit verlaufen alle Graphen durch **\\((0|0)\\) und \\((1|1)\\)**."
+      },
+
+      // ========== LEVEL 4 — mittel-schwer: Streckungsfaktor a aus Punkt bestimmen ==========
+      {
+        "id": 19,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Die Funktion \\(f(x) = a \\cdot x^2\\) verläuft durch den Punkt \\(P(2|12)\\). Bestimme \\(a\\).",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "Setze die Koordinaten von \\(P\\) in die Gleichung ein und löse nach \\(a\\) auf.",
+        "loesungsweg": "$$f(2) = a \\cdot 2^2 = 4a = 12 \\Rightarrow a = 3$$"
+      },
+      {
+        "id": 20,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Die Funktion \\(f(x) = a \\cdot x^3\\) verläuft durch den Punkt \\(P(2|16)\\). Bestimme \\(a\\).",
+        "loesung": 2,
+        "toleranz": 0,
+        "tipp": "Einsetzen: \\(16 = a \\cdot 2^3\\).",
+        "loesungsweg": "$$f(2) = a \\cdot 2^3 = 8a = 16 \\Rightarrow a = 2$$"
+      },
+      {
+        "id": 21,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Die Funktion \\(f(x) = a \\cdot x^4\\) verläuft durch den Punkt \\(P(-2|48)\\). Bestimme \\(a\\).",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "Achtung: \\((-2)^4 = 16\\).",
+        "loesungsweg": "$$f(-2) = a \\cdot (-2)^4 = 16a = 48 \\Rightarrow a = 3$$"
+      },
+      {
+        "id": 22,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Die Funktion \\(f(x) = a \\cdot x^2\\) verläuft durch \\(P(4|4)\\). Bestimme \\(a\\) (als Dezimalzahl).",
+        "loesung": 0.25,
+        "toleranz": 0.01,
+        "tipp": "\\(a \\cdot 16 = 4\\).",
+        "loesungsweg": "$$f(4) = a \\cdot 4^2 = 16a = 4 \\Rightarrow a = \\frac{4}{16} = \\frac{1}{4} = 0{,}25$$"
+      },
+      {
+        "id": 23,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Die Funktion \\(f(x) = a \\cdot x^3\\) verläuft durch \\(P(-1|5)\\). Welchen Wert hat \\(a\\)?",
+        "optionen": ["\\(a = 5\\)", "\\(a = -5\\)", "\\(a = \\tfrac{1}{5}\\)", "\\(a = -\\tfrac{1}{5}\\)"],
+        "korrekt": 1,
+        "tipp": "\\((-1)^3 = -1\\), also \\(a \\cdot (-1) = 5\\).",
+        "loesungsweg": "$$f(-1) = a \\cdot (-1)^3 = -a = 5 \\Rightarrow a = -5$$"
+      },
+      {
+        "id": 24,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Die Funktion \\(f(x) = a \\cdot x^5\\) verläuft durch \\(P(2|64)\\). Bestimme \\(a\\).",
+        "loesung": 2,
+        "toleranz": 0,
+        "tipp": "\\(2^5 = 32\\).",
+        "loesungsweg": "$$f(2) = a \\cdot 2^5 = 32a = 64 \\Rightarrow a = 2$$"
+      },
+
+      // ========== LEVEL 5 — schwer: Verschiebungen (x-d)^n + e ==========
+      {
+        "id": 25,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Gegeben ist \\(f(x) = (x-2)^2 + 3\\). Berechne \\(f(5)\\).",
+        "loesung": 12,
+        "toleranz": 0,
+        "tipp": "Zuerst die Klammer, dann quadrieren, dann addieren.",
+        "loesungsweg": "$$f(5) = (5-2)^2 + 3 = 3^2 + 3 = 9 + 3 = 12$$"
+      },
+      {
+        "id": 26,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Gegeben ist \\(f(x) = (x+1)^3 - 4\\). Berechne \\(f(1)\\).",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "\\((1+1)^3 = 8\\).",
+        "loesungsweg": "$$f(1) = (1+1)^3 - 4 = 2^3 - 4 = 8 - 4 = 4$$"
+      },
+      {
+        "id": 27,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Der Graph von \\(f(x) = x^2\\) wird um 3 nach rechts und 2 nach oben verschoben. Wie lautet die neue Funktionsgleichung?",
+        "optionen": [
+          "\\(g(x) = (x+3)^2 + 2\\)",
+          "\\(g(x) = (x-3)^2 + 2\\)",
+          "\\(g(x) = (x-3)^2 - 2\\)",
+          "\\(g(x) = (x+3)^2 - 2\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Verschiebung nach **rechts** um \\(d\\): \\(x \\to x - d\\).",
+        "loesungsweg": "Verschiebung um 3 nach rechts: \\(x \\to x - 3\\). Verschiebung um 2 nach oben: \\(+2\\). Ergebnis: \\(g(x) = (x-3)^2 + 2\\)."
+      },
+      {
+        "id": 28,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Der Scheitel/Verschiebungspunkt von \\(f(x) = (x-4)^2 + 5\\) liegt bei \\((x_S | y_S)\\). Gib \\(x_S\\) an.",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "Bei \\((x-d)^n + e\\) liegt der Verschiebungspunkt bei \\((d|e)\\).",
+        "loesungsweg": "Aus \\(f(x) = (x-4)^2 + 5\\) liest man \\(d = 4\\) und \\(e = 5\\) ab. Der Scheitel liegt bei \\((4|5)\\), also \\(x_S = 4\\)."
+      },
+      {
+        "id": 29,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Gegeben ist \\(f(x) = (x-1)^3 + 2\\). An welcher Stelle schneidet der Graph die \\(y\\)-Achse? (Gib den \\(y\\)-Wert des Schnittpunkts an.)",
+        "loesung": 1,
+        "toleranz": 0,
+        "tipp": "Setze \\(x = 0\\) ein.",
+        "loesungsweg": "$$f(0) = (0-1)^3 + 2 = (-1)^3 + 2 = -1 + 2 = 1$$ Der \\(y\\)-Achsenabschnitt ist \\(1\\)."
+      },
+      {
+        "id": 30,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Die Funktion \\(f(x) = (x-d)^2 + 1\\) verläuft durch den Punkt \\(P(5|10)\\) mit \\(0 < d < 5\\). Bestimme \\(d\\).",
+        "loesung": 2,
+        "toleranz": 0,
+        "tipp": "\\((5-d)^2 + 1 = 10 \\Rightarrow (5-d)^2 = 9\\).",
+        "loesungsweg": "$$(5-d)^2 + 1 = 10 \\Rightarrow (5-d)^2 = 9 \\Rightarrow 5-d = \\pm 3$$ Also \\(d = 2\\) oder \\(d = 8\\). Wegen \\(0 < d < 5\\) bleibt nur \\(d = 2\\). Probe: \\(f(5) = (5-2)^2 + 1 = 9 + 1 = 10\\) ✓."
+      },
+
+      // ========== LEVEL 6 — sehr schwer: Funktionsgleichung aus Eigenschaften aufstellen ==========
+      {
+        "id": 31,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Der Graph von \\(f(x) = a \\cdot x^n\\) verläuft durch \\(P(1|3)\\) und \\(Q(2|24)\\). Bestimme \\(n\\).",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "Aus \\(P\\) folgt \\(a = 3\\). Setze dies dann in die Gleichung für \\(Q\\) ein.",
+        "loesungsweg": "Aus \\(P(1|3)\\): \\(a \\cdot 1^n = a = 3\\). Aus \\(Q(2|24)\\): $$3 \\cdot 2^n = 24 \\Rightarrow 2^n = 8 \\Rightarrow n = 3$$"
+      },
+      {
+        "id": 32,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Der Graph von \\(f(x) = a \\cdot x^n\\) verläuft durch \\(P(1|2)\\) und \\(Q(3|162)\\). Bestimme \\(n\\).",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "Aus \\(P\\): \\(a = 2\\). Dann \\(2 \\cdot 3^n = 162\\).",
+        "loesungsweg": "Aus \\(P(1|2)\\): \\(a = 2\\). Aus \\(Q(3|162)\\): $$2 \\cdot 3^n = 162 \\Rightarrow 3^n = 81 \\Rightarrow n = 4$$"
+      },
+      {
+        "id": 33,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Gesucht ist eine Potenzfunktion der Form \\(f(x) = a \\cdot x^3\\), deren Graph punktsymmetrisch zum Ursprung ist und durch \\(P(2|-16)\\) verläuft. Wie lautet sie?",
+        "optionen": [
+          "\\(f(x) = -2 x^3\\)",
+          "\\(f(x) = 2 x^3\\)",
+          "\\(f(x) = -4 x^3\\)",
+          "\\(f(x) = -\\tfrac{1}{2} x^3\\)"
+        ],
+        "korrekt": 0,
+        "tipp": "Setze die Koordinaten von \\(P\\) in \\(f(x) = a \\cdot x^3\\) ein.",
+        "loesungsweg": "Jede Funktion \\(a \\cdot x^3\\) ist punktsymmetrisch zum Ursprung. Einsetzen von \\(P(2|-16)\\): $$a \\cdot 2^3 = -16 \\Rightarrow 8a = -16 \\Rightarrow a = -2$$ Also \\(f(x) = -2x^3\\)."
+      },
+      {
+        "id": 34,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Die Funktion \\(f(x) = (x-d)^4\\) hat die Nullstelle \\(x_0 = 3\\). Bestimme \\(d\\).",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "\\((x-d)^4 = 0 \\Leftrightarrow x = d\\).",
+        "loesungsweg": "Aus \\((x-d)^4 = 0\\) folgt \\(x = d\\). Da die Nullstelle bei \\(x_0 = 3\\) liegt, muss \\(d = 3\\) sein."
+      },
+      {
+        "id": 35,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Gegeben: \\(f(x) = a \\cdot (x-1)^2 + 3\\). Der Graph verläuft durch \\(P(3|11)\\). Bestimme \\(a\\).",
+        "loesung": 2,
+        "toleranz": 0,
+        "tipp": "Einsetzen: \\(a \\cdot (3-1)^2 + 3 = 11\\).",
+        "loesungsweg": "$$a \\cdot (3-1)^2 + 3 = 11 \\Rightarrow a \\cdot 4 + 3 = 11 \\Rightarrow 4a = 8 \\Rightarrow a = 2$$"
+      },
+      {
+        "id": 36,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Die Funktion \\(f(x) = a \\cdot (x - d)^3\\) verläuft durch \\((2|0)\\) und \\((4|16)\\). Bestimme \\(a\\).",
+        "loesung": 2,
+        "toleranz": 0,
+        "tipp": "Aus der Nullstelle folgt \\(d\\); dann mit dem zweiten Punkt \\(a\\) berechnen.",
+        "loesungsweg": "Nullstelle bei \\(x = 2\\): \\(a(2-d)^3 = 0 \\Rightarrow d = 2\\). Einsetzen von \\((4|16)\\): $$a \\cdot (4-2)^3 = 16 \\Rightarrow 8a = 16 \\Rightarrow a = 2$$"
+      }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

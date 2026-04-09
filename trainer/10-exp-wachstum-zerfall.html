@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exponentielles Wachstum & Zerfall - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '10-exp-wachstum-zerfall';
+    const THEMA_CONFIG = { name: 'Wachstum & Zerfall', bereich: 'analysis' };
+    const AUFGABEN = [
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 1 — Wachstumsfaktor aus Prozentsatz
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 1, level: 1, typ: "mc",
+        frage: "Ein Bestand wächst jährlich um \\(5\\%\\). Wie lautet der Wachstumsfaktor \\(q\\)?",
+        optionen: ["\\(q = 1{,}05\\)", "\\(q = 0{,}05\\)", "\\(q = 1{,}5\\)", "\\(q = 0{,}95\\)"],
+        korrekt: 0,
+        tipp: "Bei Wachstum: \\(q = 1 + \\frac{p}{100}\\).",
+        loesungsweg: "\\(+5\\%\\) bedeutet \\(q = 1 + 0{,}05 = 1{,}05\\)."
+    },
+    {
+        id: 2, level: 1, typ: "mc",
+        frage: "Ein Bestand nimmt jährlich um \\(3\\%\\) ab. Wie lautet der Wachstumsfaktor \\(q\\)?",
+        optionen: ["\\(q = 1{,}03\\)", "\\(q = 0{,}97\\)", "\\(q = -0{,}03\\)", "\\(q = 0{,}03\\)"],
+        korrekt: 1,
+        tipp: "Bei Abnahme: \\(q = 1 - \\frac{p}{100}\\).",
+        loesungsweg: "\\(-3\\%\\) bedeutet \\(q = 1 - 0{,}03 = 0{,}97\\)."
+    },
+    {
+        id: 3, level: 1, typ: "mc",
+        frage: "Ein Kapital verzinst sich mit \\(12\\%\\) pro Jahr. Welcher Wachstumsfaktor gehört dazu?",
+        optionen: ["\\(q = 0{,}12\\)", "\\(q = 1{,}2\\)", "\\(q = 1{,}12\\)", "\\(q = 0{,}88\\)"],
+        korrekt: 2,
+        tipp: "Zuerst Prozent in Dezimal umrechnen: \\(12\\% = 0{,}12\\).",
+        loesungsweg: "\\(q = 1 + 0{,}12 = 1{,}12\\)."
+    },
+    {
+        id: 4, level: 1, typ: "mc",
+        frage: "Der Wert eines Autos sinkt jährlich um \\(25\\%\\). Welcher Wachstumsfaktor beschreibt den Zerfall?",
+        optionen: ["\\(q = 0{,}25\\)", "\\(q = 0{,}75\\)", "\\(q = 1{,}25\\)", "\\(q = -0{,}25\\)"],
+        korrekt: 1,
+        tipp: "Bei Abnahme: \\(q = 1 - \\frac{p}{100}\\). Der Faktor liegt zwischen 0 und 1.",
+        loesungsweg: "\\(q = 1 - 0{,}25 = 0{,}75\\). Nach einem Jahr sind noch \\(75\\%\\) übrig."
+    },
+    {
+        id: 5, level: 1, typ: "mc",
+        frage: "Eine Bakterienkultur verdoppelt sich in einer Stunde (\\(+100\\%\\)). Wie lautet \\(q\\)?",
+        optionen: ["\\(q = 1\\)", "\\(q = 1{,}5\\)", "\\(q = 2\\)", "\\(q = 100\\)"],
+        korrekt: 2,
+        tipp: "\\(+100\\%\\) heißt, der Bestand wird verdoppelt.",
+        loesungsweg: "\\(q = 1 + 1 = 2\\). Nach einer Stunde ist der Bestand doppelt so groß."
+    },
+    {
+        id: 6, level: 1, typ: "mc",
+        frage: "Ein radioaktiver Stoff halbiert sich (\\(-50\\%\\) pro Zeitschritt). Wie lautet \\(q\\)?",
+        optionen: ["\\(q = 0{,}5\\)", "\\(q = -0{,}5\\)", "\\(q = 1{,}5\\)", "\\(q = 2\\)"],
+        korrekt: 0,
+        tipp: "\\(-50\\%\\) bedeutet, dass nur noch die Hälfte vorhanden ist.",
+        loesungsweg: "\\(q = 1 - 0{,}5 = 0{,}5\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 2 — B(t) = B_0 · q^t berechnen
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 7, level: 2, typ: "numerisch",
+        frage: "Ein Kapital von \\(1000\\,€\\) wird mit \\(5\\%\\) pro Jahr verzinst. Welchen Wert hat das Kapital nach \\(10\\) Jahren? <br>Runde auf zwei Dezimalstellen.",
+        loesung: 1628.89, toleranz: 0.01,
+        tipp: "Zinseszinsformel: \\(K_n = K_0 \\cdot (1 + p)^n\\) mit \\(p = 0{,}05\\) und \\(n = 10\\).",
+        loesungsweg: "\\(K_{10} = 1000 \\cdot 1{,}05^{10} = 1000 \\cdot 1{,}62889\\ldots \\approx 1628{,}89\\,€\\)."
+    },
+    {
+        id: 8, level: 2, typ: "numerisch",
+        frage: "Ein Kapital von \\(500\\,€\\) wird mit \\(4\\%\\) pro Jahr verzinst. Welchen Wert hat es nach \\(5\\) Jahren? <br>Runde auf zwei Dezimalstellen.",
+        loesung: 608.33, toleranz: 0.01,
+        tipp: "\\(B(t) = B_0 \\cdot q^t\\) mit \\(B_0 = 500\\), \\(q = 1{,}04\\), \\(t = 5\\).",
+        loesungsweg: "\\(B(5) = 500 \\cdot 1{,}04^5 = 500 \\cdot 1{,}21665 \\approx 608{,}33\\,€\\)."
+    },
+    {
+        id: 9, level: 2, typ: "numerisch",
+        frage: "Eine Population von \\(200\\) Tieren nimmt jährlich um \\(10\\%\\) ab. Wie groß ist der Bestand nach \\(3\\) Jahren?",
+        loesung: 145.8, toleranz: 0.01,
+        tipp: "Wachstumsfaktor: \\(q = 0{,}9\\). Dann \\(B(3) = 200 \\cdot 0{,}9^3\\).",
+        loesungsweg: "\\(B(3) = 200 \\cdot 0{,}9^3 = 200 \\cdot 0{,}729 = 145{,}8\\) Tiere."
+    },
+    {
+        id: 10, level: 2, typ: "numerisch",
+        frage: "Eine Bakterienkultur hat anfangs \\(100\\) Bakterien und verdoppelt sich jede Stunde. Wie viele Bakterien sind nach \\(5\\) Stunden vorhanden?",
+        loesung: 3200, toleranz: 0,
+        tipp: "Verdopplung: \\(q = 2\\). Dann \\(B(5) = 100 \\cdot 2^5\\).",
+        loesungsweg: "\\(B(5) = 100 \\cdot 2^5 = 100 \\cdot 32 = 3200\\) Bakterien."
+    },
+    {
+        id: 11, level: 2, typ: "numerisch",
+        frage: "\\(2000\\,€\\) werden mit \\(3\\%\\) pro Jahr verzinst. Welcher Kontostand steht nach \\(8\\) Jahren? <br>Runde auf zwei Dezimalstellen.",
+        loesung: 2533.54, toleranz: 0.01,
+        tipp: "\\(K_8 = 2000 \\cdot 1{,}03^8\\). Rechne \\(1{,}03^8\\) mit dem Taschenrechner.",
+        loesungsweg: "\\(K_8 = 2000 \\cdot 1{,}03^8 \\approx 2000 \\cdot 1{,}26677 \\approx 2533{,}54\\,€\\)."
+    },
+    {
+        id: 12, level: 2, typ: "numerisch",
+        frage: "Ein Auto ist \\(800\\,€\\) wert und verliert jährlich \\(15\\%\\) an Wert. Welchen Wert hat es nach \\(4\\) Jahren? <br>Runde auf zwei Dezimalstellen.",
+        loesung: 417.61, toleranz: 0.02,
+        tipp: "\\(q = 0{,}85\\). Dann \\(B(4) = 800 \\cdot 0{,}85^4\\).",
+        loesungsweg: "\\(B(4) = 800 \\cdot 0{,}85^4 = 800 \\cdot 0{,}52200625 \\approx 417{,}61\\,€\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 3 — B_0 oder q aus zwei Werten bestimmen
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 13, level: 3, typ: "numerisch",
+        frage: "Ein exponentielles Wachstum startet bei \\(B_0 = 100\\). Nach \\(2\\) Jahren sind es \\(144\\). Wie groß ist der Wachstumsfaktor \\(q\\)?",
+        loesung: 1.2, toleranz: 0.01,
+        tipp: "Aus \\(B_0 \\cdot q^2 = 144\\) folgt \\(q = \\sqrt{144/100}\\).",
+        loesungsweg: "\\(q^2 = \\frac{144}{100} = 1{,}44\\), also \\(q = \\sqrt{1{,}44} = 1{,}2\\). Das entspricht \\(+20\\%\\) pro Jahr."
+    },
+    {
+        id: 14, level: 3, typ: "numerisch",
+        frage: "Ein Bestand wächst mit \\(q = 1{,}1\\) exponentiell. Nach \\(2\\) Jahren beträgt er \\(500\\). Wie groß war der Startwert \\(B_0\\)? <br>Runde auf zwei Dezimalstellen.",
+        loesung: 413.22, toleranz: 0.01,
+        tipp: "Aus \\(B_0 \\cdot q^2 = 500\\) folgt \\(B_0 = \\frac{500}{q^2}\\).",
+        loesungsweg: "\\(B_0 = \\frac{500}{1{,}1^2} = \\frac{500}{1{,}21} \\approx 413{,}22\\)."
+    },
+    {
+        id: 15, level: 3, typ: "numerisch",
+        frage: "Eine Bakterienkultur wächst von \\(50\\) auf \\(400\\) in \\(3\\) Stunden. Wie groß ist der stündliche Wachstumsfaktor \\(q\\)?",
+        loesung: 2, toleranz: 0.01,
+        tipp: "\\(50 \\cdot q^3 = 400\\) liefert \\(q^3 = 8\\).",
+        loesungsweg: "\\(q^3 = \\frac{400}{50} = 8\\), also \\(q = \\sqrt[3]{8} = 2\\). Der Bestand verdoppelt sich jede Stunde."
+    },
+    {
+        id: 16, level: 3, typ: "numerisch",
+        frage: "Ein Bestand fällt in \\(4\\) Jahren von \\(1000\\) auf \\(656{,}1\\). Wie groß ist der Wachstumsfaktor \\(q\\)?",
+        loesung: 0.9, toleranz: 0.01,
+        tipp: "\\(q^4 = \\frac{656{,}1}{1000} = 0{,}6561\\). Ziehe die vierte Wurzel.",
+        loesungsweg: "\\(q = \\sqrt[4]{0{,}6561} = 0{,}9\\). Das entspricht \\(-10\\%\\) pro Jahr."
+    },
+    {
+        id: 17, level: 3, typ: "mc",
+        frage: "Welche Angaben legen ein exponentielles Modell \\(B(t) = B_0 \\cdot q^t\\) eindeutig fest?",
+        optionen: [
+            "Nur \\(B_0\\)",
+            "\\(B_0\\) und \\(q\\)",
+            "Nur \\(q\\)",
+            "Nur zwei beliebige Funktionswerte ohne weitere Info"
+        ],
+        korrekt: 1,
+        tipp: "Man braucht sowohl den Startwert als auch den Wachstumsfaktor, oder zwei Funktionswerte, aus denen man beides berechnen kann.",
+        loesungsweg: "Das Modell \\(B(t) = B_0 \\cdot q^t\\) hat zwei Parameter: \\(B_0\\) und \\(q\\). Beide müssen bekannt sein (direkt oder über zwei Messwerte)."
+    },
+    {
+        id: 18, level: 3, typ: "numerisch",
+        frage: "Ein Kapital wird mit \\(2\\%\\) pro Jahr verzinst. Nach \\(10\\) Jahren beträgt der Kontostand \\(1000\\,€\\). Wie hoch war das Anfangskapital \\(K_0\\)? <br>Runde auf zwei Dezimalstellen.",
+        loesung: 820.35, toleranz: 0.01,
+        tipp: "Aus \\(K_0 \\cdot 1{,}02^{10} = 1000\\) folgt \\(K_0 = \\frac{1000}{1{,}02^{10}}\\).",
+        loesungsweg: "\\(K_0 = \\frac{1000}{1{,}02^{10}} = \\frac{1000}{1{,}21899} \\approx 820{,}35\\,€\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 4 — Linear vs. exponentiell
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 19, level: 4, typ: "mc",
+        frage: "Welche Aussage beschreibt den Unterschied zwischen linearem und exponentiellem Wachstum korrekt?",
+        optionen: [
+            "Beim linearen Wachstum wird pro Zeitschritt derselbe Faktor multipliziert.",
+            "Beim linearen Wachstum wird pro Zeitschritt derselbe Betrag addiert, beim exponentiellen wird mit einem festen Faktor multipliziert.",
+            "Exponentielles Wachstum ist immer schneller als lineares Wachstum – unabhängig vom Zeitraum.",
+            "Lineares Wachstum verdoppelt den Bestand in festen Zeitabständen."
+        ],
+        korrekt: 1,
+        tipp: "Linear: gleiche absolute Änderung. Exponentiell: gleiche prozentuale Änderung.",
+        loesungsweg: "Linear: \\(B(t) = B_0 + m \\cdot t\\) (konstante Differenz). Exponentiell: \\(B(t) = B_0 \\cdot q^t\\) (konstanter Quotient)."
+    },
+    {
+        id: 20, level: 4, typ: "mc",
+        frage: "Welche Wertetabelle zeigt exponentielles Wachstum?",
+        optionen: [
+            "\\(t=0,1,2,3\\): \\(10, 15, 20, 25\\)",
+            "\\(t=0,1,2,3\\): \\(10, 20, 40, 80\\)",
+            "\\(t=0,1,2,3\\): \\(10, 13, 16, 19\\)",
+            "\\(t=0,1,2,3\\): \\(10, 12, 14, 16\\)"
+        ],
+        korrekt: 1,
+        tipp: "Bei exponentiellem Wachstum ist der Quotient aufeinanderfolgender Werte konstant.",
+        loesungsweg: "\\(\\frac{20}{10} = \\frac{40}{20} = \\frac{80}{40} = 2\\) – konstanter Faktor \\(q = 2\\). Die anderen Tabellen haben konstante Differenzen (linear)."
+    },
+    {
+        id: 21, level: 4, typ: "mc",
+        frage: "Modell A (linear): \\(A(t) = 100 + 50t\\). Modell B (exponentiell): \\(B(t) = 50 \\cdot 1{,}3^t\\). Ab welchem ganzzahligen \\(t\\) übertrifft \\(B\\) erstmals \\(A\\)?",
+        optionen: ["\\(t = 5\\)", "\\(t = 7\\)", "\\(t = 10\\)", "\\(t = 15\\)"],
+        korrekt: 2,
+        tipp: "Berechne \\(A(t)\\) und \\(B(t)\\) für einige Werte und vergleiche.",
+        loesungsweg: "\\(t = 9\\): \\(A = 550\\), \\(B = 50 \\cdot 1{,}3^9 \\approx 530{,}2\\) – \\(A\\) noch größer. <br>\\(t = 10\\): \\(A = 600\\), \\(B = 50 \\cdot 1{,}3^{10} \\approx 689{,}3\\) – jetzt übertrifft \\(B\\) das lineare Modell."
+    },
+    {
+        id: 22, level: 4, typ: "mc",
+        frage: "Welche Aussage über exponentielles Wachstum mit \\(q > 1\\) ist richtig?",
+        optionen: [
+            "Es wächst langsamer als jede lineare Funktion.",
+            "Es wächst auf Dauer schneller als jede lineare Funktion.",
+            "Es wächst im ersten Zeitschritt immer schneller als eine lineare Funktion.",
+            "Es ist konstant."
+        ],
+        korrekt: 1,
+        tipp: "Langfristig (für großes \\(t\\)) schlägt Exponential jedes Lineare – auch wenn es zu Beginn langsamer ist.",
+        loesungsweg: "Für hinreichend großes \\(t\\) übertrifft jede Exponentialfunktion \\(q^t\\) mit \\(q > 1\\) jede lineare Funktion. Kurzfristig kann das lineare Modell aber größer sein."
+    },
+    {
+        id: 23, level: 4, typ: "numerisch",
+        frage: "Ein linearer Sparplan addiert jedes Jahr \\(100\\,€\\) zum Startbetrag \\(1000\\,€\\). Wie hoch ist das Guthaben nach \\(5\\) Jahren?",
+        loesung: 1500, toleranz: 0,
+        tipp: "Linear: \\(G(t) = 1000 + 100 \\cdot t\\).",
+        loesungsweg: "\\(G(5) = 1000 + 100 \\cdot 5 = 1500\\,€\\)."
+    },
+    {
+        id: 24, level: 4, typ: "numerisch",
+        frage: "Ein Kapital von \\(1000\\,€\\) wird mit \\(10\\%\\) pro Jahr verzinst. Wie hoch ist das Guthaben nach \\(5\\) Jahren (exponentielles Wachstum)? <br>Runde auf zwei Dezimalstellen.",
+        loesung: 1610.51, toleranz: 0.01,
+        tipp: "\\(K_5 = 1000 \\cdot 1{,}1^5\\). Vergleiche mit dem linearen Ergebnis der vorherigen Aufgabe!",
+        loesungsweg: "\\(K_5 = 1000 \\cdot 1{,}1^5 = 1000 \\cdot 1{,}61051 \\approx 1610{,}51\\,€\\). Die exponentielle Verzinsung bringt rund \\(110\\,€\\) mehr als ein linearer Sparplan mit \\(+100\\,€\\) pro Jahr."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 5 — Halbwertszeit / Verdopplungszeit
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Ein Kapital wird mit \\(5\\%\\) pro Jahr verzinst. Nach wie vielen Jahren verdoppelt sich das Kapital? <br>Verwende \\(T_d = \\frac{\\ln(2)}{\\ln(q)}\\) und runde auf zwei Dezimalstellen.",
+        loesung: 14.21, toleranz: 0.02,
+        tipp: "\\(T_d = \\frac{\\ln 2}{\\ln 1{,}05}\\). Rechne mit dem Taschenrechner.",
+        loesungsweg: "\\(T_d = \\frac{\\ln 2}{\\ln 1{,}05} = \\frac{0{,}6931}{0{,}04879} \\approx 14{,}21\\) Jahre."
+    },
+    {
+        id: 26, level: 5, typ: "numerisch",
+        frage: "Ein Bestand wächst mit \\(q = 1{,}02\\). Wie lautet die Verdopplungszeit \\(T_d\\)? <br>Runde auf zwei Dezimalstellen.",
+        loesung: 35.00, toleranz: 0.05,
+        tipp: "\\(T_d = \\frac{\\ln 2}{\\ln q}\\).",
+        loesungsweg: "\\(T_d = \\frac{\\ln 2}{\\ln 1{,}02} = \\frac{0{,}6931}{0{,}01980} \\approx 35{,}00\\) Zeiteinheiten."
+    },
+    {
+        id: 27, level: 5, typ: "numerisch",
+        frage: "Ein Stoff zerfällt mit \\(q = 0{,}9\\) pro Jahr. Wie lautet die Halbwertszeit \\(T_h\\)? <br>Verwende \\(T_h = \\frac{\\ln(0{,}5)}{\\ln(q)}\\) und runde auf zwei Dezimalstellen.",
+        loesung: 6.58, toleranz: 0.02,
+        tipp: "\\(T_h = \\frac{\\ln 0{,}5}{\\ln 0{,}9}\\). Beide Logarithmen sind negativ, der Quotient ist positiv.",
+        loesungsweg: "\\(T_h = \\frac{\\ln 0{,}5}{\\ln 0{,}9} = \\frac{-0{,}6931}{-0{,}10536} \\approx 6{,}58\\) Jahre."
+    },
+    {
+        id: 28, level: 5, typ: "numerisch",
+        frage: "Ein Bestand nimmt pro Zeitschritt um \\(20\\%\\) ab (\\(q = 0{,}8\\)). Wie lautet die Halbwertszeit? <br>Runde auf zwei Dezimalstellen.",
+        loesung: 3.11, toleranz: 0.02,
+        tipp: "\\(T_h = \\frac{\\ln 0{,}5}{\\ln 0{,}8}\\).",
+        loesungsweg: "\\(T_h = \\frac{\\ln 0{,}5}{\\ln 0{,}8} = \\frac{-0{,}6931}{-0{,}2231} \\approx 3{,}11\\) Zeiteinheiten."
+    },
+    {
+        id: 29, level: 5, typ: "mc",
+        frage: "Wie berechnet man die Verdopplungszeit \\(T_d\\) eines exponentiellen Wachstums mit Faktor \\(q > 1\\)?",
+        optionen: [
+            "\\(T_d = \\frac{\\ln(q)}{\\ln(2)}\\)",
+            "\\(T_d = \\frac{\\ln(2)}{\\ln(q)}\\)",
+            "\\(T_d = \\frac{2}{q}\\)",
+            "\\(T_d = q \\cdot \\ln(2)\\)"
+        ],
+        korrekt: 1,
+        tipp: "Setze \\(2 \\cdot B_0 = B_0 \\cdot q^{T_d}\\) und löse nach \\(T_d\\) auf.",
+        loesungsweg: "Aus \\(q^{T_d} = 2\\) folgt durch Logarithmieren \\(T_d \\cdot \\ln(q) = \\ln(2)\\), also \\(T_d = \\frac{\\ln(2)}{\\ln(q)}\\)."
+    },
+    {
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Ein Bestand wächst mit \\(3\\%\\) pro Jahr. Wie lange dauert die Verdopplung? <br>Runde auf zwei Dezimalstellen.",
+        loesung: 23.45, toleranz: 0.05,
+        tipp: "\\(q = 1{,}03\\), dann \\(T_d = \\frac{\\ln 2}{\\ln 1{,}03}\\).",
+        loesungsweg: "\\(T_d = \\frac{\\ln 2}{\\ln 1{,}03} = \\frac{0{,}6931}{0{,}02956} \\approx 23{,}45\\) Jahre."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 6 — Komplexe Textaufgaben
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 31, level: 6, typ: "numerisch",
+        frage: "Ein Sparbuch startet mit \\(3000\\,€\\) und wird mit \\(2{,}5\\%\\) pro Jahr verzinst (Zinseszins). Welchen Kontostand hat das Sparbuch nach \\(10\\) Jahren? <br>Runde auf zwei Dezimalstellen.",
+        loesung: 3840.25, toleranz: 0.02,
+        tipp: "\\(K_{10} = 3000 \\cdot 1{,}025^{10}\\).",
+        loesungsweg: "\\(K_{10} = 3000 \\cdot 1{,}025^{10} = 3000 \\cdot 1{,}28008 \\approx 3840{,}25\\,€\\)."
+    },
+    {
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Ein Medikament hat anfangs \\(500\\,\\text{mg}\\) Wirkstoff im Blut. Pro Stunde werden \\(15\\%\\) abgebaut. Wie viel Wirkstoff ist nach \\(6\\) Stunden noch vorhanden? <br>Runde auf zwei Dezimalstellen.",
+        loesung: 188.57, toleranz: 0.02,
+        tipp: "\\(q = 0{,}85\\). Dann \\(W(6) = 500 \\cdot 0{,}85^6\\).",
+        loesungsweg: "\\(W(6) = 500 \\cdot 0{,}85^6 = 500 \\cdot 0{,}37715 \\approx 188{,}57\\,\\text{mg}\\)."
+    },
+    {
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Eine Bakterienkultur startet mit \\(200\\) Bakterien und verdoppelt sich alle \\(3\\) Stunden. Wie viele Bakterien sind nach \\(12\\) Stunden vorhanden?",
+        loesung: 3200, toleranz: 0,
+        tipp: "Modell: \\(B(t) = 200 \\cdot 2^{t/3}\\). Für \\(t = 12\\) wird \\(\\frac{t}{3} = 4\\).",
+        loesungsweg: "\\(B(12) = 200 \\cdot 2^{12/3} = 200 \\cdot 2^4 = 200 \\cdot 16 = 3200\\) Bakterien."
+    },
+    {
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Ein Kapital von \\(5000\\,€\\) wird mit \\(2{,}5\\%\\) pro Jahr verzinst. Welchen Wert hat das Kapital nach \\(20\\) Jahren? <br>Runde auf zwei Dezimalstellen.",
+        loesung: 8193.08, toleranz: 0.02,
+        tipp: "\\(K_{20} = 5000 \\cdot 1{,}025^{20}\\). Rechne \\(1{,}025^{20} \\approx 1{,}63862\\).",
+        loesungsweg: "\\(K_{20} = 5000 \\cdot 1{,}025^{20} \\approx 5000 \\cdot 1{,}63862 \\approx 8193{,}08\\,€\\)."
+    },
+    {
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Ein Kapital verdoppelt sich bei einer jährlichen Verzinsung von \\(4\\%\\) (\\(q = 1{,}04\\)) nach wie vielen Jahren? <br>Runde auf zwei Dezimalstellen.",
+        loesung: 17.67, toleranz: 0.05,
+        tipp: "Verdopplungszeit: \\(T_d = \\frac{\\ln 2}{\\ln 1{,}04}\\).",
+        loesungsweg: "\\(T_d = \\frac{\\ln 2}{\\ln 1{,}04} = \\frac{0{,}6931}{0{,}03922} \\approx 17{,}67\\) Jahre."
+    },
+    {
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Kohlenstoff-14 hat eine Halbwertszeit von \\(5730\\) Jahren. Eine Probe enthält heute \\(100\\,\\text{g}\\) C-14. Wie viel Gramm sind nach \\(10000\\) Jahren noch vorhanden? <br>Modell: \\(B(t) = 100 \\cdot 0{,}5^{t/5730}\\). Runde auf zwei Dezimalstellen.",
+        loesung: 29.81, toleranz: 0.05,
+        tipp: "Setze \\(t = 10000\\) ein. Berechne zuerst den Exponenten \\(\\frac{10000}{5730} \\approx 1{,}7452\\).",
+        loesungsweg: "\\(B(10000) = 100 \\cdot 0{,}5^{10000/5730} = 100 \\cdot 0{,}5^{1{,}7452} \\approx 100 \\cdot 0{,}2981 \\approx 29{,}81\\,\\text{g}\\)."
+    }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

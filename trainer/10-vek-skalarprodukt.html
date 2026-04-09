@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skalarprodukt & Winkel - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #70AD47; --spirale-secondary: #548235; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '10-vek-skalarprodukt';
+    const THEMA_CONFIG = { name: 'Skalarprodukt & Winkel', bereich: 'geometrie' };
+    const AUFGABEN = [
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 1 — Skalarprodukt im R² (Definition, kleine Rechnungen)
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 1, level: 1, typ: "numerisch",
+        frage: "Berechne das Skalarprodukt \\(\\vec{a} \\cdot \\vec{b}\\) mit \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 1 \\\\ 4 \\end{pmatrix}\\).",
+        loesung: 14, toleranz: 0,
+        tipp: "Formel im \\(\\mathbb{R}^2\\): \\(\\vec{a} \\cdot \\vec{b} = a_1 b_1 + a_2 b_2\\).",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 2 \\cdot 1 + 3 \\cdot 4 = 2 + 12 = 14\\)."
+    },
+    {
+        id: 2, level: 1, typ: "numerisch",
+        frage: "Berechne \\(\\vec{a} \\cdot \\vec{b}\\) mit \\(\\vec{a} = \\begin{pmatrix} 5 \\\\ -1 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix}\\).",
+        loesung: 7, toleranz: 0,
+        tipp: "Multipliziere komponentenweise und addiere die Produkte.",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 5 \\cdot 2 + (-1) \\cdot 3 = 10 - 3 = 7\\)."
+    },
+    {
+        id: 3, level: 1, typ: "numerisch",
+        frage: "Berechne \\(\\vec{a} \\cdot \\vec{b}\\) mit \\(\\vec{a} = \\begin{pmatrix} -2 \\\\ 4 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 3 \\\\ 1 \\end{pmatrix}\\).",
+        loesung: -2, toleranz: 0,
+        tipp: "Achte auf Vorzeichen: \\((-2) \\cdot 3 + 4 \\cdot 1\\).",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = (-2) \\cdot 3 + 4 \\cdot 1 = -6 + 4 = -2\\)."
+    },
+    {
+        id: 4, level: 1, typ: "mc",
+        frage: "Was ergibt \\(\\begin{pmatrix} 6 \\\\ 0 \\end{pmatrix} \\cdot \\begin{pmatrix} 0 \\\\ 5 \\end{pmatrix}\\)?",
+        optionen: ["\\(0\\)", "\\(30\\)", "\\(11\\)", "\\(-30\\)"],
+        korrekt: 0,
+        tipp: "Ein Null-Eintrag \"löscht\" sein Produkt.",
+        loesungsweg: "\\(6 \\cdot 0 + 0 \\cdot 5 = 0 + 0 = 0\\). Die beiden Vektoren stehen senkrecht aufeinander."
+    },
+    {
+        id: 5, level: 1, typ: "numerisch",
+        frage: "Berechne \\(\\vec{a} \\cdot \\vec{b}\\) mit \\(\\vec{a} = \\begin{pmatrix} 3 \\\\ 2 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} -1 \\\\ 4 \\end{pmatrix}\\).",
+        loesung: 5, toleranz: 0,
+        tipp: "\\(3 \\cdot (-1) + 2 \\cdot 4\\).",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 3 \\cdot (-1) + 2 \\cdot 4 = -3 + 8 = 5\\)."
+    },
+    {
+        id: 6, level: 1, typ: "numerisch",
+        frage: "Berechne \\(\\vec{a} \\cdot \\vec{b}\\) mit \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 7 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 2 \\\\ -2 \\end{pmatrix}\\).",
+        loesung: -12, toleranz: 0,
+        tipp: "\\(1 \\cdot 2 + 7 \\cdot (-2)\\).",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 1 \\cdot 2 + 7 \\cdot (-2) = 2 - 14 = -12\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 2 — Skalarprodukt im R³
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 7, level: 2, typ: "numerisch",
+        frage: "Berechne \\(\\vec{a} \\cdot \\vec{b}\\) mit \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 4 \\\\ -1 \\\\ 2 \\end{pmatrix}\\).",
+        loesung: 8, toleranz: 0,
+        tipp: "Im \\(\\mathbb{R}^3\\): \\(\\vec{a} \\cdot \\vec{b} = a_1 b_1 + a_2 b_2 + a_3 b_3\\).",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 1 \\cdot 4 + 2 \\cdot (-1) + 3 \\cdot 2 = 4 - 2 + 6 = 8\\)."
+    },
+    {
+        id: 8, level: 2, typ: "numerisch",
+        frage: "Berechne \\(\\vec{a} \\cdot \\vec{b}\\) mit \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ 0 \\\\ -1 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 3 \\\\ 5 \\\\ 4 \\end{pmatrix}\\).",
+        loesung: 2, toleranz: 0,
+        tipp: "Die zweite Komponente von \\(\\vec{a}\\) ist 0 — dieses Produkt fällt weg.",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 2 \\cdot 3 + 0 \\cdot 5 + (-1) \\cdot 4 = 6 + 0 - 4 = 2\\)."
+    },
+    {
+        id: 9, level: 2, typ: "numerisch",
+        frage: "Berechne \\(\\vec{a} \\cdot \\vec{b}\\) mit \\(\\vec{a} = \\begin{pmatrix} -1 \\\\ 3 \\\\ 2 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 2 \\\\ 1 \\\\ -2 \\end{pmatrix}\\).",
+        loesung: -3, toleranz: 0,
+        tipp: "Sorgfältig mit Vorzeichen arbeiten: \\((-1)(2) + 3 \\cdot 1 + 2 \\cdot (-2)\\).",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = (-1) \\cdot 2 + 3 \\cdot 1 + 2 \\cdot (-2) = -2 + 3 - 4 = -3\\)."
+    },
+    {
+        id: 10, level: 2, typ: "numerisch",
+        frage: "Berechne \\(\\vec{a} \\cdot \\vec{b}\\) mit \\(\\vec{a} = \\begin{pmatrix} 4 \\\\ 2 \\\\ 1 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 1 \\\\ -3 \\\\ 5 \\end{pmatrix}\\).",
+        loesung: 3, toleranz: 0,
+        tipp: "\\(4 \\cdot 1 + 2 \\cdot (-3) + 1 \\cdot 5\\).",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 4 - 6 + 5 = 3\\)."
+    },
+    {
+        id: 11, level: 2, typ: "mc",
+        frage: "Was ergibt \\(\\begin{pmatrix} 0 \\\\ 5 \\\\ -2 \\end{pmatrix} \\cdot \\begin{pmatrix} 3 \\\\ 1 \\\\ 4 \\end{pmatrix}\\)?",
+        optionen: ["\\(-3\\)", "\\(13\\)", "\\(3\\)", "\\(-13\\)"],
+        korrekt: 0,
+        tipp: "\\(0 \\cdot 3 + 5 \\cdot 1 + (-2) \\cdot 4\\).",
+        loesungsweg: "\\(0 + 5 - 8 = -3\\)."
+    },
+    {
+        id: 12, level: 2, typ: "numerisch",
+        frage: "Berechne \\(\\vec{a} \\cdot \\vec{b}\\) mit \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ 2 \\\\ 2 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 1 \\\\ -1 \\\\ 3 \\end{pmatrix}\\).",
+        loesung: 6, toleranz: 0,
+        tipp: "\\(2 \\cdot 1 + 2 \\cdot (-1) + 2 \\cdot 3\\).",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 2 - 2 + 6 = 6\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 3 — Orthogonalität: a·b = 0, fehlende Koordinate
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 13, level: 3, typ: "mc",
+        frage: "Stehen die Vektoren \\(\\vec{a} = \\begin{pmatrix} 3 \\\\ 4 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 4 \\\\ -3 \\end{pmatrix}\\) senkrecht zueinander?",
+        optionen: ["Ja, denn \\(\\vec{a} \\cdot \\vec{b} = 0\\)", "Nein, denn \\(\\vec{a} \\cdot \\vec{b} = 24\\)", "Ja, denn sie sind gleich lang", "Nein, denn \\(\\vec{a} \\cdot \\vec{b} = 1\\)"],
+        korrekt: 0,
+        tipp: "Zwei Vektoren sind orthogonal genau dann, wenn \\(\\vec{a} \\cdot \\vec{b} = 0\\).",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 3 \\cdot 4 + 4 \\cdot (-3) = 12 - 12 = 0\\). Also stehen \\(\\vec{a}\\) und \\(\\vec{b}\\) senkrecht aufeinander."
+    },
+    {
+        id: 14, level: 3, typ: "numerisch",
+        frage: "Für welches \\(x\\) sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} x \\\\ -1 \\end{pmatrix}\\) orthogonal?",
+        loesung: 2, toleranz: 0,
+        tipp: "Setze \\(\\vec{a} \\cdot \\vec{b} = 0\\) und löse nach \\(x\\) auf.",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 1 \\cdot x + 2 \\cdot (-1) = x - 2 \\stackrel{!}{=} 0 \\Rightarrow x = 2\\)."
+    },
+    {
+        id: 15, level: 3, typ: "numerisch",
+        frage: "Für welches \\(x\\) sind \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ -3 \\\\ 1 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 3 \\\\ 2 \\\\ x \\end{pmatrix}\\) orthogonal?",
+        loesung: 0, toleranz: 0,
+        tipp: "Bilde \\(\\vec{a} \\cdot \\vec{b}\\) in Abhängigkeit von \\(x\\) und setze gleich 0.",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 2 \\cdot 3 + (-3) \\cdot 2 + 1 \\cdot x = 6 - 6 + x = x \\stackrel{!}{=} 0 \\Rightarrow x = 0\\)."
+    },
+    {
+        id: 16, level: 3, typ: "numerisch",
+        frage: "Für welches \\(a\\) sind \\(\\vec{u} = \\begin{pmatrix} a \\\\ 2 \\\\ 3 \\end{pmatrix}\\) und \\(\\vec{v} = \\begin{pmatrix} 1 \\\\ 4 \\\\ -2 \\end{pmatrix}\\) orthogonal?",
+        loesung: -2, toleranz: 0,
+        tipp: "\\(a \\cdot 1 + 2 \\cdot 4 + 3 \\cdot (-2) = 0\\).",
+        loesungsweg: "\\(\\vec{u} \\cdot \\vec{v} = a + 8 - 6 = a + 2 \\stackrel{!}{=} 0 \\Rightarrow a = -2\\)."
+    },
+    {
+        id: 17, level: 3, typ: "mc",
+        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 5 \\\\ -2 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 2 \\\\ 5 \\end{pmatrix}\\) orthogonal?",
+        optionen: ["Ja", "Nein, \\(\\vec{a} \\cdot \\vec{b} = 20\\)", "Nein, \\(\\vec{a} \\cdot \\vec{b} = 5\\)", "Kann man so nicht entscheiden"],
+        korrekt: 0,
+        tipp: "Berechne \\(5 \\cdot 2 + (-2) \\cdot 5\\).",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 5 \\cdot 2 + (-2) \\cdot 5 = 10 - 10 = 0\\). Also orthogonal."
+    },
+    {
+        id: 18, level: 3, typ: "numerisch",
+        frage: "Für welches \\(x\\) sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 1 \\\\ 1 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 2 \\\\ -1 \\\\ x \\end{pmatrix}\\) orthogonal?",
+        loesung: -1, toleranz: 0,
+        tipp: "\\(\\vec{a} \\cdot \\vec{b} = 2 - 1 + x\\). Setze gleich 0.",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 1 \\cdot 2 + 1 \\cdot (-1) + 1 \\cdot x = 1 + x \\stackrel{!}{=} 0 \\Rightarrow x = -1\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 4 — Winkelformel cos(φ) = (a·b)/(|a|·|b|)
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 19, level: 4, typ: "numerisch",
+        frage: "Berechne den Winkel \\(\\varphi\\) zwischen \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 0 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 1 \\\\ 1 \\end{pmatrix}\\) in Grad.",
+        loesung: 45, toleranz: 0.5,
+        tipp: "Formel: \\(\\cos\\varphi = \\dfrac{\\vec{a} \\cdot \\vec{b}}{|\\vec{a}| \\cdot |\\vec{b}|}\\). Dann \\(\\varphi = \\arccos(\\ldots)\\).",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 1\\), \\(|\\vec{a}| = 1\\), \\(|\\vec{b}| = \\sqrt{2}\\). \\(\\cos\\varphi = \\dfrac{1}{\\sqrt{2}} \\Rightarrow \\varphi = 45°\\)."
+    },
+    {
+        id: 20, level: 4, typ: "numerisch",
+        frage: "Berechne den Winkel zwischen \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ 0 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 3 \\end{pmatrix}\\) in Grad.",
+        loesung: 90, toleranz: 0,
+        tipp: "Ist das Skalarprodukt 0, ist der Winkel sofort bekannt.",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 0 \\Rightarrow \\cos\\varphi = 0 \\Rightarrow \\varphi = 90°\\)."
+    },
+    {
+        id: 21, level: 4, typ: "numerisch",
+        frage: "Berechne den Winkel zwischen \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 1 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} -1 \\\\ 1 \\end{pmatrix}\\) in Grad.",
+        loesung: 90, toleranz: 0,
+        tipp: "Prüfe zuerst, ob \\(\\vec{a} \\cdot \\vec{b} = 0\\).",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 1 \\cdot (-1) + 1 \\cdot 1 = 0 \\Rightarrow \\varphi = 90°\\)."
+    },
+    {
+        id: 22, level: 4, typ: "numerisch",
+        frage: "Berechne den Winkel zwischen \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 0 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} -1 \\\\ 0 \\end{pmatrix}\\) in Grad.",
+        loesung: 180, toleranz: 0,
+        tipp: "Antiparallele Vektoren — welchen Wert hat \\(\\cos\\varphi\\)?",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = -1\\), \\(|\\vec{a}| = |\\vec{b}| = 1\\). \\(\\cos\\varphi = -1 \\Rightarrow \\varphi = 180°\\)."
+    },
+    {
+        id: 23, level: 4, typ: "numerisch",
+        frage: "Berechne den Winkel zwischen \\(\\vec{a} = \\begin{pmatrix} 3 \\\\ 4 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 4 \\\\ 3 \\end{pmatrix}\\) in Grad (auf eine Nachkommastelle).",
+        loesung: 16.26, toleranz: 0.5,
+        tipp: "\\(|\\vec{a}| = |\\vec{b}| = 5\\). Dann \\(\\cos\\varphi = \\dfrac{\\vec{a}\\cdot\\vec{b}}{25}\\).",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 12 + 12 = 24\\), \\(|\\vec{a}| = \\sqrt{9+16} = 5\\), \\(|\\vec{b}| = 5\\). \\(\\cos\\varphi = \\dfrac{24}{25} = 0{,}96\\). \\(\\varphi = \\arccos(0{,}96) \\approx 16{,}26°\\)."
+    },
+    {
+        id: 24, level: 4, typ: "numerisch",
+        frage: "Berechne den Winkel zwischen \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 2 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 2 \\\\ 2 \\\\ 1 \\end{pmatrix}\\) in Grad (auf eine Nachkommastelle).",
+        loesung: 27.27, toleranz: 0.5,
+        tipp: "\\(|\\vec{a}| = |\\vec{b}| = 3\\). Erst Skalarprodukt, dann durch 9 teilen.",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 2 + 4 + 2 = 8\\), \\(|\\vec{a}| = \\sqrt{1+4+4} = 3\\), \\(|\\vec{b}| = 3\\). \\(\\cos\\varphi = \\dfrac{8}{9} \\approx 0{,}8889\\). \\(\\varphi \\approx 27{,}27°\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 5 — Nachweise: Orthogonalität / rechter Winkel
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Zeige, dass \\(\\vec{a} = \\begin{pmatrix} 3 \\\\ 4 \\\\ 0 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 5 \\end{pmatrix}\\) orthogonal sind. Gib den Wert von \\(\\vec{a} \\cdot \\vec{b}\\) an.",
+        loesung: 0, toleranz: 0,
+        tipp: "Zwei Vektoren sind orthogonal genau dann, wenn ihr Skalarprodukt 0 ergibt.",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 3 \\cdot 0 + 4 \\cdot 0 + 0 \\cdot 5 = 0\\). Damit ist die Orthogonalität gezeigt."
+    },
+    {
+        id: 26, level: 5, typ: "mc",
+        frage: "Sind die Vektoren \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ -1 \\\\ 3 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 1 \\\\ 5 \\\\ 1 \\end{pmatrix}\\) orthogonal?",
+        optionen: ["Ja, denn \\(\\vec{a} \\cdot \\vec{b} = 0\\)", "Nein, denn \\(\\vec{a} \\cdot \\vec{b} = 10\\)", "Ja, weil beide gleich lang sind", "Nein, denn \\(\\vec{a} \\cdot \\vec{b} = -2\\)"],
+        korrekt: 0,
+        tipp: "Rechne \\(2 \\cdot 1 + (-1) \\cdot 5 + 3 \\cdot 1\\).",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 2 - 5 + 3 = 0\\). Die Vektoren sind orthogonal."
+    },
+    {
+        id: 27, level: 5, typ: "numerisch",
+        frage: "Gegeben: \\(A(0|0)\\), \\(B(2|1)\\), \\(C(-1|2)\\). Zeige, dass bei \\(A\\) ein rechter Winkel liegt, indem du \\(\\overrightarrow{AB} \\cdot \\overrightarrow{AC}\\) berechnest.",
+        loesung: 0, toleranz: 0,
+        tipp: "Bestimme zuerst \\(\\overrightarrow{AB}\\) und \\(\\overrightarrow{AC}\\), dann ihr Skalarprodukt.",
+        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 2 \\\\ 1 \\end{pmatrix}\\), \\(\\overrightarrow{AC} = \\begin{pmatrix} -1 \\\\ 2 \\end{pmatrix}\\). \\(\\overrightarrow{AB} \\cdot \\overrightarrow{AC} = -2 + 2 = 0\\). Also rechter Winkel bei \\(A\\)."
+    },
+    {
+        id: 28, level: 5, typ: "mc",
+        frage: "Stehen \\(\\vec{a} = \\begin{pmatrix} 6 \\\\ -4 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix}\\) senkrecht aufeinander?",
+        optionen: ["Ja", "Nein, der Winkel ist spitz", "Nein, der Winkel ist stumpf", "Nur wenn man sie normiert"],
+        korrekt: 0,
+        tipp: "\\(6 \\cdot 2 + (-4) \\cdot 3 = ?\\)",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 12 - 12 = 0\\). Die Vektoren stehen senkrecht aufeinander."
+    },
+    {
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Für welches \\(t\\) stehen \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ t \\\\ 1 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 3 \\\\ -1 \\\\ 4 \\end{pmatrix}\\) senkrecht zueinander?",
+        loesung: 10, toleranz: 0,
+        tipp: "\\(\\vec{a} \\cdot \\vec{b} = 6 - t + 4\\). Setze gleich 0.",
+        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 2 \\cdot 3 + t \\cdot (-1) + 1 \\cdot 4 = 10 - t \\stackrel{!}{=} 0 \\Rightarrow t = 10\\)."
+    },
+    {
+        id: 30, level: 5, typ: "mc",
+        frage: "Welche Aussage über \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 2 \\\\ 4 \\\\ 6 \\end{pmatrix}\\) ist richtig?",
+        optionen: ["\\(\\vec{b} = 2\\vec{a}\\), also parallel", "Die Vektoren sind orthogonal", "Die Vektoren sind weder parallel noch orthogonal", "Der Winkel beträgt 45°"],
+        korrekt: 0,
+        tipp: "Teste, ob jede Komponente von \\(\\vec{b}\\) das gleiche Vielfache von \\(\\vec{a}\\) ist.",
+        loesungsweg: "Es gilt \\(\\vec{b} = 2 \\vec{a}\\), denn \\(2 \\cdot 1 = 2\\), \\(2 \\cdot 2 = 4\\), \\(2 \\cdot 3 = 6\\). Die Vektoren sind parallel (gleiche Richtung)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 6 — Anwendung: Winkel im Dreieck
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 31, level: 6, typ: "numerisch",
+        frage: "Gegeben: Dreieck mit \\(A(0|0)\\), \\(B(4|0)\\), \\(C(0|3)\\). Berechne den Innenwinkel bei \\(A\\) in Grad.",
+        loesung: 90, toleranz: 0,
+        tipp: "Berechne \\(\\overrightarrow{AB}\\) und \\(\\overrightarrow{AC}\\), dann die Winkelformel.",
+        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 4 \\\\ 0 \\end{pmatrix}\\), \\(\\overrightarrow{AC} = \\begin{pmatrix} 0 \\\\ 3 \\end{pmatrix}\\). \\(\\overrightarrow{AB} \\cdot \\overrightarrow{AC} = 0 \\Rightarrow \\varphi_A = 90°\\)."
+    },
+    {
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Im gleichen Dreieck \\(A(0|0)\\), \\(B(4|0)\\), \\(C(0|3)\\): Berechne den Innenwinkel bei \\(B\\) in Grad (auf eine Nachkommastelle).",
+        loesung: 36.87, toleranz: 0.5,
+        tipp: "Verwende \\(\\overrightarrow{BA}\\) und \\(\\overrightarrow{BC}\\) — beide Vektoren müssen vom Punkt \\(B\\) wegzeigen.",
+        loesungsweg: "\\(\\overrightarrow{BA} = \\begin{pmatrix} -4 \\\\ 0 \\end{pmatrix}\\), \\(\\overrightarrow{BC} = \\begin{pmatrix} -4 \\\\ 3 \\end{pmatrix}\\). Skalarprodukt: \\(16 + 0 = 16\\). \\(|\\overrightarrow{BA}| = 4\\), \\(|\\overrightarrow{BC}| = 5\\). \\(\\cos\\varphi_B = \\dfrac{16}{20} = 0{,}8 \\Rightarrow \\varphi_B \\approx 36{,}87°\\)."
+    },
+    {
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Im Dreieck \\(A(0|0)\\), \\(B(4|0)\\), \\(C(0|3)\\): Berechne den Innenwinkel bei \\(C\\) in Grad (auf eine Nachkommastelle).",
+        loesung: 53.13, toleranz: 0.5,
+        tipp: "Bilde \\(\\overrightarrow{CA}\\) und \\(\\overrightarrow{CB}\\). Die Summe der Innenwinkel muss 180° ergeben.",
+        loesungsweg: "\\(\\overrightarrow{CA} = \\begin{pmatrix} 0 \\\\ -3 \\end{pmatrix}\\), \\(\\overrightarrow{CB} = \\begin{pmatrix} 4 \\\\ -3 \\end{pmatrix}\\). Skalarprodukt: \\(0 + 9 = 9\\). \\(|\\overrightarrow{CA}| = 3\\), \\(|\\overrightarrow{CB}| = 5\\). \\(\\cos\\varphi_C = \\dfrac{9}{15} = 0{,}6 \\Rightarrow \\varphi_C \\approx 53{,}13°\\). Probe: \\(90° + 36{,}87° + 53{,}13° = 180°\\). ✓"
+    },
+    {
+        id: 34, level: 6, typ: "mc",
+        frage: "Ist das Dreieck mit \\(A(1|1)\\), \\(B(5|1)\\), \\(C(1|4)\\) rechtwinklig?",
+        optionen: ["Ja, rechter Winkel bei \\(A\\)", "Ja, rechter Winkel bei \\(B\\)", "Ja, rechter Winkel bei \\(C\\)", "Nein, kein rechter Winkel"],
+        korrekt: 0,
+        tipp: "Prüfe an jedem Eckpunkt, ob das Skalarprodukt der beiden wegführenden Vektoren 0 ergibt.",
+        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 4 \\\\ 0 \\end{pmatrix}\\), \\(\\overrightarrow{AC} = \\begin{pmatrix} 0 \\\\ 3 \\end{pmatrix}\\). \\(\\overrightarrow{AB} \\cdot \\overrightarrow{AC} = 0\\). Also rechter Winkel bei \\(A\\)."
+    },
+    {
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Gegeben: Dreieck mit \\(A(2|0|0)\\), \\(B(0|2|0)\\), \\(C(0|0|2)\\). Berechne den Innenwinkel bei \\(A\\) in Grad.",
+        loesung: 60, toleranz: 0.5,
+        tipp: "\\(\\overrightarrow{AB}\\) und \\(\\overrightarrow{AC}\\) haben beide die Länge \\(\\sqrt{8}\\).",
+        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} -2 \\\\ 2 \\\\ 0 \\end{pmatrix}\\), \\(\\overrightarrow{AC} = \\begin{pmatrix} -2 \\\\ 0 \\\\ 2 \\end{pmatrix}\\). Skalarprodukt: \\(4 + 0 + 0 = 4\\). \\(|\\overrightarrow{AB}| = |\\overrightarrow{AC}| = \\sqrt{8}\\). \\(\\cos\\varphi_A = \\dfrac{4}{8} = 0{,}5 \\Rightarrow \\varphi_A = 60°\\). (Das Dreieck ist gleichseitig.)"
+    },
+    {
+        id: 36, level: 6, typ: "mc",
+        frage: "Ist das Dreieck mit \\(A(1|0|0)\\), \\(B(0|1|0)\\), \\(C(0|0|1)\\) rechtwinklig?",
+        optionen: ["Nein, es ist gleichseitig", "Ja, rechter Winkel bei \\(A\\)", "Ja, rechter Winkel bei \\(B\\)", "Ja, rechter Winkel bei \\(C\\)"],
+        korrekt: 0,
+        tipp: "Berechne die Seitenlängen \\(|\\overrightarrow{AB}|\\), \\(|\\overrightarrow{BC}|\\), \\(|\\overrightarrow{CA}|\\) — was fällt auf?",
+        loesungsweg: "Alle Seiten haben die Länge \\(\\sqrt{2}\\) (z. B. \\(\\overrightarrow{AB} = (-1|1|0)\\) mit \\(|\\overrightarrow{AB}| = \\sqrt{2}\\)). Das Dreieck ist gleichseitig, jeder Winkel beträgt \\(60°\\). Probe: \\(\\overrightarrow{AB} \\cdot \\overrightarrow{AC} = 1 + 0 + 0 = 1 \\neq 0\\) — kein rechter Winkel bei \\(A\\), analog für \\(B\\) und \\(C\\)."
+    }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

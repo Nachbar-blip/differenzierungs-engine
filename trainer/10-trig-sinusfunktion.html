@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sinusfunktion - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '10-trig-sinusfunktion';
+    const THEMA_CONFIG = { name: 'Sinusfunktion', bereich: 'analysis' };
+    const AUFGABEN = [
+      // ========== LEVEL 1 — Grundeigenschaften (6 Aufgaben) ==========
+      {
+        "id": 1,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Was ist der Definitionsbereich von \\(f(x) = \\sin(x)\\)?",
+        "optionen": [
+          "\\(D = [-1;\\, 1]\\)",
+          "\\(D = \\mathbb{R}\\)",
+          "\\(D = [0;\\, 2\\pi]\\)",
+          "\\(D = \\mathbb{R} \\setminus \\{0\\}\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Für welche \\(x\\)-Werte ist \\(\\sin(x)\\) definiert?",
+        "loesungsweg": "Die Sinusfunktion ist für alle reellen Zahlen definiert: \\(D = \\mathbb{R}\\)."
+      },
+      {
+        "id": 2,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Was ist der Wertebereich von \\(f(x) = \\sin(x)\\)?",
+        "optionen": [
+          "\\(W = \\mathbb{R}\\)",
+          "\\(W = [0;\\, 1]\\)",
+          "\\(W = [-1;\\, 1]\\)",
+          "\\(W = [-\\pi;\\, \\pi]\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Welche größten und kleinsten Werte kann \\(\\sin(x)\\) annehmen?",
+        "loesungsweg": "Der Sinus schwankt zwischen \\(-1\\) und \\(1\\). Also: \\(W = [-1;\\, 1]\\)."
+      },
+      {
+        "id": 3,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Wie groß ist die Periode von \\(f(x) = \\sin(x)\\)?",
+        "optionen": [
+          "\\(\\pi\\)",
+          "\\(2\\pi\\)",
+          "\\(\\frac{\\pi}{2}\\)",
+          "\\(4\\pi\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Nach welcher Länge wiederholt sich der Verlauf vollständig?",
+        "loesungsweg": "Die Sinusfunktion wiederholt sich nach \\(2\\pi\\). Es gilt \\(\\sin(x + 2\\pi) = \\sin(x)\\)."
+      },
+      {
+        "id": 4,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Welche Symmetrie hat der Graph von \\(f(x) = \\sin(x)\\)?",
+        "optionen": [
+          "achsensymmetrisch zur \\(y\\)-Achse",
+          "punktsymmetrisch zum Ursprung",
+          "achsensymmetrisch zur \\(x\\)-Achse",
+          "keine Symmetrie"
+        ],
+        "korrekt": 1,
+        "tipp": "Es gilt \\(\\sin(-x) = -\\sin(x)\\).",
+        "loesungsweg": "Wegen \\(\\sin(-x) = -\\sin(x)\\) ist \\(\\sin\\) eine ungerade Funktion. Der Graph ist punktsymmetrisch zum Ursprung."
+      },
+      {
+        "id": 5,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Welche der folgenden Stellen ist eine Nullstelle von \\(f(x) = \\sin(x)\\)?",
+        "optionen": [
+          "\\(x = \\frac{\\pi}{2}\\)",
+          "\\(x = \\frac{\\pi}{4}\\)",
+          "\\(x = \\pi\\)",
+          "\\(x = \\frac{3\\pi}{2}\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Alle Nullstellen von \\(\\sin\\) sind ganzzahlige Vielfache von \\(\\pi\\).",
+        "loesungsweg": "Die Nullstellen der Sinusfunktion sind \\(x = k \\cdot \\pi\\) mit \\(k \\in \\mathbb{Z}\\). Also ist \\(x = \\pi\\) eine Nullstelle."
+      },
+      {
+        "id": 6,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Wie lauten alle Nullstellen von \\(f(x) = \\sin(x)\\)?",
+        "optionen": [
+          "\\(x = k \\cdot \\pi,\\ k \\in \\mathbb{Z}\\)",
+          "\\(x = k \\cdot 2\\pi,\\ k \\in \\mathbb{Z}\\)",
+          "\\(x = \\frac{\\pi}{2} + k \\cdot \\pi\\)",
+          "nur \\(x = 0\\)"
+        ],
+        "korrekt": 0,
+        "tipp": "Der Sinus ist \\(0\\) bei \\(0,\\ \\pi,\\ 2\\pi,\\ -\\pi, \\ldots\\).",
+        "loesungsweg": "Die Nullstellen sind alle ganzzahligen Vielfachen von \\(\\pi\\): \\(x = k \\cdot \\pi\\) mit \\(k \\in \\mathbb{Z}\\)."
+      },
+
+      // ========== LEVEL 2 — Spezielle Werte (6 Aufgaben) ==========
+      {
+        "id": 7,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Berechne \\(\\sin(0)\\).",
+        "loesung": 0,
+        "toleranz": 0.001,
+        "tipp": "Der Graph startet im Ursprung.",
+        "loesungsweg": "\\(\\sin(0) = 0\\)."
+      },
+      {
+        "id": 8,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Berechne \\(\\sin\\!\\left(\\frac{\\pi}{2}\\right)\\).",
+        "loesung": 1,
+        "toleranz": 0.001,
+        "tipp": "Bei \\(\\frac{\\pi}{2}\\) erreicht die Sinusfunktion ihr Maximum.",
+        "loesungsweg": "\\(\\sin\\!\\left(\\frac{\\pi}{2}\\right) = 1\\) (Hochpunkt)."
+      },
+      {
+        "id": 9,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Was ist \\(\\sin(\\pi)\\)?",
+        "optionen": [
+          "\\(1\\)",
+          "\\(-1\\)",
+          "\\(0\\)",
+          "\\(\\pi\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "\\(\\pi\\) ist eine Nullstelle der Sinusfunktion.",
+        "loesungsweg": "\\(\\sin(\\pi) = 0\\), da \\(\\pi\\) eine Nullstelle ist."
+      },
+      {
+        "id": 10,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Berechne \\(\\sin\\!\\left(\\frac{3\\pi}{2}\\right)\\).",
+        "loesung": -1,
+        "toleranz": 0.001,
+        "tipp": "Bei \\(\\frac{3\\pi}{2}\\) liegt der Tiefpunkt.",
+        "loesungsweg": "\\(\\sin\\!\\left(\\frac{3\\pi}{2}\\right) = -1\\) (Tiefpunkt)."
+      },
+      {
+        "id": 11,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Berechne \\(\\sin(2\\pi)\\).",
+        "loesung": 0,
+        "toleranz": 0.001,
+        "tipp": "Nach einer vollen Periode ist der Sinus wieder bei 0.",
+        "loesungsweg": "\\(\\sin(2\\pi) = \\sin(0) = 0\\) wegen der Periode \\(2\\pi\\)."
+      },
+      {
+        "id": 12,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Was ist \\(\\sin\\!\\left(\\frac{\\pi}{6}\\right)\\)?",
+        "optionen": [
+          "\\(\\frac{1}{2}\\)",
+          "\\(\\frac{\\sqrt{2}}{2}\\)",
+          "\\(\\frac{\\sqrt{3}}{2}\\)",
+          "\\(1\\)"
+        ],
+        "korrekt": 0,
+        "tipp": "\\(\\frac{\\pi}{6}\\) entspricht 30°.",
+        "loesungsweg": "Aus der Wertetabelle: \\(\\sin\\!\\left(\\frac{\\pi}{6}\\right) = \\sin(30^\\circ) = \\frac{1}{2}\\)."
+      },
+
+      // ========== LEVEL 3 — Verlauf, Hoch-/Tiefpunkte, Monotonie (6 Aufgaben) ==========
+      {
+        "id": 13,
+        "level": 3,
+        "typ": "mc",
+        "frage": "An welcher Stelle im Intervall \\([0;\\, 2\\pi]\\) hat \\(f(x) = \\sin(x)\\) ihren Hochpunkt?",
+        "optionen": [
+          "\\(x = 0\\)",
+          "\\(x = \\frac{\\pi}{2}\\)",
+          "\\(x = \\pi\\)",
+          "\\(x = \\frac{3\\pi}{2}\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Das Maximum \\(1\\) wird bei \\(\\frac{\\pi}{2}\\) erreicht.",
+        "loesungsweg": "Der Hochpunkt liegt bei \\(H\\!\\left(\\frac{\\pi}{2}\\,\\middle|\\,1\\right)\\)."
+      },
+      {
+        "id": 14,
+        "level": 3,
+        "typ": "mc",
+        "frage": "An welcher Stelle im Intervall \\([0;\\, 2\\pi]\\) hat \\(f(x) = \\sin(x)\\) ihren Tiefpunkt?",
+        "optionen": [
+          "\\(x = \\pi\\)",
+          "\\(x = \\frac{3\\pi}{2}\\)",
+          "\\(x = 2\\pi\\)",
+          "\\(x = \\frac{\\pi}{2}\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Das Minimum \\(-1\\) wird bei \\(\\frac{3\\pi}{2}\\) erreicht.",
+        "loesungsweg": "Der Tiefpunkt liegt bei \\(T\\!\\left(\\frac{3\\pi}{2}\\,\\middle|\\,-1\\right)\\)."
+      },
+      {
+        "id": 15,
+        "level": 3,
+        "typ": "mc",
+        "frage": "In welchem Intervall ist \\(f(x) = \\sin(x)\\) monoton steigend?",
+        "optionen": [
+          "\\(\\left[0;\\, \\frac{\\pi}{2}\\right]\\)",
+          "\\(\\left[\\frac{\\pi}{2};\\, \\pi\\right]\\)",
+          "\\(\\left[\\pi;\\, \\frac{3\\pi}{2}\\right]\\)",
+          "\\(\\left[\\frac{3\\pi}{2};\\, 2\\pi\\right]\\)"
+        ],
+        "korrekt": 0,
+        "tipp": "Wo steigt die Kurve vom Wert 0 zum Wert 1?",
+        "loesungsweg": "Von \\(0\\) bis \\(\\frac{\\pi}{2}\\) steigt der Sinus von \\(0\\) auf \\(1\\), ist also monoton steigend."
+      },
+      {
+        "id": 16,
+        "level": 3,
+        "typ": "mc",
+        "frage": "In welchem Intervall ist \\(f(x) = \\sin(x)\\) monoton fallend?",
+        "optionen": [
+          "\\(\\left[0;\\, \\frac{\\pi}{2}\\right]\\)",
+          "\\(\\left[\\frac{\\pi}{2};\\, \\frac{3\\pi}{2}\\right]\\)",
+          "\\(\\left[\\pi;\\, 2\\pi\\right]\\)",
+          "\\(\\left[\\frac{3\\pi}{2};\\, 2\\pi\\right]\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Vom Hochpunkt \\(\\frac{\\pi}{2}\\) bis zum Tiefpunkt \\(\\frac{3\\pi}{2}\\) fällt der Sinus.",
+        "loesungsweg": "Zwischen \\(\\frac{\\pi}{2}\\) und \\(\\frac{3\\pi}{2}\\) fällt der Sinus von \\(1\\) auf \\(-1\\)."
+      },
+      {
+        "id": 17,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Welche Aussage über \\(f(x) = \\sin(x)\\) im Intervall \\(\\left[\\frac{3\\pi}{2};\\, 2\\pi\\right]\\) ist korrekt?",
+        "optionen": [
+          "streng monoton fallend",
+          "streng monoton steigend",
+          "konstant",
+          "weder steigend noch fallend"
+        ],
+        "korrekt": 1,
+        "tipp": "Vom Tiefpunkt \\(-1\\) geht es zurück zur Nullstelle.",
+        "loesungsweg": "Von \\(\\frac{3\\pi}{2}\\) (Wert \\(-1\\)) bis \\(2\\pi\\) (Wert \\(0\\)) steigt der Sinus. Also monoton steigend."
+      },
+      {
+        "id": 18,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Wie lautet der Hochpunkt von \\(f(x) = \\sin(x)\\) im Intervall \\([2\\pi;\\, 4\\pi]\\)?",
+        "optionen": [
+          "\\(H(2\\pi\\,|\\,1)\\)",
+          "\\(H\\!\\left(\\frac{5\\pi}{2}\\,\\middle|\\,1\\right)\\)",
+          "\\(H(3\\pi\\,|\\,1)\\)",
+          "\\(H\\!\\left(\\frac{7\\pi}{2}\\,\\middle|\\,1\\right)\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Wegen der Periode \\(2\\pi\\) ist der Hochpunkt um \\(2\\pi\\) verschoben: \\(\\frac{\\pi}{2} + 2\\pi\\).",
+        "loesungsweg": "Der Hochpunkt bei \\(\\frac{\\pi}{2}\\) wiederholt sich um eine Periode versetzt bei \\(\\frac{\\pi}{2} + 2\\pi = \\frac{5\\pi}{2}\\). Also \\(H\\!\\left(\\frac{5\\pi}{2}\\,\\middle|\\,1\\right)\\)."
+      },
+
+      // ========== LEVEL 4 — Nullstellen in [0, 4π] (6 Aufgaben) ==========
+      {
+        "id": 19,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Wie viele Nullstellen hat \\(f(x) = \\sin(x)\\) im Intervall \\([0;\\, 4\\pi]\\)?",
+        "optionen": [
+          "\\(3\\)",
+          "\\(4\\)",
+          "\\(5\\)",
+          "\\(6\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Zähle: \\(0,\\ \\pi,\\ 2\\pi,\\ 3\\pi,\\ 4\\pi\\).",
+        "loesungsweg": "Die Nullstellen in \\([0;\\, 4\\pi]\\) sind \\(0,\\ \\pi,\\ 2\\pi,\\ 3\\pi,\\ 4\\pi\\). Das sind \\(5\\) Nullstellen."
+      },
+      {
+        "id": 20,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Welche Menge gibt alle Nullstellen von \\(f(x) = \\sin(x)\\) im Intervall \\([0;\\, 4\\pi]\\) an?",
+        "optionen": [
+          "\\(\\{0;\\ \\pi;\\ 2\\pi\\}\\)",
+          "\\(\\{0;\\ \\pi;\\ 2\\pi;\\ 3\\pi;\\ 4\\pi\\}\\)",
+          "\\(\\{\\pi;\\ 2\\pi;\\ 3\\pi\\}\\)",
+          "\\(\\left\\{\\frac{\\pi}{2};\\ \\frac{3\\pi}{2};\\ \\frac{5\\pi}{2}\\right\\}\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Alle ganzzahligen Vielfachen von \\(\\pi\\) zwischen \\(0\\) und \\(4\\pi\\).",
+        "loesungsweg": "Aus \\(\\sin(x) = 0\\) folgt \\(x = k \\cdot \\pi\\). Für \\(k = 0, 1, 2, 3, 4\\) liegt \\(x\\) in \\([0;\\, 4\\pi]\\)."
+      },
+      {
+        "id": 21,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Die kleinste positive Nullstelle von \\(f(x) = \\sin(x)\\) ist \\(x = k\\pi\\). Gib \\(k\\) an.",
+        "loesung": 1,
+        "toleranz": 0,
+        "tipp": "Die kleinste positive Nullstelle ist \\(\\pi\\).",
+        "loesungsweg": "Die kleinste positive Nullstelle ist \\(x = \\pi = 1 \\cdot \\pi\\), also \\(k = 1\\)."
+      },
+      {
+        "id": 22,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Wie viele Hochpunkte hat \\(f(x) = \\sin(x)\\) im Intervall \\([0;\\, 4\\pi]\\)?",
+        "optionen": [
+          "\\(1\\)",
+          "\\(2\\)",
+          "\\(3\\)",
+          "\\(4\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Pro Periode gibt es einen Hochpunkt. \\([0;\\, 4\\pi]\\) enthält zwei Perioden.",
+        "loesungsweg": "Hochpunkte bei \\(\\frac{\\pi}{2}\\) und \\(\\frac{5\\pi}{2}\\). Das sind \\(2\\) Hochpunkte."
+      },
+      {
+        "id": 23,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Welche Stelle ist KEINE Nullstelle von \\(f(x) = \\sin(x)\\) in \\([0;\\, 4\\pi]\\)?",
+        "optionen": [
+          "\\(x = 2\\pi\\)",
+          "\\(x = 3\\pi\\)",
+          "\\(x = \\frac{5\\pi}{2}\\)",
+          "\\(x = 4\\pi\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Nullstellen sind ganzzahlige Vielfache von \\(\\pi\\).",
+        "loesungsweg": "\\(\\frac{5\\pi}{2}\\) ist kein ganzzahliges Vielfaches von \\(\\pi\\) und somit keine Nullstelle. Dort liegt sogar ein Hochpunkt (\\(\\sin\\!\\left(\\frac{5\\pi}{2}\\right) = 1\\))."
+      },
+      {
+        "id": 24,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Wie viele Tiefpunkte hat \\(f(x) = \\sin(x)\\) im Intervall \\([0;\\, 4\\pi]\\)?",
+        "loesung": 2,
+        "toleranz": 0,
+        "tipp": "In jeder Periode \\(2\\pi\\) gibt es genau einen Tiefpunkt.",
+        "loesungsweg": "Tiefpunkte bei \\(\\frac{3\\pi}{2}\\) und \\(\\frac{7\\pi}{2}\\). Das sind \\(2\\) Tiefpunkte."
+      },
+
+      // ========== LEVEL 5 — Gleichung sin(x) = c in [0, 2π] (6 Aufgaben) ==========
+      {
+        "id": 25,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Löse \\(\\sin(x) = 0{,}5\\) im Intervall \\([0;\\, 2\\pi]\\).",
+        "optionen": [
+          "\\(x = \\frac{\\pi}{6}\\)",
+          "\\(x = \\frac{\\pi}{6}\\) und \\(x = \\frac{5\\pi}{6}\\)",
+          "\\(x = \\frac{\\pi}{4}\\) und \\(x = \\frac{3\\pi}{4}\\)",
+          "\\(x = \\frac{\\pi}{3}\\) und \\(x = \\frac{2\\pi}{3}\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Eine Lösung ist \\(\\frac{\\pi}{6}\\). Wegen Symmetrie: zweite Lösung \\(\\pi - \\frac{\\pi}{6}\\).",
+        "loesungsweg": "\\(\\sin\\!\\left(\\frac{\\pi}{6}\\right) = 0{,}5\\). Zweite Lösung: \\(\\pi - \\frac{\\pi}{6} = \\frac{5\\pi}{6}\\). Also \\(x_1 = \\frac{\\pi}{6},\\ x_2 = \\frac{5\\pi}{6}\\)."
+      },
+      {
+        "id": 26,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Löse \\(\\sin(x) = 1\\) im Intervall \\([0;\\, 2\\pi]\\).",
+        "optionen": [
+          "\\(x = 0\\)",
+          "\\(x = \\frac{\\pi}{2}\\)",
+          "\\(x = \\pi\\)",
+          "\\(x = \\frac{\\pi}{2}\\) und \\(x = \\frac{3\\pi}{2}\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Das Maximum \\(1\\) wird genau einmal im Intervall erreicht.",
+        "loesungsweg": "Das Maximum \\(\\sin(x) = 1\\) wird im Intervall \\([0;\\, 2\\pi]\\) nur bei \\(x = \\frac{\\pi}{2}\\) angenommen."
+      },
+      {
+        "id": 27,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Löse \\(\\sin(x) = -1\\) im Intervall \\([0;\\, 2\\pi]\\).",
+        "optionen": [
+          "\\(x = \\pi\\)",
+          "\\(x = \\frac{3\\pi}{2}\\)",
+          "\\(x = 2\\pi\\)",
+          "keine Lösung"
+        ],
+        "korrekt": 1,
+        "tipp": "Das Minimum \\(-1\\) wird am Tiefpunkt erreicht.",
+        "loesungsweg": "Das Minimum \\(\\sin(x) = -1\\) wird bei \\(x = \\frac{3\\pi}{2}\\) angenommen."
+      },
+      {
+        "id": 28,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Löse \\(\\sin(x) = 0\\) im Intervall \\([0;\\, 2\\pi]\\).",
+        "optionen": [
+          "\\(x = 0\\)",
+          "\\(x = 0\\) und \\(x = \\pi\\)",
+          "\\(x = 0,\\ x = \\pi,\\ x = 2\\pi\\)",
+          "\\(x = \\pi\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Alle Nullstellen in \\([0;\\, 2\\pi]\\).",
+        "loesungsweg": "Nullstellen sind \\(x = k\\pi\\). Im Intervall \\([0;\\, 2\\pi]\\) liegen \\(x = 0,\\ x = \\pi,\\ x = 2\\pi\\)."
+      },
+      {
+        "id": 29,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Löse \\(\\sin(x) = \\frac{\\sqrt{2}}{2}\\) im Intervall \\([0;\\, 2\\pi]\\).",
+        "optionen": [
+          "\\(x = \\frac{\\pi}{6},\\ \\frac{5\\pi}{6}\\)",
+          "\\(x = \\frac{\\pi}{4},\\ \\frac{3\\pi}{4}\\)",
+          "\\(x = \\frac{\\pi}{3},\\ \\frac{2\\pi}{3}\\)",
+          "\\(x = \\frac{\\pi}{4}\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "\\(\\sin\\!\\left(\\frac{\\pi}{4}\\right) = \\frac{\\sqrt{2}}{2} \\approx 0{,}7071\\).",
+        "loesungsweg": "Erste Lösung: \\(x_1 = \\frac{\\pi}{4}\\). Zweite Lösung: \\(x_2 = \\pi - \\frac{\\pi}{4} = \\frac{3\\pi}{4}\\)."
+      },
+      {
+        "id": 30,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Löse \\(\\sin(x) = -0{,}5\\) im Intervall \\([0;\\, 2\\pi]\\).",
+        "optionen": [
+          "\\(x = \\frac{\\pi}{6},\\ \\frac{5\\pi}{6}\\)",
+          "\\(x = \\frac{7\\pi}{6},\\ \\frac{11\\pi}{6}\\)",
+          "\\(x = \\frac{7\\pi}{6},\\ \\frac{5\\pi}{6}\\)",
+          "keine Lösung"
+        ],
+        "korrekt": 1,
+        "tipp": "Negative Werte liegen im Bereich \\([\\pi;\\, 2\\pi]\\). Nutze \\(x = \\pi + \\frac{\\pi}{6}\\) und \\(x = 2\\pi - \\frac{\\pi}{6}\\).",
+        "loesungsweg": "Da \\(\\sin\\!\\left(\\frac{\\pi}{6}\\right) = 0{,}5\\), sind die Lösungen von \\(\\sin(x) = -0{,}5\\) im Intervall \\([0;\\, 2\\pi]\\): \\(x_1 = \\pi + \\frac{\\pi}{6} = \\frac{7\\pi}{6}\\) und \\(x_2 = 2\\pi - \\frac{\\pi}{6} = \\frac{11\\pi}{6}\\)."
+      },
+
+      // ========== LEVEL 6 — Anwendungen (6 Aufgaben) ==========
+      {
+        "id": 31,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Die Tageslänge an einem bestimmten Ort lässt sich näherungsweise durch eine Sinusfunktion beschreiben. Welche Eigenschaft der Sinusfunktion bildet den jährlichen Wechsel von Sommer und Winter ab?",
+        "optionen": [
+          "der Definitionsbereich",
+          "die Periodizität",
+          "die Nullstellen",
+          "der Wertebereich"
+        ],
+        "korrekt": 1,
+        "tipp": "Was wiederholt sich jedes Jahr?",
+        "loesungsweg": "Die Periodizität sorgt dafür, dass sich das Muster (Sommer/Winter) regelmäßig wiederholt. Ein Jahr entspricht einer Periode."
+      },
+      {
+        "id": 32,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Ein Riesenrad-Sitz bewegt sich auf einer Kreisbahn. Die Höhe über der Mitte wird näherungsweise durch \\(h(t) = \\sin(t)\\) beschrieben. Welche Bedeutung hat der Wert \\(1\\) des Wertebereichs?",
+        "optionen": [
+          "die Umlaufzeit",
+          "die höchste Position über der Mitte",
+          "die Startposition",
+          "die Geschwindigkeit"
+        ],
+        "korrekt": 1,
+        "tipp": "Der maximale Wert von \\(\\sin(t)\\) ist \\(1\\).",
+        "loesungsweg": "Der Maximalwert \\(1\\) entspricht dem höchsten Punkt des Sitzes über der Mitte der Kreisbahn."
+      },
+      {
+        "id": 33,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Die Temperaturschwankung an einem Tag wird vereinfacht durch \\(T(t) = \\sin(t)\\) modelliert. Nach welcher Zeit ist der Temperaturverlauf wieder am Ausgangswert (eine volle Periode)?",
+        "optionen": [
+          "\\(\\pi\\)",
+          "\\(\\frac{\\pi}{2}\\)",
+          "\\(2\\pi\\)",
+          "\\(4\\pi\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Die Periode der Sinusfunktion ist \\(2\\pi\\).",
+        "loesungsweg": "Die Grundperiode von \\(\\sin(t)\\) beträgt \\(2\\pi\\). Nach \\(2\\pi\\) beginnt der Verlauf von vorn."
+      },
+      {
+        "id": 34,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Eine Welle wird durch \\(y(x) = \\sin(x)\\) beschrieben. Zwischen welchen Werten schwankt die Auslenkung?",
+        "optionen": [
+          "zwischen \\(0\\) und \\(1\\)",
+          "zwischen \\(-1\\) und \\(1\\)",
+          "zwischen \\(-\\pi\\) und \\(\\pi\\)",
+          "zwischen \\(-2\\) und \\(2\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Der Wertebereich der Sinusfunktion.",
+        "loesungsweg": "Der Wertebereich ist \\(W = [-1;\\, 1]\\). Die Auslenkung schwankt also zwischen \\(-1\\) und \\(1\\)."
+      },
+      {
+        "id": 35,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Die Höhe eines schaukelnden Pendels (in Metern) wird durch \\(h(t) = \\sin(t)\\) beschrieben. Welche Höhe hat das Pendel zum Zeitpunkt \\(t = \\frac{\\pi}{2}\\)?",
+        "loesung": 1,
+        "toleranz": 0.001,
+        "tipp": "Setze \\(t = \\frac{\\pi}{2}\\) in \\(h(t)\\) ein.",
+        "loesungsweg": "\\(h\\!\\left(\\frac{\\pi}{2}\\right) = \\sin\\!\\left(\\frac{\\pi}{2}\\right) = 1\\). Das Pendel ist auf Höhe \\(1\\,\\text{m}\\)."
+      },
+      {
+        "id": 36,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Der Wasserstand in einem Hafen wird vereinfacht durch \\(w(t) = \\sin(t)\\) beschrieben (in Metern, \\(t\\) in Stunden). Zu welchem Zeitpunkt im Intervall \\([0;\\, 2\\pi]\\) ist der Wasserstand am niedrigsten?",
+        "optionen": [
+          "\\(t = 0\\)",
+          "\\(t = \\frac{\\pi}{2}\\)",
+          "\\(t = \\pi\\)",
+          "\\(t = \\frac{3\\pi}{2}\\)"
+        ],
+        "korrekt": 3,
+        "tipp": "Der Tiefpunkt der Sinusfunktion liegt bei \\(\\frac{3\\pi}{2}\\).",
+        "loesungsweg": "Der niedrigste Wert von \\(\\sin(t)\\) im Intervall \\([0;\\, 2\\pi]\\) wird bei \\(t = \\frac{3\\pi}{2}\\) mit \\(w = -1\\) angenommen."
+      }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

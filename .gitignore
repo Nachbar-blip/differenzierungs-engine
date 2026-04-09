@@ -1,4 +1,7 @@
 docs/
+.claude/
+Mathe/
 *.tmp
+~$*
 .DS_Store
 Thumbs.db
