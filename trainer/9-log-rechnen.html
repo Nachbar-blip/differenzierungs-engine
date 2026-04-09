@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logarithmen & Rechengesetze - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '9-log-rechnen';
+    const THEMA_CONFIG = { name: 'Logarithmen & Rechengesetze', bereich: 'Algebra' };
+    const AUFGABEN = [
+
+    // ═══════════════════════════════════════════════════════════════
+    // Level 1: Definition anwenden — einfache Logarithmen berechnen
+    // ═══════════════════════════════════════════════════════════════
+
+    {
+        "id": 1, "level": 1, "typ": "mc",
+        "frage": "Berechne \\(\\log_2(8)\\).",
+        "optionen": ["\\(2\\)", "\\(3\\)", "\\(4\\)", "\\(8\\)"],
+        "korrekt": 1,
+        "tipp": "Frage dich: \\(2\\) hoch wie viel ergibt \\(8\\)?",
+        "loesungsweg": "Nach Definition gilt \\(\\log_b(a) = x \\Leftrightarrow b^x = a\\). Wegen \\(2^3 = 8\\) folgt \\(\\log_2(8) = 3\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 2, "level": 1, "typ": "numerisch",
+        "frage": "Berechne \\(\\lg(100)\\). (Erinnerung: \\(\\lg = \\log_{10}\\))",
+        "loesung": 2,
+        "toleranz": 0,
+        "tipp": "\\(10\\) hoch wie viel ergibt \\(100\\)?",
+        "loesungsweg": "\\(10^2 = 100\\), also \\(\\lg(100) = 2\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 3, "level": 1, "typ": "numerisch",
+        "frage": "Berechne \\(\\log_3(27)\\).",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "\\(3 \\cdot 3 \\cdot 3 = ?\\)",
+        "loesungsweg": "\\(3^3 = 27\\), also \\(\\log_3(27) = 3\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 4, "level": 1, "typ": "mc",
+        "frage": "Berechne \\(\\log_5(25)\\).",
+        "optionen": ["\\(1\\)", "\\(2\\)", "\\(5\\)", "\\(25\\)"],
+        "korrekt": 1,
+        "tipp": "\\(5\\) hoch wie viel ergibt \\(25\\)?",
+        "loesungsweg": "\\(5^2 = 25\\), also \\(\\log_5(25) = 2\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 5, "level": 1, "typ": "numerisch",
+        "frage": "Berechne \\(\\lg(1000)\\).",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "Wie oft muss man \\(10\\) mit sich selbst multiplizieren, um \\(1000\\) zu erhalten?",
+        "loesungsweg": "\\(10^3 = 1000\\), also \\(\\lg(1000) = 3\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 6, "level": 1, "typ": "numerisch",
+        "frage": "Berechne \\(\\log_2(16)\\).",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "Potenzen von \\(2\\): \\(2, 4, 8, 16, \\ldots\\)",
+        "loesungsweg": "\\(2^4 = 16\\), also \\(\\log_2(16) = 4\\).",
+        "bereich": "Algebra"
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // Level 2: Definition, Spezialfälle, ln und lg
+    // ═══════════════════════════════════════════════════════════════
+
+    {
+        "id": 7, "level": 2, "typ": "mc",
+        "frage": "Welche Aussage ist äquivalent zu \\(\\log_b(a) = x\\)?",
+        "optionen": ["\\(a^b = x\\)", "\\(b^x = a\\)", "\\(x^a = b\\)", "\\(b \\cdot x = a\\)"],
+        "korrekt": 1,
+        "tipp": "Der Logarithmus ist der Exponent, mit dem man \\(b\\) potenzieren muss, um \\(a\\) zu erhalten.",
+        "loesungsweg": "Definition: \\(\\log_b(a) = x \\Leftrightarrow b^x = a\\) (mit \\(b > 0\\), \\(b \\neq 1\\), \\(a > 0\\)).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 8, "level": 2, "typ": "mc",
+        "frage": "Welcher Wert ist \\(\\log_b(1)\\) für jede Basis \\(b > 0\\), \\(b \\neq 1\\)?",
+        "optionen": ["\\(0\\)", "\\(1\\)", "\\(b\\)", "undefiniert"],
+        "korrekt": 0,
+        "tipp": "\\(b\\) hoch wie viel ergibt \\(1\\)?",
+        "loesungsweg": "Für jede Basis \\(b\\) gilt \\(b^0 = 1\\), also \\(\\log_b(1) = 0\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 9, "level": 2, "typ": "numerisch",
+        "frage": "Berechne \\(\\ln(e^3)\\). (\\(\\ln\\) ist der Logarithmus zur Basis \\(e \\approx 2{,}718\\))",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "\\(\\ln(e^n) = n\\), denn \\(\\ln\\) und \\(e^{\\cdot}\\) heben sich auf.",
+        "loesungsweg": "\\(\\ln(e^3) = \\log_e(e^3) = 3\\), weil \\(e^3 = e^3\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 10, "level": 2, "typ": "numerisch",
+        "frage": "Schreibe \\(2^5 = 32\\) als Logarithmus und gib \\(\\log_2(32)\\) an.",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "\\(b^y = x \\Leftrightarrow \\log_b(x) = y\\).",
+        "loesungsweg": "Aus \\(2^5 = 32\\) folgt \\(\\log_2(32) = 5\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 11, "level": 2, "typ": "mc",
+        "frage": "Welche Gleichung ist äquivalent zu \\(\\log_3(81) = 4\\)?",
+        "optionen": ["\\(3^{81} = 4\\)", "\\(4^3 = 81\\)", "\\(3^4 = 81\\)", "\\(81^4 = 3\\)"],
+        "korrekt": 2,
+        "tipp": "\\(\\log_b(a) = x \\Leftrightarrow b^x = a\\).",
+        "loesungsweg": "\\(\\log_3(81) = 4\\) bedeutet \\(3^4 = 81\\). Probe: \\(3 \\cdot 3 \\cdot 3 \\cdot 3 = 81\\) ✓",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 12, "level": 2, "typ": "numerisch",
+        "frage": "Berechne \\(\\log_2\\left(\\frac{1}{8}\\right)\\).",
+        "loesung": -3,
+        "toleranz": 0,
+        "tipp": "\\(\\frac{1}{8} = 2^{-3}\\).",
+        "loesungsweg": "\\(\\frac{1}{8} = \\frac{1}{2^3} = 2^{-3}\\), also \\(\\log_2\\left(\\frac{1}{8}\\right) = -3\\).",
+        "bereich": "Algebra"
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // Level 3: Rechengesetze erkennen und anwenden
+    // ═══════════════════════════════════════════════════════════════
+
+    {
+        "id": 13, "level": 3, "typ": "mc",
+        "frage": "Welche Formel ist korrekt?",
+        "optionen": [
+            "\\(\\log(a \\cdot b) = \\log(a) \\cdot \\log(b)\\)",
+            "\\(\\log(a \\cdot b) = \\log(a) + \\log(b)\\)",
+            "\\(\\log(a + b) = \\log(a) + \\log(b)\\)",
+            "\\(\\log(a \\cdot b) = \\log(a) - \\log(b)\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Produkte im Argument werden zu Summen der Logarithmen.",
+        "loesungsweg": "Produktgesetz: \\(\\log(u \\cdot v) = \\log(u) + \\log(v)\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 14, "level": 3, "typ": "numerisch",
+        "frage": "Vereinfache \\(\\log_2(4) + \\log_2(8)\\).",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Nutze \\(\\log(u) + \\log(v) = \\log(u \\cdot v)\\) oder berechne beide Werte einzeln.",
+        "loesungsweg": "\\(\\log_2(4) + \\log_2(8) = \\log_2(4 \\cdot 8) = \\log_2(32) = 5\\). Alternativ: \\(2 + 3 = 5\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 15, "level": 3, "typ": "numerisch",
+        "frage": "Berechne \\(\\log_3(27) - \\log_3(3)\\).",
+        "loesung": 2,
+        "toleranz": 0,
+        "tipp": "\\(\\log(u) - \\log(v) = \\log\\left(\\frac{u}{v}\\right)\\).",
+        "loesungsweg": "\\(\\log_3(27) - \\log_3(3) = \\log_3\\left(\\frac{27}{3}\\right) = \\log_3(9) = 2\\). Alternativ: \\(3 - 1 = 2\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 16, "level": 3, "typ": "numerisch",
+        "frage": "Berechne \\(\\log_2(4^5)\\) mit dem Potenzgesetz.",
+        "loesung": 10,
+        "toleranz": 0,
+        "tipp": "\\(\\log(u^n) = n \\cdot \\log(u)\\).",
+        "loesungsweg": "\\(\\log_2(4^5) = 5 \\cdot \\log_2(4) = 5 \\cdot 2 = 10\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 17, "level": 3, "typ": "mc",
+        "frage": "Vereinfache \\(\\lg(20) + \\lg(5)\\).",
+        "optionen": ["\\(\\lg(25)\\)", "\\(\\lg(100) = 2\\)", "\\(\\lg(4) \\approx 0{,}6\\)", "\\(25\\)"],
+        "korrekt": 1,
+        "tipp": "Produktgesetz: \\(\\lg(u) + \\lg(v) = \\lg(u \\cdot v)\\).",
+        "loesungsweg": "\\(\\lg(20) + \\lg(5) = \\lg(20 \\cdot 5) = \\lg(100) = 2\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 18, "level": 3, "typ": "numerisch",
+        "frage": "Berechne \\(\\log_2(16) - \\log_2(2) + \\log_2(4)\\).",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Berechne jeden Logarithmus einzeln und addiere/subtrahiere.",
+        "loesungsweg": "\\(\\log_2(16) = 4\\), \\(\\log_2(2) = 1\\), \\(\\log_2(4) = 2\\). Ergebnis: \\(4 - 1 + 2 = 5\\).",
+        "bereich": "Algebra"
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // Level 4: Zusammenfassen und Aufspalten von Log-Ausdrücken
+    // ═══════════════════════════════════════════════════════════════
+
+    {
+        "id": 19, "level": 4, "typ": "mc",
+        "frage": "Fasse \\(\\log(a) + \\log(b) - \\log(c)\\) zu einem Logarithmus zusammen.",
+        "optionen": [
+            "\\(\\log(a + b - c)\\)",
+            "\\(\\log\\left(\\frac{a \\cdot b}{c}\\right)\\)",
+            "\\(\\log\\left(\\frac{a}{b \\cdot c}\\right)\\)",
+            "\\(\\log(a \\cdot b \\cdot c)\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Summen werden zu Produkten, Differenzen zu Quotienten.",
+        "loesungsweg": "\\(\\log(a) + \\log(b) - \\log(c) = \\log(a \\cdot b) - \\log(c) = \\log\\left(\\frac{a \\cdot b}{c}\\right)\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 20, "level": 4, "typ": "mc",
+        "frage": "Spalte \\(\\log\\left(\\frac{x^3}{y}\\right)\\) in einzelne Logarithmen auf.",
+        "optionen": [
+            "\\(3\\log(x) - \\log(y)\\)",
+            "\\(3\\log(x) \\cdot \\log(y)\\)",
+            "\\(\\log(3x) - \\log(y)\\)",
+            "\\(\\log(x) - 3\\log(y)\\)"
+        ],
+        "korrekt": 0,
+        "tipp": "Zuerst das Quotientengesetz, dann das Potenzgesetz anwenden.",
+        "loesungsweg": "\\(\\log\\left(\\frac{x^3}{y}\\right) = \\log(x^3) - \\log(y) = 3\\log(x) - \\log(y)\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 21, "level": 4, "typ": "numerisch",
+        "frage": "Berechne \\(\\log_2(8) + \\log_2(16) - \\log_2(4)\\).",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Einzelwerte: \\(\\log_2(8) = 3\\), \\(\\log_2(16) = 4\\), \\(\\log_2(4) = 2\\).",
+        "loesungsweg": "\\(3 + 4 - 2 = 5\\). Oder: \\(\\log_2\\left(\\frac{8 \\cdot 16}{4}\\right) = \\log_2(32) = 5\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 22, "level": 4, "typ": "numerisch",
+        "frage": "Vereinfache \\(2 \\cdot \\lg(5) + \\lg(4)\\).",
+        "loesung": 2,
+        "toleranz": 0,
+        "tipp": "Potenzgesetz rückwärts: \\(2 \\cdot \\lg(5) = \\lg(5^2) = \\lg(25)\\).",
+        "loesungsweg": "\\(2 \\cdot \\lg(5) + \\lg(4) = \\lg(25) + \\lg(4) = \\lg(100) = 2\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 23, "level": 4, "typ": "mc",
+        "frage": "Fasse \\(\\frac{1}{2}\\log(a) + \\log(b)\\) zu einem Logarithmus zusammen.",
+        "optionen": [
+            "\\(\\log\\left(\\frac{a}{2} \\cdot b\\right)\\)",
+            "\\(\\log(\\sqrt{a} \\cdot b)\\)",
+            "\\(\\log(a^2 \\cdot b)\\)",
+            "\\(\\log\\left(\\frac{a \\cdot b}{2}\\right)\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "\\(\\frac{1}{2}\\log(a) = \\log(a^{1/2}) = \\log(\\sqrt{a})\\).",
+        "loesungsweg": "\\(\\frac{1}{2}\\log(a) + \\log(b) = \\log(\\sqrt{a}) + \\log(b) = \\log(\\sqrt{a} \\cdot b)\\). Das verknüpft Potenz-, Wurzel- und Logarithmusgesetze.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 24, "level": 4, "typ": "numerisch",
+        "frage": "Berechne \\(\\log_3(9) + \\log_3(27) - \\log_3(81)\\).",
+        "loesung": 1,
+        "toleranz": 0,
+        "tipp": "\\(\\log_3(9) = 2\\), \\(\\log_3(27) = 3\\), \\(\\log_3(81) = 4\\).",
+        "loesungsweg": "\\(2 + 3 - 4 = 1\\). Oder: \\(\\log_3\\left(\\frac{9 \\cdot 27}{81}\\right) = \\log_3(3) = 1\\).",
+        "bereich": "Algebra"
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // Level 5: Einfache Logarithmus- und Exponentialgleichungen
+    // ═══════════════════════════════════════════════════════════════
+
+    {
+        "id": 25, "level": 5, "typ": "numerisch",
+        "frage": "Löse die Gleichung \\(\\log_2(x) = 3\\).",
+        "loesung": 8,
+        "toleranz": 0,
+        "tipp": "Wandle die Gleichung in die Form \\(b^y = x\\) um.",
+        "loesungsweg": "\\(\\log_2(x) = 3 \\Leftrightarrow x = 2^3 = 8\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 26, "level": 5, "typ": "numerisch",
+        "frage": "Löse die Gleichung \\(\\lg(x) = 2\\).",
+        "loesung": 100,
+        "toleranz": 0,
+        "tipp": "\\(\\lg\\) ist der Logarithmus zur Basis \\(10\\).",
+        "loesungsweg": "\\(\\lg(x) = 2 \\Leftrightarrow x = 10^2 = 100\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 27, "level": 5, "typ": "numerisch",
+        "frage": "Löse \\(2^x = 32\\).",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Schreibe \\(32\\) als Zweierpotenz oder wende \\(\\log_2\\) an.",
+        "loesungsweg": "\\(2^x = 32 = 2^5 \\Rightarrow x = 5\\). Alternativ: \\(x = \\log_2(32) = 5\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 28, "level": 5, "typ": "numerisch",
+        "frage": "Löse \\(3^x = 81\\).",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "Welche Potenz von \\(3\\) ergibt \\(81\\)?",
+        "loesungsweg": "\\(3^4 = 81\\), also \\(x = \\log_3(81) = 4\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 29, "level": 5, "typ": "numerisch",
+        "frage": "Löse \\(\\log_2(x) + \\log_2(4) = 5\\).",
+        "loesung": 8,
+        "toleranz": 0,
+        "tipp": "Zuerst \\(\\log_2(4) = 2\\) berechnen, dann umformen.",
+        "loesungsweg": "\\(\\log_2(x) + 2 = 5 \\Leftrightarrow \\log_2(x) = 3 \\Leftrightarrow x = 2^3 = 8\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 30, "level": 5, "typ": "numerisch",
+        "frage": "Löse \\(3 \\cdot 2^x = 48\\).",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "Isoliere zuerst die Potenz (durch \\(3\\) teilen).",
+        "loesungsweg": "\\(3 \\cdot 2^x = 48 \\Leftrightarrow 2^x = 16 \\Leftrightarrow x = \\log_2(16) = 4\\).",
+        "bereich": "Algebra"
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // Level 6: Anwendungen und Basiswechsel
+    // ═══════════════════════════════════════════════════════════════
+
+    {
+        "id": 31, "level": 6, "typ": "numerisch",
+        "frage": "Ein Bakterienstamm verdoppelt sich stündlich. Startwert \\(100\\). Nach wie vielen Stunden sind es \\(1600\\) Bakterien?",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "Ansatz: \\(100 \\cdot 2^t = 1600\\). Löse nach \\(t\\) auf.",
+        "loesungsweg": "\\(100 \\cdot 2^t = 1600 \\Leftrightarrow 2^t = 16 \\Leftrightarrow t = \\log_2(16) = 4\\) Stunden.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 32, "level": 6, "typ": "numerisch",
+        "frage": "Ein radioaktives Material hat eine Halbwertszeit von \\(5\\) Jahren. Nach wie vielen Jahren ist nur noch \\(\\frac{1}{8}\\) der ursprünglichen Menge vorhanden?",
+        "loesung": 15,
+        "toleranz": 0,
+        "tipp": "\\(\\frac{1}{8} = \\left(\\frac{1}{2}\\right)^3\\) — wie viele Halbwertszeiten sind das?",
+        "loesungsweg": "\\(\\frac{1}{8} = \\left(\\frac{1}{2}\\right)^3\\), also sind \\(3\\) Halbwertszeiten nötig: \\(3 \\cdot 5 = 15\\) Jahre.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 33, "level": 6, "typ": "numerisch",
+        "frage": "Löse \\(2^x = 10\\) mit der Basiswechselformel. Runde auf zwei Nachkommastellen.",
+        "loesung": 3.32,
+        "toleranz": 0.01,
+        "tipp": "Basiswechsel: \\(\\log_2(10) = \\frac{\\lg(10)}{\\lg(2)} = \\frac{1}{\\lg(2)}\\).",
+        "loesungsweg": "\\(x = \\log_2(10) = \\frac{\\lg(10)}{\\lg(2)} = \\frac{1}{0{,}30103} \\approx 3{,}32\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 34, "level": 6, "typ": "mc",
+        "frage": "Eine Population wächst nach \\(N(t) = 500 \\cdot 2^t\\) (in Stunden). Wann erreicht sie \\(4000\\)?",
+        "optionen": ["\\(t = 2\\)", "\\(t = 3\\)", "\\(t = 4\\)", "\\(t = 8\\)"],
+        "korrekt": 1,
+        "tipp": "\\(500 \\cdot 2^t = 4000 \\Rightarrow 2^t = 8\\).",
+        "loesungsweg": "\\(500 \\cdot 2^t = 4000 \\Leftrightarrow 2^t = 8 \\Leftrightarrow t = \\log_2(8) = 3\\) Stunden.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 35, "level": 6, "typ": "numerisch",
+        "frage": "Ein Medikament wird im Körper pro Stunde auf \\(50\\,\\%\\) abgebaut. Startdosis \\(200\\) mg. Nach wie vielen Stunden sind nur noch \\(25\\) mg im Körper?",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "Ansatz: \\(200 \\cdot 0{,}5^t = 25\\). Bestimme zuerst den Faktor.",
+        "loesungsweg": "\\(200 \\cdot 0{,}5^t = 25 \\Leftrightarrow 0{,}5^t = \\frac{1}{8} = 0{,}5^3 \\Leftrightarrow t = 3\\) Stunden.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 36, "level": 6, "typ": "numerisch",
+        "frage": "Ein Guthaben von \\(1000\\,€\\) wächst jährlich mit Faktor \\(1{,}05\\). Nach wie vielen Jahren ist es auf \\(2000\\,€\\) angewachsen? Runde auf zwei Nachkommastellen.",
+        "loesung": 14.21,
+        "toleranz": 0.05,
+        "tipp": "\\(1{,}05^t = 2 \\Rightarrow t = \\frac{\\lg(2)}{\\lg(1{,}05)}\\).",
+        "loesungsweg": "\\(1000 \\cdot 1{,}05^t = 2000 \\Leftrightarrow 1{,}05^t = 2 \\Leftrightarrow t = \\frac{\\lg(2)}{\\lg(1{,}05)} \\approx \\frac{0{,}3010}{0{,}0212} \\approx 14{,}21\\) Jahre.",
+        "bereich": "Algebra"
+    }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

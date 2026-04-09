@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zehnerpotenzen & Einheitenvorsätze - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '9-pot-zehnerpotenzen';
+    const THEMA_CONFIG = { name: 'Zehnerpotenzen & Einheitenvorsätze', bereich: 'Algebra' };
+    const AUFGABEN = [
+
+    // ═══════════════════════════════════════════════════════════════
+    // Level 1: Wissenschaftliche Notation & Vorsatz-Erkennung (Basis)
+    // ═══════════════════════════════════════════════════════════════
+
+    {
+        "id": 1, "level": 1, "typ": "mc",
+        "frage": "Welche Zahl entspricht \\(3{,}4 \\cdot 10^5\\)?",
+        "optionen": ["\\(34\\,000\\)", "\\(340\\,000\\)", "\\(3\\,400\\,000\\)", "\\(0{,}000034\\)"],
+        "korrekt": 1,
+        "tipp": "\\(10^5 = 100\\,000\\). Komma um 5 Stellen nach rechts verschieben.",
+        "loesungsweg": "\\(3{,}4 \\cdot 10^5 = 3{,}4 \\cdot 100\\,000 = 340\\,000\\). Das Komma wandert 5 Stellen nach rechts.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 2, "level": 1, "typ": "mc",
+        "frage": "Welche Zahl entspricht \\(5 \\cdot 10^{-3}\\)?",
+        "optionen": ["\\(5000\\)", "\\(0{,}5\\)", "\\(0{,}005\\)", "\\(0{,}0005\\)"],
+        "korrekt": 2,
+        "tipp": "Negativer Exponent: Komma nach links verschieben.",
+        "loesungsweg": "\\(5 \\cdot 10^{-3} = \\frac{5}{1000} = 0{,}005\\). Komma wandert 3 Stellen nach links.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 3, "level": 1, "typ": "mc",
+        "frage": "Schreibe \\(72\\,000\\) in wissenschaftlicher Notation.",
+        "optionen": ["\\(7{,}2 \\cdot 10^3\\)", "\\(7{,}2 \\cdot 10^4\\)", "\\(72 \\cdot 10^3\\)", "\\(0{,}72 \\cdot 10^5\\)"],
+        "korrekt": 1,
+        "tipp": "Die Mantisse muss zwischen 1 und 10 liegen. Wie oft Komma nach links verschieben?",
+        "loesungsweg": "\\(72\\,000 = 7{,}2 \\cdot 10\\,000 = 7{,}2 \\cdot 10^4\\). Die Mantisse \\(7{,}2\\) liegt korrekt zwischen 1 und 10.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 4, "level": 1, "typ": "mc",
+        "frage": "Welcher Einheitenvorsatz entspricht \\(10^6\\)?",
+        "optionen": ["kilo (k)", "Mega (M)", "Giga (G)", "milli (m)"],
+        "korrekt": 1,
+        "tipp": "Eine Million = \\(10^6\\).",
+        "loesungsweg": "Mega (M) steht für \\(10^6\\) = eine Million. Beispiel: 1 MW = \\(10^6\\) W.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 5, "level": 1, "typ": "mc",
+        "frage": "Welcher Vorsatz entspricht \\(10^{-9}\\)?",
+        "optionen": ["milli (m)", "mikro (μ)", "nano (n)", "pico (p)"],
+        "korrekt": 2,
+        "tipp": "Ein Milliardstel.",
+        "loesungsweg": "nano (n) steht für \\(10^{-9}\\). Beispiel: 1 nm = \\(10^{-9}\\) m.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 6, "level": 1, "typ": "mc",
+        "frage": "Schreibe \\(0{,}00046\\) in wissenschaftlicher Notation.",
+        "optionen": ["\\(4{,}6 \\cdot 10^{-3}\\)", "\\(4{,}6 \\cdot 10^{-4}\\)", "\\(46 \\cdot 10^{-5}\\)", "\\(0{,}46 \\cdot 10^{-3}\\)"],
+        "korrekt": 1,
+        "tipp": "Komma so verschieben, dass Mantisse zwischen 1 und 10 liegt. Zähle die Stellen.",
+        "loesungsweg": "\\(0{,}00046 = 4{,}6 \\cdot 10^{-4}\\). Das Komma wird 4 Stellen nach rechts verschoben, deshalb Exponent \\(-4\\).",
+        "bereich": "Algebra"
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // Level 2: Umrechnung & Vorsatz-Zuordnung
+    // ═══════════════════════════════════════════════════════════════
+
+    {
+        "id": 7, "level": 2, "typ": "mc",
+        "frage": "Welcher Vorsatz entspricht \\(10^3\\)?",
+        "optionen": ["Hekto (h)", "kilo (k)", "Mega (M)", "deci (d)"],
+        "korrekt": 1,
+        "tipp": "1 Kilogramm = 1000 Gramm.",
+        "loesungsweg": "kilo (k) steht für \\(10^3\\) = 1000. Beispiele: 1 km = 1000 m, 1 kg = 1000 g.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 8, "level": 2, "typ": "mc",
+        "frage": "Welcher Vorsatz entspricht \\(10^{-6}\\)?",
+        "optionen": ["milli (m)", "mikro (μ)", "nano (n)", "centi (c)"],
+        "korrekt": 1,
+        "tipp": "Ein Millionstel.",
+        "loesungsweg": "mikro (μ) steht für \\(10^{-6}\\). Beispiel: 1 μm = \\(10^{-6}\\) m (Durchmesser eines Haares: ca. 50 μm).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 9, "level": 2, "typ": "mc",
+        "frage": "Wie schreibt man \\(2{,}5 \\cdot 10^9\\) mit Vorsatz?",
+        "optionen": ["\\(2{,}5\\) M", "\\(2{,}5\\) G", "\\(2{,}5\\) k", "\\(2{,}5\\) n"],
+        "korrekt": 1,
+        "tipp": "\\(10^9\\) = Giga.",
+        "loesungsweg": "\\(10^9\\) entspricht dem Vorsatz Giga (G). Also \\(2{,}5 \\cdot 10^9 = 2{,}5\\) G. Beispiel: 2,5 GHz (Taktfrequenz).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 10, "level": 2, "typ": "numerisch",
+        "frage": "Gib den Exponenten an: \\(0{,}00007 = 7 \\cdot 10^{?}\\)",
+        "loesung": -5,
+        "toleranz": 0,
+        "tipp": "Wie viele Stellen muss das Komma nach rechts wandern, um aus \\(0{,}00007\\) eine \\(7\\) zu machen?",
+        "loesungsweg": "\\(0{,}00007 = 7 \\cdot 10^{-5}\\). Das Komma muss 5 Stellen nach rechts, also Exponent \\(-5\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 11, "level": 2, "typ": "numerisch",
+        "frage": "Gib den Exponenten an: \\(8\\,500\\,000 = 8{,}5 \\cdot 10^{?}\\)",
+        "loesung": 6,
+        "toleranz": 0,
+        "tipp": "Wie viele Stellen muss das Komma nach links verschoben werden?",
+        "loesungsweg": "\\(8\\,500\\,000 = 8{,}5 \\cdot 10^6\\). Das Komma wird 6 Stellen nach links verschoben.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 12, "level": 2, "typ": "mc",
+        "frage": "Welche der folgenden Zahlen ist in korrekter wissenschaftlicher Notation?",
+        "optionen": [
+            "\\(25 \\cdot 10^4\\)",
+            "\\(0{,}7 \\cdot 10^3\\)",
+            "\\(2{,}5 \\cdot 10^5\\)",
+            "\\(10 \\cdot 10^2\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Die Mantisse muss \\(1 \\le |a| < 10\\) erfüllen.",
+        "loesungsweg": "Nur \\(2{,}5 \\cdot 10^5\\) erfüllt die Bedingung \\(1 \\le 2{,}5 < 10\\). Die anderen sind zwar mathematisch gleichwertig, aber nicht in normierter wissenschaftlicher Notation.",
+        "bereich": "Algebra"
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // Level 3: Multiplizieren & Dividieren mit Zehnerpotenzen
+    // ═══════════════════════════════════════════════════════════════
+
+    {
+        "id": 13, "level": 3, "typ": "mc",
+        "frage": "Berechne: \\((2 \\cdot 10^4) \\cdot (3 \\cdot 10^5)\\)",
+        "optionen": ["\\(6 \\cdot 10^9\\)", "\\(6 \\cdot 10^{20}\\)", "\\(5 \\cdot 10^9\\)", "\\(6 \\cdot 10^{10}\\)"],
+        "korrekt": 0,
+        "tipp": "Mantissen multiplizieren, Exponenten addieren.",
+        "loesungsweg": "\\((2 \\cdot 10^4) \\cdot (3 \\cdot 10^5) = (2 \\cdot 3) \\cdot 10^{4+5} = 6 \\cdot 10^9\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 14, "level": 3, "typ": "mc",
+        "frage": "Berechne: \\(\\frac{8 \\cdot 10^7}{2 \\cdot 10^3}\\)",
+        "optionen": ["\\(4 \\cdot 10^4\\)", "\\(4 \\cdot 10^{10}\\)", "\\(6 \\cdot 10^4\\)", "\\(16 \\cdot 10^4\\)"],
+        "korrekt": 0,
+        "tipp": "Mantissen dividieren, Exponenten subtrahieren.",
+        "loesungsweg": "\\(\\frac{8 \\cdot 10^7}{2 \\cdot 10^3} = \\frac{8}{2} \\cdot 10^{7-3} = 4 \\cdot 10^4\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 15, "level": 3, "typ": "mc",
+        "frage": "Berechne: \\((5 \\cdot 10^{-3}) \\cdot (4 \\cdot 10^6)\\)",
+        "optionen": ["\\(2 \\cdot 10^4\\)", "\\(20 \\cdot 10^3\\)", "\\(9 \\cdot 10^3\\)", "\\(2 \\cdot 10^3\\)"],
+        "korrekt": 0,
+        "tipp": "\\(5 \\cdot 4 = 20\\), Exponenten: \\(-3 + 6 = 3\\). Ergebnis dann normieren.",
+        "loesungsweg": "\\((5 \\cdot 10^{-3}) \\cdot (4 \\cdot 10^6) = 20 \\cdot 10^3 = 2 \\cdot 10^4\\) (normiert).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 16, "level": 3, "typ": "numerisch",
+        "frage": "Berechne den Exponenten: \\(\\frac{6 \\cdot 10^{-2}}{3 \\cdot 10^{-5}} = 2 \\cdot 10^{?}\\)",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "\\(-2 - (-5) = -2 + 5\\).",
+        "loesungsweg": "Exponenten subtrahieren: \\(-2 - (-5) = 3\\). Mantissen: \\(\\frac{6}{3} = 2\\). Ergebnis: \\(2 \\cdot 10^3\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 17, "level": 3, "typ": "mc",
+        "frage": "Berechne: \\((4 \\cdot 10^5)^2\\)",
+        "optionen": ["\\(16 \\cdot 10^7\\)", "\\(1{,}6 \\cdot 10^{11}\\)", "\\(8 \\cdot 10^{10}\\)", "\\(4 \\cdot 10^{10}\\)"],
+        "korrekt": 1,
+        "tipp": "Mantisse quadrieren, Exponent verdoppeln. Dann normieren.",
+        "loesungsweg": "\\((4 \\cdot 10^5)^2 = 4^2 \\cdot 10^{10} = 16 \\cdot 10^{10} = 1{,}6 \\cdot 10^{11}\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 18, "level": 3, "typ": "numerisch",
+        "frage": "Berechne \\((3 \\cdot 10^4) \\cdot (2 \\cdot 10^{-6})\\). Ergebnis als Dezimalzahl.",
+        "loesung": 0.06,
+        "toleranz": 0.0001,
+        "tipp": "\\(3 \\cdot 2 = 6\\), Exponenten: \\(4 + (-6) = -2\\), also \\(6 \\cdot 10^{-2}\\).",
+        "loesungsweg": "\\((3 \\cdot 10^4) \\cdot (2 \\cdot 10^{-6}) = 6 \\cdot 10^{-2} = 0{,}06\\).",
+        "bereich": "Algebra"
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // Level 4: Rechnen & Einheiten-Umrechnung
+    // ═══════════════════════════════════════════════════════════════
+
+    {
+        "id": 19, "level": 4, "typ": "numerisch",
+        "frage": "Wie viele Meter sind \\(4{,}5\\) km? (Antwort in m)",
+        "loesung": 4500,
+        "toleranz": 0,
+        "tipp": "1 km = \\(10^3\\) m.",
+        "loesungsweg": "\\(4{,}5 \\text{ km} = 4{,}5 \\cdot 10^3 \\text{ m} = 4500 \\text{ m}\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 20, "level": 4, "typ": "numerisch",
+        "frage": "Wie viele Meter sind \\(250\\) nm? Gib den Exponenten an: \\(2{,}5 \\cdot 10^{?}\\) m.",
+        "loesung": -7,
+        "toleranz": 0,
+        "tipp": "1 nm = \\(10^{-9}\\) m. \\(250 = 2{,}5 \\cdot 10^2\\).",
+        "loesungsweg": "\\(250 \\text{ nm} = 250 \\cdot 10^{-9} \\text{ m} = 2{,}5 \\cdot 10^2 \\cdot 10^{-9} \\text{ m} = 2{,}5 \\cdot 10^{-7}\\) m.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 21, "level": 4, "typ": "mc",
+        "frage": "\\(3\\) MW entsprechen wie vielen Watt?",
+        "optionen": ["\\(3 \\cdot 10^3\\) W", "\\(3 \\cdot 10^6\\) W", "\\(3 \\cdot 10^9\\) W", "\\(3 \\cdot 10^{-6}\\) W"],
+        "korrekt": 1,
+        "tipp": "Mega = \\(10^6\\).",
+        "loesungsweg": "\\(3 \\text{ MW} = 3 \\cdot 10^6 \\text{ W} = 3\\,000\\,000\\) W.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 22, "level": 4, "typ": "mc",
+        "frage": "\\(500\\) μs entsprechen wie vielen Sekunden?",
+        "optionen": ["\\(5 \\cdot 10^{-4}\\) s", "\\(5 \\cdot 10^{-3}\\) s", "\\(5 \\cdot 10^{-6}\\) s", "\\(5 \\cdot 10^{2}\\) s"],
+        "korrekt": 0,
+        "tipp": "1 μs = \\(10^{-6}\\) s. Dann \\(500\\) einsetzen und normieren.",
+        "loesungsweg": "\\(500 \\text{ μs} = 500 \\cdot 10^{-6} \\text{ s} = 5 \\cdot 10^2 \\cdot 10^{-6} \\text{ s} = 5 \\cdot 10^{-4}\\) s.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 23, "level": 4, "typ": "numerisch",
+        "frage": "Ein Mobilfunkmast sendet mit \\(2\\) GHz. Wie viele Hertz sind das? (Antwort in Hz als ganze Zahl)",
+        "loesung": 2000000000,
+        "toleranz": 0,
+        "tipp": "Giga = \\(10^9\\).",
+        "loesungsweg": "\\(2 \\text{ GHz} = 2 \\cdot 10^9 \\text{ Hz} = 2\\,000\\,000\\,000\\) Hz.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 24, "level": 4, "typ": "numerisch",
+        "frage": "Eine Speicherkarte hat \\(32\\) GB. Wie viele MB sind das? (Antwort in MB)",
+        "loesung": 32000,
+        "toleranz": 0,
+        "tipp": "1 GB = \\(10^3\\) MB (SI-Vorsätze).",
+        "loesungsweg": "\\(32 \\text{ GB} = 32 \\cdot 10^9 \\text{ B} = 32 \\cdot 10^3 \\text{ MB} = 32\\,000\\) MB.",
+        "bereich": "Algebra"
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // Level 5: Physik-Anwendungen & Einheiten-Umrechnung
+    // ═══════════════════════════════════════════════════════════════
+
+    {
+        "id": 25, "level": 5, "typ": "numerisch",
+        "frage": "Lichtgeschwindigkeit: \\(c \\approx 3 \\cdot 10^8\\) m/s. Welche Strecke (in m) legt Licht in \\(2 \\cdot 10^{-3}\\) s zurück? Gib den Exponenten an: \\(6 \\cdot 10^{?}\\) m.",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Strecke = Geschwindigkeit · Zeit. Mantissen multiplizieren, Exponenten addieren.",
+        "loesungsweg": "\\(s = c \\cdot t = (3 \\cdot 10^8) \\cdot (2 \\cdot 10^{-3}) = 6 \\cdot 10^5\\) m = 600 km.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 26, "level": 5, "typ": "mc",
+        "frage": "Der Durchmesser eines Wasserstoffatoms beträgt ca. \\(1 \\cdot 10^{-10}\\) m. Wie viele Atome passen nebeneinander in \\(1\\) mm?",
+        "optionen": ["\\(10^7\\)", "\\(10^{10}\\)", "\\(10^{13}\\)", "\\(10^{4}\\)"],
+        "korrekt": 0,
+        "tipp": "\\(1\\) mm = \\(10^{-3}\\) m. Teile durch den Durchmesser.",
+        "loesungsweg": "Anzahl = \\(\\frac{10^{-3} \\text{ m}}{10^{-10} \\text{ m}} = 10^{-3-(-10)} = 10^7\\). Zehn Millionen Atome passen nebeneinander in 1 mm.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 27, "level": 5, "typ": "numerisch",
+        "frage": "Eine CPU macht \\(4 \\cdot 10^9\\) Rechenschritte pro Sekunde. Wie lange (in ns) dauert ein einzelner Rechenschritt? (Runde auf eine Nachkommastelle.)",
+        "loesung": 0.25,
+        "toleranz": 0.01,
+        "tipp": "Zeit pro Schritt = \\(\\frac{1}{f}\\). Ergebnis in Sekunden, dann in Nanosekunden umrechnen.",
+        "loesungsweg": "\\(t = \\frac{1}{4 \\cdot 10^9 \\text{ Hz}} = 0{,}25 \\cdot 10^{-9}\\) s = 0{,}25 ns.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 28, "level": 5, "typ": "mc",
+        "frage": "Ein Virus hat einen Durchmesser von ca. \\(100\\) nm. Wie lautet das in Meter?",
+        "optionen": [
+            "\\(1 \\cdot 10^{-6}\\) m",
+            "\\(1 \\cdot 10^{-7}\\) m",
+            "\\(1 \\cdot 10^{-8}\\) m",
+            "\\(1 \\cdot 10^{-9}\\) m"
+        ],
+        "korrekt": 1,
+        "tipp": "\\(100 = 10^2\\), dazu \\(10^{-9}\\) für nano.",
+        "loesungsweg": "\\(100 \\text{ nm} = 10^2 \\cdot 10^{-9} \\text{ m} = 10^{-7}\\) m.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 29, "level": 5, "typ": "numerisch",
+        "frage": "Die Sonne ist ca. \\(1{,}5 \\cdot 10^{11}\\) m von der Erde entfernt. Wie viele Sekunden (gerundet) benötigt das Licht mit \\(c = 3 \\cdot 10^8\\) m/s dafür?",
+        "loesung": 500,
+        "toleranz": 1,
+        "tipp": "Zeit = Strecke / Geschwindigkeit.",
+        "loesungsweg": "\\(t = \\frac{s}{c} = \\frac{1{,}5 \\cdot 10^{11}}{3 \\cdot 10^8} = 0{,}5 \\cdot 10^3 = 500\\) s (ca. 8 Minuten 20 Sekunden).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 30, "level": 5, "typ": "mc",
+        "frage": "Ein menschliches Haar hat ca. \\(60\\) μm Durchmesser. Wie lautet das in Meter in wissenschaftlicher Notation?",
+        "optionen": [
+            "\\(6 \\cdot 10^{-4}\\) m",
+            "\\(6 \\cdot 10^{-5}\\) m",
+            "\\(6 \\cdot 10^{-6}\\) m",
+            "\\(6 \\cdot 10^{-3}\\) m"
+        ],
+        "korrekt": 1,
+        "tipp": "\\(60 \\text{ μm} = 60 \\cdot 10^{-6}\\) m. Normieren!",
+        "loesungsweg": "\\(60 \\text{ μm} = 60 \\cdot 10^{-6} \\text{ m} = 6 \\cdot 10^1 \\cdot 10^{-6} \\text{ m} = 6 \\cdot 10^{-5}\\) m.",
+        "bereich": "Algebra"
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // Level 6: Größenordnungs-Vergleiche & Mehrschritt-Anwendungen
+    // ═══════════════════════════════════════════════════════════════
+
+    {
+        "id": 31, "level": 6, "typ": "numerisch",
+        "frage": "Die Erde hat eine Masse von ca. \\(6 \\cdot 10^{24}\\) kg, der Mond \\(7{,}5 \\cdot 10^{22}\\) kg. Wie oft ist die Erde schwerer als der Mond? (Auf ganze Zahl runden.)",
+        "loesung": 80,
+        "toleranz": 1,
+        "tipp": "Masse der Erde durch Masse des Mondes teilen. \\(\\frac{6}{7{,}5} = 0{,}8\\).",
+        "loesungsweg": "\\(\\frac{6 \\cdot 10^{24}}{7{,}5 \\cdot 10^{22}} = \\frac{6}{7{,}5} \\cdot 10^{2} = 0{,}8 \\cdot 100 = 80\\). Die Erde ist 80-mal schwerer.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 32, "level": 6, "typ": "numerisch",
+        "frage": "Ein Atomradius beträgt ca. \\(1 \\cdot 10^{-10}\\) m, der Durchmesser der Milchstraße ca. \\(1 \\cdot 10^{21}\\) m. Um wie viele Größenordnungen (Zehnerpotenzen) ist die Milchstraße größer? Gib den Exponenten an.",
+        "loesung": 31,
+        "toleranz": 0,
+        "tipp": "\\(\\frac{10^{21}}{10^{-10}} = 10^{?}\\). Exponenten subtrahieren.",
+        "loesungsweg": "\\(\\frac{10^{21}}{10^{-10}} = 10^{21-(-10)} = 10^{31}\\). Die Milchstraße ist 31 Größenordnungen größer.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 33, "level": 6, "typ": "numerisch",
+        "frage": "Ein Datenzentrum verbraucht \\(50\\) MW über \\(24\\) Stunden. Wie viele Kilowattstunden (kWh) sind das?",
+        "loesung": 1200000,
+        "toleranz": 0,
+        "tipp": "Umrechnen: MW in kW (Faktor \\(10^3\\)), dann mal Stunden.",
+        "loesungsweg": "\\(50 \\text{ MW} = 50 \\cdot 10^3 \\text{ kW} = 5 \\cdot 10^4\\) kW. Energie = \\(5 \\cdot 10^4 \\text{ kW} \\cdot 24 \\text{ h} = 1{,}2 \\cdot 10^6\\) kWh = 1\\,200\\,000 kWh.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 34, "level": 6, "typ": "mc",
+        "frage": "Ordne aufsteigend nach Größe: \\(3 \\cdot 10^{-4}\\), \\(2 \\cdot 10^{-3}\\), \\(5 \\cdot 10^{-5}\\).",
+        "optionen": [
+            "\\(5 \\cdot 10^{-5} < 3 \\cdot 10^{-4} < 2 \\cdot 10^{-3}\\)",
+            "\\(3 \\cdot 10^{-4} < 5 \\cdot 10^{-5} < 2 \\cdot 10^{-3}\\)",
+            "\\(2 \\cdot 10^{-3} < 3 \\cdot 10^{-4} < 5 \\cdot 10^{-5}\\)",
+            "\\(5 \\cdot 10^{-5} < 2 \\cdot 10^{-3} < 3 \\cdot 10^{-4}\\)"
+        ],
+        "korrekt": 0,
+        "tipp": "Bei negativen Exponenten: je kleiner der Exponent, desto kleiner die Zahl. Bei gleichem Exponenten auf die Mantisse achten.",
+        "loesungsweg": "Umgerechnet: \\(5 \\cdot 10^{-5} = 0{,}00005\\), \\(3 \\cdot 10^{-4} = 0{,}0003\\), \\(2 \\cdot 10^{-3} = 0{,}002\\). Aufsteigend: \\(0{,}00005 < 0{,}0003 < 0{,}002\\).",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 35, "level": 6, "typ": "numerisch",
+        "frage": "Ein Lichtjahr ist die Strecke, die Licht (\\(c = 3 \\cdot 10^8\\) m/s) in einem Jahr (ca. \\(3{,}15 \\cdot 10^7\\) s) zurücklegt. Wie viele Meter sind das näherungsweise? Gib den Exponenten an: \\(9{,}45 \\cdot 10^{?}\\) m.",
+        "loesung": 15,
+        "toleranz": 0,
+        "tipp": "Strecke = \\(c \\cdot t\\). Mantissen multiplizieren (\\(3 \\cdot 3{,}15\\)), Exponenten addieren (\\(8 + 7\\)).",
+        "loesungsweg": "\\(s = (3 \\cdot 10^8) \\cdot (3{,}15 \\cdot 10^7) = 9{,}45 \\cdot 10^{15}\\) m. Ein Lichtjahr entspricht ca. \\(9{,}45 \\cdot 10^{15}\\) m.",
+        "bereich": "Algebra"
+    },
+    {
+        "id": 36, "level": 6, "typ": "mc",
+        "frage": "Ein rotes Blutkörperchen hat ca. \\(7\\) μm Durchmesser, ein Bakterium ca. \\(2 \\cdot 10^{-6}\\) m. Wie verhalten sie sich zueinander?",
+        "optionen": [
+            "Das Bakterium ist 3,5-mal größer",
+            "Das Blutkörperchen ist 3,5-mal größer",
+            "Sie sind gleich groß",
+            "Das Blutkörperchen ist 10-mal größer"
+        ],
+        "korrekt": 1,
+        "tipp": "\\(7 \\text{ μm} = 7 \\cdot 10^{-6}\\) m. Dann beide vergleichen.",
+        "loesungsweg": "\\(7 \\text{ μm} = 7 \\cdot 10^{-6}\\) m. Verhältnis: \\(\\frac{7 \\cdot 10^{-6}}{2 \\cdot 10^{-6}} = 3{,}5\\). Das Blutkörperchen ist 3,5-mal größer.",
+        "bereich": "Algebra"
+    }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sinussatz & Kosinussatz - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '9-trig-sinus-kosinus-satz';
+    const THEMA_CONFIG = { name: 'Sinussatz & Kosinussatz', bereich: 'Trigonometrie' };
+    const AUFGABEN = [
+        // ===== LEVEL 1: Formeln identifizieren =====
+        {
+            id: 1,
+            level: 1,
+            typ: "mc",
+            frage: "Welche Formel ist der Sinussatz?",
+            optionen: [
+                "\\(\\dfrac{a}{\\sin\\alpha} = \\dfrac{b}{\\sin\\beta} = \\dfrac{c}{\\sin\\gamma}\\)",
+                "\\(a^2 = b^2 + c^2 - 2bc\\cos\\alpha\\)",
+                "\\(A = \\tfrac{1}{2} a b \\sin\\gamma\\)",
+                "\\(\\sin^2\\alpha + \\cos^2\\alpha = 1\\)"
+            ],
+            korrekt: 0,
+            tipp: "Seite geteilt durch Sinus des gegenüberliegenden Winkels — für alle drei Seiten gleich.",
+            loesungsweg: "Der **Sinussatz** lautet: \\(\\dfrac{a}{\\sin\\alpha} = \\dfrac{b}{\\sin\\beta} = \\dfrac{c}{\\sin\\gamma}\\). Jede Seite verhält sich zum Sinus ihres Gegenwinkels wie jede andere."
+        },
+        {
+            id: 2,
+            level: 1,
+            typ: "mc",
+            frage: "Welche Formel ist der Kosinussatz für die Seite \\(a\\)?",
+            optionen: [
+                "\\(a^2 = b^2 + c^2 - 2bc\\cos\\alpha\\)",
+                "\\(a^2 = b^2 + c^2\\)",
+                "\\(a^2 = b^2 + c^2 + 2bc\\cos\\alpha\\)",
+                "\\(a = b + c - 2bc\\cos\\alpha\\)"
+            ],
+            korrekt: 0,
+            tipp: "Es ist eine Verallgemeinerung des Satzes von Pythagoras mit einem zusätzlichen Korrekturterm.",
+            loesungsweg: "Der **Kosinussatz** lautet: \\(a^2 = b^2 + c^2 - 2bc\\cos\\alpha\\). Für \\(\\alpha = 90°\\) ist \\(\\cos\\alpha = 0\\), und wir erhalten den Satz des Pythagoras."
+        },
+        {
+            id: 3,
+            level: 1,
+            typ: "mc",
+            frage: "Welche Formel ist der Flächeninhaltssatz (Flächenformel mit Sinus)?",
+            optionen: [
+                "\\(A = \\tfrac{1}{2} a b \\sin\\gamma\\)",
+                "\\(A = a \\cdot b\\)",
+                "\\(A = \\tfrac{1}{2} g \\cdot h\\)",
+                "\\(A = a b \\cos\\gamma\\)"
+            ],
+            korrekt: 0,
+            tipp: "\\(\\gamma\\) ist der Winkel zwischen den beiden Seiten \\(a\\) und \\(b\\).",
+            loesungsweg: "Der **Flächeninhaltssatz** lautet: \\(A = \\dfrac{1}{2} a b \\sin\\gamma\\). Man braucht zwei Seiten und den von ihnen eingeschlossenen Winkel."
+        },
+        {
+            id: 4,
+            level: 1,
+            typ: "mc",
+            frage: "Wahr oder falsch: Der Sinussatz kann angewendet werden, wenn zwei Winkel und eine Seite gegeben sind (WSW- oder SWW-Fall).",
+            optionen: ["Wahr", "Falsch"],
+            korrekt: 0,
+            tipp: "Man kennt einen Winkel mit seiner Gegenseite — daraus kann man weitere Seiten berechnen.",
+            loesungsweg: "**Wahr.** Kennt man eine Seite und ihren Gegenwinkel sowie einen weiteren Winkel, berechnet man mit dem Sinussatz die restlichen Seiten. Den dritten Winkel findet man über die Winkelsumme \\(\\alpha + \\beta + \\gamma = 180°\\)."
+        },
+        {
+            id: 5,
+            level: 1,
+            typ: "mc",
+            frage: "Welcher Satz ist beim SWS-Fall (zwei Seiten und der eingeschlossene Winkel) geeignet, um die dritte Seite zu berechnen?",
+            optionen: ["Kosinussatz", "Sinussatz", "Satz des Thales", "Höhensatz"],
+            korrekt: 0,
+            tipp: "Der Sinussatz braucht einen Winkel MIT seiner Gegenseite — den haben wir hier nicht.",
+            loesungsweg: "Beim **SWS-Fall** (zwei Seiten \\(b, c\\) und eingeschlossener Winkel \\(\\alpha\\)) liefert der Kosinussatz direkt: \\(a^2 = b^2 + c^2 - 2bc\\cos\\alpha\\)."
+        },
+        {
+            id: 6,
+            level: 1,
+            typ: "mc",
+            frage: "Wahr oder falsch: Der Kosinussatz ist eine Verallgemeinerung des Satzes von Pythagoras.",
+            optionen: ["Wahr", "Falsch"],
+            korrekt: 0,
+            tipp: "Setze \\(\\alpha = 90°\\) in den Kosinussatz ein und beobachte, was übrig bleibt.",
+            loesungsweg: "**Wahr.** Für \\(\\alpha = 90°\\) gilt \\(\\cos 90° = 0\\), und aus \\(a^2 = b^2 + c^2 - 2bc\\cos\\alpha\\) wird \\(a^2 = b^2 + c^2\\) — der Satz des Pythagoras."
+        },
+
+        // ===== LEVEL 2: Einfache Anwendung Sinussatz =====
+        {
+            id: 7,
+            level: 2,
+            typ: "numerisch",
+            frage: "In einem Dreieck ist \\(a = 8\\) cm, \\(\\alpha = 30°\\) und \\(\\beta = 45°\\). Berechne die Seite \\(b\\) in cm (zwei Nachkommastellen).",
+            loesung: 11.31,
+            toleranz: 0.05,
+            tipp: "Sinussatz: \\(\\dfrac{a}{\\sin\\alpha} = \\dfrac{b}{\\sin\\beta}\\), also \\(b = a \\cdot \\dfrac{\\sin\\beta}{\\sin\\alpha}\\).",
+            loesungsweg: "\\(b = 8 \\cdot \\dfrac{\\sin 45°}{\\sin 30°} = 8 \\cdot \\dfrac{0{,}7071}{0{,}5} \\approx 11{,}31\\) cm."
+        },
+        {
+            id: 8,
+            level: 2,
+            typ: "numerisch",
+            frage: "Gegeben: \\(c = 10\\) cm, \\(\\gamma = 60°\\), \\(\\alpha = 40°\\). Berechne die Seite \\(a\\) in cm (zwei Nachkommastellen).",
+            loesung: 7.42,
+            toleranz: 0.05,
+            tipp: "\\(a = c \\cdot \\dfrac{\\sin\\alpha}{\\sin\\gamma}\\)",
+            loesungsweg: "\\(a = 10 \\cdot \\dfrac{\\sin 40°}{\\sin 60°} = 10 \\cdot \\dfrac{0{,}6428}{0{,}8660} \\approx 7{,}42\\) cm."
+        },
+        {
+            id: 9,
+            level: 2,
+            typ: "numerisch",
+            frage: "In einem Dreieck sind \\(\\alpha = 50°\\) und \\(\\beta = 70°\\). Wie groß ist der dritte Winkel \\(\\gamma\\) in Grad?",
+            loesung: 60,
+            toleranz: 0.5,
+            tipp: "Die Winkelsumme im Dreieck beträgt \\(180°\\).",
+            loesungsweg: "\\(\\gamma = 180° - \\alpha - \\beta = 180° - 50° - 70° = 60°\\)."
+        },
+        {
+            id: 10,
+            level: 2,
+            typ: "numerisch",
+            frage: "Gegeben: \\(b = 12\\) cm, \\(\\beta = 80°\\), \\(\\gamma = 40°\\). Berechne die Seite \\(c\\) in cm (zwei Nachkommastellen).",
+            loesung: 7.83,
+            toleranz: 0.05,
+            tipp: "\\(c = b \\cdot \\dfrac{\\sin\\gamma}{\\sin\\beta}\\)",
+            loesungsweg: "\\(c = 12 \\cdot \\dfrac{\\sin 40°}{\\sin 80°} = 12 \\cdot \\dfrac{0{,}6428}{0{,}9848} \\approx 7{,}83\\) cm."
+        },
+        {
+            id: 11,
+            level: 2,
+            typ: "mc",
+            frage: "Welcher Ansatz führt im WSW-Fall (\\(\\alpha, c, \\beta\\) gegeben) am schnellsten zur Seite \\(a\\)?",
+            optionen: [
+                "Erst \\(\\gamma = 180° - \\alpha - \\beta\\), dann \\(a = c \\cdot \\dfrac{\\sin\\alpha}{\\sin\\gamma}\\)",
+                "Direkt Kosinussatz \\(a^2 = b^2 + c^2 - 2bc\\cos\\alpha\\)",
+                "Satz des Pythagoras \\(a^2 + b^2 = c^2\\)",
+                "Flächeninhaltssatz \\(A = \\tfrac{1}{2}ab\\sin\\gamma\\)"
+            ],
+            korrekt: 0,
+            tipp: "Der Sinussatz braucht eine Seite mit ihrem Gegenwinkel — hier zuerst \\(\\gamma\\) bestimmen.",
+            loesungsweg: "Man berechnet zuerst den dritten Winkel \\(\\gamma = 180° - \\alpha - \\beta\\). Dann liefert der Sinussatz mit dem Paar (\\(c, \\gamma\\)): \\(a = c \\cdot \\dfrac{\\sin\\alpha}{\\sin\\gamma}\\)."
+        },
+        {
+            id: 12,
+            level: 2,
+            typ: "numerisch",
+            frage: "In einem Dreieck ist \\(a = 15\\) cm, \\(\\alpha = 75°\\), \\(\\beta = 55°\\). Berechne \\(b\\) in cm (zwei Nachkommastellen).",
+            loesung: 12.72,
+            toleranz: 0.05,
+            tipp: "\\(b = a \\cdot \\dfrac{\\sin\\beta}{\\sin\\alpha}\\)",
+            loesungsweg: "\\(b = 15 \\cdot \\dfrac{\\sin 55°}{\\sin 75°} = 15 \\cdot \\dfrac{0{,}8192}{0{,}9659} \\approx 12{,}72\\) cm."
+        },
+
+        // ===== LEVEL 3: Kosinussatz SWS-Fall =====
+        {
+            id: 13,
+            level: 3,
+            typ: "numerisch",
+            frage: "Im Dreieck ABC gilt \\(b = 5\\) cm, \\(c = 7\\) cm und \\(\\alpha = 60°\\). Berechne die dritte Seite \\(a\\) in cm (zwei Nachkommastellen).",
+            loesung: 6.24,
+            toleranz: 0.05,
+            tipp: "Kosinussatz: \\(a^2 = b^2 + c^2 - 2bc\\cos\\alpha\\).",
+            loesungsweg: "\\(a^2 = 25 + 49 - 2\\cdot 5 \\cdot 7 \\cdot \\cos 60° = 74 - 70 \\cdot 0{,}5 = 74 - 35 = 39\\). Also \\(a = \\sqrt{39} \\approx 6{,}24\\) cm."
+        },
+        {
+            id: 14,
+            level: 3,
+            typ: "numerisch",
+            frage: "Gegeben: \\(a = 8\\) cm, \\(c = 6\\) cm, \\(\\beta = 50°\\). Berechne die Seite \\(b\\) in cm (zwei Nachkommastellen).",
+            loesung: 6.19,
+            toleranz: 0.05,
+            tipp: "Kosinussatz: \\(b^2 = a^2 + c^2 - 2ac\\cos\\beta\\).",
+            loesungsweg: "\\(b^2 = 64 + 36 - 2 \\cdot 8 \\cdot 6 \\cdot \\cos 50° = 100 - 96 \\cdot 0{,}6428 \\approx 100 - 61{,}71 \\approx 38{,}29\\). Also \\(b \\approx \\sqrt{38{,}29} \\approx 6{,}19\\) cm."
+        },
+        {
+            id: 15,
+            level: 3,
+            typ: "numerisch",
+            frage: "In einem Dreieck sind \\(a = 4\\) cm, \\(b = 5\\) cm und \\(\\gamma = 90°\\). Berechne \\(c\\) in cm (zwei Nachkommastellen).",
+            loesung: 6.4,
+            toleranz: 0.05,
+            tipp: "Kosinussatz mit \\(\\cos 90° = 0\\) ergibt den Satz des Pythagoras.",
+            loesungsweg: "\\(c^2 = a^2 + b^2 - 2ab\\cos 90° = 16 + 25 - 0 = 41\\). Also \\(c = \\sqrt{41} \\approx 6{,}40\\) cm."
+        },
+        {
+            id: 16,
+            level: 3,
+            typ: "numerisch",
+            frage: "Zwei Wanderwege starten vom selben Punkt unter einem Winkel von \\(70°\\). Der eine ist \\(3\\) km, der andere \\(4\\) km lang. Wie weit sind die Endpunkte voneinander entfernt (in km, zwei Nachkommastellen)?",
+            loesung: 4.1,
+            toleranz: 0.05,
+            tipp: "SWS-Fall: zwei Seiten und der eingeschlossene Winkel gegeben. Nutze den Kosinussatz.",
+            loesungsweg: "\\(d^2 = 3^2 + 4^2 - 2 \\cdot 3 \\cdot 4 \\cdot \\cos 70° = 9 + 16 - 24 \\cdot 0{,}3420 \\approx 25 - 8{,}21 \\approx 16{,}79\\). Also \\(d \\approx \\sqrt{16{,}79} \\approx 4{,}10\\) km."
+        },
+        {
+            id: 17,
+            level: 3,
+            typ: "numerisch",
+            frage: "Gegeben: \\(b = 9\\) cm, \\(c = 12\\) cm und \\(\\alpha = 45°\\). Berechne \\(a\\) in cm (zwei Nachkommastellen).",
+            loesung: 8.5,
+            toleranz: 0.1,
+            tipp: "\\(a^2 = b^2 + c^2 - 2bc\\cos\\alpha\\)",
+            loesungsweg: "\\(a^2 = 81 + 144 - 2 \\cdot 9 \\cdot 12 \\cdot \\cos 45° = 225 - 216 \\cdot 0{,}7071 \\approx 225 - 152{,}74 \\approx 72{,}26\\). Also \\(a \\approx 8{,}50\\) cm."
+        },
+        {
+            id: 18,
+            level: 3,
+            typ: "mc",
+            frage: "Welcher der folgenden Fälle lässt sich NICHT direkt mit dem Sinussatz (ohne Zwischenrechnung über den Kosinussatz) lösen?",
+            optionen: [
+                "SWS: zwei Seiten und der eingeschlossene Winkel",
+                "WSW: zwei Winkel und die dazwischen liegende Seite",
+                "SWW: eine Seite, ein anliegender und der gegenüberliegende Winkel",
+                "SSW: zwei Seiten und der der größeren Seite gegenüberliegende Winkel"
+            ],
+            korrekt: 0,
+            tipp: "Der Sinussatz braucht immer ein Paar aus Seite und zugehörigem Gegenwinkel.",
+            loesungsweg: "Beim **SWS-Fall** kennt man keine Seite mit ihrem Gegenwinkel — daher ist der Sinussatz zunächst nicht anwendbar. Man verwendet den **Kosinussatz**, um die dritte Seite zu berechnen."
+        },
+
+        // ===== LEVEL 4: SSS-Fall (Winkel berechnen) + Flächeninhaltssatz =====
+        {
+            id: 19,
+            level: 4,
+            typ: "numerisch",
+            frage: "In einem Dreieck ist \\(a = 5\\) cm, \\(b = 6\\) cm, \\(c = 7\\) cm. Berechne den Winkel \\(\\alpha\\) in Grad (eine Nachkommastelle).",
+            loesung: 44.4,
+            toleranz: 0.3,
+            tipp: "Kosinussatz umstellen: \\(\\cos\\alpha = \\dfrac{b^2 + c^2 - a^2}{2bc}\\).",
+            loesungsweg: "\\(\\cos\\alpha = \\dfrac{36 + 49 - 25}{2 \\cdot 6 \\cdot 7} = \\dfrac{60}{84} \\approx 0{,}7143\\). Also \\(\\alpha = \\arccos(0{,}7143) \\approx 44{,}4°\\)."
+        },
+        {
+            id: 20,
+            level: 4,
+            typ: "numerisch",
+            frage: "Ein Dreieck hat die Seiten \\(a = 8\\) cm, \\(b = 5\\) cm, \\(c = 6\\) cm. Berechne den größten Winkel (in Grad, eine Nachkommastelle).",
+            loesung: 92.9,
+            toleranz: 0.3,
+            tipp: "Der größte Winkel liegt der größten Seite gegenüber — hier \\(\\alpha\\) (gegenüber von \\(a\\)). Nutze \\(\\cos\\alpha = \\dfrac{b^2 + c^2 - a^2}{2bc}\\).",
+            loesungsweg: "\\(\\cos\\alpha = \\dfrac{25 + 36 - 64}{2 \\cdot 5 \\cdot 6} = \\dfrac{-3}{60} = -0{,}05\\). Also \\(\\alpha = \\arccos(-0{,}05) \\approx 92{,}87° \\approx 92{,}9°\\)."
+        },
+        {
+            id: 21,
+            level: 4,
+            typ: "numerisch",
+            frage: "Berechne die Fläche eines Dreiecks mit \\(a = 6\\) cm, \\(b = 8\\) cm und eingeschlossenem Winkel \\(\\gamma = 30°\\). (in cm², zwei Nachkommastellen)",
+            loesung: 12,
+            toleranz: 0.1,
+            tipp: "Flächeninhaltssatz: \\(A = \\tfrac{1}{2} a b \\sin\\gamma\\).",
+            loesungsweg: "\\(A = \\dfrac{1}{2} \\cdot 6 \\cdot 8 \\cdot \\sin 30° = 24 \\cdot 0{,}5 = 12\\) cm²."
+        },
+        {
+            id: 22,
+            level: 4,
+            typ: "numerisch",
+            frage: "Ein Dreieck hat die Seiten \\(b = 10\\) cm, \\(c = 14\\) cm und den eingeschlossenen Winkel \\(\\alpha = 50°\\). Wie groß ist die Fläche in cm² (eine Nachkommastelle)?",
+            loesung: 53.6,
+            toleranz: 0.3,
+            tipp: "\\(A = \\dfrac{1}{2} b c \\sin\\alpha\\)",
+            loesungsweg: "\\(A = \\dfrac{1}{2} \\cdot 10 \\cdot 14 \\cdot \\sin 50° = 70 \\cdot 0{,}7660 \\approx 53{,}62\\) cm²."
+        },
+        {
+            id: 23,
+            level: 4,
+            typ: "numerisch",
+            frage: "Gegeben: \\(a = 9\\) cm, \\(b = 12\\) cm, \\(c = 15\\) cm. Berechne den Winkel \\(\\gamma\\) in Grad (eine Nachkommastelle).",
+            loesung: 90,
+            toleranz: 0.5,
+            tipp: "\\(\\cos\\gamma = \\dfrac{a^2 + b^2 - c^2}{2ab}\\). Beobachte: ist der Ausdruck negativ, null oder positiv?",
+            loesungsweg: "\\(\\cos\\gamma = \\dfrac{81 + 144 - 225}{2 \\cdot 9 \\cdot 12} = \\dfrac{0}{216} = 0\\). Also \\(\\gamma = 90°\\). (Das Dreieck ist rechtwinklig — 9-12-15 ist ein pythagoreisches Tripel.)"
+        },
+        {
+            id: 24,
+            level: 4,
+            typ: "mc",
+            frage: "In einem Dreieck gilt \\(a = 5\\) cm, \\(b = 7\\) cm, \\(\\gamma = 60°\\). Welche Fläche hat das Dreieck (gerundet)?",
+            optionen: ["15,16 cm²", "17,50 cm²", "8,75 cm²", "30,31 cm²"],
+            korrekt: 0,
+            tipp: "\\(A = \\dfrac{1}{2} a b \\sin\\gamma\\)",
+            loesungsweg: "\\(A = \\dfrac{1}{2} \\cdot 5 \\cdot 7 \\cdot \\sin 60° = 17{,}5 \\cdot 0{,}8660 \\approx 15{,}16\\) cm²."
+        },
+
+        // ===== LEVEL 5: Mehrschrittig (Winkel + Seite + Fläche) =====
+        {
+            id: 25,
+            level: 5,
+            typ: "numerisch",
+            frage: "In einem Dreieck sind \\(a = 10\\) cm, \\(\\alpha = 40°\\) und \\(\\beta = 60°\\) gegeben. Berechne den Flächeninhalt in cm² (eine Nachkommastelle). Hinweis: zuerst \\(b\\) mit dem Sinussatz, dann \\(\\gamma\\), dann Flächeninhaltssatz.",
+            loesung: 66.2,
+            toleranz: 0.5,
+            tipp: "Schritt 1: \\(b = a \\cdot \\dfrac{\\sin\\beta}{\\sin\\alpha}\\). Schritt 2: \\(\\gamma = 180° - \\alpha - \\beta\\). Schritt 3: \\(A = \\tfrac{1}{2} a b \\sin\\gamma\\).",
+            loesungsweg: "\\(b = 10 \\cdot \\dfrac{\\sin 60°}{\\sin 40°} \\approx 10 \\cdot \\dfrac{0{,}8660}{0{,}6428} \\approx 13{,}47\\) cm. \\(\\gamma = 180° - 40° - 60° = 80°\\). \\(A = \\dfrac{1}{2} \\cdot 10 \\cdot 13{,}47 \\cdot \\sin 80° \\approx 67{,}35 \\cdot 0{,}9848 \\approx 66{,}33\\) cm²."
+        },
+        {
+            id: 26,
+            level: 5,
+            typ: "numerisch",
+            frage: "Im Dreieck ABC gilt \\(a = 7\\) cm, \\(b = 9\\) cm, \\(\\gamma = 55°\\). Berechne zuerst die Seite \\(c\\) in cm (zwei Nachkommastellen).",
+            loesung: 7.6,
+            toleranz: 0.05,
+            tipp: "Kosinussatz: \\(c^2 = a^2 + b^2 - 2ab\\cos\\gamma\\).",
+            loesungsweg: "\\(c^2 = 49 + 81 - 2 \\cdot 7 \\cdot 9 \\cdot \\cos 55° = 130 - 126 \\cdot 0{,}5736 \\approx 130 - 72{,}27 \\approx 57{,}73\\). Also \\(c \\approx \\sqrt{57{,}73} \\approx 7{,}60\\) cm."
+        },
+        {
+            id: 27,
+            level: 5,
+            typ: "numerisch",
+            frage: "Im Dreieck ABC gilt \\(a = 7\\) cm, \\(b = 9\\) cm, \\(\\gamma = 55°\\). Berechne die Fläche des Dreiecks in cm² (eine Nachkommastelle).",
+            loesung: 25.8,
+            toleranz: 0.2,
+            tipp: "SWS-Fall: \\(A = \\dfrac{1}{2} a b \\sin\\gamma\\).",
+            loesungsweg: "\\(A = \\dfrac{1}{2} \\cdot 7 \\cdot 9 \\cdot \\sin 55° = 31{,}5 \\cdot 0{,}8192 \\approx 25{,}80\\) cm²."
+        },
+        {
+            id: 28,
+            level: 5,
+            typ: "numerisch",
+            frage: "Ein Parallelogramm hat die Seiten \\(a = 8\\) cm und \\(b = 5\\) cm sowie einen Innenwinkel von \\(70°\\). Wie groß ist die Fläche in cm² (eine Nachkommastelle)?",
+            loesung: 37.6,
+            toleranz: 0.2,
+            tipp: "Die Fläche eines Parallelogramms ist \\(A = a \\cdot b \\cdot \\sin\\alpha\\) (zwei Dreiecke mit Flächeninhaltssatz).",
+            loesungsweg: "\\(A = 8 \\cdot 5 \\cdot \\sin 70° = 40 \\cdot 0{,}9397 \\approx 37{,}59\\) cm²."
+        },
+        {
+            id: 29,
+            level: 5,
+            typ: "numerisch",
+            frage: "In einem Dreieck sind \\(a = 12\\) cm, \\(b = 10\\) cm, \\(c = 8\\) cm gegeben. Berechne die Fläche mit Hilfe des Kosinussatzes und des Flächeninhaltssatzes (in cm², eine Nachkommastelle). Hinweis: Erst \\(\\gamma\\) bestimmen, dann Flächeninhaltssatz.",
+            loesung: 39.7,
+            toleranz: 0.5,
+            tipp: "\\(\\cos\\gamma = \\dfrac{a^2 + b^2 - c^2}{2ab}\\), dann \\(A = \\tfrac{1}{2} a b \\sin\\gamma\\).",
+            loesungsweg: "\\(\\cos\\gamma = \\dfrac{144 + 100 - 64}{240} = \\dfrac{180}{240} = 0{,}75\\). Also \\(\\gamma \\approx 41{,}41°\\), \\(\\sin\\gamma \\approx 0{,}6614\\). \\(A = \\dfrac{1}{2} \\cdot 12 \\cdot 10 \\cdot 0{,}6614 \\approx 39{,}69\\) cm²."
+        },
+        {
+            id: 30,
+            level: 5,
+            typ: "numerisch",
+            frage: "Im Dreieck ABC sind \\(a = 14\\) cm, \\(b = 11\\) cm und \\(\\gamma = 48°\\) gegeben. Berechne den Winkel \\(\\alpha\\) in Grad (eine Nachkommastelle). Hinweis: Es wird nach dem spitzen Winkel \\(\\alpha\\) gefragt.",
+            loesung: 81.1,
+            toleranz: 0.5,
+            tipp: "Schritt 1: Kosinussatz für \\(c\\). Schritt 2: Sinussatz für \\(\\alpha\\).",
+            loesungsweg: "\\(c^2 = 196 + 121 - 2 \\cdot 14 \\cdot 11 \\cdot \\cos 48° = 317 - 308 \\cdot 0{,}6691 \\approx 317 - 206{,}09 \\approx 110{,}91\\). Also \\(c \\approx 10{,}53\\) cm. Sinussatz: \\(\\sin\\alpha = \\dfrac{a \\cdot \\sin\\gamma}{c} = \\dfrac{14 \\cdot 0{,}7431}{10{,}53} \\approx 0{,}9879\\). Da \\(\\alpha\\) spitz ist (\\(\\beta\\) ergibt sich über die Winkelsumme \\(\\approx 50{,}9°\\)): \\(\\alpha = \\arcsin(0{,}9879) \\approx 81{,}1°\\)."
+        },
+
+        // ===== LEVEL 6: Anwendungen / komplexe Mehrschritt-Aufgaben =====
+        {
+            id: 31,
+            level: 6,
+            typ: "numerisch",
+            frage: "Ein Grundstück hat die Form eines Dreiecks mit den Seitenlängen \\(25\\) m, \\(32\\) m und \\(40\\) m. Wie groß ist die Fläche in m² (eine Nachkommastelle)? Hinweis: Erst einen Winkel mit Kosinussatz, dann Flächeninhaltssatz.",
+            loesung: 399.2,
+            toleranz: 3,
+            tipp: "Berechne z.B. \\(\\cos\\gamma\\) mit \\(\\gamma\\) gegenüber von \\(c = 40\\). Dann \\(A = \\tfrac{1}{2} a b \\sin\\gamma\\).",
+            loesungsweg: "\\(\\cos\\gamma = \\dfrac{25^2 + 32^2 - 40^2}{2 \\cdot 25 \\cdot 32} = \\dfrac{625 + 1024 - 1600}{1600} = \\dfrac{49}{1600} \\approx 0{,}03063\\). Also \\(\\gamma \\approx 88{,}24°\\), \\(\\sin\\gamma \\approx 0{,}9995\\). \\(A = \\dfrac{1}{2} \\cdot 25 \\cdot 32 \\cdot 0{,}9995 \\approx 399{,}8\\) m²."
+        },
+        {
+            id: 32,
+            level: 6,
+            typ: "numerisch",
+            frage: "Zwei Schiffe verlassen einen Hafen gleichzeitig: Schiff A fährt mit \\(20\\) km/h in Richtung Nord, Schiff B mit \\(25\\) km/h in einer Richtung, die mit der Nordrichtung einen Winkel von \\(35°\\) bildet. Wie weit sind die Schiffe nach \\(2\\) Stunden voneinander entfernt (in km, eine Nachkommastelle)?",
+            loesung: 28.9,
+            toleranz: 0.3,
+            tipp: "Nach 2h: Schiff A hat 40 km, Schiff B hat 50 km zurückgelegt. Der Winkel zwischen den Wegen ist \\(35°\\) (SWS-Fall). Nutze den Kosinussatz.",
+            loesungsweg: "\\(a = 40\\) km, \\(b = 50\\) km, \\(\\gamma = 35°\\). \\(c^2 = 1600 + 2500 - 2 \\cdot 40 \\cdot 50 \\cdot \\cos 35° = 4100 - 4000 \\cdot 0{,}8192 \\approx 4100 - 3276{,}61 \\approx 823{,}39\\). Also \\(c \\approx 28{,}69\\) km."
+        },
+        {
+            id: 33,
+            level: 6,
+            typ: "numerisch",
+            frage: "Ein Turm wird von zwei Punkten A und B (auf gleicher Höhe am Fußniveau, \\(50\\) m voneinander entfernt) beobachtet. Von A aus misst man den Höhenwinkel \\(30°\\) zur Spitze, von B aus \\(45°\\). Die Punkte A, B und Turmfuß liegen auf einer Geraden (B zwischen A und Turmfuß). Wie hoch ist der Turm in m (eine Nachkommastelle)?",
+            loesung: 68.3,
+            toleranz: 1,
+            tipp: "Sei \\(h\\) die Höhe und \\(x\\) der Abstand von B zum Turmfuß. Dann: \\(\\tan 45° = \\dfrac{h}{x}\\) und \\(\\tan 30° = \\dfrac{h}{x + 50}\\). Also \\(x = h\\) und \\(h = (h+50)\\tan 30°\\).",
+            loesungsweg: "Aus \\(\\tan 45° = 1\\) folgt \\(x = h\\). Einsetzen: \\(h = (h + 50) \\cdot \\tan 30° = (h+50) \\cdot 0{,}5774\\). Umformen: \\(h - 0{,}5774 h = 0{,}5774 \\cdot 50 \\Rightarrow 0{,}4226 h = 28{,}87 \\Rightarrow h \\approx 68{,}30\\) m."
+        },
+        {
+            id: 34,
+            level: 6,
+            typ: "numerisch",
+            frage: "Ein Dreieck hat die Seiten \\(a = 13\\) cm, \\(b = 14\\) cm, \\(c = 15\\) cm. Berechne die Höhe auf die Seite \\(c\\) in cm (eine Nachkommastelle). Hinweis: Berechne zuerst die Fläche \\(A\\), dann aus \\(A = \\tfrac{1}{2} c \\cdot h_c\\) die Höhe.",
+            loesung: 11.2,
+            toleranz: 0.2,
+            tipp: "\\(\\cos\\gamma = \\dfrac{a^2+b^2-c^2}{2ab}\\), \\(A = \\tfrac{1}{2}ab\\sin\\gamma\\), \\(h_c = \\dfrac{2A}{c}\\).",
+            loesungsweg: "\\(\\cos\\gamma = \\dfrac{169 + 196 - 225}{2 \\cdot 13 \\cdot 14} = \\dfrac{140}{364} \\approx 0{,}3846\\). Also \\(\\gamma \\approx 67{,}38°\\), \\(\\sin\\gamma \\approx 0{,}9231\\). \\(A = \\dfrac{1}{2} \\cdot 13 \\cdot 14 \\cdot 0{,}9231 \\approx 84{,}0\\) cm². \\(h_c = \\dfrac{2 \\cdot 84}{15} = 11{,}2\\) cm."
+        },
+        {
+            id: 35,
+            level: 6,
+            typ: "numerisch",
+            frage: "Ein Flugzeug fliegt von Ort A nach Ort B (Entfernung \\(500\\) km). Nach einem Richtungsfehler landet es an Ort C, der \\(320\\) km von B und \\(420\\) km von A entfernt ist. Um welchen Winkel (in Grad, eine Nachkommastelle) ist das Flugzeug bei A von der Sollrichtung (Richtung B) abgewichen?",
+            loesung: 39.6,
+            toleranz: 0.5,
+            tipp: "Gesucht ist der Winkel bei A im Dreieck ABC. Gegenseite ist \\(BC = 320\\). Kosinussatz: \\(\\cos\\alpha = \\dfrac{AB^2 + AC^2 - BC^2}{2 \\cdot AB \\cdot AC}\\).",
+            loesungsweg: "\\(\\cos\\alpha = \\dfrac{500^2 + 420^2 - 320^2}{2 \\cdot 500 \\cdot 420} = \\dfrac{250000 + 176400 - 102400}{420000} = \\dfrac{324000}{420000} \\approx 0{,}7714\\). Also \\(\\alpha \\approx \\arccos(0{,}7714) \\approx 39{,}52°\\)."
+        },
+        {
+            id: 36,
+            level: 6,
+            typ: "numerisch",
+            frage: "In einem Dreieck sind \\(b = 20\\) cm, \\(c = 15\\) cm und \\(\\alpha = 70°\\). Berechne den Umfang des Dreiecks in cm (eine Nachkommastelle). Hinweis: Zuerst \\(a\\) mit Kosinussatz, dann Umfang.",
+            loesung: 55.6,
+            toleranz: 0.3,
+            tipp: "\\(a^2 = b^2 + c^2 - 2bc\\cos\\alpha\\), danach \\(U = a + b + c\\).",
+            loesungsweg: "\\(a^2 = 400 + 225 - 2 \\cdot 20 \\cdot 15 \\cdot \\cos 70° = 625 - 600 \\cdot 0{,}3420 \\approx 625 - 205{,}21 \\approx 419{,}79\\). Also \\(a \\approx 20{,}49\\) cm. Umfang: \\(U \\approx 20{,}49 + 20 + 15 = 55{,}49 \\approx 55{,}5\\) cm."
+        }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

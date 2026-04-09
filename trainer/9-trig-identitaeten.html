@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trigonometrische Identitäten & Supplementwinkel - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '9-trig-identitaeten';
+    const THEMA_CONFIG = { name: 'Trig. Identitäten & Supplementwinkel', bereich: 'Trigonometrie' };
+    const AUFGABEN = [
+        // ===== LEVEL 1: Grundidentitäten erkennen =====
+        {
+            id: 1,
+            level: 1,
+            typ: "mc",
+            frage: "Welche Gleichung ist der trigonometrische Pythagoras?",
+            optionen: ["\\(\\sin^2\\alpha + \\cos^2\\alpha = 1\\)", "\\(\\sin\\alpha + \\cos\\alpha = 1\\)", "\\(\\sin^2\\alpha - \\cos^2\\alpha = 1\\)", "\\(\\sin\\alpha \\cdot \\cos\\alpha = 1\\)"],
+            korrekt: 0,
+            tipp: "Der Name kommt vom Satz des Pythagoras am Einheitskreis.",
+            loesungsweg: "Am Einheitskreis bilden \\(\\sin\\alpha\\) und \\(\\cos\\alpha\\) die Katheten eines rechtwinkligen Dreiecks mit Hypotenuse 1. Nach Pythagoras: \\(\\sin^2\\alpha + \\cos^2\\alpha = 1\\)."
+        },
+        {
+            id: 2,
+            level: 1,
+            typ: "mc",
+            frage: "Wie lässt sich \\(\\tan\\alpha\\) durch \\(\\sin\\alpha\\) und \\(\\cos\\alpha\\) ausdrücken?",
+            optionen: ["\\(\\tan\\alpha = \\dfrac{\\sin\\alpha}{\\cos\\alpha}\\)", "\\(\\tan\\alpha = \\dfrac{\\cos\\alpha}{\\sin\\alpha}\\)", "\\(\\tan\\alpha = \\sin\\alpha \\cdot \\cos\\alpha\\)", "\\(\\tan\\alpha = \\sin\\alpha + \\cos\\alpha\\)"],
+            korrekt: 0,
+            tipp: "Im rechtwinkligen Dreieck: Gegenkathete/Ankathete.",
+            loesungsweg: "\\(\\tan\\alpha = \\dfrac{\\text{Gegenkathete}}{\\text{Ankathete}} = \\dfrac{\\text{Gegenkathete}/\\text{Hypotenuse}}{\\text{Ankathete}/\\text{Hypotenuse}} = \\dfrac{\\sin\\alpha}{\\cos\\alpha}\\)."
+        },
+        {
+            id: 3,
+            level: 1,
+            typ: "mc",
+            frage: "Welche Beziehung gilt für Supplementwinkel beim Sinus?",
+            optionen: ["\\(\\sin(180°-\\alpha) = \\sin\\alpha\\)", "\\(\\sin(180°-\\alpha) = -\\sin\\alpha\\)", "\\(\\sin(180°-\\alpha) = \\cos\\alpha\\)", "\\(\\sin(180°-\\alpha) = 1-\\sin\\alpha\\)"],
+            korrekt: 0,
+            tipp: "Am Einheitskreis haben Punkte bei \\(\\alpha\\) und \\(180°-\\alpha\\) dieselbe \\(y\\)-Koordinate.",
+            loesungsweg: "Supplementwinkel (Ergänzung auf \\(180°\\)) haben denselben Sinuswert, denn am Einheitskreis ist die \\(y\\)-Koordinate gleich: \\(\\sin(180°-\\alpha) = \\sin\\alpha\\)."
+        },
+        {
+            id: 4,
+            level: 1,
+            typ: "mc",
+            frage: "Welche Beziehung gilt für Supplementwinkel beim Kosinus?",
+            optionen: ["\\(\\cos(180°-\\alpha) = -\\cos\\alpha\\)", "\\(\\cos(180°-\\alpha) = \\cos\\alpha\\)", "\\(\\cos(180°-\\alpha) = \\sin\\alpha\\)", "\\(\\cos(180°-\\alpha) = 1-\\cos\\alpha\\)"],
+            korrekt: 0,
+            tipp: "Die \\(x\\)-Koordinate am Einheitskreis wechselt bei Spiegelung an der \\(y\\)-Achse das Vorzeichen.",
+            loesungsweg: "Supplementwinkel spiegeln am Einheitskreis an der \\(y\\)-Achse. Die \\(x\\)-Koordinate (\\(= \\cos\\)) wechselt dabei das Vorzeichen: \\(\\cos(180°-\\alpha) = -\\cos\\alpha\\)."
+        },
+        {
+            id: 5,
+            level: 1,
+            typ: "mc",
+            frage: "Welche Komplementwinkel-Beziehung ist korrekt?",
+            optionen: ["\\(\\sin(90°-\\alpha) = \\cos\\alpha\\)", "\\(\\sin(90°-\\alpha) = -\\cos\\alpha\\)", "\\(\\sin(90°-\\alpha) = \\sin\\alpha\\)", "\\(\\sin(90°-\\alpha) = 1-\\cos\\alpha\\)"],
+            korrekt: 0,
+            tipp: "Im rechtwinkligen Dreieck: Tauscht man die Rollen der beiden spitzen Winkel, werden Gegen- und Ankathete vertauscht.",
+            loesungsweg: "Im rechtwinkligen Dreieck ist die Gegenkathete von \\(\\alpha\\) die Ankathete von \\(90°-\\alpha\\). Daher: \\(\\sin(90°-\\alpha) = \\cos\\alpha\\)."
+        },
+        {
+            id: 6,
+            level: 1,
+            typ: "mc",
+            frage: "Wahr oder falsch: \\(\\cos(90°-\\alpha) = \\sin\\alpha\\).",
+            optionen: ["Wahr", "Falsch"],
+            korrekt: 0,
+            tipp: "Komplementwinkel tauschen \\(\\sin\\) und \\(\\cos\\).",
+            loesungsweg: "**Wahr.** Analog zu \\(\\sin(90°-\\alpha) = \\cos\\alpha\\) gilt auch \\(\\cos(90°-\\alpha) = \\sin\\alpha\\). Das ist die Begründung für den Namen \"**Ko**sinus\" (Komplement-Sinus)."
+        },
+
+        // ===== LEVEL 2: Direktes Einsetzen =====
+        {
+            id: 7,
+            level: 2,
+            typ: "numerisch",
+            frage: "Gegeben: \\(\\sin\\alpha = 0{,}6\\). Berechne \\(\\sin^2\\alpha + \\cos^2\\alpha\\).",
+            loesung: 1,
+            toleranz: 0.001,
+            tipp: "Das ist der trigonometrische Pythagoras — das Ergebnis ist immer gleich.",
+            loesungsweg: "Für **jeden** Winkel \\(\\alpha\\) gilt \\(\\sin^2\\alpha + \\cos^2\\alpha = 1\\). Es spielt keine Rolle, welchen Wert \\(\\sin\\alpha\\) hat."
+        },
+        {
+            id: 8,
+            level: 2,
+            typ: "numerisch",
+            frage: "Berechne \\(\\sin(180° - 30°)\\) (als Dezimalzahl).",
+            loesung: 0.5,
+            toleranz: 0.01,
+            tipp: "Supplementwinkel haben denselben Sinuswert.",
+            loesungsweg: "\\(\\sin(180°-30°) = \\sin(150°) = \\sin(30°) = 0{,}5\\)."
+        },
+        {
+            id: 9,
+            level: 2,
+            typ: "numerisch",
+            frage: "Berechne \\(\\cos(180° - 60°)\\) (als Dezimalzahl).",
+            loesung: -0.5,
+            toleranz: 0.01,
+            tipp: "Beim Kosinus kehrt sich das Vorzeichen bei Supplementwinkeln um.",
+            loesungsweg: "\\(\\cos(180°-60°) = \\cos(120°) = -\\cos(60°) = -0{,}5\\)."
+        },
+        {
+            id: 10,
+            level: 2,
+            typ: "mc",
+            frage: "Welchen Wert hat \\(\\sin(150°)\\)?",
+            optionen: ["\\(0{,}5\\)", "\\(-0{,}5\\)", "\\(\\dfrac{\\sqrt{3}}{2}\\)", "\\(-\\dfrac{\\sqrt{3}}{2}\\)"],
+            korrekt: 0,
+            tipp: "\\(150° = 180° - 30°\\).",
+            loesungsweg: "\\(\\sin(150°) = \\sin(180°-30°) = \\sin(30°) = \\dfrac{1}{2} = 0{,}5\\)."
+        },
+        {
+            id: 11,
+            level: 2,
+            typ: "mc",
+            frage: "Welchen Wert hat \\(\\cos(135°)\\)?",
+            optionen: ["\\(-\\dfrac{\\sqrt{2}}{2}\\)", "\\(\\dfrac{\\sqrt{2}}{2}\\)", "\\(-\\dfrac{1}{2}\\)", "\\(\\dfrac{1}{2}\\)"],
+            korrekt: 0,
+            tipp: "\\(135° = 180° - 45°\\), dann Supplementwinkel-Regel für Kosinus anwenden.",
+            loesungsweg: "\\(\\cos(135°) = \\cos(180°-45°) = -\\cos(45°) = -\\dfrac{\\sqrt{2}}{2}\\)."
+        },
+        {
+            id: 12,
+            level: 2,
+            typ: "numerisch",
+            frage: "Gegeben \\(\\sin\\alpha = 0{,}8\\) und \\(\\cos\\alpha = 0{,}6\\). Berechne \\(\\tan\\alpha\\) (zwei Nachkommastellen).",
+            loesung: 1.33,
+            toleranz: 0.01,
+            tipp: "\\(\\tan\\alpha = \\dfrac{\\sin\\alpha}{\\cos\\alpha}\\).",
+            loesungsweg: "\\(\\tan\\alpha = \\dfrac{\\sin\\alpha}{\\cos\\alpha} = \\dfrac{0{,}8}{0{,}6} = \\dfrac{4}{3} \\approx 1{,}33\\)."
+        },
+
+        // ===== LEVEL 3: Umstellen mit Pythagoras =====
+        {
+            id: 13,
+            level: 3,
+            typ: "numerisch",
+            frage: "Gegeben: \\(\\sin\\alpha = 0{,}6\\) und \\(\\alpha\\) ist spitz. Berechne \\(\\cos\\alpha\\).",
+            loesung: 0.8,
+            toleranz: 0.01,
+            tipp: "\\(\\cos^2\\alpha = 1 - \\sin^2\\alpha\\). Da \\(\\alpha\\) spitz ist, ist \\(\\cos\\alpha > 0\\).",
+            loesungsweg: "\\(\\cos^2\\alpha = 1 - \\sin^2\\alpha = 1 - 0{,}36 = 0{,}64\\). Da \\(\\alpha\\) spitz: \\(\\cos\\alpha = \\sqrt{0{,}64} = 0{,}8\\)."
+        },
+        {
+            id: 14,
+            level: 3,
+            typ: "numerisch",
+            frage: "Gegeben: \\(\\cos\\alpha = 0{,}28\\), \\(\\alpha\\) spitz. Berechne \\(\\sin\\alpha\\) (zwei Nachkommastellen).",
+            loesung: 0.96,
+            toleranz: 0.01,
+            tipp: "\\(\\sin^2\\alpha = 1 - \\cos^2\\alpha\\).",
+            loesungsweg: "\\(\\sin^2\\alpha = 1 - 0{,}28^2 = 1 - 0{,}0784 = 0{,}9216\\). Also \\(\\sin\\alpha = \\sqrt{0{,}9216} = 0{,}96\\)."
+        },
+        {
+            id: 15,
+            level: 3,
+            typ: "numerisch",
+            frage: "Gegeben: \\(\\sin\\alpha = \\dfrac{5}{13}\\), \\(\\alpha\\) spitz. Bestimme \\(\\cos\\alpha\\) (als Dezimalzahl, drei Nachkommastellen).",
+            loesung: 0.923,
+            toleranz: 0.005,
+            tipp: "\\(\\cos\\alpha = \\sqrt{1 - \\sin^2\\alpha}\\).",
+            loesungsweg: "\\(\\cos^2\\alpha = 1 - \\dfrac{25}{169} = \\dfrac{144}{169}\\). Also \\(\\cos\\alpha = \\dfrac{12}{13} \\approx 0{,}923\\). Das ist ein klassisches 5-12-13-Dreieck!"
+        },
+        {
+            id: 16,
+            level: 3,
+            typ: "numerisch",
+            frage: "\\(\\sin\\alpha = 0{,}6\\) und \\(\\alpha\\) ist spitz. Berechne \\(\\tan\\alpha\\) (zwei Nachkommastellen).",
+            loesung: 0.75,
+            toleranz: 0.01,
+            tipp: "Berechne zuerst \\(\\cos\\alpha\\) mit dem trig. Pythagoras, dann \\(\\tan\\alpha = \\sin\\alpha / \\cos\\alpha\\).",
+            loesungsweg: "\\(\\cos\\alpha = \\sqrt{1-0{,}36} = 0{,}8\\). Dann \\(\\tan\\alpha = \\dfrac{0{,}6}{0{,}8} = 0{,}75\\)."
+        },
+        {
+            id: 17,
+            level: 3,
+            typ: "mc",
+            frage: "\\(\\cos\\alpha = \\dfrac{\\sqrt{3}}{2}\\), \\(\\alpha\\) spitz. Welchen Wert hat \\(\\sin\\alpha\\)?",
+            optionen: ["\\(\\dfrac{1}{2}\\)", "\\(\\dfrac{\\sqrt{3}}{2}\\)", "\\(\\dfrac{\\sqrt{2}}{2}\\)", "\\(1\\)"],
+            korrekt: 0,
+            tipp: "\\(\\sin^2\\alpha = 1 - \\cos^2\\alpha = 1 - \\dfrac{3}{4}\\).",
+            loesungsweg: "\\(\\sin^2\\alpha = 1 - \\dfrac{3}{4} = \\dfrac{1}{4}\\). Da \\(\\alpha\\) spitz: \\(\\sin\\alpha = \\dfrac{1}{2}\\). (Das ist der Standardwinkel \\(\\alpha=30°\\).)"
+        },
+        {
+            id: 18,
+            level: 3,
+            typ: "numerisch",
+            frage: "Für einen spitzen Winkel gilt \\(\\tan\\alpha = \\dfrac{3}{4}\\). Bestimme \\(\\sin\\alpha\\) (als Dezimalzahl).",
+            loesung: 0.6,
+            toleranz: 0.01,
+            tipp: "Stelle dir ein Dreieck mit Gegenkathete 3 und Ankathete 4 vor. Berechne die Hypotenuse mit Pythagoras.",
+            loesungsweg: "Gegenkathete \\(= 3\\), Ankathete \\(= 4\\), also Hypotenuse \\(= \\sqrt{9+16} = 5\\). Damit \\(\\sin\\alpha = \\dfrac{3}{5} = 0{,}6\\)."
+        },
+
+        // ===== LEVEL 4: Supplement- und Komplementwinkel =====
+        {
+            id: 19,
+            level: 4,
+            typ: "numerisch",
+            frage: "Gegeben: \\(\\sin(40°) \\approx 0{,}643\\). Wie groß ist \\(\\sin(140°)\\) (drei Nachkommastellen)?",
+            loesung: 0.643,
+            toleranz: 0.005,
+            tipp: "\\(140° = 180° - 40°\\).",
+            loesungsweg: "\\(\\sin(140°) = \\sin(180°-40°) = \\sin(40°) \\approx 0{,}643\\). Supplementwinkel haben denselben Sinuswert."
+        },
+        {
+            id: 20,
+            level: 4,
+            typ: "numerisch",
+            frage: "Gegeben: \\(\\cos(50°) \\approx 0{,}643\\). Bestimme \\(\\cos(130°)\\) (drei Nachkommastellen).",
+            loesung: -0.643,
+            toleranz: 0.005,
+            tipp: "\\(130° = 180° - 50°\\), und beim Kosinus wechselt das Vorzeichen.",
+            loesungsweg: "\\(\\cos(130°) = \\cos(180°-50°) = -\\cos(50°) \\approx -0{,}643\\)."
+        },
+        {
+            id: 21,
+            level: 4,
+            typ: "mc",
+            frage: "Welcher Ausdruck ist gleich \\(\\sin(110°)\\)?",
+            optionen: ["\\(\\sin(70°)\\)", "\\(-\\sin(70°)\\)", "\\(\\cos(70°)\\)", "\\(-\\cos(70°)\\)"],
+            korrekt: 0,
+            tipp: "\\(110° = 180° - 70°\\).",
+            loesungsweg: "\\(\\sin(110°) = \\sin(180°-70°) = \\sin(70°)\\)."
+        },
+        {
+            id: 22,
+            level: 4,
+            typ: "mc",
+            frage: "Welcher Ausdruck ist gleich \\(\\cos(120°)\\)?",
+            optionen: ["\\(-\\cos(60°)\\)", "\\(\\cos(60°)\\)", "\\(\\sin(60°)\\)", "\\(-\\sin(60°)\\)"],
+            korrekt: 0,
+            tipp: "\\(120° = 180° - 60°\\), beim Kosinus Vorzeichenwechsel.",
+            loesungsweg: "\\(\\cos(120°) = \\cos(180°-60°) = -\\cos(60°) = -\\dfrac{1}{2}\\)."
+        },
+        {
+            id: 23,
+            level: 4,
+            typ: "numerisch",
+            frage: "Berechne \\(\\sin(90° - 35°) - \\cos(35°)\\).",
+            loesung: 0,
+            toleranz: 0.001,
+            tipp: "Nutze \\(\\sin(90°-\\alpha) = \\cos\\alpha\\).",
+            loesungsweg: "\\(\\sin(90°-35°) = \\cos(35°)\\). Also ist die Differenz \\(\\cos(35°) - \\cos(35°) = 0\\)."
+        },
+        {
+            id: 24,
+            level: 4,
+            typ: "mc",
+            frage: "Wahr oder falsch: Für jeden Winkel \\(\\alpha\\) mit \\(0° \\leq \\alpha \\leq 180°\\) gilt \\(\\sin(180°-\\alpha) + \\cos(180°-\\alpha) = \\sin\\alpha - \\cos\\alpha\\).",
+            optionen: ["Wahr", "Falsch"],
+            korrekt: 0,
+            tipp: "Wende beide Supplementwinkelformeln einzeln an und addiere.",
+            loesungsweg: "**Wahr.** \\(\\sin(180°-\\alpha) = \\sin\\alpha\\) und \\(\\cos(180°-\\alpha) = -\\cos\\alpha\\). Summe: \\(\\sin\\alpha + (-\\cos\\alpha) = \\sin\\alpha - \\cos\\alpha\\). Stimmt!"
+        },
+
+        // ===== LEVEL 5: Ausdrücke vereinfachen =====
+        {
+            id: 25,
+            level: 5,
+            typ: "mc",
+            frage: "Vereinfache: \\(1 - \\sin^2\\alpha\\)",
+            optionen: ["\\(\\cos^2\\alpha\\)", "\\(\\cos\\alpha\\)", "\\(-\\cos^2\\alpha\\)", "\\(\\sin^2\\alpha\\)"],
+            korrekt: 0,
+            tipp: "Forme den trig. Pythagoras um.",
+            loesungsweg: "Aus \\(\\sin^2\\alpha + \\cos^2\\alpha = 1\\) folgt direkt \\(\\cos^2\\alpha = 1 - \\sin^2\\alpha\\)."
+        },
+        {
+            id: 26,
+            level: 5,
+            typ: "mc",
+            frage: "Vereinfache: \\(\\dfrac{\\sin\\alpha}{\\tan\\alpha}\\)",
+            optionen: ["\\(\\cos\\alpha\\)", "\\(\\sin\\alpha\\)", "\\(1\\)", "\\(\\tan\\alpha\\)"],
+            korrekt: 0,
+            tipp: "Ersetze \\(\\tan\\alpha\\) durch \\(\\sin\\alpha/\\cos\\alpha\\).",
+            loesungsweg: "\\(\\dfrac{\\sin\\alpha}{\\tan\\alpha} = \\dfrac{\\sin\\alpha}{\\sin\\alpha/\\cos\\alpha} = \\sin\\alpha \\cdot \\dfrac{\\cos\\alpha}{\\sin\\alpha} = \\cos\\alpha\\)."
+        },
+        {
+            id: 27,
+            level: 5,
+            typ: "mc",
+            frage: "Vereinfache: \\(\\sin^2\\alpha + \\cos^2\\alpha + \\tan^2\\alpha \\cdot \\cos^2\\alpha\\)",
+            optionen: ["\\(1 + \\sin^2\\alpha\\)", "\\(1\\)", "\\(2\\)", "\\(\\sin^2\\alpha\\)"],
+            korrekt: 0,
+            tipp: "\\(\\tan^2\\alpha \\cdot \\cos^2\\alpha = \\dfrac{\\sin^2\\alpha}{\\cos^2\\alpha} \\cdot \\cos^2\\alpha\\).",
+            loesungsweg: "\\(\\tan^2\\alpha \\cdot \\cos^2\\alpha = \\sin^2\\alpha\\). Der Gesamtausdruck ist also \\((\\sin^2\\alpha + \\cos^2\\alpha) + \\sin^2\\alpha = 1 + \\sin^2\\alpha\\)."
+        },
+        {
+            id: 28,
+            level: 5,
+            typ: "numerisch",
+            frage: "Berechne \\(\\sin^2(37°) + \\cos^2(37°) + \\sin^2(143°) + \\cos^2(143°)\\).",
+            loesung: 2,
+            toleranz: 0.001,
+            tipp: "Für **jeden** Winkel gilt \\(\\sin^2\\alpha + \\cos^2\\alpha = 1\\).",
+            loesungsweg: "\\(\\sin^2(37°) + \\cos^2(37°) = 1\\) und \\(\\sin^2(143°) + \\cos^2(143°) = 1\\). Summe: \\(1 + 1 = 2\\)."
+        },
+        {
+            id: 29,
+            level: 5,
+            typ: "mc",
+            frage: "Vereinfache: \\((\\sin\\alpha + \\cos\\alpha)^2\\)",
+            optionen: ["\\(1 + 2\\sin\\alpha\\cos\\alpha\\)", "\\(1\\)", "\\(\\sin^2\\alpha + \\cos^2\\alpha\\)", "\\(2\\sin\\alpha\\cos\\alpha\\)"],
+            korrekt: 0,
+            tipp: "Binomische Formel, dann trig. Pythagoras anwenden.",
+            loesungsweg: "\\((\\sin\\alpha + \\cos\\alpha)^2 = \\sin^2\\alpha + 2\\sin\\alpha\\cos\\alpha + \\cos^2\\alpha = 1 + 2\\sin\\alpha\\cos\\alpha\\)."
+        },
+        {
+            id: 30,
+            level: 5,
+            typ: "numerisch",
+            frage: "Berechne \\(\\sin(30°) \\cdot \\cos(60°) + \\cos(30°) \\cdot \\sin(60°)\\) (zwei Nachkommastellen).",
+            loesung: 1,
+            toleranz: 0.01,
+            tipp: "Beachte: \\(\\sin(30°) = \\cos(60°)\\) und \\(\\cos(30°) = \\sin(60°)\\) (Komplementwinkel).",
+            loesungsweg: "\\(\\sin(30°) = \\dfrac{1}{2}\\), \\(\\cos(60°) = \\dfrac{1}{2}\\), \\(\\cos(30°) = \\dfrac{\\sqrt{3}}{2}\\), \\(\\sin(60°) = \\dfrac{\\sqrt{3}}{2}\\). Summe: \\(\\dfrac{1}{4} + \\dfrac{3}{4} = 1\\)."
+        },
+
+        // ===== LEVEL 6: Identitäten beweisen / Mehrschritt =====
+        {
+            id: 31,
+            level: 6,
+            typ: "mc",
+            frage: "Vereinfache: \\((1 - \\cos\\alpha)(1 + \\cos\\alpha)\\)",
+            optionen: ["\\(\\sin^2\\alpha\\)", "\\(\\cos^2\\alpha\\)", "\\(1\\)", "\\(1 - \\cos\\alpha\\)"],
+            korrekt: 0,
+            tipp: "Dritte binomische Formel, dann trig. Pythagoras.",
+            loesungsweg: "\\((1-\\cos\\alpha)(1+\\cos\\alpha) = 1 - \\cos^2\\alpha = \\sin^2\\alpha\\) (trig. Pythagoras umgestellt)."
+        },
+        {
+            id: 32,
+            level: 6,
+            typ: "numerisch",
+            frage: "Für einen spitzen Winkel gilt \\(\\sin\\alpha - \\cos\\alpha = 0{,}2\\). Berechne \\(\\sin\\alpha \\cdot \\cos\\alpha\\) (zwei Nachkommastellen).",
+            loesung: 0.48,
+            toleranz: 0.01,
+            tipp: "Quadriere beide Seiten und nutze \\(\\sin^2\\alpha + \\cos^2\\alpha = 1\\).",
+            loesungsweg: "\\((\\sin\\alpha - \\cos\\alpha)^2 = 0{,}04\\), also \\(\\sin^2\\alpha - 2\\sin\\alpha\\cos\\alpha + \\cos^2\\alpha = 0{,}04\\). Wegen \\(\\sin^2\\alpha + \\cos^2\\alpha = 1\\) folgt \\(1 - 2\\sin\\alpha\\cos\\alpha = 0{,}04\\), also \\(\\sin\\alpha\\cos\\alpha = \\dfrac{0{,}96}{2} = 0{,}48\\)."
+        },
+        {
+            id: 33,
+            level: 6,
+            typ: "mc",
+            frage: "Vereinfache: \\(\\dfrac{1 - \\cos^2\\alpha}{\\sin\\alpha}\\) (mit \\(\\sin\\alpha \\neq 0\\))",
+            optionen: ["\\(\\sin\\alpha\\)", "\\(\\cos\\alpha\\)", "\\(\\tan\\alpha\\)", "\\(1\\)"],
+            korrekt: 0,
+            tipp: "Zähler mit trig. Pythagoras umschreiben.",
+            loesungsweg: "\\(\\dfrac{1-\\cos^2\\alpha}{\\sin\\alpha} = \\dfrac{\\sin^2\\alpha}{\\sin\\alpha} = \\sin\\alpha\\)."
+        },
+        {
+            id: 34,
+            level: 6,
+            typ: "numerisch",
+            frage: "Gegeben: \\(\\sin\\alpha + \\cos\\alpha = 1{,}2\\). Berechne \\(2\\sin\\alpha\\cos\\alpha\\) (zwei Nachkommastellen).",
+            loesung: 0.44,
+            toleranz: 0.01,
+            tipp: "Quadriere die Gleichung und nutze den trig. Pythagoras.",
+            loesungsweg: "\\((\\sin\\alpha + \\cos\\alpha)^2 = 1{,}44\\), also \\(\\sin^2\\alpha + 2\\sin\\alpha\\cos\\alpha + \\cos^2\\alpha = 1{,}44\\). Daraus \\(1 + 2\\sin\\alpha\\cos\\alpha = 1{,}44\\), also \\(2\\sin\\alpha\\cos\\alpha = 0{,}44\\)."
+        },
+        {
+            id: 35,
+            level: 6,
+            typ: "mc",
+            frage: "Wahr oder falsch: Der Ausdruck \\(\\tan\\alpha \\cdot \\cos\\alpha + \\cos(90°-\\alpha)\\) ist für alle spitzen Winkel gleich \\(2\\sin\\alpha\\).",
+            optionen: ["Wahr", "Falsch"],
+            korrekt: 0,
+            tipp: "Nutze \\(\\tan\\alpha = \\dfrac{\\sin\\alpha}{\\cos\\alpha}\\) und \\(\\cos(90°-\\alpha) = \\sin\\alpha\\).",
+            loesungsweg: "**Wahr.** \\(\\tan\\alpha \\cdot \\cos\\alpha = \\dfrac{\\sin\\alpha}{\\cos\\alpha} \\cdot \\cos\\alpha = \\sin\\alpha\\). Und \\(\\cos(90°-\\alpha) = \\sin\\alpha\\). Summe: \\(\\sin\\alpha + \\sin\\alpha = 2\\sin\\alpha\\)."
+        },
+        {
+            id: 36,
+            level: 6,
+            typ: "numerisch",
+            frage: "Für einen spitzen Winkel \\(\\alpha\\) gilt \\(\\tan\\alpha = 2\\). Berechne \\(\\sin^2\\alpha\\) (zwei Nachkommastellen).",
+            loesung: 0.8,
+            toleranz: 0.01,
+            tipp: "Stelle ein Dreieck mit Gegenkathete 2 und Ankathete 1 vor. Berechne die Hypotenuse.",
+            loesungsweg: "Gegenkathete \\(= 2\\), Ankathete \\(= 1\\), Hypotenuse \\(= \\sqrt{5}\\). Dann \\(\\sin\\alpha = \\dfrac{2}{\\sqrt{5}}\\), also \\(\\sin^2\\alpha = \\dfrac{4}{5} = 0{,}8\\)."
+        }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Häufigkeitsverteilungen und Stichproben - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #ED7D31; --spirale-secondary: #C55A11; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '9-stoch-haeufigkeiten';
+    const THEMA_CONFIG = { name: 'Häufigkeitsverteilungen', bereich: 'Stochastik' };
+    const AUFGABEN = [
+
+      // ═══════════════════════════════════════════════════════════
+      // Level 1 — Absolute Häufigkeit ablesen, Grundbegriffe
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 1, level: 1, typ: 'mc',
+        frage: 'Eine Münze wird 200-mal geworfen. Dabei fällt 108-mal „Kopf". Wie groß ist die absolute Häufigkeit von „Kopf"?',
+        optionen: [
+          '108',
+          '200',
+          '92',
+          '0,54'
+        ],
+        korrekt: 0,
+        tipp: 'Die absolute Häufigkeit gibt an, wie oft ein Ergebnis tatsächlich eingetreten ist.',
+        loesungsweg: 'Die absolute Häufigkeit ist einfach die gezählte Anzahl: \\(H_n(\\text{Kopf}) = 108\\).'
+      },
+      {
+        id: 2, level: 1, typ: 'mc',
+        frage: 'In einer Klasse werden die Lieblingsfarben erfasst: Blau 12, Rot 8, Grün 5, Gelb 3. Wie groß ist der Stichprobenumfang \\(n\\)?',
+        optionen: [
+          '28',
+          '12',
+          '4',
+          '32'
+        ],
+        korrekt: 0,
+        tipp: 'Der Stichprobenumfang ist die Gesamtzahl aller erfassten Daten.',
+        loesungsweg: '\\(n = 12 + 8 + 5 + 3 = 28\\).'
+      },
+      {
+        id: 3, level: 1, typ: 'mc',
+        frage: 'Was versteht man unter der „Grundgesamtheit" bei einer statistischen Erhebung?',
+        optionen: [
+          'Die Menge aller Objekte, über die man eine Aussage treffen möchte',
+          'Nur die tatsächlich befragten Personen',
+          'Die Summe aller absoluten Häufigkeiten',
+          'Die Anzahl der unterschiedlichen Merkmalswerte'
+        ],
+        korrekt: 0,
+        tipp: 'Die Grundgesamtheit ist das, worüber man etwas herausfinden will.',
+        loesungsweg: 'Die Grundgesamtheit umfasst alle Objekte (z. B. alle Schüler einer Schule), über die eine Aussage getroffen werden soll. Die Stichprobe ist nur ein Teil davon.'
+      },
+      {
+        id: 4, level: 1, typ: 'numerisch',
+        frage: 'Ein Würfel wird 300-mal geworfen. Die absolute Häufigkeit der Sechs beträgt 48. Berechne die relative Häufigkeit \\(h_n(6)\\) als Dezimalzahl.',
+        loesung: 0.16, toleranz: 0.001,
+        tipp: 'Relative Häufigkeit: \\(h_n(A) = \\frac{k}{n}\\), wobei \\(k\\) die absolute Häufigkeit und \\(n\\) der Stichprobenumfang ist.',
+        loesungsweg: '\\(h_n(6) = \\frac{48}{300} = 0{,}16\\).'
+      },
+      {
+        id: 5, level: 1, typ: 'mc',
+        frage: 'Welche Aussage über die relative Häufigkeit \\(h_n(A)\\) ist richtig?',
+        optionen: [
+          '\\(h_n(A)\\) liegt immer zwischen 0 und 1',
+          '\\(h_n(A)\\) kann größer als 1 werden',
+          '\\(h_n(A)\\) ist immer eine ganze Zahl',
+          '\\(h_n(A)\\) ist immer gleich \\(\\frac{1}{2}\\)'
+        ],
+        korrekt: 0,
+        tipp: 'Die relative Häufigkeit ist ein Anteil an der Gesamtzahl.',
+        loesungsweg: 'Da \\(h_n(A) = \\frac{k}{n}\\) und \\(0 \\leq k \\leq n\\), gilt \\(0 \\leq h_n(A) \\leq 1\\).'
+      },
+      {
+        id: 6, level: 1, typ: 'numerisch',
+        frage: 'Bei einer Umfrage unter 500 Personen geben 125 an, gerne Fußball zu schauen. Bestimme die relative Häufigkeit als Dezimalzahl.',
+        loesung: 0.25, toleranz: 0.001,
+        tipp: 'Teile die absolute Häufigkeit durch den Stichprobenumfang.',
+        loesungsweg: '\\(h_n(\\text{Fußball}) = \\frac{125}{500} = 0{,}25\\).'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // Level 2 — Relative Häufigkeit berechnen, Prozentangaben
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 7, level: 2, typ: 'numerisch',
+        frage: 'In einer Stichprobe von 250 Autos sind 60 rot. Berechne die relative Häufigkeit \\(h_n(\\text{rot})\\) als Dezimalzahl.',
+        loesung: 0.24, toleranz: 0.001,
+        tipp: '\\(h_n(A) = \\frac{k}{n}\\)',
+        loesungsweg: '\\(h_n(\\text{rot}) = \\frac{60}{250} = 0{,}24\\) (also 24 %).'
+      },
+      {
+        id: 8, level: 2, typ: 'numerisch',
+        frage: 'Eine Reißzwecke wird 400-mal geworfen. Sie landet 160-mal mit der Spitze nach oben. Bestimme die relative Häufigkeit „Spitze oben" als Dezimalzahl.',
+        loesung: 0.4, toleranz: 0.001,
+        tipp: '\\(h_n = \\frac{k}{n} = \\frac{160}{400}\\)',
+        loesungsweg: '\\(h_n(\\text{Spitze oben}) = \\frac{160}{400} = 0{,}4\\).'
+      },
+      {
+        id: 9, level: 2, typ: 'numerisch',
+        frage: 'Ein Würfel wird 600-mal geworfen. Die Zahl 1 erscheint 95-mal. Berechne die relative Häufigkeit von „1" (3 Nachkommastellen).',
+        loesung: 0.158, toleranz: 0.001,
+        tipp: 'Dividiere 95 durch 600.',
+        loesungsweg: '\\(h_n(1) = \\frac{95}{600} \\approx 0{,}158\\).'
+      },
+      {
+        id: 10, level: 2, typ: 'mc',
+        frage: 'Eine Umfrage ergibt: 180 von 400 Personen trinken morgens Kaffee. Welche Aussage ist richtig?',
+        optionen: [
+          'Die relative Häufigkeit beträgt 0,45 (bzw. 45 %)',
+          'Die relative Häufigkeit beträgt 180',
+          'Die relative Häufigkeit beträgt 0,18',
+          'Die relative Häufigkeit beträgt 2,22'
+        ],
+        korrekt: 0,
+        tipp: 'Teile 180 durch 400.',
+        loesungsweg: '\\(h_n(\\text{Kaffee}) = \\frac{180}{400} = 0{,}45 = 45\\,\\%\\).'
+      },
+      {
+        id: 11, level: 2, typ: 'numerisch',
+        frage: 'Bei 800 Würfen einer Münze fällt 416-mal „Zahl". Berechne die relative Häufigkeit von „Zahl" als Dezimalzahl.',
+        loesung: 0.52, toleranz: 0.001,
+        tipp: '\\(h_n = \\frac{416}{800}\\)',
+        loesungsweg: '\\(h_n(\\text{Zahl}) = \\frac{416}{800} = 0{,}52\\).'
+      },
+      {
+        id: 12, level: 2, typ: 'numerisch',
+        frage: 'Ein Glücksrad wird 500-mal gedreht. Die Farbe „Blau" erscheint 125-mal. Bestimme die relative Häufigkeit von Blau als Dezimalzahl.',
+        loesung: 0.25, toleranz: 0.001,
+        tipp: '\\(h_n(\\text{Blau}) = \\frac{125}{500}\\)',
+        loesungsweg: '\\(h_n(\\text{Blau}) = \\frac{125}{500} = 0{,}25\\) (also 25 %).'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // Level 3 — Häufigkeitstabellen interpretieren
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 13, level: 3, typ: 'numerisch',
+        frage: 'Eine Klassenarbeit ergab folgende Notenverteilung: 1er: 4, 2er: 9, 3er: 10, 4er: 5, 5er: 2. Wie groß ist der Stichprobenumfang \\(n\\)?',
+        loesung: 30, toleranz: 0.1,
+        tipp: 'Addiere alle absoluten Häufigkeiten.',
+        loesungsweg: '\\(n = 4 + 9 + 10 + 5 + 2 = 30\\).'
+      },
+      {
+        id: 14, level: 3, typ: 'numerisch',
+        frage: 'Bei 400 Würfen eines Würfels wurden folgende absolute Häufigkeiten notiert: 1: 62, 2: 71, 3: 68, 4: 65, 5: 66, 6: 68. Berechne die relative Häufigkeit der Augenzahl 2 als Dezimalzahl (3 Nachkommastellen).',
+        loesung: 0.178, toleranz: 0.001,
+        tipp: '\\(h_n(2) = \\frac{71}{400}\\)',
+        loesungsweg: '\\(h_n(2) = \\frac{71}{400} = 0{,}1775 \\approx 0{,}178\\).'
+      },
+      {
+        id: 15, level: 3, typ: 'numerisch',
+        frage: 'In einer Häufigkeitstabelle sind folgende Werte eingetragen: A: 0,20, B: 0,35, C: 0,15, D: ?. Welche relative Häufigkeit muss bei D eingetragen werden?',
+        loesung: 0.3, toleranz: 0.001,
+        tipp: 'Die Summe aller relativen Häufigkeiten muss 1 ergeben.',
+        loesungsweg: '\\(h_n(D) = 1 - 0{,}20 - 0{,}35 - 0{,}15 = 0{,}30\\).'
+      },
+      {
+        id: 16, level: 3, typ: 'mc',
+        frage: 'Eine Tabelle zeigt: Merkmal A hat absolute Häufigkeit 84 bei Stichprobenumfang 240. Welche relative Häufigkeit hat A?',
+        optionen: [
+          '0,35',
+          '0,84',
+          '2,86',
+          '0,24'
+        ],
+        korrekt: 0,
+        tipp: '\\(h_n = \\frac{84}{240}\\)',
+        loesungsweg: '\\(h_n(A) = \\frac{84}{240} = 0{,}35\\).'
+      },
+      {
+        id: 17, level: 3, typ: 'numerisch',
+        frage: 'Ein Würfel wird geworfen. Aus einer Gesamtwurfzahl von \\(n = 1000\\) beträgt die relative Häufigkeit der Sechs 0,172. Wie oft fiel die Sechs absolut?',
+        loesung: 172, toleranz: 0.1,
+        tipp: 'Stelle die Formel um: \\(k = h_n \\cdot n\\).',
+        loesungsweg: '\\(k = h_n \\cdot n = 0{,}172 \\cdot 1000 = 172\\).'
+      },
+      {
+        id: 18, level: 3, typ: 'numerisch',
+        frage: 'Bei einer Verkehrsbefragung unter 750 Personen gaben 225 an, mit dem Fahrrad zur Arbeit zu fahren. Bestimme die relative Häufigkeit als Dezimalzahl.',
+        loesung: 0.3, toleranz: 0.001,
+        tipp: '\\(h_n = \\frac{225}{750}\\)',
+        loesungsweg: '\\(h_n(\\text{Fahrrad}) = \\frac{225}{750} = 0{,}3\\) (also 30 %).'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // Level 4 — Stichprobenumfang, Tabellen vervollständigen
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 19, level: 4, typ: 'numerisch',
+        frage: 'Von einer Stichprobe ist bekannt: \\(h_n(A) = 0{,}28\\) und die absolute Häufigkeit \\(H_n(A) = 140\\). Bestimme den Stichprobenumfang \\(n\\).',
+        loesung: 500, toleranz: 0.1,
+        tipp: 'Stelle \\(h_n = \\frac{k}{n}\\) nach \\(n\\) um: \\(n = \\frac{k}{h_n}\\).',
+        loesungsweg: '\\(n = \\frac{140}{0{,}28} = 500\\).'
+      },
+      {
+        id: 20, level: 4, typ: 'numerisch',
+        frage: 'Ein Münzwurf-Experiment ergab folgende relative Häufigkeiten: „Kopf": 0,486, „Zahl": ?. Bestimme die relative Häufigkeit von „Zahl".',
+        loesung: 0.514, toleranz: 0.001,
+        tipp: 'Die Summe aller relativen Häufigkeiten eines Experiments ist 1.',
+        loesungsweg: '\\(h_n(\\text{Zahl}) = 1 - 0{,}486 = 0{,}514\\).'
+      },
+      {
+        id: 21, level: 4, typ: 'numerisch',
+        frage: 'Bei einer Befragung von Schülerinnen zur Pausenverpflegung ergab sich: Obst 96, Brot 144, Müsliriegel 72, Sonstiges 48. Berechne die relative Häufigkeit von „Brot" als Dezimalzahl.',
+        loesung: 0.4, toleranz: 0.001,
+        tipp: 'Zuerst \\(n\\) berechnen, dann \\(h_n = \\frac{144}{n}\\).',
+        loesungsweg: '\\(n = 96 + 144 + 72 + 48 = 360\\). \\(h_n(\\text{Brot}) = \\frac{144}{360} = 0{,}4\\).'
+      },
+      {
+        id: 22, level: 4, typ: 'numerisch',
+        frage: 'Ein Würfel wird 1000-mal geworfen. Die Augenzahlen 1 bis 5 haben zusammen die relative Häufigkeit 0,831. Berechne die absolute Häufigkeit der Sechs.',
+        loesung: 169, toleranz: 0.1,
+        tipp: 'Zuerst \\(h_n(6) = 1 - 0{,}831\\), dann mit \\(n = 1000\\) multiplizieren.',
+        loesungsweg: '\\(h_n(6) = 1 - 0{,}831 = 0{,}169\\). \\(H_n(6) = 0{,}169 \\cdot 1000 = 169\\).'
+      },
+      {
+        id: 23, level: 4, typ: 'numerisch',
+        frage: 'Eine Reißzwecke wird 250-mal geworfen. Sie fiel 110-mal mit der Spitze nach unten. Bestimme die relative Häufigkeit für „Spitze oben" als Dezimalzahl.',
+        loesung: 0.56, toleranz: 0.001,
+        tipp: 'Zuerst absolute Häufigkeit für „Spitze oben" berechnen: \\(250 - 110\\).',
+        loesungsweg: '\\(H_n(\\text{Spitze oben}) = 250 - 110 = 140\\). \\(h_n(\\text{Spitze oben}) = \\frac{140}{250} = 0{,}56\\).'
+      },
+      {
+        id: 24, level: 4, typ: 'mc',
+        frage: 'In einer Stichprobe von 600 Personen beträgt die relative Häufigkeit von „Brillenträger" 0,35. Wie viele Personen der Stichprobe tragen eine Brille?',
+        optionen: [
+          '210',
+          '35',
+          '165',
+          '350'
+        ],
+        korrekt: 0,
+        tipp: '\\(H_n = h_n \\cdot n\\)',
+        loesungsweg: '\\(H_n(\\text{Brille}) = 0{,}35 \\cdot 600 = 210\\).'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // Level 5 — Simulation, Approximation an Wahrscheinlichkeit
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 25, level: 5, typ: 'numerisch',
+        frage: 'Ein fairer Würfel wird 6000-mal simuliert geworfen. Erwartete relative Häufigkeit der Sechs nach dem empirischen Gesetz der großen Zahlen (Dezimalzahl, 3 Nachkommastellen)?',
+        loesung: 0.167, toleranz: 0.005,
+        tipp: 'Bei großer Wurfzahl nähert sich die relative Häufigkeit dem Wert \\(\\frac{1}{6}\\) an.',
+        loesungsweg: 'Nach dem empirischen Gesetz der großen Zahlen: \\(h_n(6) \\approx \\frac{1}{6} \\approx 0{,}167\\).'
+      },
+      {
+        id: 26, level: 5, typ: 'mc',
+        frage: 'Was besagt das empirische Gesetz der großen Zahlen?',
+        optionen: [
+          'Bei zunehmendem Stichprobenumfang stabilisiert sich die relative Häufigkeit um einen festen Wert',
+          'Die absolute Häufigkeit wird immer größer als die relative',
+          'Bei 100 Würfen fällt jede Augenzahl genau gleich oft',
+          'Die Summe der absoluten Häufigkeiten ist immer 1'
+        ],
+        korrekt: 0,
+        tipp: 'Denke an das Verhalten bei vielen Wiederholungen eines Zufallsexperiments.',
+        loesungsweg: 'Mit wachsender Anzahl \\(n\\) der Versuche nähert sich \\(h_n(A)\\) einem stabilen Wert an — dieser wird als Wahrscheinlichkeit des Ereignisses interpretiert.'
+      },
+      {
+        id: 27, level: 5, typ: 'numerisch',
+        frage: 'Bei 10000 simulierten Münzwürfen fiel „Kopf" 4972-mal. Berechne die relative Häufigkeit als Dezimalzahl (4 Nachkommastellen).',
+        loesung: 0.4972, toleranz: 0.001,
+        tipp: '\\(h_n = \\frac{4972}{10000}\\)',
+        loesungsweg: '\\(h_n(\\text{Kopf}) = \\frac{4972}{10000} = 0{,}4972\\). Das liegt nahe bei 0,5 — passend zum empirischen Gesetz der großen Zahlen.'
+      },
+      {
+        id: 28, level: 5, typ: 'numerisch',
+        frage: 'Ein Glücksrad mit 4 gleichen Sektoren (Rot, Gelb, Grün, Blau) wird 1200-mal gedreht. Welche absolute Häufigkeit der Farbe „Rot" erwartet man näherungsweise?',
+        loesung: 300, toleranz: 15,
+        tipp: 'Bei 4 gleichen Sektoren sollte \\(h_n(\\text{Rot}) \\approx \\frac{1}{4}\\) sein.',
+        loesungsweg: 'Erwartete relative Häufigkeit \\(\\frac{1}{4}\\), also \\(H_n \\approx \\frac{1}{4} \\cdot 1200 = 300\\).'
+      },
+      {
+        id: 29, level: 5, typ: 'numerisch',
+        frage: 'Ein Würfel wird 900-mal geworfen. Die Augenzahl 3 erscheint 162-mal. Um wie viel weicht die relative Häufigkeit von dem erwarteten Wert \\(\\frac{1}{6}\\) ab (absolute Abweichung, Dezimalzahl)?',
+        loesung: 0.013, toleranz: 0.002,
+        tipp: 'Berechne erst \\(h_n(3)\\), dann \\(|h_n(3) - \\frac{1}{6}|\\).',
+        loesungsweg: '\\(h_n(3) = \\frac{162}{900} = 0{,}18\\). \\(\\frac{1}{6} \\approx 0{,}1667\\). Abweichung: \\(|0{,}18 - 0{,}1667| \\approx 0{,}013\\).'
+      },
+      {
+        id: 30, level: 5, typ: 'mc',
+        frage: 'Ein Würfel wird 50-mal geworfen, die Sechs fällt 12-mal. Warum weicht \\(h_n(6) = 0{,}24\\) deutlich vom erwarteten Wert \\(\\frac{1}{6}\\) ab?',
+        optionen: [
+          'Der Stichprobenumfang ist zu klein — bei kleiner \\(n\\) sind größere Abweichungen normal',
+          'Der Würfel muss gezinkt sein',
+          'Die Formel \\(h_n = \\frac{k}{n}\\) gilt nicht für kleine \\(n\\)',
+          'Es wurde falsch gezählt'
+        ],
+        korrekt: 0,
+        tipp: 'Das Gesetz der großen Zahlen wirkt erst ab großem \\(n\\).',
+        loesungsweg: 'Bei nur 50 Würfen sind deutliche Abweichungen vom theoretischen Wert \\(\\frac{1}{6}\\) ganz normal. Erst bei sehr vielen Wiederholungen stabilisiert sich die relative Häufigkeit.'
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // Level 6 — Kritische Interpretation, Repräsentativität
+      // ═══════════════════════════════════════════════════════════
+
+      {
+        id: 31, level: 6, typ: 'mc',
+        frage: 'Eine Umfrage nur unter Lehrkräften einer Schule ergibt, dass 92 % die Einführung einer Hausaufgabenpflicht befürworten. Warum ist dieses Ergebnis NICHT repräsentativ für die gesamte Schulgemeinschaft?',
+        optionen: [
+          'Die Stichprobe ist nicht aus der gesamten Grundgesamtheit gezogen — Schüler und Eltern fehlen',
+          'Die Stichprobe ist zu klein',
+          'Die relative Häufigkeit müsste als Bruch angegeben werden',
+          '92 % ist ein unmöglicher Wert'
+        ],
+        korrekt: 0,
+        tipp: 'Eine repräsentative Stichprobe muss die Struktur der Grundgesamtheit widerspiegeln.',
+        loesungsweg: 'Die Grundgesamtheit umfasst auch Schüler und Eltern. Da nur Lehrkräfte befragt wurden, ist die Stichprobe verzerrt und nicht repräsentativ für die gesamte Schulgemeinschaft.'
+      },
+      {
+        id: 32, level: 6, typ: 'numerisch',
+        frage: 'Zwei Stichproben zur gleichen Frage: Stichprobe A: \\(n = 50\\), \\(h_n(\\text{Ja}) = 0{,}60\\). Stichprobe B: \\(n = 2000\\), \\(h_n(\\text{Ja}) = 0{,}52\\). Welcher Wert ist als Schätzung der tatsächlichen Quote vertrauenswürdiger? Gib den Wert ein.',
+        loesung: 0.52, toleranz: 0.001,
+        tipp: 'Nach dem empirischen Gesetz der großen Zahlen: Je größer \\(n\\), desto stabiler \\(h_n\\).',
+        loesungsweg: 'Stichprobe B hat deutlich mehr Daten. Nach dem Gesetz der großen Zahlen ist \\(h_n = 0{,}52\\) die bessere Schätzung.'
+      },
+      {
+        id: 33, level: 6, typ: 'numerisch',
+        frage: 'Aus einer Langzeitstudie weiß man: Die relative Häufigkeit, dass eine bestimmte Reißzwecke mit der Spitze nach oben fällt, liegt stabil bei 0,62. Mit wie vielen „Spitze oben"-Ergebnissen rechnet man näherungsweise bei 1500 Würfen?',
+        loesung: 930, toleranz: 5,
+        tipp: '\\(H_n \\approx h_n \\cdot n\\)',
+        loesungsweg: 'Erwartete absolute Häufigkeit: \\(H_n \\approx 0{,}62 \\cdot 1500 = 930\\).'
+      },
+      {
+        id: 34, level: 6, typ: 'mc',
+        frage: 'Ein Würfel wird 300-mal geworfen, die Sechs erscheint 78-mal. \\(h_n(6) = 0{,}26\\). Welche Schlussfolgerung ist am sachlich angemessensten?',
+        optionen: [
+          'Es besteht ein begründeter Verdacht, dass der Würfel nicht fair ist — eine größere Stichprobe sollte dies klären',
+          'Der Würfel ist garantiert gezinkt — weitere Experimente sind überflüssig',
+          'Die Abweichung liegt im normalen Zufallsbereich und kann komplett ignoriert werden',
+          'Das Ergebnis ist mathematisch unmöglich'
+        ],
+        korrekt: 0,
+        tipp: 'Erwartet wäre \\(h_n \\approx 0{,}167\\). Die Abweichung ist deutlich, aber garantiert ist nichts.',
+        loesungsweg: '\\(h_n = 0{,}26\\) liegt deutlich über dem erwarteten Wert \\(\\frac{1}{6} \\approx 0{,}167\\). Das ist ein starker Hinweis auf eine Unregelmäßigkeit, aber kein Beweis. Eine größere Stichprobe würde mehr Sicherheit geben.'
+      },
+      {
+        id: 35, level: 6, typ: 'numerisch',
+        frage: 'In einer Stadt mit 80000 Einwohnern wird eine repräsentative Stichprobe von 1200 Personen befragt. 288 nutzen regelmäßig den ÖPNV. Schätze die absolute Anzahl der ÖPNV-Nutzer in der gesamten Stadt.',
+        loesung: 19200, toleranz: 50,
+        tipp: 'Berechne \\(h_n\\) der Stichprobe und übertrage auf die Grundgesamtheit.',
+        loesungsweg: '\\(h_n = \\frac{288}{1200} = 0{,}24\\). Schätzung: \\(0{,}24 \\cdot 80000 = 19200\\) Einwohner.'
+      },
+      {
+        id: 36, level: 6, typ: 'mc',
+        frage: 'Eine Online-Umfrage auf einer Fußballseite ergibt, dass 89 % der Befragten Fußball als beliebteste Sportart nennen. Welcher Kritikpunkt ist am wichtigsten?',
+        optionen: [
+          'Die Stichprobe ist selbst-selektiv und nicht repräsentativ für die Gesamtbevölkerung',
+          'Die Prozentangabe 89 % ist mathematisch falsch',
+          'Die relative Häufigkeit hätte als Bruch angegeben werden müssen',
+          'Eine Umfrage mit weniger als 1000 Personen ist grundsätzlich unbrauchbar'
+        ],
+        korrekt: 0,
+        tipp: 'Wer nimmt an einer Umfrage auf einer Fußballseite teil?',
+        loesungsweg: 'Die Teilnehmer sind bereits an Fußball interessiert (Selbst-Selektion). Die Stichprobe spiegelt also nicht die Gesamtbevölkerung wider und ist deshalb nicht repräsentativ.'
+      }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

@@ -186,10 +186,16 @@
 
   /* ── Filter hide ────────────────────────────────── */
   body.filter-gk .lk-only { display: none; }
+  body.filter-klasse-9  .col-10,
+  body.filter-klasse-9  .col-11,
+  body.filter-klasse-9  .col-12 { display: none; }
+  body.filter-klasse-10 .col-9,
   body.filter-klasse-10 .col-11,
   body.filter-klasse-10 .col-12 { display: none; }
+  body.filter-klasse-11 .col-9,
   body.filter-klasse-11 .col-10,
   body.filter-klasse-11 .col-12 { display: none; }
+  body.filter-klasse-12 .col-9,
   body.filter-klasse-12 .col-10,
   body.filter-klasse-12 .col-11 { display: none; }
 
@@ -320,7 +326,7 @@
 
   <header>
     <h1>DifferenzierungsEngine</h1>
-    <p class="subtitle">Adaptives Mathe-Training &middot; Klasse 10 &ndash; 12</p>
+    <p class="subtitle">Adaptives Mathe-Training &middot; Klasse 9 &ndash; 12</p>
     <button class="profil-btn" id="profil-btn" type="button">&#x2699; Meine Klasse: <span id="profil-label">&mdash;</span></button>
   </header>
 
@@ -328,6 +334,7 @@
 
   <div class="filter-bar" data-filter-group="klasse">
     <button class="filter-btn active" data-filter="alle">Alle</button>
+    <button class="filter-btn" data-filter="9">Klasse 9</button>
     <button class="filter-btn" data-filter="10">Klasse 10</button>
     <button class="filter-btn" data-filter="11">Klasse 11</button>
     <button class="filter-btn" data-filter="12">Klasse 12</button>
@@ -341,20 +348,156 @@
 
   <div class="grid">
 
-    <!-- ═══════════ Klasse 10 ═══════════ -->
-    <div class="col col-10">
-      <div class="column-header">Klasse 10</div>
+    <!-- ═══════════ Klasse 9 ═══════════ -->
+    <div class="col col-9">
+      <div class="column-header">Klasse 9</div>
 
-      <!-- A — Funktionen & Gleichungen -->
+      <!-- A — Trigonometrie -->
       <div class="section-card">
-        <div class="section-title analysis">A &middot; Funktionen &amp; Gleichungen</div>
+        <div class="section-title analysis">A &middot; Trigonometrie</div>
         <div class="theme-list">
-          <a class="theme-row" href="trainer/10-func-linear-wdh.html" data-key="spirale-10-func-linear-wdh">
+          <a class="theme-row" href="trainer/9-trig-rechtwinkliges-dreieck.html" data-key="spirale-9-trig-rechtwinkliges-dreieck">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Rechtw. Dreieck (sin/cos/tan)</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/9-trig-identitaeten.html" data-key="spirale-9-trig-identitaeten">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Trig. Identit&auml;ten</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/9-trig-sinus-kosinus-satz.html" data-key="spirale-9-trig-sinus-kosinus-satz">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Sinus- &amp; Kosinussatz</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/9-trig-anwendungen.html" data-key="spirale-9-trig-anwendungen">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Trig. Anwendungen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- B — Potenzen, Wurzeln, Logarithmen -->
+      <div class="section-card">
+        <div class="section-title analysis">B &middot; Potenzen, Wurzeln, Log</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/9-pot-natuerliche-exp.html" data-key="spirale-9-pot-natuerliche-exp">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Potenzen nat&uuml;rl. Exp.</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/9-pot-ganzzahlige-exp.html" data-key="spirale-9-pot-ganzzahlige-exp">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Potenzen ganzzahl. Exp.</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/9-pot-gesetze.html" data-key="spirale-9-pot-gesetze">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Potenzgesetze</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/9-pot-zehnerpotenzen.html" data-key="spirale-9-pot-zehnerpotenzen">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Zehnerpotenzen &amp; Einheiten</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/9-pot-wurzeln-rational.html" data-key="spirale-9-pot-wurzeln-rational">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Wurzeln &amp; rat. Exp.</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/9-log-rechnen.html" data-key="spirale-9-log-rechnen">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Logarithmen &amp; Rechenges.</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- C — Quadratische Funktionen & Gleichungen -->
+      <div class="section-card">
+        <div class="section-title analysis">C &middot; Quadrat. Funktionen &amp; Gleich.</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/9-func-linear-wdh.html" data-key="spirale-9-func-linear-wdh">
             <span class="connector">&#x251C;</span>
             <span class="theme-name">Lineare Funktionen (Wdh.)</span>
             <span class="level-badge neu">Neu</span>
             <span class="progress-wrap"><span class="progress-fill"></span></span>
           </a>
+          <a class="theme-row" href="trainer/9-func-quadratisch.html" data-key="spirale-9-func-quadratisch">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Quadrat. Funktionen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/9-func-quadrat-gleichungen.html" data-key="spirale-9-func-quadrat-gleichungen">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Quadrat. Gleichungen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/9-func-gleich-hoehere-grade.html" data-key="spirale-9-func-gleich-hoehere-grade">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Gleich. h&ouml;herer Grade</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/9-func-quadrat-anwendungen.html" data-key="spirale-9-func-quadrat-anwendungen">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Quadrat. Anwendungen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- D — Häufigkeitsverteilungen -->
+      <div class="section-card">
+        <div class="section-title stochastik">D &middot; H&auml;ufigkeitsverteilungen</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/9-stoch-haeufigkeiten.html" data-key="spirale-9-stoch-haeufigkeiten">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">H&auml;ufigkeiten &amp; Stichproben</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/9-stoch-histogramm-boxplot.html" data-key="spirale-9-stoch-histogramm-boxplot">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Histogramm &amp; Boxplot</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/9-stoch-lage-streumass.html" data-key="spirale-9-stoch-lage-streumass">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Lage- &amp; Streuma&szlig;e</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /col 9 -->
+
+    <!-- ═══════════ Klasse 10 ═══════════ -->
+    <div class="col col-10">
+      <div class="column-header">Klasse 10</div>
+
+      <!-- A — Lineare Gleichungssysteme -->
+      <div class="section-card">
+        <div class="section-title analysis">A &middot; Lineare Gleichungssysteme</div>
+        <div class="theme-list">
           <a class="theme-row" href="trainer/10-func-lgs-2.html" data-key="spirale-10-func-lgs-2">
             <span class="connector">&#x251C;</span>
             <span class="theme-name">LGS 2 Variablen</span>
@@ -362,48 +505,18 @@
             <span class="progress-wrap"><span class="progress-fill"></span></span>
           </a>
           <a class="theme-row" href="trainer/10-func-lgs-3-gauss.html" data-key="spirale-10-func-lgs-3-gauss">
-            <span class="connector">&#x251C;</span>
-            <span class="theme-name">LGS 3 Variablen (Gau&szlig;)</span>
-            <span class="level-badge neu">Neu</span>
-            <span class="progress-wrap"><span class="progress-fill"></span></span>
-          </a>
-          <a class="theme-row" href="trainer/10-func-quadratisch-wdh.html" data-key="spirale-10-func-quadratisch-wdh">
-            <span class="connector">&#x251C;</span>
-            <span class="theme-name">Quadrat. Funktionen (Wdh.)</span>
-            <span class="level-badge neu">Neu</span>
-            <span class="progress-wrap"><span class="progress-fill"></span></span>
-          </a>
-          <a class="theme-row" href="trainer/10-func-quadrat-gleichungen.html" data-key="spirale-10-func-quadrat-gleichungen">
             <span class="connector">&#x2514;</span>
-            <span class="theme-name">Quadrat. Gleichungen</span>
+            <span class="theme-name">LGS 3 Variablen (Gau&szlig;)</span>
             <span class="level-badge neu">Neu</span>
             <span class="progress-wrap"><span class="progress-fill"></span></span>
           </a>
         </div>
       </div>
 
-      <!-- B — Potenzen, Wurzeln, Exp, Log -->
+      <!-- B — Exponential & Logarithmus-Funktionen -->
       <div class="section-card">
-        <div class="section-title analysis">B &middot; Potenzen, Exp, Log</div>
+        <div class="section-title analysis">B &middot; Exp- &amp; Log-Funktionen</div>
         <div class="theme-list">
-          <a class="theme-row" href="trainer/10-pot-natuerliche-exp.html" data-key="spirale-10-pot-natuerliche-exp">
-            <span class="connector">&#x251C;</span>
-            <span class="theme-name">Potenzfkt. nat&uuml;rl. Exp.</span>
-            <span class="level-badge neu">Neu</span>
-            <span class="progress-wrap"><span class="progress-fill"></span></span>
-          </a>
-          <a class="theme-row" href="trainer/10-pot-ganzzahlige-exp.html" data-key="spirale-10-pot-ganzzahlige-exp">
-            <span class="connector">&#x251C;</span>
-            <span class="theme-name">Potenzfkt. ganzzahl. Exp.</span>
-            <span class="level-badge neu">Neu</span>
-            <span class="progress-wrap"><span class="progress-fill"></span></span>
-          </a>
-          <a class="theme-row" href="trainer/10-pot-wurzeln-rational.html" data-key="spirale-10-pot-wurzeln-rational">
-            <span class="connector">&#x251C;</span>
-            <span class="theme-name">Wurzeln &amp; rat. Exp.</span>
-            <span class="level-badge neu">Neu</span>
-            <span class="progress-wrap"><span class="progress-fill"></span></span>
-          </a>
           <a class="theme-row" href="trainer/10-exp-funktionen.html" data-key="spirale-10-exp-funktionen">
             <span class="connector">&#x251C;</span>
             <span class="theme-name">Exponentialfunktionen</span>
@@ -425,16 +538,10 @@
         </div>
       </div>
 
-      <!-- C — Trigonometrie -->
+      <!-- C — Trigonometrie (Einheitskreis, Funktionen) -->
       <div class="section-card">
-        <div class="section-title analysis">C &middot; Trigonometrie</div>
+        <div class="section-title analysis">C &middot; Trig. Funktionen</div>
         <div class="theme-list">
-          <a class="theme-row" href="trainer/10-trig-rechtwinkliges-dreieck.html" data-key="spirale-10-trig-rechtwinkliges-dreieck">
-            <span class="connector">&#x251C;</span>
-            <span class="theme-name">Rechtw. Dreieck (Wdh.)</span>
-            <span class="level-badge neu">Neu</span>
-            <span class="progress-wrap"><span class="progress-fill"></span></span>
-          </a>
           <a class="theme-row" href="trainer/10-trig-einheitskreis.html" data-key="spirale-10-trig-einheitskreis">
             <span class="connector">&#x251C;</span>
             <span class="theme-name">Einheitskreis &amp; Bogenma&szlig;</span>
@@ -868,8 +975,9 @@
   // ── Filter generisch ────────────────────────────────────────
 
   function applyKlasseFilter(mode) {
-    document.body.classList.remove('filter-klasse-10', 'filter-klasse-11', 'filter-klasse-12');
-    if (mode === '10') document.body.classList.add('filter-klasse-10');
+    document.body.classList.remove('filter-klasse-9', 'filter-klasse-10', 'filter-klasse-11', 'filter-klasse-12');
+    if (mode === '9') document.body.classList.add('filter-klasse-9');
+    else if (mode === '10') document.body.classList.add('filter-klasse-10');
     else if (mode === '11') document.body.classList.add('filter-klasse-11');
     else if (mode === '12') document.body.classList.add('filter-klasse-12');
   }

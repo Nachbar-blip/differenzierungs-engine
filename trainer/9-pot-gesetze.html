@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Potenzgesetze - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '9-pot-gesetze';
+    const THEMA_CONFIG = { name: 'Potenzgesetze', bereich: 'Algebra' };
+    const AUFGABEN = [
+      // ========== LEVEL 1 — babyleicht: direkte Anwendung eines Gesetzes, konkrete Zahlen ==========
+      {
+        "id": 1,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(x^3 \\cdot x^5\\)",
+        "optionen": ["\\(x^{15}\\)", "\\(x^8\\)", "\\(x^2\\)", "\\(2x^8\\)"],
+        "korrekt": 1,
+        "tipp": "Bei Multiplikation gleicher Basis werden die Exponenten addiert.",
+        "loesungsweg": "$$x^3 \\cdot x^5 = x^{3+5} = x^8$$"
+      },
+      {
+        "id": 2,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Berechne: \\(2^3 \\cdot 2^4\\)",
+        "loesung": 128,
+        "toleranz": 0,
+        "tipp": "\\(2^3 \\cdot 2^4 = 2^{3+4} = 2^7\\)",
+        "loesungsweg": "$$2^3 \\cdot 2^4 = 2^{3+4} = 2^7 = 128$$"
+      },
+      {
+        "id": 3,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(\\dfrac{a^7}{a^2}\\)",
+        "optionen": ["\\(a^5\\)", "\\(a^9\\)", "\\(a^{3{,}5}\\)", "\\(a^{14}\\)"],
+        "korrekt": 0,
+        "tipp": "Bei Division gleicher Basis werden die Exponenten subtrahiert.",
+        "loesungsweg": "$$\\frac{a^7}{a^2} = a^{7-2} = a^5$$"
+      },
+      {
+        "id": 4,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Vereinfache: \\((y^3)^4\\)",
+        "optionen": ["\\(y^7\\)", "\\(y^{12}\\)", "\\(y^{81}\\)", "\\(4y^3\\)"],
+        "korrekt": 1,
+        "tipp": "Bei Potenz einer Potenz werden die Exponenten multipliziert.",
+        "loesungsweg": "$$(y^3)^4 = y^{3 \\cdot 4} = y^{12}$$"
+      },
+      {
+        "id": 5,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Berechne: \\(\\dfrac{5^6}{5^4}\\)",
+        "loesung": 25,
+        "toleranz": 0,
+        "tipp": "\\(5^{6-4} = 5^2\\)",
+        "loesungsweg": "$$\\frac{5^6}{5^4} = 5^{6-4} = 5^2 = 25$$"
+      },
+      {
+        "id": 6,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Welcher Wert ergibt \\(7^0\\)?",
+        "optionen": ["\\(0\\)", "\\(7\\)", "\\(1\\)", "nicht definiert"],
+        "korrekt": 2,
+        "tipp": "Jede (von Null verschiedene) Zahl hoch 0 ergibt 1.",
+        "loesungsweg": "Nach der Definition gilt \\(a^0 = 1\\) für alle \\(a \\neq 0\\). Also \\(7^0 = 1\\)."
+      },
+
+      // ========== LEVEL 2 — leicht: einzelne Gesetze mit leichter Variation ==========
+      {
+        "id": 7,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Vereinfache: \\((2x)^3\\)",
+        "optionen": ["\\(2x^3\\)", "\\(6x^3\\)", "\\(8x^3\\)", "\\(8x\\)"],
+        "korrekt": 2,
+        "tipp": "Die Potenz wirkt auf jeden Faktor: \\((a \\cdot b)^n = a^n \\cdot b^n\\).",
+        "loesungsweg": "$$(2x)^3 = 2^3 \\cdot x^3 = 8x^3$$"
+      },
+      {
+        "id": 8,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(\\left(\\dfrac{a}{b}\\right)^4\\)",
+        "optionen": ["\\(\\dfrac{a^4}{b^4}\\)", "\\(\\dfrac{a}{b^4}\\)", "\\(\\dfrac{4a}{4b}\\)", "\\(\\dfrac{a^4}{b}\\)"],
+        "korrekt": 0,
+        "tipp": "Der Exponent wirkt sowohl auf Zähler als auch auf Nenner.",
+        "loesungsweg": "$$\\left(\\frac{a}{b}\\right)^4 = \\frac{a^4}{b^4}$$"
+      },
+      {
+        "id": 9,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Schreibe \\(a^{-3}\\) als Bruch.",
+        "optionen": ["\\(-a^3\\)", "\\(\\dfrac{1}{a^3}\\)", "\\(\\dfrac{1}{3a}\\)", "\\(\\dfrac{-1}{a^3}\\)"],
+        "korrekt": 1,
+        "tipp": "Es gilt \\(a^{-n} = \\dfrac{1}{a^n}\\).",
+        "loesungsweg": "$$a^{-3} = \\frac{1}{a^3}$$"
+      },
+      {
+        "id": 10,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Berechne: \\(2^{-3}\\) (als Dezimalzahl)",
+        "loesung": 0.125,
+        "toleranz": 0.001,
+        "tipp": "\\(2^{-3} = \\dfrac{1}{2^3} = \\dfrac{1}{8}\\)",
+        "loesungsweg": "$$2^{-3} = \\frac{1}{2^3} = \\frac{1}{8} = 0{,}125$$"
+      },
+      {
+        "id": 11,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(x^4 \\cdot x^{-1}\\)",
+        "optionen": ["\\(x^{-4}\\)", "\\(x^5\\)", "\\(x^3\\)", "\\(x^{-3}\\)"],
+        "korrekt": 2,
+        "tipp": "Addiere die Exponenten — auch negative.",
+        "loesungsweg": "$$x^4 \\cdot x^{-1} = x^{4 + (-1)} = x^3$$"
+      },
+      {
+        "id": 12,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Berechne: \\((3^2)^2\\)",
+        "loesung": 81,
+        "toleranz": 0,
+        "tipp": "\\((3^2)^2 = 3^{2 \\cdot 2} = 3^4\\)",
+        "loesungsweg": "$$(3^2)^2 = 3^{2 \\cdot 2} = 3^4 = 81$$"
+      },
+
+      // ========== LEVEL 3 — mittel: Kombination mehrerer Gesetze, negative Exponenten ==========
+      {
+        "id": 13,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(\\dfrac{x^5 \\cdot x^3}{x^2}\\)",
+        "optionen": ["\\(x^6\\)", "\\(x^{10}\\)", "\\(x^4\\)", "\\(x^{15}\\)"],
+        "korrekt": 0,
+        "tipp": "Erst im Zähler zusammenfassen, dann subtrahieren.",
+        "loesungsweg": "$$\\frac{x^5 \\cdot x^3}{x^2} = \\frac{x^{5+3}}{x^2} = \\frac{x^8}{x^2} = x^{8-2} = x^6$$"
+      },
+      {
+        "id": 14,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Vereinfache: \\((2a^2)^3\\)",
+        "optionen": ["\\(2a^6\\)", "\\(6a^5\\)", "\\(8a^6\\)", "\\(8a^5\\)"],
+        "korrekt": 2,
+        "tipp": "Jeder Faktor wird potenziert: \\(2^3\\) und \\((a^2)^3\\).",
+        "loesungsweg": "$$(2a^2)^3 = 2^3 \\cdot (a^2)^3 = 8 \\cdot a^{2 \\cdot 3} = 8a^6$$"
+      },
+      {
+        "id": 15,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(\\dfrac{a^3}{a^7}\\) (mit positivem Exponenten).",
+        "optionen": ["\\(a^4\\)", "\\(a^{-4}\\)", "\\(\\dfrac{1}{a^4}\\)", "\\(\\dfrac{1}{a^{10}}\\)"],
+        "korrekt": 2,
+        "tipp": "\\(a^{3-7} = a^{-4} = \\dfrac{1}{a^4}\\).",
+        "loesungsweg": "$$\\frac{a^3}{a^7} = a^{3-7} = a^{-4} = \\frac{1}{a^4}$$"
+      },
+      {
+        "id": 16,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Berechne: \\(\\dfrac{4^5 \\cdot 4^{-2}}{4^2}\\)",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "Im Zähler zusammenfassen: \\(4^{5 + (-2)} = 4^3\\).",
+        "loesungsweg": "$$\\frac{4^5 \\cdot 4^{-2}}{4^2} = \\frac{4^{5-2}}{4^2} = \\frac{4^3}{4^2} = 4^{3-2} = 4^1 = 4$$"
+      },
+      {
+        "id": 17,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Vereinfache: \\((x^{-2})^3\\)",
+        "optionen": ["\\(x^{-6}\\)", "\\(x^{-5}\\)", "\\(x^{6}\\)", "\\(x\\)"],
+        "korrekt": 0,
+        "tipp": "Exponenten multiplizieren: \\((-2) \\cdot 3\\).",
+        "loesungsweg": "$$(x^{-2})^3 = x^{(-2) \\cdot 3} = x^{-6}$$"
+      },
+      {
+        "id": 18,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(a^5 \\cdot a^{-5}\\)",
+        "optionen": ["\\(a^{10}\\)", "\\(a^{-25}\\)", "\\(1\\)", "\\(0\\)"],
+        "korrekt": 2,
+        "tipp": "Exponenten addieren: \\(5 + (-5) = 0\\).",
+        "loesungsweg": "$$a^5 \\cdot a^{-5} = a^{5-5} = a^0 = 1$$"
+      },
+
+      // ========== LEVEL 4 — mittel-schwer: Termumformungen mit Variablen ==========
+      {
+        "id": 19,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(\\dfrac{(3x^2)^3}{9x^4}\\)",
+        "optionen": ["\\(3x^2\\)", "\\(27x^2\\)", "\\(9x^2\\)", "\\(3x^6\\)"],
+        "korrekt": 0,
+        "tipp": "Zuerst Zähler ausrechnen, dann kürzen.",
+        "loesungsweg": "$$\\frac{(3x^2)^3}{9x^4} = \\frac{27x^6}{9x^4} = 3x^{6-4} = 3x^2$$"
+      },
+      {
+        "id": 20,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(\\dfrac{a^4 b^{-2}}{a^{-1} b^3}\\)",
+        "optionen": ["\\(\\dfrac{a^5}{b^5}\\)", "\\(\\dfrac{a^3}{b^5}\\)", "\\(\\dfrac{a^5}{b}\\)", "\\(a^5 b^5\\)"],
+        "korrekt": 0,
+        "tipp": "Für jede Basis getrennt: Exponenten subtrahieren.",
+        "loesungsweg": "$$\\frac{a^4 b^{-2}}{a^{-1} b^3} = a^{4-(-1)} \\cdot b^{-2-3} = a^5 \\cdot b^{-5} = \\frac{a^5}{b^5}$$"
+      },
+      {
+        "id": 21,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Vereinfache: \\((2x^3 y^{-2})^2\\)",
+        "optionen": ["\\(4x^6 y^{-4}\\)", "\\(2x^6 y^{-4}\\)", "\\(4x^5 y^{-4}\\)", "\\(4x^6 y^4\\)"],
+        "korrekt": 0,
+        "tipp": "Jeder Faktor wird quadriert: \\(2^2\\), \\((x^3)^2\\), \\((y^{-2})^2\\).",
+        "loesungsweg": "$$(2x^3 y^{-2})^2 = 2^2 \\cdot x^{3 \\cdot 2} \\cdot y^{-2 \\cdot 2} = 4x^6 y^{-4}$$"
+      },
+      {
+        "id": 22,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(\\dfrac{x^n \\cdot x^{n+1}}{x^{n-1}}\\) (mit \\(n \\in \\mathbb{Z}\\))",
+        "optionen": ["\\(x^{n+2}\\)", "\\(x^{3n}\\)", "\\(x^{n+1}\\)", "\\(x^2\\)"],
+        "korrekt": 0,
+        "tipp": "Zähler: \\(x^{n + (n+1)} = x^{2n+1}\\), dann durch \\(x^{n-1}\\) teilen.",
+        "loesungsweg": "$$\\frac{x^n \\cdot x^{n+1}}{x^{n-1}} = \\frac{x^{2n+1}}{x^{n-1}} = x^{(2n+1)-(n-1)} = x^{n+2}$$"
+      },
+      {
+        "id": 23,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(\\left(\\dfrac{2a^2}{b^3}\\right)^3\\)",
+        "optionen": ["\\(\\dfrac{8a^6}{b^9}\\)", "\\(\\dfrac{8a^5}{b^6}\\)", "\\(\\dfrac{6a^6}{b^9}\\)", "\\(\\dfrac{2a^6}{b^9}\\)"],
+        "korrekt": 0,
+        "tipp": "Zähler und Nenner separat potenzieren.",
+        "loesungsweg": "$$\\left(\\frac{2a^2}{b^3}\\right)^3 = \\frac{(2a^2)^3}{(b^3)^3} = \\frac{8a^6}{b^9}$$"
+      },
+      {
+        "id": 24,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(x^{-2} \\cdot (x^3)^{-1}\\)",
+        "optionen": ["\\(x^{-5}\\)", "\\(\\dfrac{1}{x^5}\\)", "Beide Antworten sind richtig", "\\(x^5\\)"],
+        "korrekt": 2,
+        "tipp": "Erst innere Klammer auflösen: \\((x^3)^{-1} = x^{-3}\\).",
+        "loesungsweg": "$$x^{-2} \\cdot (x^3)^{-1} = x^{-2} \\cdot x^{-3} = x^{-5} = \\frac{1}{x^5}$$ Beide Schreibweisen sind äquivalent."
+      },
+
+      // ========== LEVEL 5 — schwer: komplexe Brüche und Umformungen ==========
+      {
+        "id": 25,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(\\dfrac{(a^3 b^2)^2 \\cdot a^{-1}}{a^4 b^3}\\)",
+        "optionen": ["\\(a b\\)", "\\(a^2 b\\)", "\\(a b^2\\)", "\\(\\dfrac{b}{a}\\)"],
+        "korrekt": 0,
+        "tipp": "Zähler auspotenzieren: \\((a^3 b^2)^2 = a^6 b^4\\).",
+        "loesungsweg": "$$\\frac{(a^3 b^2)^2 \\cdot a^{-1}}{a^4 b^3} = \\frac{a^6 b^4 \\cdot a^{-1}}{a^4 b^3} = \\frac{a^{5} b^4}{a^4 b^3} = a^{5-4} \\cdot b^{4-3} = a b$$"
+      },
+      {
+        "id": 26,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(\\left(\\dfrac{x^{-2} y^3}{x y^{-1}}\\right)^2\\)",
+        "optionen": ["\\(\\dfrac{y^8}{x^6}\\)", "\\(\\dfrac{y^6}{x^4}\\)", "\\(\\dfrac{x^6}{y^8}\\)", "\\(\\dfrac{y^4}{x^6}\\)"],
+        "korrekt": 0,
+        "tipp": "Zuerst innen vereinfachen, dann Klammer quadrieren.",
+        "loesungsweg": "Innen: \\(\\dfrac{x^{-2} y^3}{x y^{-1}} = x^{-2-1} \\cdot y^{3-(-1)} = x^{-3} y^4\\). Dann $$\\left(x^{-3} y^4\\right)^2 = x^{-6} y^8 = \\frac{y^8}{x^6}$$"
+      },
+      {
+        "id": 27,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(\\dfrac{3^{n+2}}{3^n}\\)",
+        "optionen": ["\\(9\\)", "\\(3^2 \\cdot n\\)", "\\(3\\)", "\\(27\\)"],
+        "korrekt": 0,
+        "tipp": "Exponenten subtrahieren: \\((n+2) - n = 2\\).",
+        "loesungsweg": "$$\\frac{3^{n+2}}{3^n} = 3^{(n+2)-n} = 3^2 = 9$$"
+      },
+      {
+        "id": 28,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(\\dfrac{2^{n+1} \\cdot 2^{n-1}}{4^n}\\)",
+        "optionen": ["\\(1\\)", "\\(2\\)", "\\(2^n\\)", "\\(\\dfrac{1}{2}\\)"],
+        "korrekt": 0,
+        "tipp": "Achtung: \\(4^n = (2^2)^n = 2^{2n}\\). Dann alles auf Basis 2 bringen.",
+        "loesungsweg": "Zähler: \\(2^{n+1} \\cdot 2^{n-1} = 2^{(n+1)+(n-1)} = 2^{2n}\\). Nenner: \\(4^n = 2^{2n}\\). Also $$\\frac{2^{2n}}{2^{2n}} = 2^0 = 1$$"
+      },
+      {
+        "id": 29,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(\\dfrac{a^{-3} b^2}{(a b)^{-1}}\\)",
+        "optionen": ["\\(\\dfrac{b^3}{a^2}\\)", "\\(\\dfrac{1}{a^2 b^3}\\)", "\\(a^2 b^3\\)", "\\(\\dfrac{b}{a^4}\\)"],
+        "korrekt": 0,
+        "tipp": "Bedenke: \\((ab)^{-1} = a^{-1} b^{-1}\\). Division durch \\(a^{-1} b^{-1}\\) heißt Multiplikation mit \\(a b\\).",
+        "loesungsweg": "$$\\frac{a^{-3} b^2}{(ab)^{-1}} = \\frac{a^{-3} b^2}{a^{-1} b^{-1}} = a^{-3-(-1)} \\cdot b^{2-(-1)} = a^{-2} b^3 = \\frac{b^3}{a^2}$$"
+      },
+      {
+        "id": 30,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Berechne: \\(\\left(\\dfrac{1}{2}\\right)^{-3}\\)",
+        "loesung": 8,
+        "toleranz": 0,
+        "tipp": "\\(\\left(\\dfrac{1}{2}\\right)^{-3} = 2^3\\).",
+        "loesungsweg": "$$\\left(\\frac{1}{2}\\right)^{-3} = \\frac{1}{\\left(\\frac{1}{2}\\right)^3} = \\frac{1}{\\frac{1}{8}} = 8$$ Alternativ: \\(\\left(\\tfrac{1}{2}\\right)^{-3} = 2^3 = 8\\)."
+      },
+
+      // ========== LEVEL 6 — sehr schwer: Parameter, Begründungen, komplexe Terme ==========
+      {
+        "id": 31,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Für welches \\(n\\) gilt \\(x^n \\cdot x^5 = x^{12}\\)?",
+        "optionen": ["\\(n = 2{,}4\\)", "\\(n = 7\\)", "\\(n = 17\\)", "\\(n = 60\\)"],
+        "korrekt": 1,
+        "tipp": "Exponenten addieren: \\(n + 5 = 12\\).",
+        "loesungsweg": "$$x^n \\cdot x^5 = x^{n+5} = x^{12} \\Rightarrow n + 5 = 12 \\Rightarrow n = 7$$"
+      },
+      {
+        "id": 32,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(\\dfrac{\\left(x^{n+1}\\right)^2 \\cdot x^{-n}}{x^{n+2}}\\)",
+        "optionen": ["\\(1\\)", "\\(x\\)", "\\(x^n\\)", "\\(x^{n+1}\\)"],
+        "korrekt": 0,
+        "tipp": "Zähler zuerst: \\((x^{n+1})^2 = x^{2n+2}\\), dann alles zusammen.",
+        "loesungsweg": "Zähler: \\(x^{2(n+1)} \\cdot x^{-n} = x^{2n+2-n} = x^{n+2}\\). Bruch: $$\\frac{x^{n+2}}{x^{n+2}} = x^0 = 1$$"
+      },
+      {
+        "id": 33,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(\\dfrac{9^n \\cdot 3^{n+1}}{27^n}\\)",
+        "optionen": ["\\(3\\)", "\\(3^n\\)", "\\(9\\)", "\\(1\\)"],
+        "korrekt": 0,
+        "tipp": "Alles auf Basis 3 bringen: \\(9 = 3^2\\), \\(27 = 3^3\\).",
+        "loesungsweg": "Zähler: \\(9^n \\cdot 3^{n+1} = 3^{2n} \\cdot 3^{n+1} = 3^{3n+1}\\). Nenner: \\(27^n = 3^{3n}\\). Bruch: $$\\frac{3^{3n+1}}{3^{3n}} = 3^{(3n+1)-3n} = 3^1 = 3$$"
+      },
+      {
+        "id": 34,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Welche Aussage über \\(a^0\\) (mit \\(a \\neq 0\\)) ist richtig?",
+        "optionen": [
+          "\\(a^0 = 0\\), weil die Potenz null Faktoren hat",
+          "\\(a^0 = 1\\), damit das Gesetz \\(\\dfrac{a^n}{a^n} = a^{n-n}\\) gilt",
+          "\\(a^0 = a\\), weil die Basis erhalten bleibt",
+          "\\(a^0\\) ist nicht definiert"
+        ],
+        "korrekt": 1,
+        "tipp": "Überlege, was \\(\\dfrac{a^n}{a^n}\\) ergibt.",
+        "loesungsweg": "Es gilt \\(\\dfrac{a^n}{a^n} = 1\\). Nach dem Potenzgesetz ist \\(\\dfrac{a^n}{a^n} = a^{n-n} = a^0\\). Damit das Gesetz weiter gilt, muss \\(a^0 = 1\\) definiert werden (für \\(a \\neq 0\\))."
+      },
+      {
+        "id": 35,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Vereinfache: \\(\\left(\\dfrac{a^2 b^{-3}}{a^{-1} b^2}\\right)^{-2}\\)",
+        "optionen": ["\\(\\dfrac{b^{10}}{a^6}\\)", "\\(\\dfrac{a^6}{b^{10}}\\)", "\\(\\dfrac{b^{10}}{a^4}\\)", "\\(\\dfrac{a^{10}}{b^6}\\)"],
+        "korrekt": 0,
+        "tipp": "Erst innen vereinfachen, dann mit dem negativen Exponenten umformen.",
+        "loesungsweg": "Innen: \\(\\dfrac{a^2 b^{-3}}{a^{-1} b^2} = a^{2-(-1)} \\cdot b^{-3-2} = a^3 b^{-5}\\). Dann: $$(a^3 b^{-5})^{-2} = a^{-6} b^{10} = \\frac{b^{10}}{a^6}$$"
+      },
+      {
+        "id": 36,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Für welche \\(n \\in \\mathbb{Z}\\) gilt \\(\\dfrac{2^{n+3}}{2^{n-1}} = 16\\)?",
+        "optionen": [
+          "Nur für \\(n = 0\\)",
+          "Nur für \\(n = 4\\)",
+          "Für jedes \\(n \\in \\mathbb{Z}\\)",
+          "Für kein \\(n\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Vereinfache die linke Seite zuerst mit den Potenzgesetzen. Fällt \\(n\\) vielleicht komplett heraus?",
+        "loesungsweg": "$$\\frac{2^{n+3}}{2^{n-1}} = 2^{(n+3)-(n-1)} = 2^{4} = 16$$ Die linke Seite ist unabhängig von \\(n\\) immer gleich 16. Die Gleichung gilt also für **jedes** \\(n \\in \\mathbb{Z}\\)."
+      }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>
