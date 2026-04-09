@@ -193,6 +193,118 @@
   body.filter-klasse-12 .col-10,
   body.filter-klasse-12 .col-11 { display: none; }
 
+  /* ── Max-Klasse (persistiertes Schülerprofil) ───── */
+  /* Blendet Klassen OBERHALB der eigenen Stufe aus.
+     Wirkt nur wenn KEIN manueller Klassen-Filter aktiv ist. */
+  body.max-klasse-5:not([class*="filter-klasse-"]) .col-6,
+  body.max-klasse-5:not([class*="filter-klasse-"]) .col-7,
+  body.max-klasse-5:not([class*="filter-klasse-"]) .col-8,
+  body.max-klasse-5:not([class*="filter-klasse-"]) .col-9,
+  body.max-klasse-5:not([class*="filter-klasse-"]) .col-10,
+  body.max-klasse-5:not([class*="filter-klasse-"]) .col-11,
+  body.max-klasse-5:not([class*="filter-klasse-"]) .col-12 { display: none; }
+  body.max-klasse-6:not([class*="filter-klasse-"]) .col-7,
+  body.max-klasse-6:not([class*="filter-klasse-"]) .col-8,
+  body.max-klasse-6:not([class*="filter-klasse-"]) .col-9,
+  body.max-klasse-6:not([class*="filter-klasse-"]) .col-10,
+  body.max-klasse-6:not([class*="filter-klasse-"]) .col-11,
+  body.max-klasse-6:not([class*="filter-klasse-"]) .col-12 { display: none; }
+  body.max-klasse-7:not([class*="filter-klasse-"]) .col-8,
+  body.max-klasse-7:not([class*="filter-klasse-"]) .col-9,
+  body.max-klasse-7:not([class*="filter-klasse-"]) .col-10,
+  body.max-klasse-7:not([class*="filter-klasse-"]) .col-11,
+  body.max-klasse-7:not([class*="filter-klasse-"]) .col-12 { display: none; }
+  body.max-klasse-8:not([class*="filter-klasse-"]) .col-9,
+  body.max-klasse-8:not([class*="filter-klasse-"]) .col-10,
+  body.max-klasse-8:not([class*="filter-klasse-"]) .col-11,
+  body.max-klasse-8:not([class*="filter-klasse-"]) .col-12 { display: none; }
+  body.max-klasse-9:not([class*="filter-klasse-"]) .col-10,
+  body.max-klasse-9:not([class*="filter-klasse-"]) .col-11,
+  body.max-klasse-9:not([class*="filter-klasse-"]) .col-12 { display: none; }
+  body.max-klasse-10:not([class*="filter-klasse-"]) .col-11,
+  body.max-klasse-10:not([class*="filter-klasse-"]) .col-12 { display: none; }
+  body.max-klasse-11:not([class*="filter-klasse-"]) .col-12 { display: none; }
+
+  /* ── Profil-Button im Header ────────────────────── */
+  .profil-btn {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.35);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 999px;
+    padding: 0.3rem 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 0.4rem;
+  }
+  .profil-btn:hover { background: rgba(255,255,255,0.25); }
+
+  /* ── Modal (Stufenauswahl) ──────────────────────── */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(20,20,40,0.78);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+  }
+  .modal-backdrop.active { display: flex; }
+
+  .modal-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 2rem 1.8rem;
+    max-width: 440px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    text-align: center;
+  }
+  .modal-card h2 {
+    font-size: 1.35rem;
+    color: #1a1a2e;
+    margin-bottom: 0.4rem;
+  }
+  .modal-card p {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 1.3rem;
+  }
+  .modal-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+  }
+  .modal-grid button {
+    padding: 0.8rem 0.3rem;
+    border: 2px solid #e0e3ff;
+    background: #f8f9ff;
+    color: #667eea;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .modal-grid button:hover:not(:disabled) {
+    background: #667eea;
+    color: #fff;
+    border-color: #667eea;
+    transform: translateY(-1px);
+  }
+  .modal-grid button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  .modal-hint {
+    font-size: 0.75rem;
+    color: #999;
+    margin-top: 1rem;
+  }
+
   /* ── Footer ─────────────────────────────────────── */
   footer {
     text-align: center;
@@ -209,6 +321,7 @@
   <header>
     <h1>DifferenzierungsEngine</h1>
     <p class="subtitle">Adaptives Mathe-Training &middot; Klasse 10 &ndash; 12</p>
+    <button class="profil-btn" id="profil-btn" type="button">&#x2699; Meine Klasse: <span id="profil-label">&mdash;</span></button>
   </header>
 
   <div class="gesamt" id="gesamt"></div>
@@ -689,12 +802,29 @@
 
 </div><!-- /container -->
 
+<!-- ═══════════ Stufen-Auswahl-Modal ═══════════ -->
+<div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-labelledby="modal-title">
+  <div class="modal-card">
+    <h2 id="modal-title">In welche Klasse gehst du?</h2>
+    <p>Wir zeigen dir dann alle Themen bis zu deiner Stufe.</p>
+    <div class="modal-grid" id="modal-grid">
+      <!-- Buttons werden per JS eingef&uuml;gt (nur Klassen mit Content aktivierbar) -->
+    </div>
+    <p class="modal-hint">&Auml;ltere Sch&uuml;ler sehen automatisch auch die j&uuml;ngeren Themen zur Wiederholung.</p>
+  </div>
+</div>
+
 <script>
 (function () {
   'use strict';
 
   const LS_KLASSE = 'de-engine-klasse-filter';
   const LS_GKLK = 'de-engine-gklk-filter';
+  const LS_EIGENE = 'de-engine-eigene-klasse';
+
+  // Alle Klassen, die im Modal angeboten werden (Sek I + Sek II).
+  // Content-Verfügbarkeit wird dynamisch aus .col-N Elementen ermittelt.
+  const ALLE_KLASSEN = [5, 6, 7, 8, 9, 10, 11, 12];
 
   // ── Progress laden ──────────────────────────────────────────
 
@@ -776,11 +906,94 @@
     });
   }
 
+  // ── Stufen-Auswahl (eigene Klasse) ──────────────────────────
+
+  function getVerfuegbareKlassen() {
+    // Klassen, für die es bereits einen Content-Block gibt.
+    const verfuegbar = new Set();
+    document.querySelectorAll('.col').forEach(function (col) {
+      col.classList.forEach(function (c) {
+        const m = c.match(/^col-(\d+)$/);
+        if (m) verfuegbar.add(parseInt(m[1], 10));
+      });
+    });
+    return verfuegbar;
+  }
+
+  function applyMaxKlasse(klasse) {
+    // Alte max-klasse-X Klasse entfernen
+    const toRemove = [];
+    document.body.classList.forEach(function (c) {
+      if (/^max-klasse-\d+$/.test(c)) toRemove.push(c);
+    });
+    toRemove.forEach(function (c) { document.body.classList.remove(c); });
+
+    if (klasse) {
+      document.body.classList.add('max-klasse-' + klasse);
+      const label = document.getElementById('profil-label');
+      if (label) label.textContent = 'Klasse ' + klasse;
+    }
+  }
+
+  function setEigeneKlasse(klasse) {
+    try { localStorage.setItem(LS_EIGENE, String(klasse)); } catch (e) {}
+    applyMaxKlasse(klasse);
+    hideModal();
+  }
+
+  function buildModalGrid() {
+    const grid = document.getElementById('modal-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    const verfuegbar = getVerfuegbareKlassen();
+
+    ALLE_KLASSEN.forEach(function (k) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = 'Klasse ' + k;
+      if (!verfuegbar.has(k)) {
+        btn.disabled = true;
+        btn.title = 'Inhalte folgen';
+      } else {
+        btn.addEventListener('click', function () { setEigeneKlasse(k); });
+      }
+      grid.appendChild(btn);
+    });
+  }
+
+  function showModal() {
+    const bd = document.getElementById('modal-backdrop');
+    if (bd) bd.classList.add('active');
+  }
+
+  function hideModal() {
+    const bd = document.getElementById('modal-backdrop');
+    if (bd) bd.classList.remove('active');
+  }
+
+  function initStufenAuswahl() {
+    buildModalGrid();
+
+    const btn = document.getElementById('profil-btn');
+    if (btn) btn.addEventListener('click', showModal);
+
+    let saved = null;
+    try { saved = localStorage.getItem(LS_EIGENE); } catch (e) {}
+
+    if (saved) {
+      applyMaxKlasse(parseInt(saved, 10));
+    } else {
+      // Erster Besuch → Modal zeigen, noch keine max-Klasse setzen
+      showModal();
+    }
+  }
+
   // ── Init ────────────────────────────────────────────────────
 
   loadProgress();
   initFilterGroup('klasse', LS_KLASSE, applyKlasseFilter);
   initFilterGroup('gklk', LS_GKLK, applyGklkFilter);
+  initStufenAuswahl();
 
 })();
 </script>
