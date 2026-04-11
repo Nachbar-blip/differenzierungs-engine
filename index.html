@@ -1068,8 +1068,9 @@
   // ── Filter generisch ────────────────────────────────────────
 
   function applyKlasseFilter(mode) {
-    document.body.classList.remove('filter-klasse-9', 'filter-klasse-10', 'filter-klasse-11', 'filter-klasse-12');
-    if (mode === '9') document.body.classList.add('filter-klasse-9');
+    document.body.classList.remove('filter-klasse-7', 'filter-klasse-9', 'filter-klasse-10', 'filter-klasse-11', 'filter-klasse-12');
+    if (mode === '7') document.body.classList.add('filter-klasse-7');
+    else if (mode === '9') document.body.classList.add('filter-klasse-9');
     else if (mode === '10') document.body.classList.add('filter-klasse-10');
     else if (mode === '11') document.body.classList.add('filter-klasse-11');
     else if (mode === '12') document.body.classList.add('filter-klasse-12');
