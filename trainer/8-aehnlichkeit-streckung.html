@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ähnlichkeit &amp; Zentrische Streckung - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '8-aehnlichkeit-streckung';
+    const THEMA_CONFIG = { name: 'Aehnlichkeit & Zentrische Streckung', bereich: 'geometrie' };
+    const AUFGABEN = [
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 1 — Massstab verstehen
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 1, level: 1, typ: "numerisch",
+        frage: "Eine Karte hat den Massstab \\(1 : 50\\,000\\). Eine Strecke auf der Karte ist \\(3\\,\\text{cm}\\) lang. Wie lang ist die Strecke in Wirklichkeit (in km)?",
+        loesung: 1.5, toleranz: 0.01,
+        tipp: "Multipliziere die Kartenlaenge mit dem Massstabsfaktor: \\(3\\,\\text{cm} \\cdot 50\\,000\\).",
+        loesungsweg: "\\(3\\,\\text{cm} \\cdot 50\\,000 = 150\\,000\\,\\text{cm} = 1\\,500\\,\\text{m} = 1{,}5\\,\\text{km}\\)."
+    },
+    {
+        id: 2, level: 1, typ: "mc",
+        frage: "Was bedeutet der Massstab \\(1 : 100\\)?",
+        optionen: ["1 cm auf der Zeichnung entspricht 100 cm in Wirklichkeit", "1 cm in Wirklichkeit entspricht 100 cm auf der Zeichnung", "Die Zeichnung ist 100-mal groesser als das Original", "Der Massstab hat keine feste Bedeutung"],
+        korrekt: 0,
+        tipp: "Der erste Wert steht fuer die Zeichnung, der zweite fuer die Wirklichkeit.",
+        loesungsweg: "\\(1 : 100\\) bedeutet: 1 cm auf der Zeichnung entspricht 100 cm (= 1 m) in der Wirklichkeit. Es handelt sich um eine Verkleinerung."
+    },
+    {
+        id: 3, level: 1, typ: "mc",
+        frage: "Welcher Massstab beschreibt eine Vergroesserung?",
+        optionen: ["\\(5 : 1\\)", "\\(1 : 5\\)", "\\(1 : 1\\)", "\\(1 : 100\\)"],
+        korrekt: 0,
+        tipp: "Bei einer Vergroesserung ist die Zeichnung groesser als das Original.",
+        loesungsweg: "\\(5 : 1\\) bedeutet: 5 cm auf der Zeichnung entsprechen 1 cm in Wirklichkeit. Die Zeichnung ist also 5-mal groesser als das Original."
+    },
+    {
+        id: 4, level: 1, typ: "numerisch",
+        frage: "Eine Karte hat den Massstab \\(1 : 25\\,000\\). Eine Strecke auf der Karte ist \\(8\\,\\text{cm}\\) lang. Wie lang ist sie in Wirklichkeit (in km)?",
+        loesung: 2, toleranz: 0.01,
+        tipp: "\\(8\\,\\text{cm} \\cdot 25\\,000 = \\,?\\,\\text{cm}\\). Dann in km umrechnen.",
+        loesungsweg: "\\(8\\,\\text{cm} \\cdot 25\\,000 = 200\\,000\\,\\text{cm} = 2\\,000\\,\\text{m} = 2\\,\\text{km}\\)."
+    },
+    {
+        id: 5, level: 1, typ: "numerisch",
+        frage: "Ein Grundriss hat den Massstab \\(1 : 200\\). Ein Zimmer ist auf dem Plan \\(4\\,\\text{cm}\\) breit. Wie breit ist das Zimmer in Wirklichkeit (in m)?",
+        loesung: 8, toleranz: 0.01,
+        tipp: "Multipliziere \\(4\\,\\text{cm}\\) mit \\(200\\) und rechne in Meter um.",
+        loesungsweg: "\\(4\\,\\text{cm} \\cdot 200 = 800\\,\\text{cm} = 8\\,\\text{m}\\)."
+    },
+    {
+        id: 6, level: 1, typ: "mc",
+        frage: "Ein Modell eines Autos ist im Massstab \\(1 : 18\\) gebaut. Das echte Auto ist \\(4{,}5\\,\\text{m}\\) lang. Wie lang ist das Modell?",
+        optionen: ["\\(25\\,\\text{cm}\\)", "\\(81\\,\\text{cm}\\)", "\\(4{,}5\\,\\text{cm}\\)", "\\(45\\,\\text{cm}\\)"],
+        korrekt: 0,
+        tipp: "Teile die echte Laenge durch den Massstabsfaktor 18.",
+        loesungsweg: "\\(\\dfrac{4{,}5\\,\\text{m}}{18} = \\dfrac{450\\,\\text{cm}}{18} = 25\\,\\text{cm}\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 2 — Zentrische Streckung: Streckfaktor k
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 7, level: 2, typ: "mc",
+        frage: "Ein Dreieck wird zentrisch gestreckt. Die Bildseite ist 3-mal so lang wie die Originalseite. Wie gross ist der Streckfaktor \\(k\\)?",
+        optionen: ["\\(k = 3\\)", "\\(k = \\frac{1}{3}\\)", "\\(k = -3\\)", "\\(k = 0{,}3\\)"],
+        korrekt: 0,
+        tipp: "Der Streckfaktor ist das Verhaeltnis von Bild zu Original.",
+        loesungsweg: "\\(k = \\dfrac{\\text{Bildlaenge}}{\\text{Originallaenge}} = \\dfrac{3a}{a} = 3\\)."
+    },
+    {
+        id: 8, level: 2, typ: "numerisch",
+        frage: "Eine Strecke ist \\(6\\,\\text{cm}\\) lang. Sie wird mit dem Streckfaktor \\(k = 2{,}5\\) zentrisch gestreckt. Wie lang ist die Bildstrecke (in cm)?",
+        loesung: 15, toleranz: 0.01,
+        tipp: "Bildlaenge = Originallaenge \\(\\cdot k\\).",
+        loesungsweg: "\\(6\\,\\text{cm} \\cdot 2{,}5 = 15\\,\\text{cm}\\)."
+    },
+    {
+        id: 9, level: 2, typ: "numerisch",
+        frage: "Eine Strecke ist \\(12\\,\\text{cm}\\) lang. Nach zentrischer Streckung ist sie \\(6\\,\\text{cm}\\) lang. Bestimme den Streckfaktor \\(k\\).",
+        loesung: 0.5, toleranz: 0.01,
+        tipp: "\\(k = \\dfrac{\\text{Bildlaenge}}{\\text{Originallaenge}}\\).",
+        loesungsweg: "\\(k = \\dfrac{6}{12} = 0{,}5\\). Es handelt sich um eine Verkleinerung."
+    },
+    {
+        id: 10, level: 2, typ: "numerisch",
+        frage: "Ein Rechteck hat die Seiten \\(4\\,\\text{cm}\\) und \\(7\\,\\text{cm}\\). Es wird mit \\(k = 3\\) gestreckt. Wie lang ist die laengere Seite des Bildes (in cm)?",
+        loesung: 21, toleranz: 0,
+        tipp: "Multipliziere die laengere Seite mit dem Streckfaktor.",
+        loesungsweg: "\\(7\\,\\text{cm} \\cdot 3 = 21\\,\\text{cm}\\)."
+    },
+    {
+        id: 11, level: 2, typ: "mc",
+        frage: "Bei zentrischer Streckung mit \\(k = -2\\) wird die Figur ...",
+        optionen: ["auf die andere Seite des Zentrums gespiegelt und doppelt so gross", "nur doppelt so gross", "halb so gross", "auf die andere Seite gespiegelt und halb so gross"],
+        korrekt: 0,
+        tipp: "Ein negatives \\(k\\) bewirkt eine Spiegelung am Zentrum.",
+        loesungsweg: "Bei \\(k = -2\\) wird die Figur um den Faktor \\(|{-2}| = 2\\) vergroessert und gleichzeitig am Streckzentrum gespiegelt (auf die andere Seite)."
+    },
+    {
+        id: 12, level: 2, typ: "numerisch",
+        frage: "Ein Dreieck hat eine Seite von \\(10\\,\\text{cm}\\). Nach zentrischer Streckung ist diese Seite \\(4\\,\\text{cm}\\) lang. Bestimme \\(k\\).",
+        loesung: 0.4, toleranz: 0.01,
+        tipp: "\\(k = \\dfrac{\\text{Bild}}{\\text{Original}}\\).",
+        loesungsweg: "\\(k = \\dfrac{4}{10} = 0{,}4\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 3 — Aehnlichkeit erkennen
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 13, level: 3, typ: "mc",
+        frage: "Zwei Dreiecke haben die Winkel \\(40^\\circ\\), \\(60^\\circ\\), \\(80^\\circ\\) bzw. \\(40^\\circ\\), \\(60^\\circ\\), \\(80^\\circ\\). Sind sie aehnlich?",
+        optionen: ["Ja, weil alle Winkel uebereinstimmen", "Nein, die Seiten koennten verschieden sein", "Nur wenn sie gleich gross sind", "Man kann es nicht entscheiden"],
+        korrekt: 0,
+        tipp: "Fuer Aehnlichkeit bei Dreiecken reicht die Uebereinstimmung aller Winkel.",
+        loesungsweg: "Zwei Dreiecke sind aehnlich, wenn sie in allen Winkeln uebereinstimmen (WWW-Kriterium). Die Seitenlaengen duerfen unterschiedlich sein, muessen aber proportional sein."
+    },
+    {
+        id: 14, level: 3, typ: "mc",
+        frage: "Dreieck 1 hat die Seiten \\(3\\), \\(4\\), \\(5\\). Dreieck 2 hat die Seiten \\(6\\), \\(8\\), \\(10\\). Sind sie aehnlich?",
+        optionen: ["Ja, alle Seiten haben das gleiche Verhaeltnis \\(1 : 2\\)", "Nein, die Seiten sind verschieden", "Nur wenn die Winkel gleich sind", "Nein, da die Dreiecke unterschiedlich gross sind"],
+        korrekt: 0,
+        tipp: "Pruefe, ob das Verhaeltnis jeder Seite gleich ist: \\(\\frac{6}{3} = \\frac{8}{4} = \\frac{10}{5}\\).",
+        loesungsweg: "\\(\\dfrac{6}{3} = 2\\), \\(\\dfrac{8}{4} = 2\\), \\(\\dfrac{10}{5} = 2\\). Alle Seitenverhaeltnisse sind gleich, also sind die Dreiecke aehnlich mit \\(k = 2\\)."
+    },
+    {
+        id: 15, level: 3, typ: "mc",
+        frage: "Dreieck 1 hat die Seiten \\(5\\), \\(7\\), \\(9\\). Dreieck 2 hat die Seiten \\(10\\), \\(15\\), \\(18\\). Sind sie aehnlich?",
+        optionen: ["Nein, die Seitenverhaeltnisse sind nicht alle gleich", "Ja, weil beide Dreiecke drei Seiten haben", "Ja, weil das groesste Dreieck doppelt so gross ist", "Man kann es ohne Winkel nicht sagen"],
+        korrekt: 0,
+        tipp: "Berechne alle drei Seitenverhaeltnisse: \\(\\frac{10}{5}\\), \\(\\frac{15}{7}\\), \\(\\frac{18}{9}\\).",
+        loesungsweg: "\\(\\dfrac{10}{5} = 2\\), \\(\\dfrac{15}{7} \\approx 2{,}14\\), \\(\\dfrac{18}{9} = 2\\). Da \\(\\frac{15}{7} \\neq 2\\), sind die Dreiecke nicht aehnlich."
+    },
+    {
+        id: 16, level: 3, typ: "mc",
+        frage: "Welche Aussage ueber aehnliche Figuren ist richtig?",
+        optionen: ["Alle Winkel stimmen ueberein und die Seiten sind proportional", "Alle Seiten sind gleich lang", "Nur die Winkel stimmen ueberein, die Seiten spielen keine Rolle", "Aehnliche Figuren haben immer den gleichen Flaecheninhalt"],
+        korrekt: 0,
+        tipp: "Aehnlichkeit bedeutet gleiche Form, aber nicht unbedingt gleiche Groesse.",
+        loesungsweg: "Aehnliche Figuren haben die gleiche Form: Alle Winkel stimmen ueberein und alle entsprechenden Seiten stehen im gleichen Verhaeltnis \\(k\\)."
+    },
+    {
+        id: 17, level: 3, typ: "mc",
+        frage: "Sind alle Quadrate zueinander aehnlich?",
+        optionen: ["Ja, immer", "Nein, nur wenn sie gleich gross sind", "Nur wenn die Diagonalen gleich sind", "Nein, nie"],
+        korrekt: 0,
+        tipp: "Alle Quadrate haben vier rechte Winkel und vier gleich lange Seiten.",
+        loesungsweg: "Ja, alle Quadrate haben die gleiche Form (vier rechte Winkel, vier gleiche Seiten). Sie unterscheiden sich nur in der Groesse, also sind sie immer aehnlich."
+    },
+    {
+        id: 18, level: 3, typ: "mc",
+        frage: "Sind alle Rechtecke zueinander aehnlich?",
+        optionen: ["Nein, nur wenn die Seitenverhaeltnisse gleich sind", "Ja, alle Rechtecke sind aehnlich", "Ja, weil alle Winkel \\(90^\\circ\\) sind", "Nein, Rechtecke koennen nie aehnlich sein"],
+        korrekt: 0,
+        tipp: "Ueberlege: Ein Rechteck \\(2 \\times 3\\) und ein Rechteck \\(2 \\times 5\\) haben gleiche Winkel. Sind die Seiten proportional?",
+        loesungsweg: "Nein! Gleiche Winkel allein reichen bei Vierecken nicht aus. Ein Rechteck \\(2 \\times 3\\) und ein Rechteck \\(2 \\times 5\\) haben beide nur \\(90^\\circ\\)-Winkel, aber \\(\\frac{2}{2} = 1 \\neq \\frac{5}{3}\\). Die Seitenverhaeltnisse muessen gleich sein."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 4 — Fehlende Seiten bei aehnlichen Dreiecken
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 19, level: 4, typ: "numerisch",
+        frage: "Zwei Dreiecke sind aehnlich. Das erste hat die Seiten \\(3\\), \\(5\\), \\(7\\). Die kuerzeste Seite des zweiten Dreiecks ist \\(9\\). Wie lang ist die laengste Seite des zweiten Dreiecks?",
+        loesung: 21, toleranz: 0.01,
+        tipp: "Bestimme zuerst den Streckfaktor: \\(k = \\frac{9}{3}\\).",
+        loesungsweg: "\\(k = \\dfrac{9}{3} = 3\\). Laengste Seite: \\(7 \\cdot 3 = 21\\)."
+    },
+    {
+        id: 20, level: 4, typ: "numerisch",
+        frage: "Dreieck \\(ABC\\) ist aehnlich zu Dreieck \\(A'B'C'\\). Es gilt \\(a = 4\\), \\(b = 6\\), \\(a' = 10\\). Berechne \\(b'\\).",
+        loesung: 15, toleranz: 0.01,
+        tipp: "Nutze die Verhaeltnisgleichung: \\(\\frac{a}{a'} = \\frac{b}{b'}\\).",
+        loesungsweg: "\\(\\dfrac{a}{a'} = \\dfrac{b}{b'} \\Rightarrow \\dfrac{4}{10} = \\dfrac{6}{b'} \\Rightarrow b' = \\dfrac{6 \\cdot 10}{4} = 15\\)."
+    },
+    {
+        id: 21, level: 4, typ: "numerisch",
+        frage: "Zwei aehnliche Dreiecke haben den Streckfaktor \\(k = 1{,}5\\). Eine Seite des Originals ist \\(8\\,\\text{cm}\\). Wie lang ist die entsprechende Seite des Bildes (in cm)?",
+        loesung: 12, toleranz: 0.01,
+        tipp: "Bildseite \\(= k \\cdot\\) Originalseite.",
+        loesungsweg: "\\(8\\,\\text{cm} \\cdot 1{,}5 = 12\\,\\text{cm}\\)."
+    },
+    {
+        id: 22, level: 4, typ: "numerisch",
+        frage: "In zwei aehnlichen Dreiecken gilt: \\(a = 5\\), \\(b = 8\\), \\(c = 10\\) und \\(a' = 7{,}5\\). Berechne \\(c'\\).",
+        loesung: 15, toleranz: 0.01,
+        tipp: "Bestimme \\(k = \\frac{a'}{a}\\), dann \\(c' = k \\cdot c\\).",
+        loesungsweg: "\\(k = \\dfrac{7{,}5}{5} = 1{,}5\\). Damit \\(c' = 1{,}5 \\cdot 10 = 15\\)."
+    },
+    {
+        id: 23, level: 4, typ: "numerisch",
+        frage: "Zwei aehnliche Dreiecke: Im ersten gilt \\(a = 12\\), \\(b = 9\\). Im zweiten gilt \\(a' = 4\\). Berechne \\(b'\\).",
+        loesung: 3, toleranz: 0.01,
+        tipp: "\\(k = \\frac{a'}{a} = \\frac{4}{12}\\).",
+        loesungsweg: "\\(k = \\dfrac{4}{12} = \\dfrac{1}{3}\\). Damit \\(b' = \\dfrac{1}{3} \\cdot 9 = 3\\)."
+    },
+    {
+        id: 24, level: 4, typ: "numerisch",
+        frage: "Dreieck \\(ABC\\) ist aehnlich zu Dreieck \\(DEF\\). Gegeben: \\(AB = 6\\), \\(BC = 10\\), \\(DE = 15\\). Berechne \\(EF\\).",
+        loesung: 25, toleranz: 0.01,
+        tipp: "\\(k = \\frac{DE}{AB}\\), dann \\(EF = k \\cdot BC\\).",
+        loesungsweg: "\\(k = \\dfrac{DE}{AB} = \\dfrac{15}{6} = 2{,}5\\). Damit \\(EF = 2{,}5 \\cdot 10 = 25\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 5 — Strahlensaetze anwenden
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Zwei Geraden werden von zwei Parallelen geschnitten. Die Abschnitte auf der ersten Geraden sind \\(4\\) und \\(6\\). Auf der zweiten Geraden ist der erste Abschnitt \\(6\\). Berechne den zweiten Abschnitt.",
+        loesung: 9, toleranz: 0.01,
+        tipp: "Erster Strahlensatz: \\(\\frac{4}{6} = \\frac{6}{x}\\).",
+        loesungsweg: "\\(\\dfrac{4}{6} = \\dfrac{6}{x} \\Rightarrow x = \\dfrac{6 \\cdot 6}{4} = \\dfrac{36}{4} = 9\\)."
+    },
+    {
+        id: 26, level: 5, typ: "numerisch",
+        frage: "Von einem Zentrum \\(Z\\) gehen zwei Strahlen aus. Auf dem ersten Strahl liegen die Punkte \\(A\\) und \\(B\\) mit \\(ZA = 3\\) und \\(ZB = 9\\). Auf dem zweiten Strahl liegt \\(C\\) mit \\(ZC = 5\\). Bestimme \\(ZD\\), wobei \\(D\\) so liegt, dass \\(AB \\parallel CD\\).",
+        loesung: 15, toleranz: 0.01,
+        tipp: "\\(\\frac{ZA}{ZB} = \\frac{ZC}{ZD}\\).",
+        loesungsweg: "\\(\\dfrac{ZA}{ZB} = \\dfrac{ZC}{ZD} \\Rightarrow \\dfrac{3}{9} = \\dfrac{5}{ZD} \\Rightarrow ZD = \\dfrac{5 \\cdot 9}{3} = 15\\)."
+    },
+    {
+        id: 27, level: 5, typ: "numerisch",
+        frage: "Zwei Parallelen schneiden zwei Strahlen von einem Zentrum \\(Z\\). Gegeben: \\(ZA = 8\\), \\(AB = 4\\), \\(ZC = 6\\). Berechne \\(CD\\).",
+        loesung: 3, toleranz: 0.01,
+        tipp: "Erster Strahlensatz: \\(\\frac{ZA}{AB} = \\frac{ZC}{CD}\\).",
+        loesungsweg: "\\(\\dfrac{ZA}{AB} = \\dfrac{ZC}{CD} \\Rightarrow \\dfrac{8}{4} = \\dfrac{6}{CD} \\Rightarrow CD = \\dfrac{6 \\cdot 4}{8} = 3\\)."
+    },
+    {
+        id: 28, level: 5, typ: "numerisch",
+        frage: "Nach dem zweiten Strahlensatz gilt: Die Parallelstrecke \\(p_1 = 5\\) und \\(p_2 = 10\\). Die Entfernung vom Zentrum zur ersten Parallelen ist \\(ZA = 7\\). Bestimme \\(ZB\\) (Entfernung zur zweiten Parallelen).",
+        loesung: 14, toleranz: 0.01,
+        tipp: "Zweiter Strahlensatz: \\(\\frac{p_1}{p_2} = \\frac{ZA}{ZB}\\).",
+        loesungsweg: "\\(\\dfrac{5}{10} = \\dfrac{7}{ZB} \\Rightarrow ZB = \\dfrac{7 \\cdot 10}{5} = 14\\)."
+    },
+    {
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Gegeben: \\(ZA = 6\\), \\(ZB = 10\\), \\(ZC = 9\\). Bestimme \\(ZD\\), wenn \\(AC \\parallel BD\\).",
+        loesung: 15, toleranz: 0.01,
+        tipp: "\\(\\frac{ZA}{ZB} = \\frac{ZC}{ZD}\\).",
+        loesungsweg: "\\(\\dfrac{6}{10} = \\dfrac{9}{ZD} \\Rightarrow ZD = \\dfrac{9 \\cdot 10}{6} = 15\\)."
+    },
+    {
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Vom Zentrum \\(Z\\) gehen zwei Strahlen aus. Auf dem ersten: \\(ZA = 5\\), \\(ZB = 15\\). Zwischen den Parallelen betraegt die Strecke auf dem zweiten Strahl \\(CD = 8\\). Berechne \\(ZC\\).",
+        loesung: 4, toleranz: 0.01,
+        tipp: "\\(\\frac{ZA}{AB} = \\frac{ZC}{CD}\\). Beachte: \\(AB = ZB - ZA = 10\\).",
+        loesungsweg: "\\(AB = 15 - 5 = 10\\). \\(\\dfrac{ZA}{AB} = \\dfrac{ZC}{CD} \\Rightarrow \\dfrac{5}{10} = \\dfrac{ZC}{8} \\Rightarrow ZC = \\dfrac{5 \\cdot 8}{10} = 4\\)."
+    },
+
+    // ══════════════════════════════════════════════════════════════
+    // LEVEL 6 — Anwendungen (Schatten, Foto, Flaeche)
+    // ══════════════════════════════════════════════════════════════
+    {
+        id: 31, level: 6, typ: "numerisch",
+        frage: "Ein Stock (\\(1{,}5\\,\\text{m}\\)) wirft einen Schatten von \\(2\\,\\text{m}\\). Gleichzeitig wirft ein Baum einen Schatten von \\(12\\,\\text{m}\\). Wie hoch ist der Baum (in m)?",
+        loesung: 9, toleranz: 0.01,
+        tipp: "Die Dreiecke (Stock + Schatten) und (Baum + Schatten) sind aehnlich: \\(\\frac{1{,}5}{2} = \\frac{h}{12}\\).",
+        loesungsweg: "\\(\\dfrac{1{,}5}{2} = \\dfrac{h}{12} \\Rightarrow h = \\dfrac{1{,}5 \\cdot 12}{2} = \\dfrac{18}{2} = 9\\,\\text{m}\\)."
+    },
+    {
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Ein Foto (\\(10\\,\\text{cm} \\times 15\\,\\text{cm}\\)) wird auf \\(60\\%\\) verkleinert. Wie breit ist das verkleinerte Foto (in cm)?",
+        loesung: 6, toleranz: 0.01,
+        tipp: "\\(60\\%\\) Verkleinerung bedeutet \\(k = 0{,}6\\). Neue Breite \\(= 10 \\cdot 0{,}6\\).",
+        loesungsweg: "\\(k = 0{,}6\\). Breite: \\(10 \\cdot 0{,}6 = 6\\,\\text{cm}\\). Hoehe: \\(15 \\cdot 0{,}6 = 9\\,\\text{cm}\\)."
+    },
+    {
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Zwei aehnliche Dreiecke haben den Streckfaktor \\(k = 3\\). Das kleinere Dreieck hat den Flaecheninhalt \\(5\\,\\text{cm}^2\\). Wie gross ist der Flaecheninhalt des groesseren Dreiecks (in cm\\(^2\\))?",
+        loesung: 45, toleranz: 0.01,
+        tipp: "Bei aehnlichen Figuren gilt: \\(A' = k^2 \\cdot A\\).",
+        loesungsweg: "\\(A' = k^2 \\cdot A = 3^2 \\cdot 5 = 9 \\cdot 5 = 45\\,\\text{cm}^2\\)."
+    },
+    {
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Um die Breite eines Flusses zu bestimmen, wird der Strahlensatz genutzt. Vom Ufer misst man: \\(ZA = 4\\,\\text{m}\\), \\(ZB = 20\\,\\text{m}\\), \\(ZC = 3\\,\\text{m}\\). Berechne \\(ZD\\) (die Flussbreite auf dem zweiten Strahl, in m).",
+        loesung: 15, toleranz: 0.01,
+        tipp: "\\(\\frac{ZA}{ZB} = \\frac{ZC}{ZD}\\).",
+        loesungsweg: "\\(\\dfrac{4}{20} = \\dfrac{3}{ZD} \\Rightarrow ZD = \\dfrac{3 \\cdot 20}{4} = 15\\,\\text{m}\\)."
+    },
+    {
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Zwei aehnliche Quadrate: Das erste hat die Seitenlaenge \\(4\\,\\text{cm}\\), das zweite \\(12\\,\\text{cm}\\). Um welchen Faktor ist die Flaeche des groesseren Quadrats groesser als die des kleineren?",
+        loesung: 9, toleranz: 0.01,
+        tipp: "Flaechenverhaeltnis \\(= k^2\\). Bestimme zuerst \\(k\\).",
+        loesungsweg: "\\(k = \\dfrac{12}{4} = 3\\). Flaechenverhaeltnis: \\(k^2 = 3^2 = 9\\). Die Flaeche ist 9-mal so gross."
+    },
+    {
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Ein Laternenmast (\\(6\\,\\text{m}\\)) wirft einen Schatten von \\(8\\,\\text{m}\\). Eine Person (\\(1{,}8\\,\\text{m}\\)) steht so, dass die Schattenspitze der Person mit der Schattenspitze des Mastes zusammenfaellt. Wie weit steht die Person vom Mast entfernt (in m)?",
+        loesung: 5.6, toleranz: 0.01,
+        tipp: "Die Person steht an der Stelle, ab der ihr eigener Schatten beginnt. Nutze aehnliche Dreiecke: \\(\\frac{6}{8} = \\frac{1{,}8}{s}\\), wobei \\(s\\) die Schattenlaenge der Person ist.",
+        loesungsweg: "Schattenlaenge der Person: \\(\\dfrac{6}{8} = \\dfrac{1{,}8}{s} \\Rightarrow s = \\dfrac{1{,}8 \\cdot 8}{6} = 2{,}4\\,\\text{m}\\). Abstand zum Mast: \\(8 - 2{,}4 = 5{,}6\\,\\text{m}\\)."
+    }
+
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

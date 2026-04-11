@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lineare Funktionen — Grundlagen - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '8-lineare-funktionen-grund';
+    const THEMA_CONFIG = { name: 'Lineare Funktionen — Grundlagen', bereich: 'funktionen' };
+    const AUFGABEN = [
+      // ========== LEVEL 1 — Funktionsbegriff, Funktionswerte ==========
+      {
+        "id": 1,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Gegeben ist \\(f(x) = 2x + 1\\). Berechne \\(f(3)\\).",
+        "loesung": 7,
+        "toleranz": 0,
+        "tipp": "Setze \\(x = 3\\) in die Funktionsgleichung ein.",
+        "loesungsweg": "$$f(3) = 2 \\cdot 3 + 1 = 6 + 1 = 7$$"
+      },
+      {
+        "id": 2,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Welche Darstellung beschreibt eine Funktion?",
+        "optionen": ["Jedem \\(x\\) wird genau ein \\(y\\) zugeordnet", "Jedem \\(y\\) werden mehrere \\(x\\) zugeordnet", "Einem \\(x\\) werden zwei verschiedene \\(y\\) zugeordnet", "Es gibt keine feste Zuordnung"],
+        "korrekt": 0,
+        "tipp": "Bei einer Funktion hat jeder \\(x\\)-Wert genau einen \\(y\\)-Wert.",
+        "loesungsweg": "Eine Funktion ordnet jedem \\(x\\)-Wert genau einen \\(y\\)-Wert zu. Das ist die Definition einer Funktion."
+      },
+      {
+        "id": 3,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Gegeben ist \\(f(x) = -3x + 5\\). Berechne \\(f(2)\\).",
+        "loesung": -1,
+        "toleranz": 0,
+        "tipp": "Setze \\(x = 2\\) ein: \\(-3 \\cdot 2 + 5\\).",
+        "loesungsweg": "$$f(2) = -3 \\cdot 2 + 5 = -6 + 5 = -1$$"
+      },
+      {
+        "id": 4,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Gegeben ist \\(f(x) = 4x - 3\\). Welcher Wert ist \\(f(0)\\)?",
+        "optionen": ["\\(4\\)", "\\(-3\\)", "\\(0\\)", "\\(1\\)"],
+        "korrekt": 1,
+        "tipp": "Setze \\(x = 0\\) ein: \\(4 \\cdot 0 - 3\\).",
+        "loesungsweg": "$$f(0) = 4 \\cdot 0 - 3 = 0 - 3 = -3$$"
+      },
+      {
+        "id": 5,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Gegeben ist \\(f(x) = 0{,}5x + 4\\). Berechne \\(f(6)\\).",
+        "loesung": 7,
+        "toleranz": 0,
+        "tipp": "Setze \\(x = 6\\) ein: \\(0{,}5 \\cdot 6 + 4\\).",
+        "loesungsweg": "$$f(6) = 0{,}5 \\cdot 6 + 4 = 3 + 4 = 7$$"
+      },
+      {
+        "id": 6,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Welche der folgenden Gleichungen beschreibt eine lineare Funktion?",
+        "optionen": ["\\(f(x) = x^2 + 1\\)", "\\(f(x) = 3x - 7\\)", "\\(f(x) = \\frac{1}{x}\\)", "\\(f(x) = 2^x\\)"],
+        "korrekt": 1,
+        "tipp": "Eine lineare Funktion hat die Form \\(f(x) = mx + n\\).",
+        "loesungsweg": "Nur \\(f(x) = 3x - 7\\) hat die Form \\(f(x) = mx + n\\) mit \\(m = 3\\) und \\(n = -7\\). Die anderen sind quadratisch, gebrochen-rational bzw. exponentiell."
+      },
+      // ========== LEVEL 2 — Steigung und y-Achsenabschnitt ablesen ==========
+      {
+        "id": 7,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Gegeben ist \\(f(x) = 3x - 2\\). Wie gross ist die Steigung \\(m\\)?",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "In \\(f(x) = mx + n\\) steht die Steigung vor dem \\(x\\).",
+        "loesungsweg": "Bei \\(f(x) = 3x - 2\\) ist \\(m = 3\\) (der Faktor vor \\(x\\))."
+      },
+      {
+        "id": 8,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Gegeben ist \\(f(x) = -2x + 5\\). Wie gross ist der \\(y\\)-Achsenabschnitt \\(n\\)?",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Der \\(y\\)-Achsenabschnitt ist der Wert ohne \\(x\\).",
+        "loesungsweg": "Bei \\(f(x) = -2x + 5\\) ist \\(n = 5\\). Der Graph schneidet die \\(y\\)-Achse bei \\((0 \\mid 5)\\)."
+      },
+      {
+        "id": 9,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Welche Funktion hat die Steigung \\(m = -4\\) und den \\(y\\)-Achsenabschnitt \\(n = 1\\)?",
+        "optionen": ["\\(f(x) = 4x + 1\\)", "\\(f(x) = -4x + 1\\)", "\\(f(x) = x - 4\\)", "\\(f(x) = -4x - 1\\)"],
+        "korrekt": 1,
+        "tipp": "Setze \\(m = -4\\) und \\(n = 1\\) in \\(f(x) = mx + n\\) ein.",
+        "loesungsweg": "$$f(x) = mx + n = -4x + 1$$"
+      },
+      {
+        "id": 10,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Gegeben ist \\(f(x) = 0{,}5x + 3\\). Wie gross ist die Steigung \\(m\\)?",
+        "loesung": 0.5,
+        "toleranz": 0.01,
+        "tipp": "Die Steigung ist der Faktor vor \\(x\\).",
+        "loesungsweg": "Bei \\(f(x) = 0{,}5x + 3\\) ist \\(m = 0{,}5\\)."
+      },
+      {
+        "id": 11,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Der Graph einer linearen Funktion schneidet die \\(y\\)-Achse bei \\((0 \\mid -3)\\) und hat die Steigung \\(2\\). Welche Gleichung passt?",
+        "optionen": ["\\(f(x) = -3x + 2\\)", "\\(f(x) = 2x + 3\\)", "\\(f(x) = 2x - 3\\)", "\\(f(x) = 3x - 2\\)"],
+        "korrekt": 2,
+        "tipp": "\\(n = -3\\) (\\(y\\)-Achsenabschnitt) und \\(m = 2\\) (Steigung).",
+        "loesungsweg": "$$f(x) = mx + n = 2x + (-3) = 2x - 3$$"
+      },
+      {
+        "id": 12,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Gegeben ist \\(f(x) = -\\frac{3}{4}x + 2\\). Wie gross ist der \\(y\\)-Achsenabschnitt \\(n\\)?",
+        "loesung": 2,
+        "toleranz": 0,
+        "tipp": "Der \\(y\\)-Achsenabschnitt ist die Zahl ohne \\(x\\).",
+        "loesungsweg": "Bei \\(f(x) = -\\frac{3}{4}x + 2\\) ist \\(n = 2\\). Der Graph schneidet die \\(y\\)-Achse bei \\((0 \\mid 2)\\)."
+      },
+      // ========== LEVEL 3 — Steigung aus zwei Punkten berechnen ==========
+      {
+        "id": 13,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Berechne die Steigung der Geraden durch \\(P(1 \\mid 3)\\) und \\(Q(4 \\mid 9)\\).",
+        "loesung": 2,
+        "toleranz": 0,
+        "tipp": "Verwende die Formel \\(m = \\frac{y_2 - y_1}{x_2 - x_1}\\).",
+        "loesungsweg": "$$m = \\frac{9 - 3}{4 - 1} = \\frac{6}{3} = 2$$"
+      },
+      {
+        "id": 14,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Berechne die Steigung der Geraden durch \\(A(2 \\mid 5)\\) und \\(B(6 \\mid 1)\\).",
+        "loesung": -1,
+        "toleranz": 0,
+        "tipp": "\\(m = \\frac{y_2 - y_1}{x_2 - x_1} = \\frac{1 - 5}{6 - 2}\\).",
+        "loesungsweg": "$$m = \\frac{1 - 5}{6 - 2} = \\frac{-4}{4} = -1$$"
+      },
+      {
+        "id": 15,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Die Gerade durch \\(P(0 \\mid 4)\\) und \\(Q(2 \\mid 4)\\) hat welche Steigung?",
+        "optionen": ["\\(m = 2\\)", "\\(m = 0\\)", "\\(m = 4\\)", "\\(m = -2\\)"],
+        "korrekt": 1,
+        "tipp": "Wenn beide \\(y\\)-Werte gleich sind, ist die Gerade waagerecht.",
+        "loesungsweg": "$$m = \\frac{4 - 4}{2 - 0} = \\frac{0}{2} = 0$$ Die Gerade ist waagerecht."
+      },
+      {
+        "id": 16,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Berechne die Steigung der Geraden durch \\(P(-1 \\mid 2)\\) und \\(Q(3 \\mid 10)\\).",
+        "loesung": 2,
+        "toleranz": 0,
+        "tipp": "\\(m = \\frac{10 - 2}{3 - (-1)}\\). Achte auf das Vorzeichen!",
+        "loesungsweg": "$$m = \\frac{10 - 2}{3 - (-1)} = \\frac{8}{4} = 2$$"
+      },
+      {
+        "id": 17,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Die Punkte \\(A(1 \\mid 6)\\) und \\(B(4 \\mid 0)\\) liegen auf einer Geraden. Welche Steigung hat sie?",
+        "optionen": ["\\(m = 2\\)", "\\(m = -2\\)", "\\(m = 3\\)", "\\(m = -3\\)"],
+        "korrekt": 1,
+        "tipp": "\\(m = \\frac{0 - 6}{4 - 1}\\).",
+        "loesungsweg": "$$m = \\frac{0 - 6}{4 - 1} = \\frac{-6}{3} = -2$$"
+      },
+      {
+        "id": 18,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Berechne die Steigung der Geraden durch \\(P(2 \\mid -1)\\) und \\(Q(5 \\mid 8)\\).",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "\\(m = \\frac{8 - (-1)}{5 - 2}\\).",
+        "loesungsweg": "$$m = \\frac{8 - (-1)}{5 - 2} = \\frac{9}{3} = 3$$"
+      },
+      // ========== LEVEL 4 — Funktionsgleichung aufstellen ==========
+      {
+        "id": 19,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Eine Gerade hat die Steigung \\(m = 2\\) und geht durch \\(P(1 \\mid 5)\\). Wie gross ist der \\(y\\)-Achsenabschnitt \\(n\\)?",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "Setze \\(m\\), \\(x\\) und \\(y\\) in \\(y = mx + n\\) ein und lose nach \\(n\\) auf.",
+        "loesungsweg": "$$5 = 2 \\cdot 1 + n$$ $$5 = 2 + n \\quad | -2$$ $$n = 3$$ Also: \\(f(x) = 2x + 3\\)."
+      },
+      {
+        "id": 20,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Eine Gerade geht durch \\(P(2 \\mid 3)\\) und \\(Q(4 \\mid 7)\\). Welche Funktionsgleichung hat sie?",
+        "optionen": ["\\(f(x) = 2x - 1\\)", "\\(f(x) = 2x + 1\\)", "\\(f(x) = x + 1\\)", "\\(f(x) = 3x - 3\\)"],
+        "korrekt": 0,
+        "tipp": "Berechne erst \\(m\\), dann setze einen Punkt ein, um \\(n\\) zu finden.",
+        "loesungsweg": "$$m = \\frac{7 - 3}{4 - 2} = \\frac{4}{2} = 2$$ Einsetzen von \\(P(2 \\mid 3)\\): $$3 = 2 \\cdot 2 + n \\implies n = -1$$ Also: \\(f(x) = 2x - 1\\)."
+      },
+      {
+        "id": 21,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Eine Gerade hat die Steigung \\(m = -3\\) und geht durch \\(P(2 \\mid 1)\\). Wie gross ist \\(n\\)?",
+        "loesung": 7,
+        "toleranz": 0,
+        "tipp": "\\(1 = -3 \\cdot 2 + n\\). Lose nach \\(n\\) auf.",
+        "loesungsweg": "$$1 = -3 \\cdot 2 + n$$ $$1 = -6 + n \\quad | +6$$ $$n = 7$$ Also: \\(f(x) = -3x + 7\\)."
+      },
+      {
+        "id": 22,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Eine Gerade geht durch \\(P(0 \\mid 4)\\) und \\(Q(3 \\mid -2)\\). Welche Gleichung passt?",
+        "optionen": ["\\(f(x) = -2x + 4\\)", "\\(f(x) = 2x + 4\\)", "\\(f(x) = -2x - 4\\)", "\\(f(x) = -\\frac{1}{2}x + 4\\)"],
+        "korrekt": 0,
+        "tipp": "\\(P(0 \\mid 4)\\) verrät direkt den \\(y\\)-Achsenabschnitt: \\(n = 4\\).",
+        "loesungsweg": "Da \\(P(0 \\mid 4)\\) auf der \\(y\\)-Achse liegt, ist \\(n = 4\\). $$m = \\frac{-2 - 4}{3 - 0} = \\frac{-6}{3} = -2$$ Also: \\(f(x) = -2x + 4\\)."
+      },
+      {
+        "id": 23,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Eine Gerade geht durch \\(A(1 \\mid 2)\\) und \\(B(3 \\mid 8)\\). Wie gross ist der \\(y\\)-Achsenabschnitt \\(n\\)?",
+        "loesung": -1,
+        "toleranz": 0,
+        "tipp": "Berechne erst \\(m = \\frac{8 - 2}{3 - 1}\\), dann setze einen Punkt ein.",
+        "loesungsweg": "$$m = \\frac{8 - 2}{3 - 1} = \\frac{6}{2} = 3$$ Einsetzen von \\(A(1 \\mid 2)\\): $$2 = 3 \\cdot 1 + n \\implies n = -1$$ Also: \\(f(x) = 3x - 1\\)."
+      },
+      {
+        "id": 24,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Eine Gerade hat die Steigung \\(m = \\frac{1}{2}\\) und geht durch \\(P(4 \\mid 5)\\). Welche Gleichung stimmt?",
+        "optionen": ["\\(f(x) = \\frac{1}{2}x + 5\\)", "\\(f(x) = \\frac{1}{2}x + 3\\)", "\\(f(x) = 2x + 3\\)", "\\(f(x) = \\frac{1}{2}x - 3\\)"],
+        "korrekt": 1,
+        "tipp": "Setze \\(P(4 \\mid 5)\\) in \\(y = \\frac{1}{2}x + n\\) ein.",
+        "loesungsweg": "$$5 = \\frac{1}{2} \\cdot 4 + n = 2 + n$$ $$n = 3$$ Also: \\(f(x) = \\frac{1}{2}x + 3\\)."
+      },
+      // ========== LEVEL 5 — Nullstelle, Monotonie ==========
+      {
+        "id": 25,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Berechne die Nullstelle von \\(f(x) = 2x - 6\\).",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "Setze \\(f(x) = 0\\) und lose nach \\(x\\) auf.",
+        "loesungsweg": "$$2x - 6 = 0 \\quad | +6$$ $$2x = 6 \\quad | :2$$ $$x = 3$$ Die Nullstelle ist bei \\(x = 3\\)."
+      },
+      {
+        "id": 26,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Die Funktion \\(f(x) = -3x + 9\\) ist ...",
+        "optionen": ["streng monoton steigend", "streng monoton fallend", "weder steigend noch fallend", "erst steigend, dann fallend"],
+        "korrekt": 1,
+        "tipp": "Betrachte das Vorzeichen der Steigung \\(m = -3\\).",
+        "loesungsweg": "Da \\(m = -3 < 0\\), ist die Funktion streng monoton fallend."
+      },
+      {
+        "id": 27,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Berechne die Nullstelle von \\(f(x) = -4x + 12\\).",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "\\(-4x + 12 = 0\\). Bringe \\(12\\) auf die andere Seite.",
+        "loesungsweg": "$$-4x + 12 = 0 \\quad | -12$$ $$-4x = -12 \\quad | :(-4)$$ $$x = 3$$"
+      },
+      {
+        "id": 28,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Wo schneidet der Graph von \\(f(x) = 5x + 10\\) die \\(x\\)-Achse?",
+        "optionen": ["\\((-2 \\mid 0)\\)", "\\((2 \\mid 0)\\)", "\\((0 \\mid 10)\\)", "\\((-5 \\mid 0)\\)"],
+        "korrekt": 0,
+        "tipp": "Setze \\(f(x) = 0\\): \\(5x + 10 = 0\\).",
+        "loesungsweg": "$$5x + 10 = 0 \\quad | -10$$ $$5x = -10 \\quad | :5$$ $$x = -2$$ Der Schnittpunkt mit der \\(x\\)-Achse ist \\((-2 \\mid 0)\\)."
+      },
+      {
+        "id": 29,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Berechne die Nullstelle von \\(f(x) = \\frac{1}{2}x - 3\\).",
+        "loesung": 6,
+        "toleranz": 0,
+        "tipp": "\\(\\frac{1}{2}x - 3 = 0\\). Addiere \\(3\\) und multipliziere mit \\(2\\).",
+        "loesungsweg": "$$\\frac{1}{2}x - 3 = 0 \\quad | +3$$ $$\\frac{1}{2}x = 3 \\quad | \\cdot 2$$ $$x = 6$$"
+      },
+      {
+        "id": 30,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Welche Aussage stimmt fuer \\(f(x) = 7x - 2\\)?",
+        "optionen": ["Die Funktion ist streng monoton fallend", "Die Nullstelle liegt bei \\(x = -\\frac{2}{7}\\)", "Die Funktion ist streng monoton steigend mit Nullstelle \\(x = \\frac{2}{7}\\)", "Die Funktion hat keine Nullstelle"],
+        "korrekt": 2,
+        "tipp": "\\(m = 7 > 0\\) bedeutet steigend. Setze \\(f(x) = 0\\).",
+        "loesungsweg": "Da \\(m = 7 > 0\\), ist \\(f\\) streng monoton steigend. Nullstelle: $$7x - 2 = 0 \\implies x = \\frac{2}{7}$$"
+      },
+      // ========== LEVEL 6 — Schnittpunkt zweier Geraden, Textaufgaben ==========
+      {
+        "id": 31,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Bestimme die \\(x\\)-Koordinate des Schnittpunkts von \\(f(x) = 2x + 1\\) und \\(g(x) = -x + 7\\).",
+        "loesung": 2,
+        "toleranz": 0,
+        "tipp": "Setze \\(f(x) = g(x)\\): \\(2x + 1 = -x + 7\\).",
+        "loesungsweg": "$$2x + 1 = -x + 7 \\quad | +x$$ $$3x + 1 = 7 \\quad | -1$$ $$3x = 6 \\quad | :3$$ $$x = 2$$ Probe: \\(f(2) = 5\\), \\(g(2) = 5\\). Schnittpunkt: \\(S(2 \\mid 5)\\)."
+      },
+      {
+        "id": 32,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Bestimme die \\(y\\)-Koordinate des Schnittpunkts von \\(f(x) = 3x - 4\\) und \\(g(x) = x + 2\\).",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Finde erst \\(x\\) durch Gleichsetzen, dann berechne \\(y\\).",
+        "loesungsweg": "$$3x - 4 = x + 2 \\quad | -x$$ $$2x - 4 = 2 \\quad | +4$$ $$2x = 6 \\quad | :2$$ $$x = 3$$ $$y = g(3) = 3 + 2 = 5$$ Schnittpunkt: \\(S(3 \\mid 5)\\)."
+      },
+      {
+        "id": 33,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Tarif A kostet \\(10\\) Euro Grundgebuehr und \\(2\\) Euro pro Stunde. Tarif B kostet \\(4\\) Euro pro Stunde ohne Grundgebuehr. Ab welcher Stundenzahl ist Tarif A guenstiger?",
+        "optionen": ["Ab \\(4\\) Stunden", "Ab \\(5\\) Stunden", "Ab \\(6\\) Stunden", "Tarif A ist nie guenstiger"],
+        "korrekt": 2,
+        "tipp": "Stelle Funktionen auf: \\(A(x) = 2x + 10\\), \\(B(x) = 4x\\). Wann gilt \\(A(x) < B(x)\\)?",
+        "loesungsweg": "Gleichsetzen: $$2x + 10 = 4x \\quad | -2x$$ $$10 = 2x \\quad | :2$$ $$x = 5$$ Bei 5 Stunden sind beide gleich teuer (20 Euro). Ab 6 Stunden ist Tarif A guenstiger."
+      },
+      {
+        "id": 34,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Bestimme die \\(x\\)-Koordinate des Schnittpunkts von \\(f(x) = -2x + 8\\) und \\(g(x) = x - 1\\).",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "Setze gleich: \\(-2x + 8 = x - 1\\).",
+        "loesungsweg": "$$-2x + 8 = x - 1 \\quad | -x$$ $$-3x + 8 = -1 \\quad | -8$$ $$-3x = -9 \\quad | :(-3)$$ $$x = 3$$ $$y = g(3) = 3 - 1 = 2$$ Schnittpunkt: \\(S(3 \\mid 2)\\)."
+      },
+      {
+        "id": 35,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Ein Wasserbehaelter wird mit \\(f(x) = 5x + 20\\) Litern gefuellt (\\(x\\) in Minuten). Ein zweiter Behaelter hat \\(g(x) = -3x + 100\\) Liter. Wann haben beide den gleichen Fuellstand?",
+        "optionen": ["Nach \\(8\\) Minuten", "Nach \\(10\\) Minuten", "Nach \\(12\\) Minuten", "Nach \\(15\\) Minuten"],
+        "korrekt": 1,
+        "tipp": "Setze \\(f(x) = g(x)\\) und lose nach \\(x\\) auf.",
+        "loesungsweg": "$$5x + 20 = -3x + 100 \\quad | +3x$$ $$8x + 20 = 100 \\quad | -20$$ $$8x = 80 \\quad | :8$$ $$x = 10$$ Nach 10 Minuten haben beide 70 Liter."
+      },
+      {
+        "id": 36,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Bestimme die \\(y\\)-Koordinate des Schnittpunkts von \\(f(x) = 4x - 3\\) und \\(g(x) = -2x + 9\\).",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Erst \\(x\\) bestimmen durch Gleichsetzen, dann \\(y\\) berechnen.",
+        "loesungsweg": "$$4x - 3 = -2x + 9 \\quad | +2x$$ $$6x - 3 = 9 \\quad | +3$$ $$6x = 12 \\quad | :6$$ $$x = 2$$ $$y = f(2) = 4 \\cdot 2 - 3 = 5$$ Schnittpunkt: \\(S(2 \\mid 5)\\)."
+      }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

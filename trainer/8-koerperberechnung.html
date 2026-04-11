@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koerperberechnung - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '8-koerperberechnung';
+    const THEMA_CONFIG = { name: 'Koerperberechnung', bereich: 'geometrie' };
+    const AUFGABEN = [
+      // ========== LEVEL 1 -- Formeln kennen: V_Prisma = G*h, V_Zylinder = pi*r^2*h ==========
+      {
+        "id": 1,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Welche Formel beschreibt das Volumen eines Prismas?",
+        "optionen": ["\\(V = a \\cdot b \\cdot c\\)", "\\(V = G \\cdot h\\)", "\\(V = \\frac{1}{3} \\cdot G \\cdot h\\)", "\\(V = \\pi r^2 h\\)"],
+        "korrekt": 1,
+        "tipp": "Das Volumen eines Prismas ist immer Grundflaeche mal Hoehe.",
+        "loesungsweg": "Die allgemeine Volumenformel fuer Prismen lautet: $$V = G \\cdot h$$ Dabei ist \\(G\\) die Grundflaeche und \\(h\\) die Hoehe des Prismas."
+      },
+      {
+        "id": 2,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Welche Formel beschreibt das Volumen eines Zylinders?",
+        "optionen": ["\\(V = 2\\pi r h\\)", "\\(V = \\pi r^2 h\\)", "\\(V = \\frac{1}{3} \\pi r^2 h\\)", "\\(V = 4\\pi r^2\\)"],
+        "korrekt": 1,
+        "tipp": "Die Grundflaeche eines Zylinders ist ein Kreis: \\(G = \\pi r^2\\).",
+        "loesungsweg": "Die Grundflaeche eines Zylinders ist ein Kreis mit \\(G = \\pi r^2\\). Also: $$V = G \\cdot h = \\pi r^2 h$$"
+      },
+      {
+        "id": 3,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Ein Koerper hat die Volumenformel \\(V = \\frac{1}{3} \\cdot G \\cdot h\\). Um welchen Koerper handelt es sich?",
+        "optionen": ["Prisma", "Zylinder", "Pyramide oder Kegel", "Kugel"],
+        "korrekt": 2,
+        "tipp": "Der Faktor \\(\\frac{1}{3}\\) ist typisch fuer spitz zulaufende Koerper.",
+        "loesungsweg": "Die Formel \\(V = \\frac{1}{3} \\cdot G \\cdot h\\) gilt fuer **Pyramiden** und **Kegel** -- also Koerper, die in einer Spitze enden."
+      },
+      {
+        "id": 4,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Wie lautet die Volumenformel einer Kugel?",
+        "optionen": ["\\(V = \\frac{4}{3} \\pi r^3\\)", "\\(V = 4\\pi r^2\\)", "\\(V = \\pi r^2 h\\)", "\\(V = \\frac{1}{3} \\pi r^2 h\\)"],
+        "korrekt": 0,
+        "tipp": "Bei der Kugel gibt es keine Hoehe -- nur den Radius. Die Formel enthaelt \\(r^3\\).",
+        "loesungsweg": "Die Volumenformel der Kugel lautet: $$V = \\frac{4}{3} \\pi r^3$$"
+      },
+      {
+        "id": 5,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Welche Formel berechnet die Mantelflaeche eines Zylinders?",
+        "optionen": ["\\(M = 2\\pi r^2\\)", "\\(M = 2\\pi r h\\)", "\\(M = \\pi r^2 h\\)", "\\(M = \\pi r s\\)"],
+        "korrekt": 1,
+        "tipp": "Die Mantelflaeche ist das 'abgerollte Rechteck': Umfang mal Hoehe.",
+        "loesungsweg": "Die Mantelflaeche des Zylinders ergibt sich als Rechteck mit Breite \\(= 2\\pi r\\) (Umfang) und Hoehe \\(h\\): $$M = 2\\pi r h$$"
+      },
+      {
+        "id": 6,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Welcher Zusammenhang besteht zwischen dem Volumen eines Kegels und dem eines Zylinders mit gleicher Grundflaeche und Hoehe?",
+        "optionen": ["\\(V_{\\text{Kegel}} = V_{\\text{Zylinder}}\\)", "\\(V_{\\text{Kegel}} = \\frac{1}{2} \\cdot V_{\\text{Zylinder}}\\)", "\\(V_{\\text{Kegel}} = \\frac{1}{3} \\cdot V_{\\text{Zylinder}}\\)", "\\(V_{\\text{Kegel}} = \\frac{2}{3} \\cdot V_{\\text{Zylinder}}\\)"],
+        "korrekt": 2,
+        "tipp": "Der Kegel hat den Faktor \\(\\frac{1}{3}\\) im Vergleich zum Zylinder.",
+        "loesungsweg": "$$V_{\\text{Zylinder}} = \\pi r^2 h \\quad \\text{und} \\quad V_{\\text{Kegel}} = \\frac{1}{3} \\pi r^2 h$$ Der Kegel hat genau **ein Drittel** des Zylindervolumens."
+      },
+      // ========== LEVEL 2 -- Volumen Prisma/Zylinder berechnen ==========
+      {
+        "id": 7,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Berechne das Volumen eines Dreiecksprismas mit \\(a = 8\\,\\text{cm}\\), \\(h_a = 6\\,\\text{cm}\\) und Prismahoehe \\(h = 10\\,\\text{cm}\\). Antwort in \\(\\text{cm}^3\\).",
+        "loesung": 240,
+        "toleranz": 0,
+        "tipp": "Grundflaeche: \\(G = \\frac{1}{2} \\cdot 8 \\cdot 6 = 24\\). Dann \\(V = G \\cdot h\\).",
+        "loesungsweg": "$$G = \\frac{1}{2} \\cdot 8 \\cdot 6 = 24\\,\\text{cm}^2$$ $$V = G \\cdot h = 24 \\cdot 10 = 240\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 8,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Ein Zylinder hat den Radius \\(r = 5\\,\\text{cm}\\) und die Hoehe \\(h = 10\\,\\text{cm}\\). Berechne das Volumen. Runde auf eine Dezimalstelle.",
+        "loesung": 785.4,
+        "toleranz": 0.1,
+        "tipp": "\\(V = \\pi \\cdot 5^2 \\cdot 10 = 250\\pi\\)",
+        "loesungsweg": "$$V = \\pi r^2 h = \\pi \\cdot 25 \\cdot 10 = 250\\pi \\approx 785{,}4\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 9,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Ein Trapezprisma hat die Grundflaeche eines Trapezes mit \\(a = 10\\,\\text{cm}\\), \\(c = 6\\,\\text{cm}\\) und \\(h_{\\text{Trapez}} = 4\\,\\text{cm}\\). Die Prismahoehe betraegt \\(h = 8\\,\\text{cm}\\). Berechne \\(V\\) in \\(\\text{cm}^3\\).",
+        "loesung": 256,
+        "toleranz": 0,
+        "tipp": "Trapezflaeche: \\(G = \\frac{a + c}{2} \\cdot h_{\\text{Trapez}} = \\frac{10 + 6}{2} \\cdot 4 = 32\\). Dann \\(V = G \\cdot h\\).",
+        "loesungsweg": "$$G = \\frac{10 + 6}{2} \\cdot 4 = 8 \\cdot 4 = 32\\,\\text{cm}^2$$ $$V = 32 \\cdot 8 = 256\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 10,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Ein Zylinder hat den Durchmesser \\(d = 8\\,\\text{cm}\\) und die Hoehe \\(h = 12\\,\\text{cm}\\). Berechne das Volumen. Runde auf eine Dezimalstelle.",
+        "loesung": 603.2,
+        "toleranz": 0.1,
+        "tipp": "Radius: \\(r = \\frac{d}{2} = 4\\,\\text{cm}\\). Dann \\(V = \\pi \\cdot 4^2 \\cdot 12 = 192\\pi\\).",
+        "loesungsweg": "$$r = 4\\,\\text{cm}$$ $$V = \\pi \\cdot 16 \\cdot 12 = 192\\pi \\approx 603{,}2\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 11,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Ein Dreiecksprisma hat \\(a = 12\\,\\text{cm}\\), \\(h_a = 5\\,\\text{cm}\\) und Prismahoehe \\(h = 15\\,\\text{cm}\\). Berechne das Volumen in \\(\\text{cm}^3\\).",
+        "loesung": 450,
+        "toleranz": 0,
+        "tipp": "\\(G = \\frac{1}{2} \\cdot 12 \\cdot 5 = 30\\). Dann \\(V = 30 \\cdot 15\\).",
+        "loesungsweg": "$$G = \\frac{1}{2} \\cdot 12 \\cdot 5 = 30\\,\\text{cm}^2$$ $$V = 30 \\cdot 15 = 450\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 12,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Ein Zylinder hat \\(r = 3\\,\\text{cm}\\) und \\(h = 7\\,\\text{cm}\\). Berechne das Volumen. Runde auf eine Dezimalstelle.",
+        "loesung": 197.9,
+        "toleranz": 0.1,
+        "tipp": "\\(V = \\pi \\cdot 3^2 \\cdot 7 = 63\\pi\\)",
+        "loesungsweg": "$$V = \\pi \\cdot 9 \\cdot 7 = 63\\pi \\approx 197{,}9\\,\\text{cm}^3$$"
+      },
+      // ========== LEVEL 3 -- Oberflaeche Prisma/Zylinder, Mantelflaeche ==========
+      {
+        "id": 13,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Berechne die Mantelflaeche eines Zylinders mit \\(r = 4\\,\\text{cm}\\) und \\(h = 10\\,\\text{cm}\\). Runde auf eine Dezimalstelle.",
+        "loesung": 251.3,
+        "toleranz": 0.1,
+        "tipp": "\\(M = 2\\pi r h = 2\\pi \\cdot 4 \\cdot 10 = 80\\pi\\)",
+        "loesungsweg": "$$M = 2\\pi r h = 2\\pi \\cdot 4 \\cdot 10 = 80\\pi \\approx 251{,}3\\,\\text{cm}^2$$"
+      },
+      {
+        "id": 14,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Berechne die gesamte Oberflaeche eines Zylinders mit \\(r = 3\\,\\text{cm}\\) und \\(h = 8\\,\\text{cm}\\).<br>Formel: \\(O = 2\\pi r^2 + 2\\pi r h\\). Runde auf eine Dezimalstelle.",
+        "loesung": 207.3,
+        "toleranz": 0.1,
+        "tipp": "\\(O = 2\\pi \\cdot 9 + 2\\pi \\cdot 3 \\cdot 8 = 18\\pi + 48\\pi = 66\\pi\\)",
+        "loesungsweg": "$$O = 2\\pi r^2 + 2\\pi r h = 18\\pi + 48\\pi = 66\\pi \\approx 207{,}3\\,\\text{cm}^2$$"
+      },
+      {
+        "id": 15,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Ein Dreiecksprisma hat die Grundflaeche \\(G = 30\\,\\text{cm}^2\\). Die Dreiecksseiten sind \\(a = 5\\,\\text{cm}\\), \\(b = 12\\,\\text{cm}\\), \\(c = 13\\,\\text{cm}\\). Die Prismahoehe ist \\(h = 10\\,\\text{cm}\\). Berechne die Oberflaeche in \\(\\text{cm}^2\\).",
+        "loesung": 360,
+        "toleranz": 0,
+        "tipp": "\\(O = 2G + (a + b + c) \\cdot h = 2 \\cdot 30 + (5 + 12 + 13) \\cdot 10\\)",
+        "loesungsweg": "$$O = 2 \\cdot 30 + (5 + 12 + 13) \\cdot 10 = 60 + 30 \\cdot 10 = 60 + 300 = 360\\,\\text{cm}^2$$"
+      },
+      {
+        "id": 16,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Berechne die Oberflaeche eines Zylinders mit \\(r = 5\\,\\text{cm}\\) und \\(h = 6\\,\\text{cm}\\). Runde auf eine Dezimalstelle.",
+        "loesung": 345.6,
+        "toleranz": 0.1,
+        "tipp": "\\(O = 2\\pi \\cdot 25 + 2\\pi \\cdot 5 \\cdot 6 = 50\\pi + 60\\pi = 110\\pi\\)",
+        "loesungsweg": "$$O = 2\\pi r^2 + 2\\pi r h = 50\\pi + 60\\pi = 110\\pi \\approx 345{,}6\\,\\text{cm}^2$$"
+      },
+      {
+        "id": 17,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Ein Zylinder hat \\(r = 6\\,\\text{cm}\\) und \\(h = 4\\,\\text{cm}\\). Was ist groesser: die Mantelflaeche oder die Summe der beiden Kreisflaechen?",
+        "optionen": ["Mantelflaeche (\\(M = 48\\pi\\))", "Kreisflaechen (\\(2 \\cdot 36\\pi = 72\\pi\\))", "Beide sind gleich gross"],
+        "korrekt": 1,
+        "tipp": "Berechne: Mantel \\(= 2\\pi \\cdot 6 \\cdot 4 = 48\\pi\\). Kreise \\(= 2\\pi \\cdot 36 = 72\\pi\\).",
+        "loesungsweg": "Mantelflaeche: \\(2\\pi \\cdot 6 \\cdot 4 = 48\\pi\\). Kreisflaechen: \\(2\\pi \\cdot 36 = 72\\pi\\). Die **Kreisflaechen** sind groesser, da \\(r > h\\)."
+      },
+      {
+        "id": 18,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Berechne die Mantelflaeche eines Zylinders mit \\(r = 7\\,\\text{cm}\\) und \\(h = 5\\,\\text{cm}\\). Runde auf eine Dezimalstelle.",
+        "loesung": 219.9,
+        "toleranz": 0.1,
+        "tipp": "\\(M = 2\\pi r h = 2\\pi \\cdot 7 \\cdot 5 = 70\\pi\\)",
+        "loesungsweg": "$$M = 2\\pi \\cdot 7 \\cdot 5 = 70\\pi \\approx 219{,}9\\,\\text{cm}^2$$"
+      },
+      // ========== LEVEL 4 -- Pyramide, Kegel, Kugel: Volumen berechnen ==========
+      {
+        "id": 19,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Berechne das Volumen einer quadratischen Pyramide mit Grundkante \\(a = 9\\,\\text{cm}\\) und Hoehe \\(h = 12\\,\\text{cm}\\). Antwort in \\(\\text{cm}^3\\).",
+        "loesung": 324,
+        "toleranz": 0,
+        "tipp": "\\(G = 9^2 = 81\\). Dann \\(V = \\frac{1}{3} \\cdot 81 \\cdot 12\\).",
+        "loesungsweg": "$$G = 9^2 = 81\\,\\text{cm}^2$$ $$V = \\frac{1}{3} \\cdot 81 \\cdot 12 = \\frac{972}{3} = 324\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 20,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Berechne das Volumen eines Kegels mit \\(r = 6\\,\\text{cm}\\) und \\(h = 10\\,\\text{cm}\\). Runde auf eine Dezimalstelle.",
+        "loesung": 377.0,
+        "toleranz": 0.1,
+        "tipp": "\\(V = \\frac{1}{3} \\pi r^2 h = \\frac{1}{3} \\pi \\cdot 36 \\cdot 10 = 120\\pi\\)",
+        "loesungsweg": "$$V = \\frac{1}{3} \\pi \\cdot 36 \\cdot 10 = 120\\pi \\approx 377{,}0\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 21,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Berechne das Volumen einer Kugel mit \\(r = 3\\,\\text{cm}\\). Runde auf eine Dezimalstelle.",
+        "loesung": 113.1,
+        "toleranz": 0.1,
+        "tipp": "\\(V = \\frac{4}{3} \\pi r^3 = \\frac{4}{3} \\pi \\cdot 27 = 36\\pi\\)",
+        "loesungsweg": "$$V = \\frac{4}{3} \\pi \\cdot 27 = 36\\pi \\approx 113{,}1\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 22,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Ein Kegel hat \\(r = 4\\,\\text{cm}\\) und \\(h = 9\\,\\text{cm}\\). Berechne das Volumen. Runde auf eine Dezimalstelle.",
+        "loesung": 150.8,
+        "toleranz": 0.1,
+        "tipp": "\\(V = \\frac{1}{3} \\pi \\cdot 16 \\cdot 9 = 48\\pi\\)",
+        "loesungsweg": "$$V = \\frac{1}{3} \\pi \\cdot 16 \\cdot 9 = 48\\pi \\approx 150{,}8\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 23,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Berechne das Volumen einer Kugel mit \\(r = 6\\,\\text{cm}\\). Runde auf eine Dezimalstelle.",
+        "loesung": 904.8,
+        "toleranz": 0.1,
+        "tipp": "\\(V = \\frac{4}{3} \\pi \\cdot 216 = 288\\pi\\)",
+        "loesungsweg": "$$V = \\frac{4}{3} \\pi \\cdot 216 = 288\\pi \\approx 904{,}8\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 24,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Eine Pyramide hat eine rechteckige Grundflaeche mit \\(a = 8\\,\\text{cm}\\) und \\(b = 6\\,\\text{cm}\\) und die Hoehe \\(h = 15\\,\\text{cm}\\). Berechne das Volumen in \\(\\text{cm}^3\\).",
+        "loesung": 240,
+        "toleranz": 0,
+        "tipp": "\\(G = 8 \\cdot 6 = 48\\). Dann \\(V = \\frac{1}{3} \\cdot 48 \\cdot 15\\).",
+        "loesungsweg": "$$G = 8 \\cdot 6 = 48\\,\\text{cm}^2$$ $$V = \\frac{1}{3} \\cdot 48 \\cdot 15 = \\frac{720}{3} = 240\\,\\text{cm}^3$$"
+      },
+      // ========== LEVEL 5 -- Rueckwaerts rechnen, Oberflaeche Kegel ==========
+      {
+        "id": 25,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Ein Zylinder hat \\(V = 500\\,\\text{cm}^3\\) und \\(r = 5\\,\\text{cm}\\). Berechne die Hoehe \\(h\\) in cm. Runde auf eine Dezimalstelle.",
+        "loesung": 6.4,
+        "toleranz": 0.1,
+        "tipp": "\\(h = \\frac{V}{\\pi r^2} = \\frac{500}{25\\pi}\\)",
+        "loesungsweg": "$$h = \\frac{V}{\\pi r^2} = \\frac{500}{25\\pi} = \\frac{20}{\\pi} \\approx 6{,}4\\,\\text{cm}$$"
+      },
+      {
+        "id": 26,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Ein Kegel hat \\(V = 150\\pi\\,\\text{cm}^3\\) und \\(h = 18\\,\\text{cm}\\). Berechne den Radius \\(r\\) in cm.",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "\\(V = \\frac{1}{3} \\pi r^2 h \\Rightarrow r^2 = \\frac{3V}{\\pi h} = \\frac{3 \\cdot 150\\pi}{\\pi \\cdot 18}\\)",
+        "loesungsweg": "$$r^2 = \\frac{3 \\cdot 150\\pi}{\\pi \\cdot 18} = \\frac{450}{18} = 25 \\quad \\Rightarrow \\quad r = 5\\,\\text{cm}$$"
+      },
+      {
+        "id": 27,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Eine Kugel hat das Volumen \\(V = 288\\pi\\,\\text{cm}^3\\). Berechne den Radius \\(r\\) in cm.",
+        "loesung": 6,
+        "toleranz": 0,
+        "tipp": "\\(V = \\frac{4}{3} \\pi r^3 \\Rightarrow r^3 = \\frac{3V}{4\\pi} = \\frac{3 \\cdot 288\\pi}{4\\pi}\\)",
+        "loesungsweg": "$$r^3 = \\frac{3 \\cdot 288\\pi}{4\\pi} = \\frac{864}{4} = 216 \\quad \\Rightarrow \\quad r = \\sqrt[3]{216} = 6\\,\\text{cm}$$"
+      },
+      {
+        "id": 28,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Berechne die Oberflaeche eines Kegels mit \\(r = 3\\,\\text{cm}\\) und Mantellinie \\(s = 5\\,\\text{cm}\\).<br>Formel: \\(O = \\pi r^2 + \\pi r s\\). Runde auf eine Dezimalstelle.",
+        "loesung": 75.4,
+        "toleranz": 0.1,
+        "tipp": "\\(O = \\pi \\cdot 9 + \\pi \\cdot 3 \\cdot 5 = 9\\pi + 15\\pi = 24\\pi\\)",
+        "loesungsweg": "$$O = \\pi r^2 + \\pi r s = 9\\pi + 15\\pi = 24\\pi \\approx 75{,}4\\,\\text{cm}^2$$"
+      },
+      {
+        "id": 29,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Ein Kegel hat \\(r = 5\\,\\text{cm}\\) und \\(h = 12\\,\\text{cm}\\). Berechne zuerst die Mantellinie \\(s = \\sqrt{r^2 + h^2}\\) und dann die Oberflaeche. Runde auf eine Dezimalstelle.",
+        "loesung": 282.7,
+        "toleranz": 0.1,
+        "tipp": "\\(s = \\sqrt{25 + 144} = \\sqrt{169} = 13\\). Dann \\(O = \\pi \\cdot 25 + \\pi \\cdot 5 \\cdot 13 = 25\\pi + 65\\pi = 90\\pi\\).",
+        "loesungsweg": "$$s = \\sqrt{5^2 + 12^2} = \\sqrt{169} = 13\\,\\text{cm}$$ $$O = \\pi r^2 + \\pi r s = 25\\pi + 65\\pi = 90\\pi \\approx 282{,}7\\,\\text{cm}^2$$"
+      },
+      {
+        "id": 30,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Eine quadratische Pyramide hat \\(V = 250\\,\\text{cm}^3\\) und die Grundkante \\(a = 5\\,\\text{cm}\\). Berechne die Hoehe \\(h\\) in cm.",
+        "loesung": 30,
+        "toleranz": 0,
+        "tipp": "\\(h = \\frac{3V}{a^2} = \\frac{3 \\cdot 250}{25}\\)",
+        "loesungsweg": "$$h = \\frac{3V}{a^2} = \\frac{750}{25} = 30\\,\\text{cm}$$"
+      },
+      // ========== LEVEL 6 -- Zusammengesetzte Koerper, Restkoerper, Umfuellaufgaben ==========
+      {
+        "id": 31,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Auf einem Zylinder (\\(r = 3\\,\\text{cm}\\), \\(h = 8\\,\\text{cm}\\)) sitzt ein Kegel mit gleichem Radius und Kegelhoehe \\(h_K = 6\\,\\text{cm}\\). Berechne das Gesamtvolumen. Runde auf eine Dezimalstelle.",
+        "loesung": 282.7,
+        "toleranz": 0.1,
+        "tipp": "\\(V_{\\text{Zyl}} = \\pi \\cdot 9 \\cdot 8 = 72\\pi\\). \\(V_{\\text{Kegel}} = \\frac{1}{3} \\pi \\cdot 9 \\cdot 6 = 18\\pi\\). Addiere.",
+        "loesungsweg": "$$V_{\\text{Zyl}} = \\pi \\cdot 9 \\cdot 8 = 72\\pi$$ $$V_{\\text{Kegel}} = \\frac{1}{3} \\pi \\cdot 9 \\cdot 6 = 18\\pi$$ $$V_{\\text{ges}} = 72\\pi + 18\\pi = 90\\pi \\approx 282{,}7\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 32,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Aus einem Quader (\\(a = 10\\,\\text{cm}\\), \\(b = 10\\,\\text{cm}\\), \\(c = 10\\,\\text{cm}\\)) wird eine Halbkugel mit \\(r = 5\\,\\text{cm}\\) herausgeschnitten. Berechne das Restvolumen. Runde auf eine Dezimalstelle.",
+        "loesung": 738.2,
+        "toleranz": 0.1,
+        "tipp": "\\(V_{\\text{Quader}} = 1000\\). Halbkugel: \\(V = \\frac{1}{2} \\cdot \\frac{4}{3} \\pi \\cdot 125 = \\frac{250\\pi}{3}\\).",
+        "loesungsweg": "$$V_{\\text{Quader}} = 1000\\,\\text{cm}^3$$ $$V_{\\text{Halbkugel}} = \\frac{1}{2} \\cdot \\frac{4}{3} \\pi \\cdot 125 = \\frac{250\\pi}{3} \\approx 261{,}8$$ $$V_{\\text{Rest}} = 1000 - 261{,}8 \\approx 738{,}2\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 33,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Ein Zylinder (\\(r = 4\\,\\text{cm}\\), \\(h = 20\\,\\text{cm}\\)) ist randvoll mit Wasser. Das Wasser wird in einen Kegel mit \\(r = 6\\,\\text{cm}\\) umgefuellt. Wie hoch steht das Wasser im Kegel? Runde auf eine Dezimalstelle.",
+        "loesung": 26.7,
+        "toleranz": 0.1,
+        "tipp": "\\(V_{\\text{Zyl}} = \\pi \\cdot 16 \\cdot 20 = 320\\pi\\). Kegel: \\(V = \\frac{1}{3} \\pi \\cdot 36 \\cdot h_K\\). Gleichsetzen.",
+        "loesungsweg": "$$V_{\\text{Zyl}} = 320\\pi$$ $$320\\pi = \\frac{1}{3} \\pi \\cdot 36 \\cdot h_K = 12\\pi \\cdot h_K$$ $$h_K = \\frac{320}{12} = \\frac{80}{3} \\approx 26{,}7\\,\\text{cm}$$"
+      },
+      {
+        "id": 34,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Berechne die Oberflaeche einer Kugel mit \\(r = 5\\,\\text{cm}\\).<br>Formel: \\(O = 4\\pi r^2\\). Runde auf eine Dezimalstelle.",
+        "loesung": 314.2,
+        "toleranz": 0.1,
+        "tipp": "\\(O = 4\\pi \\cdot 25 = 100\\pi\\)",
+        "loesungsweg": "$$O = 4\\pi r^2 = 4\\pi \\cdot 25 = 100\\pi \\approx 314{,}2\\,\\text{cm}^2$$"
+      },
+      {
+        "id": 35,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Auf einem Quader (\\(a = 8\\,\\text{cm}\\), \\(b = 8\\,\\text{cm}\\), \\(c = 5\\,\\text{cm}\\)) sitzt eine quadratische Pyramide mit gleicher Grundflaeche und Pyramidenhoehe \\(h_P = 12\\,\\text{cm}\\). Berechne das Gesamtvolumen in \\(\\text{cm}^3\\).",
+        "loesung": 576,
+        "toleranz": 0,
+        "tipp": "\\(V_{\\text{Quader}} = 8 \\cdot 8 \\cdot 5 = 320\\). \\(V_{\\text{Pyr}} = \\frac{1}{3} \\cdot 64 \\cdot 12 = 256\\). Addiere.",
+        "loesungsweg": "$$V_{\\text{Quader}} = 8 \\cdot 8 \\cdot 5 = 320\\,\\text{cm}^3$$ $$V_{\\text{Pyramide}} = \\frac{1}{3} \\cdot 64 \\cdot 12 = \\frac{768}{3} = 256\\,\\text{cm}^3$$ $$V_{\\text{ges}} = 320 + 256 = 576\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 36,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Eine Kugel (\\(r = 3\\,\\text{cm}\\)) wird in einen Zylinder eingeschmolzen. Der Zylinder hat den Radius \\(r = 3\\,\\text{cm}\\). Wie hoch wird der Zylinder? Runde auf eine Dezimalstelle.",
+        "loesung": 4.0,
+        "toleranz": 0.1,
+        "tipp": "\\(V_{\\text{Kugel}} = \\frac{4}{3} \\pi \\cdot 27 = 36\\pi\\). Zylinder: \\(V = \\pi \\cdot 9 \\cdot h\\). Gleichsetzen.",
+        "loesungsweg": "$$V_{\\text{Kugel}} = \\frac{4}{3} \\pi \\cdot 27 = 36\\pi$$ $$36\\pi = \\pi \\cdot 9 \\cdot h \\quad \\Rightarrow \\quad h = \\frac{36}{9} = 4{,}0\\,\\text{cm}$$"
+      }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

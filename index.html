@@ -188,13 +188,19 @@
   body.filter-gk .lk-only { display: none; }
   /* GK/LK-Leiste ausblenden wenn höchste Klasse ≤ 10 */
   body.filter-klasse-7  [data-filter-group="gklk"],
+  body.filter-klasse-8  [data-filter-group="gklk"],
   body.filter-klasse-9  [data-filter-group="gklk"],
   body.filter-klasse-10 [data-filter-group="gklk"] { display: none; }
   /* "Klasse X" = zeige alles ≤ X, blende alles > X aus */
+  body.filter-klasse-7  .col-8,
   body.filter-klasse-7  .col-9,
   body.filter-klasse-7  .col-10,
   body.filter-klasse-7  .col-11,
   body.filter-klasse-7  .col-12 { display: none; }
+  body.filter-klasse-8  .col-9,
+  body.filter-klasse-8  .col-10,
+  body.filter-klasse-8  .col-11,
+  body.filter-klasse-8  .col-12 { display: none; }
   body.filter-klasse-9  .col-10,
   body.filter-klasse-9  .col-11,
   body.filter-klasse-9  .col-12 { display: none; }
@@ -325,6 +331,7 @@
   <div class="filter-bar" data-filter-group="klasse">
     <button class="filter-btn active" data-filter="alle">Alle</button>
     <button class="filter-btn" data-filter="7">Klasse 7</button>
+    <button class="filter-btn" data-filter="8">Klasse 8</button>
     <button class="filter-btn" data-filter="9">Klasse 9</button>
     <button class="filter-btn" data-filter="10">Klasse 10</button>
     <button class="filter-btn" data-filter="11">Klasse 11</button>
@@ -432,6 +439,100 @@
       </div>
 
     </div><!-- /col 7 -->
+
+    <!-- ═══════════ Klasse 8 ═══════════ -->
+    <div class="col col-8">
+      <div class="column-header">Klasse 8</div>
+
+      <!-- A — Algebra -->
+      <div class="section-card">
+        <div class="section-title analysis">A &middot; Terme &amp; Gleichungen</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/8-terme-binomische-formeln.html" data-key="spirale-8-terme-binomische-formeln">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Terme &amp; Binomische Formeln</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/8-gleichungen-linear.html" data-key="spirale-8-gleichungen-linear">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Lineare Gleichungen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/8-quadratwurzeln-reelle-zahlen.html" data-key="spirale-8-quadratwurzeln-reelle-zahlen">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Quadratwurzeln &amp; Reelle Zahlen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- B — Funktionen -->
+      <div class="section-card">
+        <div class="section-title analysis">B &middot; Lineare Funktionen</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/8-lineare-funktionen-grund.html" data-key="spirale-8-lineare-funktionen-grund">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Lineare Funktionen &mdash; Grundlagen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/8-lineare-funktionen-anwendungen.html" data-key="spirale-8-lineare-funktionen-anwendungen">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Lineare Funktionen &mdash; Anwendungen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- C — Geometrie -->
+      <div class="section-card">
+        <div class="section-title geometrie">C &middot; Geometrie</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/8-pythagoras.html" data-key="spirale-8-pythagoras">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Satz des Pythagoras</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/8-aehnlichkeit-streckung.html" data-key="spirale-8-aehnlichkeit-streckung">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">&Auml;hnlichkeit &amp; Zentr. Streckung</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/8-koerperberechnung.html" data-key="spirale-8-koerperberechnung">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">K&ouml;rperberechnung</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/8-kreise-winkel.html" data-key="spirale-8-kreise-winkel">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Kreise &amp; Winkel am Kreis</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- D — Stochastik -->
+      <div class="section-card">
+        <div class="section-title stochastik">D &middot; Stochastik</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/8-zufallsversuche-mehrstufig.html" data-key="spirale-8-zufallsversuche-mehrstufig">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Mehrstufige Zufallsversuche</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /col 8 -->
 
     <!-- ═══════════ Klasse 9 ═══════════ -->
     <div class="col col-9">
@@ -1060,8 +1161,9 @@
   // ── Filter generisch ────────────────────────────────────────
 
   function applyKlasseFilter(mode) {
-    document.body.classList.remove('filter-klasse-7', 'filter-klasse-9', 'filter-klasse-10', 'filter-klasse-11', 'filter-klasse-12');
+    document.body.classList.remove('filter-klasse-7', 'filter-klasse-8', 'filter-klasse-9', 'filter-klasse-10', 'filter-klasse-11', 'filter-klasse-12');
     if (mode === '7') document.body.classList.add('filter-klasse-7');
+    else if (mode === '8') document.body.classList.add('filter-klasse-8');
     else if (mode === '9') document.body.classList.add('filter-klasse-9');
     else if (mode === '10') document.body.classList.add('filter-klasse-10');
     else if (mode === '11') document.body.classList.add('filter-klasse-11');

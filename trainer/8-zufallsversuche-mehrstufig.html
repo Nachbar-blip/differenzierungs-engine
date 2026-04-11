@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mehrstufige Zufallsversuche - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '8-zufallsversuche-mehrstufig';
+    const THEMA_CONFIG = { name: 'Mehrstufige Zufallsversuche', bereich: 'stochastik' };
+    const AUFGABEN = [
+
+      // ===============================================================
+      // Level 1 -- Baumdiagramm lesen, Pfade zaehlen, Ergebnismenge
+      // ===============================================================
+
+      {
+        id: 1, level: 1, typ: 'mc',
+        frage: 'Eine Muenze wird zweimal geworfen. Wie viele verschiedene Ergebnisse (Pfade im Baumdiagramm) gibt es?',
+        optionen: ['2', '3', '4', '6'],
+        korrekt: 2,
+        tipp: 'Zeichne ein Baumdiagramm: Bei jedem Wurf gibt es 2 Moeglichkeiten.',
+        loesungsweg: 'Beim ersten Wurf: 2 Moeglichkeiten (K, Z). Beim zweiten Wurf: wieder 2. Insgesamt \\(2 \\cdot 2 = 4\\) Pfade: KK, KZ, ZK, ZZ.'
+      },
+      {
+        id: 2, level: 1, typ: 'mc',
+        frage: 'Welche Ergebnismenge gehoert zum zweimaligen Muenzwurf?',
+        optionen: [
+          '\\(\\Omega = \\{K, Z\\}\\)',
+          '\\(\\Omega = \\{KK, KZ, ZK, ZZ\\}\\)',
+          '\\(\\Omega = \\{KK, ZZ\\}\\)',
+          '\\(\\Omega = \\{K, Z, KK, ZZ\\}\\)'
+        ],
+        korrekt: 1,
+        tipp: 'Jedes Ergebnis des zweistufigen Versuchs ist ein Paar aus erstem und zweitem Wurf.',
+        loesungsweg: 'Beim zweistufigen Versuch besteht jedes Ergebnis aus zwei Teilergebnissen. Alle Kombinationen: \\(\\Omega = \\{KK, KZ, ZK, ZZ\\}\\).'
+      },
+      {
+        id: 3, level: 1, typ: 'numerisch',
+        frage: 'Ein Wuerfel wird zweimal geworfen. Wie viele Pfade hat das Baumdiagramm insgesamt?',
+        loesung: 36, toleranz: 0,
+        tipp: 'Erster Wurf: 6 Moeglichkeiten. Zweiter Wurf: 6 Moeglichkeiten.',
+        loesungsweg: 'Anzahl der Pfade: \\(6 \\cdot 6 = 36\\).'
+      },
+      {
+        id: 4, level: 1, typ: 'mc',
+        frage: 'Beim Baumdiagramm: Was steht an den Aesten (Verzweigungen)?',
+        optionen: [
+          'Die Ergebnisse des Gesamtversuchs',
+          'Die moeglichen Teilergebnisse und ihre Wahrscheinlichkeiten',
+          'Nur die Ergebnismenge',
+          'Die Summe aller Wahrscheinlichkeiten'
+        ],
+        korrekt: 1,
+        tipp: 'An jedem Ast des Baumdiagramms stehen zwei Informationen.',
+        loesungsweg: 'An jedem Ast steht das Teilergebnis (z. B. Kopf oder Zahl) und die zugehoerige Wahrscheinlichkeit.'
+      },
+      {
+        id: 5, level: 1, typ: 'numerisch',
+        frage: 'Eine Muenze wird dreimal geworfen. Wie viele verschiedene Ergebnisse gibt es?',
+        loesung: 8, toleranz: 0,
+        tipp: 'Bei jedem Wurf gibt es 2 Moeglichkeiten. Multipliziere fuer alle Stufen.',
+        loesungsweg: 'Anzahl der Ergebnisse: \\(2 \\cdot 2 \\cdot 2 = 2^3 = 8\\).'
+      },
+      {
+        id: 6, level: 1, typ: 'mc',
+        frage: 'Eine Muenze wird geworfen und dann ein Wuerfel. Wie viele Pfade hat das Baumdiagramm?',
+        optionen: ['6', '8', '12', '36'],
+        korrekt: 2,
+        tipp: 'Die Muenze hat 2, der Wuerfel 6 Moeglichkeiten.',
+        loesungsweg: 'Anzahl der Pfade: \\(2 \\cdot 6 = 12\\). Z. B. (K,1), (K,2), ..., (K,6), (Z,1), ..., (Z,6).'
+      },
+
+      // ===============================================================
+      // Level 2 -- Produktregel (1. Pfadregel)
+      // ===============================================================
+
+      {
+        id: 7, level: 2, typ: 'mc',
+        frage: 'Eine Muenze wird geworfen und dann ein Wuerfel. Wie gross ist \\(P(\\text{Kopf und 6})\\)?',
+        optionen: [
+          '\\(\\frac{1}{2}\\)',
+          '\\(\\frac{1}{6}\\)',
+          '\\(\\frac{1}{12}\\)',
+          '\\(\\frac{1}{8}\\)'
+        ],
+        korrekt: 2,
+        tipp: '1. Pfadregel: Die Wahrscheinlichkeiten entlang eines Pfades werden multipliziert.',
+        loesungsweg: '\\(P(\\text{Kopf und 6}) = P(\\text{Kopf}) \\cdot P(\\text{6}) = \\frac{1}{2} \\cdot \\frac{1}{6} = \\frac{1}{12}\\).'
+      },
+      {
+        id: 8, level: 2, typ: 'numerisch',
+        frage: 'Eine Muenze wird zweimal geworfen. Wie gross ist \\(P(\\text{Kopf, Kopf})\\)? Gib das Ergebnis als Dezimalzahl ein.',
+        loesung: 0.25, toleranz: 0.01,
+        tipp: 'Produktregel: \\(P(\\text{KK}) = P(K) \\cdot P(K)\\).',
+        loesungsweg: '\\(P(\\text{KK}) = \\frac{1}{2} \\cdot \\frac{1}{2} = \\frac{1}{4} = 0{,}25\\).'
+      },
+      {
+        id: 9, level: 2, typ: 'mc',
+        frage: 'Wie lautet die 1. Pfadregel?',
+        optionen: [
+          'Die Wahrscheinlichkeiten verschiedener Pfade werden addiert',
+          'Die Wahrscheinlichkeiten entlang eines Pfades werden multipliziert',
+          'Die Wahrscheinlichkeiten entlang eines Pfades werden addiert',
+          'Die Wahrscheinlichkeiten aller Pfade ergeben zusammen 2'
+        ],
+        korrekt: 1,
+        tipp: 'Die 1. Pfadregel betrifft einen einzelnen Pfad im Baumdiagramm.',
+        loesungsweg: '1. Pfadregel (Produktregel): Die Wahrscheinlichkeit eines Pfades ist das Produkt der Einzelwahrscheinlichkeiten entlang dieses Pfades.'
+      },
+      {
+        id: 10, level: 2, typ: 'mc',
+        frage: 'Ein Wuerfel wird zweimal geworfen. Wie gross ist \\(P(\\text{erst 3, dann 5})\\)?',
+        optionen: [
+          '\\(\\frac{1}{6}\\)',
+          '\\(\\frac{2}{6}\\)',
+          '\\(\\frac{1}{12}\\)',
+          '\\(\\frac{1}{36}\\)'
+        ],
+        korrekt: 3,
+        tipp: 'Produktregel: \\(\\frac{1}{6} \\cdot \\frac{1}{6}\\).',
+        loesungsweg: '\\(P(\\text{3 und 5}) = \\frac{1}{6} \\cdot \\frac{1}{6} = \\frac{1}{36}\\).'
+      },
+      {
+        id: 11, level: 2, typ: 'numerisch',
+        frage: 'Eine Ampel ist mit Wahrscheinlichkeit \\(0{,}6\\) gruen. Du faehrst an zwei unabhaengigen Ampeln vorbei. Wie gross ist \\(P(\\text{beide gruen})\\)?',
+        loesung: 0.36, toleranz: 0.01,
+        tipp: 'Produktregel: \\(P = 0{,}6 \\cdot 0{,}6\\).',
+        loesungsweg: '\\(P(\\text{beide gruen}) = 0{,}6 \\cdot 0{,}6 = 0{,}36\\).'
+      },
+      {
+        id: 12, level: 2, typ: 'numerisch',
+        frage: 'Ein Gluecksrad hat \\(\\frac{1}{4}\\) rot und \\(\\frac{3}{4}\\) blau. Es wird zweimal gedreht. Wie gross ist \\(P(\\text{erst rot, dann blau})\\)? Gib das Ergebnis als Dezimalzahl ein.',
+        loesung: 0.1875, toleranz: 0.01,
+        tipp: 'Produktregel: \\(\\frac{1}{4} \\cdot \\frac{3}{4}\\).',
+        loesungsweg: '\\(P(\\text{rot, blau}) = \\frac{1}{4} \\cdot \\frac{3}{4} = \\frac{3}{16} = 0{,}1875\\).'
+      },
+
+      // ===============================================================
+      // Level 3 -- Summenregel (2. Pfadregel)
+      // ===============================================================
+
+      {
+        id: 13, level: 3, typ: 'mc',
+        frage: 'Wie lautet die 2. Pfadregel?',
+        optionen: [
+          'Man multipliziert die Wahrscheinlichkeiten entlang eines Pfades',
+          'Man addiert die Wahrscheinlichkeiten aller Pfade, die zum Ereignis gehoeren',
+          'Man subtrahiert die Pfadwahrscheinlichkeiten voneinander',
+          'Man teilt die Pfadwahrscheinlichkeit durch die Anzahl der Pfade'
+        ],
+        korrekt: 1,
+        tipp: 'Die 2. Pfadregel kommt zum Einsatz, wenn mehrere Pfade zu einem Ereignis gehoeren.',
+        loesungsweg: '2. Pfadregel (Summenregel): Gehoeren mehrere Pfade zu einem Ereignis, werden ihre Wahrscheinlichkeiten addiert.'
+      },
+      {
+        id: 14, level: 3, typ: 'numerisch',
+        frage: 'Eine Muenze wird zweimal geworfen. Wie gross ist \\(P(\\text{genau einmal Kopf})\\)? Gib das Ergebnis als Dezimalzahl ein.',
+        loesung: 0.5, toleranz: 0.01,
+        tipp: 'Es gibt zwei Pfade mit genau einmal Kopf: KZ und ZK.',
+        loesungsweg: '\\(P(\\text{KZ}) = \\frac{1}{2} \\cdot \\frac{1}{2} = \\frac{1}{4}\\). \\(P(\\text{ZK}) = \\frac{1}{4}\\). Summenregel: \\(P = \\frac{1}{4} + \\frac{1}{4} = \\frac{1}{2} = 0{,}5\\).'
+      },
+      {
+        id: 15, level: 3, typ: 'numerisch',
+        frage: 'Ein Gluecksrad hat \\(\\frac{1}{3}\\) rot und \\(\\frac{2}{3}\\) blau. Es wird zweimal gedreht. Wie gross ist \\(P(\\text{genau einmal rot})\\)? Runde auf zwei Nachkommastellen.',
+        loesung: 0.44, toleranz: 0.01,
+        tipp: 'Zwei Pfade: rot-blau und blau-rot. Berechne jeden Pfad mit der Produktregel und addiere.',
+        loesungsweg: '\\(P(\\text{RB}) = \\frac{1}{3} \\cdot \\frac{2}{3} = \\frac{2}{9}\\). \\(P(\\text{BR}) = \\frac{2}{3} \\cdot \\frac{1}{3} = \\frac{2}{9}\\). Summenregel: \\(P = \\frac{2}{9} + \\frac{2}{9} = \\frac{4}{9} \\approx 0{,}44\\).'
+      },
+      {
+        id: 16, level: 3, typ: 'mc',
+        frage: 'Ein Wuerfel wird zweimal geworfen. Wie gross ist \\(P(\\text{Augensumme 3})\\)?',
+        optionen: [
+          '\\(\\frac{1}{36}\\)',
+          '\\(\\frac{2}{36} = \\frac{1}{18}\\)',
+          '\\(\\frac{3}{36} = \\frac{1}{12}\\)',
+          '\\(\\frac{6}{36} = \\frac{1}{6}\\)'
+        ],
+        korrekt: 1,
+        tipp: 'Welche Paare ergeben Summe 3? (1,2) und (2,1).',
+        loesungsweg: 'Guenstige Pfade: (1,2) und (2,1). Jeder hat Wahrscheinlichkeit \\(\\frac{1}{36}\\). Summenregel: \\(P = \\frac{1}{36} + \\frac{1}{36} = \\frac{2}{36} = \\frac{1}{18}\\).'
+      },
+      {
+        id: 17, level: 3, typ: 'numerisch',
+        frage: 'Muenze und Wuerfel: Wie gross ist \\(P(\\text{Kopf und gerade Zahl})\\)? Gib das Ergebnis als Dezimalzahl ein.',
+        loesung: 0.25, toleranz: 0.01,
+        tipp: 'Gerade Zahlen: 2, 4, 6. Das sind 3 Pfade, die zum Ereignis gehoeren.',
+        loesungsweg: 'Guenstige Pfade: (K,2), (K,4), (K,6). Jeder hat \\(P = \\frac{1}{2} \\cdot \\frac{1}{6} = \\frac{1}{12}\\). Summenregel: \\(P = 3 \\cdot \\frac{1}{12} = \\frac{3}{12} = \\frac{1}{4} = 0{,}25\\).'
+      },
+      {
+        id: 18, level: 3, typ: 'numerisch',
+        frage: 'Ein Wuerfel wird zweimal geworfen. Wie gross ist \\(P(\\text{Augensumme 7})\\)? Runde auf zwei Nachkommastellen.',
+        loesung: 0.17, toleranz: 0.01,
+        tipp: 'Welche Paare ergeben Summe 7? Zaehle alle: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1).',
+        loesungsweg: 'Guenstige Pfade: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1) -- das sind 6 Stueck. \\(P = \\frac{6}{36} = \\frac{1}{6} \\approx 0{,}17\\).'
+      },
+
+      // ===============================================================
+      // Level 4 -- Ziehen ohne Zuruecklegen
+      // ===============================================================
+
+      {
+        id: 19, level: 4, typ: 'numerisch',
+        frage: 'In einer Urne sind 3 rote und 2 blaue Kugeln. Du ziehst zweimal ohne Zuruecklegen. Wie gross ist \\(P(\\text{2x rot})\\)? Gib das Ergebnis als Dezimalzahl ein.',
+        loesung: 0.3, toleranz: 0.01,
+        tipp: 'Erster Zug: \\(\\frac{3}{5}\\). Zweiter Zug (eine rote Kugel weniger): \\(\\frac{2}{4}\\).',
+        loesungsweg: '\\(P(\\text{2x rot}) = \\frac{3}{5} \\cdot \\frac{2}{4} = \\frac{6}{20} = \\frac{3}{10} = 0{,}3\\).'
+      },
+      {
+        id: 20, level: 4, typ: 'mc',
+        frage: 'Worin unterscheidet sich Ziehen ohne Zuruecklegen vom Ziehen mit Zuruecklegen?',
+        optionen: [
+          'Die Wahrscheinlichkeiten aendern sich von Stufe zu Stufe',
+          'Es gibt weniger Stufen im Baumdiagramm',
+          'Die Wahrscheinlichkeiten bleiben auf jeder Stufe gleich',
+          'Es gibt keine Pfadregel mehr'
+        ],
+        korrekt: 0,
+        tipp: 'Wenn eine Kugel nicht zurueckgelegt wird, aendert sich die Gesamtanzahl.',
+        loesungsweg: 'Ohne Zuruecklegen verringert sich die Gesamtanzahl und ggf. die Anzahl guenstiger Kugeln. Die Wahrscheinlichkeiten im Baum aendern sich von Stufe zu Stufe.'
+      },
+      {
+        id: 21, level: 4, typ: 'numerisch',
+        frage: 'Urne mit 4 roten und 6 blauen Kugeln. Zweimal ziehen ohne Zuruecklegen. Wie gross ist \\(P(\\text{erst rot, dann blau})\\)? Runde auf zwei Nachkommastellen.',
+        loesung: 0.27, toleranz: 0.01,
+        tipp: 'Erster Zug rot: \\(\\frac{4}{10}\\). Zweiter Zug blau: \\(\\frac{6}{9}\\) (Gesamtzahl sinkt um 1).',
+        loesungsweg: '\\(P = \\frac{4}{10} \\cdot \\frac{6}{9} = \\frac{24}{90} = \\frac{4}{15} \\approx 0{,}27\\).'
+      },
+      {
+        id: 22, level: 4, typ: 'numerisch',
+        frage: 'Urne mit 5 gruenen und 3 gelben Kugeln. Zweimal ziehen ohne Zuruecklegen. Wie gross ist \\(P(\\text{2x gruen})\\)? Runde auf zwei Nachkommastellen.',
+        loesung: 0.36, toleranz: 0.01,
+        tipp: 'Erster Zug gruen: \\(\\frac{5}{8}\\). Zweiter Zug gruen: \\(\\frac{4}{7}\\).',
+        loesungsweg: '\\(P(\\text{2x gruen}) = \\frac{5}{8} \\cdot \\frac{4}{7} = \\frac{20}{56} = \\frac{5}{14} \\approx 0{,}36\\).'
+      },
+      {
+        id: 23, level: 4, typ: 'numerisch',
+        frage: 'In einer Schachtel sind 6 Gewinne und 4 Nieten. Du ziehst zweimal ohne Zuruecklegen. Wie gross ist \\(P(\\text{2x Gewinn})\\)? Runde auf zwei Nachkommastellen.',
+        loesung: 0.33, toleranz: 0.01,
+        tipp: 'Erster Zug Gewinn: \\(\\frac{6}{10}\\). Zweiter Zug Gewinn: \\(\\frac{5}{9}\\).',
+        loesungsweg: '\\(P(\\text{2x Gewinn}) = \\frac{6}{10} \\cdot \\frac{5}{9} = \\frac{30}{90} = \\frac{1}{3} \\approx 0{,}33\\).'
+      },
+      {
+        id: 24, level: 4, typ: 'numerisch',
+        frage: 'Urne mit 3 roten und 2 blauen Kugeln. Zweimal ziehen ohne Zuruecklegen. Wie gross ist \\(P(\\text{2x blau})\\)? Gib das Ergebnis als Dezimalzahl ein.',
+        loesung: 0.1, toleranz: 0.01,
+        tipp: 'Erster Zug blau: \\(\\frac{2}{5}\\). Zweiter Zug blau: \\(\\frac{1}{4}\\).',
+        loesungsweg: '\\(P(\\text{2x blau}) = \\frac{2}{5} \\cdot \\frac{1}{4} = \\frac{2}{20} = \\frac{1}{10} = 0{,}1\\).'
+      },
+
+      // ===============================================================
+      // Level 5 -- Gegenereignis bei mehrstufigen Versuchen
+      // ===============================================================
+
+      {
+        id: 25, level: 5, typ: 'mc',
+        frage: 'Warum ist die Berechnung ueber das Gegenereignis manchmal einfacher?',
+        optionen: [
+          'Weil das Gegenereignis immer Wahrscheinlichkeit 0 hat',
+          'Weil man nur einen Pfad statt vieler Pfade berechnen muss',
+          'Weil die Summenregel nicht gilt',
+          'Weil man das Baumdiagramm nicht braucht'
+        ],
+        korrekt: 1,
+        tipp: 'Bei "mindestens eine 6" muesste man viele Pfade addieren. Das Gegenereignis "keine 6" hat oft nur einen Pfad.',
+        loesungsweg: 'Beispiel: \\(P(\\text{mind. eine 6 bei 3 Wuerfen})\\) hat viele guenstige Pfade. Das Gegenereignis \\(P(\\text{keine 6})\\) hat nur einen: \\(\\frac{5}{6} \\cdot \\frac{5}{6} \\cdot \\frac{5}{6}\\). Dann: \\(P = 1 - P(\\text{keine 6})\\).'
+      },
+      {
+        id: 26, level: 5, typ: 'numerisch',
+        frage: 'Ein Wuerfel wird dreimal geworfen. Wie gross ist \\(P(\\text{mindestens eine 6})\\)? Runde auf zwei Nachkommastellen. $$P = 1 - P(\\text{keine 6})^3$$',
+        loesung: 0.42, toleranz: 0.01,
+        tipp: '\\(P(\\text{keine 6 in einem Wurf}) = \\frac{5}{6}\\). Fuer drei Wuerfe: \\(\\left(\\frac{5}{6}\\right)^3\\).',
+        loesungsweg: '\\(P(\\text{keine 6}) = \\left(\\frac{5}{6}\\right)^3 = \\frac{125}{216} \\approx 0{,}579\\). Also \\(P(\\text{mind. eine 6}) = 1 - 0{,}579 \\approx 0{,}42\\).'
+      },
+      {
+        id: 27, level: 5, typ: 'numerisch',
+        frage: 'Eine Muenze wird viermal geworfen. Wie gross ist \\(P(\\text{mindestens einmal Kopf})\\)? Runde auf zwei Nachkommastellen.',
+        loesung: 0.94, toleranz: 0.01,
+        tipp: 'Gegenereignis: kein einziges Mal Kopf, also 4x Zahl. \\(P(\\text{4x Zahl}) = \\left(\\frac{1}{2}\\right)^4\\).',
+        loesungsweg: '\\(P(\\text{kein Kopf}) = \\left(\\frac{1}{2}\\right)^4 = \\frac{1}{16} = 0{,}0625\\). Also \\(P(\\text{mind. 1x Kopf}) = 1 - 0{,}0625 = 0{,}9375 \\approx 0{,}94\\).'
+      },
+      {
+        id: 28, level: 5, typ: 'numerisch',
+        frage: 'Ein Gluecksrad hat \\(P(\\text{Gewinn}) = 0{,}2\\). Du drehst dreimal. Wie gross ist \\(P(\\text{mindestens ein Gewinn})\\)? Runde auf zwei Nachkommastellen.',
+        loesung: 0.49, toleranz: 0.01,
+        tipp: 'Gegenereignis: kein Gewinn in 3 Drehungen. \\(P(\\text{kein Gewinn}) = 0{,}8^3\\).',
+        loesungsweg: '\\(P(\\text{kein Gewinn}) = 0{,}8^3 = 0{,}512\\). Also \\(P(\\text{mind. 1 Gewinn}) = 1 - 0{,}512 = 0{,}488 \\approx 0{,}49\\).'
+      },
+      {
+        id: 29, level: 5, typ: 'numerisch',
+        frage: 'Ein Bauteil hat eine Ausfallwahrscheinlichkeit von \\(0{,}1\\). In einer Maschine sind 3 solche Bauteile (unabhaengig). Wie gross ist \\(P(\\text{mindestens ein Ausfall})\\)? Runde auf zwei Nachkommastellen.',
+        loesung: 0.27, toleranz: 0.01,
+        tipp: '\\(P(\\text{kein Ausfall}) = 0{,}9^3\\). Dann das Gegenereignis bilden.',
+        loesungsweg: '\\(P(\\text{kein Ausfall}) = 0{,}9^3 = 0{,}729\\). Also \\(P(\\text{mind. 1 Ausfall}) = 1 - 0{,}729 = 0{,}271 \\approx 0{,}27\\).'
+      },
+      {
+        id: 30, level: 5, typ: 'numerisch',
+        frage: 'Beim Lottospiel ist \\(P(\\text{Niete}) = 0{,}95\\) pro Spiel. Du spielst 5-mal. Wie gross ist \\(P(\\text{mindestens ein Gewinn})\\)? Runde auf zwei Nachkommastellen.',
+        loesung: 0.23, toleranz: 0.01,
+        tipp: '\\(P(\\text{5x Niete}) = 0{,}95^5\\). Rechne \\(1 - P(\\text{5x Niete})\\).',
+        loesungsweg: '\\(P(\\text{5x Niete}) = 0{,}95^5 \\approx 0{,}7738\\). Also \\(P(\\text{mind. 1 Gewinn}) = 1 - 0{,}7738 \\approx 0{,}23\\).'
+      },
+
+      // ===============================================================
+      // Level 6 -- Komplexe Anwendungen
+      // ===============================================================
+
+      {
+        id: 31, level: 6, typ: 'numerisch',
+        frage: 'Ein medizinischer Test erkennt eine Krankheit mit \\(P(\\text{positiv}|\\text{krank}) = 0{,}95\\). Die Krankheit hat \\(P(\\text{krank}) = 0{,}02\\). Wie gross ist \\(P(\\text{krank und positiv})\\)? Runde auf vier Nachkommastellen.',
+        loesung: 0.019, toleranz: 0.001,
+        tipp: 'Produktregel im Baumdiagramm: \\(P(\\text{krank und positiv}) = P(\\text{krank}) \\cdot P(\\text{positiv}|\\text{krank})\\).',
+        loesungsweg: '\\(P(\\text{krank und positiv}) = 0{,}02 \\cdot 0{,}95 = 0{,}019\\).'
+      },
+      {
+        id: 32, level: 6, typ: 'numerisch',
+        frage: 'Eine Fabrik hat 2 Maschinen. Maschine A produziert 60 % der Teile mit 3 % Ausschuss. Maschine B produziert 40 % mit 5 % Ausschuss. Wie gross ist \\(P(\\text{defektes Teil})\\) insgesamt? Runde auf zwei Nachkommastellen.',
+        loesung: 0.04, toleranz: 0.01,
+        tipp: 'Totale Wahrscheinlichkeit: \\(P(D) = P(A) \\cdot P(D|A) + P(B) \\cdot P(D|B)\\).',
+        loesungsweg: '\\(P(D) = 0{,}6 \\cdot 0{,}03 + 0{,}4 \\cdot 0{,}05 = 0{,}018 + 0{,}02 = 0{,}038 \\approx 0{,}04\\).'
+      },
+      {
+        id: 33, level: 6, typ: 'numerisch',
+        frage: 'Aus einer Urne mit 4 roten und 3 blauen Kugeln wird dreimal ohne Zuruecklegen gezogen. Wie gross ist \\(P(\\text{3x rot})\\)? Runde auf zwei Nachkommastellen.',
+        loesung: 0.11, toleranz: 0.01,
+        tipp: '\\(P = \\frac{4}{7} \\cdot \\frac{3}{6} \\cdot \\frac{2}{5}\\).',
+        loesungsweg: '\\(P(\\text{3x rot}) = \\frac{4}{7} \\cdot \\frac{3}{6} \\cdot \\frac{2}{5} = \\frac{24}{210} = \\frac{4}{35} \\approx 0{,}11\\).'
+      },
+      {
+        id: 34, level: 6, typ: 'mc',
+        frage: 'Ein Spiel kostet 2 Euro Einsatz. Du wuerfelst zweimal. Bei Pasch (gleiche Augenzahl) gewinnst du 10 Euro. Lohnt sich das Spiel?',
+        optionen: [
+          'Ja, der erwartete Gewinn ist positiv',
+          'Nein, der erwartete Gewinn ist negativ',
+          'Es ist ein faires Spiel',
+          'Das kann man nicht berechnen'
+        ],
+        korrekt: 1,
+        tipp: '\\(P(\\text{Pasch}) = \\frac{6}{36} = \\frac{1}{6}\\). Erwarteter Gewinn: \\(\\frac{1}{6} \\cdot 10 - 2\\).',
+        loesungsweg: '\\(P(\\text{Pasch}) = \\frac{6}{36} = \\frac{1}{6}\\). Erwartungswert: \\(\\frac{1}{6} \\cdot 10 - 2 = 1{,}67 - 2 = -0{,}33\\) Euro. Der erwartete Gewinn ist negativ -- das Spiel lohnt sich nicht.'
+      },
+      {
+        id: 35, level: 6, typ: 'numerisch',
+        frage: 'In einer Klasse sind 12 Maedchen und 8 Jungen. Es werden zufaellig 2 Schueler ohne Zuruecklegen fuer ein Projekt ausgewaehlt. Wie gross ist \\(P(\\text{gemischtes Team})\\)? Runde auf zwei Nachkommastellen.',
+        loesung: 0.51, toleranz: 0.01,
+        tipp: 'Gegenereignis: \\(P(\\text{2 Maedchen}) + P(\\text{2 Jungen})\\). Oder direkt: \\(P(\\text{MJ}) + P(\\text{JM})\\).',
+        loesungsweg: '\\(P(\\text{MJ}) = \\frac{12}{20} \\cdot \\frac{8}{19} = \\frac{96}{380}\\). \\(P(\\text{JM}) = \\frac{8}{20} \\cdot \\frac{12}{19} = \\frac{96}{380}\\). \\(P(\\text{gemischt}) = \\frac{192}{380} = \\frac{48}{95} \\approx 0{,}51\\).'
+      },
+      {
+        id: 36, level: 6, typ: 'numerisch',
+        frage: 'Ein Alarm geht mit \\(P = 0{,}01\\) pro Nacht fehlerhaft los. Wie gross ist \\(P(\\text{mindestens ein Fehlalarm in 30 Naechten})\\)? Runde auf zwei Nachkommastellen.',
+        loesung: 0.26, toleranz: 0.01,
+        tipp: 'Gegenereignis: kein Fehlalarm in 30 Naechten. \\(P(\\text{kein Fehlalarm}) = 0{,}99^{30}\\).',
+        loesungsweg: '\\(P(\\text{kein Fehlalarm}) = 0{,}99^{30} \\approx 0{,}7397\\). Also \\(P(\\text{mind. 1 Fehlalarm}) = 1 - 0{,}7397 \\approx 0{,}26\\).'
+      }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

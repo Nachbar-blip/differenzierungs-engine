@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lineare Funktionen — Anwendungen - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '8-lineare-funktionen-anwendungen';
+    const THEMA_CONFIG = { name: 'Lineare Funktionen — Anwendungen', bereich: 'funktionen' };
+    const AUFGABEN = [
+      // ========== LEVEL 1 — Alltagssituationen als lineare Funktion erkennen ==========
+      {
+        "id": 1,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Ein Taxi berechnet 3,50 Euro Grundgebuehr und 1,80 Euro pro Kilometer. Welche Funktion beschreibt den Fahrpreis \\(f(x)\\) in Abhaengigkeit von der Strecke \\(x\\) in km?",
+        "optionen": ["\\(f(x) = 1{,}80x + 3{,}50\\)", "\\(f(x) = 3{,}50x + 1{,}80\\)", "\\(f(x) = 5{,}30x\\)", "\\(f(x) = 1{,}80x - 3{,}50\\)"],
+        "korrekt": 0,
+        "tipp": "Die Grundgebuehr ist der y-Achsenabschnitt, der km-Preis ist die Steigung.",
+        "loesungsweg": "Grundgebuehr = 3,50 Euro (y-Achsenabschnitt), km-Preis = 1,80 Euro/km (Steigung). Also: $$f(x) = 1{,}80x + 3{,}50$$"
+      },
+      {
+        "id": 2,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Ein Handytarif kostet 9 Euro Grundgebuehr plus 0,12 Euro pro Minute. Wie hoch ist die Rechnung (in Euro) bei 50 Minuten Telefonieren?",
+        "loesung": 15,
+        "toleranz": 0,
+        "tipp": "Berechne: Grundgebuehr + Minutenpreis mal Anzahl der Minuten.",
+        "loesungsweg": "$$f(50) = 0{,}12 \\cdot 50 + 9 = 6 + 9 = 15 \\text{ Euro}$$"
+      },
+      {
+        "id": 3,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Ein Schwimmbad verlangt 4 Euro Eintritt und 2 Euro pro Stunde. Welche Groesse ist hier die Steigung \\(m\\)?",
+        "optionen": ["4 Euro (Eintritt)", "2 Euro pro Stunde", "6 Euro insgesamt", "Die Anzahl der Stunden"],
+        "korrekt": 1,
+        "tipp": "Die Steigung beschreibt, wie sich der Preis pro Zeiteinheit aendert.",
+        "loesungsweg": "Die Steigung ist der Preis pro Stunde: \\(m = 2\\) Euro/Stunde. Der Eintritt von 4 Euro ist der y-Achsenabschnitt \\(n\\)."
+      },
+      {
+        "id": 4,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Ein Pizzalieferdienst berechnet 2,50 Euro Liefergebuehr plus den Pizzapreis. Jede Pizza kostet 8 Euro. Stelle die Funktion auf und berechne die Kosten fuer 3 Pizzen (in Euro).",
+        "loesung": 26.5,
+        "toleranz": 0,
+        "tipp": "\\(f(x) = 8x + 2{,}50\\). Setze \\(x = 3\\) ein.",
+        "loesungsweg": "$$f(x) = 8x + 2{,}50$$ $$f(3) = 8 \\cdot 3 + 2{,}50 = 24 + 2{,}50 = 26{,}50 \\text{ Euro}$$"
+      },
+      {
+        "id": 5,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Welche Situation laesst sich NICHT durch eine lineare Funktion beschreiben?",
+        "optionen": ["Mietkosten: Grundmiete + Nebenkosten pro Monat", "Taxifahrt: Grundgebuehr + km-Preis", "Bevoelkerungswachstum: Verdopplung alle 10 Jahre", "Parkgebuehren: Grundgebuehr + Preis pro Stunde"],
+        "korrekt": 2,
+        "tipp": "Linear bedeutet: gleichmaessige Zunahme pro Einheit. Verdopplung ist exponentiell.",
+        "loesungsweg": "Eine Verdopplung alle 10 Jahre ist exponentielles Wachstum, keine lineare Zunahme. Alle anderen Situationen haben die Form \\(f(x) = mx + n\\)."
+      },
+      {
+        "id": 6,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Ein Streamingdienst kostet 5 Euro Grundgebuehr plus 1,50 Euro pro Film. Wie viel kostet es (in Euro), wenn man 4 Filme schaut?",
+        "loesung": 11,
+        "toleranz": 0,
+        "tipp": "\\(f(x) = 1{,}50x + 5\\). Setze \\(x = 4\\) ein.",
+        "loesungsweg": "$$f(4) = 1{,}50 \\cdot 4 + 5 = 6 + 5 = 11 \\text{ Euro}$$"
+      },
+      // ========== LEVEL 2 — Wertetabelle und Funktionswerte interpretieren ==========
+      {
+        "id": 7,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Ein Wasserbecken wird gleichmaessig gefuellt. Nach 2 Stunden sind 80 Liter drin, nach 5 Stunden 200 Liter. Wie viele Liter sind nach 3 Stunden im Becken?",
+        "loesung": 120,
+        "toleranz": 0,
+        "tipp": "Bestimme zuerst die Steigung: \\(m = \\frac{200 - 80}{5 - 2}\\).",
+        "loesungsweg": "Steigung: \\(m = \\frac{200 - 80}{5 - 2} = \\frac{120}{3} = 40\\) Liter/Stunde. Anfangswert: \\(80 = 40 \\cdot 2 + n \\Rightarrow n = 0\\). Also \\(f(x) = 40x\\). $$f(3) = 40 \\cdot 3 = 120 \\text{ Liter}$$"
+      },
+      {
+        "id": 8,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Ein Mietwagen kostet 30 Euro Tagesgebuehr plus 0,25 Euro pro km. Die Wertetabelle zeigt: \\(f(0) = 30\\), \\(f(100) = 55\\), \\(f(200) = 80\\). Was bedeutet \\(f(200) = 80\\)?",
+        "optionen": ["Nach 200 Minuten kostet es 80 Euro", "Bei 200 km Fahrt kostet der Mietwagen 80 Euro", "80 km kosten 200 Euro", "Der Wagen faehrt 80 km in 200 Minuten"],
+        "korrekt": 1,
+        "tipp": "\\(x\\) ist die gefahrene Strecke in km, \\(f(x)\\) sind die Gesamtkosten.",
+        "loesungsweg": "\\(f(200) = 80\\) bedeutet: Bei einer Fahrstrecke von 200 km betragen die Gesamtkosten 80 Euro. Probe: \\(0{,}25 \\cdot 200 + 30 = 50 + 30 = 80\\) Euro."
+      },
+      {
+        "id": 9,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Eine Kerze ist zu Beginn 24 cm lang und brennt pro Stunde 3 cm ab. Wie lang (in cm) ist die Kerze nach 5 Stunden?",
+        "loesung": 9,
+        "toleranz": 0,
+        "tipp": "Die Kerze wird kuerzer: \\(f(x) = -3x + 24\\).",
+        "loesungsweg": "$$f(x) = -3x + 24$$ $$f(5) = -3 \\cdot 5 + 24 = -15 + 24 = 9 \\text{ cm}$$"
+      },
+      {
+        "id": 10,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Ein Wasserspeicher hat zu Beginn 500 Liter. Pro Stunde fliessen 20 Liter ab. Welche Wertetabelle passt?",
+        "optionen": ["\\(f(0)=500,\\; f(5)=400,\\; f(10)=300\\)", "\\(f(0)=500,\\; f(5)=600,\\; f(10)=700\\)", "\\(f(0)=0,\\; f(5)=100,\\; f(10)=200\\)", "\\(f(0)=500,\\; f(5)=500,\\; f(10)=500\\)"],
+        "korrekt": 0,
+        "tipp": "Pro Stunde 20 Liter weniger: \\(f(x) = -20x + 500\\).",
+        "loesungsweg": "\\(f(x) = -20x + 500\\). Damit: \\(f(0) = 500\\), \\(f(5) = -100 + 500 = 400\\), \\(f(10) = -200 + 500 = 300\\)."
+      },
+      {
+        "id": 11,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Ein Handwerker berechnet 45 Euro Anfahrt und 35 Euro pro Arbeitsstunde. Erstelle die Funktion und berechne die Kosten (in Euro) fuer 4 Stunden Arbeit.",
+        "loesung": 185,
+        "toleranz": 0,
+        "tipp": "\\(f(x) = 35x + 45\\). Setze \\(x = 4\\) ein.",
+        "loesungsweg": "$$f(x) = 35x + 45$$ $$f(4) = 35 \\cdot 4 + 45 = 140 + 45 = 185 \\text{ Euro}$$"
+      },
+      {
+        "id": 12,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Ein Sparguthaben startet bei 200 Euro. Jeden Monat werden 25 Euro eingezahlt. Wie hoch (in Euro) ist das Guthaben nach 8 Monaten?",
+        "loesung": 400,
+        "toleranz": 0,
+        "tipp": "\\(f(x) = 25x + 200\\). Setze \\(x = 8\\) ein.",
+        "loesungsweg": "$$f(x) = 25x + 200$$ $$f(8) = 25 \\cdot 8 + 200 = 200 + 200 = 400 \\text{ Euro}$$"
+      },
+      // ========== LEVEL 3 — Graphen interpretieren, Steigung als Aenderungsrate ==========
+      {
+        "id": 13,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Der Graph einer Taxifahrt zeigt eine Gerade mit Steigung 2,20 und y-Achsenabschnitt 3,80. Was bedeutet die Steigung?",
+        "optionen": ["Die Fahrt dauert 2,20 Stunden", "Pro Kilometer steigt der Preis um 2,20 Euro", "Die Grundgebuehr betraegt 2,20 Euro", "Nach 2,20 km ist die Fahrt zu Ende"],
+        "korrekt": 1,
+        "tipp": "Die Steigung gibt an, wie sich der Funktionswert pro Einheit aendert.",
+        "loesungsweg": "Die Steigung \\(m = 2{,}20\\) bedeutet: Pro Kilometer erhoeht sich der Fahrpreis um 2,20 Euro. Der y-Achsenabschnitt 3,80 Euro ist die Grundgebuehr."
+      },
+      {
+        "id": 14,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Ein Graph zeigt den Wasserstand eines Beckens. Bei \\(x = 0\\) steht der Wasserstand bei 50 Liter, bei \\(x = 10\\) bei 200 Liter. Wie viele Liter fliessen pro Stunde zu?",
+        "loesung": 15,
+        "toleranz": 0,
+        "tipp": "Berechne die Steigung: \\(m = \\frac{200 - 50}{10 - 0}\\).",
+        "loesungsweg": "$$m = \\frac{200 - 50}{10 - 0} = \\frac{150}{10} = 15 \\text{ Liter pro Stunde}$$"
+      },
+      {
+        "id": 15,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Eine Gerade faellt von links nach rechts. Im Kontext beschreibt sie den Benzinverbrauch eines Autos (y-Achse: Liter im Tank, x-Achse: gefahrene km). Was bedeutet die negative Steigung?",
+        "optionen": ["Das Auto faehrt rueckwaerts", "Pro Kilometer verringert sich der Tankinhalt", "Der Tank wird voller", "Das Auto steht still"],
+        "korrekt": 1,
+        "tipp": "Eine negative Steigung bedeutet: Der Funktionswert nimmt ab.",
+        "loesungsweg": "Die negative Steigung bedeutet, dass der Tankinhalt mit zunehmender Fahrstrecke abnimmt. Pro Kilometer wird eine bestimmte Menge Benzin verbraucht."
+      },
+      {
+        "id": 16,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Der Graph einer Heizkosten-Funktion hat den y-Achsenabschnitt 120 und die Steigung 0,08. Was sind die Heizkosten (in Euro) bei einem Verbrauch von 500 kWh?",
+        "loesung": 160,
+        "toleranz": 0,
+        "tipp": "\\(f(x) = 0{,}08x + 120\\). Setze \\(x = 500\\) ein.",
+        "loesungsweg": "$$f(500) = 0{,}08 \\cdot 500 + 120 = 40 + 120 = 160 \\text{ Euro}$$"
+      },
+      {
+        "id": 17,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Zwei Graphen zeigen die Kosten zweier Fitnessstudios. Graph A steigt steiler als Graph B, aber Graph B startet hoeher. Was laesst sich sagen?",
+        "optionen": ["Studio A hat hoehere Grundgebuehr und hoeheren Monatsbeitrag", "Studio A hat niedrigere Grundgebuehr, aber hoeheren Monatsbeitrag", "Studio B hat niedrigere Grundgebuehr und niedrigeren Monatsbeitrag", "Beide Studios kosten gleich viel"],
+        "korrekt": 1,
+        "tipp": "Steilerer Graph = groessere Steigung = hoeherer Monatsbeitrag. Hoeherer Startpunkt = groesserer y-Achsenabschnitt = hoehere Grundgebuehr.",
+        "loesungsweg": "Graph A steigt steiler (hoeherer Monatsbeitrag), startet aber niedriger (geringere Grundgebuehr). Graph B startet hoeher (hoehere Grundgebuehr), steigt aber langsamer (niedrigerer Monatsbeitrag)."
+      },
+      {
+        "id": 18,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Ein Graph zeigt die Temperatur in einem Raum. Um 8 Uhr betraegt sie 16 Grad, um 12 Uhr 24 Grad. Um wie viel Grad steigt die Temperatur pro Stunde?",
+        "loesung": 2,
+        "toleranz": 0,
+        "tipp": "Steigung = Aenderung der Temperatur geteilt durch Aenderung der Zeit.",
+        "loesungsweg": "$$m = \\frac{24 - 16}{12 - 8} = \\frac{8}{4} = 2 \\text{ Grad pro Stunde}$$"
+      },
+      // ========== LEVEL 4 — Zwei lineare Modelle vergleichen, Tarifvergleich ==========
+      {
+        "id": 19,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Tarif A: 10 Euro Grundgebuehr + 0,20 Euro/min. Tarif B: 5 Euro Grundgebuehr + 0,30 Euro/min. Ab wie vielen Minuten ist Tarif A guenstiger?",
+        "loesung": 51,
+        "toleranz": 0,
+        "tipp": "Setze die beiden Funktionen gleich: \\(10 + 0{,}20x = 5 + 0{,}30x\\).",
+        "loesungsweg": "Gleichsetzen: $$10 + 0{,}20x = 5 + 0{,}30x$$ $$5 = 0{,}10x$$ $$x = 50$$ Bei genau 50 Minuten kosten beide gleich viel. Ab 51 Minuten ist Tarif A guenstiger."
+      },
+      {
+        "id": 20,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Mietwagen A: 40 Euro/Tag + 0,15 Euro/km. Mietwagen B: 25 Euro/Tag + 0,25 Euro/km. Bei 150 km am Tag: Welcher ist guenstiger?",
+        "optionen": ["Mietwagen A (62,50 Euro)", "Mietwagen B (62,50 Euro)", "Beide kosten gleich viel (62,50 Euro)", "Mietwagen B (52,50 Euro)"],
+        "korrekt": 2,
+        "tipp": "Berechne jeweils: Tagesgebuehr + km-Preis mal 150.",
+        "loesungsweg": "Mietwagen A: \\(40 + 0{,}15 \\cdot 150 = 40 + 22{,}50 = 62{,}50\\) Euro. Mietwagen B: \\(25 + 0{,}25 \\cdot 150 = 25 + 37{,}50 = 62{,}50\\) Euro. Beide kosten gleich viel."
+      },
+      {
+        "id": 21,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Fitnessstudio A: 50 Euro Anmeldegebuehr + 20 Euro/Monat. Studio B: keine Anmeldegebuehr + 30 Euro/Monat. Ab welchem Monat ist Studio A insgesamt guenstiger?",
+        "loesung": 6,
+        "toleranz": 0,
+        "tipp": "Gleichsetzen: \\(50 + 20x = 30x\\).",
+        "loesungsweg": "Gleichsetzen: $$50 + 20x = 30x$$ $$50 = 10x$$ $$x = 5$$ Nach 5 Monaten kosten beide gleich viel. Ab dem 6. Monat ist Studio A guenstiger."
+      },
+      {
+        "id": 22,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Stromtarif A: 8 Euro Grundgebuehr + 0,30 Euro/kWh. Tarif B: 14 Euro Grundgebuehr + 0,24 Euro/kWh. Bei wie vielen kWh kosten beide Tarife gleich viel?",
+        "loesung": 100,
+        "toleranz": 0,
+        "tipp": "\\(8 + 0{,}30x = 14 + 0{,}24x\\). Loese nach \\(x\\) auf.",
+        "loesungsweg": "$$8 + 0{,}30x = 14 + 0{,}24x$$ $$0{,}06x = 6$$ $$x = 100 \\text{ kWh}$$"
+      },
+      {
+        "id": 23,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Internetanbieter A: 20 Euro/Monat. Anbieter B: 15 Euro/Monat + 50 Euro Einrichtungsgebuehr. Ab welchem Monat hat man bei B insgesamt weniger bezahlt?",
+        "optionen": ["Ab dem 8. Monat", "Ab dem 10. Monat", "Ab dem 11. Monat", "A ist immer guenstiger"],
+        "korrekt": 2,
+        "tipp": "Gleichsetzen: \\(20x = 15x + 50\\). Nach dem Schnittpunkt ist A teurer, also B insgesamt guenstiger ... oder umgekehrt?",
+        "loesungsweg": "Gleichsetzen: \\(20x = 15x + 50 \\Rightarrow 5x = 50 \\Rightarrow x = 10\\). Nach 10 Monaten kosten beide gleich viel. Ab dem 11. Monat hat Anbieter B insgesamt weniger gekostet (weil 15 Euro/Monat < 20 Euro/Monat). Achtung: A ist ab Monat 11 teurer!"
+      },
+      {
+        "id": 24,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Parkhaus A: 2 Euro Grundgebuehr + 1,50 Euro/Stunde. Parkhaus B: keine Grundgebuehr + 2 Euro/Stunde. Nach wie vielen vollen Stunden kosten beide gleich viel?",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "\\(2 + 1{,}50x = 2x\\). Loese nach \\(x\\) auf.",
+        "loesungsweg": "$$2 + 1{,}50x = 2x$$ $$2 = 0{,}50x$$ $$x = 4 \\text{ Stunden}$$"
+      },
+      // ========== LEVEL 5 — Aus Messdaten Funktionsgleichung bestimmen, Prognosen ==========
+      {
+        "id": 25,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Messung: Nach 2 Stunden sind 60 Liter im Tank, nach 6 Stunden 180 Liter. Bestimme die Steigung \\(m\\) der linearen Funktion.",
+        "loesung": 30,
+        "toleranz": 0,
+        "tipp": "\\(m = \\frac{180 - 60}{6 - 2}\\).",
+        "loesungsweg": "$$m = \\frac{180 - 60}{6 - 2} = \\frac{120}{4} = 30 \\text{ Liter/Stunde}$$"
+      },
+      {
+        "id": 26,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Messpunkte: \\((3,\\, 21)\\) und \\((7,\\, 45)\\). Bestimme den y-Achsenabschnitt \\(n\\) der linearen Funktion \\(f(x) = mx + n\\).",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "Berechne zuerst \\(m = \\frac{45 - 21}{7 - 3}\\), dann setze einen Punkt ein.",
+        "loesungsweg": "Steigung: \\(m = \\frac{45 - 21}{7 - 3} = \\frac{24}{4} = 6\\). Einsetzen von \\((3, 21)\\): $$21 = 6 \\cdot 3 + n \\Rightarrow n = 21 - 18 = 3$$ Also: \\(f(x) = 6x + 3\\)."
+      },
+      {
+        "id": 27,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Ein Wasserbecken wird gleichmaessig gefuellt. Messung: Nach 4 Stunden 120 Liter, nach 10 Stunden 300 Liter. Wie viele Liter sind nach 15 Stunden im Becken?",
+        "loesung": 450,
+        "toleranz": 0,
+        "tipp": "Bestimme \\(m\\) und \\(n\\), dann setze \\(x = 15\\) ein.",
+        "loesungsweg": "Steigung: \\(m = \\frac{300 - 120}{10 - 4} = \\frac{180}{6} = 30\\). Anfangswert: \\(120 = 30 \\cdot 4 + n \\Rightarrow n = 0\\). Also \\(f(x) = 30x\\). $$f(15) = 30 \\cdot 15 = 450 \\text{ Liter}$$"
+      },
+      {
+        "id": 28,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Messdaten eines Heizkoerpers: Nach 10 min ist die Temperatur 22 Grad, nach 30 min 34 Grad. Wie lautet die Funktionsgleichung \\(f(x)\\)?",
+        "optionen": ["\\(f(x) = 0{,}6x + 16\\)", "\\(f(x) = 0{,}6x + 22\\)", "\\(f(x) = 1{,}2x + 10\\)", "\\(f(x) = 0{,}5x + 17\\)"],
+        "korrekt": 0,
+        "tipp": "Steigung: \\(m = \\frac{34 - 22}{30 - 10}\\). Dann \\(n\\) bestimmen.",
+        "loesungsweg": "Steigung: \\(m = \\frac{34 - 22}{30 - 10} = \\frac{12}{20} = 0{,}6\\). Einsetzen: \\(22 = 0{,}6 \\cdot 10 + n \\Rightarrow n = 22 - 6 = 16\\). Also: \\(f(x) = 0{,}6x + 16\\)."
+      },
+      {
+        "id": 29,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Eine Pflanze ist nach 3 Wochen 11 cm und nach 8 Wochen 21 cm hoch. Wie hoch (in cm) wird sie nach 12 Wochen sein?",
+        "loesung": 29,
+        "toleranz": 0,
+        "tipp": "Steigung: \\(m = \\frac{21 - 11}{8 - 3}\\). Dann \\(n\\) bestimmen und \\(f(12)\\) berechnen.",
+        "loesungsweg": "Steigung: \\(m = \\frac{21 - 11}{8 - 3} = \\frac{10}{5} = 2\\) cm/Woche. Einsetzen: \\(11 = 2 \\cdot 3 + n \\Rightarrow n = 5\\). Also \\(f(x) = 2x + 5\\). $$f(12) = 2 \\cdot 12 + 5 = 29 \\text{ cm}$$"
+      },
+      {
+        "id": 30,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Messung eines Tanks: Bei \\(x = 5\\) sind 85 Liter drin, bei \\(x = 20\\) sind 40 Liter drin (\\(x\\) in Stunden). Wann ist der Tank leer? Gib die Stundenzahl an.",
+        "loesung": 33.33,
+        "toleranz": 0.1,
+        "tipp": "Bestimme \\(f(x) = mx + n\\) und setze \\(f(x) = 0\\).",
+        "loesungsweg": "Steigung: \\(m = \\frac{40 - 85}{20 - 5} = \\frac{-45}{15} = -3\\). Einsetzen: \\(85 = -3 \\cdot 5 + n \\Rightarrow n = 100\\). Also \\(f(x) = -3x + 100\\). Nullstelle: $$0 = -3x + 100 \\Rightarrow x = \\frac{100}{3} \\approx 33{,}33 \\text{ Stunden}$$"
+      },
+      // ========== LEVEL 6 — Komplexe Modellierung: Break-Even, Bewegungsaufgaben ==========
+      {
+        "id": 31,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Ein Unternehmen hat Fixkosten von 600 Euro und variable Kosten von 4 Euro pro Stueck. Der Verkaufspreis betraegt 10 Euro pro Stueck. Ab wie vielen Stuecken macht das Unternehmen Gewinn (Break-Even)?",
+        "loesung": 101,
+        "toleranz": 0,
+        "tipp": "Kosten: \\(K(x) = 4x + 600\\). Erloese: \\(E(x) = 10x\\). Setze \\(K(x) = E(x)\\).",
+        "loesungsweg": "Kosten: \\(K(x) = 4x + 600\\), Erloese: \\(E(x) = 10x\\). Gleichsetzen: $$4x + 600 = 10x \\Rightarrow 600 = 6x \\Rightarrow x = 100$$ Bei 100 Stueck ist Break-Even. Ab 101 Stueck macht das Unternehmen Gewinn."
+      },
+      {
+        "id": 32,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Auto A startet um 8:00 Uhr in Stadt X und faehrt mit 80 km/h Richtung Stadt Y. Auto B startet um 9:00 Uhr in Stadt X und faehrt mit 100 km/h in dieselbe Richtung. Nach wie vielen Stunden (ab 9:00 Uhr) holt Auto B Auto A ein?",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "Um 9:00 Uhr hat Auto A schon 80 km Vorsprung. Position A: \\(80 + 80t\\), Position B: \\(100t\\).",
+        "loesungsweg": "Um 9:00 hat Auto A bereits \\(80 \\cdot 1 = 80\\) km Vorsprung. Position ab 9:00: \\(A(t) = 80 + 80t\\), \\(B(t) = 100t\\). Gleichsetzen: $$80 + 80t = 100t \\Rightarrow 80 = 20t \\Rightarrow t = 4 \\text{ Stunden}$$"
+      },
+      {
+        "id": 33,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Ein Limonadenstand hat Kosten von \\(K(x) = 0{,}50x + 20\\) und Erloese von \\(E(x) = 1{,}50x\\) (\\(x\\) = Anzahl Becher). Welche Aussage stimmt?",
+        "optionen": ["Ab 20 Bechern macht man Gewinn", "Ab 21 Bechern macht man Gewinn", "Man macht immer Verlust", "Schon ab dem 1. Becher macht man Gewinn"],
+        "korrekt": 1,
+        "tipp": "Setze \\(K(x) = E(x)\\) und interpretiere das Ergebnis.",
+        "loesungsweg": "Gleichsetzen: \\(0{,}50x + 20 = 1{,}50x \\Rightarrow 20 = x\\). Bei 20 Bechern: \\(K(20) = 30 = E(20)\\), kein Gewinn. Ab 21 Bechern: \\(E(21) = 31{,}50 > K(21) = 30{,}50\\), also Gewinn."
+      },
+      {
+        "id": 34,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Zwei Wanderer starten gleichzeitig. Wanderer A geht von Position 0 mit 5 km/h los. Wanderer B startet 12 km entfernt und geht mit 3 km/h in Richtung A. Nach wie vielen Stunden treffen sie sich?",
+        "loesung": 1.5,
+        "toleranz": 0.01,
+        "tipp": "A: \\(f(t) = 5t\\). B: \\(g(t) = 12 - 3t\\). Gleichsetzen.",
+        "loesungsweg": "Wanderer A: \\(f(t) = 5t\\). Wanderer B (kommt entgegen): \\(g(t) = 12 - 3t\\). Gleichsetzen: $$5t = 12 - 3t \\Rightarrow 8t = 12 \\Rightarrow t = 1{,}5 \\text{ Stunden}$$"
+      },
+      {
+        "id": 35,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Mischungsaufgabe: Loesung A hat 200 ml mit 10% Salzgehalt. Man fuegt Loesung B mit 30% Salzgehalt hinzu. Wie viele ml von Loesung B braucht man fuer eine Mischung mit 18% Salzgehalt?",
+        "loesung": 133.33,
+        "toleranz": 0.5,
+        "tipp": "Salzmenge: \\(0{,}10 \\cdot 200 + 0{,}30 \\cdot x = 0{,}18 \\cdot (200 + x)\\).",
+        "loesungsweg": "Salzmenge gesamt: \\(0{,}10 \\cdot 200 + 0{,}30x = 20 + 0{,}30x\\). Gewuenschter Salzgehalt: \\(0{,}18 \\cdot (200 + x)\\). Gleichsetzen: $$20 + 0{,}30x = 36 + 0{,}18x$$ $$0{,}12x = 16$$ $$x = \\frac{16}{0{,}12} = 133{,}\\overline{3} \\approx 133{,}33 \\text{ ml}$$"
+      },
+      {
+        "id": 36,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Ein Unternehmen produziert T-Shirts. Fixkosten: 1200 Euro. Variable Kosten: 6 Euro/Stueck. Verkaufspreis: 18 Euro/Stueck. Wie hoch ist der Gewinn (in Euro) bei 200 verkauften T-Shirts?",
+        "loesung": 1200,
+        "toleranz": 0,
+        "tipp": "Gewinn = Erloese - Kosten. \\(G(x) = 18x - (6x + 1200)\\).",
+        "loesungsweg": "Gewinnfunktion: $$G(x) = E(x) - K(x) = 18x - (6x + 1200) = 12x - 1200$$ $$G(200) = 12 \\cdot 200 - 1200 = 2400 - 1200 = 1200 \\text{ Euro}$$"
+      }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lineare Gleichungen - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '8-gleichungen-linear';
+    const THEMA_CONFIG = { name: 'Lineare Gleichungen', bereich: 'algebra' };
+    const AUFGABEN = [
+      // ========== LEVEL 1 — Gleichungen mit Klammern ==========
+      {
+        "id": 1,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Lose die Gleichung: \\(3(x + 2) = 15\\)",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "Multipliziere die Klammer aus: \\(3x + 6 = 15\\).",
+        "loesungsweg": "$$3(x + 2) = 15$$ $$3x + 6 = 15 \\quad | -6$$ $$3x = 9 \\quad | :3$$ $$x = 3$$"
+      },
+      {
+        "id": 2,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Lose: \\(-(2x - 4) = 10\\). Was ist \\(x\\)?",
+        "optionen": ["\\(7\\)", "\\(-3\\)", "\\(3\\)", "\\(-7\\)"],
+        "korrekt": 1,
+        "tipp": "Klammer auflosen: \\(-(2x - 4) = -2x + 4\\).",
+        "loesungsweg": "$$-(2x - 4) = 10$$ $$-2x + 4 = 10 \\quad | -4$$ $$-2x = 6 \\quad | :(-2)$$ $$x = -3$$"
+      },
+      {
+        "id": 3,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Lose: \\(4(x - 3) = 20\\)",
+        "loesung": 8,
+        "toleranz": 0,
+        "tipp": "Ausmultiplizieren: \\(4x - 12 = 20\\).",
+        "loesungsweg": "$$4(x - 3) = 20$$ $$4x - 12 = 20 \\quad | +12$$ $$4x = 32 \\quad | :4$$ $$x = 8$$"
+      },
+      {
+        "id": 4,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Lose: \\(-3(x + 1) = -12\\). Was ist \\(x\\)?",
+        "optionen": ["\\(-3\\)", "\\(5\\)", "\\(3\\)", "\\(4\\)"],
+        "korrekt": 2,
+        "tipp": "Ausmultiplizieren: \\(-3x - 3 = -12\\).",
+        "loesungsweg": "$$-3(x + 1) = -12$$ $$-3x - 3 = -12 \\quad | +3$$ $$-3x = -9 \\quad | :(-3)$$ $$x = 3$$"
+      },
+      {
+        "id": 5,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Lose: \\(2(3x + 5) = 34\\)",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "Ausmultiplizieren: \\(6x + 10 = 34\\).",
+        "loesungsweg": "$$2(3x + 5) = 34$$ $$6x + 10 = 34 \\quad | -10$$ $$6x = 24 \\quad | :6$$ $$x = 4$$"
+      },
+      {
+        "id": 6,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Lose: \\(-(5x - 10) = -15\\). Was ist \\(x\\)?",
+        "optionen": ["\\(1\\)", "\\(-1\\)", "\\(5\\)", "\\(-5\\)"],
+        "korrekt": 2,
+        "tipp": "Klammer auflosen: \\(-5x + 10 = -15\\).",
+        "loesungsweg": "$$-(5x - 10) = -15$$ $$-5x + 10 = -15 \\quad | -10$$ $$-5x = -25 \\quad | :(-5)$$ $$x = 5$$"
+      },
+      // ========== LEVEL 2 — Variable auf beiden Seiten + Klammern ==========
+      {
+        "id": 7,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Lose: \\(5(x + 1) = 3(x + 5)\\)",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Beide Klammern ausmultiplizieren: \\(5x + 5 = 3x + 15\\).",
+        "loesungsweg": "$$5(x + 1) = 3(x + 5)$$ $$5x + 5 = 3x + 15 \\quad | -3x$$ $$2x + 5 = 15 \\quad | -5$$ $$2x = 10 \\quad | :2$$ $$x = 5$$"
+      },
+      {
+        "id": 8,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Lose: \\(2(3x - 4) = 4x + 6\\). Was ist \\(x\\)?",
+        "optionen": ["\\(5\\)", "\\(7\\)", "\\(3\\)", "\\(1\\)"],
+        "korrekt": 1,
+        "tipp": "Links ausmultiplizieren: \\(6x - 8 = 4x + 6\\).",
+        "loesungsweg": "$$2(3x - 4) = 4x + 6$$ $$6x - 8 = 4x + 6 \\quad | -4x$$ $$2x - 8 = 6 \\quad | +8$$ $$2x = 14 \\quad | :2$$ $$x = 7$$"
+      },
+      {
+        "id": 9,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Lose: \\(4(x + 2) = 2(x + 9)\\)",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Ausmultiplizieren: \\(4x + 8 = 2x + 18\\).",
+        "loesungsweg": "$$4(x + 2) = 2(x + 9)$$ $$4x + 8 = 2x + 18 \\quad | -2x$$ $$2x + 8 = 18 \\quad | -8$$ $$2x = 10 \\quad | :2$$ $$x = 5$$"
+      },
+      {
+        "id": 10,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Lose: \\(3(2x + 1) - 5 = 4(x - 1) + 8\\). Was ist \\(x\\)?",
+        "optionen": ["\\(2\\)", "\\(3\\)", "\\(-1\\)", "\\(5\\)"],
+        "korrekt": 1,
+        "tipp": "Links: \\(6x + 3 - 5 = 6x - 2\\). Rechts: \\(4x - 4 + 8 = 4x + 4\\).",
+        "loesungsweg": "$$3(2x + 1) - 5 = 4(x - 1) + 8$$ $$6x + 3 - 5 = 4x - 4 + 8$$ $$6x - 2 = 4x + 4 \\quad | -4x$$ $$2x - 2 = 4 \\quad | +2$$ $$2x = 6 \\quad | :2$$ $$x = 3$$"
+      },
+      {
+        "id": 11,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Lose: \\(7(x - 2) = 3(x + 6)\\)",
+        "loesung": 8,
+        "toleranz": 0,
+        "tipp": "Ausmultiplizieren: \\(7x - 14 = 3x + 18\\).",
+        "loesungsweg": "$$7(x - 2) = 3(x + 6)$$ $$7x - 14 = 3x + 18 \\quad | -3x$$ $$4x - 14 = 18 \\quad | +14$$ $$4x = 32 \\quad | :4$$ $$x = 8$$"
+      },
+      {
+        "id": 12,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Lose: \\(-(x + 3) = 2(x - 6)\\). Was ist \\(x\\)?",
+        "optionen": ["\\(1\\)", "\\(9\\)", "\\(3\\)", "\\(-3\\)"],
+        "korrekt": 2,
+        "tipp": "Links: \\(-x - 3\\). Rechts: \\(2x - 12\\).",
+        "loesungsweg": "$$-(x + 3) = 2(x - 6)$$ $$-x - 3 = 2x - 12 \\quad | +x$$ $$-3 = 3x - 12 \\quad | +12$$ $$9 = 3x \\quad | :3$$ $$x = 3$$"
+      },
+      // ========== LEVEL 3 — Bruchgleichungen einfach ==========
+      {
+        "id": 13,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Lose: \\(\\dfrac{x}{3} + \\dfrac{x}{4} = 7\\)",
+        "loesung": 12,
+        "toleranz": 0,
+        "tipp": "Hauptnenner ist \\(12\\). Multipliziere die ganze Gleichung mit \\(12\\).",
+        "loesungsweg": "$$\\frac{x}{3} + \\frac{x}{4} = 7 \\quad | \\cdot 12$$ $$4x + 3x = 84$$ $$7x = 84 \\quad | :7$$ $$x = 12$$"
+      },
+      {
+        "id": 14,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Lose: \\(\\dfrac{2x + 1}{5} = 3\\). Was ist \\(x\\)?",
+        "optionen": ["\\(8\\)", "\\(7\\)", "\\(3\\)", "\\(14\\)"],
+        "korrekt": 1,
+        "tipp": "Multipliziere beide Seiten mit \\(5\\): \\(2x + 1 = 15\\).",
+        "loesungsweg": "$$\\frac{2x + 1}{5} = 3 \\quad | \\cdot 5$$ $$2x + 1 = 15 \\quad | -1$$ $$2x = 14 \\quad | :2$$ $$x = 7$$"
+      },
+      {
+        "id": 15,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Lose: \\(\\dfrac{x}{2} - \\dfrac{x}{5} = 6\\)",
+        "loesung": 20,
+        "toleranz": 0,
+        "tipp": "Hauptnenner ist \\(10\\). Multipliziere alles mit \\(10\\).",
+        "loesungsweg": "$$\\frac{x}{2} - \\frac{x}{5} = 6 \\quad | \\cdot 10$$ $$5x - 2x = 60$$ $$3x = 60 \\quad | :3$$ $$x = 20$$"
+      },
+      {
+        "id": 16,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Lose: \\(\\dfrac{3x - 2}{4} = 7\\). Was ist \\(x\\)?",
+        "optionen": ["\\(8\\)", "\\(10\\)", "\\(6\\)", "\\(12\\)"],
+        "korrekt": 1,
+        "tipp": "Multipliziere mit \\(4\\): \\(3x - 2 = 28\\).",
+        "loesungsweg": "$$\\frac{3x - 2}{4} = 7 \\quad | \\cdot 4$$ $$3x - 2 = 28 \\quad | +2$$ $$3x = 30 \\quad | :3$$ $$x = 10$$"
+      },
+      {
+        "id": 17,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Lose: \\(\\dfrac{x + 3}{2} = \\dfrac{x - 1}{3}\\)",
+        "loesung": -11,
+        "toleranz": 0,
+        "tipp": "Hauptnenner ist \\(6\\). Multipliziere beide Seiten mit \\(6\\).",
+        "loesungsweg": "$$\\frac{x + 3}{2} = \\frac{x - 1}{3} \\quad | \\cdot 6$$ $$3(x + 3) = 2(x - 1)$$ $$3x + 9 = 2x - 2 \\quad | -2x$$ $$x + 9 = -2 \\quad | -9$$ $$x = -11$$"
+      },
+      {
+        "id": 18,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Lose: \\(\\dfrac{x}{6} + \\dfrac{x}{3} = 5\\). Was ist \\(x\\)?",
+        "optionen": ["\\(6\\)", "\\(15\\)", "\\(10\\)", "\\(30\\)"],
+        "korrekt": 2,
+        "tipp": "Hauptnenner ist \\(6\\): \\(\\dfrac{x}{6} + \\dfrac{2x}{6} = 5\\), also \\(\\dfrac{3x}{6} = 5\\).",
+        "loesungsweg": "$$\\frac{x}{6} + \\frac{x}{3} = 5 \\quad | \\cdot 6$$ $$x + 2x = 30$$ $$3x = 30 \\quad | :3$$ $$x = 10$$"
+      },
+      // ========== LEVEL 4 — Verhaeltnisgleichungen und Formelumstellung ==========
+      {
+        "id": 19,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Lose die Verhaeltnisgleichung: \\(\\dfrac{x}{6} = \\dfrac{5}{3}\\)",
+        "loesung": 10,
+        "toleranz": 0,
+        "tipp": "Multipliziere beide Seiten mit \\(6\\).",
+        "loesungsweg": "$$\\frac{x}{6} = \\frac{5}{3} \\quad | \\cdot 6$$ $$x = \\frac{30}{3} = 10$$"
+      },
+      {
+        "id": 20,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Die Formel fur den Umfang eines Rechtecks lautet \\(U = 2(l + b)\\). Lose nach \\(b\\) auf.",
+        "optionen": ["\\(b = \\dfrac{U}{2} - l\\)", "\\(b = \\dfrac{U - l}{2}\\)", "\\(b = U - 2l\\)", "\\(b = 2U - l\\)"],
+        "korrekt": 0,
+        "tipp": "Teile zuerst durch \\(2\\), dann subtrahiere \\(l\\).",
+        "loesungsweg": "$$U = 2(l + b) \\quad | :2$$ $$\\frac{U}{2} = l + b \\quad | -l$$ $$b = \\frac{U}{2} - l$$"
+      },
+      {
+        "id": 21,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Lose die Verhaeltnisgleichung: \\(\\dfrac{3}{x} = \\dfrac{9}{12}\\). Gib \\(x\\) an.",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "Kreuzweise multiplizieren: \\(3 \\cdot 12 = 9 \\cdot x\\).",
+        "loesungsweg": "$$\\frac{3}{x} = \\frac{9}{12}$$ Kreuzweise multiplizieren: $$3 \\cdot 12 = 9 \\cdot x$$ $$36 = 9x \\quad | :9$$ $$x = 4$$"
+      },
+      {
+        "id": 22,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Stelle die Formel \\(A = \\dfrac{a \\cdot h}{2}\\) nach \\(h\\) um.",
+        "optionen": ["\\(h = \\dfrac{A}{2a}\\)", "\\(h = \\dfrac{2A}{a}\\)", "\\(h = 2Aa\\)", "\\(h = \\dfrac{a}{2A}\\)"],
+        "korrekt": 1,
+        "tipp": "Multipliziere zuerst mit \\(2\\), dann teile durch \\(a\\).",
+        "loesungsweg": "$$A = \\frac{a \\cdot h}{2} \\quad | \\cdot 2$$ $$2A = a \\cdot h \\quad | :a$$ $$h = \\frac{2A}{a}$$"
+      },
+      {
+        "id": 23,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Lose: \\(\\dfrac{x + 2}{4} = \\dfrac{x - 1}{2}\\)",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "Hauptnenner \\(4\\): Multipliziere beide Seiten mit \\(4\\).",
+        "loesungsweg": "$$\\frac{x + 2}{4} = \\frac{x - 1}{2} \\quad | \\cdot 4$$ $$x + 2 = 2(x - 1)$$ $$x + 2 = 2x - 2 \\quad | -x$$ $$2 = x - 2 \\quad | +2$$ $$x = 4$$"
+      },
+      {
+        "id": 24,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Stelle die Formel \\(v = \\dfrac{s}{t}\\) nach \\(t\\) um.",
+        "optionen": ["\\(t = s \\cdot v\\)", "\\(t = \\dfrac{s}{v}\\)", "\\(t = \\dfrac{v}{s}\\)", "\\(t = s - v\\)"],
+        "korrekt": 1,
+        "tipp": "Multipliziere mit \\(t\\) und teile dann durch \\(v\\).",
+        "loesungsweg": "$$v = \\frac{s}{t} \\quad | \\cdot t$$ $$v \\cdot t = s \\quad | :v$$ $$t = \\frac{s}{v}$$"
+      },
+      // ========== LEVEL 5 — Nichtlineare Gleichungen durch Interpretation ==========
+      {
+        "id": 25,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Bestimme die Losungsmenge von \\(x^2 = 16\\).",
+        "optionen": ["\\(\\mathbb{L} = \\{4\\}\\)", "\\(\\mathbb{L} = \\{-4;\\, 4\\}\\)", "\\(\\mathbb{L} = \\{-4\\}\\)", "\\(\\mathbb{L} = \\{\\,\\}\\)"],
+        "korrekt": 1,
+        "tipp": "Eine quadratische Gleichung kann zwei Losungen haben: die positive und die negative Wurzel.",
+        "loesungsweg": "$$x^2 = 16$$ $$x = \\pm\\sqrt{16} = \\pm 4$$ $$\\mathbb{L} = \\{-4;\\, 4\\}$$"
+      },
+      {
+        "id": 26,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Bestimme die Losungsmenge von \\(|x| = 5\\).",
+        "optionen": ["\\(\\mathbb{L} = \\{5\\}\\)", "\\(\\mathbb{L} = \\{-5\\}\\)", "\\(\\mathbb{L} = \\{-5;\\, 5\\}\\)", "\\(\\mathbb{L} = \\{\\,\\}\\)"],
+        "korrekt": 2,
+        "tipp": "Der Betrag einer Zahl ist \\(5\\), wenn die Zahl selbst \\(5\\) oder \\(-5\\) ist.",
+        "loesungsweg": "$$|x| = 5$$ $$x = 5 \\quad \\text{oder} \\quad x = -5$$ $$\\mathbb{L} = \\{-5;\\, 5\\}$$"
+      },
+      {
+        "id": 27,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Lose: \\(\\sqrt[3]{x} = 2\\). Gib \\(x\\) an.",
+        "loesung": 8,
+        "toleranz": 0,
+        "tipp": "Hebe die dritte Wurzel auf, indem du beide Seiten hoch \\(3\\) nimmst.",
+        "loesungsweg": "$$\\sqrt[3]{x} = 2 \\quad | \\text{hoch } 3$$ $$x = 2^3 = 8$$"
+      },
+      {
+        "id": 28,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Bestimme die Losungsmenge von \\(x^2 = -9\\) in \\(\\mathbb{R}\\).",
+        "optionen": ["\\(\\mathbb{L} = \\{3\\}\\)", "\\(\\mathbb{L} = \\{-3;\\, 3\\}\\)", "\\(\\mathbb{L} = \\{-3\\}\\)", "\\(\\mathbb{L} = \\{\\,\\}\\)"],
+        "korrekt": 3,
+        "tipp": "Kann ein Quadrat in den reellen Zahlen negativ sein?",
+        "loesungsweg": "$$x^2 = -9$$ Ein Quadrat ist immer \\(\\geq 0\\). Es gibt keine reelle Zahl, deren Quadrat \\(-9\\) ergibt. $$\\mathbb{L} = \\{\\,\\}$$"
+      },
+      {
+        "id": 29,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Lose: \\(x^2 = 49\\). Gib die positive Losung an.",
+        "loesung": 7,
+        "toleranz": 0,
+        "tipp": "Ziehe die Wurzel: \\(x = \\pm\\sqrt{49}\\). Gefragt ist die positive Losung.",
+        "loesungsweg": "$$x^2 = 49$$ $$x = \\pm\\sqrt{49} = \\pm 7$$ Die positive Losung ist \\(x = 7\\)."
+      },
+      {
+        "id": 30,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Bestimme die Losungsmenge von \\(|x - 3| = 7\\).",
+        "optionen": ["\\(\\mathbb{L} = \\{10\\}\\)", "\\(\\mathbb{L} = \\{-4\\}\\)", "\\(\\mathbb{L} = \\{-4;\\, 10\\}\\)", "\\(\\mathbb{L} = \\{4;\\, -10\\}\\)"],
+        "korrekt": 2,
+        "tipp": "Setze den Klammerinhalt gleich \\(7\\) und gleich \\(-7\\).",
+        "loesungsweg": "$$|x - 3| = 7$$ Fall 1: \\(x - 3 = 7 \\Rightarrow x = 10\\) $$ $$ Fall 2: \\(x - 3 = -7 \\Rightarrow x = -4\\) $$\\mathbb{L} = \\{-4;\\, 10\\}$$"
+      },
+      // ========== LEVEL 6 — Textaufgaben, Gleichung aufstellen, Sonderfaelle ==========
+      {
+        "id": 31,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Tom ist doppelt so alt wie Lena. In 6 Jahren ist er nur noch \\(1{,}5\\)-mal so alt wie sie. Wie alt ist Lena jetzt?",
+        "loesung": 6,
+        "toleranz": 0,
+        "tipp": "Sei \\(x\\) = Lenas Alter. Tom: \\(2x\\). In 6 Jahren: \\(2x + 6 = 1{,}5 \\cdot (x + 6)\\).",
+        "loesungsweg": "Sei \\(x\\) = Lenas Alter, Tom = \\(2x\\). $$2x + 6 = 1{,}5(x + 6)$$ $$2x + 6 = 1{,}5x + 9 \\quad | -1{,}5x$$ $$0{,}5x + 6 = 9 \\quad | -6$$ $$0{,}5x = 3 \\quad | :0{,}5$$ $$x = 6$$ Lena ist 6 Jahre alt."
+      },
+      {
+        "id": 32,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Wie viele Losungen hat die Gleichung \\(2(x + 3) = 2x + 6\\)?",
+        "optionen": ["Keine Losung", "Genau eine Losung", "Unendlich viele Losungen", "Genau zwei Losungen"],
+        "korrekt": 2,
+        "tipp": "Multipliziere die Klammer aus und vereinfache.",
+        "loesungsweg": "$$2(x + 3) = 2x + 6$$ $$2x + 6 = 2x + 6$$ Die Gleichung ist fur alle \\(x\\) wahr (Identitat). $$\\mathbb{L} = \\mathbb{R}$$"
+      },
+      {
+        "id": 33,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Die Summe dreier aufeinanderfolgender ungerader Zahlen betraegt 75. Wie lautet die kleinste?",
+        "loesung": 23,
+        "toleranz": 0,
+        "tipp": "Drei aufeinanderfolgende ungerade Zahlen: \\(x\\), \\(x+2\\), \\(x+4\\).",
+        "loesungsweg": "Sei \\(x\\) die kleinste ungerade Zahl. $$x + (x + 2) + (x + 4) = 75$$ $$3x + 6 = 75 \\quad | -6$$ $$3x = 69 \\quad | :3$$ $$x = 23$$ Die Zahlen sind 23, 25 und 27."
+      },
+      {
+        "id": 34,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Wie viele Losungen hat die Gleichung \\(3x + 5 = 3x + 8\\)?",
+        "optionen": ["Keine Losung", "Genau eine Losung", "Unendlich viele Losungen", "\\(x = 1\\)"],
+        "korrekt": 0,
+        "tipp": "Subtrahiere \\(3x\\) auf beiden Seiten. Was bleibt ubrig?",
+        "loesungsweg": "$$3x + 5 = 3x + 8 \\quad | -3x$$ $$5 = 8$$ Das ist ein Widerspruch. Die Gleichung hat keine Losung. $$\\mathbb{L} = \\{\\,\\}$$"
+      },
+      {
+        "id": 35,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Ein Dreieck hat den Umfang 42 cm. Die zweite Seite ist 3 cm laenger als die erste, die dritte ist doppelt so lang wie die erste. Wie lang ist die erste Seite (in cm)?",
+        "loesung": 9.75,
+        "toleranz": 0.01,
+        "tipp": "Sei \\(x\\) = erste Seite. Dann: \\(x + (x+3) + 2x = 42\\).",
+        "loesungsweg": "Sei \\(x\\) = erste Seite. $$x + (x + 3) + 2x = 42$$ $$4x + 3 = 42 \\quad | -3$$ $$4x = 39 \\quad | :4$$ $$x = 9{,}75$$ Die erste Seite ist \\(9{,}75\\) cm lang."
+      },
+      {
+        "id": 36,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Eine Mutter ist 30 Jahre aelter als ihre Tochter. Vor 5 Jahren war die Mutter dreimal so alt wie die Tochter. Wie alt ist die Tochter heute?",
+        "optionen": ["\\(20\\)", "\\(10\\)", "\\(15\\)", "\\(25\\)"],
+        "korrekt": 0,
+        "tipp": "Sei \\(x\\) = Alter der Tochter heute. Mutter: \\(x + 30\\). Vor 5 Jahren: \\(x + 25 = 3(x - 5)\\).",
+        "loesungsweg": "Sei \\(x\\) = Alter der Tochter. Mutter: \\(x + 30\\). $$x + 25 = 3(x - 5)$$ $$x + 25 = 3x - 15 \\quad | -x$$ $$25 = 2x - 15 \\quad | +15$$ $$40 = 2x \\quad | :2$$ $$x = 20$$ Die Tochter ist 20 Jahre alt."
+      }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

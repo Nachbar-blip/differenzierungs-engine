@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satz des Pythagoras - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '8-pythagoras';
+    const THEMA_CONFIG = { name: 'Satz des Pythagoras', bereich: 'geometrie' };
+    const AUFGABEN = [
+      // ========== LEVEL 1 — Katheten und Hypotenuse erkennen, Satz formulieren ==========
+      {
+        "id": 1,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Wie heisst die laengste Seite in einem rechtwinkligen Dreieck?",
+        "optionen": ["Kathete", "Hypotenuse", "Ankathete", "Gegenkathete"],
+        "korrekt": 1,
+        "tipp": "Sie liegt dem rechten Winkel gegenueber.",
+        "loesungsweg": "Die **Hypotenuse** ist die laengste Seite eines rechtwinkligen Dreiecks. Sie liegt dem rechten Winkel (90 Grad) gegenueber."
+      },
+      {
+        "id": 2,
+        "level": 1,
+        "typ": "mc",
+        "frage": "In einem rechtwinkligen Dreieck mit den Seiten \\(a\\), \\(b\\) und \\(c\\) liegt der rechte Winkel bei \\(C\\). Welche Seite ist die Hypotenuse?",
+        "optionen": ["Seite \\(a\\)", "Seite \\(b\\)", "Seite \\(c\\)", "Alle Seiten sind gleich lang"],
+        "korrekt": 2,
+        "tipp": "Die Hypotenuse liegt dem rechten Winkel gegenueber. Dem Winkel \\(C\\) liegt die Seite \\(c\\) gegenueber.",
+        "loesungsweg": "Der rechte Winkel liegt bei \\(C\\). Die gegenueberliegende Seite ist \\(c\\) — das ist die Hypotenuse."
+      },
+      {
+        "id": 3,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Wie lautet der Satz des Pythagoras fuer ein rechtwinkliges Dreieck mit Katheten \\(a\\) und \\(b\\) und Hypotenuse \\(c\\)?",
+        "optionen": ["\\(a^2 + b^2 = c^2\\)", "\\(a + b = c\\)", "\\(a^2 \\cdot b^2 = c^2\\)", "\\(a^2 - b^2 = c^2\\)"],
+        "korrekt": 0,
+        "tipp": "Die Summe der Kathetenquadrate ergibt das Hypotenusenquadrat.",
+        "loesungsweg": "$$a^2 + b^2 = c^2$$ Die Summe der Flaecheninhalte der Kathetenquadrate ist gleich dem Flaecheninhalt des Hypotenusenquadrats."
+      },
+      {
+        "id": 4,
+        "level": 1,
+        "typ": "mc",
+        "frage": "In welchem Dreieck gilt der Satz des Pythagoras?",
+        "optionen": ["In jedem Dreieck", "Nur in gleichseitigen Dreiecken", "Nur in rechtwinkligen Dreiecken", "Nur in gleichschenkligen Dreiecken"],
+        "korrekt": 2,
+        "tipp": "Der Satz des Pythagoras setzt einen bestimmten Winkel voraus.",
+        "loesungsweg": "Der Satz des Pythagoras gilt **nur in rechtwinkligen Dreiecken**, also in Dreiecken mit einem 90-Grad-Winkel."
+      },
+      {
+        "id": 5,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Ein rechtwinkliges Dreieck hat die Seiten 3 cm, 4 cm und 5 cm. Welche Seite ist die Hypotenuse?",
+        "optionen": ["3 cm", "4 cm", "5 cm", "Kann man nicht sagen"],
+        "korrekt": 2,
+        "tipp": "Die Hypotenuse ist immer die laengste Seite.",
+        "loesungsweg": "Die Hypotenuse ist die laengste Seite: **5 cm**. Probe: \\(3^2 + 4^2 = 9 + 16 = 25 = 5^2\\). Stimmt!"
+      },
+      {
+        "id": 6,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Welche Aussage ueber die Hypotenuse ist richtig?",
+        "optionen": ["Sie ist die kuerzeste Seite", "Sie liegt neben dem rechten Winkel", "Sie liegt dem rechten Winkel gegenueber und ist die laengste Seite", "Sie hat immer die Laenge 5"],
+        "korrekt": 2,
+        "tipp": "Ueberlege, wo die Hypotenuse im Dreieck liegt und was fuer ihre Laenge gilt.",
+        "loesungsweg": "Die Hypotenuse liegt dem rechten Winkel gegenueber und ist **immer die laengste Seite** im rechtwinkligen Dreieck."
+      },
+      // ========== LEVEL 2 — Hypotenuse berechnen (ganzzahlige Ergebnisse) ==========
+      {
+        "id": 7,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Berechne die Hypotenuse \\(c\\) fuer \\(a = 3\\) und \\(b = 4\\).",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "\\(c^2 = a^2 + b^2 = 9 + 16 = \\,?\\). Dann die Wurzel ziehen.",
+        "loesungsweg": "$$c^2 = 3^2 + 4^2 = 9 + 16 = 25 \\quad \\Rightarrow \\quad c = \\sqrt{25} = 5$$"
+      },
+      {
+        "id": 8,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Berechne die Hypotenuse \\(c\\) fuer \\(a = 6\\) und \\(b = 8\\).",
+        "loesung": 10,
+        "toleranz": 0,
+        "tipp": "\\(c^2 = 36 + 64 = \\,?\\)",
+        "loesungsweg": "$$c^2 = 6^2 + 8^2 = 36 + 64 = 100 \\quad \\Rightarrow \\quad c = \\sqrt{100} = 10$$"
+      },
+      {
+        "id": 9,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Ein rechtwinkliges Dreieck hat die Katheten \\(a = 5\\) und \\(b = 12\\). Wie lang ist die Hypotenuse \\(c\\)?",
+        "loesung": 13,
+        "toleranz": 0,
+        "tipp": "\\(c^2 = 25 + 144 = \\,?\\)",
+        "loesungsweg": "$$c^2 = 5^2 + 12^2 = 25 + 144 = 169 \\quad \\Rightarrow \\quad c = \\sqrt{169} = 13$$"
+      },
+      {
+        "id": 10,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Berechne \\(c\\) fuer \\(a = 8\\) und \\(b = 15\\).",
+        "loesung": 17,
+        "toleranz": 0,
+        "tipp": "\\(c^2 = 64 + 225 = \\,?\\)",
+        "loesungsweg": "$$c^2 = 8^2 + 15^2 = 64 + 225 = 289 \\quad \\Rightarrow \\quad c = \\sqrt{289} = 17$$"
+      },
+      {
+        "id": 11,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Welches der folgenden ist ein pythagoreisches Tripel?",
+        "optionen": ["(3, 4, 5)", "(2, 3, 4)", "(4, 5, 6)", "(1, 2, 3)"],
+        "korrekt": 0,
+        "tipp": "Pruefe bei jedem Tripel: Gilt \\(a^2 + b^2 = c^2\\)?",
+        "loesungsweg": "$$3^2 + 4^2 = 9 + 16 = 25 = 5^2 \\quad \\checkmark$$ Die anderen Tripel erfuellen die Gleichung nicht, z.B. \\(2^2 + 3^2 = 13 \\neq 16 = 4^2\\)."
+      },
+      {
+        "id": 12,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Berechne die Hypotenuse \\(c\\) fuer \\(a = 9\\) und \\(b = 12\\).",
+        "loesung": 15,
+        "toleranz": 0,
+        "tipp": "\\(c^2 = 81 + 144 = \\,?\\)",
+        "loesungsweg": "$$c^2 = 9^2 + 12^2 = 81 + 144 = 225 \\quad \\Rightarrow \\quad c = \\sqrt{225} = 15$$"
+      },
+      // ========== LEVEL 3 — Kathete berechnen (Umstellen) ==========
+      {
+        "id": 13,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Gegeben: \\(c = 13\\) und \\(a = 5\\). Berechne die Kathete \\(b\\).",
+        "loesung": 12,
+        "toleranz": 0,
+        "tipp": "Stelle um: \\(b^2 = c^2 - a^2 = 169 - 25 = \\,?\\)",
+        "loesungsweg": "$$b^2 = c^2 - a^2 = 13^2 - 5^2 = 169 - 25 = 144 \\quad \\Rightarrow \\quad b = \\sqrt{144} = 12$$"
+      },
+      {
+        "id": 14,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Gegeben: \\(c = 10\\) und \\(b = 6\\). Berechne die Kathete \\(a\\).",
+        "loesung": 8,
+        "toleranz": 0,
+        "tipp": "\\(a^2 = c^2 - b^2 = 100 - 36 = \\,?\\)",
+        "loesungsweg": "$$a^2 = c^2 - b^2 = 10^2 - 6^2 = 100 - 36 = 64 \\quad \\Rightarrow \\quad a = \\sqrt{64} = 8$$"
+      },
+      {
+        "id": 15,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Ein rechtwinkliges Dreieck hat \\(c = 17\\) und \\(a = 8\\). Berechne \\(b\\).",
+        "loesung": 15,
+        "toleranz": 0,
+        "tipp": "\\(b^2 = 17^2 - 8^2 = 289 - 64 = \\,?\\)",
+        "loesungsweg": "$$b^2 = 17^2 - 8^2 = 289 - 64 = 225 \\quad \\Rightarrow \\quad b = \\sqrt{225} = 15$$"
+      },
+      {
+        "id": 16,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Gegeben: \\(c = 25\\) und \\(b = 24\\). Berechne die Kathete \\(a\\).",
+        "loesung": 7,
+        "toleranz": 0,
+        "tipp": "\\(a^2 = 25^2 - 24^2 = 625 - 576 = \\,?\\)",
+        "loesungsweg": "$$a^2 = 25^2 - 24^2 = 625 - 576 = 49 \\quad \\Rightarrow \\quad a = \\sqrt{49} = 7$$"
+      },
+      {
+        "id": 17,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Wie lautet die Formel fuer die Kathete \\(a\\), wenn \\(c\\) und \\(b\\) bekannt sind?",
+        "optionen": ["\\(a = \\sqrt{c^2 + b^2}\\)", "\\(a = \\sqrt{c^2 - b^2}\\)", "\\(a = c^2 - b^2\\)", "\\(a = c - b\\)"],
+        "korrekt": 1,
+        "tipp": "Stelle \\(a^2 + b^2 = c^2\\) nach \\(a\\) um: \\(a^2 = c^2 - b^2\\). Dann die Wurzel ziehen.",
+        "loesungsweg": "$$a^2 + b^2 = c^2 \\quad \\Rightarrow \\quad a^2 = c^2 - b^2 \\quad \\Rightarrow \\quad a = \\sqrt{c^2 - b^2}$$"
+      },
+      {
+        "id": 18,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Gegeben: \\(c = 15\\) und \\(a = 9\\). Berechne \\(b\\).",
+        "loesung": 12,
+        "toleranz": 0,
+        "tipp": "\\(b^2 = 15^2 - 9^2 = 225 - 81 = \\,?\\)",
+        "loesungsweg": "$$b^2 = 15^2 - 9^2 = 225 - 81 = 144 \\quad \\Rightarrow \\quad b = \\sqrt{144} = 12$$"
+      },
+      // ========== LEVEL 4 — Mit Wurzeln rechnen (nicht-ganzzahlige Ergebnisse) ==========
+      {
+        "id": 19,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Berechne \\(c\\) fuer \\(a = 3\\) und \\(b = 5\\). Runde auf zwei Nachkommastellen.",
+        "loesung": 5.83,
+        "toleranz": 0.01,
+        "tipp": "\\(c^2 = 9 + 25 = 34\\). Dann \\(c = \\sqrt{34} \\approx \\,?\\)",
+        "loesungsweg": "$$c^2 = 3^2 + 5^2 = 9 + 25 = 34 \\quad \\Rightarrow \\quad c = \\sqrt{34} \\approx 5{,}83$$"
+      },
+      {
+        "id": 20,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Berechne \\(c\\) fuer \\(a = 4\\) und \\(b = 7\\). Runde auf zwei Nachkommastellen.",
+        "loesung": 8.06,
+        "toleranz": 0.01,
+        "tipp": "\\(c^2 = 16 + 49 = 65\\). Dann \\(c = \\sqrt{65} \\approx \\,?\\)",
+        "loesungsweg": "$$c^2 = 4^2 + 7^2 = 16 + 49 = 65 \\quad \\Rightarrow \\quad c = \\sqrt{65} \\approx 8{,}06$$"
+      },
+      {
+        "id": 21,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Berechne die Kathete \\(b\\) fuer \\(c = 10\\) und \\(a = 7\\). Runde auf zwei Nachkommastellen.",
+        "loesung": 7.14,
+        "toleranz": 0.01,
+        "tipp": "\\(b^2 = 100 - 49 = 51\\). Dann \\(b = \\sqrt{51} \\approx \\,?\\)",
+        "loesungsweg": "$$b^2 = 10^2 - 7^2 = 100 - 49 = 51 \\quad \\Rightarrow \\quad b = \\sqrt{51} \\approx 7{,}14$$"
+      },
+      {
+        "id": 22,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Ein rechtwinkliges Dreieck hat \\(a = 2\\) und \\(b = 6\\). Berechne \\(c\\). Runde auf zwei Nachkommastellen.",
+        "loesung": 6.32,
+        "toleranz": 0.01,
+        "tipp": "\\(c^2 = 4 + 36 = 40\\). Dann \\(c = \\sqrt{40} \\approx \\,?\\)",
+        "loesungsweg": "$$c^2 = 2^2 + 6^2 = 4 + 36 = 40 \\quad \\Rightarrow \\quad c = \\sqrt{40} \\approx 6{,}32$$"
+      },
+      {
+        "id": 23,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Berechne die Kathete \\(a\\) fuer \\(c = 12\\) und \\(b = 5\\). Runde auf zwei Nachkommastellen.",
+        "loesung": 10.91,
+        "toleranz": 0.01,
+        "tipp": "\\(a^2 = 144 - 25 = 119\\). Dann \\(a = \\sqrt{119} \\approx \\,?\\)",
+        "loesungsweg": "$$a^2 = 12^2 - 5^2 = 144 - 25 = 119 \\quad \\Rightarrow \\quad a = \\sqrt{119} \\approx 10{,}91$$"
+      },
+      {
+        "id": 24,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Berechne \\(c\\) fuer \\(a = 1\\) und \\(b = 1\\). Runde auf zwei Nachkommastellen.",
+        "loesung": 1.41,
+        "toleranz": 0.01,
+        "tipp": "\\(c^2 = 1 + 1 = 2\\). Dann \\(c = \\sqrt{2} \\approx \\,?\\)",
+        "loesungsweg": "$$c^2 = 1^2 + 1^2 = 2 \\quad \\Rightarrow \\quad c = \\sqrt{2} \\approx 1{,}41$$"
+      },
+      // ========== LEVEL 5 — Umkehrung: Rechtwinkliges Dreieck pruefen, Diagonalen ==========
+      {
+        "id": 25,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Ist das Dreieck mit den Seiten \\(a = 7\\), \\(b = 24\\), \\(c = 25\\) rechtwinklig?",
+        "optionen": ["Ja", "Nein"],
+        "korrekt": 0,
+        "tipp": "Pruefe: \\(7^2 + 24^2 = 49 + 576 = 625\\). Ist das gleich \\(25^2\\)?",
+        "loesungsweg": "$$7^2 + 24^2 = 49 + 576 = 625 = 25^2 \\quad \\checkmark$$ Ja, das Dreieck ist rechtwinklig."
+      },
+      {
+        "id": 26,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Ist das Dreieck mit den Seiten \\(a = 5\\), \\(b = 7\\), \\(c = 9\\) rechtwinklig?",
+        "optionen": ["Ja", "Nein"],
+        "korrekt": 1,
+        "tipp": "Pruefe: \\(5^2 + 7^2 = 25 + 49 = 74\\). Ist das gleich \\(9^2 = 81\\)?",
+        "loesungsweg": "$$5^2 + 7^2 = 25 + 49 = 74 \\neq 81 = 9^2$$ Nein, das Dreieck ist **nicht** rechtwinklig."
+      },
+      {
+        "id": 27,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Berechne die Diagonale \\(d\\) eines Rechtecks mit den Seiten \\(a = 3\\) cm und \\(b = 4\\) cm.",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Die Diagonale teilt das Rechteck in zwei rechtwinklige Dreiecke. Es gilt: \\(d^2 = a^2 + b^2\\).",
+        "loesungsweg": "$$d^2 = 3^2 + 4^2 = 9 + 16 = 25 \\quad \\Rightarrow \\quad d = \\sqrt{25} = 5 \\text{ cm}$$"
+      },
+      {
+        "id": 28,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Ein Rechteck hat die Seiten 5 cm und 12 cm. Wie lang ist die Diagonale?",
+        "loesung": 13,
+        "toleranz": 0,
+        "tipp": "\\(d^2 = 5^2 + 12^2 = 25 + 144 = \\,?\\)",
+        "loesungsweg": "$$d^2 = 5^2 + 12^2 = 25 + 144 = 169 \\quad \\Rightarrow \\quad d = \\sqrt{169} = 13 \\text{ cm}$$"
+      },
+      {
+        "id": 29,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Berechne die Raumdiagonale \\(d\\) eines Quaders mit \\(a = 3\\) cm, \\(b = 4\\) cm und \\(c = 12\\) cm.",
+        "loesung": 13,
+        "toleranz": 0,
+        "tipp": "Raumdiagonale: \\(d^2 = a^2 + b^2 + c^2\\). Wende Pythagoras zweimal an.",
+        "loesungsweg": "$$d^2 = a^2 + b^2 + c^2 = 9 + 16 + 144 = 169 \\quad \\Rightarrow \\quad d = \\sqrt{169} = 13 \\text{ cm}$$"
+      },
+      {
+        "id": 30,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Ist das Dreieck mit den Seiten \\(a = 9\\), \\(b = 40\\), \\(c = 41\\) rechtwinklig?",
+        "optionen": ["Ja", "Nein"],
+        "korrekt": 0,
+        "tipp": "Pruefe: \\(9^2 + 40^2 = 81 + 1600 = 1681\\). Ist das gleich \\(41^2\\)?",
+        "loesungsweg": "$$9^2 + 40^2 = 81 + 1600 = 1681 = 41^2 \\quad \\checkmark$$ Ja, das Dreieck ist rechtwinklig."
+      },
+      // ========== LEVEL 6 — Anwendungsaufgaben ==========
+      {
+        "id": 31,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Eine 5 m lange Leiter lehnt an einer Wand. Der Fuss der Leiter ist 3 m von der Wand entfernt. Wie hoch reicht die Leiter an der Wand?",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "Die Leiter ist die Hypotenuse (\\(c = 5\\)), der Abstand zur Wand eine Kathete (\\(a = 3\\)). Gesucht: \\(b\\).",
+        "loesungsweg": "$$b^2 = c^2 - a^2 = 5^2 - 3^2 = 25 - 9 = 16 \\quad \\Rightarrow \\quad b = 4 \\text{ m}$$"
+      },
+      {
+        "id": 32,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Zwei Orte liegen an einem See. Von Ort A geht man 6 km nach Osten und dann 8 km nach Norden zu Ort B. Wie weit ist die direkte Entfernung ueber den See? ",
+        "loesung": 10,
+        "toleranz": 0,
+        "tipp": "Die Wege nach Osten und Norden bilden die Katheten. Die direkte Entfernung ist die Hypotenuse.",
+        "loesungsweg": "$$d^2 = 6^2 + 8^2 = 36 + 64 = 100 \\quad \\Rightarrow \\quad d = \\sqrt{100} = 10 \\text{ km}$$"
+      },
+      {
+        "id": 33,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Berechne die Hoehe \\(h\\) eines gleichseitigen Dreiecks mit Seitenlaenge \\(a = 6\\) cm. Runde auf zwei Nachkommastellen.",
+        "loesung": 5.20,
+        "toleranz": 0.01,
+        "tipp": "Die Hoehe teilt die Grundseite in zwei Haelften. Es gilt: \\(h = \\frac{a}{2} \\cdot \\sqrt{3}\\) oder berechne mit Pythagoras: \\(h^2 = a^2 - \\left(\\frac{a}{2}\\right)^2\\).",
+        "loesungsweg": "$$h^2 = 6^2 - 3^2 = 36 - 9 = 27 \\quad \\Rightarrow \\quad h = \\sqrt{27} = 3\\sqrt{3} \\approx 5{,}20 \\text{ cm}$$"
+      },
+      {
+        "id": 34,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Berechne den Abstand der Punkte \\(A(1 \\mid 2)\\) und \\(B(4 \\mid 6)\\).",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Abstandsformel: \\(d = \\sqrt{(x_B - x_A)^2 + (y_B - y_A)^2}\\). Berechne \\(\\Delta x = 4 - 1\\) und \\(\\Delta y = 6 - 2\\).",
+        "loesungsweg": "$$d = \\sqrt{(4-1)^2 + (6-2)^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5$$"
+      },
+      {
+        "id": 35,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Berechne den Abstand der Punkte \\(P(2 \\mid 1)\\) und \\(Q(5 \\mid 5)\\).",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "\\(d = \\sqrt{(5-2)^2 + (5-1)^2} = \\sqrt{9 + 16}\\)",
+        "loesungsweg": "$$d = \\sqrt{(5-2)^2 + (5-1)^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5$$"
+      },
+      {
+        "id": 36,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Ein Fussballfeld ist 100 m lang und 60 m breit. Wie lang ist die Diagonale? Runde auf zwei Nachkommastellen.",
+        "loesung": 116.62,
+        "toleranz": 0.01,
+        "tipp": "Die Diagonale ist die Hypotenuse: \\(d^2 = 100^2 + 60^2\\).",
+        "loesungsweg": "$$d^2 = 100^2 + 60^2 = 10000 + 3600 = 13600 \\quad \\Rightarrow \\quad d = \\sqrt{13600} \\approx 116{,}62 \\text{ m}$$"
+      }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

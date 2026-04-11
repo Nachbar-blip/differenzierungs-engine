@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kreise &amp; Winkel am Kreis - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '8-kreise-winkel';
+    const THEMA_CONFIG = { name: 'Kreise & Winkel am Kreis', bereich: 'geometrie' };
+    const AUFGABEN = [
+      // ========== LEVEL 1 -- Lagebeziehungen Kreis/Gerade und Kreis/Kreis ==========
+      {
+        "id": 1,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Eine Gerade hat vom Kreismittelpunkt den Abstand \\(d = 5\\,\\text{cm}\\). Der Kreis hat den Radius \\(r = 5\\,\\text{cm}\\). Welche Lagebeziehung liegt vor?",
+        "optionen": ["Passante", "Sekante", "Tangente", "Die Gerade geht durch den Mittelpunkt"],
+        "korrekt": 2,
+        "tipp": "Vergleiche den Abstand \\(d\\) mit dem Radius \\(r\\). Was gilt, wenn \\(d = r\\)?",
+        "loesungsweg": "Wenn der Abstand der Geraden zum Mittelpunkt gleich dem Radius ist (\\(d = r\\)), beruehrt die Gerade den Kreis in genau einem Punkt. Das ist eine <b>Tangente</b>."
+      },
+      {
+        "id": 2,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Eine Gerade hat vom Kreismittelpunkt den Abstand \\(d = 3\\,\\text{cm}\\). Der Radius betraegt \\(r = 7\\,\\text{cm}\\). Welche Lagebeziehung liegt vor?",
+        "optionen": ["Tangente", "Passante", "Sekante", "Kann man nicht entscheiden"],
+        "korrekt": 2,
+        "tipp": "Da \\(d < r\\), schneidet die Gerade den Kreis.",
+        "loesungsweg": "Es gilt \\(d = 3 < 7 = r\\). Wenn der Abstand kleiner als der Radius ist, schneidet die Gerade den Kreis in <b>zwei Punkten</b> -- sie ist eine <b>Sekante</b>."
+      },
+      {
+        "id": 3,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Welche Gerade hat keinen gemeinsamen Punkt mit dem Kreis?",
+        "optionen": ["Tangente", "Sekante", "Passante", "Sehne"],
+        "korrekt": 2,
+        "tipp": "Das Wort kommt vom lateinischen 'passare' = 'vorbeigehen'.",
+        "loesungsweg": "Eine <b>Passante</b> geht am Kreis vorbei, ohne ihn zu beruehren oder zu schneiden. Es gilt \\(d > r\\) (Abstand groesser als Radius)."
+      },
+      {
+        "id": 4,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Zwei Kreise haben die Radien \\(r_1 = 4\\,\\text{cm}\\) und \\(r_2 = 3\\,\\text{cm}\\). Der Abstand der Mittelpunkte betraegt \\(d = 7\\,\\text{cm}\\). Welche Lagebeziehung liegt vor?",
+        "optionen": ["Sie schneiden sich in zwei Punkten", "Sie beruehren sich von aussen", "Sie liegen ausserhalb voneinander", "Der eine liegt im anderen"],
+        "korrekt": 1,
+        "tipp": "Berechne \\(r_1 + r_2\\) und vergleiche mit \\(d\\).",
+        "loesungsweg": "Es gilt \\(r_1 + r_2 = 4 + 3 = 7 = d\\). Wenn die Summe der Radien gleich dem Mittelpunktsabstand ist, <b>beruehren sich die Kreise von aussen</b> in genau einem Punkt."
+      },
+      {
+        "id": 5,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Zwei Kreise haben die Radien \\(r_1 = 5\\,\\text{cm}\\) und \\(r_2 = 3\\,\\text{cm}\\). Der Mittelpunktsabstand ist \\(d = 6\\,\\text{cm}\\). Welche Lagebeziehung liegt vor?",
+        "optionen": ["Aussere Beruehrung", "Zwei Schnittpunkte", "Kein gemeinsamer Punkt", "Innere Beruehrung"],
+        "korrekt": 1,
+        "tipp": "Pruefe: Ist \\(|r_1 - r_2| < d < r_1 + r_2\\)?",
+        "loesungsweg": "Es gilt \\(|r_1 - r_2| = 2\\) und \\(r_1 + r_2 = 8\\). Da \\(2 < 6 < 8\\), also \\(|r_1 - r_2| < d < r_1 + r_2\\), haben die Kreise <b>zwei Schnittpunkte</b>."
+      },
+      {
+        "id": 6,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Ein Kreis hat den Radius \\(r = 10\\,\\text{cm}\\). Eine Gerade hat den Abstand \\(d = 12\\,\\text{cm}\\) vom Mittelpunkt. Wie viele gemeinsame Punkte gibt es?",
+        "optionen": ["0", "1", "2", "Unendlich viele"],
+        "korrekt": 0,
+        "tipp": "Vergleiche \\(d\\) und \\(r\\). Ist \\(d > r\\)?",
+        "loesungsweg": "Da \\(d = 12 > 10 = r\\), ist die Gerade eine <b>Passante</b> und hat <b>0 gemeinsame Punkte</b> mit dem Kreis."
+      },
+
+      // ========== LEVEL 2 -- Tangenteneigenschaften ==========
+      {
+        "id": 7,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Welchen Winkel bildet die Tangente mit dem Beruehrungsradius?",
+        "optionen": ["\\(45^\\circ\\)", "\\(60^\\circ\\)", "\\(90^\\circ\\)", "Das haengt vom Kreis ab"],
+        "korrekt": 2,
+        "tipp": "Die Tangente steht in einer besonderen Beziehung zum Radius im Beruehrungspunkt.",
+        "loesungsweg": "Die Tangente steht <b>senkrecht</b> auf dem Beruehrungsradius, bildet also einen Winkel von \\(90^\\circ\\). Das ist eine fundamentale Eigenschaft der Tangente."
+      },
+      {
+        "id": 8,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Von einem Punkt \\(P\\) ausserhalb des Kreises werden zwei Tangenten an den Kreis gelegt. Was gilt fuer die beiden Tangentenabschnitte von \\(P\\) zu den Beruehrungspunkten?",
+        "optionen": ["Sie sind verschieden lang", "Sie sind gleich lang", "Einer ist doppelt so lang wie der andere", "Das haengt vom Radius ab"],
+        "korrekt": 1,
+        "tipp": "Betrachte die beiden rechtwinkligen Dreiecke, die entstehen.",
+        "loesungsweg": "Die beiden Tangentenabschnitte von einem externen Punkt sind <b>gleich lang</b>. Die entstehenden rechtwinkligen Dreiecke sind kongruent (gleiche Hypotenuse = Abstand Punkt-Mittelpunkt, gleiche Kathete = Radius)."
+      },
+      {
+        "id": 9,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Ein Kreis hat den Radius \\(r = 5\\,\\text{cm}\\). Der Punkt \\(P\\) hat den Abstand \\(13\\,\\text{cm}\\) vom Mittelpunkt. Wie lang ist der Tangentenabschnitt von \\(P\\) zum Beruehrungspunkt (in cm)?",
+        "loesung": 12,
+        "toleranz": 0.01,
+        "tipp": "Nutze den Satz des Pythagoras: Radius, Tangentenabschnitt und Strecke Mittelpunkt-P bilden ein rechtwinkliges Dreieck.",
+        "loesungsweg": "Im rechtwinkligen Dreieck gilt: $$t^2 + r^2 = d^2$$ $$t^2 + 5^2 = 13^2$$ $$t^2 = 169 - 25 = 144$$ $$t = 12\\,\\text{cm}$$"
+      },
+      {
+        "id": 10,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Welcher Schritt gehoert NICHT zur Konstruktion einer Tangente an einen Kreis durch einen Punkt \\(P\\) ausserhalb?",
+        "optionen": ["Verbinde \\(P\\) mit dem Mittelpunkt \\(M\\)", "Bestimme den Mittelpunkt der Strecke \\(\\overline{PM}\\)", "Schlage einen Thaleskreis ueber \\(\\overline{PM}\\)", "Zeichne eine Parallele zum Radius"],
+        "korrekt": 3,
+        "tipp": "Die Tangentenkonstruktion nutzt den Thaleskreis, um den rechten Winkel zu finden.",
+        "loesungsweg": "Man verbindet \\(P\\) mit \\(M\\), findet den Mittelpunkt von \\(\\overline{PM}\\) und schlaegt darueber einen Thaleskreis. Die Schnittpunkte mit dem gegebenen Kreis sind die Beruehrungspunkte. Eine <b>Parallele zum Radius</b> wird nicht benoetigt."
+      },
+      {
+        "id": 11,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Ein Kreis hat den Radius \\(r = 8\\,\\text{cm}\\). Der Punkt \\(P\\) hat den Abstand \\(10\\,\\text{cm}\\) vom Mittelpunkt. Wie lang ist der Tangentenabschnitt (in cm)? Runde auf zwei Dezimalstellen.",
+        "loesung": 6,
+        "toleranz": 0.01,
+        "tipp": "Nutze \\(t = \\sqrt{d^2 - r^2}\\).",
+        "loesungsweg": "$$t = \\sqrt{d^2 - r^2} = \\sqrt{10^2 - 8^2} = \\sqrt{100 - 64} = \\sqrt{36} = 6\\,\\text{cm}$$"
+      },
+      {
+        "id": 12,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Im Beruehrungspunkt einer Tangente entsteht ein rechtwinkliges Dreieck mit dem Mittelpunkt und einem externen Punkt. Wo liegt der rechte Winkel?",
+        "optionen": ["Am externen Punkt", "Am Mittelpunkt", "Am Beruehrungspunkt", "Es gibt keinen rechten Winkel"],
+        "korrekt": 2,
+        "tipp": "Denke an die Eigenschaft: Tangente steht senkrecht auf dem Radius.",
+        "loesungsweg": "Da die Tangente senkrecht auf dem Radius steht, liegt der rechte Winkel am <b>Beruehrungspunkt</b>. Die Strecke vom Mittelpunkt zum externen Punkt ist die Hypotenuse."
+      },
+
+      // ========== LEVEL 3 -- Peripheriewinkelsatz ==========
+      {
+        "id": 13,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Was ist ein Peripheriewinkel (Umfangswinkel)?",
+        "optionen": ["Ein Winkel im Mittelpunkt des Kreises", "Ein Winkel, dessen Scheitel auf der Kreislinie liegt und dessen Schenkel durch zwei weitere Kreispunkte gehen", "Der Winkel zwischen Tangente und Radius", "Ein Winkel von genau \\(90^\\circ\\)"],
+        "korrekt": 1,
+        "tipp": "Der Scheitel liegt auf der Peripherie (= dem Kreisrand).",
+        "loesungsweg": "Ein <b>Peripheriewinkel</b> hat seinen Scheitel auf der Kreislinie. Seine Schenkel gehen durch zwei feste Punkte auf dem Kreis. Alle Peripheriewinkel ueber demselben Bogen sind gleich gross."
+      },
+      {
+        "id": 14,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Der Zentriwinkel (Mittelpunktswinkel) ueber einem Bogen betraegt \\(120^\\circ\\). Wie gross ist der zugehoerige Peripheriewinkel?",
+        "optionen": ["\\(60^\\circ\\)", "\\(120^\\circ\\)", "\\(240^\\circ\\)", "\\(30^\\circ\\)"],
+        "korrekt": 0,
+        "tipp": "Der Peripheriewinkel ist halb so gross wie der Zentriwinkel ueber demselben Bogen.",
+        "loesungsweg": "Es gilt: <b>Peripheriewinkel = halber Zentriwinkel</b>. $$\\alpha = \\frac{120^\\circ}{2} = 60^\\circ$$"
+      },
+      {
+        "id": 15,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Der Peripheriewinkel ueber einem Bogen betraegt \\(35^\\circ\\). Wie gross ist der zugehoerige Zentriwinkel (in Grad)?",
+        "loesung": 70,
+        "toleranz": 0.01,
+        "tipp": "Der Zentriwinkel ist doppelt so gross wie der Peripheriewinkel.",
+        "loesungsweg": "$$\\text{Zentriwinkel} = 2 \\cdot \\text{Peripheriewinkel} = 2 \\cdot 35^\\circ = 70^\\circ$$"
+      },
+      {
+        "id": 16,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Drei Punkte \\(A\\), \\(B\\), \\(C\\) liegen auf einem Kreis. Die Punkte \\(A\\) und \\(B\\) sind fest. Was gilt fuer den Winkel \\(\\angle ACB\\), wenn \\(C\\) sich auf dem Kreisbogen bewegt (auf derselben Seite von \\(AB\\))?",
+        "optionen": ["Er wird groesser", "Er wird kleiner", "Er bleibt gleich", "Er schwankt zwischen zwei Werten"],
+        "korrekt": 2,
+        "tipp": "Das ist die zentrale Aussage des Peripheriewinkelsatzes.",
+        "loesungsweg": "Nach dem <b>Peripheriewinkelsatz</b> sind alle Peripheriewinkel ueber demselben Bogen gleich gross. Egal wo \\(C\\) auf dem gleichen Bogen liegt -- der Winkel \\(\\angle ACB\\) <b>bleibt gleich</b>."
+      },
+      {
+        "id": 17,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "In einem Kreis betraegt der Zentriwinkel \\(\\angle AMB = 84^\\circ\\). Punkt \\(C\\) liegt auf dem gegenueberliegenden grossen Bogen. Wie gross ist \\(\\angle ACB\\) (in Grad)?",
+        "loesung": 42,
+        "toleranz": 0.01,
+        "tipp": "Der Peripheriewinkel auf dem gegenueberliegenden Bogen ist die Haelfte des Zentriwinkels.",
+        "loesungsweg": "Der Peripheriewinkel ueber demselben Bogen ist halb so gross wie der Zentriwinkel: $$\\angle ACB = \\frac{\\angle AMB}{2} = \\frac{84^\\circ}{2} = 42^\\circ$$"
+      },
+      {
+        "id": 18,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Zwei Peripheriewinkel ueber demselben Bogen betragen \\(\\alpha = 48^\\circ\\). Wie gross ist der Zentriwinkel (in Grad)?",
+        "loesung": 96,
+        "toleranz": 0.01,
+        "tipp": "Zentriwinkel = 2 mal Peripheriewinkel.",
+        "loesungsweg": "$$\\text{Zentriwinkel} = 2 \\cdot 48^\\circ = 96^\\circ$$"
+      },
+
+      // ========== LEVEL 4 -- Satz des Thales ==========
+      {
+        "id": 19,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Was besagt der Satz des Thales?",
+        "optionen": ["Jeder Winkel im Kreis ist rechtwinklig", "Jeder Peripheriewinkel im Halbkreis ist ein rechter Winkel", "Der Zentriwinkel ist immer \\(90^\\circ\\)", "Tangente und Sehne stehen senkrecht aufeinander"],
+        "korrekt": 1,
+        "tipp": "Es geht um den Spezialfall, dass die Sehne ein Durchmesser ist.",
+        "loesungsweg": "Der <b>Satz des Thales</b>: Liegt ein Punkt \\(C\\) auf dem Halbkreis ueber dem Durchmesser \\(\\overline{AB}\\), so ist \\(\\angle ACB = 90^\\circ\\). Der Durchmesser als Sehne erzeugt einen Zentriwinkel von \\(180^\\circ\\), also Peripheriewinkel \\(= 90^\\circ\\)."
+      },
+      {
+        "id": 20,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Ein Dreieck \\(ABC\\) ist in einen Kreis einbeschrieben. Die Seite \\(\\overline{AB}\\) ist ein Durchmesser. Welchen Winkel hat das Dreieck bei \\(C\\)?",
+        "optionen": ["\\(45^\\circ\\)", "\\(60^\\circ\\)", "\\(90^\\circ\\)", "Das haengt von der Lage von \\(C\\) ab"],
+        "korrekt": 2,
+        "tipp": "Wende den Satz des Thales an.",
+        "loesungsweg": "Nach dem Satz des Thales ist \\(\\angle ACB = 90^\\circ\\), da \\(C\\) auf dem Thaleskreis ueber dem Durchmesser \\(\\overline{AB}\\) liegt."
+      },
+      {
+        "id": 21,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Ein Kreis hat den Durchmesser \\(\\overline{AB}\\) mit \\(|AB| = 10\\,\\text{cm}\\). Der Punkt \\(C\\) liegt auf dem Kreis mit \\(|AC| = 6\\,\\text{cm}\\). Wie lang ist \\(|BC|\\)?",
+        "optionen": ["\\(4\\,\\text{cm}\\)", "\\(6\\,\\text{cm}\\)", "\\(8\\,\\text{cm}\\)", "\\(10\\,\\text{cm}\\)"],
+        "korrekt": 2,
+        "tipp": "Nach Thales ist das Dreieck rechtwinklig bei \\(C\\). Nutze Pythagoras.",
+        "loesungsweg": "Nach Thales: \\(\\angle ACB = 90^\\circ\\). Mit Pythagoras: $$|BC|^2 = |AB|^2 - |AC|^2 = 100 - 36 = 64$$ $$|BC| = 8\\,\\text{cm}$$"
+      },
+      {
+        "id": 22,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Ein Punkt \\(C\\) liegt innerhalb eines Kreises mit Durchmesser \\(\\overline{AB}\\). Wie ist der Winkel \\(\\angle ACB\\)?",
+        "optionen": ["Kleiner als \\(90^\\circ\\)", "Genau \\(90^\\circ\\)", "Groesser als \\(90^\\circ\\)", "Das kann man nicht sagen"],
+        "korrekt": 2,
+        "tipp": "Auf dem Kreis ist der Winkel genau \\(90^\\circ\\). Was passiert, wenn der Punkt naeher rueckt?",
+        "loesungsweg": "Liegt \\(C\\) <b>innerhalb</b> des Kreises, ist \\(\\angle ACB > 90^\\circ\\). Liegt \\(C\\) <b>auf</b> dem Kreis, ist \\(\\angle ACB = 90^\\circ\\) (Thales). Liegt \\(C\\) <b>ausserhalb</b>, ist \\(\\angle ACB < 90^\\circ\\). Das ist die <b>Umkehrung des Satzes des Thales</b>."
+      },
+      {
+        "id": 23,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Wie kann man pruefen, ob ein Punkt \\(C\\) auf dem Thaleskreis ueber \\(\\overline{AB}\\) liegt?",
+        "optionen": ["Messen, ob \\(|AC| = |BC|\\)", "Pruefen, ob \\(\\angle ACB = 90^\\circ\\)", "Pruefen, ob \\(|AC| + |BC| = |AB|\\)", "Pruefen, ob \\(C\\) der Mittelpunkt von \\(\\overline{AB}\\) ist"],
+        "korrekt": 1,
+        "tipp": "Die Umkehrung des Satzes des Thales liefert das Kriterium.",
+        "loesungsweg": "Nach der <b>Umkehrung des Satzes des Thales</b> gilt: Wenn \\(\\angle ACB = 90^\\circ\\), dann liegt \\(C\\) auf dem Thaleskreis ueber \\(\\overline{AB}\\)."
+      },
+      {
+        "id": 24,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "In einem Thaleskreis ueber \\(\\overline{AB}\\) mit \\(|AB| = 13\\,\\text{cm}\\) liegt der Punkt \\(C\\) auf dem Kreis. Es gilt \\(|AC| = 5\\,\\text{cm}\\). Berechne \\(|BC|\\) (in cm).",
+        "loesung": 12,
+        "toleranz": 0.01,
+        "tipp": "Nach Thales ist \\(\\angle ACB = 90^\\circ\\). Wende Pythagoras an.",
+        "loesungsweg": "$$|BC| = \\sqrt{|AB|^2 - |AC|^2} = \\sqrt{169 - 25} = \\sqrt{144} = 12\\,\\text{cm}$$"
+      },
+
+      // ========== LEVEL 5 -- Sehnentangentenwinkel, kombinierte Winkelsaetze ==========
+      {
+        "id": 25,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Was ist ein Sehnentangentenwinkel?",
+        "optionen": ["Der Winkel zwischen zwei Sehnen", "Der Winkel zwischen einer Tangente und einer Sehne im Beruehrungspunkt", "Der Winkel zwischen zwei Tangenten", "Der Winkel im Mittelpunkt"],
+        "korrekt": 1,
+        "tipp": "Der Name sagt es: Sehne + Tangente.",
+        "loesungsweg": "Der <b>Sehnentangentenwinkel</b> ist der Winkel zwischen einer Tangente und einer Sehne, die beide durch denselben Punkt auf dem Kreis gehen. Er ist halb so gross wie der zugehoerige Bogen."
+      },
+      {
+        "id": 26,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Ein Sehnentangentenwinkel gehoert zu einem Bogen von \\(130^\\circ\\). Wie gross ist der Sehnentangentenwinkel (in Grad)?",
+        "loesung": 65,
+        "toleranz": 0.01,
+        "tipp": "Der Sehnentangentenwinkel ist die Haelfte des zugehoerigen Bogens.",
+        "loesungsweg": "$$\\text{Sehnentangentenwinkel} = \\frac{\\text{Bogen}}{2} = \\frac{130^\\circ}{2} = 65^\\circ$$"
+      },
+      {
+        "id": 27,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "In einem Kreis betraegt der Zentriwinkel \\(\\angle AMB = 100^\\circ\\). Eine Tangente beruehrt den Kreis in \\(A\\). Wie gross ist der Sehnentangentenwinkel zwischen der Tangente und der Sehne \\(\\overline{AB}\\) auf der Seite des kleineren Bogens (in Grad)?",
+        "loesung": 50,
+        "toleranz": 0.01,
+        "tipp": "Der Sehnentangentenwinkel ist die Haelfte des Bogens, den er einschliesst.",
+        "loesungsweg": "Der Zentriwinkel \\(100^\\circ\\) entspricht dem Bogen \\(\\stackrel{\\frown}{AB} = 100^\\circ\\). Der Sehnentangentenwinkel ist: $$\\frac{100^\\circ}{2} = 50^\\circ$$"
+      },
+      {
+        "id": 28,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "In einem Kreis gilt: Peripheriewinkel \\(\\angle ACB = 55^\\circ\\). Berechne den Zentriwinkel \\(\\angle AMB\\) und den Sehnentangentenwinkel im Punkt \\(A\\) ueber dem gleichen Bogen. Gib den Sehnentangentenwinkel an (in Grad).",
+        "loesung": 55,
+        "toleranz": 0.01,
+        "tipp": "Zentriwinkel = \\(2 \\cdot 55^\\circ = 110^\\circ\\). Der Sehnentangentenwinkel ueber demselben Bogen ist auch die Haelfte des Bogens.",
+        "loesungsweg": "Zentriwinkel: \\(2 \\cdot 55^\\circ = 110^\\circ\\). Der Sehnentangentenwinkel ueber demselben Bogen ist: $$\\frac{110^\\circ}{2} = 55^\\circ$$ Bemerkenswert: Der Sehnentangentenwinkel ist gleich dem Peripheriewinkel ueber demselben Bogen!"
+      },
+      {
+        "id": 29,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "In einem Kreis bilden die Punkte \\(A\\), \\(B\\), \\(C\\), \\(D\\) ein Sehnenviereck. Es gilt \\(\\angle DAB = 72^\\circ\\). Wie gross ist \\(\\angle BCD\\) (in Grad)?",
+        "loesung": 108,
+        "toleranz": 0.01,
+        "tipp": "In einem Sehnenviereck sind gegenueberliegende Winkel supplementaer (ergeben zusammen \\(180^\\circ\\)).",
+        "loesungsweg": "In einem Sehnenviereck gilt: Gegenueberliegende Winkel ergaenzen sich zu \\(180^\\circ\\). $$\\angle BCD = 180^\\circ - \\angle DAB = 180^\\circ - 72^\\circ = 108^\\circ$$"
+      },
+      {
+        "id": 30,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Ein Bogen hat die Laenge \\(b = 5\\pi\\,\\text{cm}\\). Der Kreis hat den Radius \\(r = 10\\,\\text{cm}\\). Wie gross ist der zugehoerige Zentriwinkel in Grad?",
+        "loesung": 90,
+        "toleranz": 0.1,
+        "tipp": "Bogenlaenge \\(b = \\frac{\\alpha}{360^\\circ} \\cdot 2\\pi r\\). Stelle nach \\(\\alpha\\) um.",
+        "loesungsweg": "$$b = \\frac{\\alpha}{360^\\circ} \\cdot 2\\pi r$$ $$5\\pi = \\frac{\\alpha}{360^\\circ} \\cdot 2\\pi \\cdot 10 = \\frac{\\alpha}{360^\\circ} \\cdot 20\\pi$$ $$\\frac{5\\pi}{20\\pi} = \\frac{\\alpha}{360^\\circ}$$ $$\\alpha = \\frac{1}{4} \\cdot 360^\\circ = 90^\\circ$$"
+      },
+
+      // ========== LEVEL 6 -- Anwendungen ==========
+      {
+        "id": 31,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Welche Konstruktionsbeschreibung fuer eine Tangente von \\(P\\) an den Kreis \\(k(M, r)\\) ist korrekt?",
+        "optionen": [
+          "Zeichne eine Parallele zu \\(\\overline{PM}\\) durch den Kreis",
+          "Bestimme den Mittelpunkt von \\(\\overline{PM}\\), schlage Thaleskreis, Schnittpunkte mit \\(k\\) sind die Beruehrungspunkte",
+          "Zeichne einen Kreis um \\(P\\) mit Radius \\(r\\)",
+          "Faelle das Lot von \\(P\\) auf \\(M\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Der Thaleskreis erzeugt den rechten Winkel, den die Tangente braucht.",
+        "loesungsweg": "Korrekt ist: Mittelpunkt \\(H\\) von \\(\\overline{PM}\\) bestimmen, Thaleskreis um \\(H\\) mit Radius \\(|HM|\\) schlagen. Die Schnittpunkte des Thaleskreises mit \\(k\\) sind die Beruehrungspunkte -- dort steht der Radius senkrecht, also entsteht die Tangente."
+      },
+      {
+        "id": 32,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Von einem Punkt \\(P\\) mit Abstand \\(15\\,\\text{cm}\\) zum Mittelpunkt wird eine Tangente an einen Kreis mit \\(r = 9\\,\\text{cm}\\) gelegt. Wie lang ist der Tangentenabschnitt (in cm)?",
+        "loesung": 12,
+        "toleranz": 0.01,
+        "tipp": "Pythagoras: \\(t = \\sqrt{d^2 - r^2}\\).",
+        "loesungsweg": "$$t = \\sqrt{d^2 - r^2} = \\sqrt{15^2 - 9^2} = \\sqrt{225 - 81} = \\sqrt{144} = 12\\,\\text{cm}$$"
+      },
+      {
+        "id": 33,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Berechne die Laenge eines Kreisbogens mit Radius \\(r = 6\\,\\text{cm}\\) und Zentriwinkel \\(\\alpha = 60^\\circ\\). Runde auf zwei Dezimalstellen (in cm).",
+        "loesung": 6.28,
+        "toleranz": 0.1,
+        "tipp": "Bogenlaenge \\(b = \\frac{\\alpha}{360^\\circ} \\cdot 2\\pi r\\).",
+        "loesungsweg": "$$b = \\frac{60^\\circ}{360^\\circ} \\cdot 2\\pi \\cdot 6 = \\frac{1}{6} \\cdot 12\\pi = 2\\pi \\approx 6{,}28\\,\\text{cm}$$"
+      },
+      {
+        "id": 34,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Berechne die Flaeche eines Kreisausschnitts mit Radius \\(r = 10\\,\\text{cm}\\) und Zentriwinkel \\(\\alpha = 90^\\circ\\). Runde auf zwei Dezimalstellen (in cm\\(^2\\)).",
+        "loesung": 78.54,
+        "toleranz": 0.1,
+        "tipp": "Flaecheninhalt: \\(A = \\frac{\\alpha}{360^\\circ} \\cdot \\pi r^2\\).",
+        "loesungsweg": "$$A = \\frac{90^\\circ}{360^\\circ} \\cdot \\pi \\cdot 10^2 = \\frac{1}{4} \\cdot 100\\pi = 25\\pi \\approx 78{,}54\\,\\text{cm}^2$$"
+      },
+      {
+        "id": 35,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Ein Kreisausschnitt hat den Radius \\(r = 8\\,\\text{cm}\\) und den Zentriwinkel \\(\\alpha = 120^\\circ\\). Berechne die Bogenlaenge (in cm). Runde auf zwei Dezimalstellen.",
+        "loesung": 16.76,
+        "toleranz": 0.1,
+        "tipp": "\\(b = \\frac{\\alpha}{360^\\circ} \\cdot 2\\pi r\\).",
+        "loesungsweg": "$$b = \\frac{120^\\circ}{360^\\circ} \\cdot 2\\pi \\cdot 8 = \\frac{1}{3} \\cdot 16\\pi = \\frac{16\\pi}{3} \\approx 16{,}76\\,\\text{cm}$$"
+      },
+      {
+        "id": 36,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Die Flaeche eines Kreisausschnitts betraegt \\(A = 50\\,\\text{cm}^2\\). Der Radius ist \\(r = 10\\,\\text{cm}\\). Berechne den Zentriwinkel \\(\\alpha\\) in Grad. Runde auf eine Dezimalstelle.",
+        "loesung": 57.3,
+        "toleranz": 0.5,
+        "tipp": "Stelle \\(A = \\frac{\\alpha}{360^\\circ} \\cdot \\pi r^2\\) nach \\(\\alpha\\) um.",
+        "loesungsweg": "$$A = \\frac{\\alpha}{360^\\circ} \\cdot \\pi r^2$$ $$50 = \\frac{\\alpha}{360^\\circ} \\cdot \\pi \\cdot 100$$ $$\\frac{\\alpha}{360^\\circ} = \\frac{50}{100\\pi} = \\frac{1}{2\\pi}$$ $$\\alpha = \\frac{360^\\circ}{2\\pi} \\approx 57{,}3^\\circ$$"
+      }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>
