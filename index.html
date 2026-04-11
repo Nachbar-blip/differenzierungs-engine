@@ -186,29 +186,21 @@
 
   /* ── Filter hide ────────────────────────────────── */
   body.filter-gk .lk-only { display: none; }
+  /* GK/LK-Leiste ausblenden wenn höchste Klasse ≤ 10 */
   body.filter-klasse-7  [data-filter-group="gklk"],
   body.filter-klasse-9  [data-filter-group="gklk"],
   body.filter-klasse-10 [data-filter-group="gklk"] { display: none; }
+  /* "Klasse X" = zeige alles ≤ X, blende alles > X aus */
   body.filter-klasse-7  .col-9,
   body.filter-klasse-7  .col-10,
   body.filter-klasse-7  .col-11,
   body.filter-klasse-7  .col-12 { display: none; }
-  body.filter-klasse-9  .col-7,
   body.filter-klasse-9  .col-10,
   body.filter-klasse-9  .col-11,
   body.filter-klasse-9  .col-12 { display: none; }
-  body.filter-klasse-10 .col-7,
-  body.filter-klasse-10 .col-9,
   body.filter-klasse-10 .col-11,
   body.filter-klasse-10 .col-12 { display: none; }
-  body.filter-klasse-11 .col-7,
-  body.filter-klasse-11 .col-9,
-  body.filter-klasse-11 .col-10,
   body.filter-klasse-11 .col-12 { display: none; }
-  body.filter-klasse-12 .col-7,
-  body.filter-klasse-12 .col-9,
-  body.filter-klasse-12 .col-10,
-  body.filter-klasse-12 .col-11 { display: none; }
 
   /* ── Max-Klasse (persistiertes Schülerprofil) ───── */
   /* Blendet Klassen OBERHALB der eigenen Stufe aus.
