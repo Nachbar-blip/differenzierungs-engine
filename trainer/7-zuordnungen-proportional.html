@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zuordnungen -- proportional &amp; antiproportional - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '7-zuordnungen-proportional';
+    const THEMA_CONFIG = { name: 'Zuordnungen -- proportional & antiproportional', bereich: 'funktionen' };
+    const AUFGABEN = [
+      // ========== LEVEL 1 -- Zuordnung erkennen: proportional / antiproportional / weder noch ==========
+      {
+        "id": 1,
+        "level": 1,
+        "typ": "mc",
+        "frage": "3 Brötchen kosten 1,50 €. 6 Brötchen kosten 3,00 €. Welche Art von Zuordnung liegt vor?",
+        "optionen": ["proportional", "antiproportional", "weder noch"],
+        "korrekt": 0,
+        "tipp": "Doppelte Menge → doppelter Preis. Was bedeutet das?",
+        "loesungsweg": "Doppelte Anzahl → doppelter Preis. Das Verhältnis \\(\\frac{\\text{Preis}}{\\text{Anzahl}}\\) ist konstant: $$\\frac{1{,}50}{3} = \\frac{3{,}00}{6} = 0{,}50$$ Also: **proportionale Zuordnung**."
+      },
+      {
+        "id": 2,
+        "level": 1,
+        "typ": "mc",
+        "frage": "2 Maler streichen einen Zaun in 6 Stunden. 4 Maler brauchen nur 3 Stunden. Welche Art von Zuordnung liegt vor?",
+        "optionen": ["proportional", "antiproportional", "weder noch"],
+        "korrekt": 1,
+        "tipp": "Doppelt so viele Maler → halbe Zeit. Mehr von einem Wert bedeutet weniger vom anderen.",
+        "loesungsweg": "Doppelt so viele Maler → halbe Zeit: $$2 \\cdot 6 = 4 \\cdot 3 = 12$$ Das Produkt ist konstant → **antiproportionale Zuordnung**."
+      },
+      {
+        "id": 3,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Die Körpergröße eines Kindes und sein Alter: Welche Art von Zuordnung liegt vor?",
+        "optionen": ["proportional", "antiproportional", "weder noch"],
+        "korrekt": 2,
+        "tipp": "Ist ein 10-jähriges Kind doppelt so groß wie ein 5-jähriges?",
+        "loesungsweg": "Ein 10-jähriges Kind ist nicht doppelt so groß wie ein 5-jähriges. Es gibt kein festes Verhältnis → **weder proportional noch antiproportional**."
+      },
+      {
+        "id": 4,
+        "level": 1,
+        "typ": "mc",
+        "frage": "5 Liter Benzin kosten 9,50 €. 10 Liter kosten 19,00 €. Welche Art von Zuordnung liegt vor?",
+        "optionen": ["proportional", "antiproportional", "weder noch"],
+        "korrekt": 0,
+        "tipp": "Verdoppelt sich die Menge, verdoppelt sich auch der Preis?",
+        "loesungsweg": "$$\\frac{9{,}50}{5} = 1{,}90 \\quad \\text{und} \\quad \\frac{19{,}00}{10} = 1{,}90$$ Konstanter Quotient → **proportionale Zuordnung**."
+      },
+      {
+        "id": 5,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Eine Pizza wird unter Freunden aufgeteilt. Je mehr Personen, desto kleiner das Stück. Welche Art von Zuordnung liegt vor?",
+        "optionen": ["proportional", "antiproportional", "weder noch"],
+        "korrekt": 1,
+        "tipp": "Mehr Personen → weniger pro Person. Was bleibt konstant?",
+        "loesungsweg": "Mehr Personen → kleinere Stücke. Das Produkt (Personen × Stückgröße) = ganze Pizza bleibt konstant → **antiproportionale Zuordnung**."
+      },
+      {
+        "id": 6,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Die Hausnummer und die Entfernung zum Stadtzentrum: Welche Art von Zuordnung liegt vor?",
+        "optionen": ["proportional", "antiproportional", "weder noch"],
+        "korrekt": 2,
+        "tipp": "Hat eine doppelt so hohe Hausnummer auch den doppelten Abstand?",
+        "loesungsweg": "Hausnummern haben keinen festen Zusammenhang mit der Entfernung zum Zentrum → **weder proportional noch antiproportional**."
+      },
+      // ========== LEVEL 2 -- Dreisatz direkt (proportional) ==========
+      {
+        "id": 7,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "5 kg Äpfel kosten 12,00 €. Was kosten 8 kg?",
+        "loesung": 19.2,
+        "toleranz": 0.01,
+        "tipp": "Berechne zuerst den Preis für 1 kg: \\(12{,}00 \\div 5\\).",
+        "loesungsweg": "$$\\frac{12{,}00\\,€}{5\\,\\text{kg}} = 2{,}40\\,\\frac{€}{\\text{kg}}$$ $$8 \\cdot 2{,}40 = 19{,}20\\,€$$"
+      },
+      {
+        "id": 8,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "3 Hefte kosten 5,40 €. Was kosten 7 Hefte?",
+        "loesung": 12.6,
+        "toleranz": 0.01,
+        "tipp": "Dreisatz: Zuerst den Preis für 1 Heft bestimmen.",
+        "loesungsweg": "$$\\frac{5{,}40\\,€}{3} = 1{,}80\\,€ \\text{ pro Heft}$$ $$7 \\cdot 1{,}80 = 12{,}60\\,€$$"
+      },
+      {
+        "id": 9,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Ein Auto fährt mit 6 Litern Benzin 90 km. Wie weit kommt es mit 10 Litern?",
+        "loesung": 150,
+        "toleranz": 0,
+        "tipp": "Berechne zuerst, wie weit das Auto mit 1 Liter fährt.",
+        "loesungsweg": "$$\\frac{90\\,\\text{km}}{6\\,\\text{L}} = 15\\,\\frac{\\text{km}}{\\text{L}}$$ $$10 \\cdot 15 = 150\\,\\text{km}$$"
+      },
+      {
+        "id": 10,
+        "level": 2,
+        "typ": "mc",
+        "frage": "4 Tafeln Schokolade kosten 6,00 €. Vervollständige die Tabelle: 10 Tafeln kosten … €.",
+        "optionen": ["\\(12{,}00\\,€\\)", "\\(15{,}00\\,€\\)", "\\(10{,}00\\,€\\)", "\\(24{,}00\\,€\\)"],
+        "korrekt": 1,
+        "tipp": "Preis pro Tafel: \\(6{,}00 \\div 4 = 1{,}50\\,€\\). Dann mal 10.",
+        "loesungsweg": "$$\\frac{6{,}00}{4} = 1{,}50\\,€ \\text{ pro Tafel}$$ $$10 \\cdot 1{,}50 = 15{,}00\\,€$$"
+      },
+      {
+        "id": 11,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Für 250 g Mehl braucht man 150 ml Wasser. Wie viel ml Wasser braucht man für 400 g Mehl?",
+        "loesung": 240,
+        "toleranz": 0,
+        "tipp": "Dreisatz: Erst für 1 g berechnen, dann mal 400.",
+        "loesungsweg": "$$\\frac{150\\,\\text{ml}}{250\\,\\text{g}} = 0{,}6\\,\\frac{\\text{ml}}{\\text{g}}$$ $$400 \\cdot 0{,}6 = 240\\,\\text{ml}$$"
+      },
+      {
+        "id": 12,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "8 Stifte kosten 3,60 €. Was kosten 12 Stifte?",
+        "loesung": 5.4,
+        "toleranz": 0.01,
+        "tipp": "Preis pro Stift: \\(3{,}60 \\div 8\\).",
+        "loesungsweg": "$$\\frac{3{,}60}{8} = 0{,}45\\,€ \\text{ pro Stift}$$ $$12 \\cdot 0{,}45 = 5{,}40\\,€$$"
+      },
+      // ========== LEVEL 3 -- Dreisatz umgekehrt (antiproportional) ==========
+      {
+        "id": 13,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "4 Arbeiter brauchen 6 Tage für einen Auftrag. Wie viele Tage brauchen 3 Arbeiter?",
+        "loesung": 8,
+        "toleranz": 0,
+        "tipp": "Antiproportional: Weniger Arbeiter → mehr Tage. Berechne das Gesamtprodukt \\(4 \\cdot 6\\).",
+        "loesungsweg": "Gesamtarbeit: $$4 \\cdot 6 = 24 \\text{ Personentage}$$ $$\\frac{24}{3} = 8 \\text{ Tage}$$"
+      },
+      {
+        "id": 14,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "6 Pumpen füllen ein Becken in 10 Stunden. Wie lange brauchen 4 Pumpen?",
+        "loesung": 15,
+        "toleranz": 0,
+        "tipp": "Weniger Pumpen → mehr Zeit. Berechne \\(6 \\cdot 10\\) und teile durch 4.",
+        "loesungsweg": "$$6 \\cdot 10 = 60$$ $$\\frac{60}{4} = 15 \\text{ Stunden}$$"
+      },
+      {
+        "id": 15,
+        "level": 3,
+        "typ": "mc",
+        "frage": "5 Maschinen produzieren 200 Teile in 8 Stunden. Wie lange brauchen 10 Maschinen für 200 Teile?",
+        "optionen": ["16 Stunden", "4 Stunden", "2 Stunden", "8 Stunden"],
+        "korrekt": 1,
+        "tipp": "Doppelt so viele Maschinen → halbe Zeit.",
+        "loesungsweg": "$$5 \\cdot 8 = 40$$ $$\\frac{40}{10} = 4 \\text{ Stunden}$$"
+      },
+      {
+        "id": 16,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Entscheide: '12 Arbeiter brauchen 15 Tage. Wie viele Tage brauchen 20 Arbeiter?' -- Ist das proportional oder antiproportional?",
+        "optionen": ["proportional", "antiproportional"],
+        "korrekt": 1,
+        "tipp": "Mehr Arbeiter → weniger Tage oder mehr Tage?",
+        "loesungsweg": "Mehr Arbeiter → weniger Tage. Das Produkt \\(\\text{Arbeiter} \\times \\text{Tage}\\) bleibt konstant → **antiproportional**."
+      },
+      {
+        "id": 17,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "12 Arbeiter brauchen 15 Tage. Wie viele Tage brauchen 20 Arbeiter?",
+        "loesung": 9,
+        "toleranz": 0,
+        "tipp": "Antiproportional: \\(12 \\cdot 15 = \\,?\\), dann teile durch 20.",
+        "loesungsweg": "$$12 \\cdot 15 = 180$$ $$\\frac{180}{20} = 9 \\text{ Tage}$$"
+      },
+      {
+        "id": 18,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Ein Vorrat reicht für 8 Personen genau 15 Tage. Wie lange reicht er für 12 Personen?",
+        "loesung": 10,
+        "toleranz": 0,
+        "tipp": "Mehr Personen → weniger Tage. Berechne \\(8 \\cdot 15\\), dann teile durch 12.",
+        "loesungsweg": "$$8 \\cdot 15 = 120$$ $$\\frac{120}{12} = 10 \\text{ Tage}$$"
+      },
+      // ========== LEVEL 4 -- Proportionalitätsfaktor k berechnen ==========
+      {
+        "id": 19,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Eine proportionale Zuordnung hat die Wertepaare \\((4;\\,10)\\). Berechne den Proportionalitätsfaktor \\(k\\).",
+        "loesung": 2.5,
+        "toleranz": 0.01,
+        "tipp": "Bei proportionaler Zuordnung gilt \\(y = k \\cdot x\\), also \\(k = \\frac{y}{x}\\).",
+        "loesungsweg": "$$k = \\frac{y}{x} = \\frac{10}{4} = 2{,}5$$"
+      },
+      {
+        "id": 20,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Proportionale Zuordnung mit \\(k = 2{,}5\\). Berechne \\(y\\) für \\(x = 8\\).",
+        "loesung": 20,
+        "toleranz": 0,
+        "tipp": "\\(y = k \\cdot x = 2{,}5 \\cdot 8\\).",
+        "loesungsweg": "$$y = k \\cdot x = 2{,}5 \\cdot 8 = 20$$"
+      },
+      {
+        "id": 21,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Eine antiproportionale Zuordnung hat die Wertepaare \\((3;\\,12)\\). Welche Formel gilt?",
+        "optionen": ["\\(y = 36 \\cdot x\\)", "\\(y = \\dfrac{36}{x}\\)", "\\(y = 4 \\cdot x\\)", "\\(y = \\dfrac{4}{x}\\)"],
+        "korrekt": 1,
+        "tipp": "Antiproportional: \\(y = \\frac{k}{x}\\) mit \\(k = x \\cdot y\\).",
+        "loesungsweg": "$$k = x \\cdot y = 3 \\cdot 12 = 36$$ $$y = \\frac{36}{x}$$"
+      },
+      {
+        "id": 22,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Antiproportionale Zuordnung mit \\(k = 60\\). Berechne \\(y\\) für \\(x = 12\\).",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "\\(y = \\frac{k}{x} = \\frac{60}{12}\\).",
+        "loesungsweg": "$$y = \\frac{k}{x} = \\frac{60}{12} = 5$$"
+      },
+      {
+        "id": 23,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Die Wertepaare \\((5;\\,8)\\) und \\((10;\\,16)\\) gehören zu einer proportionalen Zuordnung. Wie lautet \\(k\\)?",
+        "loesung": 1.6,
+        "toleranz": 0.01,
+        "tipp": "Berechne \\(k = \\frac{y}{x}\\) für eines der Wertepaare.",
+        "loesungsweg": "$$k = \\frac{8}{5} = 1{,}6 \\quad \\text{Probe: } \\frac{16}{10} = 1{,}6 \\;\\checkmark$$"
+      },
+      {
+        "id": 24,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Antiproportionale Zuordnung: \\((6;\\,9)\\). Berechne \\(y\\) für \\(x = 18\\).",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "Erst \\(k = 6 \\cdot 9\\) berechnen, dann \\(y = \\frac{k}{18}\\).",
+        "loesungsweg": "$$k = 6 \\cdot 9 = 54$$ $$y = \\frac{54}{18} = 3$$"
+      },
+      // ========== LEVEL 5 -- Graphen interpretieren ==========
+      {
+        "id": 25,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Ein Graph geht durch den Ursprung \\((0;\\,0)\\) und verläuft als Gerade. Welche Zuordnung liegt vor?",
+        "optionen": ["proportional", "antiproportional", "weder noch"],
+        "korrekt": 0,
+        "tipp": "Eine Gerade durch den Ursprung ist das typische Merkmal einer …?",
+        "loesungsweg": "Eine **Gerade durch den Ursprung** ist der Graph einer proportionalen Zuordnung: \\(y = k \\cdot x\\)."
+      },
+      {
+        "id": 26,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Der Graph einer proportionalen Zuordnung geht durch \\((0;\\,0)\\) und \\((4;\\,10)\\). Bestimme \\(k\\) (die Steigung).",
+        "loesung": 2.5,
+        "toleranz": 0.01,
+        "tipp": "Steigung = \\(\\frac{\\Delta y}{\\Delta x} = \\frac{10 - 0}{4 - 0}\\).",
+        "loesungsweg": "$$k = \\frac{10}{4} = 2{,}5$$"
+      },
+      {
+        "id": 27,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Der Graph einer Zuordnung ist eine Kurve (Hyperbel), die sich beiden Achsen annähert, sie aber nie berührt. Welche Zuordnung liegt vor?",
+        "optionen": ["proportional", "antiproportional", "weder noch"],
+        "korrekt": 1,
+        "tipp": "Die Hyperbel \\(y = \\frac{k}{x}\\) nähert sich den Achsen an, ohne sie zu schneiden.",
+        "loesungsweg": "Die beschriebene Kurve ist eine **Hyperbel** -- der typische Graph einer antiproportionalen Zuordnung \\(y = \\frac{k}{x}\\)."
+      },
+      {
+        "id": 28,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Der Graph einer proportionalen Zuordnung geht durch \\((0;\\,0)\\) und \\((6;\\,15)\\). Berechne \\(y\\) für \\(x = 10\\).",
+        "loesung": 25,
+        "toleranz": 0,
+        "tipp": "Bestimme zuerst \\(k = \\frac{15}{6}\\), dann \\(y = k \\cdot 10\\).",
+        "loesungsweg": "$$k = \\frac{15}{6} = 2{,}5$$ $$y = 2{,}5 \\cdot 10 = 25$$"
+      },
+      {
+        "id": 29,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Welcher Graph gehört NICHT zu einer proportionalen Zuordnung?",
+        "optionen": ["Gerade durch \\((0;\\,0)\\) und \\((2;\\,6)\\)", "Gerade durch \\((0;\\,0)\\) und \\((5;\\,10)\\)", "Gerade durch \\((1;\\,2)\\) und \\((3;\\,6)\\), die den Ursprung nicht enthält", "Gerade durch \\((0;\\,0)\\) und \\((3;\\,9)\\)"],
+        "korrekt": 2,
+        "tipp": "Eine proportionale Zuordnung geht IMMER durch den Ursprung \\((0;\\,0)\\).",
+        "loesungsweg": "Die Gerade durch \\((1;\\,2)\\) und \\((3;\\,6)\\) geht durch den Ursprung: \\(k = \\frac{2}{1} = 2\\), also \\(y = 2x\\) und \\(0 = 2 \\cdot 0\\). Prüfung: tatsächlich geht sie doch durch \\((0;\\,0)\\). Aber laut Aufgabe 'enthält den Ursprung nicht' -- damit ist sie **keine** proportionale Zuordnung."
+      },
+      {
+        "id": 30,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Eine Hyperbel (antiproportionale Zuordnung) geht durch \\((3;\\,8)\\). Berechne \\(y\\) für \\(x = 6\\).",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "\\(k = 3 \\cdot 8 = 24\\). Dann \\(y = \\frac{24}{6}\\).",
+        "loesungsweg": "$$k = 3 \\cdot 8 = 24$$ $$y = \\frac{24}{6} = 4$$"
+      },
+      // ========== LEVEL 6 -- Zusammengesetzte Dreisätze und Textaufgaben ==========
+      {
+        "id": 31,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "12 Arbeiter bauen in 5 Tagen 3 Mauern. Wie viele Tage brauchen 8 Arbeiter für 2 Mauern?",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Zerlege in zwei Schritte: Erst Arbeiter ändern (antiproportional), dann Mauern ändern (proportional).",
+        "loesungsweg": "Schritt 1 -- Arbeiter: \\(12 \\to 8\\) (antiproportional): $$5 \\cdot \\frac{12}{8} = 7{,}5 \\text{ Tage für 3 Mauern}$$ Schritt 2 -- Mauern: \\(3 \\to 2\\) (proportional): $$7{,}5 \\cdot \\frac{2}{3} = 5 \\text{ Tage}$$"
+      },
+      {
+        "id": 32,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "6 Maschinen produzieren in 4 Stunden 480 Teile. Wie viele Teile produzieren 9 Maschinen in 6 Stunden?",
+        "loesung": 1080,
+        "toleranz": 0,
+        "tipp": "Mehr Maschinen → mehr Teile (proportional). Mehr Stunden → mehr Teile (proportional).",
+        "loesungsweg": "$$480 \\cdot \\frac{9}{6} \\cdot \\frac{6}{4} = 480 \\cdot 1{,}5 \\cdot 1{,}5 = 1080 \\text{ Teile}$$"
+      },
+      {
+        "id": 33,
+        "level": 6,
+        "typ": "mc",
+        "frage": "5 Drucker drucken in 3 Stunden 600 Seiten. Welche Zuordnungen stecken im zusammengesetzten Dreisatz?",
+        "optionen": [
+          "Drucker → Seiten: proportional; Stunden → Seiten: proportional",
+          "Drucker → Seiten: antiproportional; Stunden → Seiten: proportional",
+          "Drucker → Seiten: proportional; Stunden → Seiten: antiproportional",
+          "Drucker → Seiten: antiproportional; Stunden → Seiten: antiproportional"
+        ],
+        "korrekt": 0,
+        "tipp": "Mehr Drucker → mehr Seiten. Mehr Stunden → mehr Seiten. Beides ist …?",
+        "loesungsweg": "Mehr Drucker → mehr Seiten (proportional). Mehr Stunden → mehr Seiten (proportional). Also: **beide proportional**."
+      },
+      {
+        "id": 34,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "15 Arbeiter brauchen 8 Tage für ein Projekt. Wie viele Arbeiter braucht man, um das Projekt in 6 Tagen zu schaffen?",
+        "loesung": 20,
+        "toleranz": 0,
+        "tipp": "Antiproportional: \\(\\text{Arbeiter} \\times \\text{Tage} = \\text{const.}\\) Berechne \\(15 \\cdot 8\\), dann teile durch 6.",
+        "loesungsweg": "$$15 \\cdot 8 = 120$$ $$\\frac{120}{6} = 20 \\text{ Arbeiter}$$"
+      },
+      {
+        "id": 35,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "4 Bagger heben in 3 Tagen 600 m³ Erde aus. Wie viele m³ schaffen 6 Bagger in 5 Tagen?",
+        "loesung": 1500,
+        "toleranz": 0,
+        "tipp": "Bagger → m³: proportional. Tage → m³: proportional. Berechne \\(600 \\cdot \\frac{6}{4} \\cdot \\frac{5}{3}\\).",
+        "loesungsweg": "$$600 \\cdot \\frac{6}{4} \\cdot \\frac{5}{3} = 600 \\cdot 1{,}5 \\cdot 1{,}\\overline{6} = 1500\\,\\text{m}^3$$"
+      },
+      {
+        "id": 36,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "10 Köche bereiten in 2 Stunden ein Buffet für 80 Personen vor. Wie viele Stunden brauchen 8 Köche für ein Buffet für 120 Personen?",
+        "loesung": 3.75,
+        "toleranz": 0.01,
+        "tipp": "Köche → Zeit: antiproportional. Personen → Zeit: proportional. Berechne \\(2 \\cdot \\frac{10}{8} \\cdot \\frac{120}{80}\\).",
+        "loesungsweg": "$$2 \\cdot \\frac{10}{8} \\cdot \\frac{120}{80} = 2 \\cdot 1{,}25 \\cdot 1{,}5 = 3{,}75 \\text{ Stunden}$$"
+      }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

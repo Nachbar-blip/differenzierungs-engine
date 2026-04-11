@@ -186,15 +186,23 @@
 
   /* ── Filter hide ────────────────────────────────── */
   body.filter-gk .lk-only { display: none; }
+  body.filter-klasse-7  .col-9,
+  body.filter-klasse-7  .col-10,
+  body.filter-klasse-7  .col-11,
+  body.filter-klasse-7  .col-12 { display: none; }
+  body.filter-klasse-9  .col-7,
   body.filter-klasse-9  .col-10,
   body.filter-klasse-9  .col-11,
   body.filter-klasse-9  .col-12 { display: none; }
+  body.filter-klasse-10 .col-7,
   body.filter-klasse-10 .col-9,
   body.filter-klasse-10 .col-11,
   body.filter-klasse-10 .col-12 { display: none; }
+  body.filter-klasse-11 .col-7,
   body.filter-klasse-11 .col-9,
   body.filter-klasse-11 .col-10,
   body.filter-klasse-11 .col-12 { display: none; }
+  body.filter-klasse-12 .col-7,
   body.filter-klasse-12 .col-9,
   body.filter-klasse-12 .col-10,
   body.filter-klasse-12 .col-11 { display: none; }
@@ -202,19 +210,6 @@
   /* ── Max-Klasse (persistiertes Schülerprofil) ───── */
   /* Blendet Klassen OBERHALB der eigenen Stufe aus.
      Wirkt nur wenn KEIN manueller Klassen-Filter aktiv ist. */
-  body.max-klasse-5:not([class*="filter-klasse-"]) .col-6,
-  body.max-klasse-5:not([class*="filter-klasse-"]) .col-7,
-  body.max-klasse-5:not([class*="filter-klasse-"]) .col-8,
-  body.max-klasse-5:not([class*="filter-klasse-"]) .col-9,
-  body.max-klasse-5:not([class*="filter-klasse-"]) .col-10,
-  body.max-klasse-5:not([class*="filter-klasse-"]) .col-11,
-  body.max-klasse-5:not([class*="filter-klasse-"]) .col-12 { display: none; }
-  body.max-klasse-6:not([class*="filter-klasse-"]) .col-7,
-  body.max-klasse-6:not([class*="filter-klasse-"]) .col-8,
-  body.max-klasse-6:not([class*="filter-klasse-"]) .col-9,
-  body.max-klasse-6:not([class*="filter-klasse-"]) .col-10,
-  body.max-klasse-6:not([class*="filter-klasse-"]) .col-11,
-  body.max-klasse-6:not([class*="filter-klasse-"]) .col-12 { display: none; }
   body.max-klasse-7:not([class*="filter-klasse-"]) .col-8,
   body.max-klasse-7:not([class*="filter-klasse-"]) .col-9,
   body.max-klasse-7:not([class*="filter-klasse-"]) .col-10,
@@ -326,7 +321,7 @@
 
   <header>
     <h1>DifferenzierungsEngine</h1>
-    <p class="subtitle">Adaptives Mathe-Training &middot; Klasse 9 &ndash; 12</p>
+    <p class="subtitle">Adaptives Mathe-Training &middot; Klasse 7 &ndash; 12</p>
     <button class="profil-btn" id="profil-btn" type="button">&#x2699; Meine Klasse: <span id="profil-label">&mdash;</span></button>
   </header>
 
@@ -334,6 +329,7 @@
 
   <div class="filter-bar" data-filter-group="klasse">
     <button class="filter-btn active" data-filter="alle">Alle</button>
+    <button class="filter-btn" data-filter="7">Klasse 7</button>
     <button class="filter-btn" data-filter="9">Klasse 9</button>
     <button class="filter-btn" data-filter="10">Klasse 10</button>
     <button class="filter-btn" data-filter="11">Klasse 11</button>
@@ -347,6 +343,100 @@
   </div>
 
   <div class="grid">
+
+    <!-- ═══════════ Klasse 7 ═══════════ -->
+    <div class="col col-7">
+      <div class="column-header">Klasse 7</div>
+
+      <!-- A — Arithmetik -->
+      <div class="section-card">
+        <div class="section-title analysis">A &middot; Rationale Zahlen &amp; Prozent</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/7-rat-zahlen-rechnen.html" data-key="spirale-7-rat-zahlen-rechnen">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Rationale Zahlen &mdash; Rechnen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/7-prozent-grundaufgaben.html" data-key="spirale-7-prozent-grundaufgaben">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Prozent &mdash; Grundaufgaben</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/7-prozent-anwendungen-zins.html" data-key="spirale-7-prozent-anwendungen-zins">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Prozent &mdash; Anwendungen &amp; Zins</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- B — Algebra -->
+      <div class="section-card">
+        <div class="section-title analysis">B &middot; Terme &amp; Gleichungen</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/7-terme-vereinfachen.html" data-key="spirale-7-terme-vereinfachen">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Terme vereinfachen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/7-gleichungen-linear.html" data-key="spirale-7-gleichungen-linear">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Lineare Gleichungen l&ouml;sen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- C — Geometrie -->
+      <div class="section-card">
+        <div class="section-title geometrie">C &middot; Geometrie</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/7-dreiecke-konstruktionen.html" data-key="spirale-7-dreiecke-konstruktionen">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Dreiecke &amp; Konstruktionen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/7-kreise-umfang-flaeche.html" data-key="spirale-7-kreise-umfang-flaeche">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Kreise &mdash; Umfang &amp; Fl&auml;che</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/7-koerper-volumen.html" data-key="spirale-7-koerper-volumen">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">K&ouml;rper &mdash; Darstellung &amp; Volumen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- D — Zuordnungen & Stochastik -->
+      <div class="section-card">
+        <div class="section-title stochastik">D &middot; Zuordnungen &amp; Stochastik</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/7-zuordnungen-proportional.html" data-key="spirale-7-zuordnungen-proportional">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Zuordnungen (prop. &amp; antiprop.)</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/7-wahrscheinlichkeit.html" data-key="spirale-7-wahrscheinlichkeit">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Wahrscheinlichkeit</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /col 7 -->
 
     <!-- ═══════════ Klasse 9 ═══════════ -->
     <div class="col col-9">
@@ -905,7 +995,7 @@
 
   </div><!-- /grid -->
 
-  <footer>DifferenzierungsEngine &middot; Adaptives Spiral-Training &middot; Klasse 10&ndash;12</footer>
+  <footer>DifferenzierungsEngine &middot; Adaptives Spiral-Training &middot; Klasse 7&ndash;12</footer>
 
 </div><!-- /container -->
 
@@ -931,7 +1021,7 @@
 
   // Alle Klassen, die im Modal angeboten werden (Sek I + Sek II).
   // Content-Verfügbarkeit wird dynamisch aus .col-N Elementen ermittelt.
-  const ALLE_KLASSEN = [5, 6, 7, 8, 9, 10, 11, 12];
+  const ALLE_KLASSEN = [7, 8, 9, 10, 11, 12];
 
   // ── Progress laden ──────────────────────────────────────────
 

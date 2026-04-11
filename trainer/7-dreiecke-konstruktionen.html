@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dreiecke &amp; Konstruktionen - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '7-dreiecke-konstruktionen';
+    const THEMA_CONFIG = { name: 'Dreiecke & Konstruktionen', bereich: 'geometrie' };
+    const AUFGABEN = [
+      // ========== LEVEL 1 -- babyleicht: Dreiecksarten benennen und Winkel identifizieren ==========
+      {
+        "id": 1,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Wie heißt ein Dreieck, bei dem alle drei Seiten gleich lang sind?",
+        "optionen": ["Rechtwinkliges Dreieck", "Gleichschenkliges Dreieck", "Gleichseitiges Dreieck", "Stumpfwinkliges Dreieck"],
+        "korrekt": 2,
+        "tipp": "'Gleich-seitig' -- alle Seiten sind gleich.",
+        "loesungsweg": "Ein Dreieck mit drei gleich langen Seiten heißt <b>gleichseitiges Dreieck</b>. Alle Winkel sind dann auch gleich groß (je \\(60°\\))."
+      },
+      {
+        "id": 2,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Wie heißt ein Dreieck mit genau zwei gleich langen Seiten?",
+        "optionen": ["Gleichseitiges Dreieck", "Gleichschenkliges Dreieck", "Unregelmäßiges Dreieck", "Rechtwinkliges Dreieck"],
+        "korrekt": 1,
+        "tipp": "Die zwei gleich langen Seiten heißen 'Schenkel'.",
+        "loesungsweg": "Ein Dreieck mit genau zwei gleich langen Seiten heißt <b>gleichschenkliges Dreieck</b>. Die zwei gleichen Seiten sind die Schenkel, die dritte Seite ist die Basis."
+      },
+      {
+        "id": 3,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Welche besondere Eigenschaft hat ein rechtwinkliges Dreieck?",
+        "optionen": ["Alle Seiten sind gleich lang", "Es hat einen Winkel von \\(90°\\)", "Alle Winkel sind kleiner als \\(90°\\)", "Es hat einen Winkel größer als \\(90°\\)"],
+        "korrekt": 1,
+        "tipp": "'Rechtwinklig' deutet auf einen rechten Winkel hin.",
+        "loesungsweg": "Ein rechtwinkliges Dreieck hat genau einen Winkel von \\(90°\\). Die Seite gegenüber dem rechten Winkel heißt Hypotenuse."
+      },
+      {
+        "id": 4,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Wie heißt ein Dreieck, bei dem ein Winkel größer als \\(90°\\) ist?",
+        "optionen": ["Spitzwinkliges Dreieck", "Rechtwinkliges Dreieck", "Stumpfwinkliges Dreieck", "Gleichseitiges Dreieck"],
+        "korrekt": 2,
+        "tipp": "Ein 'stumpfer' Winkel ist größer als \\(90°\\).",
+        "loesungsweg": "Ein Dreieck mit einem Winkel größer als \\(90°\\) heißt <b>stumpfwinkliges Dreieck</b>. Ein spitzwinkliges Dreieck hat dagegen nur Winkel kleiner als \\(90°\\)."
+      },
+      {
+        "id": 5,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Wie viele Ecken hat ein Dreieck?",
+        "optionen": ["2", "3", "4", "5"],
+        "korrekt": 1,
+        "tipp": "Der Name 'Drei-Eck' verrät es schon.",
+        "loesungsweg": "Ein Dreieck hat genau <b>3 Ecken</b>, 3 Seiten und 3 Innenwinkel."
+      },
+      {
+        "id": 6,
+        "level": 1,
+        "typ": "mc",
+        "frage": "In einem spitzwinkligen Dreieck sind alle Winkel …",
+        "optionen": ["… gleich \\(60°\\)", "… kleiner als \\(90°\\)", "… größer als \\(90°\\)", "… genau \\(90°\\)"],
+        "korrekt": 1,
+        "tipp": "'Spitz' bedeutet kleiner als ein rechter Winkel.",
+        "loesungsweg": "In einem spitzwinkligen Dreieck sind alle drei Innenwinkel <b>kleiner als \\(90°\\)</b>. Ein gleichseitiges Dreieck (alle Winkel \\(60°\\)) ist ein Spezialfall."
+      },
+      // ========== LEVEL 2 -- leicht: Innenwinkelsatz anwenden ==========
+      {
+        "id": 7,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "In einem Dreieck gilt \\(\\alpha = 60°\\) und \\(\\beta = 50°\\). Berechne \\(\\gamma\\) in Grad.",
+        "loesung": 70,
+        "toleranz": 0,
+        "tipp": "Die Winkelsumme im Dreieck beträgt \\(180°\\). Also: \\(\\gamma = 180° - \\alpha - \\beta\\).",
+        "loesungsweg": "$$\\gamma = 180° - 60° - 50° = 70°$$"
+      },
+      {
+        "id": 8,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "In einem Dreieck gilt \\(\\alpha = 90°\\) und \\(\\beta = 35°\\). Wie groß ist \\(\\gamma\\) in Grad?",
+        "loesung": 55,
+        "toleranz": 0,
+        "tipp": "Nutze die Winkelsumme: \\(\\alpha + \\beta + \\gamma = 180°\\).",
+        "loesungsweg": "$$\\gamma = 180° - 90° - 35° = 55°$$"
+      },
+      {
+        "id": 9,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Zwei Winkel eines Dreiecks betragen \\(45°\\) und \\(75°\\). Wie groß ist der dritte Winkel in Grad?",
+        "loesung": 60,
+        "toleranz": 0,
+        "tipp": "Berechne \\(180° - 45° - 75°\\).",
+        "loesungsweg": "$$\\gamma = 180° - 45° - 75° = 60°$$"
+      },
+      {
+        "id": 10,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Wie groß ist die Summe aller Innenwinkel in einem Dreieck?",
+        "optionen": ["\\(90°\\)", "\\(180°\\)", "\\(270°\\)", "\\(360°\\)"],
+        "korrekt": 1,
+        "tipp": "Das ist der Innenwinkelsatz -- ein grundlegender Satz der Geometrie.",
+        "loesungsweg": "Die Summe der Innenwinkel in jedem Dreieck beträgt immer \\(180°\\): $$\\alpha + \\beta + \\gamma = 180°$$"
+      },
+      {
+        "id": 11,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "In einem Dreieck sind \\(\\alpha = 110°\\) und \\(\\beta = 40°\\). Berechne \\(\\gamma\\) in Grad.",
+        "loesung": 30,
+        "toleranz": 0,
+        "tipp": "\\(\\gamma = 180° - 110° - 40°\\)",
+        "loesungsweg": "$$\\gamma = 180° - 110° - 40° = 30°$$"
+      },
+      {
+        "id": 12,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Ein Dreieck hat die Winkel \\(\\alpha = 72°\\) und \\(\\gamma = 63°\\). Wie groß ist \\(\\beta\\) in Grad?",
+        "loesung": 45,
+        "toleranz": 0,
+        "tipp": "Setze in den Innenwinkelsatz ein: \\(\\beta = 180° - \\alpha - \\gamma\\).",
+        "loesungsweg": "$$\\beta = 180° - 72° - 63° = 45°$$"
+      },
+      // ========== LEVEL 3 -- nervenschonend: Besondere Dreiecke und Winkelsumme ==========
+      {
+        "id": 13,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "In einem gleichschenkligen Dreieck ist der Winkel an der Spitze \\(40°\\). Wie groß ist ein Basiswinkel in Grad?",
+        "loesung": 70,
+        "toleranz": 0,
+        "tipp": "Die beiden Basiswinkel sind gleich groß. Zusammen mit dem Spitzenwinkel ergeben sie \\(180°\\).",
+        "loesungsweg": "$$\\text{Basiswinkel} = \\frac{180° - 40°}{2} = \\frac{140°}{2} = 70°$$"
+      },
+      {
+        "id": 14,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Im gleichschenkligen Dreieck beträgt ein Basiswinkel \\(55°\\). Wie groß ist der Winkel an der Spitze in Grad?",
+        "loesung": 70,
+        "toleranz": 0,
+        "tipp": "Beide Basiswinkel sind gleich groß: \\(2 \\cdot 55° = 110°\\). Dann den Spitzenwinkel berechnen.",
+        "loesungsweg": "$$\\text{Spitzenwinkel} = 180° - 2 \\cdot 55° = 180° - 110° = 70°$$"
+      },
+      {
+        "id": 15,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Wie groß ist jeder Winkel in einem gleichseitigen Dreieck? Antwort in Grad.",
+        "loesung": 60,
+        "toleranz": 0,
+        "tipp": "Alle drei Winkel sind gleich groß und ergeben zusammen \\(180°\\).",
+        "loesungsweg": "$$\\text{Winkel} = \\frac{180°}{3} = 60°$$"
+      },
+      {
+        "id": 16,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Ein gleichschenkliges Dreieck hat den Spitzenwinkel \\(80°\\). Was gilt für die Basiswinkel?",
+        "optionen": ["Sie sind jeweils \\(80°\\)", "Sie sind jeweils \\(50°\\)", "Sie sind jeweils \\(40°\\)", "Sie sind jeweils \\(100°\\)"],
+        "korrekt": 1,
+        "tipp": "Basiswinkel \\(= \\frac{180° - 80°}{2}\\)",
+        "loesungsweg": "$$\\text{Basiswinkel} = \\frac{180° - 80°}{2} = \\frac{100°}{2} = 50°$$"
+      },
+      {
+        "id": 17,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "In einem gleichschenkligen rechtwinkligen Dreieck beträgt der rechte Winkel \\(90°\\). Wie groß ist einer der anderen Winkel in Grad?",
+        "loesung": 45,
+        "toleranz": 0,
+        "tipp": "Die beiden anderen Winkel sind gleich groß (gleichschenklig!) und ergänzen sich mit \\(90°\\) zu \\(180°\\).",
+        "loesungsweg": "$$\\text{Basiswinkel} = \\frac{180° - 90°}{2} = \\frac{90°}{2} = 45°$$"
+      },
+      {
+        "id": 18,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Ein Dreieck hat die Seiten \\(a = 5\\,\\text{cm}\\), \\(b = 5\\,\\text{cm}\\) und \\(c = 8\\,\\text{cm}\\). Um welchen Dreieckstyp handelt es sich?",
+        "optionen": ["Gleichseitiges Dreieck", "Gleichschenkliges Dreieck", "Allgemeines Dreieck", "Rechtwinkliges Dreieck"],
+        "korrekt": 1,
+        "tipp": "Zwei Seiten sind gleich lang -- das kennzeichnet einen bestimmten Typ.",
+        "loesungsweg": "Da \\(a = b = 5\\,\\text{cm}\\) und \\(c = 8\\,\\text{cm}\\), sind genau zwei Seiten gleich lang. Das ist ein <b>gleichschenkliges Dreieck</b>."
+      },
+      // ========== LEVEL 4 -- mittel: Kongruenzsätze und Außenwinkelsatz ==========
+      {
+        "id": 19,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Zwei Dreiecke stimmen in allen drei Seitenlängen überein. Welcher Kongruenzsatz gilt?",
+        "optionen": ["SWS", "SSS", "WSW", "SSW"],
+        "korrekt": 1,
+        "tipp": "Drei Seiten -- also S, S und S.",
+        "loesungsweg": "Stimmen alle drei Seiten überein, gilt der Kongruenzsatz <b>SSS</b> (Seite-Seite-Seite)."
+      },
+      {
+        "id": 20,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Gegeben sind zwei Seiten und der von ihnen eingeschlossene Winkel. Welcher Kongruenzsatz passt?",
+        "optionen": ["SSS", "SSW", "SWS", "WSW"],
+        "korrekt": 2,
+        "tipp": "Zwei Seiten mit dem Winkel dazwischen -- Seite, Winkel, Seite.",
+        "loesungsweg": "Zwei Seiten und der <b>eingeschlossene</b> Winkel bestimmen das Dreieck eindeutig. Es gilt der Kongruenzsatz <b>SWS</b>."
+      },
+      {
+        "id": 21,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Gegeben sind eine Seite und die beiden anliegenden Winkel. Welcher Kongruenzsatz passt?",
+        "optionen": ["SSS", "SWS", "SSW", "WSW"],
+        "korrekt": 3,
+        "tipp": "Winkel -- Seite -- Winkel.",
+        "loesungsweg": "Eine Seite und die beiden anliegenden Winkel bestimmen das Dreieck eindeutig. Es gilt der Kongruenzsatz <b>WSW</b> (Winkel-Seite-Winkel)."
+      },
+      {
+        "id": 22,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Der Außenwinkel an der Ecke \\(C\\) eines Dreiecks beträgt \\(130°\\). Wie groß ist der Innenwinkel \\(\\gamma\\) in Grad?",
+        "loesung": 50,
+        "toleranz": 0,
+        "tipp": "Innenwinkel und Außenwinkel an derselben Ecke ergänzen sich zu \\(180°\\).",
+        "loesungsweg": "$$\\gamma = 180° - 130° = 50°$$"
+      },
+      {
+        "id": 23,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "In einem Dreieck gilt \\(\\alpha = 65°\\) und \\(\\beta = 45°\\). Wie groß ist der Außenwinkel an \\(C\\) in Grad?",
+        "loesung": 110,
+        "toleranz": 0,
+        "tipp": "Der Außenwinkel an einer Ecke ist gleich der Summe der beiden nicht anliegenden Innenwinkel.",
+        "loesungsweg": "Außenwinkelsatz: Der Außenwinkel an \\(C\\) ist gleich \\(\\alpha + \\beta\\): $$\\delta_C = 65° + 45° = 110°$$"
+      },
+      {
+        "id": 24,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Welche Angabe reicht <b>nicht</b> aus, um ein Dreieck eindeutig zu konstruieren?",
+        "optionen": ["Drei Seitenlängen (SSS)", "Zwei Seiten und der eingeschlossene Winkel (SWS)", "Drei Winkel (WWW)", "Zwei Seiten und der der größeren Seite gegenüberliegende Winkel (SsW)"],
+        "korrekt": 2,
+        "tipp": "Drei Winkel legen nur die Form, nicht die Größe fest.",
+        "loesungsweg": "Bei <b>WWW</b> (drei Winkel) ist das Dreieck nicht eindeutig bestimmt -- man kann es beliebig vergrößern oder verkleinern. Es sind dann unendlich viele ähnliche Dreiecke möglich."
+      },
+      // ========== LEVEL 5 -- anspruchsvoll: Winkel an Parallelen ==========
+      {
+        "id": 25,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Zwei parallele Geraden werden von einer dritten Geraden geschnitten. Welche Winkel sind gleich groß?",
+        "optionen": ["Nebenwinkel", "Stufenwinkel (F-Winkel)", "Supplementwinkel", "Keine davon"],
+        "korrekt": 1,
+        "tipp": "Denke an die F-Form: Stufenwinkel an Parallelen sind …",
+        "loesungsweg": "<b>Stufenwinkel</b> (auch F-Winkel) an parallelen Geraden sind gleich groß. Ebenso sind Wechselwinkel (Z-Winkel) gleich groß."
+      },
+      {
+        "id": 26,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Zwei parallele Geraden werden von einer Transversalen geschnitten. Ein Stufenwinkel beträgt \\(62°\\). Wie groß ist der zugehörige Wechselwinkel auf der anderen Seite der Transversalen in Grad?",
+        "loesung": 62,
+        "toleranz": 0,
+        "tipp": "Wechselwinkel an Parallelen sind genauso groß wie Stufenwinkel -- nämlich gleich groß.",
+        "loesungsweg": "Stufenwinkel und Wechselwinkel an parallelen Geraden sind jeweils gleich groß: $$\\text{Wechselwinkel} = 62°$$"
+      },
+      {
+        "id": 27,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "An einer Parallelen-Konfiguration ist ein Winkel \\(\\alpha = 115°\\). Wie groß ist der Nebenwinkel von \\(\\alpha\\) in Grad?",
+        "loesung": 65,
+        "toleranz": 0,
+        "tipp": "Nebenwinkel ergänzen sich zu \\(180°\\).",
+        "loesungsweg": "$$\\text{Nebenwinkel} = 180° - 115° = 65°$$"
+      },
+      {
+        "id": 28,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Zwei Geraden schneiden sich. Ein Scheitelwinkel beträgt \\(73°\\). Wie groß ist der gegenüberliegende Scheitelwinkel in Grad?",
+        "loesung": 73,
+        "toleranz": 0,
+        "tipp": "Scheitelwinkel sind immer …",
+        "loesungsweg": "Scheitelwinkel sind stets gleich groß: $$\\text{Scheitelwinkel} = 73°$$"
+      },
+      {
+        "id": 29,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Zwei parallele Geraden werden geschnitten. Ein Stufenwinkel beträgt \\(48°\\). Wie groß ist der Nebenwinkel des entsprechenden Wechselwinkels in Grad?",
+        "loesung": 132,
+        "toleranz": 0,
+        "tipp": "Erst den Wechselwinkel bestimmen (gleich dem Stufenwinkel), dann den Nebenwinkel berechnen.",
+        "loesungsweg": "Wechselwinkel \\(= 48°\\) (gleich dem Stufenwinkel). Nebenwinkel: $$180° - 48° = 132°$$"
+      },
+      {
+        "id": 30,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Welche Aussage ist korrekt? An zwei parallelen Geraden mit Transversale gilt:",
+        "optionen": ["Stufenwinkel ergänzen sich zu \\(180°\\)", "Wechselwinkel sind gleich groß", "Nebenwinkel sind gleich groß", "Scheitelwinkel ergänzen sich zu \\(180°\\)"],
+        "korrekt": 1,
+        "tipp": "Wechselwinkel (Z-Winkel) an Parallelen haben eine besondere Eigenschaft.",
+        "loesungsweg": "<b>Wechselwinkel</b> an parallelen Geraden sind gleich groß (Z-Winkel). Stufenwinkel sind ebenfalls gleich groß. Nebenwinkel ergänzen sich zu \\(180°\\)."
+      },
+      // ========== LEVEL 6 -- wagnerisch: Komplexe Berechnungen, Vierecke über Dreiecke ==========
+      {
+        "id": 31,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Ein Viereck wird durch eine Diagonale in zwei Dreiecke geteilt. Wie groß ist die Innenwinkelsumme des Vierecks in Grad?",
+        "loesung": 360,
+        "toleranz": 0,
+        "tipp": "Jedes Dreieck hat die Winkelsumme \\(180°\\). Zwei Dreiecke also …",
+        "loesungsweg": "Ein Viereck besteht aus zwei Dreiecken: $$2 \\cdot 180° = 360°$$"
+      },
+      {
+        "id": 32,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Im Dreieck \\(ABC\\) liegt \\(D\\) auf \\(BC\\). Es gilt: \\(\\angle BAD = 30°\\), \\(\\angle DAC = 25°\\) und \\(\\angle ABD = 80°\\). Wie groß ist \\(\\angle ACD\\) in Grad?",
+        "loesung": 45,
+        "toleranz": 0,
+        "tipp": "Bestimme zuerst \\(\\angle BAC = 30° + 25° = 55°\\), dann nutze die Winkelsumme im Dreieck \\(ABC\\).",
+        "loesungsweg": "$$\\angle BAC = 30° + 25° = 55°$$ Im Dreieck \\(ABC\\): $$\\angle ACB = 180° - 80° - 55° = 45°$$"
+      },
+      {
+        "id": 33,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Zwei Dreiecke teilen sich eine gemeinsame Seite. Im ersten Dreieck sind die Winkel \\(50°\\), \\(60°\\) und \\(70°\\). Im zweiten Dreieck sind zwei Winkel \\(40°\\) und \\(85°\\). Wie groß ist der dritte Winkel des zweiten Dreiecks in Grad?",
+        "loesung": 55,
+        "toleranz": 0,
+        "tipp": "Wende den Innenwinkelsatz auf das zweite Dreieck an.",
+        "loesungsweg": "Im zweiten Dreieck: $$\\gamma = 180° - 40° - 85° = 55°$$"
+      },
+      {
+        "id": 34,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Ein Schüler will ein Dreieck mit \\(a = 3\\,\\text{cm}\\), \\(b = 4\\,\\text{cm}\\) und \\(\\angle \\gamma = 90°\\) konstruieren. Welcher Kongruenzsatz beschreibt diese Konstruktion, und welche Konstruktionsreihenfolge ist sinnvoll?",
+        "optionen": ["SSS -- Zuerst alle drei Seiten abtragen", "SWS -- Zuerst \\(a\\) abtragen, dann \\(\\gamma = 90°\\) antragen, dann \\(b\\) abtragen", "WSW -- Zuerst \\(\\gamma\\) antragen, dann beide Seiten", "SSW -- Zuerst \\(a\\) und \\(b\\), dann \\(\\gamma\\) ablesen"],
+        "korrekt": 1,
+        "tipp": "Zwei Seiten und der eingeschlossene Winkel -- das ist …",
+        "loesungsweg": "Es sind zwei Seiten (\\(a\\) und \\(b\\)) und der eingeschlossene Winkel (\\(\\gamma\\)) gegeben. Das ist <b>SWS</b>. Konstruktion: Seite \\(a\\) abtragen, Winkel \\(90°\\) antragen, Seite \\(b\\) abtragen, Endpunkte verbinden."
+      },
+      {
+        "id": 35,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "In einem Dreieck schneiden sich die Winkelhalbierenden von \\(\\alpha = 70°\\) und \\(\\beta = 60°\\). Wie groß ist der Winkel zwischen diesen beiden Winkelhalbierenden im Inneren des Dreiecks in Grad?",
+        "loesung": 115,
+        "toleranz": 0,
+        "tipp": "Die Winkelhalbierenden halbieren \\(\\alpha\\) und \\(\\beta\\). Im Teildreieck der Winkelhalbierenden und der Seite \\(c\\) gilt die Winkelsumme \\(180°\\).",
+        "loesungsweg": "Die halbierten Winkel sind \\(\\frac{70°}{2} = 35°\\) und \\(\\frac{60°}{2} = 30°\\). Im Dreieck aus den Winkelhalbierenden und Seite \\(c\\): $$\\text{Winkel} = 180° - 35° - 30° = 115°$$"
+      },
+      {
+        "id": 36,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Ein regelmäßiges Sechseck wird durch Diagonalen von einer Ecke aus in Dreiecke zerlegt. Wie viele Dreiecke entstehen?",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "Von einer Ecke eines \\(n\\)-Ecks kann man \\(n - 3\\) Diagonalen ziehen, die das \\(n\\)-Eck in \\(n - 2\\) Dreiecke zerlegen.",
+        "loesungsweg": "Ein \\(n\\)-Eck wird durch Diagonalen von einer Ecke in \\(n - 2\\) Dreiecke zerlegt: $$6 - 2 = 4 \\text{ Dreiecke}$$"
+      }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

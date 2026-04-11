@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Körper -- Darstellung &amp; Volumen - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '7-koerper-volumen';
+    const THEMA_CONFIG = { name: 'Körper -- Darstellung & Volumen', bereich: 'geometrie' };
+    const AUFGABEN = [
+      // ========== LEVEL 1 -- babyleicht: Körper benennen, Ecken/Kanten/Flächen zählen ==========
+      {
+        "id": 1,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Welcher Körper hat 6 gleich große quadratische Flächen?",
+        "optionen": ["Quader", "Würfel", "Prisma", "Pyramide"],
+        "korrekt": 1,
+        "tipp": "Alle Flächen sind Quadrate -- also alle Seiten gleich lang.",
+        "loesungsweg": "Ein <b>Würfel</b> hat 6 kongruente quadratische Seitenflächen, 8 Ecken und 12 Kanten."
+      },
+      {
+        "id": 2,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Wie viele Ecken hat ein Quader?",
+        "optionen": ["4", "6", "8", "12"],
+        "korrekt": 2,
+        "tipp": "Ein Quader hat oben 4 Ecken und unten 4 Ecken.",
+        "loesungsweg": "Ein Quader hat <b>8 Ecken</b>, 12 Kanten und 6 Flächen (3 Paare von Rechtecken)."
+      },
+      {
+        "id": 3,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Welcher Körper hat eine kreisförmige Grundfläche und eine Spitze?",
+        "optionen": ["Zylinder", "Kugel", "Kegel", "Prisma"],
+        "korrekt": 2,
+        "tipp": "Denke an eine Eistüte.",
+        "loesungsweg": "Ein <b>Kegel</b> hat eine kreisförmige Grundfläche und läuft oben in einer Spitze zusammen."
+      },
+      {
+        "id": 4,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Wie viele Kanten hat ein Würfel?",
+        "optionen": ["6", "8", "10", "12"],
+        "korrekt": 3,
+        "tipp": "4 Kanten oben, 4 Kanten unten und 4 senkrechte Kanten.",
+        "loesungsweg": "Ein Würfel hat <b>12 Kanten</b>: 4 oben, 4 unten und 4 senkrechte Verbindungskanten."
+      },
+      {
+        "id": 5,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Welcher Körper hat zwei parallele, kongruente kreisförmige Grundflächen?",
+        "optionen": ["Kegel", "Kugel", "Zylinder", "Pyramide"],
+        "korrekt": 2,
+        "tipp": "Denke an eine Dose.",
+        "loesungsweg": "Ein <b>Zylinder</b> hat zwei parallele, gleich große Kreisflächen als Grund- und Deckfläche, verbunden durch eine gekrümmte Mantelfläche."
+      },
+      {
+        "id": 6,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Wie viele Flächen hat eine quadratische Pyramide (Grundfläche = Quadrat)?",
+        "optionen": ["4", "5", "6", "8"],
+        "korrekt": 1,
+        "tipp": "Zähle: 1 Grundfläche + die Dreiecke an den Seiten.",
+        "loesungsweg": "Eine quadratische Pyramide hat <b>5 Flächen</b>: 1 quadratische Grundfläche und 4 dreieckige Seitenflächen."
+      },
+      // ========== LEVEL 2 -- leicht: Netze erkennen, Oberfläche Quader ==========
+      {
+        "id": 7,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Aus wie vielen Rechtecken besteht das Netz eines Quaders?",
+        "optionen": ["4", "5", "6", "8"],
+        "korrekt": 2,
+        "tipp": "Jede Fläche des Quaders wird zu einem Rechteck im Netz.",
+        "loesungsweg": "Das Netz eines Quaders besteht aus <b>6 Rechtecken</b> (3 Paare gegenüberliegender Flächen)."
+      },
+      {
+        "id": 8,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Das Netz eines Würfels besteht aus 6 Quadraten. Welche Anordnung ist <b>kein</b> gültiges Würfelnetz?",
+        "optionen": ["Ein Kreuz aus 6 Quadraten (1-4-1)", "Eine T-Form (1-4-1, versetzt)", "Vier Quadrate in einer Reihe mit je einem links und rechts angesetzt", "Sechs Quadrate in einer geraden Reihe"],
+        "korrekt": 3,
+        "tipp": "Können 6 Quadrate in einer geraden Reihe zu einem Würfel gefaltet werden?",
+        "loesungsweg": "<b>Sechs Quadrate in einer geraden Reihe</b> ergeben kein gültiges Würfelnetz, da sich beim Falten zwei Flächen überlappen würden."
+      },
+      {
+        "id": 9,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Berechne die Oberfläche eines Quaders mit \\(a = 4\\,\\text{cm}\\), \\(b = 3\\,\\text{cm}\\) und \\(c = 2\\,\\text{cm}\\).<br>Formel: \\(O = 2(ab + ac + bc)\\). Antwort in \\(\\text{cm}^2\\).",
+        "loesung": 52,
+        "toleranz": 0,
+        "tipp": "\\(O = 2(4 \\cdot 3 + 4 \\cdot 2 + 3 \\cdot 2)\\)",
+        "loesungsweg": "$$O = 2(ab + ac + bc) = 2(12 + 8 + 6) = 2 \\cdot 26 = 52\\,\\text{cm}^2$$"
+      },
+      {
+        "id": 10,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Berechne die Oberfläche eines Würfels mit der Kantenlänge \\(a = 5\\,\\text{cm}\\).<br>Formel: \\(O = 6a^2\\). Antwort in \\(\\text{cm}^2\\).",
+        "loesung": 150,
+        "toleranz": 0,
+        "tipp": "Ein Würfel hat 6 gleich große quadratische Flächen.",
+        "loesungsweg": "$$O = 6a^2 = 6 \\cdot 5^2 = 6 \\cdot 25 = 150\\,\\text{cm}^2$$"
+      },
+      {
+        "id": 11,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Berechne die Oberfläche eines Quaders mit \\(a = 6\\,\\text{cm}\\), \\(b = 5\\,\\text{cm}\\) und \\(c = 4\\,\\text{cm}\\). Antwort in \\(\\text{cm}^2\\).",
+        "loesung": 148,
+        "toleranz": 0,
+        "tipp": "\\(O = 2(ab + ac + bc) = 2(30 + 24 + 20)\\)",
+        "loesungsweg": "$$O = 2(6 \\cdot 5 + 6 \\cdot 4 + 5 \\cdot 4) = 2(30 + 24 + 20) = 2 \\cdot 74 = 148\\,\\text{cm}^2$$"
+      },
+      {
+        "id": 12,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Das Netz eines Zylinders besteht aus …",
+        "optionen": ["2 Kreisen und 1 Rechteck", "2 Kreisen und 2 Rechtecken", "1 Kreis und 1 Rechteck", "2 Quadraten und 1 Rechteck"],
+        "korrekt": 0,
+        "tipp": "Denke an eine Dose: Deckel, Boden und die 'abgerollte' Seitenfläche.",
+        "loesungsweg": "Das Netz eines Zylinders besteht aus <b>2 Kreisen</b> (Grund- und Deckfläche) und <b>1 Rechteck</b> (die abgerollte Mantelfläche)."
+      },
+      // ========== LEVEL 3 -- nervenschonend: Volumen Quader und Würfel ==========
+      {
+        "id": 13,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Berechne das Volumen eines Quaders mit \\(a = 3\\,\\text{cm}\\), \\(b = 4\\,\\text{cm}\\) und \\(c = 5\\,\\text{cm}\\).<br>Formel: \\(V = a \\cdot b \\cdot c\\). Antwort in \\(\\text{cm}^3\\).",
+        "loesung": 60,
+        "toleranz": 0,
+        "tipp": "\\(V = 3 \\cdot 4 \\cdot 5\\)",
+        "loesungsweg": "$$V = a \\cdot b \\cdot c = 3 \\cdot 4 \\cdot 5 = 60\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 14,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Berechne das Volumen eines Würfels mit der Kantenlänge \\(a = 4\\,\\text{cm}\\).<br>Formel: \\(V = a^3\\). Antwort in \\(\\text{cm}^3\\).",
+        "loesung": 64,
+        "toleranz": 0,
+        "tipp": "\\(V = 4^3 = 4 \\cdot 4 \\cdot 4\\)",
+        "loesungsweg": "$$V = a^3 = 4^3 = 64\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 15,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Ein Quader hat die Maße \\(a = 8\\,\\text{cm}\\), \\(b = 5\\,\\text{cm}\\), \\(c = 3\\,\\text{cm}\\). Berechne sein Volumen in \\(\\text{cm}^3\\).",
+        "loesung": 120,
+        "toleranz": 0,
+        "tipp": "\\(V = 8 \\cdot 5 \\cdot 3\\)",
+        "loesungsweg": "$$V = 8 \\cdot 5 \\cdot 3 = 120\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 16,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Ein Würfel hat das Volumen \\(V = 27\\,\\text{cm}^3\\). Wie lang ist eine Kante in cm?",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "\\(a = \\sqrt[3]{V}\\)",
+        "loesungsweg": "$$a = \\sqrt[3]{27} = 3\\,\\text{cm}$$"
+      },
+      {
+        "id": 17,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Ein Quader hat \\(a = 10\\,\\text{cm}\\), \\(b = 10\\,\\text{cm}\\) und \\(c = 10\\,\\text{cm}\\). Welches Volumen hat er?",
+        "optionen": ["\\(100\\,\\text{cm}^3\\)", "\\(600\\,\\text{cm}^3\\)", "\\(1000\\,\\text{cm}^3\\)", "\\(300\\,\\text{cm}^3\\)"],
+        "korrekt": 2,
+        "tipp": "Alle Seiten gleich lang -- das ist ein Würfel: \\(V = 10^3\\).",
+        "loesungsweg": "$$V = 10 \\cdot 10 \\cdot 10 = 1000\\,\\text{cm}^3 = 1\\,\\text{dm}^3 = 1\\,\\text{Liter}$$"
+      },
+      {
+        "id": 18,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Ein Quader hat \\(a = 6\\,\\text{cm}\\), \\(b = 4\\,\\text{cm}\\) und \\(V = 120\\,\\text{cm}^3\\). Wie hoch ist der Quader (\\(c\\)) in cm?",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "\\(c = \\frac{V}{a \\cdot b}\\)",
+        "loesungsweg": "$$c = \\frac{V}{a \\cdot b} = \\frac{120}{6 \\cdot 4} = \\frac{120}{24} = 5\\,\\text{cm}$$"
+      },
+      // ========== LEVEL 4 -- mittel: Volumen Prisma und Zylinder ==========
+      {
+        "id": 19,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Ein Dreiecksprisma hat die Grundfläche eines Dreiecks mit \\(a = 6\\,\\text{cm}\\) und \\(h_a = 4\\,\\text{cm}\\). Die Höhe des Prismas ist \\(h = 10\\,\\text{cm}\\). Berechne das Volumen in \\(\\text{cm}^3\\).<br>Formel: \\(V = G \\cdot h\\) mit \\(G = \\frac{1}{2} \\cdot a \\cdot h_a\\).",
+        "loesung": 120,
+        "toleranz": 0,
+        "tipp": "Erst die Grundfläche: \\(G = \\frac{1}{2} \\cdot 6 \\cdot 4 = 12\\). Dann \\(V = 12 \\cdot 10\\).",
+        "loesungsweg": "$$G = \\frac{1}{2} \\cdot 6 \\cdot 4 = 12\\,\\text{cm}^2$$ $$V = G \\cdot h = 12 \\cdot 10 = 120\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 20,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Berechne das Volumen eines Zylinders mit \\(r = 3\\,\\text{cm}\\) und \\(h = 10\\,\\text{cm}\\).<br>Formel: \\(V = \\pi r^2 h\\). Runde auf eine Dezimalstelle.",
+        "loesung": 282.7,
+        "toleranz": 0.1,
+        "tipp": "\\(V = \\pi \\cdot 3^2 \\cdot 10 = 90\\pi\\)",
+        "loesungsweg": "$$V = \\pi r^2 h = \\pi \\cdot 9 \\cdot 10 = 90\\pi \\approx 282{,}7\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 21,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Ein Dreiecksprisma hat eine Grundfläche mit \\(a = 8\\,\\text{cm}\\) und \\(h_a = 5\\,\\text{cm}\\). Die Prismahöhe beträgt \\(h = 12\\,\\text{cm}\\). Berechne \\(V\\) in \\(\\text{cm}^3\\).",
+        "loesung": 240,
+        "toleranz": 0,
+        "tipp": "\\(G = \\frac{1}{2} \\cdot 8 \\cdot 5 = 20\\). Dann \\(V = 20 \\cdot 12\\).",
+        "loesungsweg": "$$G = \\frac{1}{2} \\cdot 8 \\cdot 5 = 20\\,\\text{cm}^2$$ $$V = 20 \\cdot 12 = 240\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 22,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Ein Zylinder hat \\(r = 5\\,\\text{cm}\\) und \\(h = 8\\,\\text{cm}\\). Berechne das Volumen. Runde auf eine Dezimalstelle.",
+        "loesung": 628.3,
+        "toleranz": 0.1,
+        "tipp": "\\(V = \\pi \\cdot 5^2 \\cdot 8 = 200\\pi\\)",
+        "loesungsweg": "$$V = \\pi \\cdot 25 \\cdot 8 = 200\\pi \\approx 628{,}3\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 23,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Die Grundfläche eines Prismas ist ein Trapez mit \\(a = 8\\,\\text{cm}\\), \\(c = 4\\,\\text{cm}\\) und \\(h_{\\text{Trapez}} = 3\\,\\text{cm}\\). Die Prismahöhe beträgt \\(10\\,\\text{cm}\\). Welches Volumen hat das Prisma?",
+        "optionen": ["\\(120\\,\\text{cm}^3\\)", "\\(180\\,\\text{cm}^3\\)", "\\(240\\,\\text{cm}^3\\)", "\\(360\\,\\text{cm}^3\\)"],
+        "korrekt": 1,
+        "tipp": "Trapezfläche: \\(G = \\frac{a + c}{2} \\cdot h_{\\text{Trapez}}\\). Dann \\(V = G \\cdot h\\).",
+        "loesungsweg": "$$G = \\frac{8 + 4}{2} \\cdot 3 = 6 \\cdot 3 = 18\\,\\text{cm}^2$$ $$V = 18 \\cdot 10 = 180\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 24,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Ein Zylinder hat den Durchmesser \\(d = 10\\,\\text{cm}\\) und die Höhe \\(h = 6\\,\\text{cm}\\). Berechne das Volumen. Runde auf eine Dezimalstelle.",
+        "loesung": 471.2,
+        "toleranz": 0.1,
+        "tipp": "Der Radius ist \\(r = \\frac{d}{2} = 5\\,\\text{cm}\\). Dann: \\(V = \\pi \\cdot 5^2 \\cdot 6\\).",
+        "loesungsweg": "$$r = \\frac{10}{2} = 5\\,\\text{cm}$$ $$V = \\pi \\cdot 25 \\cdot 6 = 150\\pi \\approx 471{,}2\\,\\text{cm}^3$$"
+      },
+      // ========== LEVEL 5 -- anspruchsvoll: Oberfläche Zylinder/Prisma, Rückwärtsrechnen ==========
+      {
+        "id": 25,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Berechne die Oberfläche eines Zylinders mit \\(r = 4\\,\\text{cm}\\) und \\(h = 7\\,\\text{cm}\\).<br>Formel: \\(O = 2\\pi r^2 + 2\\pi r h\\). Runde auf eine Dezimalstelle.",
+        "loesung": 276.5,
+        "toleranz": 0.1,
+        "tipp": "\\(O = 2\\pi \\cdot 16 + 2\\pi \\cdot 4 \\cdot 7 = 32\\pi + 56\\pi = 88\\pi\\)",
+        "loesungsweg": "$$O = 2\\pi r^2 + 2\\pi r h = 2\\pi \\cdot 16 + 2\\pi \\cdot 28 = 32\\pi + 56\\pi = 88\\pi \\approx 276{,}5\\,\\text{cm}^2$$"
+      },
+      {
+        "id": 26,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Ein Quader hat das Volumen \\(V = 360\\,\\text{cm}^3\\), \\(a = 9\\,\\text{cm}\\) und \\(b = 8\\,\\text{cm}\\). Berechne die Höhe \\(c\\) in cm.",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "\\(c = \\frac{V}{a \\cdot b}\\)",
+        "loesungsweg": "$$c = \\frac{V}{a \\cdot b} = \\frac{360}{9 \\cdot 8} = \\frac{360}{72} = 5\\,\\text{cm}$$"
+      },
+      {
+        "id": 27,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Ein Zylinder hat das Volumen \\(V = 500\\pi\\,\\text{cm}^3\\) und die Höhe \\(h = 20\\,\\text{cm}\\). Berechne den Radius \\(r\\) in cm.",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "\\(V = \\pi r^2 h \\Rightarrow r^2 = \\frac{V}{\\pi h} = \\frac{500\\pi}{\\pi \\cdot 20}\\)",
+        "loesungsweg": "$$r^2 = \\frac{500\\pi}{\\pi \\cdot 20} = \\frac{500}{20} = 25 \\Rightarrow r = 5\\,\\text{cm}$$"
+      },
+      {
+        "id": 28,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Berechne die Oberfläche eines Zylinders mit \\(r = 3\\,\\text{cm}\\) und \\(h = 10\\,\\text{cm}\\). Runde auf eine Dezimalstelle.",
+        "loesung": 245.0,
+        "toleranz": 0.1,
+        "tipp": "\\(O = 2\\pi r^2 + 2\\pi r h = 2\\pi \\cdot 9 + 2\\pi \\cdot 30 = 18\\pi + 60\\pi\\)",
+        "loesungsweg": "$$O = 2\\pi r^2 + 2\\pi r h = 18\\pi + 60\\pi = 78\\pi \\approx 245{,}0\\,\\text{cm}^2$$"
+      },
+      {
+        "id": 29,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Ein Dreiecksprisma hat die Grundfläche \\(G = 24\\,\\text{cm}^2\\). Die drei Seiten des Dreiecks sind \\(a = 6\\,\\text{cm}\\), \\(b = 8\\,\\text{cm}\\), \\(c = 10\\,\\text{cm}\\). Die Prismahöhe ist \\(h = 15\\,\\text{cm}\\).<br>Berechne die Oberfläche \\(O = 2G + (a + b + c) \\cdot h\\) in \\(\\text{cm}^2\\).",
+        "loesung": 408,
+        "toleranz": 0,
+        "tipp": "Mantelfläche: \\((6 + 8 + 10) \\cdot 15 = 360\\). Dazu: \\(2 \\cdot 24 = 48\\).",
+        "loesungsweg": "$$O = 2 \\cdot 24 + (6 + 8 + 10) \\cdot 15 = 48 + 24 \\cdot 15 = 48 + 360 = 408\\,\\text{cm}^2$$"
+      },
+      {
+        "id": 30,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Ein Zylinder hat \\(r = 2\\,\\text{cm}\\) und \\(h = 10\\,\\text{cm}\\). Was ist größer: die Mantelfläche oder die Summe der beiden Kreisflächen?",
+        "optionen": ["Die Mantelfläche (\\(2\\pi r h = 40\\pi\\))", "Die beiden Kreisflächen (\\(2\\pi r^2 = 8\\pi\\))", "Beide sind gleich groß", "Kann man nicht vergleichen"],
+        "korrekt": 0,
+        "tipp": "Berechne: Mantel \\(= 2\\pi \\cdot 2 \\cdot 10\\) und Kreise \\(= 2\\pi \\cdot 4\\).",
+        "loesungsweg": "Mantelfläche: \\(2\\pi \\cdot 2 \\cdot 10 = 40\\pi\\). Kreisflächen: \\(2\\pi \\cdot 4 = 8\\pi\\). Die <b>Mantelfläche</b> ist deutlich größer."
+      },
+      // ========== LEVEL 6 -- wagnerisch: Zusammengesetzte Körper, Umfüllaufgaben, Pyramide ==========
+      {
+        "id": 31,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Berechne das Volumen einer quadratischen Pyramide mit Grundkante \\(a = 6\\,\\text{cm}\\) und Höhe \\(h = 10\\,\\text{cm}\\).<br>Formel: \\(V = \\frac{1}{3} \\cdot G \\cdot h\\) mit \\(G = a^2\\). Antwort in \\(\\text{cm}^3\\).",
+        "loesung": 120,
+        "toleranz": 0,
+        "tipp": "\\(G = 6^2 = 36\\). Dann \\(V = \\frac{1}{3} \\cdot 36 \\cdot 10\\).",
+        "loesungsweg": "$$G = 6^2 = 36\\,\\text{cm}^2$$ $$V = \\frac{1}{3} \\cdot 36 \\cdot 10 = \\frac{360}{3} = 120\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 32,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Auf einem Quader (\\(a = 6\\,\\text{cm}\\), \\(b = 6\\,\\text{cm}\\), \\(c = 4\\,\\text{cm}\\)) sitzt eine quadratische Pyramide mit gleicher Grundfläche und Pyramidenhöhe \\(h_P = 9\\,\\text{cm}\\). Berechne das Gesamtvolumen in \\(\\text{cm}^3\\).",
+        "loesung": 252,
+        "toleranz": 0,
+        "tipp": "\\(V_{\\text{Quader}} = 6 \\cdot 6 \\cdot 4\\). \\(V_{\\text{Pyramide}} = \\frac{1}{3} \\cdot 36 \\cdot 9\\). Addiere beide.",
+        "loesungsweg": "$$V_{\\text{Quader}} = 6 \\cdot 6 \\cdot 4 = 144\\,\\text{cm}^3$$ $$V_{\\text{Pyramide}} = \\frac{1}{3} \\cdot 36 \\cdot 9 = 108\\,\\text{cm}^3$$ $$V_{\\text{gesamt}} = 144 + 108 = 252\\,\\text{cm}^3$$"
+      },
+      {
+        "id": 33,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Ein Quader (\\(a = 10\\,\\text{cm}\\), \\(b = 10\\,\\text{cm}\\), \\(c = 8\\,\\text{cm}\\)) ist randvoll mit Wasser gefüllt. Das Wasser wird in einen Zylinder mit \\(r = 5\\,\\text{cm}\\) umgefüllt. Wie hoch steht das Wasser im Zylinder? Runde auf eine Dezimalstelle (in cm).",
+        "loesung": 10.2,
+        "toleranz": 0.1,
+        "tipp": "\\(V_{\\text{Quader}} = 10 \\cdot 10 \\cdot 8 = 800\\). Dann: \\(h = \\frac{V}{\\pi r^2} = \\frac{800}{25\\pi}\\).",
+        "loesungsweg": "$$V_{\\text{Quader}} = 800\\,\\text{cm}^3$$ $$h = \\frac{V}{\\pi r^2} = \\frac{800}{25\\pi} = \\frac{32}{\\pi} \\approx 10{,}2\\,\\text{cm}$$"
+      },
+      {
+        "id": 34,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Eine quadratische Pyramide hat \\(V = 200\\,\\text{cm}^3\\) und die Grundkante \\(a = 10\\,\\text{cm}\\). Berechne die Höhe \\(h\\) der Pyramide in cm.",
+        "loesung": 6,
+        "toleranz": 0,
+        "tipp": "\\(V = \\frac{1}{3} \\cdot a^2 \\cdot h \\Rightarrow h = \\frac{3V}{a^2}\\)",
+        "loesungsweg": "$$h = \\frac{3V}{a^2} = \\frac{3 \\cdot 200}{100} = \\frac{600}{100} = 6\\,\\text{cm}$$"
+      },
+      {
+        "id": 35,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Ein Zylinder (\\(r = 4\\,\\text{cm}\\), \\(h = 15\\,\\text{cm}\\)) ist halb mit Wasser gefüllt. Ein Quader (\\(3\\,\\text{cm} \\times 3\\,\\text{cm} \\times 10\\,\\text{cm}\\)) wird vollständig eingetaucht. Um wie viele cm steigt der Wasserspiegel? Runde auf eine Dezimalstelle.",
+        "loesung": 1.8,
+        "toleranz": 0.1,
+        "tipp": "Der Quader verdrängt \\(V = 3 \\cdot 3 \\cdot 10 = 90\\,\\text{cm}^3\\). Anstieg: \\(\\Delta h = \\frac{V}{\\pi r^2}\\).",
+        "loesungsweg": "$$V_{\\text{Quader}} = 90\\,\\text{cm}^3$$ $$\\Delta h = \\frac{90}{\\pi \\cdot 16} = \\frac{90}{16\\pi} \\approx 1{,}8\\,\\text{cm}$$"
+      },
+      {
+        "id": 36,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Ein Würfel und eine Pyramide haben die gleiche quadratische Grundfläche und die gleiche Höhe. In welchem Verhältnis stehen ihre Volumina?",
+        "optionen": ["\\(V_{\\text{Pyramide}} = \\frac{1}{2} \\cdot V_{\\text{Würfel}}\\)", "\\(V_{\\text{Pyramide}} = \\frac{1}{3} \\cdot V_{\\text{Würfel}}\\)", "\\(V_{\\text{Pyramide}} = \\frac{1}{4} \\cdot V_{\\text{Würfel}}\\)", "\\(V_{\\text{Pyramide}} = \\frac{2}{3} \\cdot V_{\\text{Würfel}}\\)"],
+        "korrekt": 1,
+        "tipp": "Vergleiche \\(V_{\\text{Würfel}} = a^2 \\cdot h\\) mit \\(V_{\\text{Pyramide}} = \\frac{1}{3} \\cdot a^2 \\cdot h\\).",
+        "loesungsweg": "$$V_{\\text{Würfel}} = a^2 \\cdot h \\quad\\text{und}\\quad V_{\\text{Pyramide}} = \\frac{1}{3} \\cdot a^2 \\cdot h$$ Die Pyramide hat genau <b>ein Drittel</b> des Würfelvolumens."
+      }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

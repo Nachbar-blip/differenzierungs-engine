@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lineare Gleichungen lösen - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '7-gleichungen-linear';
+    const THEMA_CONFIG = { name: 'Lineare Gleichungen lösen', bereich: 'algebra' };
+    const AUFGABEN = [
+      // ========== LEVEL 1 — babyleicht: Eine Umformung ==========
+      {
+        "id": 1,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Löse die Gleichung: \\(x + 3 = 7\\)",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "Ziehe auf beiden Seiten \\(3\\) ab.",
+        "loesungsweg": "$$x + 3 = 7 \\quad | -3$$ $$x = 4$$"
+      },
+      {
+        "id": 2,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Welche Zahl löst die Gleichung \\(x - 5 = 2\\)?",
+        "optionen": ["\\(3\\)", "\\(7\\)", "\\(-3\\)", "\\(10\\)"],
+        "korrekt": 1,
+        "tipp": "Addiere auf beiden Seiten \\(5\\).",
+        "loesungsweg": "$$x - 5 = 2 \\quad | +5$$ $$x = 7$$"
+      },
+      {
+        "id": 3,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Löse: \\(2x = 10\\)",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Teile beide Seiten durch \\(2\\).",
+        "loesungsweg": "$$2x = 10 \\quad | :2$$ $$x = 5$$"
+      },
+      {
+        "id": 4,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Löse die Gleichung \\(x + 9 = 15\\). Was ist \\(x\\)?",
+        "optionen": ["\\(24\\)", "\\(4\\)", "\\(6\\)", "\\(9\\)"],
+        "korrekt": 2,
+        "tipp": "Ziehe \\(9\\) auf beiden Seiten ab: \\(15 - 9 = \\,?\\)",
+        "loesungsweg": "$$x + 9 = 15 \\quad | -9$$ $$x = 6$$"
+      },
+      {
+        "id": 5,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Löse: \\(5x = 35\\)",
+        "loesung": 7,
+        "toleranz": 0,
+        "tipp": "Teile beide Seiten durch \\(5\\).",
+        "loesungsweg": "$$5x = 35 \\quad | :5$$ $$x = 7$$"
+      },
+      {
+        "id": 6,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Welche Gleichung hat die Lösung \\(x = 3\\)?",
+        "optionen": ["\\(x + 3 = 3\\)", "\\(x - 1 = 2\\)", "\\(2x = 8\\)", "\\(x + 5 = 7\\)"],
+        "korrekt": 1,
+        "tipp": "Setze \\(x = 3\\) in jede Gleichung ein und prüfe.",
+        "loesungsweg": "Einsetzen von \\(x = 3\\): $$3 - 1 = 2 \\quad \\checkmark$$ Die anderen: \\(3+3=6 \\neq 3\\), \\(2 \\cdot 3 = 6 \\neq 8\\), \\(3+5=8 \\neq 7\\)."
+      },
+      // ========== LEVEL 2 — leicht: Zwei Umformungen ==========
+      {
+        "id": 7,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Löse: \\(3x + 2 = 14\\)",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "Erst \\(-2\\), dann \\(:3\\).",
+        "loesungsweg": "$$3x + 2 = 14 \\quad | -2$$ $$3x = 12 \\quad | :3$$ $$x = 4$$"
+      },
+      {
+        "id": 8,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Löse \\(5x - 7 = 18\\). Was ist \\(x\\)?",
+        "optionen": ["\\(3\\)", "\\(5\\)", "\\(25\\)", "\\(11\\)"],
+        "korrekt": 1,
+        "tipp": "Erst \\(+7\\), dann \\(:5\\).",
+        "loesungsweg": "$$5x - 7 = 18 \\quad | +7$$ $$5x = 25 \\quad | :5$$ $$x = 5$$"
+      },
+      {
+        "id": 9,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Löse: \\(4x + 5 = 25\\)",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Subtrahiere erst \\(5\\), teile dann durch \\(4\\).",
+        "loesungsweg": "$$4x + 5 = 25 \\quad | -5$$ $$4x = 20 \\quad | :4$$ $$x = 5$$"
+      },
+      {
+        "id": 10,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Löse \\(2x - 3 = 11\\). Was ist \\(x\\)?",
+        "optionen": ["\\(4\\)", "\\(7\\)", "\\(8\\)", "\\(5{,}5\\)"],
+        "korrekt": 1,
+        "tipp": "Erst \\(+3\\), dann \\(:2\\).",
+        "loesungsweg": "$$2x - 3 = 11 \\quad | +3$$ $$2x = 14 \\quad | :2$$ $$x = 7$$"
+      },
+      {
+        "id": 11,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Löse: \\(7x - 4 = 31\\)",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Addiere \\(4\\), dann teile durch \\(7\\).",
+        "loesungsweg": "$$7x - 4 = 31 \\quad | +4$$ $$7x = 35 \\quad | :7$$ $$x = 5$$"
+      },
+      {
+        "id": 12,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Welcher erste Schritt ist sinnvoll, um \\(6x + 9 = 33\\) zu lösen?",
+        "optionen": ["Durch \\(6\\) teilen", "\\(9\\) subtrahieren", "\\(33\\) subtrahieren", "\\(6\\) subtrahieren"],
+        "korrekt": 1,
+        "tipp": "Bringe zuerst die Zahl ohne \\(x\\) auf die andere Seite.",
+        "loesungsweg": "Erster Schritt: \\(-9\\) auf beiden Seiten. $$6x + 9 = 33 \\quad | -9$$ $$6x = 24 \\quad | :6$$ $$x = 4$$"
+      },
+      // ========== LEVEL 3 — nervenschonend: Variable auf beiden Seiten ==========
+      {
+        "id": 13,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Löse: \\(5x + 3 = 2x + 12\\)",
+        "loesung": 3,
+        "toleranz": 0,
+        "tipp": "Bringe alle \\(x\\) auf eine Seite: \\(-2x\\) auf beiden Seiten.",
+        "loesungsweg": "$$5x + 3 = 2x + 12 \\quad | -2x$$ $$3x + 3 = 12 \\quad | -3$$ $$3x = 9 \\quad | :3$$ $$x = 3$$"
+      },
+      {
+        "id": 14,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Löse \\(7x - 4 = 3x + 8\\). Was ist \\(x\\)?",
+        "optionen": ["\\(1\\)", "\\(3\\)", "\\(4\\)", "\\(2\\)"],
+        "korrekt": 1,
+        "tipp": "Ziehe \\(3x\\) auf beiden Seiten ab und addiere dann \\(4\\).",
+        "loesungsweg": "$$7x - 4 = 3x + 8 \\quad | -3x$$ $$4x - 4 = 8 \\quad | +4$$ $$4x = 12 \\quad | :4$$ $$x = 3$$"
+      },
+      {
+        "id": 15,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Löse: \\(8x - 5 = 3x + 15\\)",
+        "loesung": 4,
+        "toleranz": 0,
+        "tipp": "Erst \\(-3x\\), dann \\(+5\\), dann \\(:5\\).",
+        "loesungsweg": "$$8x - 5 = 3x + 15 \\quad | -3x$$ $$5x - 5 = 15 \\quad | +5$$ $$5x = 20 \\quad | :5$$ $$x = 4$$"
+      },
+      {
+        "id": 16,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Löse \\(6x + 1 = 4x + 9\\). Was ist \\(x\\)?",
+        "optionen": ["\\(5\\)", "\\(4\\)", "\\(8\\)", "\\(3\\)"],
+        "korrekt": 1,
+        "tipp": "Subtrahiere \\(4x\\) auf beiden Seiten.",
+        "loesungsweg": "$$6x + 1 = 4x + 9 \\quad | -4x$$ $$2x + 1 = 9 \\quad | -1$$ $$2x = 8 \\quad | :2$$ $$x = 4$$"
+      },
+      {
+        "id": 17,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Löse: \\(9x - 7 = 5x + 13\\)",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Bringe die \\(x\\)-Terme auf die linke Seite und die Zahlen auf die rechte.",
+        "loesungsweg": "$$9x - 7 = 5x + 13 \\quad | -5x$$ $$4x - 7 = 13 \\quad | +7$$ $$4x = 20 \\quad | :4$$ $$x = 5$$"
+      },
+      {
+        "id": 18,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Löse \\(3x + 10 = x + 20\\). Was ist \\(x\\)?",
+        "optionen": ["\\(10\\)", "\\(5\\)", "\\(15\\)", "\\(3\\)"],
+        "korrekt": 1,
+        "tipp": "Subtrahiere \\(x\\) auf beiden Seiten.",
+        "loesungsweg": "$$3x + 10 = x + 20 \\quad | -x$$ $$2x + 10 = 20 \\quad | -10$$ $$2x = 10 \\quad | :2$$ $$x = 5$$"
+      },
+      // ========== LEVEL 4 — mittel: Klammern ausmultiplizieren ==========
+      {
+        "id": 19,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Löse: \\(3(x + 2) = 21\\)",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Multipliziere die Klammer aus: \\(3 \\cdot x + 3 \\cdot 2\\).",
+        "loesungsweg": "$$3(x + 2) = 21$$ $$3x + 6 = 21 \\quad | -6$$ $$3x = 15 \\quad | :3$$ $$x = 5$$"
+      },
+      {
+        "id": 20,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Löse \\(2(3x - 1) = 4(x + 3)\\). Was ist \\(x\\)?",
+        "optionen": ["\\(5\\)", "\\(7\\)", "\\(3\\)", "\\(2\\)"],
+        "korrekt": 1,
+        "tipp": "Multipliziere beide Klammern aus und bringe die \\(x\\)-Terme auf eine Seite.",
+        "loesungsweg": "$$2(3x - 1) = 4(x + 3)$$ $$6x - 2 = 4x + 12 \\quad | -4x$$ $$2x - 2 = 12 \\quad | +2$$ $$2x = 14 \\quad | :2$$ $$x = 7$$"
+      },
+      {
+        "id": 21,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Löse: \\(5(x - 3) = 2(x + 6)\\)",
+        "loesung": 9,
+        "toleranz": 0,
+        "tipp": "Ausmultiplizieren: \\(5x - 15 = 2x + 12\\).",
+        "loesungsweg": "$$5(x - 3) = 2(x + 6)$$ $$5x - 15 = 2x + 12 \\quad | -2x$$ $$3x - 15 = 12 \\quad | +15$$ $$3x = 27 \\quad | :3$$ $$x = 9$$"
+      },
+      {
+        "id": 22,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Löse \\(4(2x + 1) = 36\\). Was ist \\(x\\)?",
+        "optionen": ["\\(5\\)", "\\(4\\)", "\\(8\\)", "\\(3\\)"],
+        "korrekt": 1,
+        "tipp": "Ausmultiplizieren: \\(8x + 4 = 36\\).",
+        "loesungsweg": "$$4(2x + 1) = 36$$ $$8x + 4 = 36 \\quad | -4$$ $$8x = 32 \\quad | :8$$ $$x = 4$$"
+      },
+      {
+        "id": 23,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Löse: \\(2(x + 5) - 3 = 17\\)",
+        "loesung": 5,
+        "toleranz": 0,
+        "tipp": "Erst ausmultiplizieren, dann zusammenfassen.",
+        "loesungsweg": "$$2(x + 5) - 3 = 17$$ $$2x + 10 - 3 = 17$$ $$2x + 7 = 17 \\quad | -7$$ $$2x = 10 \\quad | :2$$ $$x = 5$$"
+      },
+      {
+        "id": 24,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Löse \\(3(x - 4) = 2(x + 1)\\). Was ist \\(x\\)?",
+        "optionen": ["\\(12\\)", "\\(14\\)", "\\(10\\)", "\\(8\\)"],
+        "korrekt": 1,
+        "tipp": "Links: \\(3x - 12\\). Rechts: \\(2x + 2\\).",
+        "loesungsweg": "$$3(x - 4) = 2(x + 1)$$ $$3x - 12 = 2x + 2 \\quad | -2x$$ $$x - 12 = 2 \\quad | +12$$ $$x = 14$$"
+      },
+      // ========== LEVEL 5 — anspruchsvoll: Bruchgleichungen ==========
+      {
+        "id": 25,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Löse: \\(\\dfrac{x}{3} + 2 = 5\\)",
+        "loesung": 9,
+        "toleranz": 0,
+        "tipp": "Erst \\(-2\\), dann \\(\\cdot 3\\).",
+        "loesungsweg": "$$\\frac{x}{3} + 2 = 5 \\quad | -2$$ $$\\frac{x}{3} = 3 \\quad | \\cdot 3$$ $$x = 9$$"
+      },
+      {
+        "id": 26,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Löse \\(\\dfrac{x+1}{4} = 3\\). Was ist \\(x\\)?",
+        "optionen": ["\\(12\\)", "\\(11\\)", "\\(13\\)", "\\(3\\)"],
+        "korrekt": 1,
+        "tipp": "Multipliziere beide Seiten mit \\(4\\).",
+        "loesungsweg": "$$\\frac{x+1}{4} = 3 \\quad | \\cdot 4$$ $$x + 1 = 12 \\quad | -1$$ $$x = 11$$"
+      },
+      {
+        "id": 27,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Löse: \\(\\dfrac{2x - 4}{3} = 6\\)",
+        "loesung": 11,
+        "toleranz": 0,
+        "tipp": "Multipliziere mit \\(3\\), dann löse die lineare Gleichung.",
+        "loesungsweg": "$$\\frac{2x - 4}{3} = 6 \\quad | \\cdot 3$$ $$2x - 4 = 18 \\quad | +4$$ $$2x = 22 \\quad | :2$$ $$x = 11$$"
+      },
+      {
+        "id": 28,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Löse die Verhältnisgleichung \\(x : 5 = 3 : 10\\). Was ist \\(x\\)?",
+        "optionen": ["\\(1\\)", "\\(1{,}5\\)", "\\(6\\)", "\\(2\\)"],
+        "korrekt": 1,
+        "tipp": "Schreibe als Bruch: \\(\\dfrac{x}{5} = \\dfrac{3}{10}\\) und multipliziere mit \\(5\\).",
+        "loesungsweg": "$$\\frac{x}{5} = \\frac{3}{10} \\quad | \\cdot 5$$ $$x = \\frac{15}{10} = 1{,}5$$"
+      },
+      {
+        "id": 29,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Löse: \\(\\dfrac{x}{2} + \\dfrac{x}{3} = 10\\)",
+        "loesung": 12,
+        "toleranz": 0,
+        "tipp": "Hauptnenner ist \\(6\\). Multipliziere die gesamte Gleichung mit \\(6\\).",
+        "loesungsweg": "$$\\frac{x}{2} + \\frac{x}{3} = 10 \\quad | \\cdot 6$$ $$3x + 2x = 60$$ $$5x = 60 \\quad | :5$$ $$x = 12$$"
+      },
+      {
+        "id": 30,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Löse \\(\\dfrac{x - 3}{5} = \\dfrac{x + 1}{3}\\). Was ist \\(x\\)?",
+        "optionen": ["\\(-7\\)", "\\(7\\)", "\\(-2\\)", "\\(4\\)"],
+        "korrekt": 0,
+        "tipp": "Hauptnenner \\(15\\): Multipliziere beide Seiten mit \\(15\\).",
+        "loesungsweg": "$$\\frac{x-3}{5} = \\frac{x+1}{3} \\quad | \\cdot 15$$ $$3(x-3) = 5(x+1)$$ $$3x - 9 = 5x + 5 \\quad | -3x$$ $$-9 = 2x + 5 \\quad | -5$$ $$-14 = 2x \\quad | :2$$ $$x = -7$$"
+      },
+      // ========== LEVEL 6 — wagnerisch: Textaufgaben & Ungleichungen ==========
+      {
+        "id": 31,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Tim ist 3 Jahre älter als Mia. Zusammen sind sie 27 Jahre alt. Wie alt ist Mia?",
+        "loesung": 12,
+        "toleranz": 0,
+        "tipp": "Setze Mias Alter als \\(x\\). Dann ist Tim \\(x + 3\\). Gleichung: \\(x + (x+3) = 27\\).",
+        "loesungsweg": "Sei \\(x\\) = Mias Alter. Tim: \\(x + 3\\). $$x + (x + 3) = 27$$ $$2x + 3 = 27 \\quad | -3$$ $$2x = 24 \\quad | :2$$ $$x = 12$$ Mia ist 12 Jahre alt."
+      },
+      {
+        "id": 32,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Ein Rechteck hat einen Umfang von 34 cm. Die Länge ist 5 cm mehr als die Breite. Wie breit ist das Rechteck?",
+        "optionen": ["\\(6 \\text{ cm}\\)", "\\(11 \\text{ cm}\\)", "\\(7 \\text{ cm}\\)", "\\(5 \\text{ cm}\\)"],
+        "korrekt": 0,
+        "tipp": "Umfang: \\(2 \\cdot (b + l) = 34\\), also \\(b + l = 17\\). Mit \\(l = b + 5\\): \\(b + b + 5 = 17\\).",
+        "loesungsweg": "Sei \\(b\\) = Breite, \\(l = b + 5\\). $$2(b + b + 5) = 34$$ $$2(2b + 5) = 34$$ $$2b + 5 = 17 \\quad | -5$$ $$2b = 12 \\quad | :2$$ $$b = 6$$ Die Breite ist 6 cm."
+      },
+      {
+        "id": 33,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Drei aufeinanderfolgende Zahlen haben die Summe 45. Wie lautet die kleinste der drei Zahlen?",
+        "loesung": 14,
+        "toleranz": 0,
+        "tipp": "Nenne die Zahlen \\(x\\), \\(x+1\\), \\(x+2\\). Stelle eine Gleichung auf.",
+        "loesungsweg": "$$x + (x+1) + (x+2) = 45$$ $$3x + 3 = 45 \\quad | -3$$ $$3x = 42 \\quad | :3$$ $$x = 14$$ Die Zahlen sind 14, 15 und 16."
+      },
+      {
+        "id": 34,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Löse die Ungleichung \\(x + 5 > 12\\). Welche Aussage stimmt?",
+        "optionen": ["\\(x > 7\\)", "\\(x > 17\\)", "\\(x < 7\\)", "\\(x > 12\\)"],
+        "korrekt": 0,
+        "tipp": "Behandle die Ungleichung wie eine Gleichung: Subtrahiere \\(5\\).",
+        "loesungsweg": "$$x + 5 > 12 \\quad | -5$$ $$x > 7$$"
+      },
+      {
+        "id": 35,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Ein Busticket kostet 2 Euro. Lisa hat 15 Euro und kauft noch ein Getränk für 3 Euro. Für wie viele Fahrten reicht ihr Geld?",
+        "loesung": 6,
+        "toleranz": 0,
+        "tipp": "Nach dem Getränk hat sie \\(15 - 3 = 12\\) Euro. Gleichung: \\(2x \\leq 12\\).",
+        "loesungsweg": "Restgeld: \\(15 - 3 = 12\\) Euro. $$2x \\leq 12 \\quad | :2$$ $$x \\leq 6$$ Lisa kann 6 Fahrten bezahlen."
+      },
+      {
+        "id": 36,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Anna denkt sich eine Zahl. Sie verdoppelt sie, addiert 8 und erhält 22. Welche Zahl hat Anna sich gedacht?",
+        "optionen": ["\\(6\\)", "\\(7\\)", "\\(11\\)", "\\(15\\)"],
+        "korrekt": 1,
+        "tipp": "Gleichung aufstellen: \\(2x + 8 = 22\\).",
+        "loesungsweg": "$$2x + 8 = 22 \\quad | -8$$ $$2x = 14 \\quad | :2$$ $$x = 7$$ Anna hat sich die 7 gedacht."
+      }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

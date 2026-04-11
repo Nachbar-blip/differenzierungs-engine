@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prozent — Anwendungen &amp; Zins - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '7-prozent-anwendungen-zins';
+    const THEMA_CONFIG = { name: 'Prozent — Anwendungen & Zins', bereich: 'arithmetik' };
+    const AUFGABEN = [
+      // ========== LEVEL 1 — babyleicht (6 Aufgaben) ==========
+      {
+        "id": 1,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Ein T-Shirt kostet \\(20\\,€\\). Du bekommst \\(10\\,\\%\\) Rabatt. Wie viel zahlst du?",
+        "loesung": 18,
+        "toleranz": 0.01,
+        "tipp": "Berechne zuerst den Rabatt: \\(20 \\cdot \\frac{10}{100}\\), dann ziehe ihn vom Preis ab.",
+        "loesungsweg": "$$\\text{Rabatt} = 20 \\cdot \\frac{10}{100} = 2\\,€$$ $$\\text{Neuer Preis} = 20 - 2 = 18\\,€$$"
+      },
+      {
+        "id": 2,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Eine Hose kostet \\(50\\,€\\). Bei \\(20\\,\\%\\) Rabatt — wie viel spart man?",
+        "optionen": [
+          "\\(5\\,€\\)",
+          "\\(10\\,€\\)",
+          "\\(15\\,€\\)",
+          "\\(20\\,€\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Rabatt = Preis mal Prozentsatz geteilt durch 100.",
+        "loesungsweg": "$$\\text{Rabatt} = 50 \\cdot \\frac{20}{100} = 50 \\cdot 0{,}2 = 10\\,€$$"
+      },
+      {
+        "id": 3,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Ein Buch kostet \\(40\\,€\\). Es gibt \\(25\\,\\%\\) Rabatt. Wie viel kostet es nach dem Rabatt?",
+        "loesung": 30,
+        "toleranz": 0.01,
+        "tipp": "\\(25\\,\\%\\) von \\(40\\) ist ein Viertel von \\(40\\).",
+        "loesungsweg": "$$\\text{Rabatt} = 40 \\cdot \\frac{25}{100} = 10\\,€$$ $$\\text{Neuer Preis} = 40 - 10 = 30\\,€$$"
+      },
+      {
+        "id": 4,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Ein Spiel kostet \\(60\\,€\\) und wird um \\(50\\,\\%\\) reduziert. Was ist der neue Preis?",
+        "optionen": [
+          "\\(20\\,€\\)",
+          "\\(30\\,€\\)",
+          "\\(40\\,€\\)",
+          "\\(50\\,€\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "\\(50\\,\\%\\) bedeutet die Hälfte.",
+        "loesungsweg": "$$\\text{Neuer Preis} = 60 \\cdot \\frac{50}{100} = 60 \\cdot 0{,}5 = 30\\,€$$"
+      },
+      {
+        "id": 5,
+        "level": 1,
+        "typ": "numerisch",
+        "frage": "Schuhe kosten \\(80\\,€\\). Mit \\(10\\,\\%\\) Rabatt — wie viel zahlst du?",
+        "loesung": 72,
+        "toleranz": 0.01,
+        "tipp": "\\(10\\,\\%\\) von \\(80\\) sind \\(8\\,€\\).",
+        "loesungsweg": "$$\\text{Rabatt} = 80 \\cdot \\frac{10}{100} = 8\\,€$$ $$\\text{Neuer Preis} = 80 - 8 = 72\\,€$$"
+      },
+      {
+        "id": 6,
+        "level": 1,
+        "typ": "mc",
+        "frage": "Ein Rucksack kostet \\(30\\,€\\). Nach \\(10\\,\\%\\) Rabatt kostet er …",
+        "optionen": [
+          "\\(20\\,€\\)",
+          "\\(25\\,€\\)",
+          "\\(27\\,€\\)",
+          "\\(29\\,€\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Berechne \\(10\\,\\%\\) von \\(30\\) und ziehe es ab.",
+        "loesungsweg": "$$\\text{Rabatt} = 30 \\cdot 0{,}1 = 3\\,€$$ $$\\text{Neuer Preis} = 30 - 3 = 27\\,€$$"
+      },
+
+      // ========== LEVEL 2 — leicht (6 Aufgaben) ==========
+      {
+        "id": 7,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Eine Rechnung beträgt \\(200\\,€\\). Bei Zahlung innerhalb von 10 Tagen erhältst du \\(3\\,\\%\\) Skonto. Wie viel zahlst du?",
+        "loesung": 194,
+        "toleranz": 0.01,
+        "tipp": "Skonto funktioniert wie Rabatt: Ziehe \\(3\\,\\%\\) von \\(200\\,€\\) ab.",
+        "loesungsweg": "$$\\text{Skonto} = 200 \\cdot \\frac{3}{100} = 6\\,€$$ $$\\text{Zu zahlen} = 200 - 6 = 194\\,€$$"
+      },
+      {
+        "id": 8,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Ein Produkt kostet \\(150\\,€\\) netto. Wie viel kostet es mit \\(19\\,\\%\\) Mehrwertsteuer?",
+        "optionen": [
+          "\\(169\\,€\\)",
+          "\\(175{,}50\\,€\\)",
+          "\\(178{,}50\\,€\\)",
+          "\\(185\\,€\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Vermehrter Grundwert: Multipliziere mit \\(1{,}19\\).",
+        "loesungsweg": "$$\\text{Brutto} = 150 \\cdot 1{,}19 = 178{,}50\\,€$$"
+      },
+      {
+        "id": 9,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Ein Händler erhöht den Preis von \\(80\\,€\\) um \\(15\\,\\%\\). Wie viel kostet der Artikel jetzt?",
+        "loesung": 92,
+        "toleranz": 0.01,
+        "tipp": "Vermehrter Grundwert: \\(80 \\cdot 1{,}15\\).",
+        "loesungsweg": "$$\\text{Neuer Preis} = 80 \\cdot 1{,}15 = 92\\,€$$"
+      },
+      {
+        "id": 10,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Ein Laptop kostet \\(500\\,€\\). Er wird um \\(15\\,\\%\\) reduziert. Der neue Preis berechnet sich mit …",
+        "optionen": [
+          "\\(500 \\cdot 0{,}15\\)",
+          "\\(500 \\cdot 0{,}85\\)",
+          "\\(500 \\cdot 1{,}15\\)",
+          "\\(500 - 15\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Verminderter Grundwert: Man multipliziert mit \\(1 - \\frac{p}{100}\\).",
+        "loesungsweg": "$$\\text{Neuer Preis} = 500 \\cdot \\left(1 - \\frac{15}{100}\\right) = 500 \\cdot 0{,}85 = 425\\,€$$"
+      },
+      {
+        "id": 11,
+        "level": 2,
+        "typ": "numerisch",
+        "frage": "Eine Handwerkerrechnung beträgt \\(350\\,€\\). Du bekommst \\(2\\,\\%\\) Skonto. Wie viel sparst du?",
+        "loesung": 7,
+        "toleranz": 0.01,
+        "tipp": "Skonto = Rechnungsbetrag mal Skontosatz.",
+        "loesungsweg": "$$\\text{Skonto} = 350 \\cdot \\frac{2}{100} = 7\\,€$$"
+      },
+      {
+        "id": 12,
+        "level": 2,
+        "typ": "mc",
+        "frage": "Ein Preis steigt von \\(120\\,€\\) um \\(25\\,\\%\\). Der neue Preis ist …",
+        "optionen": [
+          "\\(130\\,€\\)",
+          "\\(140\\,€\\)",
+          "\\(145\\,€\\)",
+          "\\(150\\,€\\)"
+        ],
+        "korrekt": 3,
+        "tipp": "\\(25\\,\\%\\) von \\(120\\) = \\(30\\). Dann addieren.",
+        "loesungsweg": "$$\\text{Erhöhung} = 120 \\cdot 0{,}25 = 30\\,€$$ $$\\text{Neuer Preis} = 120 + 30 = 150\\,€$$"
+      },
+
+      // ========== LEVEL 3 — nervenschonend (6 Aufgaben) ==========
+      {
+        "id": 13,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Du legst \\(1000\\,€\\) zu \\(5\\,\\%\\) Zinsen für 1 Jahr an. Wie viel Zinsen bekommst du?",
+        "loesung": 50,
+        "toleranz": 0.01,
+        "tipp": "Zinsformel: \\(Z = K \\cdot \\frac{p}{100}\\).",
+        "loesungsweg": "$$Z = 1000 \\cdot \\frac{5}{100} = 1000 \\cdot 0{,}05 = 50\\,€$$"
+      },
+      {
+        "id": 14,
+        "level": 3,
+        "typ": "mc",
+        "frage": "\\(2000\\,€\\) werden zu \\(3\\,\\%\\) für 1 Jahr angelegt. Die Zinsen betragen …",
+        "optionen": [
+          "\\(30\\,€\\)",
+          "\\(60\\,€\\)",
+          "\\(90\\,€\\)",
+          "\\(120\\,€\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "\\(Z = K \\cdot \\frac{p}{100}\\) mit \\(K = 2000\\) und \\(p = 3\\).",
+        "loesungsweg": "$$Z = 2000 \\cdot \\frac{3}{100} = 60\\,€$$"
+      },
+      {
+        "id": 15,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Du sparst \\(500\\,€\\) zu \\(4\\,\\%\\) Zinsen pro Jahr. Wie viel hast du nach einem Jahr insgesamt?",
+        "loesung": 520,
+        "toleranz": 0.01,
+        "tipp": "Berechne zuerst die Zinsen, dann addiere sie zum Kapital.",
+        "loesungsweg": "$$Z = 500 \\cdot \\frac{4}{100} = 20\\,€$$ $$K_{\\text{neu}} = 500 + 20 = 520\\,€$$"
+      },
+      {
+        "id": 16,
+        "level": 3,
+        "typ": "mc",
+        "frage": "Welche Formel berechnet die Zinsen für 1 Jahr?",
+        "optionen": [
+          "\\(Z = K + p\\)",
+          "\\(Z = K \\cdot \\frac{p}{100}\\)",
+          "\\(Z = \\frac{K}{p} \\cdot 100\\)",
+          "\\(Z = K \\cdot p\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Der Zinssatz \\(p\\) ist in Prozent angegeben und muss durch 100 geteilt werden.",
+        "loesungsweg": "Die Zinsformel für 1 Jahr lautet: $$Z = K \\cdot \\frac{p}{100}$$"
+      },
+      {
+        "id": 17,
+        "level": 3,
+        "typ": "numerisch",
+        "frage": "Oma legt \\(3000\\,€\\) zu \\(2\\,\\%\\) Zinsen an. Wie viel Zinsen bekommt sie nach einem Jahr?",
+        "loesung": 60,
+        "toleranz": 0.01,
+        "tipp": "\\(Z = 3000 \\cdot \\frac{2}{100}\\).",
+        "loesungsweg": "$$Z = 3000 \\cdot \\frac{2}{100} = 3000 \\cdot 0{,}02 = 60\\,€$$"
+      },
+      {
+        "id": 18,
+        "level": 3,
+        "typ": "mc",
+        "frage": "\\(1200\\,€\\) zu \\(5\\,\\%\\) für 1 Jahr. Wie viel hat man danach insgesamt?",
+        "optionen": [
+          "\\(1210\\,€\\)",
+          "\\(1240\\,€\\)",
+          "\\(1260\\,€\\)",
+          "\\(1300\\,€\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Zinsen berechnen und zum Kapital addieren.",
+        "loesungsweg": "$$Z = 1200 \\cdot \\frac{5}{100} = 60\\,€$$ $$K_{\\text{neu}} = 1200 + 60 = 1260\\,€$$"
+      },
+
+      // ========== LEVEL 4 — mittel (6 Aufgaben) ==========
+      {
+        "id": 19,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "Du legst \\(800\\,€\\) zu \\(3\\,\\%\\) für \\(6\\) Monate an. Wie viel Zinsen bekommst du?",
+        "loesung": 12,
+        "toleranz": 0.01,
+        "tipp": "Monatsformel: \\(Z = K \\cdot \\frac{p \\cdot m}{100 \\cdot 12}\\) mit \\(m = 6\\).",
+        "loesungsweg": "$$Z = 800 \\cdot \\frac{3 \\cdot 6}{100 \\cdot 12} = 800 \\cdot \\frac{18}{1200} = 800 \\cdot 0{,}015 = 12\\,€$$"
+      },
+      {
+        "id": 20,
+        "level": 4,
+        "typ": "mc",
+        "frage": "\\(1500\\,€\\) zu \\(4\\,\\%\\) für \\(3\\) Monate. Wie hoch sind die Zinsen?",
+        "optionen": [
+          "\\(10\\,€\\)",
+          "\\(15\\,€\\)",
+          "\\(20\\,€\\)",
+          "\\(45\\,€\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "\\(Z = K \\cdot \\frac{p \\cdot m}{100 \\cdot 12}\\).",
+        "loesungsweg": "$$Z = 1500 \\cdot \\frac{4 \\cdot 3}{100 \\cdot 12} = 1500 \\cdot \\frac{12}{1200} = 1500 \\cdot 0{,}01 = 15\\,€$$"
+      },
+      {
+        "id": 21,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "\\(2000\\,€\\) werden zu \\(6\\,\\%\\) für \\(90\\) Tage angelegt. Wie hoch sind die Zinsen? (Bankjahr = 360 Tage)",
+        "loesung": 30,
+        "toleranz": 0.01,
+        "tipp": "Tagesformel: \\(Z = K \\cdot \\frac{p \\cdot t}{100 \\cdot 360}\\).",
+        "loesungsweg": "$$Z = 2000 \\cdot \\frac{6 \\cdot 90}{100 \\cdot 360} = 2000 \\cdot \\frac{540}{36000} = 2000 \\cdot 0{,}015 = 30\\,€$$"
+      },
+      {
+        "id": 22,
+        "level": 4,
+        "typ": "mc",
+        "frage": "Welche Formel berechnet Zinsen für \\(t\\) Tage?",
+        "optionen": [
+          "\\(Z = K \\cdot \\frac{p}{100 \\cdot t}\\)",
+          "\\(Z = K \\cdot \\frac{p \\cdot t}{100 \\cdot 360}\\)",
+          "\\(Z = K \\cdot \\frac{p \\cdot t}{100 \\cdot 365}\\)",
+          "\\(Z = K \\cdot p \\cdot t\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Im Bankwesen rechnet man mit 360 Tagen pro Jahr.",
+        "loesungsweg": "Die Tageszinsformel lautet: $$Z = K \\cdot \\frac{p \\cdot t}{100 \\cdot 360}$$"
+      },
+      {
+        "id": 23,
+        "level": 4,
+        "typ": "numerisch",
+        "frage": "\\(600\\,€\\) zu \\(2{,}5\\,\\%\\) für \\(8\\) Monate. Berechne die Zinsen.",
+        "loesung": 10,
+        "toleranz": 0.01,
+        "tipp": "\\(Z = 600 \\cdot \\frac{2{,}5 \\cdot 8}{100 \\cdot 12}\\).",
+        "loesungsweg": "$$Z = 600 \\cdot \\frac{2{,}5 \\cdot 8}{100 \\cdot 12} = 600 \\cdot \\frac{20}{1200} = 600 \\cdot \\frac{1}{60} = 10\\,€$$"
+      },
+      {
+        "id": 24,
+        "level": 4,
+        "typ": "mc",
+        "frage": "\\(4000\\,€\\) zu \\(3\\,\\%\\) für \\(180\\) Tage. Die Zinsen betragen …",
+        "optionen": [
+          "\\(40\\,€\\)",
+          "\\(50\\,€\\)",
+          "\\(60\\,€\\)",
+          "\\(120\\,€\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "\\(Z = 4000 \\cdot \\frac{3 \\cdot 180}{100 \\cdot 360}\\).",
+        "loesungsweg": "$$Z = 4000 \\cdot \\frac{3 \\cdot 180}{100 \\cdot 360} = 4000 \\cdot \\frac{540}{36000} = 4000 \\cdot 0{,}015 = 60\\,€$$"
+      },
+
+      // ========== LEVEL 5 — anspruchsvoll (6 Aufgaben) ==========
+      {
+        "id": 25,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Nach 1 Jahr bekommst du \\(45\\,€\\) Zinsen bei \\(3\\,\\%\\). Wie hoch war das Kapital?",
+        "loesung": 1500,
+        "toleranz": 0.01,
+        "tipp": "Stelle die Zinsformel nach \\(K\\) um: \\(K = \\frac{Z \\cdot 100}{p}\\).",
+        "loesungsweg": "$$K = \\frac{Z \\cdot 100}{p} = \\frac{45 \\cdot 100}{3} = \\frac{4500}{3} = 1500\\,€$$"
+      },
+      {
+        "id": 26,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Ein Kapital von \\(2000\\,€\\) bringt in einem Jahr \\(80\\,€\\) Zinsen. Wie hoch ist der Zinssatz?",
+        "optionen": [
+          "\\(2\\,\\%\\)",
+          "\\(3\\,\\%\\)",
+          "\\(4\\,\\%\\)",
+          "\\(5\\,\\%\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Stelle um: \\(p = \\frac{Z \\cdot 100}{K}\\).",
+        "loesungsweg": "$$p = \\frac{Z \\cdot 100}{K} = \\frac{80 \\cdot 100}{2000} = \\frac{8000}{2000} = 4\\,\\%$$"
+      },
+      {
+        "id": 27,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Bei \\(2{,}5\\,\\%\\) Zinsen erhältst du \\(75\\,€\\) nach einem Jahr. Wie viel Kapital hast du angelegt?",
+        "loesung": 3000,
+        "toleranz": 0.01,
+        "tipp": "\\(K = \\frac{Z \\cdot 100}{p} = \\frac{75 \\cdot 100}{2{,}5}\\).",
+        "loesungsweg": "$$K = \\frac{75 \\cdot 100}{2{,}5} = \\frac{7500}{2{,}5} = 3000\\,€$$"
+      },
+      {
+        "id": 28,
+        "level": 5,
+        "typ": "mc",
+        "frage": "\\(5000\\,€\\) bringen in \\(6\\) Monaten \\(50\\,€\\) Zinsen. Wie hoch ist der Jahreszinssatz?",
+        "optionen": [
+          "\\(1\\,\\%\\)",
+          "\\(1{,}5\\,\\%\\)",
+          "\\(2\\,\\%\\)",
+          "\\(2{,}5\\,\\%\\)"
+        ],
+        "korrekt": 2,
+        "tipp": "Aus der Monatsformel: \\(p = \\frac{Z \\cdot 100 \\cdot 12}{K \\cdot m}\\).",
+        "loesungsweg": "$$p = \\frac{Z \\cdot 100 \\cdot 12}{K \\cdot m} = \\frac{50 \\cdot 100 \\cdot 12}{5000 \\cdot 6} = \\frac{60000}{30000} = 2\\,\\%$$"
+      },
+      {
+        "id": 29,
+        "level": 5,
+        "typ": "numerisch",
+        "frage": "Du bekommst \\(36\\,€\\) Zinsen in \\(9\\) Monaten bei \\(2\\,\\%\\). Wie hoch war das angelegte Kapital?",
+        "loesung": 2400,
+        "toleranz": 0.01,
+        "tipp": "\\(K = \\frac{Z \\cdot 100 \\cdot 12}{p \\cdot m}\\).",
+        "loesungsweg": "$$K = \\frac{36 \\cdot 100 \\cdot 12}{2 \\cdot 9} = \\frac{43200}{18} = 2400\\,€$$"
+      },
+      {
+        "id": 30,
+        "level": 5,
+        "typ": "mc",
+        "frage": "Wie lange muss man \\(4000\\,€\\) zu \\(3\\,\\%\\) anlegen, um \\(60\\,€\\) Zinsen zu erhalten? (in Monaten)",
+        "optionen": [
+          "\\(4\\) Monate",
+          "\\(5\\) Monate",
+          "\\(6\\) Monate",
+          "\\(8\\) Monate"
+        ],
+        "korrekt": 2,
+        "tipp": "Stelle um: \\(m = \\frac{Z \\cdot 100 \\cdot 12}{K \\cdot p}\\).",
+        "loesungsweg": "$$m = \\frac{Z \\cdot 100 \\cdot 12}{K \\cdot p} = \\frac{60 \\cdot 100 \\cdot 12}{4000 \\cdot 3} = \\frac{72000}{12000} = 6 \\text{ Monate}$$"
+      },
+
+      // ========== LEVEL 6 — wagnerisch (6 Aufgaben) ==========
+      {
+        "id": 31,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Du legst \\(1000\\,€\\) zu \\(5\\,\\%\\) Zinseszins für \\(2\\) Jahre an. Wie viel hast du danach? (auf Cent genau)",
+        "loesung": 1102.50,
+        "toleranz": 0.01,
+        "tipp": "Zinseszins: \\(K_n = K_0 \\cdot \\left(1 + \\frac{p}{100}\\right)^n\\).",
+        "loesungsweg": "$$K_2 = 1000 \\cdot 1{,}05^2 = 1000 \\cdot 1{,}1025 = 1102{,}50\\,€$$"
+      },
+      {
+        "id": 32,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Was ist günstiger: \\(30\\,\\%\\) Rabatt auf einmal, oder erst \\(20\\,\\%\\) und dann nochmal \\(10\\,\\%\\)?",
+        "optionen": [
+          "Beides ist gleich",
+          "\\(30\\,\\%\\) auf einmal ist günstiger",
+          "Erst \\(20\\,\\%\\), dann \\(10\\,\\%\\) ist günstiger",
+          "Man kann das nicht vergleichen"
+        ],
+        "korrekt": 1,
+        "tipp": "Rechne mit einem Beispielpreis, z. B. \\(100\\,€\\). Vergleiche die Endergebnisse.",
+        "loesungsweg": "Bei \\(100\\,€\\): $$\\text{30\\,\\% auf einmal: } 100 \\cdot 0{,}70 = 70\\,€$$ $$\\text{Erst 20\\,\\%, dann 10\\,\\%: } 100 \\cdot 0{,}80 \\cdot 0{,}90 = 72\\,€$$ \\(30\\,\\%\\) auf einmal ist günstiger (man zahlt weniger)."
+      },
+      {
+        "id": 33,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Ein Fahrrad kostet \\(500\\,€\\). Es wird erst um \\(20\\,\\%\\) reduziert, dann kommen \\(19\\,\\%\\) MwSt dazu. Was kostet es am Ende?",
+        "loesung": 476,
+        "toleranz": 0.01,
+        "tipp": "Erst den Rabatt abziehen, dann die MwSt aufschlagen: \\(500 \\cdot 0{,}80 \\cdot 1{,}19\\).",
+        "loesungsweg": "$$\\text{Nach Rabatt: } 500 \\cdot 0{,}80 = 400\\,€$$ $$\\text{Mit MwSt: } 400 \\cdot 1{,}19 = 476\\,€$$"
+      },
+      {
+        "id": 34,
+        "level": 6,
+        "typ": "mc",
+        "frage": "\\(2000\\,€\\) werden zu \\(4\\,\\%\\) Zinseszins für \\(3\\) Jahre angelegt. Wie hoch ist das Endkapital?",
+        "optionen": [
+          "\\(2240\\,€\\)",
+          "\\(2249{,}73\\,€\\)",
+          "\\(2260\\,€\\)",
+          "\\(2320\\,€\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "\\(K_3 = 2000 \\cdot 1{,}04^3\\). Berechne schrittweise: \\(1{,}04^2 = 1{,}0816\\), dann \\(\\cdot\\, 1{,}04\\).",
+        "loesungsweg": "$$K_3 = 2000 \\cdot 1{,}04^3 = 2000 \\cdot 1{,}124864 = 2249{,}73\\,€$$"
+      },
+      {
+        "id": 35,
+        "level": 6,
+        "typ": "numerisch",
+        "frage": "Angebot A: Laptop für \\(800\\,€\\) mit \\(15\\,\\%\\) Rabatt. Angebot B: gleicher Laptop für \\(700\\,€\\) mit \\(3\\,\\%\\) Aufschlag für Lieferung. Welches Angebot ist günstiger? Gib den günstigeren Preis an.",
+        "loesung": 680,
+        "toleranz": 0.01,
+        "tipp": "Berechne beide Endpreise: A: \\(800 \\cdot 0{,}85\\), B: \\(700 \\cdot 1{,}03\\).",
+        "loesungsweg": "$$\\text{Angebot A: } 800 \\cdot 0{,}85 = 680\\,€$$ $$\\text{Angebot B: } 700 \\cdot 1{,}03 = 721\\,€$$ Angebot A ist mit \\(680\\,€\\) günstiger."
+      },
+      {
+        "id": 36,
+        "level": 6,
+        "typ": "mc",
+        "frage": "Ein Kapital von \\(1000\\,€\\) wird 2 Jahre mit Zinseszins zu \\(10\\,\\%\\) angelegt. Wie viel mehr Zinsen bringt Zinseszins im Vergleich zu einfacher Verzinsung?",
+        "optionen": [
+          "\\(5\\,€\\)",
+          "\\(10\\,€\\)",
+          "\\(15\\,€\\)",
+          "\\(20\\,€\\)"
+        ],
+        "korrekt": 1,
+        "tipp": "Einfache Zinsen: \\(2 \\cdot 100 = 200\\,€\\). Zinseszins: \\(1000 \\cdot 1{,}1^2 - 1000\\).",
+        "loesungsweg": "$$\\text{Einfach: } Z = 1000 \\cdot \\frac{10}{100} \\cdot 2 = 200\\,€$$ $$\\text{Zinseszins: } 1000 \\cdot 1{,}1^2 - 1000 = 1210 - 1000 = 210\\,€$$ $$\\text{Differenz: } 210 - 200 = 10\\,€$$"
+      }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

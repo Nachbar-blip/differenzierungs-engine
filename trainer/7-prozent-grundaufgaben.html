@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prozentbegriff &amp; Grundaufgaben - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '7-prozent-grundaufgaben';
+    const THEMA_CONFIG = { name: 'Prozentbegriff & Grundaufgaben', bereich: 'arithmetik' };
+    const AUFGABEN = [
+        // ===== Level 1: Prozentbegriff verstehen =====
+        {
+            id: 1, level: 1, typ: "mc",
+            frage: "Was bedeutet \\(25\\%\\)?",
+            optionen: ["Ein Fünftel", "Ein Viertel", "Ein Drittel", "Ein Halbes"],
+            korrekt: 1,
+            tipp: "\\(25\\%\\) heißt \\(25\\) von \\(100\\). Kürze den Bruch \\(\\frac{25}{100}\\).",
+            loesungsweg: "\\(25\\% = \\frac{25}{100} = \\frac{1}{4}\\), also ein Viertel."
+        },
+        {
+            id: 2, level: 1, typ: "mc",
+            frage: "Welcher Bruch entspricht \\(50\\%\\)?",
+            optionen: ["\\(\\frac{1}{5}\\)", "\\(\\frac{1}{3}\\)", "\\(\\frac{1}{2}\\)", "\\(\\frac{1}{4}\\)"],
+            korrekt: 2,
+            tipp: "\\(50\\%\\) bedeutet die Hälfte.",
+            loesungsweg: "\\(50\\% = \\frac{50}{100} = \\frac{1}{2}\\)."
+        },
+        {
+            id: 3, level: 1, typ: "mc",
+            frage: "Wie viel Prozent sind \\(\\frac{3}{4}\\)?",
+            optionen: ["\\(30\\%\\)", "\\(34\\%\\)", "\\(75\\%\\)", "\\(80\\%\\)"],
+            korrekt: 2,
+            tipp: "Erweitere den Bruch auf den Nenner \\(100\\).",
+            loesungsweg: "\\(\\frac{3}{4} = \\frac{75}{100} = 75\\%\\)."
+        },
+        {
+            id: 4, level: 1, typ: "numerisch",
+            frage: "Wie viel Prozent sind \\(\\frac{1}{5}\\)? Gib nur die Zahl ein.",
+            loesung: 20, toleranz: 0,
+            tipp: "Rechne \\(\\frac{1}{5}\\) in einen Bruch mit Nenner \\(100\\) um.",
+            loesungsweg: "\\(\\frac{1}{5} = \\frac{20}{100} = 20\\%\\)."
+        },
+        {
+            id: 5, level: 1, typ: "mc",
+            frage: "Was bedeutet \\(100\\%\\)?",
+            optionen: ["Die Hälfte", "Ein Zehntel", "Das Ganze", "Das Doppelte"],
+            korrekt: 2,
+            tipp: "\\(100\\%\\) bedeutet \\(\\frac{100}{100}\\).",
+            loesungsweg: "\\(100\\% = \\frac{100}{100} = 1\\), also das Ganze."
+        },
+        {
+            id: 6, level: 1, typ: "numerisch",
+            frage: "Wie viel Prozent sind \\(\\frac{1}{10}\\)? Gib nur die Zahl ein.",
+            loesung: 10, toleranz: 0,
+            tipp: "Erweitere \\(\\frac{1}{10}\\) auf den Nenner \\(100\\).",
+            loesungsweg: "\\(\\frac{1}{10} = \\frac{10}{100} = 10\\%\\)."
+        },
+
+        // ===== Level 2: Einfache Prozentwerte (Kopfrechnen) =====
+        {
+            id: 7, level: 2, typ: "numerisch",
+            frage: "Berechne \\(10\\%\\) von \\(200\\).",
+            loesung: 20, toleranz: 0,
+            tipp: "\\(10\\%\\) bedeutet: durch \\(10\\) teilen.",
+            loesungsweg: "\\(10\\%\\) von \\(200 = \\frac{200}{10} = 20\\)."
+        },
+        {
+            id: 8, level: 2, typ: "numerisch",
+            frage: "Berechne \\(25\\%\\) von \\(80\\).",
+            loesung: 20, toleranz: 0,
+            tipp: "\\(25\\%\\) ist ein Viertel. Teile durch \\(4\\).",
+            loesungsweg: "\\(25\\%\\) von \\(80 = \\frac{80}{4} = 20\\)."
+        },
+        {
+            id: 9, level: 2, typ: "numerisch",
+            frage: "Berechne \\(50\\%\\) von \\(60\\).",
+            loesung: 30, toleranz: 0,
+            tipp: "\\(50\\%\\) ist die Hälfte.",
+            loesungsweg: "\\(50\\%\\) von \\(60 = \\frac{60}{2} = 30\\)."
+        },
+        {
+            id: 10, level: 2, typ: "mc",
+            frage: "Wie viel sind \\(20\\%\\) von \\(150\\)?",
+            optionen: ["\\(15\\)", "\\(25\\)", "\\(30\\)", "\\(35\\)"],
+            korrekt: 2,
+            tipp: "\\(10\\%\\) von \\(150\\) ist \\(15\\). Verdopple das Ergebnis für \\(20\\%\\).",
+            loesungsweg: "\\(10\\%\\) von \\(150 = 15\\). Also \\(20\\% = 2 \\cdot 15 = 30\\)."
+        },
+        {
+            id: 11, level: 2, typ: "mc",
+            frage: "Wie viel sind \\(75\\%\\) von \\(40\\)?",
+            optionen: ["\\(20\\)", "\\(25\\)", "\\(30\\)", "\\(35\\)"],
+            korrekt: 2,
+            tipp: "\\(75\\%\\) sind drei Viertel. Berechne erst \\(\\frac{40}{4}\\).",
+            loesungsweg: "\\(75\\%\\) von \\(40 = \\frac{3}{4} \\cdot 40 = 3 \\cdot 10 = 30\\)."
+        },
+        {
+            id: 12, level: 2, typ: "numerisch",
+            frage: "Berechne \\(1\\%\\) von \\(500\\).",
+            loesung: 5, toleranz: 0,
+            tipp: "\\(1\\%\\) bedeutet: durch \\(100\\) teilen.",
+            loesungsweg: "\\(1\\%\\) von \\(500 = \\frac{500}{100} = 5\\)."
+        },
+
+        // ===== Level 3: Prozentwert W berechnen mit Formel =====
+        {
+            id: 13, level: 3, typ: "numerisch",
+            frage: "Berechne den Prozentwert: \\(15\\%\\) von \\(240\\). $$W = G \\cdot \\frac{p}{100}$$",
+            loesung: 36, toleranz: 0,
+            tipp: "Setze \\(G = 240\\) und \\(p = 15\\) in die Formel ein.",
+            loesungsweg: "\\(W = 240 \\cdot \\frac{15}{100} = 240 \\cdot 0{,}15 = 36\\)."
+        },
+        {
+            id: 14, level: 3, typ: "numerisch",
+            frage: "Berechne: \\(8\\%\\) von \\(350\\). $$W = G \\cdot \\frac{p}{100}$$",
+            loesung: 28, toleranz: 0,
+            tipp: "\\(W = 350 \\cdot \\frac{8}{100}\\).",
+            loesungsweg: "\\(W = 350 \\cdot \\frac{8}{100} = 350 \\cdot 0{,}08 = 28\\)."
+        },
+        {
+            id: 15, level: 3, typ: "mc",
+            frage: "Wie groß ist \\(12\\%\\) von \\(250\\)?",
+            optionen: ["\\(25\\)", "\\(28\\)", "\\(30\\)", "\\(32\\)"],
+            korrekt: 2,
+            tipp: "\\(W = 250 \\cdot \\frac{12}{100}\\). Rechne schrittweise.",
+            loesungsweg: "\\(W = 250 \\cdot \\frac{12}{100} = 250 \\cdot 0{,}12 = 30\\)."
+        },
+        {
+            id: 16, level: 3, typ: "numerisch",
+            frage: "Berechne \\(35\\%\\) von \\(120\\).",
+            loesung: 42, toleranz: 0,
+            tipp: "\\(W = 120 \\cdot \\frac{35}{100}\\). Tipp: \\(120 \\cdot 0{,}35\\).",
+            loesungsweg: "\\(W = 120 \\cdot \\frac{35}{100} = 120 \\cdot 0{,}35 = 42\\)."
+        },
+        {
+            id: 17, level: 3, typ: "mc",
+            frage: "Ein Aquarium fasst \\(160\\) Liter. Es ist zu \\(45\\%\\) gefüllt. Wie viel Wasser ist drin?",
+            optionen: ["\\(64\\) Liter", "\\(68\\) Liter", "\\(72\\) Liter", "\\(76\\) Liter"],
+            korrekt: 2,
+            tipp: "\\(W = 160 \\cdot \\frac{45}{100}\\).",
+            loesungsweg: "\\(W = 160 \\cdot \\frac{45}{100} = 160 \\cdot 0{,}45 = 72\\) Liter."
+        },
+        {
+            id: 18, level: 3, typ: "numerisch",
+            frage: "Berechne \\(6\\%\\) von \\(450\\).",
+            loesung: 27, toleranz: 0,
+            tipp: "\\(W = 450 \\cdot \\frac{6}{100}\\).",
+            loesungsweg: "\\(W = 450 \\cdot \\frac{6}{100} = 450 \\cdot 0{,}06 = 27\\)."
+        },
+
+        // ===== Level 4: Grundwert G und Prozentsatz p berechnen =====
+        {
+            id: 19, level: 4, typ: "numerisch",
+            frage: "\\(12\\) sind \\(30\\%\\) von welcher Zahl? $$G = \\frac{W \\cdot 100}{p}$$",
+            loesung: 40, toleranz: 0,
+            tipp: "Setze \\(W = 12\\) und \\(p = 30\\) in die Formel für \\(G\\) ein.",
+            loesungsweg: "\\(G = \\frac{12 \\cdot 100}{30} = \\frac{1200}{30} = 40\\)."
+        },
+        {
+            id: 20, level: 4, typ: "numerisch",
+            frage: "\\(18\\) sind \\(25\\%\\) einer Zahl. Berechne den Grundwert \\(G\\).",
+            loesung: 72, toleranz: 0,
+            tipp: "\\(G = \\frac{W \\cdot 100}{p} = \\frac{18 \\cdot 100}{25}\\).",
+            loesungsweg: "\\(G = \\frac{18 \\cdot 100}{25} = \\frac{1800}{25} = 72\\)."
+        },
+        {
+            id: 21, level: 4, typ: "mc",
+            frage: "\\(27\\) von \\(90\\) -- wie viel Prozent sind das? $$p = \\frac{W \\cdot 100}{G}$$",
+            optionen: ["\\(25\\%\\)", "\\(27\\%\\)", "\\(30\\%\\)", "\\(33\\%\\)"],
+            korrekt: 2,
+            tipp: "Setze \\(W = 27\\) und \\(G = 90\\) in die Formel ein.",
+            loesungsweg: "\\(p = \\frac{27 \\cdot 100}{90} = \\frac{2700}{90} = 30\\%\\)."
+        },
+        {
+            id: 22, level: 4, typ: "numerisch",
+            frage: "In einer Klasse mit \\(32\\) Schülern haben \\(8\\) eine Eins geschrieben. Wie viel Prozent sind das?",
+            loesung: 25, toleranz: 0,
+            tipp: "\\(p = \\frac{W \\cdot 100}{G} = \\frac{8 \\cdot 100}{32}\\).",
+            loesungsweg: "\\(p = \\frac{8 \\cdot 100}{32} = \\frac{800}{32} = 25\\%\\)."
+        },
+        {
+            id: 23, level: 4, typ: "mc",
+            frage: "\\(45\\) sind \\(15\\%\\) einer Zahl. Wie groß ist der Grundwert?",
+            optionen: ["\\(250\\)", "\\(270\\)", "\\(300\\)", "\\(350\\)"],
+            korrekt: 2,
+            tipp: "\\(G = \\frac{45 \\cdot 100}{15}\\).",
+            loesungsweg: "\\(G = \\frac{45 \\cdot 100}{15} = \\frac{4500}{15} = 300\\)."
+        },
+        {
+            id: 24, level: 4, typ: "numerisch",
+            frage: "Wie viel Prozent sind \\(36\\) von \\(150\\)?",
+            loesung: 24, toleranz: 0,
+            tipp: "\\(p = \\frac{36 \\cdot 100}{150}\\).",
+            loesungsweg: "\\(p = \\frac{36 \\cdot 100}{150} = \\frac{3600}{150} = 24\\%\\)."
+        },
+
+        // ===== Level 5: Alle drei Grundaufgaben gemischt =====
+        {
+            id: 25, level: 5, typ: "mc",
+            frage: "Welche Größe ist gesucht? '\\(42\\) sind \\(\\ldots\\%\\) von \\(168\\).'",
+            optionen: ["Prozentwert \\(W\\)", "Grundwert \\(G\\)", "Prozentsatz \\(p\\)", "Keine davon"],
+            korrekt: 2,
+            tipp: "Was fehlt in der Aufgabe? \\(W\\) und \\(G\\) sind gegeben.",
+            loesungsweg: "Gegeben: \\(W = 42\\), \\(G = 168\\). Gesucht: \\(p = \\frac{42 \\cdot 100}{168} = 25\\%\\)."
+        },
+        {
+            id: 26, level: 5, typ: "numerisch",
+            frage: "Berechne den Prozentsatz: \\(42\\) von \\(168\\).",
+            loesung: 25, toleranz: 0,
+            tipp: "\\(p = \\frac{W \\cdot 100}{G}\\).",
+            loesungsweg: "\\(p = \\frac{42 \\cdot 100}{168} = \\frac{4200}{168} = 25\\%\\)."
+        },
+        {
+            id: 27, level: 5, typ: "numerisch",
+            frage: "\\(0{,}6\\) als Prozent -- wie viel ist das?",
+            loesung: 60, toleranz: 0,
+            tipp: "Multipliziere die Dezimalzahl mit \\(100\\).",
+            loesungsweg: "\\(0{,}6 \\cdot 100 = 60\\%\\)."
+        },
+        {
+            id: 28, level: 5, typ: "mc",
+            frage: "Welche Dezimalzahl entspricht \\(4{,}5\\%\\)?",
+            optionen: ["\\(0{,}45\\)", "\\(0{,}045\\)", "\\(4{,}5\\)", "\\(0{,}0045\\)"],
+            korrekt: 1,
+            tipp: "Teile \\(4{,}5\\) durch \\(100\\).",
+            loesungsweg: "\\(4{,}5\\% = \\frac{4{,}5}{100} = 0{,}045\\)."
+        },
+        {
+            id: 29, level: 5, typ: "numerisch",
+            frage: "\\(63\\) sind \\(18\\%\\) einer Zahl. Berechne den Grundwert \\(G\\).",
+            loesung: 350, toleranz: 0,
+            tipp: "\\(G = \\frac{W \\cdot 100}{p} = \\frac{63 \\cdot 100}{18}\\).",
+            loesungsweg: "\\(G = \\frac{63 \\cdot 100}{18} = \\frac{6300}{18} = 350\\)."
+        },
+        {
+            id: 30, level: 5, typ: "mc",
+            frage: "Berechne \\(22\\%\\) von \\(350\\).",
+            optionen: ["\\(70\\)", "\\(72\\)", "\\(77\\)", "\\(80\\)"],
+            korrekt: 2,
+            tipp: "\\(W = 350 \\cdot \\frac{22}{100}\\).",
+            loesungsweg: "\\(W = 350 \\cdot 0{,}22 = 77\\)."
+        },
+
+        // ===== Level 6: Textaufgaben (Rabatt, Skonto, MwSt) =====
+        {
+            id: 31, level: 6, typ: "numerisch",
+            frage: "Ein Pullover kostet \\(45{,}00\\,€\\). Es gibt \\(20\\%\\) Rabatt. Wie viel kostet er nach dem Rabatt (in €)?",
+            loesung: 36, toleranz: 0,
+            tipp: "Berechne erst den Rabatt: \\(W = 45 \\cdot \\frac{20}{100}\\). Ziehe ihn dann vom Preis ab.",
+            loesungsweg: "Rabatt: \\(W = 45 \\cdot 0{,}2 = 9\\,€\\). Neuer Preis: \\(45 - 9 = 36\\,€\\)."
+        },
+        {
+            id: 32, level: 6, typ: "mc",
+            frage: "Ein Fahrrad kostet nach \\(15\\%\\) Rabatt nur noch \\(340\\,€\\). Wie hoch war der Originalpreis?",
+            optionen: ["\\(380\\,€\\)", "\\(391\\,€\\)", "\\(400\\,€\\)", "\\(425\\,€\\)"],
+            korrekt: 2,
+            tipp: "Der reduzierte Preis entspricht \\(85\\%\\) des Originals. \\(G = \\frac{340 \\cdot 100}{85}\\).",
+            loesungsweg: "\\(85\\%\\) entsprechen \\(340\\,€\\). Also \\(G = \\frac{340 \\cdot 100}{85} = 400\\,€\\)."
+        },
+        {
+            id: 33, level: 6, typ: "numerisch",
+            frage: "Eine Rechnung über \\(800\\,€\\) wird mit \\(2\\%\\) Skonto bezahlt. Wie viel muss man zahlen (in €)?",
+            loesung: 784, toleranz: 0,
+            tipp: "Skonto = Preisnachlass bei schneller Zahlung. Berechne \\(2\\%\\) von \\(800\\) und ziehe es ab.",
+            loesungsweg: "Skonto: \\(800 \\cdot 0{,}02 = 16\\,€\\). Zahlung: \\(800 - 16 = 784\\,€\\)."
+        },
+        {
+            id: 34, level: 6, typ: "numerisch",
+            frage: "Ein Netto-Preis beträgt \\(250\\,€\\). Wie hoch ist der Brutto-Preis mit \\(19\\%\\) Mehrwertsteuer (in €)?",
+            loesung: 297.5, toleranz: 0.01,
+            tipp: "Brutto = Netto + MwSt. Berechne \\(19\\%\\) von \\(250\\) und addiere.",
+            loesungsweg: "MwSt: \\(250 \\cdot 0{,}19 = 47{,}50\\,€\\). Brutto: \\(250 + 47{,}50 = 297{,}50\\,€\\)."
+        },
+        {
+            id: 35, level: 6, typ: "mc",
+            frage: "In einem Laden sind alle Preise um \\(30\\%\\) reduziert. Lisa zahlt \\(28\\,€\\). Wie viel hat der Artikel vorher gekostet?",
+            optionen: ["\\(36{,}40\\,€\\)", "\\(38\\,€\\)", "\\(40\\,€\\)", "\\(42\\,€\\)"],
+            korrekt: 2,
+            tipp: "Lisa zahlt \\(70\\%\\) des Originalpreises. \\(G = \\frac{28 \\cdot 100}{70}\\).",
+            loesungsweg: "\\(70\\%\\) entsprechen \\(28\\,€\\). Also \\(G = \\frac{28 \\cdot 100}{70} = 40\\,€\\)."
+        },
+        {
+            id: 36, level: 6, typ: "numerisch",
+            frage: "Ein Handy kostet \\(600\\,€\\). Erst gibt es \\(10\\%\\) Rabatt, dann auf den reduzierten Preis nochmal \\(5\\%\\) Treue-Rabatt. Wie viel kostet es am Ende (in €)?",
+            loesung: 513, toleranz: 0,
+            tipp: "Berechne schrittweise: Erst \\(10\\%\\) von \\(600\\) abziehen, dann \\(5\\%\\) vom neuen Preis.",
+            loesungsweg: "Nach \\(10\\%\\): \\(600 \\cdot 0{,}9 = 540\\,€\\). Nach \\(5\\%\\): \\(540 \\cdot 0{,}95 = 513\\,€\\)."
+        }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>

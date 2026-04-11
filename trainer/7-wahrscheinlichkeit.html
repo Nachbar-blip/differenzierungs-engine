@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wahrscheinlichkeit - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+    const THEMA_KEY = '7-wahrscheinlichkeit';
+    const THEMA_CONFIG = { name: 'Wahrscheinlichkeit', bereich: 'stochastik' };
+    const AUFGABEN = [
+        // ===== Level 1: Begriffe -- Zufallsexperiment, Ergebnis, Ereignis =====
+        {
+            id: 1, level: 1, typ: "mc",
+            frage: "Welches der folgenden Vorgänge ist ein Zufallsexperiment?",
+            optionen: ["\\(2 + 3\\) ausrechnen", "Einen Würfel werfen", "Das Licht einschalten", "Wasser zum Kochen bringen"],
+            korrekt: 1,
+            tipp: "Bei einem Zufallsexperiment ist das Ergebnis vorher nicht sicher vorhersagbar.",
+            loesungsweg: "Beim Würfeln kann man vorher nicht sagen, welche Zahl kommt -- das Ergebnis ist zufällig."
+        },
+        {
+            id: 2, level: 1, typ: "mc",
+            frage: "Ist es sicher, dass beim Würfeln eine Zahl kleiner als \\(7\\) kommt?",
+            optionen: ["Ja, das ist ein sicheres Ereignis", "Nein, das ist unmöglich", "Das ist nur möglich, nicht sicher", "Das kann man nicht sagen"],
+            korrekt: 0,
+            tipp: "Ein Würfel hat die Zahlen \\(1\\) bis \\(6\\). Alle sind kleiner als \\(7\\).",
+            loesungsweg: "Jede Augenzahl des Würfels (\\(1, 2, 3, 4, 5, 6\\)) ist kleiner als \\(7\\). Das Ereignis tritt immer ein -- es ist sicher."
+        },
+        {
+            id: 3, level: 1, typ: "mc",
+            frage: "Beim Würfeln: Was ist ein Ergebnis?",
+            optionen: ["Alle geraden Zahlen", "Eine einzelne Augenzahl, z.B. die \\(3\\)", "Der Würfel selbst", "Die Summe aller Augenzahlen"],
+            korrekt: 1,
+            tipp: "Ein Ergebnis ist ein einzelner möglicher Ausgang des Zufallsexperiments.",
+            loesungsweg: "Ein Ergebnis ist ein einzelner Ausgang, z.B. 'die \\(3\\)'. Eine Zusammenfassung mehrerer Ergebnisse heißt Ereignis."
+        },
+        {
+            id: 4, level: 1, typ: "mc",
+            frage: "Welches Ereignis ist beim Würfeln unmöglich?",
+            optionen: ["Eine gerade Zahl würfeln", "Eine \\(7\\) würfeln", "Eine Zahl größer als \\(2\\) würfeln", "Eine \\(1\\) würfeln"],
+            korrekt: 1,
+            tipp: "Welche Augenzahlen hat ein normaler Würfel?",
+            loesungsweg: "Ein normaler Würfel hat nur die Zahlen \\(1\\) bis \\(6\\). Eine \\(7\\) kann nicht vorkommen -- das Ereignis ist unmöglich."
+        },
+        {
+            id: 5, level: 1, typ: "mc",
+            frage: "Was ist die Ergebnismenge \\(\\Omega\\) beim Werfen einer Münze?",
+            optionen: ["\\(\\Omega = \\{1, 2, 3, 4, 5, 6\\}\\)", "\\(\\Omega = \\{\\text{Kopf}, \\text{Zahl}\\}\\)", "\\(\\Omega = \\{\\text{Kopf}\\}\\)", "\\(\\Omega = \\{0, 1\\}\\)"],
+            korrekt: 1,
+            tipp: "Die Ergebnismenge enthält alle möglichen Ergebnisse des Experiments.",
+            loesungsweg: "Beim Münzwurf gibt es genau zwei mögliche Ergebnisse: Kopf und Zahl. Also \\(\\Omega = \\{\\text{Kopf}, \\text{Zahl}\\}\\)."
+        },
+        {
+            id: 6, level: 1, typ: "mc",
+            frage: "Beim Würfeln ist \\(E = \\{2, 4, 6\\}\\) das Ereignis 'gerade Zahl'. Wie nennt man ein solches \\(E\\)?",
+            optionen: ["Ergebnismenge", "Ereignis", "Zufallsexperiment", "Wahrscheinlichkeit"],
+            korrekt: 1,
+            tipp: "Ein Ereignis ist eine Teilmenge der Ergebnismenge \\(\\Omega\\).",
+            loesungsweg: "\\(E = \\{2, 4, 6\\}\\) ist eine Teilmenge von \\(\\Omega = \\{1,2,3,4,5,6\\}\\) und heißt Ereignis."
+        },
+
+        // ===== Level 2: Laplace-Wahrscheinlichkeit P(E) = |E| / |Ω| =====
+        {
+            id: 7, level: 2, typ: "mc",
+            frage: "Wie groß ist die Wahrscheinlichkeit, beim Würfeln eine \\(3\\) zu werfen? $$P(E) = \\frac{|E|}{|\\Omega|}$$",
+            optionen: ["\\(\\frac{1}{3}\\)", "\\(\\frac{1}{6}\\)", "\\(\\frac{1}{2}\\)", "\\(\\frac{3}{6}\\)"],
+            korrekt: 1,
+            tipp: "Es gibt \\(6\\) gleich wahrscheinliche Ergebnisse und nur \\(1\\) günstiges.",
+            loesungsweg: "\\(|\\Omega| = 6\\), \\(|E| = 1\\). Also \\(P(\\text{\"3\"}) = \\frac{1}{6}\\)."
+        },
+        {
+            id: 8, level: 2, typ: "mc",
+            frage: "Wie groß ist \\(P(\\text{gerade Zahl})\\) beim Würfeln?",
+            optionen: ["\\(\\frac{1}{6}\\)", "\\(\\frac{1}{3}\\)", "\\(\\frac{1}{2}\\)", "\\(\\frac{2}{3}\\)"],
+            korrekt: 2,
+            tipp: "Gerade Zahlen beim Würfel: \\(2, 4, 6\\). Das sind \\(3\\) von \\(6\\).",
+            loesungsweg: "\\(E = \\{2, 4, 6\\}\\), also \\(|E| = 3\\). \\(P = \\frac{3}{6} = \\frac{1}{2}\\)."
+        },
+        {
+            id: 9, level: 2, typ: "mc",
+            frage: "Beim Münzwurf: Wie groß ist \\(P(\\text{Kopf})\\)?",
+            optionen: ["\\(\\frac{1}{4}\\)", "\\(\\frac{1}{3}\\)", "\\(\\frac{1}{2}\\)", "\\(1\\)"],
+            korrekt: 2,
+            tipp: "Die Münze hat zwei Seiten, beide gleich wahrscheinlich.",
+            loesungsweg: "\\(|\\Omega| = 2\\), \\(|E| = 1\\). Also \\(P(\\text{Kopf}) = \\frac{1}{2}\\)."
+        },
+        {
+            id: 10, level: 2, typ: "mc",
+            frage: "Ein Glücksrad hat \\(8\\) gleich große Felder, davon \\(3\\) rot. Wie groß ist \\(P(\\text{rot})\\)?",
+            optionen: ["\\(\\frac{1}{8}\\)", "\\(\\frac{3}{8}\\)", "\\(\\frac{1}{3}\\)", "\\(\\frac{5}{8}\\)"],
+            korrekt: 1,
+            tipp: "\\(3\\) günstige von \\(8\\) möglichen, gleich wahrscheinlichen Ergebnissen.",
+            loesungsweg: "\\(P(\\text{rot}) = \\frac{3}{8}\\)."
+        },
+        {
+            id: 11, level: 2, typ: "mc",
+            frage: "Wie groß ist die Wahrscheinlichkeit, beim Würfeln eine Zahl größer als \\(4\\) zu werfen?",
+            optionen: ["\\(\\frac{1}{6}\\)", "\\(\\frac{1}{3}\\)", "\\(\\frac{1}{2}\\)", "\\(\\frac{2}{3}\\)"],
+            korrekt: 1,
+            tipp: "Welche Zahlen sind größer als \\(4\\)? Zähle sie.",
+            loesungsweg: "\\(E = \\{5, 6\\}\\), also \\(|E| = 2\\). \\(P = \\frac{2}{6} = \\frac{1}{3}\\)."
+        },
+        {
+            id: 12, level: 2, typ: "numerisch",
+            frage: "In einer Urne sind \\(5\\) rote und \\(15\\) blaue Kugeln. Wie groß ist \\(P(\\text{rot})\\)? Gib das Ergebnis als Dezimalzahl ein.",
+            loesung: 0.25, toleranz: 0.01,
+            tipp: "Insgesamt \\(5 + 15 = 20\\) Kugeln. \\(P = \\frac{5}{20}\\).",
+            loesungsweg: "\\(P(\\text{rot}) = \\frac{5}{20} = \\frac{1}{4} = 0{,}25\\)."
+        },
+
+        // ===== Level 3: Relative Häufigkeit =====
+        {
+            id: 13, level: 3, typ: "numerisch",
+            frage: "Bei \\(200\\) Würfen kam \\(38\\)-mal eine \\(6\\). Berechne die relative Häufigkeit \\(h(6)\\). Gib das Ergebnis als Dezimalzahl ein.",
+            loesung: 0.19, toleranz: 0.01,
+            tipp: "Relative Häufigkeit: \\(h(E) = \\frac{\\text{Anzahl von } E}{\\text{Gesamtanzahl}}\\).",
+            loesungsweg: "\\(h(6) = \\frac{38}{200} = 0{,}19\\)."
+        },
+        {
+            id: 14, level: 3, typ: "numerisch",
+            frage: "Eine Münze wird \\(500\\)-mal geworfen. Kopf erscheint \\(245\\)-mal. Berechne die relative Häufigkeit \\(h(\\text{Kopf})\\).",
+            loesung: 0.49, toleranz: 0.01,
+            tipp: "\\(h(\\text{Kopf}) = \\frac{245}{500}\\).",
+            loesungsweg: "\\(h(\\text{Kopf}) = \\frac{245}{500} = 0{,}49\\)."
+        },
+        {
+            id: 15, level: 3, typ: "mc",
+            frage: "Bei \\(150\\) Versuchen tritt ein Ereignis \\(45\\)-mal ein. Welche relative Häufigkeit ergibt sich?",
+            optionen: ["\\(0{,}25\\)", "\\(0{,}30\\)", "\\(0{,}35\\)", "\\(0{,}45\\)"],
+            korrekt: 1,
+            tipp: "\\(h = \\frac{45}{150}\\). Kürze den Bruch.",
+            loesungsweg: "\\(h = \\frac{45}{150} = \\frac{3}{10} = 0{,}30\\)."
+        },
+        {
+            id: 16, level: 3, typ: "mc",
+            frage: "Warum kann man die relative Häufigkeit als Schätzwert für die Wahrscheinlichkeit verwenden?",
+            optionen: ["Weil sie immer genau die Wahrscheinlichkeit ergibt", "Weil sie sich bei vielen Versuchen der Wahrscheinlichkeit annähert", "Weil sie einfacher zu berechnen ist", "Weil sie immer zwischen \\(0\\) und \\(0{,}5\\) liegt"],
+            korrekt: 1,
+            tipp: "Denke an das Gesetz der großen Zahlen.",
+            loesungsweg: "Nach dem Gesetz der großen Zahlen nähert sich die relative Häufigkeit bei wachsender Versuchszahl der wahren Wahrscheinlichkeit an."
+        },
+        {
+            id: 17, level: 3, typ: "numerisch",
+            frage: "Ein Reißnagel landet bei \\(80\\) Würfen \\(52\\)-mal auf dem Rücken. Schätze \\(P(\\text{Rücken})\\) als Dezimalzahl.",
+            loesung: 0.65, toleranz: 0.01,
+            tipp: "Verwende die relative Häufigkeit als Schätzwert: \\(\\frac{52}{80}\\).",
+            loesungsweg: "\\(h(\\text{Rücken}) = \\frac{52}{80} = 0{,}65\\). Dieser Wert dient als Schätzung für \\(P(\\text{Rücken})\\)."
+        },
+        {
+            id: 18, level: 3, typ: "numerisch",
+            frage: "Bei \\(400\\) Drehungen eines Glücksrads landet der Zeiger \\(96\\)-mal auf Rot. Berechne die relative Häufigkeit.",
+            loesung: 0.24, toleranz: 0.01,
+            tipp: "\\(h(\\text{Rot}) = \\frac{96}{400}\\).",
+            loesungsweg: "\\(h(\\text{Rot}) = \\frac{96}{400} = 0{,}24\\)."
+        },
+
+        // ===== Level 4: Gegenereignis P(Ā) = 1 − P(A) =====
+        {
+            id: 19, level: 4, typ: "numerisch",
+            frage: "\\(P(\\text{Kopf}) = 0{,}5\\). Wie groß ist \\(P(\\text{nicht Kopf})\\)?",
+            loesung: 0.5, toleranz: 0.01,
+            tipp: "Das Gegenereignis: \\(P(\\bar{A}) = 1 - P(A)\\).",
+            loesungsweg: "\\(P(\\text{nicht Kopf}) = 1 - P(\\text{Kopf}) = 1 - 0{,}5 = 0{,}5\\)."
+        },
+        {
+            id: 20, level: 4, typ: "numerisch",
+            frage: "Beim Würfeln: \\(P(\\text{\"6\"}) = \\frac{1}{6}\\). Wie groß ist \\(P(\\text{keine 6})\\)? Gib das Ergebnis als Dezimalzahl ein (auf zwei Nachkommastellen).",
+            loesung: 0.83, toleranz: 0.01,
+            tipp: "\\(P(\\text{keine 6}) = 1 - \\frac{1}{6}\\).",
+            loesungsweg: "\\(P(\\text{keine 6}) = 1 - \\frac{1}{6} = \\frac{5}{6} \\approx 0{,}83\\)."
+        },
+        {
+            id: 21, level: 4, typ: "mc",
+            frage: "Ein Glücksrad hat \\(P(\\text{Gewinn}) = 0{,}3\\). Wie groß ist \\(P(\\text{kein Gewinn})\\)?",
+            optionen: ["\\(0{,}3\\)", "\\(0{,}5\\)", "\\(0{,}7\\)", "\\(1{,}3\\)"],
+            korrekt: 2,
+            tipp: "\\(P(\\bar{A}) = 1 - P(A) = 1 - 0{,}3\\).",
+            loesungsweg: "\\(P(\\text{kein Gewinn}) = 1 - 0{,}3 = 0{,}7\\)."
+        },
+        {
+            id: 22, level: 4, typ: "numerisch",
+            frage: "In einer Urne ist \\(P(\\text{rot}) = \\frac{3}{8}\\). Berechne \\(P(\\text{nicht rot})\\) als Dezimalzahl.",
+            loesung: 0.625, toleranz: 0.01,
+            tipp: "\\(P(\\text{nicht rot}) = 1 - \\frac{3}{8} = \\frac{5}{8}\\).",
+            loesungsweg: "\\(P(\\text{nicht rot}) = 1 - \\frac{3}{8} = \\frac{5}{8} = 0{,}625\\)."
+        },
+        {
+            id: 23, level: 4, typ: "mc",
+            frage: "Du würfelst einmal. \\(P(\\text{Augenzahl} \\leq 4) = \\frac{4}{6}\\). Wie groß ist \\(P(\\text{Augenzahl} > 4)\\)?",
+            optionen: ["\\(\\frac{1}{6}\\)", "\\(\\frac{2}{6} = \\frac{1}{3}\\)", "\\(\\frac{3}{6} = \\frac{1}{2}\\)", "\\(\\frac{4}{6} = \\frac{2}{3}\\)"],
+            korrekt: 1,
+            tipp: "\\(P(\\text{Augenzahl} > 4) = 1 - \\frac{4}{6}\\).",
+            loesungsweg: "\\(P(\\text{Augenzahl} > 4) = 1 - \\frac{4}{6} = \\frac{2}{6} = \\frac{1}{3}\\)."
+        },
+        {
+            id: 24, level: 4, typ: "numerisch",
+            frage: "Die Wahrscheinlichkeit, dass es morgen regnet, beträgt \\(0{,}35\\). Wie groß ist die Wahrscheinlichkeit, dass es nicht regnet?",
+            loesung: 0.65, toleranz: 0.01,
+            tipp: "Gegenereignis: \\(P(\\text{kein Regen}) = 1 - P(\\text{Regen})\\).",
+            loesungsweg: "\\(P(\\text{kein Regen}) = 1 - 0{,}35 = 0{,}65\\)."
+        },
+
+        // ===== Level 5: Baumdiagramme (2-stufig), Pfadregeln =====
+        {
+            id: 25, level: 5, typ: "numerisch",
+            frage: "Eine Münze wird zweimal geworfen. Wie groß ist \\(P(\\text{2× Kopf})\\)? Gib das Ergebnis als Dezimalzahl ein.",
+            loesung: 0.25, toleranz: 0.01,
+            tipp: "Produktregel (UND): Die Wahrscheinlichkeiten entlang eines Pfades werden multipliziert.",
+            loesungsweg: "\\(P(\\text{KK}) = \\frac{1}{2} \\cdot \\frac{1}{2} = \\frac{1}{4} = 0{,}25\\)."
+        },
+        {
+            id: 26, level: 5, typ: "mc",
+            frage: "Münze zweimal werfen: Welche Pfadregel verwendet man, um \\(P(\\text{Kopf und dann Zahl})\\) zu berechnen?",
+            optionen: ["Summenregel (addieren)", "Produktregel (multiplizieren)", "Differenzregel (subtrahieren)", "Keine Regel nötig"],
+            korrekt: 1,
+            tipp: "Entlang eines Pfades im Baumdiagramm gilt: UND = multiplizieren.",
+            loesungsweg: "Für einen einzelnen Pfad (Kopf UND Zahl) wird die Produktregel angewendet: \\(P = \\frac{1}{2} \\cdot \\frac{1}{2} = \\frac{1}{4}\\)."
+        },
+        {
+            id: 27, level: 5, typ: "numerisch",
+            frage: "Münze zweimal werfen: Wie groß ist \\(P(\\text{genau einmal Kopf})\\)? Gib das Ergebnis als Dezimalzahl ein.",
+            loesung: 0.5, toleranz: 0.01,
+            tipp: "Es gibt zwei Pfade mit genau einmal Kopf: KZ und ZK. Berechne jeden Pfad und addiere (Summenregel).",
+            loesungsweg: "\\(P(\\text{KZ}) = \\frac{1}{2} \\cdot \\frac{1}{2} = \\frac{1}{4}\\). \\(P(\\text{ZK}) = \\frac{1}{4}\\). Summenregel: \\(P = \\frac{1}{4} + \\frac{1}{4} = \\frac{1}{2} = 0{,}5\\)."
+        },
+        {
+            id: 28, level: 5, typ: "mc",
+            frage: "Ein Würfel wird zweimal geworfen. Wie groß ist \\(P(\\text{zweimal eine 6})\\)?",
+            optionen: ["\\(\\frac{1}{6}\\)", "\\(\\frac{1}{12}\\)", "\\(\\frac{1}{36}\\)", "\\(\\frac{2}{6}\\)"],
+            korrekt: 2,
+            tipp: "Produktregel: \\(P = \\frac{1}{6} \\cdot \\frac{1}{6}\\).",
+            loesungsweg: "\\(P(\\text{6 und 6}) = \\frac{1}{6} \\cdot \\frac{1}{6} = \\frac{1}{36}\\)."
+        },
+        {
+            id: 29, level: 5, typ: "numerisch",
+            frage: "Ein Würfel wird zweimal geworfen. Wie groß ist \\(P(\\text{mindestens eine 6})\\)? Berechne über das Gegenereignis. Runde auf zwei Nachkommastellen.",
+            loesung: 0.31, toleranz: 0.01,
+            tipp: "Gegenereignis: 'keine 6'. \\(P(\\text{keine 6}) = \\frac{5}{6} \\cdot \\frac{5}{6}\\). Dann: \\(P = 1 - P(\\text{keine 6})\\).",
+            loesungsweg: "\\(P(\\text{keine 6}) = \\frac{5}{6} \\cdot \\frac{5}{6} = \\frac{25}{36}\\). Also \\(P(\\text{mind. eine 6}) = 1 - \\frac{25}{36} = \\frac{11}{36} \\approx 0{,}31\\)."
+        },
+        {
+            id: 30, level: 5, typ: "numerisch",
+            frage: "Eine Ampel ist mit Wahrscheinlichkeit \\(0{,}4\\) grün. Du fährst an zwei unabhängigen Ampeln vorbei. Wie groß ist \\(P(\\text{beide grün})\\)?",
+            loesung: 0.16, toleranz: 0.01,
+            tipp: "Produktregel: \\(P = 0{,}4 \\cdot 0{,}4\\).",
+            loesungsweg: "\\(P(\\text{beide grün}) = 0{,}4 \\cdot 0{,}4 = 0{,}16\\)."
+        },
+
+        // ===== Level 6: Anwendungsaufgaben =====
+        {
+            id: 31, level: 6, typ: "mc",
+            frage: "In einer Urne sind \\(3\\) rote, \\(5\\) blaue und \\(2\\) grüne Kugeln. Du ziehst eine Kugel. Wie groß ist \\(P(\\text{blau})\\)?",
+            optionen: ["\\(\\frac{3}{10}\\)", "\\(\\frac{1}{2}\\)", "\\(\\frac{5}{10} = \\frac{1}{2}\\)", "\\(\\frac{2}{5}\\)"],
+            korrekt: 2,
+            tipp: "Insgesamt \\(3 + 5 + 2 = 10\\) Kugeln, davon \\(5\\) blaue.",
+            loesungsweg: "\\(P(\\text{blau}) = \\frac{5}{10} = \\frac{1}{2}\\)."
+        },
+        {
+            id: 32, level: 6, typ: "numerisch",
+            frage: "Aus einer Urne mit \\(4\\) roten und \\(6\\) blauen Kugeln wird ohne Zurücklegen zweimal gezogen. Wie groß ist \\(P(\\text{2× rot})\\)? Gib das Ergebnis als Dezimalzahl ein (auf zwei Nachkommastellen).",
+            loesung: 0.13, toleranz: 0.01,
+            tipp: "Erster Zug: \\(\\frac{4}{10}\\). Zweiter Zug (ohne Zurücklegen): \\(\\frac{3}{9}\\).",
+            loesungsweg: "\\(P(\\text{2× rot}) = \\frac{4}{10} \\cdot \\frac{3}{9} = \\frac{12}{90} = \\frac{2}{15} \\approx 0{,}13\\)."
+        },
+        {
+            id: 33, level: 6, typ: "mc",
+            frage: "Ein Spiel: Zwei Spieler würfeln je einmal. Spieler A gewinnt bei Augensumme \\(> 7\\), Spieler B bei Augensumme \\(\\leq 7\\). Ist das Spiel fair?",
+            optionen: ["Ja, beide haben gleiche Chancen", "Nein, Spieler A hat mehr Chancen", "Nein, Spieler B hat mehr Chancen", "Das kann man nicht berechnen"],
+            korrekt: 2,
+            tipp: "Zähle die Paare \\((a,b)\\) mit \\(a + b > 7\\) und mit \\(a + b \\leq 7\\). Insgesamt gibt es \\(36\\) Paare.",
+            loesungsweg: "Paare mit Summe \\(> 7\\): \\(15\\) Stück. Paare mit Summe \\(\\leq 7\\): \\(21\\) Stück. Da \\(21 > 15\\), hat Spieler B mehr Chancen -- das Spiel ist nicht fair."
+        },
+        {
+            id: 34, level: 6, typ: "numerisch",
+            frage: "In einer Schachtel sind \\(12\\) Lose, davon \\(3\\) Gewinne. Du ziehst \\(2\\) Lose ohne Zurücklegen. Wie groß ist \\(P(\\text{kein Gewinn})\\)? Runde auf zwei Nachkommastellen.",
+            loesung: 0.55, toleranz: 0.01,
+            tipp: "Erster Zug Niete: \\(\\frac{9}{12}\\). Zweiter Zug Niete: \\(\\frac{8}{11}\\). Produktregel anwenden.",
+            loesungsweg: "\\(P(\\text{kein Gewinn}) = \\frac{9}{12} \\cdot \\frac{8}{11} = \\frac{72}{132} = \\frac{6}{11} \\approx 0{,}55\\)."
+        },
+        {
+            id: 35, level: 6, typ: "mc",
+            frage: "Ein Glücksrad hat \\(4\\) gleich große Felder: Rot, Blau, Grün, Gelb. Spieler A gewinnt bei Rot oder Blau, Spieler B bei Grün. Ist das Spiel fair?",
+            optionen: ["Ja, fair", "Nein, Spieler A hat Vorteil", "Nein, Spieler B hat Vorteil", "Nein, keiner kann gewinnen"],
+            korrekt: 1,
+            tipp: "\\(P(A) = \\frac{2}{4}\\), \\(P(B) = \\frac{1}{4}\\). Vergleiche die Wahrscheinlichkeiten.",
+            loesungsweg: "\\(P(A) = \\frac{2}{4} = \\frac{1}{2}\\), \\(P(B) = \\frac{1}{4}\\). Spieler A hat eine höhere Gewinnwahrscheinlichkeit -- das Spiel ist nicht fair."
+        },
+        {
+            id: 36, level: 6, typ: "numerisch",
+            frage: "Aus einer Urne mit \\(5\\) roten und \\(3\\) blauen Kugeln wird ohne Zurücklegen zweimal gezogen. Wie groß ist \\(P(\\text{erst rot, dann blau})\\)? Runde auf zwei Nachkommastellen.",
+            loesung: 0.27, toleranz: 0.01,
+            tipp: "Erster Zug rot: \\(\\frac{5}{8}\\). Zweiter Zug blau (ohne Zurücklegen): \\(\\frac{3}{7}\\).",
+            loesungsweg: "\\(P = \\frac{5}{8} \\cdot \\frac{3}{7} = \\frac{15}{56} \\approx 0{,}27\\)."
+        }
+    ];
+    </script>
+    <script src="../spirale-engine.js"></script>
+</body>
+</html>
