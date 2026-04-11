@@ -19,409 +19,409 @@
       // ========== LEVEL 1 — babyleicht (6 Aufgaben) ==========
       // LGS bereits in Dreiecksform — nur rückwärts einsetzen
       {
-        "id": 1,
-        "level": 1,
-        "typ": "numerisch",
-        "frage": "Das LGS steht bereits in Dreiecksform: \\(\\begin{cases} x + y + z = 10 \\\\ y + z = 5 \\\\ z = 2 \\end{cases}\\) Bestimme \\(x\\).",
-        "loesung": 5,
-        "toleranz": 0,
-        "tipp": "Setze von unten nach oben ein: zuerst \\(z\\), dann \\(y\\), dann \\(x\\).",
-        "loesungsweg": "Aus Zeile 3: \\(z = 2\\).  \nAus Zeile 2: \\(y + 2 = 5 \\Rightarrow y = 3\\).  \nAus Zeile 1: \\(x + 3 + 2 = 10 \\Rightarrow x = 5\\)."
+        id: 1,
+        level: 1,
+        typ: "numerisch",
+        frage: "Das LGS steht bereits in Dreiecksform: \\(\\begin{cases} x + y + z = 10 \\\\ y + z = 5 \\\\ z = 2 \\end{cases}\\) Bestimme \\(x\\).",
+        loesung: 5,
+        toleranz: 0,
+        tipp: "Setze von unten nach oben ein: zuerst \\(z\\), dann \\(y\\), dann \\(x\\).",
+        loesungsweg: "Aus Zeile 3: \\(z = 2\\).  \nAus Zeile 2: \\(y + 2 = 5 \\Rightarrow y = 3\\).  \nAus Zeile 1: \\(x + 3 + 2 = 10 \\Rightarrow x = 5\\)."
       },
       {
-        "id": 2,
-        "level": 1,
-        "typ": "numerisch",
-        "frage": "Das LGS ist in Dreiecksform: \\(\\begin{cases} x - y + z = 4 \\\\ 2y - z = 1 \\\\ z = 3 \\end{cases}\\) Bestimme \\(y\\).",
-        "loesung": 2,
-        "toleranz": 0,
-        "tipp": "Setze \\(z = 3\\) in die zweite Zeile ein.",
-        "loesungsweg": "\\(z = 3\\).  \nZeile 2: \\(2y - 3 = 1 \\Rightarrow 2y = 4 \\Rightarrow y = 2\\).  \nZeile 1: \\(x - 2 + 3 = 4 \\Rightarrow x = 3\\)."
+        id: 2,
+        level: 1,
+        typ: "numerisch",
+        frage: "Das LGS ist in Dreiecksform: \\(\\begin{cases} x - y + z = 4 \\\\ 2y - z = 1 \\\\ z = 3 \\end{cases}\\) Bestimme \\(y\\).",
+        loesung: 2,
+        toleranz: 0,
+        tipp: "Setze \\(z = 3\\) in die zweite Zeile ein.",
+        loesungsweg: "\\(z = 3\\).  \nZeile 2: \\(2y - 3 = 1 \\Rightarrow 2y = 4 \\Rightarrow y = 2\\).  \nZeile 1: \\(x - 2 + 3 = 4 \\Rightarrow x = 3\\)."
       },
       {
-        "id": 3,
-        "level": 1,
-        "typ": "numerisch",
-        "frage": "Bestimme \\(x\\) aus dem LGS: \\(\\begin{cases} x + y - z = 4 \\\\ y + 2z = 0 \\\\ z = -1 \\end{cases}\\)",
-        "loesung": 1,
-        "toleranz": 0,
-        "tipp": "Rückwärts einsetzen — beginne mit \\(z = -1\\).",
-        "loesungsweg": "\\(z = -1\\).  \nZeile 2: \\(y + 2(-1) = 0 \\Rightarrow y = 2\\).  \nZeile 1: \\(x + 2 - (-1) = 4 \\Rightarrow x + 3 = 4 \\Rightarrow x = 1\\)."
+        id: 3,
+        level: 1,
+        typ: "numerisch",
+        frage: "Bestimme \\(x\\) aus dem LGS: \\(\\begin{cases} x + y - z = 4 \\\\ y + 2z = 0 \\\\ z = -1 \\end{cases}\\)",
+        loesung: 1,
+        toleranz: 0,
+        tipp: "Rückwärts einsetzen — beginne mit \\(z = -1\\).",
+        loesungsweg: "\\(z = -1\\).  \nZeile 2: \\(y + 2(-1) = 0 \\Rightarrow y = 2\\).  \nZeile 1: \\(x + 2 - (-1) = 4 \\Rightarrow x + 3 = 4 \\Rightarrow x = 1\\)."
       },
       {
-        "id": 4,
-        "level": 1,
-        "typ": "mc",
-        "frage": "Welche Lösung hat das LGS \\(\\begin{cases} x + y + z = 6 \\\\ y + z = 4 \\\\ z = 1 \\end{cases}\\)?",
-        "optionen": [
+        id: 4,
+        level: 1,
+        typ: "mc",
+        frage: "Welche Lösung hat das LGS \\(\\begin{cases} x + y + z = 6 \\\\ y + z = 4 \\\\ z = 1 \\end{cases}\\)?",
+        optionen: [
           "\\(x = 2,\\; y = 3,\\; z = 1\\)",
           "\\(x = 1,\\; y = 2,\\; z = 3\\)",
           "\\(x = 3,\\; y = 2,\\; z = 1\\)",
           "\\(x = 2,\\; y = 1,\\; z = 3\\)"
         ],
-        "korrekt": 0,
-        "tipp": "Fange mit \\(z\\) an und arbeite dich nach oben.",
-        "loesungsweg": "\\(z = 1\\).  \nZeile 2: \\(y + 1 = 4 \\Rightarrow y = 3\\).  \nZeile 1: \\(x + 3 + 1 = 6 \\Rightarrow x = 2\\).  \nAlso: \\(x = 2,\\; y = 3,\\; z = 1\\)."
+        korrekt: 0,
+        tipp: "Fange mit \\(z\\) an und arbeite dich nach oben.",
+        loesungsweg: "\\(z = 1\\).  \nZeile 2: \\(y + 1 = 4 \\Rightarrow y = 3\\).  \nZeile 1: \\(x + 3 + 1 = 6 \\Rightarrow x = 2\\).  \nAlso: \\(x = 2,\\; y = 3,\\; z = 1\\)."
       },
       {
-        "id": 5,
-        "level": 1,
-        "typ": "numerisch",
-        "frage": "Das LGS \\(\\begin{cases} x + 2y - z = 1 \\\\ y - z = -2 \\\\ z = 4 \\end{cases}\\) hat eine eindeutige Lösung. Bestimme \\(x\\).",
-        "loesung": 1,
-        "toleranz": 0,
-        "tipp": "Erst \\(z\\), dann \\(y\\), dann \\(x\\).",
-        "loesungsweg": "\\(z = 4\\).  \nZeile 2: \\(y - 4 = -2 \\Rightarrow y = 2\\).  \nZeile 1: \\(x + 2 \\cdot 2 - 4 = 1 \\Rightarrow x + 0 = 1 \\Rightarrow x = 1\\)."
+        id: 5,
+        level: 1,
+        typ: "numerisch",
+        frage: "Das LGS \\(\\begin{cases} x + 2y - z = 1 \\\\ y - z = -2 \\\\ z = 4 \\end{cases}\\) hat eine eindeutige Lösung. Bestimme \\(x\\).",
+        loesung: 1,
+        toleranz: 0,
+        tipp: "Erst \\(z\\), dann \\(y\\), dann \\(x\\).",
+        loesungsweg: "\\(z = 4\\).  \nZeile 2: \\(y - 4 = -2 \\Rightarrow y = 2\\).  \nZeile 1: \\(x + 2 \\cdot 2 - 4 = 1 \\Rightarrow x + 0 = 1 \\Rightarrow x = 1\\)."
       },
       {
-        "id": 6,
-        "level": 1,
-        "typ": "numerisch",
-        "frage": "Löse das LGS \\(\\begin{cases} x + y + 2z = 7 \\\\ 2y + z = 5 \\\\ 3z = 6 \\end{cases}\\) und gib \\(z\\) an.",
-        "loesung": 2,
-        "toleranz": 0,
-        "tipp": "Teile die dritte Zeile durch 3.",
-        "loesungsweg": "Zeile 3: \\(3z = 6 \\Rightarrow z = 2\\).  \nZeile 2: \\(2y + 2 = 5 \\Rightarrow 2y = 3 \\Rightarrow y = 1{,}5\\).  \nZeile 1: \\(x + 1{,}5 + 4 = 7 \\Rightarrow x = 1{,}5\\)."
+        id: 6,
+        level: 1,
+        typ: "numerisch",
+        frage: "Löse das LGS \\(\\begin{cases} x + y + 2z = 7 \\\\ 2y + z = 5 \\\\ 3z = 6 \\end{cases}\\) und gib \\(z\\) an.",
+        loesung: 2,
+        toleranz: 0,
+        tipp: "Teile die dritte Zeile durch 3.",
+        loesungsweg: "Zeile 3: \\(3z = 6 \\Rightarrow z = 2\\).  \nZeile 2: \\(2y + 2 = 5 \\Rightarrow 2y = 3 \\Rightarrow y = 1{,}5\\).  \nZeile 1: \\(x + 1{,}5 + 4 = 7 \\Rightarrow x = 1{,}5\\)."
       },
 
       // ========== LEVEL 2 — leicht (6 Aufgaben) ==========
       // Einfaches 3×3 LGS mit einer offensichtlichen Elimination
       {
-        "id": 7,
-        "level": 2,
-        "typ": "numerisch",
-        "frage": "Bestimme \\(z\\) aus \\(\\begin{cases} x + y + z = 6 \\\\ x + y = 4 \\\\ x = 1 \\end{cases}\\)",
-        "loesung": 2,
-        "toleranz": 0,
-        "tipp": "Fast schon Dreiecksform — setze \\(x = 1\\) in Zeile 2 ein.",
-        "loesungsweg": "\\(x = 1\\).  \nZeile 2: \\(1 + y = 4 \\Rightarrow y = 3\\).  \nZeile 1: \\(1 + 3 + z = 6 \\Rightarrow z = 2\\)."
+        id: 7,
+        level: 2,
+        typ: "numerisch",
+        frage: "Bestimme \\(z\\) aus \\(\\begin{cases} x + y + z = 6 \\\\ x + y = 4 \\\\ x = 1 \\end{cases}\\)",
+        loesung: 2,
+        toleranz: 0,
+        tipp: "Fast schon Dreiecksform — setze \\(x = 1\\) in Zeile 2 ein.",
+        loesungsweg: "\\(x = 1\\).  \nZeile 2: \\(1 + y = 4 \\Rightarrow y = 3\\).  \nZeile 1: \\(1 + 3 + z = 6 \\Rightarrow z = 2\\)."
       },
       {
-        "id": 8,
-        "level": 2,
-        "typ": "numerisch",
-        "frage": "Gegeben: \\(\\begin{cases} x + y + z = 9 \\\\ x - y = 1 \\\\ y = 3 \\end{cases}\\) Bestimme \\(z\\).",
-        "loesung": 2,
-        "toleranz": 0,
-        "tipp": "Aus Zeile 3 kennst du \\(y\\), dann folgt \\(x\\).",
-        "loesungsweg": "\\(y = 3\\).  \nZeile 2: \\(x - 3 = 1 \\Rightarrow x = 4\\).  \nZeile 1: \\(4 + 3 + z = 9 \\Rightarrow z = 2\\)."
+        id: 8,
+        level: 2,
+        typ: "numerisch",
+        frage: "Gegeben: \\(\\begin{cases} x + y + z = 9 \\\\ x - y = 1 \\\\ y = 3 \\end{cases}\\) Bestimme \\(z\\).",
+        loesung: 2,
+        toleranz: 0,
+        tipp: "Aus Zeile 3 kennst du \\(y\\), dann folgt \\(x\\).",
+        loesungsweg: "\\(y = 3\\).  \nZeile 2: \\(x - 3 = 1 \\Rightarrow x = 4\\).  \nZeile 1: \\(4 + 3 + z = 9 \\Rightarrow z = 2\\)."
       },
       {
-        "id": 9,
-        "level": 2,
-        "typ": "numerisch",
-        "frage": "Löse: \\(\\begin{cases} x + y + z = 12 \\\\ x + y = 7 \\\\ y + z = 9 \\end{cases}\\) Bestimme \\(y\\).",
-        "loesung": 4,
-        "toleranz": 0,
-        "tipp": "Aus Zeile 1 minus Zeile 2 bekommst du sofort \\(z\\).",
-        "loesungsweg": "Zeile 1 \\(-\\) Zeile 2: \\(z = 12 - 7 = 5\\).  \nZeile 3: \\(y + 5 = 9 \\Rightarrow y = 4\\).  \nZeile 2: \\(x + 4 = 7 \\Rightarrow x = 3\\)."
+        id: 9,
+        level: 2,
+        typ: "numerisch",
+        frage: "Löse: \\(\\begin{cases} x + y + z = 12 \\\\ x + y = 7 \\\\ y + z = 9 \\end{cases}\\) Bestimme \\(y\\).",
+        loesung: 4,
+        toleranz: 0,
+        tipp: "Aus Zeile 1 minus Zeile 2 bekommst du sofort \\(z\\).",
+        loesungsweg: "Zeile 1 \\(-\\) Zeile 2: \\(z = 12 - 7 = 5\\).  \nZeile 3: \\(y + 5 = 9 \\Rightarrow y = 4\\).  \nZeile 2: \\(x + 4 = 7 \\Rightarrow x = 3\\)."
       },
       {
-        "id": 10,
-        "level": 2,
-        "typ": "numerisch",
-        "frage": "Gegeben: \\(\\begin{cases} 2x + y + z = 11 \\\\ x + z = 5 \\\\ y = 3 \\end{cases}\\) Bestimme \\(x\\).",
-        "loesung": 3,
-        "toleranz": 0,
-        "tipp": "Setze \\(y = 3\\) in Zeile 1 ein, danach hast du nur noch 2 Gleichungen mit 2 Unbekannten.",
-        "loesungsweg": "\\(y = 3\\).  \nZeile 1: \\(2x + 3 + z = 11 \\Rightarrow 2x + z = 8\\).  \nZusammen mit Zeile 2 \\(x + z = 5\\):  \n\\((2x + z) - (x + z) = 8 - 5 \\Rightarrow x = 3\\)."
+        id: 10,
+        level: 2,
+        typ: "numerisch",
+        frage: "Gegeben: \\(\\begin{cases} 2x + y + z = 11 \\\\ x + z = 5 \\\\ y = 3 \\end{cases}\\) Bestimme \\(x\\).",
+        loesung: 3,
+        toleranz: 0,
+        tipp: "Setze \\(y = 3\\) in Zeile 1 ein, danach hast du nur noch 2 Gleichungen mit 2 Unbekannten.",
+        loesungsweg: "\\(y = 3\\).  \nZeile 1: \\(2x + 3 + z = 11 \\Rightarrow 2x + z = 8\\).  \nZusammen mit Zeile 2 \\(x + z = 5\\):  \n\\((2x + z) - (x + z) = 8 - 5 \\Rightarrow x = 3\\)."
       },
       {
-        "id": 11,
-        "level": 2,
-        "typ": "mc",
-        "frage": "Welche Lösung hat das LGS \\(\\begin{cases} x + y + z = 8 \\\\ x = 2 \\\\ y - z = 2 \\end{cases}\\)?",
-        "optionen": [
+        id: 11,
+        level: 2,
+        typ: "mc",
+        frage: "Welche Lösung hat das LGS \\(\\begin{cases} x + y + z = 8 \\\\ x = 2 \\\\ y - z = 2 \\end{cases}\\)?",
+        optionen: [
           "\\(x = 2,\\; y = 4,\\; z = 2\\)",
           "\\(x = 2,\\; y = 2,\\; z = 4\\)",
           "\\(x = 2,\\; y = 3,\\; z = 3\\)",
           "\\(x = 2,\\; y = 5,\\; z = 1\\)"
         ],
-        "korrekt": 0,
-        "tipp": "Aus \\(x = 2\\) folgt \\(y + z = 6\\). Zusammen mit \\(y - z = 2\\) bekommst du \\(y\\) und \\(z\\).",
-        "loesungsweg": "\\(x = 2\\). Einsetzen in Zeile 1: \\(y + z = 6\\).  \nAddiere mit Zeile 3: \\((y + z) + (y - z) = 6 + 2 \\Rightarrow 2y = 8 \\Rightarrow y = 4\\).  \nDaraus: \\(z = 6 - 4 = 2\\)."
+        korrekt: 0,
+        tipp: "Aus \\(x = 2\\) folgt \\(y + z = 6\\). Zusammen mit \\(y - z = 2\\) bekommst du \\(y\\) und \\(z\\).",
+        loesungsweg: "\\(x = 2\\). Einsetzen in Zeile 1: \\(y + z = 6\\).  \nAddiere mit Zeile 3: \\((y + z) + (y - z) = 6 + 2 \\Rightarrow 2y = 8 \\Rightarrow y = 4\\).  \nDaraus: \\(z = 6 - 4 = 2\\)."
       },
       {
-        "id": 12,
-        "level": 2,
-        "typ": "numerisch",
-        "frage": "Bestimme \\(z\\) aus \\(\\begin{cases} x + y + z = 15 \\\\ x = 3 \\\\ y - z = -2 \\end{cases}\\)",
-        "loesung": 7,
-        "toleranz": 0,
-        "tipp": "Aus Zeile 2 ist \\(x\\) bekannt. Dann hast du ein 2×2 LGS für \\(y\\) und \\(z\\).",
-        "loesungsweg": "\\(x = 3\\). Einsetzen in Zeile 1: \\(y + z = 12\\).  \nZusammen mit \\(y - z = -2\\): Addition ergibt \\(2y = 10 \\Rightarrow y = 5\\).  \nDaraus: \\(z = 12 - 5 = 7\\)."
+        id: 12,
+        level: 2,
+        typ: "numerisch",
+        frage: "Bestimme \\(z\\) aus \\(\\begin{cases} x + y + z = 15 \\\\ x = 3 \\\\ y - z = -2 \\end{cases}\\)",
+        loesung: 7,
+        toleranz: 0,
+        tipp: "Aus Zeile 2 ist \\(x\\) bekannt. Dann hast du ein 2×2 LGS für \\(y\\) und \\(z\\).",
+        loesungsweg: "\\(x = 3\\). Einsetzen in Zeile 1: \\(y + z = 12\\).  \nZusammen mit \\(y - z = -2\\): Addition ergibt \\(2y = 10 \\Rightarrow y = 5\\).  \nDaraus: \\(z = 12 - 5 = 7\\)."
       },
 
       // ========== LEVEL 3 — mittel (6 Aufgaben) ==========
       // Standardmäßiger Gauß-Algorithmus mit ganzzahligen Lösungen
       {
-        "id": 13,
-        "level": 3,
-        "typ": "numerisch",
-        "frage": "Löse mit dem Gauß-Algorithmus: \\(\\begin{cases} x + y + z = 6 \\\\ 2x + y - z = 1 \\\\ x - y + 2z = 5 \\end{cases}\\) Gib \\(x\\) an.",
-        "loesung": 1,
-        "toleranz": 0,
-        "tipp": "Erzeuge Nullen in der ersten Spalte: Zeile 2 \\(- 2\\cdot\\) Zeile 1 und Zeile 3 \\(-\\) Zeile 1.",
-        "loesungsweg": "\\(Z_2 - 2 Z_1\\): \\(-y - 3z = -11\\), also \\(y + 3z = 11\\).  \n\\(Z_3 - Z_1\\): \\(-2y + z = -1\\).  \nAus der ersten neuen Gleichung: \\(y = 11 - 3z\\). Einsetzen:  \n\\(-2(11 - 3z) + z = -1 \\Rightarrow -22 + 7z = -1 \\Rightarrow z = 3\\).  \nDann \\(y = 2\\) und \\(x = 6 - 2 - 3 = 1\\)."
+        id: 13,
+        level: 3,
+        typ: "numerisch",
+        frage: "Löse mit dem Gauß-Algorithmus: \\(\\begin{cases} x + y + z = 6 \\\\ 2x + y - z = 1 \\\\ x - y + 2z = 5 \\end{cases}\\) Gib \\(x\\) an.",
+        loesung: 1,
+        toleranz: 0,
+        tipp: "Erzeuge Nullen in der ersten Spalte: Zeile 2 \\(- 2\\cdot\\) Zeile 1 und Zeile 3 \\(-\\) Zeile 1.",
+        loesungsweg: "\\(Z_2 - 2 Z_1\\): \\(-y - 3z = -11\\), also \\(y + 3z = 11\\).  \n\\(Z_3 - Z_1\\): \\(-2y + z = -1\\).  \nAus der ersten neuen Gleichung: \\(y = 11 - 3z\\). Einsetzen:  \n\\(-2(11 - 3z) + z = -1 \\Rightarrow -22 + 7z = -1 \\Rightarrow z = 3\\).  \nDann \\(y = 2\\) und \\(x = 6 - 2 - 3 = 1\\)."
       },
       {
-        "id": 14,
-        "level": 3,
-        "typ": "numerisch",
-        "frage": "Löse: \\(\\begin{cases} x + 2y + z = 8 \\\\ 2x + y + z = 7 \\\\ x + y + 2z = 9 \\end{cases}\\) Gib \\(x\\) an.",
-        "loesung": 1,
-        "toleranz": 0,
-        "tipp": "\\(Z_2 - 2 Z_1\\) eliminiert \\(x\\) in Zeile 2.",
-        "loesungsweg": "\\(Z_2 - 2 Z_1\\): \\(-3y - z = -9 \\Rightarrow 3y + z = 9\\).  \n\\(Z_3 - Z_1\\): \\(-y + z = 1\\).  \nAus der zweiten neuen: \\(z = 1 + y\\). Einsetzen: \\(3y + 1 + y = 9 \\Rightarrow 4y = 8 \\Rightarrow y = 2\\).  \nDann \\(z = 3\\) und \\(x = 8 - 4 - 3 = 1\\)."
+        id: 14,
+        level: 3,
+        typ: "numerisch",
+        frage: "Löse: \\(\\begin{cases} x + 2y + z = 8 \\\\ 2x + y + z = 7 \\\\ x + y + 2z = 9 \\end{cases}\\) Gib \\(x\\) an.",
+        loesung: 1,
+        toleranz: 0,
+        tipp: "\\(Z_2 - 2 Z_1\\) eliminiert \\(x\\) in Zeile 2.",
+        loesungsweg: "\\(Z_2 - 2 Z_1\\): \\(-3y - z = -9 \\Rightarrow 3y + z = 9\\).  \n\\(Z_3 - Z_1\\): \\(-y + z = 1\\).  \nAus der zweiten neuen: \\(z = 1 + y\\). Einsetzen: \\(3y + 1 + y = 9 \\Rightarrow 4y = 8 \\Rightarrow y = 2\\).  \nDann \\(z = 3\\) und \\(x = 8 - 4 - 3 = 1\\)."
       },
       {
-        "id": 15,
-        "level": 3,
-        "typ": "numerisch",
-        "frage": "Bestimme \\(x\\) aus: \\(\\begin{cases} x + y + z = 4 \\\\ 2x + 3y + z = 9 \\\\ x + y + 2z = 6 \\end{cases}\\)",
-        "loesung": -1,
-        "toleranz": 0,
-        "tipp": "Die Elimination liefert zwei Gleichungen mit \\(y\\) und \\(z\\).",
-        "loesungsweg": "\\(Z_2 - 2 Z_1\\): \\(y - z = 1\\).  \n\\(Z_3 - Z_1\\): \\(z = 2\\).  \nAlso \\(z = 2\\), \\(y = 3\\), \\(x = 4 - 3 - 2 = -1\\)."
+        id: 15,
+        level: 3,
+        typ: "numerisch",
+        frage: "Bestimme \\(x\\) aus: \\(\\begin{cases} x + y + z = 4 \\\\ 2x + 3y + z = 9 \\\\ x + y + 2z = 6 \\end{cases}\\)",
+        loesung: -1,
+        toleranz: 0,
+        tipp: "Die Elimination liefert zwei Gleichungen mit \\(y\\) und \\(z\\).",
+        loesungsweg: "\\(Z_2 - 2 Z_1\\): \\(y - z = 1\\).  \n\\(Z_3 - Z_1\\): \\(z = 2\\).  \nAlso \\(z = 2\\), \\(y = 3\\), \\(x = 4 - 3 - 2 = -1\\)."
       },
       {
-        "id": 16,
-        "level": 3,
-        "typ": "numerisch",
-        "frage": "Löse: \\(\\begin{cases} 2x + y + z = 7 \\\\ x + 2y + z = 8 \\\\ x + y + 2z = 9 \\end{cases}\\) Gib \\(z\\) an.",
-        "loesung": 3,
-        "toleranz": 0,
-        "tipp": "Subtrahiere benachbarte Zeilen voneinander, um sofort einfache Zusammenhänge zu bekommen.",
-        "loesungsweg": "\\(Z_1 - Z_2\\): \\(x - y = -1\\), also \\(y = x + 1\\).  \n\\(Z_2 - Z_3\\): \\(y - z = -1\\), also \\(z = y + 1 = x + 2\\).  \nEinsetzen in \\(Z_1\\): \\(2x + (x+1) + (x+2) = 7 \\Rightarrow 4x = 4 \\Rightarrow x = 1\\).  \nDann \\(y = 2,\\; z = 3\\)."
+        id: 16,
+        level: 3,
+        typ: "numerisch",
+        frage: "Löse: \\(\\begin{cases} 2x + y + z = 7 \\\\ x + 2y + z = 8 \\\\ x + y + 2z = 9 \\end{cases}\\) Gib \\(z\\) an.",
+        loesung: 3,
+        toleranz: 0,
+        tipp: "Subtrahiere benachbarte Zeilen voneinander, um sofort einfache Zusammenhänge zu bekommen.",
+        loesungsweg: "\\(Z_1 - Z_2\\): \\(x - y = -1\\), also \\(y = x + 1\\).  \n\\(Z_2 - Z_3\\): \\(y - z = -1\\), also \\(z = y + 1 = x + 2\\).  \nEinsetzen in \\(Z_1\\): \\(2x + (x+1) + (x+2) = 7 \\Rightarrow 4x = 4 \\Rightarrow x = 1\\).  \nDann \\(y = 2,\\; z = 3\\)."
       },
       {
-        "id": 17,
-        "level": 3,
-        "typ": "numerisch",
-        "frage": "Löse: \\(\\begin{cases} x + y + z = 6 \\\\ x + 2y + 3z = 14 \\\\ 2x + y + z = 7 \\end{cases}\\) Gib \\(z\\) an.",
-        "loesung": 3,
-        "toleranz": 0,
-        "tipp": "\\(Z_3 - Z_1\\) liefert sofort \\(x\\).",
-        "loesungsweg": "\\(Z_3 - Z_1\\): \\(x = 1\\).  \n\\(Z_2 - Z_1\\): \\(y + 2z = 8\\).  \nAus \\(Z_1\\) mit \\(x = 1\\): \\(y + z = 5 \\Rightarrow y = 5 - z\\).  \nEinsetzen: \\((5 - z) + 2z = 8 \\Rightarrow z = 3\\).  \nDann \\(y = 2\\)."
+        id: 17,
+        level: 3,
+        typ: "numerisch",
+        frage: "Löse: \\(\\begin{cases} x + y + z = 6 \\\\ x + 2y + 3z = 14 \\\\ 2x + y + z = 7 \\end{cases}\\) Gib \\(z\\) an.",
+        loesung: 3,
+        toleranz: 0,
+        tipp: "\\(Z_3 - Z_1\\) liefert sofort \\(x\\).",
+        loesungsweg: "\\(Z_3 - Z_1\\): \\(x = 1\\).  \n\\(Z_2 - Z_1\\): \\(y + 2z = 8\\).  \nAus \\(Z_1\\) mit \\(x = 1\\): \\(y + z = 5 \\Rightarrow y = 5 - z\\).  \nEinsetzen: \\((5 - z) + 2z = 8 \\Rightarrow z = 3\\).  \nDann \\(y = 2\\)."
       },
       {
-        "id": 18,
-        "level": 3,
-        "typ": "numerisch",
-        "frage": "Löse: \\(\\begin{cases} x + y + z = 10 \\\\ x - y + z = 4 \\\\ x + y - z = 2 \\end{cases}\\) Gib \\(y\\) an.",
-        "loesung": 3,
-        "toleranz": 0,
-        "tipp": "Zeile 1 minus Zeile 2 liefert direkt \\(y\\).",
-        "loesungsweg": "\\(Z_1 - Z_2\\): \\(2y = 6 \\Rightarrow y = 3\\).  \n\\(Z_1 - Z_3\\): \\(2z = 8 \\Rightarrow z = 4\\).  \nEinsetzen in \\(Z_1\\): \\(x + 3 + 4 = 10 \\Rightarrow x = 3\\)."
+        id: 18,
+        level: 3,
+        typ: "numerisch",
+        frage: "Löse: \\(\\begin{cases} x + y + z = 10 \\\\ x - y + z = 4 \\\\ x + y - z = 2 \\end{cases}\\) Gib \\(y\\) an.",
+        loesung: 3,
+        toleranz: 0,
+        tipp: "Zeile 1 minus Zeile 2 liefert direkt \\(y\\).",
+        loesungsweg: "\\(Z_1 - Z_2\\): \\(2y = 6 \\Rightarrow y = 3\\).  \n\\(Z_1 - Z_3\\): \\(2z = 8 \\Rightarrow z = 4\\).  \nEinsetzen in \\(Z_1\\): \\(x + 3 + 4 = 10 \\Rightarrow x = 3\\)."
       },
 
       // ========== LEVEL 4 — schwer (6 Aufgaben) ==========
       // Gauß mit Brüchen oder negativen Koeffizienten
       {
-        "id": 19,
-        "level": 4,
-        "typ": "numerisch",
-        "frage": "Löse: \\(\\begin{cases} -x + 2y + z = 4 \\\\ x + y + z = 6 \\\\ 2x - y + z = 1 \\end{cases}\\) Gib \\(x\\) an.",
-        "loesung": 3,
-        "toleranz": 0,
-        "tipp": "\\(Z_2 + Z_1\\) und \\(Z_3 + 2 Z_1\\) eliminieren \\(x\\).",
-        "loesungsweg": "\\(Z_2 + Z_1\\): \\(3y + 2z = 10\\).  \n\\(Z_3 + 2 Z_1\\): \\(3y + 3z = 9 \\Rightarrow y + z = 3\\).  \nAus beiden: Subtrahiere \\(3\\cdot(y+z=3)\\) von \\(3y+2z=10\\): \\(-z = 1 \\Rightarrow z = -1\\).  \nDann \\(y = 4\\) und \\(x = 6 - 4 - (-1) = 3\\)."
+        id: 19,
+        level: 4,
+        typ: "numerisch",
+        frage: "Löse: \\(\\begin{cases} -x + 2y + z = 4 \\\\ x + y + z = 6 \\\\ 2x - y + z = 1 \\end{cases}\\) Gib \\(x\\) an.",
+        loesung: 3,
+        toleranz: 0,
+        tipp: "\\(Z_2 + Z_1\\) und \\(Z_3 + 2 Z_1\\) eliminieren \\(x\\).",
+        loesungsweg: "\\(Z_2 + Z_1\\): \\(3y + 2z = 10\\).  \n\\(Z_3 + 2 Z_1\\): \\(3y + 3z = 9 \\Rightarrow y + z = 3\\).  \nAus beiden: Subtrahiere \\(3\\cdot(y+z=3)\\) von \\(3y+2z=10\\): \\(-z = 1 \\Rightarrow z = -1\\).  \nDann \\(y = 4\\) und \\(x = 6 - 4 - (-1) = 3\\)."
       },
       {
-        "id": 20,
-        "level": 4,
-        "typ": "numerisch",
-        "frage": "Löse: \\(\\begin{cases} x + y + z = 2 \\\\ 3x - y + 2z = 4 \\\\ 2x + 2y - z = 1 \\end{cases}\\) Gib \\(y\\) als Dezimalzahl an.",
-        "loesung": 0.25,
-        "toleranz": 0.01,
-        "tipp": "Eliminiere \\(x\\) mit \\(Z_2 - 3 Z_1\\) und \\(Z_3 - 2 Z_1\\). Es kann ein Bruch herauskommen!",
-        "loesungsweg": "\\(Z_2 - 3 Z_1\\): \\(-4y - z = -2 \\Rightarrow 4y + z = 2\\).  \n\\(Z_3 - 2 Z_1\\): \\(-3z = -3 \\Rightarrow z = 1\\).  \nEinsetzen: \\(4y + 1 = 2 \\Rightarrow y = \\tfrac{1}{4} = 0{,}25\\).  \nDann \\(x = 2 - 0{,}25 - 1 = 0{,}75\\)."
+        id: 20,
+        level: 4,
+        typ: "numerisch",
+        frage: "Löse: \\(\\begin{cases} x + y + z = 2 \\\\ 3x - y + 2z = 4 \\\\ 2x + 2y - z = 1 \\end{cases}\\) Gib \\(y\\) als Dezimalzahl an.",
+        loesung: 0.25,
+        toleranz: 0.01,
+        tipp: "Eliminiere \\(x\\) mit \\(Z_2 - 3 Z_1\\) und \\(Z_3 - 2 Z_1\\). Es kann ein Bruch herauskommen!",
+        loesungsweg: "\\(Z_2 - 3 Z_1\\): \\(-4y - z = -2 \\Rightarrow 4y + z = 2\\).  \n\\(Z_3 - 2 Z_1\\): \\(-3z = -3 \\Rightarrow z = 1\\).  \nEinsetzen: \\(4y + 1 = 2 \\Rightarrow y = \\tfrac{1}{4} = 0{,}25\\).  \nDann \\(x = 2 - 0{,}25 - 1 = 0{,}75\\)."
       },
       {
-        "id": 21,
-        "level": 4,
-        "typ": "numerisch",
-        "frage": "Löse: \\(\\begin{cases} -x + y + z = 1 \\\\ x - y + z = 3 \\\\ x + y - z = 1 \\end{cases}\\) Gib \\(y\\) an.",
-        "loesung": 1,
-        "toleranz": 0,
-        "tipp": "Addiere jeweils zwei Zeilen, um einzelne Variablen direkt zu bekommen.",
-        "loesungsweg": "\\(Z_1 + Z_2\\): \\(2z = 4 \\Rightarrow z = 2\\).  \n\\(Z_2 + Z_3\\): \\(2x = 4 \\Rightarrow x = 2\\).  \n\\(Z_1 + Z_3\\): \\(2y = 2 \\Rightarrow y = 1\\)."
+        id: 21,
+        level: 4,
+        typ: "numerisch",
+        frage: "Löse: \\(\\begin{cases} -x + y + z = 1 \\\\ x - y + z = 3 \\\\ x + y - z = 1 \\end{cases}\\) Gib \\(y\\) an.",
+        loesung: 1,
+        toleranz: 0,
+        tipp: "Addiere jeweils zwei Zeilen, um einzelne Variablen direkt zu bekommen.",
+        loesungsweg: "\\(Z_1 + Z_2\\): \\(2z = 4 \\Rightarrow z = 2\\).  \n\\(Z_2 + Z_3\\): \\(2x = 4 \\Rightarrow x = 2\\).  \n\\(Z_1 + Z_3\\): \\(2y = 2 \\Rightarrow y = 1\\)."
       },
       {
-        "id": 22,
-        "level": 4,
-        "typ": "numerisch",
-        "frage": "Löse: \\(\\begin{cases} x + y + z = 1 \\\\ x - 2y + z = 4 \\\\ 2x + y - z = 0 \\end{cases}\\) Gib \\(y\\) an.",
-        "loesung": -1,
-        "toleranz": 0,
-        "tipp": "\\(Z_2 - Z_1\\) liefert sofort \\(y\\).",
-        "loesungsweg": "\\(Z_2 - Z_1\\): \\(-3y = 3 \\Rightarrow y = -1\\).  \n\\(Z_3 - 2 Z_1\\): \\(-y - 3z = -2 \\Rightarrow 1 - 3z = -2 \\Rightarrow z = 1\\).  \nDann \\(x = 1 - (-1) - 1 = 1\\)."
+        id: 22,
+        level: 4,
+        typ: "numerisch",
+        frage: "Löse: \\(\\begin{cases} x + y + z = 1 \\\\ x - 2y + z = 4 \\\\ 2x + y - z = 0 \\end{cases}\\) Gib \\(y\\) an.",
+        loesung: -1,
+        toleranz: 0,
+        tipp: "\\(Z_2 - Z_1\\) liefert sofort \\(y\\).",
+        loesungsweg: "\\(Z_2 - Z_1\\): \\(-3y = 3 \\Rightarrow y = -1\\).  \n\\(Z_3 - 2 Z_1\\): \\(-y - 3z = -2 \\Rightarrow 1 - 3z = -2 \\Rightarrow z = 1\\).  \nDann \\(x = 1 - (-1) - 1 = 1\\)."
       },
       {
-        "id": 23,
-        "level": 4,
-        "typ": "numerisch",
-        "frage": "Löse: \\(\\begin{cases} x - y + z = 2 \\\\ -x + y + z = 4 \\\\ x + y - z = 0 \\end{cases}\\) Gib \\(x\\) an.",
-        "loesung": 1,
-        "toleranz": 0,
-        "tipp": "Addition je zweier Zeilen eliminiert jeweils zwei Variablen gleichzeitig.",
-        "loesungsweg": "\\(Z_1 + Z_2\\): \\(2z = 6 \\Rightarrow z = 3\\).  \n\\(Z_2 + Z_3\\): \\(2y = 4 \\Rightarrow y = 2\\).  \nEinsetzen in \\(Z_1\\): \\(x - 2 + 3 = 2 \\Rightarrow x = 1\\)."
+        id: 23,
+        level: 4,
+        typ: "numerisch",
+        frage: "Löse: \\(\\begin{cases} x - y + z = 2 \\\\ -x + y + z = 4 \\\\ x + y - z = 0 \\end{cases}\\) Gib \\(x\\) an.",
+        loesung: 1,
+        toleranz: 0,
+        tipp: "Addition je zweier Zeilen eliminiert jeweils zwei Variablen gleichzeitig.",
+        loesungsweg: "\\(Z_1 + Z_2\\): \\(2z = 6 \\Rightarrow z = 3\\).  \n\\(Z_2 + Z_3\\): \\(2y = 4 \\Rightarrow y = 2\\).  \nEinsetzen in \\(Z_1\\): \\(x - 2 + 3 = 2 \\Rightarrow x = 1\\)."
       },
       {
-        "id": 24,
-        "level": 4,
-        "typ": "numerisch",
-        "frage": "Löse: \\(\\begin{cases} x + 2y - z = 3 \\\\ 2x - y + z = 4 \\\\ -x + y + z = 0 \\end{cases}\\) Gib \\(x\\) an.",
-        "loesung": 2,
-        "toleranz": 0,
-        "tipp": "\\(Z_1 + Z_3\\) eliminiert \\(x\\) und \\(z\\) gleichzeitig!",
-        "loesungsweg": "\\(Z_1 + Z_3\\): \\(3y = 3 \\Rightarrow y = 1\\).  \n\\(Z_1 + Z_2\\): \\(3x + y = 7 \\Rightarrow 3x = 6 \\Rightarrow x = 2\\).  \nDann aus \\(Z_3\\): \\(-2 + 1 + z = 0 \\Rightarrow z = 1\\)."
+        id: 24,
+        level: 4,
+        typ: "numerisch",
+        frage: "Löse: \\(\\begin{cases} x + 2y - z = 3 \\\\ 2x - y + z = 4 \\\\ -x + y + z = 0 \\end{cases}\\) Gib \\(x\\) an.",
+        loesung: 2,
+        toleranz: 0,
+        tipp: "\\(Z_1 + Z_3\\) eliminiert \\(x\\) und \\(z\\) gleichzeitig!",
+        loesungsweg: "\\(Z_1 + Z_3\\): \\(3y = 3 \\Rightarrow y = 1\\).  \n\\(Z_1 + Z_2\\): \\(3x + y = 7 \\Rightarrow 3x = 6 \\Rightarrow x = 2\\).  \nDann aus \\(Z_3\\): \\(-2 + 1 + z = 0 \\Rightarrow z = 1\\)."
       },
 
       // ========== LEVEL 5 — sehr schwer (6 Aufgaben) ==========
       // Lösungsfälle: eindeutige Lösung / keine Lösung / Parameter-Lösungsmenge
       {
-        "id": 25,
-        "level": 5,
-        "typ": "mc",
-        "frage": "Welchen Lösungsfall hat das LGS \\(\\begin{cases} x + y + z = 6 \\\\ x - y + z = 2 \\\\ 2x + 2z = 8 \\end{cases}\\)?",
-        "optionen": [
+        id: 25,
+        level: 5,
+        typ: "mc",
+        frage: "Welchen Lösungsfall hat das LGS \\(\\begin{cases} x + y + z = 6 \\\\ x - y + z = 2 \\\\ 2x + 2z = 8 \\end{cases}\\)?",
+        optionen: [
           "Unendlich viele Lösungen (Parameter-Lösungsmenge)",
           "Genau eine Lösung",
           "Keine Lösung",
           "Das LGS ist widersprüchlich in allen drei Zeilen"
         ],
-        "korrekt": 0,
-        "tipp": "Prüfe, ob eine der Zeilen eine Linearkombination der anderen ist.",
-        "loesungsweg": "Addiere \\(Z_1 + Z_2\\): \\((x+y+z) + (x-y+z) = 6 + 2 \\Rightarrow 2x + 2z = 8\\).  \nDas ist genau Zeile 3! Zeile 3 ist also **abhängig** von den ersten beiden.  \nEs bleiben nur zwei unabhängige Gleichungen für drei Unbekannte \\(\\Rightarrow\\) **unendlich viele Lösungen** mit einem freien Parameter."
+        korrekt: 0,
+        tipp: "Prüfe, ob eine der Zeilen eine Linearkombination der anderen ist.",
+        loesungsweg: "Addiere \\(Z_1 + Z_2\\): \\((x+y+z) + (x-y+z) = 6 + 2 \\Rightarrow 2x + 2z = 8\\).  \nDas ist genau Zeile 3! Zeile 3 ist also **abhängig** von den ersten beiden.  \nEs bleiben nur zwei unabhängige Gleichungen für drei Unbekannte \\(\\Rightarrow\\) **unendlich viele Lösungen** mit einem freien Parameter."
       },
       {
-        "id": 26,
-        "level": 5,
-        "typ": "mc",
-        "frage": "Welchen Lösungsfall hat das LGS \\(\\begin{cases} x + y + z = 4 \\\\ 2x + 2y + 2z = 9 \\\\ x - y + z = 2 \\end{cases}\\)?",
-        "optionen": [
+        id: 26,
+        level: 5,
+        typ: "mc",
+        frage: "Welchen Lösungsfall hat das LGS \\(\\begin{cases} x + y + z = 4 \\\\ 2x + 2y + 2z = 9 \\\\ x - y + z = 2 \\end{cases}\\)?",
+        optionen: [
           "Genau eine Lösung",
           "Unendlich viele Lösungen",
           "Keine Lösung",
           "Unlösbar nur, wenn \\(x = 0\\)"
         ],
-        "korrekt": 2,
-        "tipp": "Vergleiche Zeile 1 und Zeile 2.",
-        "loesungsweg": "Zeile 1 mit 2 multipliziert ergibt \\(2x + 2y + 2z = 8\\).  \nZeile 2 sagt aber \\(2x + 2y + 2z = 9\\).  \nWiderspruch: \\(8 \\neq 9\\). Das LGS hat **keine Lösung**."
+        korrekt: 2,
+        tipp: "Vergleiche Zeile 1 und Zeile 2.",
+        loesungsweg: "Zeile 1 mit 2 multipliziert ergibt \\(2x + 2y + 2z = 8\\).  \nZeile 2 sagt aber \\(2x + 2y + 2z = 9\\).  \nWiderspruch: \\(8 \\neq 9\\). Das LGS hat **keine Lösung**."
       },
       {
-        "id": 27,
-        "level": 5,
-        "typ": "numerisch",
-        "frage": "Für welchen Wert des Parameters \\(a\\) hat das LGS \\(\\begin{cases} x + y + z = 3 \\\\ 2x + 2y + 2z = a \\\\ x + 2y - z = 1 \\end{cases}\\) unendlich viele Lösungen?",
-        "loesung": 6,
-        "toleranz": 0,
-        "tipp": "Zeile 2 muss ein Vielfaches von Zeile 1 sein, damit sie keine neue Information liefert.",
-        "loesungsweg": "Zeile 2 ist \\(2 \\cdot\\) Zeile 1, sofern \\(a = 2 \\cdot 3 = 6\\).  \nFür \\(a = 6\\) entfällt Zeile 2 als eigenständige Bedingung — es bleiben zwei unabhängige Gleichungen für drei Unbekannte und somit **unendlich viele Lösungen**.  \nFür \\(a \\neq 6\\) liegt ein Widerspruch vor (keine Lösung)."
+        id: 27,
+        level: 5,
+        typ: "numerisch",
+        frage: "Für welchen Wert des Parameters \\(a\\) hat das LGS \\(\\begin{cases} x + y + z = 3 \\\\ 2x + 2y + 2z = a \\\\ x + 2y - z = 1 \\end{cases}\\) unendlich viele Lösungen?",
+        loesung: 6,
+        toleranz: 0,
+        tipp: "Zeile 2 muss ein Vielfaches von Zeile 1 sein, damit sie keine neue Information liefert.",
+        loesungsweg: "Zeile 2 ist \\(2 \\cdot\\) Zeile 1, sofern \\(a = 2 \\cdot 3 = 6\\).  \nFür \\(a = 6\\) entfällt Zeile 2 als eigenständige Bedingung — es bleiben zwei unabhängige Gleichungen für drei Unbekannte und somit **unendlich viele Lösungen**.  \nFür \\(a \\neq 6\\) liegt ein Widerspruch vor (keine Lösung)."
       },
       {
-        "id": 28,
-        "level": 5,
-        "typ": "mc",
-        "frage": "Welchen Lösungsfall hat das LGS \\(\\begin{cases} x - y + z = 1 \\\\ 2x + y - z = 2 \\\\ 3x + 0 \\cdot y + 0 \\cdot z = 3 \\end{cases}\\)?",
-        "optionen": [
+        id: 28,
+        level: 5,
+        typ: "mc",
+        frage: "Welchen Lösungsfall hat das LGS \\(\\begin{cases} x - y + z = 1 \\\\ 2x + y - z = 2 \\\\ 3x + 0 \\cdot y + 0 \\cdot z = 3 \\end{cases}\\)?",
+        optionen: [
           "Genau eine Lösung mit \\(x = 1,\\, y = 0,\\, z = 0\\)",
           "Keine Lösung",
           "Unendlich viele Lösungen",
           "Nur die triviale Lösung \\(x = y = z = 0\\)"
         ],
-        "korrekt": 2,
-        "tipp": "Prüfe, ob die dritte Gleichung aus den ersten beiden folgt.",
-        "loesungsweg": "\\(Z_1 + Z_2\\): \\(3x + 0 \\cdot y + 0 \\cdot z = 3\\) — das ist exakt Zeile 3.  \nZeile 3 ist also eine Linearkombination der ersten beiden und liefert keine neue Information.  \nZwei unabhängige Gleichungen, drei Unbekannte \\(\\Rightarrow\\) **unendlich viele Lösungen**."
+        korrekt: 2,
+        tipp: "Prüfe, ob die dritte Gleichung aus den ersten beiden folgt.",
+        loesungsweg: "\\(Z_1 + Z_2\\): \\(3x + 0 \\cdot y + 0 \\cdot z = 3\\) — das ist exakt Zeile 3.  \nZeile 3 ist also eine Linearkombination der ersten beiden und liefert keine neue Information.  \nZwei unabhängige Gleichungen, drei Unbekannte \\(\\Rightarrow\\) **unendlich viele Lösungen**."
       },
       {
-        "id": 29,
-        "level": 5,
-        "typ": "numerisch",
-        "frage": "Für welchen Wert von \\(a\\) ist das LGS \\(\\begin{cases} x + y + z = 2 \\\\ 2x + y + z = 3 \\\\ 3x + 2y + 2z = a \\end{cases}\\) lösbar?",
-        "loesung": 5,
-        "toleranz": 0,
-        "tipp": "Beachte: Zeile 3 = Zeile 1 + Zeile 2. Was muss dann für die rechte Seite gelten?",
-        "loesungsweg": "\\(Z_1 + Z_2 = 3x + 2y + 2z = 2 + 3 = 5\\).  \nDas muss mit Zeile 3 übereinstimmen: \\(3x + 2y + 2z = a\\).  \nAlso ist das LGS genau dann lösbar, wenn \\(a = 5\\). In diesem Fall gibt es sogar unendlich viele Lösungen."
+        id: 29,
+        level: 5,
+        typ: "numerisch",
+        frage: "Für welchen Wert von \\(a\\) ist das LGS \\(\\begin{cases} x + y + z = 2 \\\\ 2x + y + z = 3 \\\\ 3x + 2y + 2z = a \\end{cases}\\) lösbar?",
+        loesung: 5,
+        toleranz: 0,
+        tipp: "Beachte: Zeile 3 = Zeile 1 + Zeile 2. Was muss dann für die rechte Seite gelten?",
+        loesungsweg: "\\(Z_1 + Z_2 = 3x + 2y + 2z = 2 + 3 = 5\\).  \nDas muss mit Zeile 3 übereinstimmen: \\(3x + 2y + 2z = a\\).  \nAlso ist das LGS genau dann lösbar, wenn \\(a = 5\\). In diesem Fall gibt es sogar unendlich viele Lösungen."
       },
       {
-        "id": 30,
-        "level": 5,
-        "typ": "mc",
-        "frage": "Welchen Lösungsfall hat das LGS \\(\\begin{cases} x + y + z = 3 \\\\ 2x + 2y + 2z = 7 \\\\ x - y + z = 1 \\end{cases}\\)?",
-        "optionen": [
+        id: 30,
+        level: 5,
+        typ: "mc",
+        frage: "Welchen Lösungsfall hat das LGS \\(\\begin{cases} x + y + z = 3 \\\\ 2x + 2y + 2z = 7 \\\\ x - y + z = 1 \\end{cases}\\)?",
+        optionen: [
           "Genau eine Lösung",
           "Keine Lösung",
           "Unendlich viele Lösungen",
           "Nur die triviale Lösung \\(x = y = z = 0\\)"
         ],
-        "korrekt": 1,
-        "tipp": "Vergleiche Zeile 2 mit dem Doppelten von Zeile 1.",
-        "loesungsweg": "Multipliziere Zeile 1 mit 2: \\(2x + 2y + 2z = 6\\).  \nZeile 2 sagt aber \\(2x + 2y + 2z = 7\\).  \nWiderspruch: \\(6 \\neq 7\\). Das LGS hat **keine Lösung**, unabhängig von Zeile 3."
+        korrekt: 1,
+        tipp: "Vergleiche Zeile 2 mit dem Doppelten von Zeile 1.",
+        loesungsweg: "Multipliziere Zeile 1 mit 2: \\(2x + 2y + 2z = 6\\).  \nZeile 2 sagt aber \\(2x + 2y + 2z = 7\\).  \nWiderspruch: \\(6 \\neq 7\\). Das LGS hat **keine Lösung**, unabhängig von Zeile 3."
       },
 
       // ========== LEVEL 6 — Experte (6 Aufgaben) ==========
       // Textaufgaben führen auf 3×3 LGS
       {
-        "id": 31,
-        "level": 6,
-        "typ": "numerisch",
-        "frage": "Die Summe dreier Zahlen \\(x, y, z\\) ist 12. Die zweite Zahl ist doppelt so groß wie die erste. Die dritte ist gleich der Summe der ersten beiden. Bestimme die kleinste Zahl \\(x\\).",
-        "loesung": 2,
-        "toleranz": 0,
-        "tipp": "Stelle aus den Bedingungen ein 3×3 LGS in \\(x, y, z\\) auf.",
-        "loesungsweg": "LGS: \\(\\begin{cases} x + y + z = 12 \\\\ y = 2x \\\\ z = x + y \\end{cases}\\)  \nWegen \\(y = 2x\\) ist \\(z = x + 2x = 3x\\). Einsetzen in die erste Gleichung:  \n\\(x + 2x + 3x = 12 \\Rightarrow 6x = 12 \\Rightarrow x = 2\\).  \nAlso \\(x = 2,\\; y = 4,\\; z = 6\\)."
+        id: 31,
+        level: 6,
+        typ: "numerisch",
+        frage: "Die Summe dreier Zahlen \\(x, y, z\\) ist 12. Die zweite Zahl ist doppelt so groß wie die erste. Die dritte ist gleich der Summe der ersten beiden. Bestimme die kleinste Zahl \\(x\\).",
+        loesung: 2,
+        toleranz: 0,
+        tipp: "Stelle aus den Bedingungen ein 3×3 LGS in \\(x, y, z\\) auf.",
+        loesungsweg: "LGS: \\(\\begin{cases} x + y + z = 12 \\\\ y = 2x \\\\ z = x + y \\end{cases}\\)  \nWegen \\(y = 2x\\) ist \\(z = x + 2x = 3x\\). Einsetzen in die erste Gleichung:  \n\\(x + 2x + 3x = 12 \\Rightarrow 6x = 12 \\Rightarrow x = 2\\).  \nAlso \\(x = 2,\\; y = 4,\\; z = 6\\)."
       },
       {
-        "id": 32,
-        "level": 6,
-        "typ": "numerisch",
-        "frage": "Ein Händler mischt drei Kaffeesorten A (6 €/kg), B (8 €/kg) und C (12 €/kg) zu einer 10-kg-Mischung zum Preis von 8 €/kg. Dabei verwendet er genauso viel von Sorte A wie von Sorte B. Wie viele kg von Sorte C sind in der Mischung?",
-        "loesung": 2,
-        "toleranz": 0,
-        "tipp": "Sei \\(a, b, c\\) die Menge (in kg) der drei Sorten. Die drei Gleichungen: Gesamtmenge, Gesamtpreis und \\(a = b\\).",
-        "loesungsweg": "LGS:  \n\\(\\begin{cases} a + b + c = 10 \\\\ 6a + 8b + 12c = 80 \\\\ a = b \\end{cases}\\)  \nSetze \\(a = b\\) ein: \\(2a + c = 10\\) und \\(14a + 12c = 80\\).  \nAus der ersten: \\(c = 10 - 2a\\). Einsetzen: \\(14a + 12(10 - 2a) = 80 \\Rightarrow 14a + 120 - 24a = 80 \\Rightarrow -10a = -40 \\Rightarrow a = 4\\).  \nAlso \\(a = b = 4\\) kg und \\(c = 10 - 8 = 2\\) kg."
+        id: 32,
+        level: 6,
+        typ: "numerisch",
+        frage: "Ein Händler mischt drei Kaffeesorten A (6 €/kg), B (8 €/kg) und C (12 €/kg) zu einer 10-kg-Mischung zum Preis von 8 €/kg. Dabei verwendet er genauso viel von Sorte A wie von Sorte B. Wie viele kg von Sorte C sind in der Mischung?",
+        loesung: 2,
+        toleranz: 0,
+        tipp: "Sei \\(a, b, c\\) die Menge (in kg) der drei Sorten. Die drei Gleichungen: Gesamtmenge, Gesamtpreis und \\(a = b\\).",
+        loesungsweg: "LGS:  \n\\(\\begin{cases} a + b + c = 10 \\\\ 6a + 8b + 12c = 80 \\\\ a = b \\end{cases}\\)  \nSetze \\(a = b\\) ein: \\(2a + c = 10\\) und \\(14a + 12c = 80\\).  \nAus der ersten: \\(c = 10 - 2a\\). Einsetzen: \\(14a + 12(10 - 2a) = 80 \\Rightarrow 14a + 120 - 24a = 80 \\Rightarrow -10a = -40 \\Rightarrow a = 4\\).  \nAlso \\(a = b = 4\\) kg und \\(c = 10 - 8 = 2\\) kg."
       },
       {
-        "id": 33,
-        "level": 6,
-        "typ": "numerisch",
-        "frage": "Drei Äpfel, zwei Birnen und ein Pfirsich kosten zusammen 7 €. Zwei Äpfel, drei Birnen und ein Pfirsich kosten ebenfalls 7 €. Ein Apfel, eine Birne und zwei Pfirsiche kosten 6 €. Wie teuer ist ein Pfirsich (in €)?",
-        "loesung": 2,
-        "toleranz": 0,
-        "tipp": "Sei \\(a\\) der Preis eines Apfels, \\(b\\) einer Birne, \\(p\\) eines Pfirsichs. Stelle das LGS auf und löse es.",
-        "loesungsweg": "LGS:  \n\\(\\begin{cases} 3a + 2b + p = 7 \\\\ 2a + 3b + p = 7 \\\\ a + b + 2p = 6 \\end{cases}\\)  \n\\(Z_1 - Z_2\\): \\(a - b = 0 \\Rightarrow a = b\\).  \nEinsetzen in \\(Z_1\\): \\(5a + p = 7 \\Rightarrow p = 7 - 5a\\).  \nEinsetzen in \\(Z_3\\): \\(2a + 2(7 - 5a) = 6 \\Rightarrow 2a + 14 - 10a = 6 \\Rightarrow -8a = -8 \\Rightarrow a = 1\\).  \nAlso \\(a = b = 1\\) € und \\(p = 7 - 5 = 2\\) €."
+        id: 33,
+        level: 6,
+        typ: "numerisch",
+        frage: "Drei Äpfel, zwei Birnen und ein Pfirsich kosten zusammen 7 €. Zwei Äpfel, drei Birnen und ein Pfirsich kosten ebenfalls 7 €. Ein Apfel, eine Birne und zwei Pfirsiche kosten 6 €. Wie teuer ist ein Pfirsich (in €)?",
+        loesung: 2,
+        toleranz: 0,
+        tipp: "Sei \\(a\\) der Preis eines Apfels, \\(b\\) einer Birne, \\(p\\) eines Pfirsichs. Stelle das LGS auf und löse es.",
+        loesungsweg: "LGS:  \n\\(\\begin{cases} 3a + 2b + p = 7 \\\\ 2a + 3b + p = 7 \\\\ a + b + 2p = 6 \\end{cases}\\)  \n\\(Z_1 - Z_2\\): \\(a - b = 0 \\Rightarrow a = b\\).  \nEinsetzen in \\(Z_1\\): \\(5a + p = 7 \\Rightarrow p = 7 - 5a\\).  \nEinsetzen in \\(Z_3\\): \\(2a + 2(7 - 5a) = 6 \\Rightarrow 2a + 14 - 10a = 6 \\Rightarrow -8a = -8 \\Rightarrow a = 1\\).  \nAlso \\(a = b = 1\\) € und \\(p = 7 - 5 = 2\\) €."
       },
       {
-        "id": 34,
-        "level": 6,
-        "typ": "numerisch",
-        "frage": "Drei Geschwister sind zusammen 45 Jahre alt. Der älteste ist doppelt so alt wie der jüngste. Der mittlere ist 5 Jahre älter als der jüngste. Wie alt ist der jüngste?",
-        "loesung": 10,
-        "toleranz": 0,
-        "tipp": "Sei \\(j, m, a\\) das Alter der drei Geschwister (jüngst, mittel, ältest). Stelle drei Gleichungen auf.",
-        "loesungsweg": "LGS:  \n\\(\\begin{cases} j + m + a = 45 \\\\ a = 2j \\\\ m = j + 5 \\end{cases}\\)  \nEinsetzen: \\(j + (j + 5) + 2j = 45 \\Rightarrow 4j + 5 = 45 \\Rightarrow j = 10\\).  \nAlso \\(j = 10,\\; m = 15,\\; a = 20\\)."
+        id: 34,
+        level: 6,
+        typ: "numerisch",
+        frage: "Drei Geschwister sind zusammen 45 Jahre alt. Der älteste ist doppelt so alt wie der jüngste. Der mittlere ist 5 Jahre älter als der jüngste. Wie alt ist der jüngste?",
+        loesung: 10,
+        toleranz: 0,
+        tipp: "Sei \\(j, m, a\\) das Alter der drei Geschwister (jüngst, mittel, ältest). Stelle drei Gleichungen auf.",
+        loesungsweg: "LGS:  \n\\(\\begin{cases} j + m + a = 45 \\\\ a = 2j \\\\ m = j + 5 \\end{cases}\\)  \nEinsetzen: \\(j + (j + 5) + 2j = 45 \\Rightarrow 4j + 5 = 45 \\Rightarrow j = 10\\).  \nAlso \\(j = 10,\\; m = 15,\\; a = 20\\)."
       },
       {
-        "id": 35,
-        "level": 6,
-        "typ": "numerisch",
-        "frage": "Ein Kino verkauft 100 Karten und nimmt 780 € ein. Kinderkarten kosten 5 €, Erwachsenenkarten 10 € und Seniorenkarten 7 €. Es wurden doppelt so viele Erwachsenenkarten wie Kinderkarten verkauft. Wie viele Seniorenkarten wurden verkauft?",
-        "loesung": 40,
-        "toleranz": 0,
-        "tipp": "Sei \\(k, e, s\\) die Anzahl der Kinder-, Erwachsenen- und Seniorenkarten.",
-        "loesungsweg": "LGS:  \n\\(\\begin{cases} k + e + s = 100 \\\\ 5k + 10e + 7s = 780 \\\\ e = 2k \\end{cases}\\)  \nEinsetzen \\(e = 2k\\): \\(3k + s = 100\\) und \\(25k + 7s = 780\\).  \nAus der ersten: \\(s = 100 - 3k\\). Einsetzen: \\(25k + 7(100 - 3k) = 780 \\Rightarrow 25k + 700 - 21k = 780 \\Rightarrow 4k = 80 \\Rightarrow k = 20\\).  \nAlso \\(k = 20,\\; e = 40,\\; s = 100 - 60 = 40\\).  \nProbe: \\(5 \\cdot 20 + 10 \\cdot 40 + 7 \\cdot 40 = 100 + 400 + 280 = 780\\) ✓"
+        id: 35,
+        level: 6,
+        typ: "numerisch",
+        frage: "Ein Kino verkauft 100 Karten und nimmt 780 € ein. Kinderkarten kosten 5 €, Erwachsenenkarten 10 € und Seniorenkarten 7 €. Es wurden doppelt so viele Erwachsenenkarten wie Kinderkarten verkauft. Wie viele Seniorenkarten wurden verkauft?",
+        loesung: 40,
+        toleranz: 0,
+        tipp: "Sei \\(k, e, s\\) die Anzahl der Kinder-, Erwachsenen- und Seniorenkarten.",
+        loesungsweg: "LGS:  \n\\(\\begin{cases} k + e + s = 100 \\\\ 5k + 10e + 7s = 780 \\\\ e = 2k \\end{cases}\\)  \nEinsetzen \\(e = 2k\\): \\(3k + s = 100\\) und \\(25k + 7s = 780\\).  \nAus der ersten: \\(s = 100 - 3k\\). Einsetzen: \\(25k + 7(100 - 3k) = 780 \\Rightarrow 25k + 700 - 21k = 780 \\Rightarrow 4k = 80 \\Rightarrow k = 20\\).  \nAlso \\(k = 20,\\; e = 40,\\; s = 100 - 60 = 40\\).  \nProbe: \\(5 \\cdot 20 + 10 \\cdot 40 + 7 \\cdot 40 = 100 + 400 + 280 = 780\\) ✓"
       },
       {
-        "id": 36,
-        "level": 6,
-        "typ": "numerisch",
-        "frage": "Drei Maschinen \\(A, B, C\\) produzieren zusammen 960 Teile pro Tag. Maschine \\(A\\) produziert doppelt so viele Teile wie \\(B\\). Maschine \\(C\\) produziert 60 Teile mehr als \\(B\\). Wie viele Teile produziert Maschine \\(A\\)?",
-        "loesung": 450,
-        "toleranz": 0,
-        "tipp": "Sei \\(a, b, c\\) die Tagesproduktion der Maschinen. Setze die beiden Relationen in die Summengleichung ein.",
-        "loesungsweg": "LGS:  \n\\(\\begin{cases} a + b + c = 960 \\\\ a = 2b \\\\ c = b + 60 \\end{cases}\\)  \nEinsetzen in die erste Gleichung: \\(2b + b + (b + 60) = 960 \\Rightarrow 4b + 60 = 960 \\Rightarrow 4b = 900 \\Rightarrow b = 225\\).  \nAlso \\(a = 450,\\; b = 225,\\; c = 285\\).  \nProbe: \\(450 + 225 + 285 = 960\\) ✓"
+        id: 36,
+        level: 6,
+        typ: "numerisch",
+        frage: "Drei Maschinen \\(A, B, C\\) produzieren zusammen 960 Teile pro Tag. Maschine \\(A\\) produziert doppelt so viele Teile wie \\(B\\). Maschine \\(C\\) produziert 60 Teile mehr als \\(B\\). Wie viele Teile produziert Maschine \\(A\\)?",
+        loesung: 450,
+        toleranz: 0,
+        tipp: "Sei \\(a, b, c\\) die Tagesproduktion der Maschinen. Setze die beiden Relationen in die Summengleichung ein.",
+        loesungsweg: "LGS:  \n\\(\\begin{cases} a + b + c = 960 \\\\ a = 2b \\\\ c = b + 60 \\end{cases}\\)  \nEinsetzen in die erste Gleichung: \\(2b + b + (b + 60) = 960 \\Rightarrow 4b + 60 = 960 \\Rightarrow 4b = 900 \\Rightarrow b = 225\\).  \nAlso \\(a = 450,\\; b = 225,\\; c = 285\\).  \nProbe: \\(450 + 225 + 285 = 960\\) ✓"
       }
     ];
     </script>

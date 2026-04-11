@@ -18,86 +18,86 @@
     const AUFGABEN = [
 
       // ═══════════════════════════════════════════════════════════
-      // LEVEL 1 — babyleicht: f'(x)-Werte ablesen → steigend/fallend
+      // LEVEL 1 — babyleicht: f"(x)-Werte ablesen → steigend/fallend
       // ═══════════════════════════════════════════════════════════
 
       {
-        id: 1, level: 1, typ: 'mc',
-        frage: 'Gegeben ist \\(f\'(2) = 5\\). Was gilt für \\(f\\) an der Stelle \\(x = 2\\)?',
+        id: 1, level: 1, typ: "mc",
+        frage: "Gegeben ist \\(f\"(2) = 5\\). Was gilt für \\(f\\) an der Stelle \\(x = 2\\)?",
         optionen: [
-          '\\(f\\) ist an \\(x=2\\) streng monoton steigend',
-          '\\(f\\) ist an \\(x=2\\) streng monoton fallend',
-          '\\(f\\) hat an \\(x=2\\) einen Extrempunkt',
-          'Keine Aussage möglich'
+          "\\(f\\) ist an \\(x=2\\) streng monoton steigend",
+          "\\(f\\) ist an \\(x=2\\) streng monoton fallend",
+          "\\(f\\) hat an \\(x=2\\) einen Extrempunkt",
+          "Keine Aussage möglich"
         ],
         korrekt: 0,
-        tipp: 'Ist \\(f\'(x) > 0\\), so steigt \\(f\\) an dieser Stelle.',
-        loesungsweg: 'Da \\(f\'(2) = 5 > 0\\), ist \\(f\\) an der Stelle \\(x = 2\\) streng monoton steigend.'
+        tipp: "Ist \\(f'(x) > 0\\), so steigt \\(f\\) an dieser Stelle.",
+        loesungsweg: "Da \\(f'(2) = 5 > 0\\), ist \\(f\\) an der Stelle \\(x = 2\\) streng monoton steigend."
       },
       {
-        id: 2, level: 1, typ: 'mc',
-        frage: 'Es gilt \\(f\'(3) = -2\\). Ist \\(f\\) an der Stelle \\(x = 3\\) steigend oder fallend?',
+        id: 2, level: 1, typ: "mc",
+        frage: "Es gilt \\(f'(3) = -2\\). Ist \\(f\\) an der Stelle \\(x = 3\\) steigend oder fallend?",
         optionen: [
-          'streng monoton steigend',
-          'streng monoton fallend',
-          'weder noch',
-          'kann man nicht sagen'
+          "streng monoton steigend",
+          "streng monoton fallend",
+          "weder noch",
+          "kann man nicht sagen"
         ],
         korrekt: 1,
-        tipp: 'Betrachte das Vorzeichen von \\(f\'(3)\\).',
-        loesungsweg: '\\(f\'(3) = -2 < 0\\) bedeutet, dass \\(f\\) an \\(x = 3\\) streng monoton fallend ist.'
+        tipp: "Betrachte das Vorzeichen von \\(f'(3)\\).",
+        loesungsweg: "\\(f'(3) = -2 < 0\\) bedeutet, dass \\(f\\) an \\(x = 3\\) streng monoton fallend ist."
       },
       {
-        id: 3, level: 1, typ: 'mc',
-        frage: 'An einer Stelle \\(x_0\\) gilt \\(f\'(x_0) = 0\\). Welche Aussage ist korrekt?',
+        id: 3, level: 1, typ: "mc",
+        frage: "An einer Stelle \\(x_0\\) gilt \\(f'(x_0) = 0\\). Welche Aussage ist korrekt?",
         optionen: [
-          '\\(f\\) hat dort immer ein Maximum',
-          '\\(f\\) hat dort immer ein Minimum',
-          '\\(f\\) hat dort eine waagerechte Tangente',
-          '\\(f\\) ist dort streng monoton steigend'
+          "\\(f\\) hat dort immer ein Maximum",
+          "\\(f\\) hat dort immer ein Minimum",
+          "\\(f\\) hat dort eine waagerechte Tangente",
+          "\\(f\\) ist dort streng monoton steigend"
         ],
         korrekt: 2,
-        tipp: '\\(f\'(x_0) = 0\\) bedeutet, dass die Tangente an \\(f\\) bei \\(x_0\\) die Steigung 0 hat.',
-        loesungsweg: '\\(f\'(x_0) = 0\\) bedeutet nur, dass die Tangente waagerecht ist. Es muss kein Extrempunkt sein (z.B. Sattelpunkt bei \\(f(x) = x^3\\)).'
+        tipp: "\\(f'(x_0) = 0\\) bedeutet, dass die Tangente an \\(f\\) bei \\(x_0\\) die Steigung 0 hat.",
+        loesungsweg: "\\(f'(x_0) = 0\\) bedeutet nur, dass die Tangente waagerecht ist. Es muss kein Extrempunkt sein (z.B. Sattelpunkt bei \\(f(x) = x^3\\))."
       },
       {
-        id: 4, level: 1, typ: 'mc',
-        frage: 'An welcher Stelle ist \\(f\\) fallend, wenn \\(f\'(1) = 3\\), \\(f\'(2) = -1\\), \\(f\'(3) = 0\\)?',
+        id: 4, level: 1, typ: "mc",
+        frage: "An welcher Stelle ist \\(f\\) fallend, wenn \\(f'(1) = 3\\), \\(f'(2) = -1\\), \\(f'(3) = 0\\)?",
         optionen: [
-          '\\(x = 1\\)',
-          '\\(x = 2\\)',
-          '\\(x = 3\\)',
-          'An keiner der Stellen'
+          "\\(x = 1\\)",
+          "\\(x = 2\\)",
+          "\\(x = 3\\)",
+          "An keiner der Stellen"
         ],
         korrekt: 1,
-        tipp: 'Suche die Stelle, an der \\(f\'(x) < 0\\) gilt.',
-        loesungsweg: 'Nur bei \\(x = 2\\) ist \\(f\'(2) = -1 < 0\\), also ist \\(f\\) dort fallend.'
+        tipp: "Suche die Stelle, an der \\(f'(x) < 0\\) gilt.",
+        loesungsweg: "Nur bei \\(x = 2\\) ist \\(f'(2) = -1 < 0\\), also ist \\(f\\) dort fallend."
       },
       {
-        id: 5, level: 1, typ: 'mc',
-        frage: 'Gegeben: \\(f\'(x) > 0\\) für alle \\(x \\in [1, 5]\\). Was bedeutet das?',
+        id: 5, level: 1, typ: "mc",
+        frage: "Gegeben: \\(f'(x) > 0\\) für alle \\(x \\in [1, 5]\\). Was bedeutet das?",
         optionen: [
-          '\\(f\\) ist auf \\([1,5]\\) streng monoton steigend',
-          '\\(f\\) ist auf \\([1,5]\\) streng monoton fallend',
-          '\\(f\\) hat auf \\([1,5]\\) genau einen Extrempunkt',
-          '\\(f\\) ist auf \\([1,5]\\) konstant'
+          "\\(f\\) ist auf \\([1,5]\\) streng monoton steigend",
+          "\\(f\\) ist auf \\([1,5]\\) streng monoton fallend",
+          "\\(f\\) hat auf \\([1,5]\\) genau einen Extrempunkt",
+          "\\(f\\) ist auf \\([1,5]\\) konstant"
         ],
         korrekt: 0,
-        tipp: 'Wenn die Ableitung auf einem ganzen Intervall positiv ist, steigt die Funktion dort überall.',
-        loesungsweg: '\\(f\'(x) > 0\\) auf \\([1,5]\\) \\(\\Rightarrow\\) \\(f\\) ist auf \\([1,5]\\) streng monoton steigend (Monotoniesatz).'
+        tipp: "Wenn die Ableitung auf einem ganzen Intervall positiv ist, steigt die Funktion dort überall.",
+        loesungsweg: "\\(f'(x) > 0\\) auf \\([1,5]\\) \\(\\Rightarrow\\) \\(f\\) ist auf \\([1,5]\\) streng monoton steigend (Monotoniesatz)."
       },
       {
-        id: 6, level: 1, typ: 'mc',
-        frage: 'Welche Bedingung muss gelten, damit \\(f\\) auf einem Intervall streng monoton fallend ist?',
+        id: 6, level: 1, typ: "mc",
+        frage: "Welche Bedingung muss gelten, damit \\(f\\) auf einem Intervall streng monoton fallend ist?",
         optionen: [
-          '\\(f\'(x) > 0\\) für alle \\(x\\) im Intervall',
-          '\\(f\'(x) < 0\\) für alle \\(x\\) im Intervall',
-          '\\(f\'(x) = 0\\) für alle \\(x\\) im Intervall',
-          '\\(f\'(x) \\geq 0\\) für alle \\(x\\) im Intervall'
+          "\\(f'(x) > 0\\) für alle \\(x\\) im Intervall",
+          "\\(f'(x) < 0\\) für alle \\(x\\) im Intervall",
+          "\\(f'(x) = 0\\) für alle \\(x\\) im Intervall",
+          "\\(f'(x) \\geq 0\\) für alle \\(x\\) im Intervall"
         ],
         korrekt: 1,
-        tipp: 'Fallend bedeutet: der Funktionswert nimmt ab. Was muss die Ableitung dann sein?',
-        loesungsweg: 'Nach dem Monotoniesatz ist \\(f\\) streng monoton fallend, wenn \\(f\'(x) < 0\\) für alle \\(x\\) im Intervall gilt.'
+        tipp: "Fallend bedeutet: der Funktionswert nimmt ab. Was muss die Ableitung dann sein?",
+        loesungsweg: "Nach dem Monotoniesatz ist \\(f\\) streng monoton fallend, wenn \\(f'(x) < 0\\) für alle \\(x\\) im Intervall gilt."
       },
 
       // ═══════════════════════════════════════════════════════════
@@ -105,218 +105,218 @@
       // ═══════════════════════════════════════════════════════════
 
       {
-        id: 7, level: 2, typ: 'mc',
-        frage: 'Gegeben: \\(f(x) = x^2 - 4x + 3\\). Auf welchem Intervall ist \\(f\\) streng monoton steigend?',
+        id: 7, level: 2, typ: "mc",
+        frage: "Gegeben: \\(f(x) = x^2 - 4x + 3\\). Auf welchem Intervall ist \\(f\\) streng monoton steigend?",
         optionen: [
-          '\\((-\\infty, 2)\\)',
-          '\\((2, \\infty)\\)',
-          '\\((-\\infty, \\infty)\\)',
-          '\\((-2, 2)\\)'
+          "\\((-\\infty, 2)\\)",
+          "\\((2, \\infty)\\)",
+          "\\((-\\infty, \\infty)\\)",
+          "\\((-2, 2)\\)"
         ],
         korrekt: 1,
-        tipp: 'Berechne \\(f\'(x)\\) und bestimme, wo \\(f\'(x) > 0\\) gilt.',
-        loesungsweg: '\\(f\'(x) = 2x - 4\\). Nullstelle: \\(x = 2\\). Für \\(x > 2\\) ist \\(f\'(x) > 0\\), also steigt \\(f\\) auf \\((2, \\infty)\\).'
+        tipp: "Berechne \\(f'(x)\\) und bestimme, wo \\(f'(x) > 0\\) gilt.",
+        loesungsweg: "\\(f'(x) = 2x - 4\\). Nullstelle: \\(x = 2\\). Für \\(x > 2\\) ist \\(f'(x) > 0\\), also steigt \\(f\\) auf \\((2, \\infty)\\)."
       },
       {
-        id: 8, level: 2, typ: 'mc',
-        frage: 'Gegeben: \\(f(x) = -x^2 + 6x\\). Wo ist \\(f\\) streng monoton fallend?',
+        id: 8, level: 2, typ: "mc",
+        frage: "Gegeben: \\(f(x) = -x^2 + 6x\\). Wo ist \\(f\\) streng monoton fallend?",
         optionen: [
-          '\\((-\\infty, 3)\\)',
-          '\\((3, \\infty)\\)',
-          '\\((-\\infty, -3)\\)',
-          '\\((-3, 3)\\)'
+          "\\((-\\infty, 3)\\)",
+          "\\((3, \\infty)\\)",
+          "\\((-\\infty, -3)\\)",
+          "\\((-3, 3)\\)"
         ],
         korrekt: 1,
-        tipp: 'Bilde \\(f\'(x)\\) und löse \\(f\'(x) < 0\\).',
-        loesungsweg: '\\(f\'(x) = -2x + 6\\). Nullstelle: \\(x = 3\\). Für \\(x > 3\\) ist \\(f\'(x) < 0\\), also fällt \\(f\\) auf \\((3, \\infty)\\).'
+        tipp: "Bilde \\(f'(x)\\) und löse \\(f'(x) < 0\\).",
+        loesungsweg: "\\(f'(x) = -2x + 6\\). Nullstelle: \\(x = 3\\). Für \\(x > 3\\) ist \\(f'(x) < 0\\), also fällt \\(f\\) auf \\((3, \\infty)\\)."
       },
       {
-        id: 9, level: 2, typ: 'numerisch',
-        frage: 'Gegeben: \\(f(x) = x^2 - 6x + 5\\). An welcher Stelle wechselt \\(f\\) von fallend zu steigend?',
+        id: 9, level: 2, typ: "numerisch",
+        frage: "Gegeben: \\(f(x) = x^2 - 6x + 5\\). An welcher Stelle wechselt \\(f\\) von fallend zu steigend?",
         loesung: 3,
         toleranz: 0,
-        tipp: 'Berechne \\(f\'(x)\\) und setze \\(f\'(x) = 0\\).',
-        loesungsweg: '\\(f\'(x) = 2x - 6 = 0 \\Rightarrow x = 3\\). Links von 3 ist \\(f\'(x) < 0\\) (fallend), rechts ist \\(f\'(x) > 0\\) (steigend).'
+        tipp: "Berechne \\(f'(x)\\) und setze \\(f'(x) = 0\\).",
+        loesungsweg: "\\(f'(x) = 2x - 6 = 0 \\Rightarrow x = 3\\). Links von 3 ist \\(f'(x) < 0\\) (fallend), rechts ist \\(f'(x) > 0\\) (steigend)."
       },
       {
-        id: 10, level: 2, typ: 'mc',
-        frage: 'Gegeben: \\(f(x) = 2x^3\\). Welche Aussage stimmt?',
+        id: 10, level: 2, typ: "mc",
+        frage: "Gegeben: \\(f(x) = 2x^3\\). Welche Aussage stimmt?",
         optionen: [
-          '\\(f\\) ist überall streng monoton steigend',
-          '\\(f\\) ist überall streng monoton fallend',
-          '\\(f\\) steigt nur für \\(x > 0\\)',
-          '\\(f\\) hat bei \\(x = 0\\) einen Extrempunkt'
+          "\\(f\\) ist überall streng monoton steigend",
+          "\\(f\\) ist überall streng monoton fallend",
+          "\\(f\\) steigt nur für \\(x > 0\\)",
+          "\\(f\\) hat bei \\(x = 0\\) einen Extrempunkt"
         ],
         korrekt: 0,
-        tipp: '\\(f\'(x) = 6x^2\\). Wo ist diese Ableitung negativ? Wo positiv? Wo null?',
-        loesungsweg: '\\(f\'(x) = 6x^2 \\geq 0\\) für alle \\(x\\), und \\(f\'(x) = 0\\) nur bei \\(x = 0\\). Da \\(f\'\\) nur an einer Stelle null wird, ist \\(f\\) auf ganz \\(\\mathbb{R}\\) streng monoton steigend.'
+        tipp: "\\(f'(x) = 6x^2\\). Wo ist diese Ableitung negativ? Wo positiv? Wo null?",
+        loesungsweg: "\\(f'(x) = 6x^2 \\geq 0\\) für alle \\(x\\), und \\(f'(x) = 0\\) nur bei \\(x = 0\\). Da \\(f'\\) nur an einer Stelle null wird, ist \\(f\\) auf ganz \\(\\mathbb{R}\\) streng monoton steigend."
       },
       {
-        id: 11, level: 2, typ: 'numerisch',
-        frage: 'Für \\(f(x) = x^2 + 2x - 8\\): Berechne \\(f\'(1)\\).',
+        id: 11, level: 2, typ: "numerisch",
+        frage: "Für \\(f(x) = x^2 + 2x - 8\\): Berechne \\(f'(1)\\).",
         loesung: 4,
         toleranz: 0,
-        tipp: 'Leite \\(f\\) ab und setze \\(x = 1\\) ein.',
-        loesungsweg: '\\(f\'(x) = 2x + 2\\). Einsetzen: \\(f\'(1) = 2 \\cdot 1 + 2 = 4\\).'
+        tipp: "Leite \\(f\\) ab und setze \\(x = 1\\) ein.",
+        loesungsweg: "\\(f'(x) = 2x + 2\\). Einsetzen: \\(f'(1) = 2 \\cdot 1 + 2 = 4\\)."
       },
       {
-        id: 12, level: 2, typ: 'mc',
-        frage: 'Gegeben: \\(f(x) = \\frac{1}{3}x^3 - 3x\\). Wo ist \\(f\\) streng monoton fallend?',
+        id: 12, level: 2, typ: "mc",
+        frage: "Gegeben: \\(f(x) = \\frac{1}{3}x^3 - 3x\\). Wo ist \\(f\\) streng monoton fallend?",
         optionen: [
-          '\\((-\\sqrt{3},\\; \\sqrt{3})\\)',
-          '\\((-\\infty, -\\sqrt{3}) \\cup (\\sqrt{3}, \\infty)\\)',
-          '\\((0, \\sqrt{3})\\)',
-          '\\((-\\sqrt{3}, 0)\\)'
+          "\\((-\\sqrt{3},\\; \\sqrt{3})\\)",
+          "\\((-\\infty, -\\sqrt{3}) \\cup (\\sqrt{3}, \\infty)\\)",
+          "\\((0, \\sqrt{3})\\)",
+          "\\((-\\sqrt{3}, 0)\\)"
         ],
         korrekt: 0,
-        tipp: 'Berechne \\(f\'(x)\\) und löse \\(f\'(x) < 0\\).',
-        loesungsweg: '\\(f\'(x) = x^2 - 3\\). Nullstellen: \\(x = \\pm\\sqrt{3}\\). \\(f\'(x) < 0\\) für \\(x \\in (-\\sqrt{3}, \\sqrt{3})\\), also fällt \\(f\\) dort.'
+        tipp: "Berechne \\(f'(x)\\) und löse \\(f'(x) < 0\\).",
+        loesungsweg: "\\(f'(x) = x^2 - 3\\). Nullstellen: \\(x = \\pm\\sqrt{3}\\). \\(f'(x) < 0\\) für \\(x \\in (-\\sqrt{3}, \\sqrt{3})\\), also fällt \\(f\\) dort."
       },
 
       // ═══════════════════════════════════════════════════════════
-      // LEVEL 3 — nervenschonend: Monotonie bei Polynomen 3. Grades, f'' für Krümmung
+      // LEVEL 3 — nervenschonend: Monotonie bei Polynomen 3. Grades, f"" für Krümmung
       // ═══════════════════════════════════════════════════════════
 
       {
-        id: 13, level: 3, typ: 'mc',
-        frage: 'Gegeben: \\(f(x) = x^3 - 3x^2 + 2\\). Wo ist \\(f\\) streng monoton steigend?',
+        id: 13, level: 3, typ: "mc",
+        frage: "Gegeben: \\(f(x) = x^3 - 3x^2 + 2\\). Wo ist \\(f\\) streng monoton steigend?",
         optionen: [
-          '\\((-\\infty, 0) \\cup (2, \\infty)\\)',
-          '\\((0, 2)\\)',
-          '\\((-\\infty, -1) \\cup (3, \\infty)\\)',
-          '\\((1, \\infty)\\)'
+          "\\((-\\infty, 0) \\cup (2, \\infty)\\)",
+          "\\((0, 2)\\)",
+          "\\((-\\infty, -1) \\cup (3, \\infty)\\)",
+          "\\((1, \\infty)\\)"
         ],
         korrekt: 0,
-        tipp: '\\(f\'(x) = 3x^2 - 6x = 3x(x-2)\\). Bestimme die Nullstellen und das Vorzeichen.',
-        loesungsweg: '\\(f\'(x) = 3x^2 - 6x = 3x(x - 2)\\). Nullstellen: \\(x = 0\\) und \\(x = 2\\). \\(f\'(x) > 0\\) für \\(x < 0\\) oder \\(x > 2\\). Also steigt \\(f\\) auf \\((-\\infty, 0) \\cup (2, \\infty)\\).'
+        tipp: "\\(f'(x) = 3x^2 - 6x = 3x(x-2)\\). Bestimme die Nullstellen und das Vorzeichen.",
+        loesungsweg: "\\(f'(x) = 3x^2 - 6x = 3x(x - 2)\\). Nullstellen: \\(x = 0\\) und \\(x = 2\\). \\(f'(x) > 0\\) für \\(x < 0\\) oder \\(x > 2\\). Also steigt \\(f\\) auf \\((-\\infty, 0) \\cup (2, \\infty)\\)."
       },
       {
-        id: 14, level: 3, typ: 'numerisch',
-        frage: 'Gegeben: \\(f(x) = x^3 - 6x^2 + 9x + 1\\). Berechne \\(f\'\'(x)\\) und gib \\(f\'\'(0)\\) an.',
+        id: 14, level: 3, typ: "numerisch",
+        frage: "Gegeben: \\(f(x) = x^3 - 6x^2 + 9x + 1\\). Berechne \\(f''(x)\\) und gib \\(f''(0)\\) an.",
         loesung: -12,
         toleranz: 0,
-        tipp: 'Leite zuerst \\(f\'(x)\\) ab, dann nochmal \\(f\'\'(x)\\). Setze \\(x = 0\\) ein.',
-        loesungsweg: '\\(f\'(x) = 3x^2 - 12x + 9\\), \\(f\'\'(x) = 6x - 12\\). Einsetzen: \\(f\'\'(0) = 6 \\cdot 0 - 12 = -12\\).'
+        tipp: "Leite zuerst \\(f'(x)\\) ab, dann nochmal \\(f''(x)\\). Setze \\(x = 0\\) ein.",
+        loesungsweg: "\\(f'(x) = 3x^2 - 12x + 9\\), \\(f''(x) = 6x - 12\\). Einsetzen: \\(f''(0) = 6 \\cdot 0 - 12 = -12\\)."
       },
       {
-        id: 15, level: 3, typ: 'mc',
-        frage: 'Was bedeutet \\(f\'\'(x) > 0\\) auf einem Intervall?',
+        id: 15, level: 3, typ: "mc",
+        frage: "Was bedeutet \\(f''(x) > 0\\) auf einem Intervall?",
         optionen: [
-          'Der Graph ist dort linksgekrümmt (konvex)',
-          'Der Graph ist dort rechtsgekrümmt (konkav)',
-          'Die Funktion ist dort steigend',
-          'Die Funktion hat dort ein Maximum'
+          "Der Graph ist dort linksgekrümmt (konvex)",
+          "Der Graph ist dort rechtsgekrümmt (konkav)",
+          "Die Funktion ist dort steigend",
+          "Die Funktion hat dort ein Maximum"
         ],
         korrekt: 0,
-        tipp: 'Die zweite Ableitung beschreibt die Krümmung, nicht die Steigung.',
-        loesungsweg: '\\(f\'\'(x) > 0\\) bedeutet, dass \\(f\'\\) steigend ist — der Graph ist linksgekrümmt (Schüssel-Form, konvex).'
+        tipp: "Die zweite Ableitung beschreibt die Krümmung, nicht die Steigung.",
+        loesungsweg: "\\(f''(x) > 0\\) bedeutet, dass \\(f'\\) steigend ist — der Graph ist linksgekrümmt (Schüssel-Form, konvex)."
       },
       {
-        id: 16, level: 3, typ: 'mc',
-        frage: 'Gegeben: \\(f(x) = x^3 - 3x\\). Wo ist der Graph rechtsgekrümmt?',
+        id: 16, level: 3, typ: "mc",
+        frage: "Gegeben: \\(f(x) = x^3 - 3x\\). Wo ist der Graph rechtsgekrümmt?",
         optionen: [
-          '\\((-\\infty, 0)\\)',
-          '\\((0, \\infty)\\)',
-          '\\((-\\infty, 1)\\)',
-          '\\((-1, 1)\\)'
+          "\\((-\\infty, 0)\\)",
+          "\\((0, \\infty)\\)",
+          "\\((-\\infty, 1)\\)",
+          "\\((-1, 1)\\)"
         ],
         korrekt: 0,
-        tipp: 'Berechne \\(f\'\'(x)\\) und bestimme, wo \\(f\'\'(x) < 0\\) gilt (rechtsgekrümmt).',
-        loesungsweg: '\\(f\'(x) = 3x^2 - 3\\), \\(f\'\'(x) = 6x\\). Rechtsgekrümmt: \\(f\'\'(x) < 0 \\Rightarrow 6x < 0 \\Rightarrow x < 0\\), also auf \\((-\\infty, 0)\\).'
+        tipp: "Berechne \\(f''(x)\\) und bestimme, wo \\(f''(x) < 0\\) gilt (rechtsgekrümmt).",
+        loesungsweg: "\\(f'(x) = 3x^2 - 3\\), \\(f''(x) = 6x\\). Rechtsgekrümmt: \\(f''(x) < 0 \\Rightarrow 6x < 0 \\Rightarrow x < 0\\), also auf \\((-\\infty, 0)\\)."
       },
       {
-        id: 17, level: 3, typ: 'numerisch',
-        frage: 'Gegeben: \\(f(x) = 2x^3 - 12x^2 + 18x\\). Bestimme die größere Nullstelle von \\(f\'(x)\\).',
+        id: 17, level: 3, typ: "numerisch",
+        frage: "Gegeben: \\(f(x) = 2x^3 - 12x^2 + 18x\\). Bestimme die größere Nullstelle von \\(f'(x)\\).",
         loesung: 3,
         toleranz: 0,
-        tipp: 'Berechne \\(f\'(x)\\) und löse \\(f\'(x) = 0\\).',
-        loesungsweg: '\\(f\'(x) = 6x^2 - 24x + 18 = 6(x^2 - 4x + 3) = 6(x-1)(x-3)\\). Nullstellen: \\(x = 1\\) und \\(x = 3\\). Die größere ist \\(x = 3\\).'
+        tipp: "Berechne \\(f'(x)\\) und löse \\(f'(x) = 0\\).",
+        loesungsweg: "\\(f'(x) = 6x^2 - 24x + 18 = 6(x^2 - 4x + 3) = 6(x-1)(x-3)\\). Nullstellen: \\(x = 1\\) und \\(x = 3\\). Die größere ist \\(x = 3\\)."
       },
       {
-        id: 18, level: 3, typ: 'mc',
-        frage: 'Gegeben: \\(f(x) = -x^3 + 6x^2 - 9x + 2\\). Auf welchem Intervall ist \\(f\\) streng monoton fallend?',
+        id: 18, level: 3, typ: "mc",
+        frage: "Gegeben: \\(f(x) = -x^3 + 6x^2 - 9x + 2\\). Auf welchem Intervall ist \\(f\\) streng monoton fallend?",
         optionen: [
-          '\\((-\\infty, 1) \\cup (3, \\infty)\\)',
-          '\\((1, 3)\\)',
-          '\\((-\\infty, 0)\\)',
-          '\\((0, 3)\\)'
+          "\\((-\\infty, 1) \\cup (3, \\infty)\\)",
+          "\\((1, 3)\\)",
+          "\\((-\\infty, 0)\\)",
+          "\\((0, 3)\\)"
         ],
         korrekt: 0,
-        tipp: '\\(f\'(x) = -3x^2 + 12x - 9 = -3(x^2 - 4x + 3) = -3(x-1)(x-3)\\). Wo ist \\(f\' < 0\\)?',
-        loesungsweg: '\\(f\'(x) = -3(x-1)(x-3)\\). Vorzeichentabelle: \\(f\'(x) < 0\\) für \\(x < 1\\) und \\(x > 3\\). Also fällt \\(f\\) auf \\((-\\infty, 1) \\cup (3, \\infty)\\).'
+        tipp: "\\(f'(x) = -3x^2 + 12x - 9 = -3(x^2 - 4x + 3) = -3(x-1)(x-3)\\). Wo ist \\(f' < 0\\)?",
+        loesungsweg: "\\(f'(x) = -3(x-1)(x-3)\\). Vorzeichentabelle: \\(f'(x) < 0\\) für \\(x < 1\\) und \\(x > 3\\). Also fällt \\(f\\) auf \\((-\\infty, 1) \\cup (3, \\infty)\\)."
       },
 
       // ═══════════════════════════════════════════════════════════
-      // LEVEL 4 — mittel: Monotonietabelle, Links-/Rechtskrümmung aus f''
+      // LEVEL 4 — mittel: Monotonietabelle, Links-/Rechtskrümmung aus f""
       // ═══════════════════════════════════════════════════════════
 
       {
-        id: 19, level: 4, typ: 'mc',
-        frage: 'Gegeben: \\(f(x) = x^4 - 4x^3\\). Die Ableitung ist \\(f\'(x) = 4x^3 - 12x^2 = 4x^2(x-3)\\). Welches Monotonieverhalten hat \\(f\\)?',
+        id: 19, level: 4, typ: "mc",
+        frage: "Gegeben: \\(f(x) = x^4 - 4x^3\\). Die Ableitung ist \\(f'(x) = 4x^3 - 12x^2 = 4x^2(x-3)\\). Welches Monotonieverhalten hat \\(f\\)?",
         optionen: [
-          'Fallend auf \\((-\\infty, 3)\\), steigend auf \\((3, \\infty)\\)',
-          'Steigend auf \\((-\\infty, 0)\\), fallend auf \\((0, 3)\\), steigend auf \\((3, \\infty)\\)',
-          'Fallend auf \\((-\\infty, 0)\\), steigend auf \\((0, \\infty)\\)',
-          'Steigend auf \\((-\\infty, 0) \\cup (3, \\infty)\\), fallend auf \\((0, 3)\\)'
+          "Fallend auf \\((-\\infty, 3)\\), steigend auf \\((3, \\infty)\\)",
+          "Steigend auf \\((-\\infty, 0)\\), fallend auf \\((0, 3)\\), steigend auf \\((3, \\infty)\\)",
+          "Fallend auf \\((-\\infty, 0)\\), steigend auf \\((0, \\infty)\\)",
+          "Steigend auf \\((-\\infty, 0) \\cup (3, \\infty)\\), fallend auf \\((0, 3)\\)"
         ],
         korrekt: 0,
-        tipp: 'Beachte: \\(4x^2 \\geq 0\\) für alle \\(x\\). Das Vorzeichen hängt nur von \\((x-3)\\) ab.',
-        loesungsweg: '\\(f\'(x) = 4x^2(x-3)\\). Da \\(4x^2 \\geq 0\\), bestimmt \\((x-3)\\) das Vorzeichen. Für \\(x < 3\\): \\(f\'(x) \\leq 0\\) (fallend). Für \\(x > 3\\): \\(f\'(x) > 0\\) (steigend). Bei \\(x = 0\\) ist \\(f\'=0\\), aber kein Vorzeichenwechsel — kein Extrempunkt!'
+        tipp: "Beachte: \\(4x^2 \\geq 0\\) für alle \\(x\\). Das Vorzeichen hängt nur von \\((x-3)\\) ab.",
+        loesungsweg: "\\(f'(x) = 4x^2(x-3)\\). Da \\(4x^2 \\geq 0\\), bestimmt \\((x-3)\\) das Vorzeichen. Für \\(x < 3\\): \\(f'(x) \\leq 0\\) (fallend). Für \\(x > 3\\): \\(f'(x) > 0\\) (steigend). Bei \\(x = 0\\) ist \\(f'=0\\), aber kein Vorzeichenwechsel — kein Extrempunkt!"
       },
       {
-        id: 20, level: 4, typ: 'mc',
-        frage: 'Gegeben: \\(f(x) = x^3 - 6x^2 + 12x - 5\\). Es gilt \\(f\'\'(x) = 6x - 12\\). Welche Krümmung hat der Graph?',
+        id: 20, level: 4, typ: "mc",
+        frage: "Gegeben: \\(f(x) = x^3 - 6x^2 + 12x - 5\\). Es gilt \\(f''(x) = 6x - 12\\). Welche Krümmung hat der Graph?",
         optionen: [
-          'Rechtsgekrümmt auf \\((-\\infty, 2)\\), linksgekrümmt auf \\((2, \\infty)\\)',
-          'Linksgekrümmt auf \\((-\\infty, 2)\\), rechtsgekrümmt auf \\((2, \\infty)\\)',
-          'Überall linksgekrümmt',
-          'Überall rechtsgekrümmt'
+          "Rechtsgekrümmt auf \\((-\\infty, 2)\\), linksgekrümmt auf \\((2, \\infty)\\)",
+          "Linksgekrümmt auf \\((-\\infty, 2)\\), rechtsgekrümmt auf \\((2, \\infty)\\)",
+          "Überall linksgekrümmt",
+          "Überall rechtsgekrümmt"
         ],
         korrekt: 0,
-        tipp: 'Setze \\(f\'\'(x) = 0\\) und prüfe das Vorzeichen links und rechts der Nullstelle.',
-        loesungsweg: '\\(f\'\'(x) = 6x - 12 = 0 \\Rightarrow x = 2\\). Für \\(x < 2\\): \\(f\'\'(x) < 0\\) → rechtsgekrümmt. Für \\(x > 2\\): \\(f\'\'(x) > 0\\) → linksgekrümmt.'
+        tipp: "Setze \\(f''(x) = 0\\) und prüfe das Vorzeichen links und rechts der Nullstelle.",
+        loesungsweg: "\\(f''(x) = 6x - 12 = 0 \\Rightarrow x = 2\\). Für \\(x < 2\\): \\(f''(x) < 0\\) → rechtsgekrümmt. Für \\(x > 2\\): \\(f''(x) > 0\\) → linksgekrümmt."
       },
       {
-        id: 21, level: 4, typ: 'numerisch',
-        frage: 'Gegeben: \\(f(x) = x^4 - 8x^2\\). Berechne \\(f\'\'(x)\\) und bestimme, bei welchem positiven \\(x\\)-Wert ein Wendepunkt liegt (gerundet auf zwei Dezimalen).',
+        id: 21, level: 4, typ: "numerisch",
+        frage: "Gegeben: \\(f(x) = x^4 - 8x^2\\). Berechne \\(f''(x)\\) und bestimme, bei welchem positiven \\(x\\)-Wert ein Wendepunkt liegt (gerundet auf zwei Dezimalen).",
         loesung: 1.15,
         toleranz: 0.02,
-        tipp: '\\(f\'\'(x) = 12x^2 - 16\\). Setze \\(f\'\'(x) = 0\\).',
-        loesungsweg: '\\(f\'(x) = 4x^3 - 16x\\), \\(f\'\'(x) = 12x^2 - 16 = 0 \\Rightarrow x^2 = \\frac{4}{3} \\Rightarrow x = \\pm\\frac{2}{\\sqrt{3}} \\approx \\pm 1{,}15\\). Der positive Wendepunkt liegt bei \\(x \\approx 1{,}15\\).'
+        tipp: "\\(f''(x) = 12x^2 - 16\\). Setze \\(f''(x) = 0\\).",
+        loesungsweg: "\\(f'(x) = 4x^3 - 16x\\), \\(f''(x) = 12x^2 - 16 = 0 \\Rightarrow x^2 = \\frac{4}{3} \\Rightarrow x = \\pm\\frac{2}{\\sqrt{3}} \\approx \\pm 1{,}15\\). Der positive Wendepunkt liegt bei \\(x \\approx 1{,}15\\)."
       },
       {
-        id: 22, level: 4, typ: 'mc',
-        frage: 'Gegeben: \\(f\'(x) = (x+1)(x-2)^2\\). Vervollständige die Monotonietabelle. Wo ist \\(f\\) streng monoton steigend?',
+        id: 22, level: 4, typ: "mc",
+        frage: "Gegeben: \\(f'(x) = (x+1)(x-2)^2\\). Vervollständige die Monotonietabelle. Wo ist \\(f\\) streng monoton steigend?",
         optionen: [
-          '\\((-1, \\infty)\\) (ohne \\(x=2\\), wo \\(f\'=0\\))',
-          '\\((-\\infty, -1)\\)',
-          '\\((-1, 2)\\) und \\((2, \\infty)\\)',
-          '\\((-\\infty, -1) \\cup (2, \\infty)\\)'
+          "\\((-1, \\infty)\\) (ohne \\(x=2\\), wo \\(f'=0\\))",
+          "\\((-\\infty, -1)\\)",
+          "\\((-1, 2)\\) und \\((2, \\infty)\\)",
+          "\\((-\\infty, -1) \\cup (2, \\infty)\\)"
         ],
         korrekt: 2,
-        tipp: 'Beachte: \\((x-2)^2 \\geq 0\\) immer. Das Vorzeichen hängt von \\((x+1)\\) ab.',
-        loesungsweg: '\\(f\'(x) = (x+1)(x-2)^2\\). Da \\((x-2)^2 \\geq 0\\), bestimmt \\((x+1)\\) das Vorzeichen. Für \\(x > -1\\): \\(f\'(x) \\geq 0\\), also steigend auf \\((-1, 2)\\) und \\((2, \\infty)\\). Für \\(x < -1\\): \\(f\'(x) < 0\\), also fallend.'
+        tipp: "Beachte: \\((x-2)^2 \\geq 0\\) immer. Das Vorzeichen hängt von \\((x+1)\\) ab.",
+        loesungsweg: "\\(f'(x) = (x+1)(x-2)^2\\). Da \\((x-2)^2 \\geq 0\\), bestimmt \\((x+1)\\) das Vorzeichen. Für \\(x > -1\\): \\(f'(x) \\geq 0\\), also steigend auf \\((-1, 2)\\) und \\((2, \\infty)\\). Für \\(x < -1\\): \\(f'(x) < 0\\), also fallend."
       },
       {
-        id: 23, level: 4, typ: 'numerisch',
-        frage: 'Gegeben: \\(f(x) = \\frac{1}{4}x^4 - 2x^2 + 1\\). An welcher positiven Stelle \\(x\\) hat \\(f\\) einen Wendepunkt? (Gerundet auf 2 Dezimalen.)',
+        id: 23, level: 4, typ: "numerisch",
+        frage: "Gegeben: \\(f(x) = \\frac{1}{4}x^4 - 2x^2 + 1\\). An welcher positiven Stelle \\(x\\) hat \\(f\\) einen Wendepunkt? (Gerundet auf 2 Dezimalen.)",
         loesung: 1.15,
         toleranz: 0.02,
-        tipp: 'Berechne \\(f\'\'(x) = 3x^2 - 4\\) und löse \\(f\'\'(x) = 0\\).',
-        loesungsweg: '\\(f\'(x) = x^3 - 4x\\), \\(f\'\'(x) = 3x^2 - 4 = 0 \\Rightarrow x^2 = \\frac{4}{3} \\Rightarrow x = \\frac{2\\sqrt{3}}{3} \\approx 1{,}15\\).'
+        tipp: "Berechne \\(f''(x) = 3x^2 - 4\\) und löse \\(f''(x) = 0\\).",
+        loesungsweg: "\\(f'(x) = x^3 - 4x\\), \\(f''(x) = 3x^2 - 4 = 0 \\Rightarrow x^2 = \\frac{4}{3} \\Rightarrow x = \\frac{2\\sqrt{3}}{3} \\approx 1{,}15\\)."
       },
       {
-        id: 24, level: 4, typ: 'mc',
-        frage: 'Die zweite Ableitung einer Funktion ist \\(f\'\'(x) = -6x + 12\\). In welchen Bereichen ist der Graph links- bzw. rechtsgekrümmt?',
+        id: 24, level: 4, typ: "mc",
+        frage: "Die zweite Ableitung einer Funktion ist \\(f''(x) = -6x + 12\\). In welchen Bereichen ist der Graph links- bzw. rechtsgekrümmt?",
         optionen: [
-          'Linksgekrümmt für \\(x < 2\\), rechtsgekrümmt für \\(x > 2\\)',
-          'Rechtsgekrümmt für \\(x < 2\\), linksgekrümmt für \\(x > 2\\)',
-          'Überall linksgekrümmt',
-          'Überall rechtsgekrümmt'
+          "Linksgekrümmt für \\(x < 2\\), rechtsgekrümmt für \\(x > 2\\)",
+          "Rechtsgekrümmt für \\(x < 2\\), linksgekrümmt für \\(x > 2\\)",
+          "Überall linksgekrümmt",
+          "Überall rechtsgekrümmt"
         ],
         korrekt: 0,
-        tipp: '\\(f\'\'(x) = 0\\) bei \\(x = 2\\). Prüfe das Vorzeichen links und rechts davon.',
-        loesungsweg: '\\(f\'\'(x) = -6x + 12 = 0 \\Rightarrow x = 2\\). Für \\(x < 2\\): \\(f\'\'(x) > 0\\) → linksgekrümmt. Für \\(x > 2\\): \\(f\'\'(x) < 0\\) → rechtsgekrümmt.'
+        tipp: "\\(f''(x) = 0\\) bei \\(x = 2\\). Prüfe das Vorzeichen links und rechts davon.",
+        loesungsweg: "\\(f''(x) = -6x + 12 = 0 \\Rightarrow x = 2\\). Für \\(x < 2\\): \\(f''(x) > 0\\) → linksgekrümmt. Für \\(x > 2\\): \\(f''(x) < 0\\) → rechtsgekrümmt."
       },
 
       // ═══════════════════════════════════════════════════════════
@@ -324,67 +324,67 @@
       // ═══════════════════════════════════════════════════════════
 
       {
-        id: 25, level: 5, typ: 'numerisch',
-        frage: 'Gegeben: \\(f(x) = x^4 - 8x^2 + 7\\). Bestimme die Anzahl der Wendepunkte von \\(f\\).',
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Gegeben: \\(f(x) = x^4 - 8x^2 + 7\\). Bestimme die Anzahl der Wendepunkte von \\(f\\).",
         loesung: 2,
         toleranz: 0,
-        tipp: 'Berechne \\(f\'\'(x)\\) und bestimme, wie viele Nullstellen mit Vorzeichenwechsel es gibt.',
-        loesungsweg: '\\(f\'(x) = 4x^3 - 16x\\), \\(f\'\'(x) = 12x^2 - 16\\). Nullstellen: \\(12x^2 = 16 \\Rightarrow x^2 = \\frac{4}{3} \\Rightarrow x = \\pm\\frac{2}{\\sqrt{3}}\\). Bei beiden wechselt \\(f\'\'\\) das Vorzeichen → 2 Wendepunkte.'
+        tipp: "Berechne \\(f''(x)\\) und bestimme, wie viele Nullstellen mit Vorzeichenwechsel es gibt.",
+        loesungsweg: "\\(f'(x) = 4x^3 - 16x\\), \\(f''(x) = 12x^2 - 16\\). Nullstellen: \\(12x^2 = 16 \\Rightarrow x^2 = \\frac{4}{3} \\Rightarrow x = \\pm\\frac{2}{\\sqrt{3}}\\). Bei beiden wechselt \\(f''\\) das Vorzeichen → 2 Wendepunkte."
       },
       {
-        id: 26, level: 5, typ: 'mc',
-        frage: 'Gegeben: \\(f(x) = x^4 - 4x^3 + 4x^2\\). Auf welchen Intervallen ist \\(f\\) streng monoton steigend?',
+        id: 26, level: 5, typ: "mc",
+        frage: "Gegeben: \\(f(x) = x^4 - 4x^3 + 4x^2\\). Auf welchen Intervallen ist \\(f\\) streng monoton steigend?",
         optionen: [
-          '\\((0, 1) \\cup (2, \\infty)\\)',
-          '\\((-\\infty, 0) \\cup (1, 2)\\)',
-          '\\((0, \\infty)\\)',
-          '\\((1, \\infty)\\)'
+          "\\((0, 1) \\cup (2, \\infty)\\)",
+          "\\((-\\infty, 0) \\cup (1, 2)\\)",
+          "\\((0, \\infty)\\)",
+          "\\((1, \\infty)\\)"
         ],
         korrekt: 0,
-        tipp: '\\(f\'(x) = 4x^3 - 12x^2 + 8x = 4x(x-1)(x-2)\\). Erstelle eine Vorzeichentabelle.',
-        loesungsweg: '\\(f\'(x) = 4x(x-1)(x-2)\\). Nullstellen: \\(x = 0, 1, 2\\). Vorzeichentabelle: Für \\(x < 0\\): (−)(−)(−) = − (fallend). Für \\(0 < x < 1\\): (+)(−)(−) = + (steigend). Für \\(1 < x < 2\\): (+)(+)(−) = − (fallend). Für \\(x > 2\\): (+)(+)(+) = + (steigend). Also steigt \\(f\\) auf \\((0,1) \\cup (2, \\infty)\\).'
+        tipp: "\\(f'(x) = 4x^3 - 12x^2 + 8x = 4x(x-1)(x-2)\\). Erstelle eine Vorzeichentabelle.",
+        loesungsweg: "\\(f'(x) = 4x(x-1)(x-2)\\). Nullstellen: \\(x = 0, 1, 2\\). Vorzeichentabelle: Für \\(x < 0\\): (−)(−)(−) = − (fallend). Für \\(0 < x < 1\\): (+)(−)(−) = + (steigend). Für \\(1 < x < 2\\): (+)(+)(−) = − (fallend). Für \\(x > 2\\): (+)(+)(+) = + (steigend). Also steigt \\(f\\) auf \\((0,1) \\cup (2, \\infty)\\)."
       },
       {
-        id: 27, level: 5, typ: 'numerisch',
-        frage: 'Gegeben: \\(f(x) = x^3 - 12x + 5\\). Bestimme die Länge des Intervalls, auf dem \\(f\\) streng monoton fallend ist.',
+        id: 27, level: 5, typ: "numerisch",
+        frage: "Gegeben: \\(f(x) = x^3 - 12x + 5\\). Bestimme die Länge des Intervalls, auf dem \\(f\\) streng monoton fallend ist.",
         loesung: 4,
         toleranz: 0,
-        tipp: '\\(f\'(x) = 3x^2 - 12 = 3(x^2 - 4) = 3(x-2)(x+2)\\). Auf welchem Intervall ist \\(f\' < 0\\)?',
-        loesungsweg: '\\(f\'(x) = 3(x-2)(x+2) < 0\\) für \\(x \\in (-2, 2)\\). Die Länge des Intervalls beträgt \\(2 - (-2) = 4\\).'
+        tipp: "\\(f'(x) = 3x^2 - 12 = 3(x^2 - 4) = 3(x-2)(x+2)\\). Auf welchem Intervall ist \\(f' < 0\\)?",
+        loesungsweg: "\\(f'(x) = 3(x-2)(x+2) < 0\\) für \\(x \\in (-2, 2)\\). Die Länge des Intervalls beträgt \\(2 - (-2) = 4\\)."
       },
       {
-        id: 28, level: 5, typ: 'mc',
-        frage: 'Gegeben: \\(f(x) = x^5 - 5x^3\\). Auf welchem Intervall ist \\(f\\) streng monoton fallend?',
+        id: 28, level: 5, typ: "mc",
+        frage: "Gegeben: \\(f(x) = x^5 - 5x^3\\). Auf welchem Intervall ist \\(f\\) streng monoton fallend?",
         optionen: [
-          '\\((-\\sqrt{3},\\, 0) \\cup (0,\\, \\sqrt{3})\\), also \\((-\\sqrt{3},\\, \\sqrt{3})\\)',
-          '\\((-\\infty, -\\sqrt{3}) \\cup (\\sqrt{3}, \\infty)\\)',
-          '\\((-3, 3)\\)',
-          '\\((-\\infty, 0)\\)'
+          "\\((-\\sqrt{3},\\, 0) \\cup (0,\\, \\sqrt{3})\\), also \\((-\\sqrt{3},\\, \\sqrt{3})\\)",
+          "\\((-\\infty, -\\sqrt{3}) \\cup (\\sqrt{3}, \\infty)\\)",
+          "\\((-3, 3)\\)",
+          "\\((-\\infty, 0)\\)"
         ],
         korrekt: 0,
-        tipp: '\\(f\'(x) = 5x^4 - 15x^2 = 5x^2(x^2 - 3)\\). Bestimme das Vorzeichen.',
-        loesungsweg: '\\(f\'(x) = 5x^4 - 15x^2 = 5x^2(x^2 - 3)\\). Da \\(5x^2 \\geq 0\\), bestimmt \\((x^2 - 3)\\) das Vorzeichen. \\(x^2 - 3 < 0\\) für \\(-\\sqrt{3} < x < \\sqrt{3}\\). Also fällt \\(f\\) auf \\((-\\sqrt{3},\\, \\sqrt{3})\\) (bei \\(x=0\\) gilt \\(f\'=0\\), aber kein Vorzeichenwechsel).'
+        tipp: "\\(f'(x) = 5x^4 - 15x^2 = 5x^2(x^2 - 3)\\). Bestimme das Vorzeichen.",
+        loesungsweg: "\\(f'(x) = 5x^4 - 15x^2 = 5x^2(x^2 - 3)\\). Da \\(5x^2 \\geq 0\\), bestimmt \\((x^2 - 3)\\) das Vorzeichen. \\(x^2 - 3 < 0\\) für \\(-\\sqrt{3} < x < \\sqrt{3}\\). Also fällt \\(f\\) auf \\((-\\sqrt{3},\\, \\sqrt{3})\\) (bei \\(x=0\\) gilt \\(f'=0\\), aber kein Vorzeichenwechsel)."
       },
       {
-        id: 29, level: 5, typ: 'numerisch',
-        frage: 'Gegeben: \\(f(x) = x^4 - 8x^3 + 18x^2\\). Die Funktion hat zwei Wendepunkte. Gib die größere Wendestelle an.',
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Gegeben: \\(f(x) = x^4 - 8x^3 + 18x^2\\). Die Funktion hat zwei Wendepunkte. Gib die größere Wendestelle an.",
         loesung: 3,
         toleranz: 0,
-        tipp: 'Berechne \\(f\'\'(x)\\) und finde die Nullstellen. Prüfe, ob ein Vorzeichenwechsel vorliegt.',
-        loesungsweg: '\\(f\'(x) = 4x^3 - 24x^2 + 36x\\), \\(f\'\'(x) = 12x^2 - 48x + 36 = 12(x-1)(x-3)\\). Nullstellen: \\(x = 1\\) und \\(x = 3\\). Bei beiden wechselt \\(f\'\'\\) das Vorzeichen → beide sind Wendepunkte. Die größere Wendestelle ist \\(x = 3\\).'
+        tipp: "Berechne \\(f''(x)\\) und finde die Nullstellen. Prüfe, ob ein Vorzeichenwechsel vorliegt.",
+        loesungsweg: "\\(f'(x) = 4x^3 - 24x^2 + 36x\\), \\(f''(x) = 12x^2 - 48x + 36 = 12(x-1)(x-3)\\). Nullstellen: \\(x = 1\\) und \\(x = 3\\). Bei beiden wechselt \\(f''\\) das Vorzeichen → beide sind Wendepunkte. Die größere Wendestelle ist \\(x = 3\\)."
       },
       {
-        id: 30, level: 5, typ: 'mc',
-        frage: 'Gegeben: \\(f(x) = x^5 - 10x^3 + 9x\\). Wie viele Wendepunkte hat \\(f\\)?',
+        id: 30, level: 5, typ: "mc",
+        frage: "Gegeben: \\(f(x) = x^5 - 10x^3 + 9x\\). Wie viele Wendepunkte hat \\(f\\)?",
         optionen: [
-          '3',
-          '2',
-          '1',
-          '4'
+          "3",
+          "2",
+          "1",
+          "4"
         ],
         korrekt: 0,
-        tipp: 'Berechne \\(f\'\'(x)\\) und bestimme, wie viele Nullstellen mit Vorzeichenwechsel vorliegen.',
-        loesungsweg: '\\(f\'(x) = 5x^4 - 30x^2 + 9\\), \\(f\'\'(x) = 20x^3 - 60x = 20x(x^2 - 3)\\). Nullstellen: \\(x = 0\\), \\(x = \\pm\\sqrt{3}\\). An jeder Stelle wechselt \\(f\'\'\\) das Vorzeichen → 3 Wendepunkte.'
+        tipp: "Berechne \\(f''(x)\\) und bestimme, wie viele Nullstellen mit Vorzeichenwechsel vorliegen.",
+        loesungsweg: "\\(f'(x) = 5x^4 - 30x^2 + 9\\), \\(f''(x) = 20x^3 - 60x = 20x(x^2 - 3)\\). Nullstellen: \\(x = 0\\), \\(x = \\pm\\sqrt{3}\\). An jeder Stelle wechselt \\(f''\\) das Vorzeichen → 3 Wendepunkte."
       },
 
       // ═══════════════════════════════════════════════════════════
@@ -392,72 +392,72 @@
       // ═══════════════════════════════════════════════════════════
 
       {
-        id: 31, level: 6, typ: 'mc',
-        frage: 'Gegeben: \\(f(x) = x^4 - 4x^3 + 6x^2 - 4x + 2\\). Zeige, dass \\(f(x) \\geq 1\\) für alle \\(x \\in \\mathbb{R}\\). Welcher Argumentationsansatz ist korrekt?',
+        id: 31, level: 6, typ: "mc",
+        frage: "Gegeben: \\(f(x) = x^4 - 4x^3 + 6x^2 - 4x + 2\\). Zeige, dass \\(f(x) \\geq 1\\) für alle \\(x \\in \\mathbb{R}\\). Welcher Argumentationsansatz ist korrekt?",
         optionen: [
-          '\\(f(x) = (x-1)^4 + 1\\). Da \\((x-1)^4 \\geq 0\\), gilt \\(f(x) \\geq 1\\) für alle \\(x\\).',
-          '\\(f\'(x) = 4x^3 - 12x^2 + 12x - 4\\), Nullstelle bei \\(x = 1\\), also Minimum. \\(f(1) = 1\\) → korrekt.',
-          'Beide obigen Ansätze sind korrekt.',
-          '\\(f\'\'(x) = 12x^2 - 24x + 12 = 12(x-1)^2 \\geq 0\\) zeigt überall Linkskrümmung, also Minimum.'
+          "\\(f(x) = (x-1)^4 + 1\\). Da \\((x-1)^4 \\geq 0\\), gilt \\(f(x) \\geq 1\\) für alle \\(x\\).",
+          "\\(f'(x) = 4x^3 - 12x^2 + 12x - 4\\), Nullstelle bei \\(x = 1\\), also Minimum. \\(f(1) = 1\\) → korrekt.",
+          "Beide obigen Ansätze sind korrekt.",
+          "\\(f''(x) = 12x^2 - 24x + 12 = 12(x-1)^2 \\geq 0\\) zeigt überall Linkskrümmung, also Minimum."
         ],
         korrekt: 2,
-        tipp: 'Schreibe \\(f(x)\\) als \\((x-1)^4 + 1\\). Alternativ: Extremwertberechnung über \\(f\'(x) = 0\\).',
-        loesungsweg: 'Ansatz A: \\(f(x) = (x-1)^4 + 1 \\geq 0 + 1 = 1\\) für alle \\(x\\) — direkter Beweis durch Umschreiben. Ansatz B (Ableitung gliedweise): \\(f\'(x) = 4x^3 - 12x^2 + 12x - 4\\). Nullstelle: \\(f\'(1) = 4 - 12 + 12 - 4 = 0\\). \\(f\'\'(x) = 12x^2 - 24x + 12\\), \\(f\'\'(1) = 0\\) — kein eindeutiges Vorzeichen, aber \\(f\'\\) wechselt von − nach + → Minimum. \\(f(1) = 1 - 4 + 6 - 4 + 2 = 1\\). Beide Wege funktionieren.'
+        tipp: "Schreibe \\(f(x)\\) als \\((x-1)^4 + 1\\). Alternativ: Extremwertberechnung über \\(f'(x) = 0\\).",
+        loesungsweg: "Ansatz A: \\(f(x) = (x-1)^4 + 1 \\geq 0 + 1 = 1\\) für alle \\(x\\) — direkter Beweis durch Umschreiben. Ansatz B (Ableitung gliedweise): \\(f'(x) = 4x^3 - 12x^2 + 12x - 4\\). Nullstelle: \\(f'(1) = 4 - 12 + 12 - 4 = 0\\). \\(f''(x) = 12x^2 - 24x + 12\\), \\(f''(1) = 0\\) — kein eindeutiges Vorzeichen, aber \\(f'\\) wechselt von − nach + → Minimum. \\(f(1) = 1 - 4 + 6 - 4 + 2 = 1\\). Beide Wege funktionieren."
       },
       {
-        id: 32, level: 6, typ: 'mc',
-        frage: 'Gegeben: \\(f(x) = \\tfrac{1}{5}x^5 - \\tfrac{5}{3}x^3 + 4x\\). Welche Kombination aus Monotonie und Krümmung ist korrekt?',
+        id: 32, level: 6, typ: "mc",
+        frage: "Gegeben: \\(f(x) = \\tfrac{1}{5}x^5 - \\tfrac{5}{3}x^3 + 4x\\). Welche Kombination aus Monotonie und Krümmung ist korrekt?",
         optionen: [
-          'Steigend auf \\((-\\infty,-2)\\cup(-1,1)\\cup(2,\\infty)\\); Wendepunkte bei \\(x=0\\) und \\(x=\\pm\\sqrt{2{,}5}\\)',
-          'Fallend auf \\((-2,-1)\\cup(1,2)\\); linksgekrümmt auf \\((-\\sqrt{2{,}5},0)\\cup(\\sqrt{2{,}5},\\infty)\\)',
-          'Überall steigend; keine Wendepunkte',
-          'Alle Angaben in A und B zusammen beschreiben \\(f\\) vollständig.'
+          "Steigend auf \\((-\\infty,-2)\\cup(-1,1)\\cup(2,\\infty)\\); Wendepunkte bei \\(x=0\\) und \\(x=\\pm\\sqrt{2{,}5}\\)",
+          "Fallend auf \\((-2,-1)\\cup(1,2)\\); linksgekrümmt auf \\((-\\sqrt{2{,}5},0)\\cup(\\sqrt{2{,}5},\\infty)\\)",
+          "Überall steigend; keine Wendepunkte",
+          "Alle Angaben in A und B zusammen beschreiben \\(f\\) vollständig."
         ],
         korrekt: 3,
-        tipp: '\\(f\'(x) = x^4 - 5x^2 + 4 = (x^2-1)(x^2-4)\\). Nullstellen bei \\(x=\\pm1, \\pm2\\). \\(f\'\'(x) = 4x^3 - 10x = 2x(2x^2-5)\\).',
-        loesungsweg: '\\(f\'(x) = x^4 - 5x^2 + 4 = (x-1)(x+1)(x-2)(x+2)\\). Nullstellen: \\(\\pm 1, \\pm 2\\). Vorzeichenanalyse: \\(f\'> 0\\) auf \\((-\\infty,-2)\\cup(-1,1)\\cup(2,\\infty)\\) → steigend. Fallend auf \\((-2,-1)\\cup(1,2)\\). \\(f\'\'(x) = 4x^3-10x = 2x(2x^2-5)\\). Nullstellen: \\(x=0, \\pm\\sqrt{2{,}5}\\). Vorzeichenwechsel → Wendepunkte. Linksgekrümmt auf \\((-\\sqrt{2{,}5},0)\\cup(\\sqrt{2{,}5},\\infty)\\). A und B zusammen beschreiben \\(f\\) vollständig.'
+        tipp: "\\(f'(x) = x^4 - 5x^2 + 4 = (x^2-1)(x^2-4)\\). Nullstellen bei \\(x=\\pm1, \\pm2\\). \\(f''(x) = 4x^3 - 10x = 2x(2x^2-5)\\).",
+        loesungsweg: "\\(f'(x) = x^4 - 5x^2 + 4 = (x-1)(x+1)(x-2)(x+2)\\). Nullstellen: \\(\\pm 1, \\pm 2\\). Vorzeichenanalyse: \\(f'> 0\\) auf \\((-\\infty,-2)\\cup(-1,1)\\cup(2,\\infty)\\) → steigend. Fallend auf \\((-2,-1)\\cup(1,2)\\). \\(f''(x) = 4x^3-10x = 2x(2x^2-5)\\). Nullstellen: \\(x=0, \\pm\\sqrt{2{,}5}\\). Vorzeichenwechsel → Wendepunkte. Linksgekrümmt auf \\((-\\sqrt{2{,}5},0)\\cup(\\sqrt{2{,}5},\\infty)\\). A und B zusammen beschreiben \\(f\\) vollständig."
       },
       {
-        id: 33, level: 6, typ: 'numerisch',
-        frage: 'Gegeben: \\(f(x) = x^4 - 4x^3 + 6x^2 - 4x + 1\\). Berechne \\(f\'\'(1)\\) direkt durch zweifaches Ableiten.',
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Gegeben: \\(f(x) = x^4 - 4x^3 + 6x^2 - 4x + 1\\). Berechne \\(f''(1)\\) direkt durch zweifaches Ableiten.",
         loesung: 0,
         toleranz: 0,
-        tipp: 'Leite \\(f(x) = x^4 - 4x^3 + 6x^2 - 4x + 1\\) direkt ab: Potenzregel gliedweise. Dann nochmals ableiten und \\(x=1\\) einsetzen.',
-        loesungsweg: '\\(f\'(x) = 4x^3 - 12x^2 + 12x - 4\\). \\(f\'\'(x) = 12x^2 - 24x + 12\\). Einsetzen: \\(f\'\'(1) = 12 - 24 + 12 = 0\\). (Hinweis: \\(f(x) = (x-1)^4\\) erklärt das Ergebnis, aber die Ableitung erfolgt hier gliedweise ohne Kettenregel.)'
+        tipp: "Leite \\(f(x) = x^4 - 4x^3 + 6x^2 - 4x + 1\\) direkt ab: Potenzregel gliedweise. Dann nochmals ableiten und \\(x=1\\) einsetzen.",
+        loesungsweg: "\\(f'(x) = 4x^3 - 12x^2 + 12x - 4\\). \\(f''(x) = 12x^2 - 24x + 12\\). Einsetzen: \\(f''(1) = 12 - 24 + 12 = 0\\). (Hinweis: \\(f(x) = (x-1)^4\\) erklärt das Ergebnis, aber die Ableitung erfolgt hier gliedweise ohne Kettenregel.)"
       },
       {
-        id: 34, level: 6, typ: 'mc',
-        frage: 'Gegeben: \\(f(x) = x^5 - 5x^4 + 5x^3 + 5x^2 - 6x\\). Die Funktion hat drei Extremstellen. Welche Aussage über Monotonie und Krümmung ist korrekt?',
+        id: 34, level: 6, typ: "mc",
+        frage: "Gegeben: \\(f(x) = x^5 - 5x^4 + 5x^3 + 5x^2 - 6x\\). Die Funktion hat drei Extremstellen. Welche Aussage über Monotonie und Krümmung ist korrekt?",
         optionen: [
-          '\\(f\'(x) = 5x^4 - 20x^3 + 15x^2 + 10x - 6\\); Vorzeichen wechselt dreimal → drei Extremstellen',
-          '\\(f\'\'(x) = 20x^3 - 60x^2 + 30x + 10\\); drei Wendepunkte',
-          '\\(f\\) ist auf \\((- \\infty, \\infty)\\) steigend, da Grad 5 ungerade',
-          '\\(f\\) hat genau einen Wendepunkt'
+          "\\(f'(x) = 5x^4 - 20x^3 + 15x^2 + 10x - 6\\); Vorzeichen wechselt dreimal → drei Extremstellen",
+          "\\(f''(x) = 20x^3 - 60x^2 + 30x + 10\\); drei Wendepunkte",
+          "\\(f\\) ist auf \\((- \\infty, \\infty)\\) steigend, da Grad 5 ungerade",
+          "\\(f\\) hat genau einen Wendepunkt"
         ],
         korrekt: 0,
-        tipp: 'Leite \\(f\\) ab: \\(f\'(x) = 5x^4 - 20x^3 + 15x^2 + 10x - 6\\). Drei Vorzeichenwechsel von \\(f\'\\) bedeuten drei Extremstellen.',
-        loesungsweg: '\\(f\'(x) = 5x^4 - 20x^3 + 15x^2 + 10x - 6\\). Diese Ableitung hat vier reelle Nullstellen (lässt sich numerisch bestätigen), wobei \\(f\'\\) dreimal das Vorzeichen wechselt → drei Extremstellen. \\(f\'\'(x) = 20x^3 - 60x^2 + 30x + 10\\) hat bis zu drei Nullstellen → bis zu drei Wendepunkte. Aussage A beschreibt die Situation korrekt.'
+        tipp: "Leite \\(f\\) ab: \\(f'(x) = 5x^4 - 20x^3 + 15x^2 + 10x - 6\\). Drei Vorzeichenwechsel von \\(f'\\) bedeuten drei Extremstellen.",
+        loesungsweg: "\\(f'(x) = 5x^4 - 20x^3 + 15x^2 + 10x - 6\\). Diese Ableitung hat vier reelle Nullstellen (lässt sich numerisch bestätigen), wobei \\(f'\\) dreimal das Vorzeichen wechselt → drei Extremstellen. \\(f''(x) = 20x^3 - 60x^2 + 30x + 10\\) hat bis zu drei Nullstellen → bis zu drei Wendepunkte. Aussage A beschreibt die Situation korrekt."
       },
       {
-        id: 35, level: 6, typ: 'mc',
-        frage: 'Gegeben: \\(f(x) = 3x^4 - 16x^3 + 24x^2 - 9\\). Man behauptet: \\(f(x) \\geq -9\\) für alle \\(x\\). Welcher Ansatz ist vollständig korrekt?',
+        id: 35, level: 6, typ: "mc",
+        frage: "Gegeben: \\(f(x) = 3x^4 - 16x^3 + 24x^2 - 9\\). Man behauptet: \\(f(x) \\geq -9\\) für alle \\(x\\). Welcher Ansatz ist vollständig korrekt?",
         optionen: [
-          '\\(f\'(x) = 12x^3 - 48x^2 + 48x = 12x(x-2)^2\\). Einzige Nullstelle mit Vorzeichenwechsel bei \\(x=0\\) → Minimum. \\(f(0) = -9\\). Also \\(f(x) \\geq -9\\).',
-          '\\(f\'\'(0) > 0\\) zeigt ein Minimum bei \\(x = 0\\), also \\(f(x) \\geq f(0) = -9\\).',
-          '\\(f(0) = -9\\) und \\(f(1) = 2 > -9\\), also gilt \\(f(x) \\geq -9\\) überall.',
-          '\\(3x^4 \\geq 0\\) für alle \\(x\\), also \\(f(x) \\geq -9\\).'
+          "\\(f'(x) = 12x^3 - 48x^2 + 48x = 12x(x-2)^2\\). Einzige Nullstelle mit Vorzeichenwechsel bei \\(x=0\\) → Minimum. \\(f(0) = -9\\). Also \\(f(x) \\geq -9\\).",
+          "\\(f''(0) > 0\\) zeigt ein Minimum bei \\(x = 0\\), also \\(f(x) \\geq f(0) = -9\\).",
+          "\\(f(0) = -9\\) und \\(f(1) = 2 > -9\\), also gilt \\(f(x) \\geq -9\\) überall.",
+          "\\(3x^4 \\geq 0\\) für alle \\(x\\), also \\(f(x) \\geq -9\\)."
         ],
         korrekt: 0,
-        tipp: '\\(f\'(x) = 12x(x-2)^2\\). Beachte: \\((x-2)^2 \\geq 0\\), also bestimmt \\(x\\) das Vorzeichen. Wo wechselt \\(f\'\\) das Vorzeichen?',
-        loesungsweg: '\\(f\'(x) = 12x^3 - 48x^2 + 48x = 12x(x^2 - 4x + 4) = 12x(x-2)^2\\). Nullstellen: \\(x = 0\\) und \\(x = 2\\). Bei \\(x = 0\\): \\(f\'\\) wechselt von − nach + → Minimum. Bei \\(x = 2\\): \\((x-2)^2 \\geq 0\\), kein Vorzeichenwechsel → kein Extrempunkt. \\(f(0) = -9\\). Da \\(x=0\\) das globale Minimum ist, gilt \\(f(x) \\geq -9\\) für alle \\(x\\).'
+        tipp: "\\(f'(x) = 12x(x-2)^2\\). Beachte: \\((x-2)^2 \\geq 0\\), also bestimmt \\(x\\) das Vorzeichen. Wo wechselt \\(f'\\) das Vorzeichen?",
+        loesungsweg: "\\(f'(x) = 12x^3 - 48x^2 + 48x = 12x(x^2 - 4x + 4) = 12x(x-2)^2\\). Nullstellen: \\(x = 0\\) und \\(x = 2\\). Bei \\(x = 0\\): \\(f'\\) wechselt von − nach + → Minimum. Bei \\(x = 2\\): \\((x-2)^2 \\geq 0\\), kein Vorzeichenwechsel → kein Extrempunkt. \\(f(0) = -9\\). Da \\(x=0\\) das globale Minimum ist, gilt \\(f(x) \\geq -9\\) für alle \\(x\\)."
       },
       {
-        id: 36, level: 6, typ: 'numerisch',
-        frage: 'Gegeben: \\(f(x) = 2x^5 - 15x^4 + 30x^3\\). An welcher Stelle \\(x > 0\\) liegt ein Sattelpunkt (waagerechte Tangente, aber kein Extremum)?',
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Gegeben: \\(f(x) = 2x^5 - 15x^4 + 30x^3\\). An welcher Stelle \\(x > 0\\) liegt ein Sattelpunkt (waagerechte Tangente, aber kein Extremum)?",
         loesung: 3,
         toleranz: 0,
-        tipp: '\\(f\'(x) = 10x^4 - 60x^3 + 90x^2 = 10x^2(x^2 - 6x + 9) = 10x^2(x-3)^2\\). Wo ist \\(f\' = 0\\) ohne Vorzeichenwechsel?',
-        loesungsweg: '\\(f\'(x) = 10x^4 - 60x^3 + 90x^2 = 10x^2(x-3)^2\\). Nullstellen: \\(x = 0\\) und \\(x = 3\\). Da \\(10x^2 \\geq 0\\) und \\((x-3)^2 \\geq 0\\), ist \\(f\'(x) \\geq 0\\) überall. Bei \\(x = 0\\) und \\(x = 3\\) kein Vorzeichenwechsel → beide sind Sattelpunkte. Der gesuchte Sattelpunkt bei \\(x > 0\\) (mit \\(x \\neq 0\\)) ist \\(x = 3\\).'
+        tipp: "\\(f'(x) = 10x^4 - 60x^3 + 90x^2 = 10x^2(x^2 - 6x + 9) = 10x^2(x-3)^2\\). Wo ist \\(f' = 0\\) ohne Vorzeichenwechsel?",
+        loesungsweg: "\\(f'(x) = 10x^4 - 60x^3 + 90x^2 = 10x^2(x-3)^2\\). Nullstellen: \\(x = 0\\) und \\(x = 3\\). Da \\(10x^2 \\geq 0\\) und \\((x-3)^2 \\geq 0\\), ist \\(f'(x) \\geq 0\\) überall. Bei \\(x = 0\\) und \\(x = 3\\) kein Vorzeichenwechsel → beide sind Sattelpunkte. Der gesuchte Sattelpunkt bei \\(x > 0\\) (mit \\(x \\neq 0\\)) ist \\(x = 3\\)."
       }
     ];
     </script>

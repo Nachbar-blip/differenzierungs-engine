@@ -18,489 +18,489 @@
     const AUFGABEN = [
       // ========== LEVEL 1 — babyleicht: Amplitude ablesen (6 Aufgaben) ==========
       {
-        "id": 1,
-        "level": 1,
-        "typ": "numerisch",
-        "frage": "Bestimme die Amplitude von \\(f(x) = 3 \\cdot \\sin(x)\\).",
-        "loesung": 3,
-        "toleranz": 0,
-        "tipp": "Die Amplitude ist der Betrag des Vorfaktors \\(a\\) vor dem Sinus.",
-        "loesungsweg": "Bei \\(f(x) = a \\cdot \\sin(x)\\) ist die Amplitude \\(|a|\\). Hier: \\(a = 3\\), also Amplitude \\(= 3\\)."
+        id: 1,
+        level: 1,
+        typ: "numerisch",
+        frage: "Bestimme die Amplitude von \\(f(x) = 3 \\cdot \\sin(x)\\).",
+        loesung: 3,
+        toleranz: 0,
+        tipp: "Die Amplitude ist der Betrag des Vorfaktors \\(a\\) vor dem Sinus.",
+        loesungsweg: "Bei \\(f(x) = a \\cdot \\sin(x)\\) ist die Amplitude \\(|a|\\). Hier: \\(a = 3\\), also Amplitude \\(= 3\\)."
       },
       {
-        "id": 2,
-        "level": 1,
-        "typ": "mc",
-        "frage": "Welche Amplitude hat \\(f(x) = 5 \\cdot \\cos(x)\\)?",
-        "optionen": [
+        id: 2,
+        level: 1,
+        typ: "mc",
+        frage: "Welche Amplitude hat \\(f(x) = 5 \\cdot \\cos(x)\\)?",
+        optionen: [
           "\\(1\\)",
           "\\(5\\)",
           "\\(10\\)",
           "\\(2\\pi\\)"
         ],
-        "korrekt": 1,
-        "tipp": "Amplitude = Betrag des Vorfaktors.",
-        "loesungsweg": "Die Amplitude ist \\(|a| = |5| = 5\\). Der Graph schwingt zwischen \\(-5\\) und \\(+5\\)."
+        korrekt: 1,
+        tipp: "Amplitude = Betrag des Vorfaktors.",
+        loesungsweg: "Die Amplitude ist \\(|a| = |5| = 5\\). Der Graph schwingt zwischen \\(-5\\) und \\(+5\\)."
       },
       {
-        "id": 3,
-        "level": 1,
-        "typ": "numerisch",
-        "frage": "Bestimme die Amplitude von \\(f(x) = -4 \\cdot \\sin(x)\\).",
-        "loesung": 4,
-        "toleranz": 0,
-        "tipp": "Die Amplitude ist immer positiv: \\(|a|\\).",
-        "loesungsweg": "Die Amplitude ist \\(|a| = |-4| = 4\\). Das negative Vorzeichen bewirkt eine Spiegelung an der \\(x\\)-Achse, ändert aber nicht die Amplitude."
+        id: 3,
+        level: 1,
+        typ: "numerisch",
+        frage: "Bestimme die Amplitude von \\(f(x) = -4 \\cdot \\sin(x)\\).",
+        loesung: 4,
+        toleranz: 0,
+        tipp: "Die Amplitude ist immer positiv: \\(|a|\\).",
+        loesungsweg: "Die Amplitude ist \\(|a| = |-4| = 4\\). Das negative Vorzeichen bewirkt eine Spiegelung an der \\(x\\)-Achse, ändert aber nicht die Amplitude."
       },
       {
-        "id": 4,
-        "level": 1,
-        "typ": "mc",
-        "frage": "Zwischen welchen Werten schwingt \\(f(x) = 2 \\cdot \\sin(x)\\)?",
-        "optionen": [
+        id: 4,
+        level: 1,
+        typ: "mc",
+        frage: "Zwischen welchen Werten schwingt \\(f(x) = 2 \\cdot \\sin(x)\\)?",
+        optionen: [
           "\\(-1\\) und \\(1\\)",
           "\\(-2\\) und \\(2\\)",
           "\\(0\\) und \\(2\\)",
           "\\(-4\\) und \\(4\\)"
         ],
-        "korrekt": 1,
-        "tipp": "Der Sinus schwingt zwischen \\(-1\\) und \\(+1\\), multipliziert mit der Amplitude.",
-        "loesungsweg": "Da \\(\\sin(x) \\in [-1; 1]\\), gilt \\(2\\sin(x) \\in [-2; 2]\\). Der Graph schwingt also zwischen \\(-2\\) und \\(2\\)."
+        korrekt: 1,
+        tipp: "Der Sinus schwingt zwischen \\(-1\\) und \\(+1\\), multipliziert mit der Amplitude.",
+        loesungsweg: "Da \\(\\sin(x) \\in [-1; 1]\\), gilt \\(2\\sin(x) \\in [-2; 2]\\). Der Graph schwingt also zwischen \\(-2\\) und \\(2\\)."
       },
       {
-        "id": 5,
-        "level": 1,
-        "typ": "numerisch",
-        "frage": "Bestimme die Amplitude von \\(f(x) = 0{,}5 \\cdot \\cos(x)\\).",
-        "loesung": 0.5,
-        "toleranz": 0.01,
-        "tipp": "Amplitude \\(= |a|\\).",
-        "loesungsweg": "Die Amplitude ist \\(|a| = 0{,}5\\). Der Graph wird gegenüber \\(\\cos(x)\\) in \\(y\\)-Richtung gestaucht."
+        id: 5,
+        level: 1,
+        typ: "numerisch",
+        frage: "Bestimme die Amplitude von \\(f(x) = 0{,}5 \\cdot \\cos(x)\\).",
+        loesung: 0.5,
+        toleranz: 0.01,
+        tipp: "Amplitude \\(= |a|\\).",
+        loesungsweg: "Die Amplitude ist \\(|a| = 0{,}5\\). Der Graph wird gegenüber \\(\\cos(x)\\) in \\(y\\)-Richtung gestaucht."
       },
       {
-        "id": 6,
-        "level": 1,
-        "typ": "mc",
-        "frage": "Welche Funktion hat die größte Amplitude?",
-        "optionen": [
+        id: 6,
+        level: 1,
+        typ: "mc",
+        frage: "Welche Funktion hat die größte Amplitude?",
+        optionen: [
           "\\(f(x) = 2 \\cdot \\sin(x)\\)",
           "\\(f(x) = -3 \\cdot \\cos(x)\\)",
           "\\(f(x) = \\sin(x)\\)",
           "\\(f(x) = 0{,}8 \\cdot \\cos(x)\\)"
         ],
-        "korrekt": 1,
-        "tipp": "Vergleiche die Beträge der Vorfaktoren.",
-        "loesungsweg": "Amplituden: \\(|2|=2\\), \\(|-3|=3\\), \\(|1|=1\\), \\(|0{,}8|=0{,}8\\). Die größte ist \\(3\\) bei \\(-3\\cos(x)\\)."
+        korrekt: 1,
+        tipp: "Vergleiche die Beträge der Vorfaktoren.",
+        loesungsweg: "Amplituden: \\(|2|=2\\), \\(|-3|=3\\), \\(|1|=1\\), \\(|0{,}8|=0{,}8\\). Die größte ist \\(3\\) bei \\(-3\\cos(x)\\)."
       },
 
       // ========== LEVEL 2 — leicht: Periode T = 2π/b (6 Aufgaben) ==========
       {
-        "id": 7,
-        "level": 2,
-        "typ": "mc",
-        "frage": "Wie lautet die Formel für die Periode \\(T\\) von \\(f(x) = \\sin(b \\cdot x)\\)?",
-        "optionen": [
+        id: 7,
+        level: 2,
+        typ: "mc",
+        frage: "Wie lautet die Formel für die Periode \\(T\\) von \\(f(x) = \\sin(b \\cdot x)\\)?",
+        optionen: [
           "\\(T = 2\\pi \\cdot b\\)",
           "\\(T = \\dfrac{2\\pi}{b}\\)",
           "\\(T = \\dfrac{\\pi}{b}\\)",
           "\\(T = \\dfrac{b}{2\\pi}\\)"
         ],
-        "korrekt": 1,
-        "tipp": "Merkregel: \\(T = \\frac{2\\pi}{b}\\).",
-        "loesungsweg": "Die Grundperiode von \\(\\sin\\) ist \\(2\\pi\\). Durch den Faktor \\(b\\) im Argument wird sie gestaucht/gedehnt: $$T = \\frac{2\\pi}{b}$$"
+        korrekt: 1,
+        tipp: "Merkregel: \\(T = \\frac{2\\pi}{b}\\).",
+        loesungsweg: "Die Grundperiode von \\(\\sin\\) ist \\(2\\pi\\). Durch den Faktor \\(b\\) im Argument wird sie gestaucht/gedehnt: $$T = \\frac{2\\pi}{b}$$"
       },
       {
-        "id": 8,
-        "level": 2,
-        "typ": "mc",
-        "frage": "Bestimme die Periode von \\(f(x) = \\sin(2x)\\).",
-        "optionen": [
+        id: 8,
+        level: 2,
+        typ: "mc",
+        frage: "Bestimme die Periode von \\(f(x) = \\sin(2x)\\).",
+        optionen: [
           "\\(2\\pi\\)",
           "\\(\\pi\\)",
           "\\(4\\pi\\)",
           "\\(\\dfrac{\\pi}{2}\\)"
         ],
-        "korrekt": 1,
-        "tipp": "Setze \\(b = 2\\) in \\(T = \\frac{2\\pi}{b}\\) ein.",
-        "loesungsweg": "$$T = \\frac{2\\pi}{b} = \\frac{2\\pi}{2} = \\pi$$ Die Periode ist \\(\\pi\\)."
+        korrekt: 1,
+        tipp: "Setze \\(b = 2\\) in \\(T = \\frac{2\\pi}{b}\\) ein.",
+        loesungsweg: "$$T = \\frac{2\\pi}{b} = \\frac{2\\pi}{2} = \\pi$$ Die Periode ist \\(\\pi\\)."
       },
       {
-        "id": 9,
-        "level": 2,
-        "typ": "mc",
-        "frage": "Bestimme die Periode von \\(f(x) = \\cos\\left(\\dfrac{1}{2}x\\right)\\).",
-        "optionen": [
+        id: 9,
+        level: 2,
+        typ: "mc",
+        frage: "Bestimme die Periode von \\(f(x) = \\cos\\left(\\dfrac{1}{2}x\\right)\\).",
+        optionen: [
           "\\(\\pi\\)",
           "\\(2\\pi\\)",
           "\\(4\\pi\\)",
           "\\(\\dfrac{\\pi}{2}\\)"
         ],
-        "korrekt": 2,
-        "tipp": "\\(b = \\frac{1}{2}\\). Einsetzen in \\(T = \\frac{2\\pi}{b}\\).",
-        "loesungsweg": "$$T = \\frac{2\\pi}{b} = \\frac{2\\pi}{1/2} = 2\\pi \\cdot 2 = 4\\pi$$"
+        korrekt: 2,
+        tipp: "\\(b = \\frac{1}{2}\\). Einsetzen in \\(T = \\frac{2\\pi}{b}\\).",
+        loesungsweg: "$$T = \\frac{2\\pi}{b} = \\frac{2\\pi}{1/2} = 2\\pi \\cdot 2 = 4\\pi$$"
       },
       {
-        "id": 10,
-        "level": 2,
-        "typ": "mc",
-        "frage": "Bestimme die Periode von \\(f(x) = \\sin(\\pi x)\\).",
-        "optionen": [
+        id: 10,
+        level: 2,
+        typ: "mc",
+        frage: "Bestimme die Periode von \\(f(x) = \\sin(\\pi x)\\).",
+        optionen: [
           "\\(\\pi\\)",
           "\\(2\\)",
           "\\(2\\pi\\)",
           "\\(\\dfrac{1}{\\pi}\\)"
         ],
-        "korrekt": 1,
-        "tipp": "\\(b = \\pi\\). Dann \\(T = \\frac{2\\pi}{\\pi}\\).",
-        "loesungsweg": "$$T = \\frac{2\\pi}{b} = \\frac{2\\pi}{\\pi} = 2$$ Die Periode ist \\(2\\)."
+        korrekt: 1,
+        tipp: "\\(b = \\pi\\). Dann \\(T = \\frac{2\\pi}{\\pi}\\).",
+        loesungsweg: "$$T = \\frac{2\\pi}{b} = \\frac{2\\pi}{\\pi} = 2$$ Die Periode ist \\(2\\)."
       },
       {
-        "id": 11,
-        "level": 2,
-        "typ": "mc",
-        "frage": "Bestimme die Periode von \\(f(x) = \\cos(4x)\\).",
-        "optionen": [
+        id: 11,
+        level: 2,
+        typ: "mc",
+        frage: "Bestimme die Periode von \\(f(x) = \\cos(4x)\\).",
+        optionen: [
           "\\(\\dfrac{\\pi}{2}\\)",
           "\\(\\pi\\)",
           "\\(2\\pi\\)",
           "\\(\\dfrac{\\pi}{4}\\)"
         ],
-        "korrekt": 0,
-        "tipp": "\\(b = 4\\). \\(T = \\frac{2\\pi}{4}\\).",
-        "loesungsweg": "$$T = \\frac{2\\pi}{b} = \\frac{2\\pi}{4} = \\frac{\\pi}{2}$$"
+        korrekt: 0,
+        tipp: "\\(b = 4\\). \\(T = \\frac{2\\pi}{4}\\).",
+        loesungsweg: "$$T = \\frac{2\\pi}{b} = \\frac{2\\pi}{4} = \\frac{\\pi}{2}$$"
       },
       {
-        "id": 12,
-        "level": 2,
-        "typ": "mc",
-        "frage": "Eine Sinusfunktion hat die Periode \\(T = \\pi\\). Wie groß ist \\(b\\)?",
-        "optionen": [
+        id: 12,
+        level: 2,
+        typ: "mc",
+        frage: "Eine Sinusfunktion hat die Periode \\(T = \\pi\\). Wie groß ist \\(b\\)?",
+        optionen: [
           "\\(b = 1\\)",
           "\\(b = 2\\)",
           "\\(b = \\pi\\)",
           "\\(b = \\dfrac{1}{2}\\)"
         ],
-        "korrekt": 1,
-        "tipp": "Aus \\(T = \\frac{2\\pi}{b}\\) folgt \\(b = \\frac{2\\pi}{T}\\).",
-        "loesungsweg": "Umstellen: $$b = \\frac{2\\pi}{T} = \\frac{2\\pi}{\\pi} = 2$$ Die Funktion ist also z. B. \\(\\sin(2x)\\)."
+        korrekt: 1,
+        tipp: "Aus \\(T = \\frac{2\\pi}{b}\\) folgt \\(b = \\frac{2\\pi}{T}\\).",
+        loesungsweg: "Umstellen: $$b = \\frac{2\\pi}{T} = \\frac{2\\pi}{\\pi} = 2$$ Die Funktion ist also z. B. \\(\\sin(2x)\\)."
       },
 
       // ========== LEVEL 3 — mittel: vertikale Verschiebung d & Wertebereich (6 Aufgaben) ==========
       {
-        "id": 13,
-        "level": 3,
-        "typ": "numerisch",
-        "frage": "Gegeben: \\(f(x) = \\sin(x) + 2\\). Bestimme die vertikale Verschiebung \\(d\\).",
-        "loesung": 2,
-        "toleranz": 0,
-        "tipp": "Die Konstante am Ende gibt die Verschiebung in \\(y\\)-Richtung an.",
-        "loesungsweg": "Bei \\(f(x) = \\sin(x) + d\\) ist \\(d\\) die vertikale Verschiebung. Hier \\(d = 2\\) — der Graph ist um 2 Einheiten nach oben verschoben."
+        id: 13,
+        level: 3,
+        typ: "numerisch",
+        frage: "Gegeben: \\(f(x) = \\sin(x) + 2\\). Bestimme die vertikale Verschiebung \\(d\\).",
+        loesung: 2,
+        toleranz: 0,
+        tipp: "Die Konstante am Ende gibt die Verschiebung in \\(y\\)-Richtung an.",
+        loesungsweg: "Bei \\(f(x) = \\sin(x) + d\\) ist \\(d\\) die vertikale Verschiebung. Hier \\(d = 2\\) — der Graph ist um 2 Einheiten nach oben verschoben."
       },
       {
-        "id": 14,
-        "level": 3,
-        "typ": "mc",
-        "frage": "Wie lautet der Wertebereich von \\(f(x) = \\sin(x) + 3\\)?",
-        "optionen": [
+        id: 14,
+        level: 3,
+        typ: "mc",
+        frage: "Wie lautet der Wertebereich von \\(f(x) = \\sin(x) + 3\\)?",
+        optionen: [
           "\\([-1;\\,1]\\)",
           "\\([2;\\,4]\\)",
           "\\([-3;\\,3]\\)",
           "\\([3;\\,4]\\)"
         ],
-        "korrekt": 1,
-        "tipp": "Der Sinus schwingt zwischen \\(-1\\) und \\(1\\), plus Verschiebung \\(d\\).",
-        "loesungsweg": "Wertebereich: \\([d - |a|;\\, d + |a|] = [3 - 1;\\, 3 + 1] = [2;\\, 4]\\)."
+        korrekt: 1,
+        tipp: "Der Sinus schwingt zwischen \\(-1\\) und \\(1\\), plus Verschiebung \\(d\\).",
+        loesungsweg: "Wertebereich: \\([d - |a|;\\, d + |a|] = [3 - 1;\\, 3 + 1] = [2;\\, 4]\\)."
       },
       {
-        "id": 15,
-        "level": 3,
-        "typ": "mc",
-        "frage": "Wie lautet der Wertebereich von \\(f(x) = 2 \\cdot \\cos(x) + 1\\)?",
-        "optionen": [
+        id: 15,
+        level: 3,
+        typ: "mc",
+        frage: "Wie lautet der Wertebereich von \\(f(x) = 2 \\cdot \\cos(x) + 1\\)?",
+        optionen: [
           "\\([-2;\\,2]\\)",
           "\\([-1;\\,3]\\)",
           "\\([0;\\,2]\\)",
           "\\([1;\\,3]\\)"
         ],
-        "korrekt": 1,
-        "tipp": "Amplitude \\(|a| = 2\\), Verschiebung \\(d = 1\\). Wertebereich: \\([d-|a|;\\,d+|a|]\\).",
-        "loesungsweg": "Amplitude: \\(|a| = 2\\), vertikale Verschiebung: \\(d = 1\\). Wertebereich: $$[1 - 2;\\, 1 + 2] = [-1;\\, 3]$$"
+        korrekt: 1,
+        tipp: "Amplitude \\(|a| = 2\\), Verschiebung \\(d = 1\\). Wertebereich: \\([d-|a|;\\,d+|a|]\\).",
+        loesungsweg: "Amplitude: \\(|a| = 2\\), vertikale Verschiebung: \\(d = 1\\). Wertebereich: $$[1 - 2;\\, 1 + 2] = [-1;\\, 3]$$"
       },
       {
-        "id": 16,
-        "level": 3,
-        "typ": "numerisch",
-        "frage": "Gegeben: \\(f(x) = 3 \\cdot \\sin(x) - 4\\). Bestimme den kleinsten \\(y\\)-Wert (Minimum) der Funktion.",
-        "loesung": -7,
-        "toleranz": 0,
-        "tipp": "Minimum = \\(d - |a|\\).",
-        "loesungsweg": "Amplitude \\(|a| = 3\\), Verschiebung \\(d = -4\\). Kleinster Wert: $$d - |a| = -4 - 3 = -7$$"
+        id: 16,
+        level: 3,
+        typ: "numerisch",
+        frage: "Gegeben: \\(f(x) = 3 \\cdot \\sin(x) - 4\\). Bestimme den kleinsten \\(y\\)-Wert (Minimum) der Funktion.",
+        loesung: -7,
+        toleranz: 0,
+        tipp: "Minimum = \\(d - |a|\\).",
+        loesungsweg: "Amplitude \\(|a| = 3\\), Verschiebung \\(d = -4\\). Kleinster Wert: $$d - |a| = -4 - 3 = -7$$"
       },
       {
-        "id": 17,
-        "level": 3,
-        "typ": "numerisch",
-        "frage": "Gegeben: \\(f(x) = 5 \\cdot \\cos(x) + 2\\). Bestimme den größten \\(y\\)-Wert (Maximum) der Funktion.",
-        "loesung": 7,
-        "toleranz": 0,
-        "tipp": "Maximum = \\(d + |a|\\).",
-        "loesungsweg": "Amplitude \\(|a| = 5\\), Verschiebung \\(d = 2\\). Größter Wert: $$d + |a| = 2 + 5 = 7$$"
+        id: 17,
+        level: 3,
+        typ: "numerisch",
+        frage: "Gegeben: \\(f(x) = 5 \\cdot \\cos(x) + 2\\). Bestimme den größten \\(y\\)-Wert (Maximum) der Funktion.",
+        loesung: 7,
+        toleranz: 0,
+        tipp: "Maximum = \\(d + |a|\\).",
+        loesungsweg: "Amplitude \\(|a| = 5\\), Verschiebung \\(d = 2\\). Größter Wert: $$d + |a| = 2 + 5 = 7$$"
       },
       {
-        "id": 18,
-        "level": 3,
-        "typ": "mc",
-        "frage": "Eine Funktion \\(f(x) = a \\cdot \\sin(x) + d\\) hat den Wertebereich \\([1;\\,5]\\). Wie lauten \\(a\\) (positiv) und \\(d\\)?",
-        "optionen": [
+        id: 18,
+        level: 3,
+        typ: "mc",
+        frage: "Eine Funktion \\(f(x) = a \\cdot \\sin(x) + d\\) hat den Wertebereich \\([1;\\,5]\\). Wie lauten \\(a\\) (positiv) und \\(d\\)?",
+        optionen: [
           "\\(a = 2, d = 3\\)",
           "\\(a = 4, d = 1\\)",
           "\\(a = 5, d = 1\\)",
           "\\(a = 3, d = 2\\)"
         ],
-        "korrekt": 0,
-        "tipp": "\\(d\\) ist die Mitte des Wertebereichs, \\(a\\) die halbe Spannweite.",
-        "loesungsweg": "Mitte: \\(d = \\frac{1 + 5}{2} = 3\\). Amplitude: \\(a = \\frac{5 - 1}{2} = 2\\). Also \\(f(x) = 2\\sin(x) + 3\\)."
+        korrekt: 0,
+        tipp: "\\(d\\) ist die Mitte des Wertebereichs, \\(a\\) die halbe Spannweite.",
+        loesungsweg: "Mitte: \\(d = \\frac{1 + 5}{2} = 3\\). Amplitude: \\(a = \\frac{5 - 1}{2} = 2\\). Also \\(f(x) = 2\\sin(x) + 3\\)."
       },
 
       // ========== LEVEL 4 — anspruchsvoll: Phasenverschiebung c kombiniert (6 Aufgaben) ==========
       {
-        "id": 19,
-        "level": 4,
-        "typ": "numerisch",
-        "frage": "Gegeben: \\(f(x) = \\sin\\!\\left(x - \\dfrac{\\pi}{2}\\right)\\). Um welchen Wert ist der Graph gegenüber \\(\\sin(x)\\) nach rechts verschoben? (Antwort als Dezimalzahl, z. B. \\(\\pi/2 \\approx 1{,}57\\))",
-        "loesung": 1.5708,
-        "toleranz": 0.01,
-        "tipp": "Bei \\(\\sin(x - c)\\) ist \\(c\\) die horizontale Verschiebung nach rechts.",
-        "loesungsweg": "Bei \\(f(x) = \\sin(x - c)\\) ist \\(c\\) die Verschiebung nach rechts. Hier \\(c = \\frac{\\pi}{2} \\approx 1{,}5708\\)."
+        id: 19,
+        level: 4,
+        typ: "numerisch",
+        frage: "Gegeben: \\(f(x) = \\sin\\!\\left(x - \\dfrac{\\pi}{2}\\right)\\). Um welchen Wert ist der Graph gegenüber \\(\\sin(x)\\) nach rechts verschoben? (Antwort als Dezimalzahl, z. B. \\(\\pi/2 \\approx 1{,}57\\))",
+        loesung: 1.5708,
+        toleranz: 0.01,
+        tipp: "Bei \\(\\sin(x - c)\\) ist \\(c\\) die horizontale Verschiebung nach rechts.",
+        loesungsweg: "Bei \\(f(x) = \\sin(x - c)\\) ist \\(c\\) die Verschiebung nach rechts. Hier \\(c = \\frac{\\pi}{2} \\approx 1{,}5708\\)."
       },
       {
-        "id": 20,
-        "level": 4,
-        "typ": "mc",
-        "frage": "Wie ist der Graph von \\(f(x) = \\cos(x + \\pi)\\) gegenüber \\(\\cos(x)\\) verschoben?",
-        "optionen": [
+        id: 20,
+        level: 4,
+        typ: "mc",
+        frage: "Wie ist der Graph von \\(f(x) = \\cos(x + \\pi)\\) gegenüber \\(\\cos(x)\\) verschoben?",
+        optionen: [
           "um \\(\\pi\\) nach rechts",
           "um \\(\\pi\\) nach links",
           "um \\(\\pi\\) nach oben",
           "um \\(\\pi\\) nach unten"
         ],
-        "korrekt": 1,
-        "tipp": "Bei \\(\\cos(x - c)\\) ist \\(c\\) die Rechts­verschiebung. Hier steht \\(+\\pi\\), also \\(c = -\\pi\\).",
-        "loesungsweg": "Umschreiben: \\(\\cos(x + \\pi) = \\cos(x - (-\\pi))\\). Die Phasenverschiebung ist \\(c = -\\pi\\), der Graph ist also um \\(\\pi\\) **nach links** verschoben."
+        korrekt: 1,
+        tipp: "Bei \\(\\cos(x - c)\\) ist \\(c\\) die Rechts­verschiebung. Hier steht \\(+\\pi\\), also \\(c = -\\pi\\).",
+        loesungsweg: "Umschreiben: \\(\\cos(x + \\pi) = \\cos(x - (-\\pi))\\). Die Phasenverschiebung ist \\(c = -\\pi\\), der Graph ist also um \\(\\pi\\) **nach links** verschoben."
       },
       {
-        "id": 21,
-        "level": 4,
-        "typ": "mc",
-        "frage": "Bestimme Amplitude und Periode von \\(f(x) = 2 \\cdot \\sin\\!\\left(3\\left(x - \\dfrac{\\pi}{6}\\right)\\right)\\).",
-        "optionen": [
+        id: 21,
+        level: 4,
+        typ: "mc",
+        frage: "Bestimme Amplitude und Periode von \\(f(x) = 2 \\cdot \\sin\\!\\left(3\\left(x - \\dfrac{\\pi}{6}\\right)\\right)\\).",
+        optionen: [
           "Amplitude \\(2\\), Periode \\(\\dfrac{2\\pi}{3}\\)",
           "Amplitude \\(3\\), Periode \\(2\\pi\\)",
           "Amplitude \\(2\\), Periode \\(3\\)",
           "Amplitude \\(6\\), Periode \\(\\pi\\)"
         ],
-        "korrekt": 0,
-        "tipp": "Amplitude \\(= |a|\\), Periode \\(= \\frac{2\\pi}{b}\\).",
-        "loesungsweg": "Amplitude: \\(|a| = 2\\). Periode: $$T = \\frac{2\\pi}{b} = \\frac{2\\pi}{3}$$"
+        korrekt: 0,
+        tipp: "Amplitude \\(= |a|\\), Periode \\(= \\frac{2\\pi}{b}\\).",
+        loesungsweg: "Amplitude: \\(|a| = 2\\). Periode: $$T = \\frac{2\\pi}{b} = \\frac{2\\pi}{3}$$"
       },
       {
-        "id": 22,
-        "level": 4,
-        "typ": "numerisch",
-        "frage": "Gegeben: \\(f(x) = 3 \\cdot \\sin\\!\\left(x - \\dfrac{\\pi}{4}\\right)\\). An welcher Stelle \\(x\\) (kleinstes positives \\(x\\)) liegt der erste Hochpunkt? (Als Dezimalzahl, \\(\\pi \\approx 3{,}1416\\))",
-        "loesung": 2.3562,
-        "toleranz": 0.01,
-        "tipp": "Sinus hat den ersten Hochpunkt bei \\(\\frac{\\pi}{2}\\). Nach Rechtsverschiebung um \\(c\\): bei \\(c + \\frac{\\pi}{2}\\).",
-        "loesungsweg": "\\(\\sin\\) hat Hochpunkte, wenn das Argument \\(\\frac{\\pi}{2}\\) ist: $$x - \\frac{\\pi}{4} = \\frac{\\pi}{2} \\Rightarrow x = \\frac{\\pi}{4} + \\frac{\\pi}{2} = \\frac{3\\pi}{4} \\approx 2{,}3562$$"
+        id: 22,
+        level: 4,
+        typ: "numerisch",
+        frage: "Gegeben: \\(f(x) = 3 \\cdot \\sin\\!\\left(x - \\dfrac{\\pi}{4}\\right)\\). An welcher Stelle \\(x\\) (kleinstes positives \\(x\\)) liegt der erste Hochpunkt? (Als Dezimalzahl, \\(\\pi \\approx 3{,}1416\\))",
+        loesung: 2.3562,
+        toleranz: 0.01,
+        tipp: "Sinus hat den ersten Hochpunkt bei \\(\\frac{\\pi}{2}\\). Nach Rechtsverschiebung um \\(c\\): bei \\(c + \\frac{\\pi}{2}\\).",
+        loesungsweg: "\\(\\sin\\) hat Hochpunkte, wenn das Argument \\(\\frac{\\pi}{2}\\) ist: $$x - \\frac{\\pi}{4} = \\frac{\\pi}{2} \\Rightarrow x = \\frac{\\pi}{4} + \\frac{\\pi}{2} = \\frac{3\\pi}{4} \\approx 2{,}3562$$"
       },
       {
-        "id": 23,
-        "level": 4,
-        "typ": "mc",
-        "frage": "Welche Funktion hat Amplitude \\(4\\), Periode \\(\\pi\\) und ist um \\(\\frac{\\pi}{2}\\) nach rechts verschoben (Sinus-Form)?",
-        "optionen": [
+        id: 23,
+        level: 4,
+        typ: "mc",
+        frage: "Welche Funktion hat Amplitude \\(4\\), Periode \\(\\pi\\) und ist um \\(\\frac{\\pi}{2}\\) nach rechts verschoben (Sinus-Form)?",
+        optionen: [
           "\\(f(x) = 4 \\cdot \\sin\\!\\left(2\\left(x - \\tfrac{\\pi}{2}\\right)\\right)\\)",
           "\\(f(x) = 2 \\cdot \\sin\\!\\left(4\\left(x - \\tfrac{\\pi}{2}\\right)\\right)\\)",
           "\\(f(x) = 4 \\cdot \\sin\\!\\left(\\tfrac{1}{2}\\left(x - \\tfrac{\\pi}{2}\\right)\\right)\\)",
           "\\(f(x) = 4 \\cdot \\sin\\!\\left(x - \\tfrac{\\pi}{2}\\right)\\)"
         ],
-        "korrekt": 0,
-        "tipp": "Aus \\(T = \\pi\\) folgt \\(b = \\frac{2\\pi}{T} = 2\\). Amplitude \\(a = 4\\), Phasen­verschiebung \\(c = \\frac{\\pi}{2}\\).",
-        "loesungsweg": "Amplitude \\(a = 4\\). Aus \\(T = \\pi\\): \\(b = \\frac{2\\pi}{\\pi} = 2\\). Phasenverschiebung \\(c = \\frac{\\pi}{2}\\). Ergebnis: $$f(x) = 4 \\cdot \\sin\\!\\left(2\\left(x - \\tfrac{\\pi}{2}\\right)\\right)$$"
+        korrekt: 0,
+        tipp: "Aus \\(T = \\pi\\) folgt \\(b = \\frac{2\\pi}{T} = 2\\). Amplitude \\(a = 4\\), Phasen­verschiebung \\(c = \\frac{\\pi}{2}\\).",
+        loesungsweg: "Amplitude \\(a = 4\\). Aus \\(T = \\pi\\): \\(b = \\frac{2\\pi}{\\pi} = 2\\). Phasenverschiebung \\(c = \\frac{\\pi}{2}\\). Ergebnis: $$f(x) = 4 \\cdot \\sin\\!\\left(2\\left(x - \\tfrac{\\pi}{2}\\right)\\right)$$"
       },
       {
-        "id": 24,
-        "level": 4,
-        "typ": "numerisch",
-        "frage": "Gegeben: \\(f(x) = \\cos\\!\\left(2\\left(x - \\dfrac{\\pi}{4}\\right)\\right)\\). Berechne \\(f\\!\\left(\\dfrac{\\pi}{4}\\right)\\).",
-        "loesung": 1,
-        "toleranz": 0.01,
-        "tipp": "Setze \\(x = \\frac{\\pi}{4}\\) ein. Dann wird das Argument \\(0\\).",
-        "loesungsweg": "$$f\\!\\left(\\frac{\\pi}{4}\\right) = \\cos\\!\\left(2\\left(\\frac{\\pi}{4} - \\frac{\\pi}{4}\\right)\\right) = \\cos(0) = 1$$"
+        id: 24,
+        level: 4,
+        typ: "numerisch",
+        frage: "Gegeben: \\(f(x) = \\cos\\!\\left(2\\left(x - \\dfrac{\\pi}{4}\\right)\\right)\\). Berechne \\(f\\!\\left(\\dfrac{\\pi}{4}\\right)\\).",
+        loesung: 1,
+        toleranz: 0.01,
+        tipp: "Setze \\(x = \\frac{\\pi}{4}\\) ein. Dann wird das Argument \\(0\\).",
+        loesungsweg: "$$f\\!\\left(\\frac{\\pi}{4}\\right) = \\cos\\!\\left(2\\left(\\frac{\\pi}{4} - \\frac{\\pi}{4}\\right)\\right) = \\cos(0) = 1$$"
       },
 
       // ========== LEVEL 5 — schwer: alle Parameter + Hoch-/Tiefpunkte (6 Aufgaben) ==========
       {
-        "id": 25,
-        "level": 5,
-        "typ": "mc",
-        "frage": "Gegeben: \\(f(x) = 2 \\cdot \\sin\\!\\left(3\\left(x - \\dfrac{\\pi}{6}\\right)\\right) + 1\\). Bestimme Amplitude, Periode und Verschiebung.",
-        "optionen": [
+        id: 25,
+        level: 5,
+        typ: "mc",
+        frage: "Gegeben: \\(f(x) = 2 \\cdot \\sin\\!\\left(3\\left(x - \\dfrac{\\pi}{6}\\right)\\right) + 1\\). Bestimme Amplitude, Periode und Verschiebung.",
+        optionen: [
           "\\(|a|=2,\\; T=\\dfrac{2\\pi}{3},\\; c=\\dfrac{\\pi}{6},\\; d=1\\)",
           "\\(|a|=3,\\; T=2\\pi,\\; c=\\dfrac{\\pi}{6},\\; d=2\\)",
           "\\(|a|=2,\\; T=3,\\; c=\\dfrac{\\pi}{6},\\; d=1\\)",
           "\\(|a|=1,\\; T=\\pi,\\; c=\\dfrac{\\pi}{3},\\; d=2\\)"
         ],
-        "korrekt": 0,
-        "tipp": "Lies Parameter direkt ab: \\(a, b, c, d\\) aus \\(a\\sin(b(x-c))+d\\).",
-        "loesungsweg": "Amplitude: \\(|a| = 2\\). Periode: \\(T = \\frac{2\\pi}{3}\\). Phasenverschiebung: \\(c = \\frac{\\pi}{6}\\) (nach rechts). Vertikale Verschiebung: \\(d = 1\\)."
+        korrekt: 0,
+        tipp: "Lies Parameter direkt ab: \\(a, b, c, d\\) aus \\(a\\sin(b(x-c))+d\\).",
+        loesungsweg: "Amplitude: \\(|a| = 2\\). Periode: \\(T = \\frac{2\\pi}{3}\\). Phasenverschiebung: \\(c = \\frac{\\pi}{6}\\) (nach rechts). Vertikale Verschiebung: \\(d = 1\\)."
       },
       {
-        "id": 26,
-        "level": 5,
-        "typ": "numerisch",
-        "frage": "Gegeben: \\(f(x) = 4 \\cdot \\sin(x) + 3\\). Bestimme den \\(y\\)-Wert des Hochpunkts.",
-        "loesung": 7,
-        "toleranz": 0,
-        "tipp": "Hochpunkt-\\(y\\)-Wert: \\(d + |a|\\).",
-        "loesungsweg": "Hochpunkt bei \\(\\sin(x) = 1\\): $$y = 4 \\cdot 1 + 3 = 7$$"
+        id: 26,
+        level: 5,
+        typ: "numerisch",
+        frage: "Gegeben: \\(f(x) = 4 \\cdot \\sin(x) + 3\\). Bestimme den \\(y\\)-Wert des Hochpunkts.",
+        loesung: 7,
+        toleranz: 0,
+        tipp: "Hochpunkt-\\(y\\)-Wert: \\(d + |a|\\).",
+        loesungsweg: "Hochpunkt bei \\(\\sin(x) = 1\\): $$y = 4 \\cdot 1 + 3 = 7$$"
       },
       {
-        "id": 27,
-        "level": 5,
-        "typ": "numerisch",
-        "frage": "Gegeben: \\(f(x) = 2 \\cdot \\cos(x) - 5\\). Bestimme den \\(y\\)-Wert des Tiefpunkts.",
-        "loesung": -7,
-        "toleranz": 0,
-        "tipp": "Tiefpunkt-\\(y\\)-Wert: \\(d - |a|\\).",
-        "loesungsweg": "Tiefpunkt bei \\(\\cos(x) = -1\\): $$y = 2 \\cdot (-1) - 5 = -2 - 5 = -7$$"
+        id: 27,
+        level: 5,
+        typ: "numerisch",
+        frage: "Gegeben: \\(f(x) = 2 \\cdot \\cos(x) - 5\\). Bestimme den \\(y\\)-Wert des Tiefpunkts.",
+        loesung: -7,
+        toleranz: 0,
+        tipp: "Tiefpunkt-\\(y\\)-Wert: \\(d - |a|\\).",
+        loesungsweg: "Tiefpunkt bei \\(\\cos(x) = -1\\): $$y = 2 \\cdot (-1) - 5 = -2 - 5 = -7$$"
       },
       {
-        "id": 28,
-        "level": 5,
-        "typ": "mc",
-        "frage": "Gegeben: \\(f(x) = 3 \\cdot \\sin(2x) + 1\\). An welcher Stelle \\(x\\) liegt der erste Hochpunkt (kleinstes \\(x \\geq 0\\))?",
-        "optionen": [
+        id: 28,
+        level: 5,
+        typ: "mc",
+        frage: "Gegeben: \\(f(x) = 3 \\cdot \\sin(2x) + 1\\). An welcher Stelle \\(x\\) liegt der erste Hochpunkt (kleinstes \\(x \\geq 0\\))?",
+        optionen: [
           "\\(x = \\dfrac{\\pi}{4}\\)",
           "\\(x = \\dfrac{\\pi}{2}\\)",
           "\\(x = \\pi\\)",
           "\\(x = \\dfrac{\\pi}{6}\\)"
         ],
-        "korrekt": 0,
-        "tipp": "Setze das Argument \\(2x = \\frac{\\pi}{2}\\) (erster Hochpunkt von \\(\\sin\\)).",
-        "loesungsweg": "\\(\\sin\\) hat den ersten Hochpunkt bei Argument \\(\\frac{\\pi}{2}\\): $$2x = \\frac{\\pi}{2} \\Rightarrow x = \\frac{\\pi}{4}$$"
+        korrekt: 0,
+        tipp: "Setze das Argument \\(2x = \\frac{\\pi}{2}\\) (erster Hochpunkt von \\(\\sin\\)).",
+        loesungsweg: "\\(\\sin\\) hat den ersten Hochpunkt bei Argument \\(\\frac{\\pi}{2}\\): $$2x = \\frac{\\pi}{2} \\Rightarrow x = \\frac{\\pi}{4}$$"
       },
       {
-        "id": 29,
-        "level": 5,
-        "typ": "mc",
-        "frage": "Gegeben: \\(f(x) = -2 \\cdot \\sin(x) + 4\\). Was ist der Wertebereich, und ist der Graph gegenüber \\(\\sin(x)\\) gespiegelt?",
-        "optionen": [
+        id: 29,
+        level: 5,
+        typ: "mc",
+        frage: "Gegeben: \\(f(x) = -2 \\cdot \\sin(x) + 4\\). Was ist der Wertebereich, und ist der Graph gegenüber \\(\\sin(x)\\) gespiegelt?",
+        optionen: [
           "\\([2;\\,6]\\), ja gespiegelt (an \\(y=4\\))",
           "\\([-2;\\,2]\\), nicht gespiegelt",
           "\\([2;\\,6]\\), nicht gespiegelt",
           "\\([4;\\,6]\\), ja gespiegelt"
         ],
-        "korrekt": 0,
-        "tipp": "Negatives \\(a\\) bewirkt Spiegelung. Wertebereich: \\([d-|a|;\\,d+|a|]\\).",
-        "loesungsweg": "Amplitude \\(|a| = 2\\), Verschiebung \\(d = 4\\). Wertebereich: \\([4-2;\\,4+2] = [2;\\,6]\\). Das negative Vorzeichen spiegelt den Graphen an der Mittellinie \\(y = 4\\)."
+        korrekt: 0,
+        tipp: "Negatives \\(a\\) bewirkt Spiegelung. Wertebereich: \\([d-|a|;\\,d+|a|]\\).",
+        loesungsweg: "Amplitude \\(|a| = 2\\), Verschiebung \\(d = 4\\). Wertebereich: \\([4-2;\\,4+2] = [2;\\,6]\\). Das negative Vorzeichen spiegelt den Graphen an der Mittellinie \\(y = 4\\)."
       },
       {
-        "id": 30,
-        "level": 5,
-        "typ": "numerisch",
-        "frage": "Gegeben: \\(f(x) = 5 \\cdot \\sin\\!\\left(\\dfrac{1}{2}x\\right) - 2\\). Berechne die Periode als Vielfaches von \\(\\pi\\). (Beispiel: \\(4\\pi\\) → Antwort \\(4\\))",
-        "loesung": 4,
-        "toleranz": 0,
-        "tipp": "\\(b = \\frac{1}{2}\\). \\(T = \\frac{2\\pi}{b}\\).",
-        "loesungsweg": "$$T = \\frac{2\\pi}{b} = \\frac{2\\pi}{1/2} = 4\\pi$$ Also Antwort: \\(4\\) (entspricht \\(4\\pi\\))."
+        id: 30,
+        level: 5,
+        typ: "numerisch",
+        frage: "Gegeben: \\(f(x) = 5 \\cdot \\sin\\!\\left(\\dfrac{1}{2}x\\right) - 2\\). Berechne die Periode als Vielfaches von \\(\\pi\\). (Beispiel: \\(4\\pi\\) → Antwort \\(4\\))",
+        loesung: 4,
+        toleranz: 0,
+        tipp: "\\(b = \\frac{1}{2}\\). \\(T = \\frac{2\\pi}{b}\\).",
+        loesungsweg: "$$T = \\frac{2\\pi}{b} = \\frac{2\\pi}{1/2} = 4\\pi$$ Also Antwort: \\(4\\) (entspricht \\(4\\pi\\))."
       },
 
       // ========== LEVEL 6 — Experte: Funktionsgleichung aufstellen (6 Aufgaben) ==========
       {
-        "id": 31,
-        "level": 6,
-        "typ": "mc",
-        "frage": "Eine Sinusfunktion hat Amplitude \\(3\\), Periode \\(2\\pi\\), keine Verschiebung. Wie lautet die Gleichung?",
-        "optionen": [
+        id: 31,
+        level: 6,
+        typ: "mc",
+        frage: "Eine Sinusfunktion hat Amplitude \\(3\\), Periode \\(2\\pi\\), keine Verschiebung. Wie lautet die Gleichung?",
+        optionen: [
           "\\(f(x) = 3 \\cdot \\sin(2x)\\)",
           "\\(f(x) = 3 \\cdot \\sin(x)\\)",
           "\\(f(x) = 2\\pi \\cdot \\sin(x)\\)",
           "\\(f(x) = \\sin(3x)\\)"
         ],
-        "korrekt": 1,
-        "tipp": "Bei Periode \\(2\\pi\\) ist \\(b = 1\\).",
-        "loesungsweg": "Amplitude \\(a = 3\\). Periode \\(T = 2\\pi \\Rightarrow b = \\frac{2\\pi}{T} = 1\\). Also: $$f(x) = 3 \\cdot \\sin(x)$$"
+        korrekt: 1,
+        tipp: "Bei Periode \\(2\\pi\\) ist \\(b = 1\\).",
+        loesungsweg: "Amplitude \\(a = 3\\). Periode \\(T = 2\\pi \\Rightarrow b = \\frac{2\\pi}{T} = 1\\). Also: $$f(x) = 3 \\cdot \\sin(x)$$"
       },
       {
-        "id": 32,
-        "level": 6,
-        "typ": "mc",
-        "frage": "Eine Sinusfunktion hat Amplitude \\(2\\) und Periode \\(\\pi\\), keine Verschiebung. Wie lautet die Gleichung?",
-        "optionen": [
+        id: 32,
+        level: 6,
+        typ: "mc",
+        frage: "Eine Sinusfunktion hat Amplitude \\(2\\) und Periode \\(\\pi\\), keine Verschiebung. Wie lautet die Gleichung?",
+        optionen: [
           "\\(f(x) = 2 \\cdot \\sin(\\pi x)\\)",
           "\\(f(x) = \\pi \\cdot \\sin(2x)\\)",
           "\\(f(x) = 2 \\cdot \\sin(2x)\\)",
           "\\(f(x) = 2 \\cdot \\sin\\!\\left(\\tfrac{1}{2}x\\right)\\)"
         ],
-        "korrekt": 2,
-        "tipp": "Aus \\(T = \\pi\\) folgt \\(b = \\frac{2\\pi}{\\pi} = 2\\).",
-        "loesungsweg": "Amplitude \\(a = 2\\). Periode \\(T = \\pi \\Rightarrow b = \\frac{2\\pi}{\\pi} = 2\\). Also: $$f(x) = 2 \\cdot \\sin(2x)$$"
+        korrekt: 2,
+        tipp: "Aus \\(T = \\pi\\) folgt \\(b = \\frac{2\\pi}{\\pi} = 2\\).",
+        loesungsweg: "Amplitude \\(a = 2\\). Periode \\(T = \\pi \\Rightarrow b = \\frac{2\\pi}{\\pi} = 2\\). Also: $$f(x) = 2 \\cdot \\sin(2x)$$"
       },
       {
-        "id": 33,
-        "level": 6,
-        "typ": "mc",
-        "frage": "Eine Kosinusfunktion hat Amplitude \\(4\\), Periode \\(4\\pi\\) und ist um \\(3\\) Einheiten nach oben verschoben. Wie lautet die Gleichung?",
-        "optionen": [
+        id: 33,
+        level: 6,
+        typ: "mc",
+        frage: "Eine Kosinusfunktion hat Amplitude \\(4\\), Periode \\(4\\pi\\) und ist um \\(3\\) Einheiten nach oben verschoben. Wie lautet die Gleichung?",
+        optionen: [
           "\\(f(x) = 4 \\cdot \\cos(2x) + 3\\)",
           "\\(f(x) = 4 \\cdot \\cos\\!\\left(\\tfrac{1}{2}x\\right) + 3\\)",
           "\\(f(x) = 3 \\cdot \\cos\\!\\left(\\tfrac{1}{2}x\\right) + 4\\)",
           "\\(f(x) = 4 \\cdot \\cos(4\\pi x) + 3\\)"
         ],
-        "korrekt": 1,
-        "tipp": "Aus \\(T = 4\\pi\\) folgt \\(b = \\frac{2\\pi}{4\\pi} = \\frac{1}{2}\\).",
-        "loesungsweg": "Amplitude \\(a = 4\\). Periode \\(T = 4\\pi \\Rightarrow b = \\frac{2\\pi}{4\\pi} = \\frac{1}{2}\\). Vertikale Verschiebung \\(d = 3\\). Also: $$f(x) = 4 \\cdot \\cos\\!\\left(\\tfrac{1}{2}x\\right) + 3$$"
+        korrekt: 1,
+        tipp: "Aus \\(T = 4\\pi\\) folgt \\(b = \\frac{2\\pi}{4\\pi} = \\frac{1}{2}\\).",
+        loesungsweg: "Amplitude \\(a = 4\\). Periode \\(T = 4\\pi \\Rightarrow b = \\frac{2\\pi}{4\\pi} = \\frac{1}{2}\\). Vertikale Verschiebung \\(d = 3\\). Also: $$f(x) = 4 \\cdot \\cos\\!\\left(\\tfrac{1}{2}x\\right) + 3$$"
       },
       {
-        "id": 34,
-        "level": 6,
-        "typ": "mc",
-        "frage": "Eine Schwingung hat Wertebereich \\([-1;\\,5]\\) und Periode \\(\\pi\\). Welche Sinusgleichung passt?",
-        "optionen": [
+        id: 34,
+        level: 6,
+        typ: "mc",
+        frage: "Eine Schwingung hat Wertebereich \\([-1;\\,5]\\) und Periode \\(\\pi\\). Welche Sinusgleichung passt?",
+        optionen: [
           "\\(f(x) = 3 \\cdot \\sin(2x) + 2\\)",
           "\\(f(x) = 5 \\cdot \\sin(\\pi x) - 1\\)",
           "\\(f(x) = 2 \\cdot \\sin(2x) + 3\\)",
           "\\(f(x) = 6 \\cdot \\sin(\\pi x) + 2\\)"
         ],
-        "korrekt": 0,
-        "tipp": "\\(d\\) = Mitte des Wertebereichs, \\(a\\) = halbe Spannweite. \\(b\\) aus Periode.",
-        "loesungsweg": "Mitte: \\(d = \\frac{-1 + 5}{2} = 2\\). Amplitude: \\(a = \\frac{5 - (-1)}{2} = 3\\). Periode \\(T = \\pi \\Rightarrow b = \\frac{2\\pi}{\\pi} = 2\\). Ergebnis: $$f(x) = 3 \\cdot \\sin(2x) + 2$$"
+        korrekt: 0,
+        tipp: "\\(d\\) = Mitte des Wertebereichs, \\(a\\) = halbe Spannweite. \\(b\\) aus Periode.",
+        loesungsweg: "Mitte: \\(d = \\frac{-1 + 5}{2} = 2\\). Amplitude: \\(a = \\frac{5 - (-1)}{2} = 3\\). Periode \\(T = \\pi \\Rightarrow b = \\frac{2\\pi}{\\pi} = 2\\). Ergebnis: $$f(x) = 3 \\cdot \\sin(2x) + 2$$"
       },
       {
-        "id": 35,
-        "level": 6,
-        "typ": "mc",
-        "frage": "Ein Riesenrad rotiert so, dass die Gondelhöhe \\(h(t)\\) (in m) zwischen \\(2\\) m und \\(42\\) m schwingt, mit Periode \\(10\\) Minuten. Zum Zeitpunkt \\(t=0\\) ist die Gondel auf mittlerer Höhe und steigt. Welche Funktion beschreibt \\(h(t)\\)?",
-        "optionen": [
+        id: 35,
+        level: 6,
+        typ: "mc",
+        frage: "Ein Riesenrad rotiert so, dass die Gondelhöhe \\(h(t)\\) (in m) zwischen \\(2\\) m und \\(42\\) m schwingt, mit Periode \\(10\\) Minuten. Zum Zeitpunkt \\(t=0\\) ist die Gondel auf mittlerer Höhe und steigt. Welche Funktion beschreibt \\(h(t)\\)?",
+        optionen: [
           "\\(h(t) = 20 \\cdot \\sin\\!\\left(\\tfrac{\\pi}{5} t\\right) + 22\\)",
           "\\(h(t) = 42 \\cdot \\sin\\!\\left(\\tfrac{2\\pi}{10} t\\right) + 2\\)",
           "\\(h(t) = 22 \\cdot \\cos\\!\\left(\\tfrac{\\pi}{5} t\\right) + 20\\)",
           "\\(h(t) = 40 \\cdot \\sin\\!\\left(\\tfrac{\\pi}{10} t\\right) + 2\\)"
         ],
-        "korrekt": 0,
-        "tipp": "Mittellinie \\(d = 22\\), Amplitude \\(a = 20\\), \\(b = \\frac{2\\pi}{T} = \\frac{2\\pi}{10} = \\frac{\\pi}{5}\\). \\(\\sin\\) startet bei 0 und steigt — passt.",
-        "loesungsweg": "Mittellinie: \\(d = \\frac{2 + 42}{2} = 22\\). Amplitude: \\(a = \\frac{42 - 2}{2} = 20\\). Periode \\(T = 10 \\Rightarrow b = \\frac{2\\pi}{10} = \\frac{\\pi}{5}\\). Da \\(\\sin\\) bei \\(t=0\\) den Wert 0 hat und steigt (Start auf Mittelhöhe, aufwärts): $$h(t) = 20 \\cdot \\sin\\!\\left(\\tfrac{\\pi}{5} t\\right) + 22$$"
+        korrekt: 0,
+        tipp: "Mittellinie \\(d = 22\\), Amplitude \\(a = 20\\), \\(b = \\frac{2\\pi}{T} = \\frac{2\\pi}{10} = \\frac{\\pi}{5}\\). \\(\\sin\\) startet bei 0 und steigt — passt.",
+        loesungsweg: "Mittellinie: \\(d = \\frac{2 + 42}{2} = 22\\). Amplitude: \\(a = \\frac{42 - 2}{2} = 20\\). Periode \\(T = 10 \\Rightarrow b = \\frac{2\\pi}{10} = \\frac{\\pi}{5}\\). Da \\(\\sin\\) bei \\(t=0\\) den Wert 0 hat und steigt (Start auf Mittelhöhe, aufwärts): $$h(t) = 20 \\cdot \\sin\\!\\left(\\tfrac{\\pi}{5} t\\right) + 22$$"
       },
       {
-        "id": 36,
-        "level": 6,
-        "typ": "numerisch",
-        "frage": "Eine Sinusfunktion \\(f(x) = a \\cdot \\sin(b x) + d\\) (mit \\(a, b > 0\\)) hat Hochpunkt bei \\(y = 9\\), Tiefpunkt bei \\(y = 1\\) und Periode \\(\\dfrac{\\pi}{2}\\). Bestimme \\(b\\).",
-        "loesung": 4,
-        "toleranz": 0,
-        "tipp": "Aus \\(T = \\frac{2\\pi}{b}\\) folgt \\(b = \\frac{2\\pi}{T}\\).",
-        "loesungsweg": "Aus der Periode \\(T = \\frac{\\pi}{2}\\) folgt: $$b = \\frac{2\\pi}{T} = \\frac{2\\pi}{\\pi/2} = 2\\pi \\cdot \\frac{2}{\\pi} = 4$$ (Zur Info: \\(a = \\frac{9-1}{2} = 4\\), \\(d = \\frac{9+1}{2} = 5\\), also \\(f(x) = 4 \\sin(4x) + 5\\).)"
+        id: 36,
+        level: 6,
+        typ: "numerisch",
+        frage: "Eine Sinusfunktion \\(f(x) = a \\cdot \\sin(b x) + d\\) (mit \\(a, b > 0\\)) hat Hochpunkt bei \\(y = 9\\), Tiefpunkt bei \\(y = 1\\) und Periode \\(\\dfrac{\\pi}{2}\\). Bestimme \\(b\\).",
+        loesung: 4,
+        toleranz: 0,
+        tipp: "Aus \\(T = \\frac{2\\pi}{b}\\) folgt \\(b = \\frac{2\\pi}{T}\\).",
+        loesungsweg: "Aus der Periode \\(T = \\frac{\\pi}{2}\\) folgt: $$b = \\frac{2\\pi}{T} = \\frac{2\\pi}{\\pi/2} = 2\\pi \\cdot \\frac{2}{\\pi} = 4$$ (Zur Info: \\(a = \\frac{9-1}{2} = 4\\), \\(d = \\frac{9+1}{2} = 5\\), also \\(f(x) = 4 \\sin(4x) + 5\\).)"
       }
     ];
     </script>

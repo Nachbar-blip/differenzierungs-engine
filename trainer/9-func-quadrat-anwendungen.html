@@ -14,444 +14,444 @@
     <div class="spirale-container" id="app"></div>
     <script>
     const THEMA_KEY = '9-func-quadrat-anwendungen';
-    const THEMA_CONFIG = { name: 'Quadr. Funktionen Anwendungen', bereich: 'Analysis' };
+    const THEMA_CONFIG = { name: 'Quadr. Funktionen Anwendungen', bereich: 'analysis' };
     const AUFGABEN = [
       // ========== LEVEL 1 — Funktionswerte einsetzen, Anfangshöhe (6 Aufgaben) ==========
       {
-        "id": 1,
-        "level": 1,
-        "typ": "numerisch",
-        "frage": "Die Höhe eines Balls ist \\(h(t) = -5t^2 + 20t + 1{,}5\\) (\\(h\\) in m, \\(t\\) in s). Wie hoch (in m) befindet sich der Ball zum Startzeitpunkt \\(t = 0\\)?",
-        "loesung": 1.5,
-        "toleranz": 0.01,
+        id: 1,
+        level: 1,
+        typ: "numerisch",
+        frage: "Die Höhe eines Balls ist \\(h(t) = -5t^2 + 20t + 1{,}5\\) (\\(h\\) in m, \\(t\\) in s). Wie hoch (in m) befindet sich der Ball zum Startzeitpunkt \\(t = 0\\)?",
+        loesung: 1.5,
+        toleranz: 0.01,
         "bereich": "Analysis",
-        "tipp": "Die Anfangshöhe ist \\(h(0)\\). Setze \\(t = 0\\) in den Term ein.",
-        "loesungsweg": "$$h(0) = -5 \\cdot 0^2 + 20 \\cdot 0 + 1{,}5 = 1{,}5 \\text{ m}$$ Der Ball startet in \\(1{,}5\\) m Höhe (z. B. Wurfhöhe der Hand)."
+        tipp: "Die Anfangshöhe ist \\(h(0)\\). Setze \\(t = 0\\) in den Term ein.",
+        loesungsweg: "$$h(0) = -5 \\cdot 0^2 + 20 \\cdot 0 + 1{,}5 = 1{,}5 \\text{ m}$$ Der Ball startet in \\(1{,}5\\) m Höhe (z. B. Wurfhöhe der Hand)."
       },
       {
-        "id": 2,
-        "level": 1,
-        "typ": "numerisch",
-        "frage": "Die Flugbahn eines Steins ist \\(h(t) = -5t^2 + 15t + 2\\) (in m). Welche Höhe (in m) hat der Stein nach \\(t = 1\\) s?",
-        "loesung": 12,
-        "toleranz": 0,
+        id: 2,
+        level: 1,
+        typ: "numerisch",
+        frage: "Die Flugbahn eines Steins ist \\(h(t) = -5t^2 + 15t + 2\\) (in m). Welche Höhe (in m) hat der Stein nach \\(t = 1\\) s?",
+        loesung: 12,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "Setze \\(t = 1\\) ein und rechne sorgfältig aus.",
-        "loesungsweg": "$$h(1) = -5 \\cdot 1^2 + 15 \\cdot 1 + 2 = -5 + 15 + 2 = 12 \\text{ m}$$"
+        tipp: "Setze \\(t = 1\\) ein und rechne sorgfältig aus.",
+        loesungsweg: "$$h(1) = -5 \\cdot 1^2 + 15 \\cdot 1 + 2 = -5 + 15 + 2 = 12 \\text{ m}$$"
       },
       {
-        "id": 3,
-        "level": 1,
-        "typ": "mc",
-        "frage": "Ein Wasserstrahl folgt der Bahn \\(f(x) = -0{,}5x^2 + 2x + 1\\) (\\(f\\), \\(x\\) in m). Welche Anfangshöhe (bei \\(x=0\\)) hat der Strahl?",
-        "optionen": [
+        id: 3,
+        level: 1,
+        typ: "mc",
+        frage: "Ein Wasserstrahl folgt der Bahn \\(f(x) = -0{,}5x^2 + 2x + 1\\) (\\(f\\), \\(x\\) in m). Welche Anfangshöhe (bei \\(x=0\\)) hat der Strahl?",
+        optionen: [
           "\\(0{,}5\\) m",
           "\\(1\\) m",
           "\\(2\\) m",
           "\\(3\\) m"
         ],
-        "korrekt": 1,
+        korrekt: 1,
         "bereich": "Analysis",
-        "tipp": "Setze \\(x = 0\\) in den Funktionsterm ein.",
-        "loesungsweg": "$$f(0) = -0{,}5 \\cdot 0 + 2 \\cdot 0 + 1 = 1 \\text{ m}$$ Der \\(y\\)-Achsenabschnitt \\(c\\) ist immer die Anfangshöhe."
+        tipp: "Setze \\(x = 0\\) in den Funktionsterm ein.",
+        loesungsweg: "$$f(0) = -0{,}5 \\cdot 0 + 2 \\cdot 0 + 1 = 1 \\text{ m}$$ Der \\(y\\)-Achsenabschnitt \\(c\\) ist immer die Anfangshöhe."
       },
       {
-        "id": 4,
-        "level": 1,
-        "typ": "numerisch",
-        "frage": "Die Höhe eines Balls nach dem Wurf: \\(h(t) = -5t^2 + 10t + 3\\). Berechne \\(h(2)\\) in m.",
-        "loesung": 3,
-        "toleranz": 0,
+        id: 4,
+        level: 1,
+        typ: "numerisch",
+        frage: "Die Höhe eines Balls nach dem Wurf: \\(h(t) = -5t^2 + 10t + 3\\). Berechne \\(h(2)\\) in m.",
+        loesung: 3,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "Setze \\(t=2\\) ein: erst \\(2^2 = 4\\).",
-        "loesungsweg": "$$h(2) = -5 \\cdot 4 + 10 \\cdot 2 + 3 = -20 + 20 + 3 = 3 \\text{ m}$$"
+        tipp: "Setze \\(t=2\\) ein: erst \\(2^2 = 4\\).",
+        loesungsweg: "$$h(2) = -5 \\cdot 4 + 10 \\cdot 2 + 3 = -20 + 20 + 3 = 3 \\text{ m}$$"
       },
       {
-        "id": 5,
-        "level": 1,
-        "typ": "numerisch",
-        "frage": "Ein Brückenbogen hat den Querschnitt \\(f(x) = -0{,}05x^2 + 2x\\) (in m). Wie hoch ist der Bogen bei \\(x = 10\\) m?",
-        "loesung": 15,
-        "toleranz": 0,
+        id: 5,
+        level: 1,
+        typ: "numerisch",
+        frage: "Ein Brückenbogen hat den Querschnitt \\(f(x) = -0{,}05x^2 + 2x\\) (in m). Wie hoch ist der Bogen bei \\(x = 10\\) m?",
+        loesung: 15,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "Setze \\(x = 10\\) ein. \\(10^2 = 100\\).",
-        "loesungsweg": "$$f(10) = -0{,}05 \\cdot 100 + 2 \\cdot 10 = -5 + 20 = 15 \\text{ m}$$"
+        tipp: "Setze \\(x = 10\\) ein. \\(10^2 = 100\\).",
+        loesungsweg: "$$f(10) = -0{,}05 \\cdot 100 + 2 \\cdot 10 = -5 + 20 = 15 \\text{ m}$$"
       },
       {
-        "id": 6,
-        "level": 1,
-        "typ": "mc",
-        "frage": "Der Gewinn eines Betriebs ist \\(G(x) = -x^2 + 10x - 9\\) (in Tausend €, \\(x\\) in Tausend Stück). Wie viel Gewinn erwirtschaftet der Betrieb bei \\(x = 0\\)?",
-        "optionen": [
+        id: 6,
+        level: 1,
+        typ: "mc",
+        frage: "Der Gewinn eines Betriebs ist \\(G(x) = -x^2 + 10x - 9\\) (in Tausend €, \\(x\\) in Tausend Stück). Wie viel Gewinn erwirtschaftet der Betrieb bei \\(x = 0\\)?",
+        optionen: [
           "\\(0\\) Tausend €",
           "\\(9\\) Tausend €",
           "\\(-9\\) Tausend € (Verlust)",
           "\\(10\\) Tausend €"
         ],
-        "korrekt": 2,
+        korrekt: 2,
         "bereich": "Analysis",
-        "tipp": "Setze \\(x = 0\\) ein. Bei \\(x = 0\\) wird nichts produziert, aber Fixkosten fallen an.",
-        "loesungsweg": "$$G(0) = -0 + 0 - 9 = -9$$ Der Betrieb macht bei \\(x = 0\\) einen Verlust von \\(9\\) Tausend € (Fixkosten)."
+        tipp: "Setze \\(x = 0\\) ein. Bei \\(x = 0\\) wird nichts produziert, aber Fixkosten fallen an.",
+        loesungsweg: "$$G(0) = -0 + 0 - 9 = -9$$ Der Betrieb macht bei \\(x = 0\\) einen Verlust von \\(9\\) Tausend € (Fixkosten)."
       },
 
       // ========== LEVEL 2 — Funktionswerte, Höhe zu Zeitpunkt, y-Achsenabschnitt (6 Aufgaben) ==========
       {
-        "id": 7,
-        "level": 2,
-        "typ": "numerisch",
-        "frage": "Die Höhe eines Balls ist \\(h(t) = -5t^2 + 20t\\) (in m). Berechne die Höhe nach \\(t = 3\\) s in m.",
-        "loesung": 15,
-        "toleranz": 0,
+        id: 7,
+        level: 2,
+        typ: "numerisch",
+        frage: "Die Höhe eines Balls ist \\(h(t) = -5t^2 + 20t\\) (in m). Berechne die Höhe nach \\(t = 3\\) s in m.",
+        loesung: 15,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "Setze \\(t = 3\\) ein: \\(3^2 = 9\\).",
-        "loesungsweg": "$$h(3) = -5 \\cdot 9 + 20 \\cdot 3 = -45 + 60 = 15 \\text{ m}$$"
+        tipp: "Setze \\(t = 3\\) ein: \\(3^2 = 9\\).",
+        loesungsweg: "$$h(3) = -5 \\cdot 9 + 20 \\cdot 3 = -45 + 60 = 15 \\text{ m}$$"
       },
       {
-        "id": 8,
-        "level": 2,
-        "typ": "numerisch",
-        "frage": "Ein Ball wird geworfen: \\(h(t) = -5t^2 + 15t + 2{,}5\\) (in m). Welche Höhe (in m) hat er nach \\(t = 2\\) s?",
-        "loesung": 12.5,
-        "toleranz": 0.01,
+        id: 8,
+        level: 2,
+        typ: "numerisch",
+        frage: "Ein Ball wird geworfen: \\(h(t) = -5t^2 + 15t + 2{,}5\\) (in m). Welche Höhe (in m) hat er nach \\(t = 2\\) s?",
+        loesung: 12.5,
+        toleranz: 0.01,
         "bereich": "Analysis",
-        "tipp": "Setze \\(t=2\\) ein.",
-        "loesungsweg": "$$h(2) = -5 \\cdot 4 + 15 \\cdot 2 + 2{,}5 = -20 + 30 + 2{,}5 = 12{,}5 \\text{ m}$$"
+        tipp: "Setze \\(t=2\\) ein.",
+        loesungsweg: "$$h(2) = -5 \\cdot 4 + 15 \\cdot 2 + 2{,}5 = -20 + 30 + 2{,}5 = 12{,}5 \\text{ m}$$"
       },
       {
-        "id": 9,
-        "level": 2,
-        "typ": "mc",
-        "frage": "Ein Brückenbogen wird durch \\(f(x) = -\\frac{1}{20}x^2 + 2x\\) modelliert (in m). Welchen Wert hat \\(f(20)\\)?",
-        "optionen": [
+        id: 9,
+        level: 2,
+        typ: "mc",
+        frage: "Ein Brückenbogen wird durch \\(f(x) = -\\frac{1}{20}x^2 + 2x\\) modelliert (in m). Welchen Wert hat \\(f(20)\\)?",
+        optionen: [
           "\\(0\\) m",
           "\\(20\\) m",
           "\\(40\\) m",
           "\\(-20\\) m"
         ],
-        "korrekt": 1,
+        korrekt: 1,
         "bereich": "Analysis",
-        "tipp": "Berechne \\(-\\frac{1}{20} \\cdot 20^2\\) und \\(2 \\cdot 20\\).",
-        "loesungsweg": "$$f(20) = -\\frac{1}{20} \\cdot 400 + 2 \\cdot 20 = -20 + 40 = 20 \\text{ m}$$"
+        tipp: "Berechne \\(-\\frac{1}{20} \\cdot 20^2\\) und \\(2 \\cdot 20\\).",
+        loesungsweg: "$$f(20) = -\\frac{1}{20} \\cdot 400 + 2 \\cdot 20 = -20 + 40 = 20 \\text{ m}$$"
       },
       {
-        "id": 10,
-        "level": 2,
-        "typ": "numerisch",
-        "frage": "Ein Ball fliegt nach \\(h(t) = -5t^2 + 25t\\) (in m). Wie hoch ist er bei \\(t = 4\\) s?",
-        "loesung": 20,
-        "toleranz": 0,
+        id: 10,
+        level: 2,
+        typ: "numerisch",
+        frage: "Ein Ball fliegt nach \\(h(t) = -5t^2 + 25t\\) (in m). Wie hoch ist er bei \\(t = 4\\) s?",
+        loesung: 20,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "\\(4^2 = 16\\). Erst multiplizieren, dann addieren.",
-        "loesungsweg": "$$h(4) = -5 \\cdot 16 + 25 \\cdot 4 = -80 + 100 = 20 \\text{ m}$$"
+        tipp: "\\(4^2 = 16\\). Erst multiplizieren, dann addieren.",
+        loesungsweg: "$$h(4) = -5 \\cdot 16 + 25 \\cdot 4 = -80 + 100 = 20 \\text{ m}$$"
       },
       {
-        "id": 11,
-        "level": 2,
-        "typ": "numerisch",
-        "frage": "Der Gewinn ist \\(G(x) = -2x^2 + 40x - 100\\) (in €, \\(x\\) in Stück). Wie viel Gewinn wird bei \\(x = 5\\) erzielt?",
-        "loesung": 50,
-        "toleranz": 0,
+        id: 11,
+        level: 2,
+        typ: "numerisch",
+        frage: "Der Gewinn ist \\(G(x) = -2x^2 + 40x - 100\\) (in €, \\(x\\) in Stück). Wie viel Gewinn wird bei \\(x = 5\\) erzielt?",
+        loesung: 50,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "Setze \\(x = 5\\) ein: \\(5^2 = 25\\).",
-        "loesungsweg": "$$G(5) = -2 \\cdot 25 + 40 \\cdot 5 - 100 = -50 + 200 - 100 = 50 \\text{ €}$$"
+        tipp: "Setze \\(x = 5\\) ein: \\(5^2 = 25\\).",
+        loesungsweg: "$$G(5) = -2 \\cdot 25 + 40 \\cdot 5 - 100 = -50 + 200 - 100 = 50 \\text{ €}$$"
       },
       {
-        "id": 12,
-        "level": 2,
-        "typ": "mc",
-        "frage": "Die Höhe ist \\(h(t) = -5t^2 + 20t + 1{,}5\\). Welche Aussage stimmt?",
-        "optionen": [
+        id: 12,
+        level: 2,
+        typ: "mc",
+        frage: "Die Höhe ist \\(h(t) = -5t^2 + 20t + 1{,}5\\). Welche Aussage stimmt?",
+        optionen: [
           "Der Ball startet in \\(20\\) m Höhe.",
           "Der Ball startet in \\(1{,}5\\) m Höhe.",
           "Der Ball startet in \\(0\\) m Höhe.",
           "Der Ball startet in \\(5\\) m Höhe."
         ],
-        "korrekt": 1,
+        korrekt: 1,
         "bereich": "Analysis",
-        "tipp": "Die Anfangshöhe ist \\(h(0)\\), also der konstante Summand.",
-        "loesungsweg": "$$h(0) = 0 + 0 + 1{,}5 = 1{,}5 \\text{ m}$$ Der \\(y\\)-Achsenabschnitt (\\(c = 1{,}5\\)) gibt die Anfangshöhe an."
+        tipp: "Die Anfangshöhe ist \\(h(0)\\), also der konstante Summand.",
+        loesungsweg: "$$h(0) = 0 + 0 + 1{,}5 = 1{,}5 \\text{ m}$$ Der \\(y\\)-Achsenabschnitt (\\(c = 1{,}5\\)) gibt die Anfangshöhe an."
       },
 
       // ========== LEVEL 3 — Scheitelpunkt (Maximum) berechnen (6 Aufgaben) ==========
       {
-        "id": 13,
-        "level": 3,
-        "typ": "numerisch",
-        "frage": "Die Höhe ist \\(h(t) = -5t^2 + 20t\\) (in m). Nach wie vielen Sekunden erreicht der Ball seine maximale Höhe?",
-        "loesung": 2,
-        "toleranz": 0,
+        id: 13,
+        level: 3,
+        typ: "numerisch",
+        frage: "Die Höhe ist \\(h(t) = -5t^2 + 20t\\) (in m). Nach wie vielen Sekunden erreicht der Ball seine maximale Höhe?",
+        loesung: 2,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "Die maximale Höhe ist im Scheitel. Nutze \\(t_s = -\\frac{b}{2a}\\).",
-        "loesungsweg": "\\(a = -5\\), \\(b = 20\\): $$t_s = -\\frac{20}{2 \\cdot (-5)} = -\\frac{20}{-10} = 2 \\text{ s}$$ Nach \\(2\\) s ist die maximale Höhe erreicht."
+        tipp: "Die maximale Höhe ist im Scheitel. Nutze \\(t_s = -\\frac{b}{2a}\\).",
+        loesungsweg: "\\(a = -5\\), \\(b = 20\\): $$t_s = -\\frac{20}{2 \\cdot (-5)} = -\\frac{20}{-10} = 2 \\text{ s}$$ Nach \\(2\\) s ist die maximale Höhe erreicht."
       },
       {
-        "id": 14,
-        "level": 3,
-        "typ": "numerisch",
-        "frage": "Die Höhe ist \\(h(t) = -5t^2 + 20t\\) (in m). Wie groß ist die maximale Höhe (in m)?",
-        "loesung": 20,
-        "toleranz": 0,
+        id: 14,
+        level: 3,
+        typ: "numerisch",
+        frage: "Die Höhe ist \\(h(t) = -5t^2 + 20t\\) (in m). Wie groß ist die maximale Höhe (in m)?",
+        loesung: 20,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "Berechne zuerst \\(t_s = -\\frac{b}{2a}\\), dann \\(h(t_s)\\).",
-        "loesungsweg": "\\(t_s = -\\frac{20}{-10} = 2\\) s. $$h(2) = -5 \\cdot 4 + 20 \\cdot 2 = -20 + 40 = 20 \\text{ m}$$ Maximale Höhe: \\(20\\) m."
+        tipp: "Berechne zuerst \\(t_s = -\\frac{b}{2a}\\), dann \\(h(t_s)\\).",
+        loesungsweg: "\\(t_s = -\\frac{20}{-10} = 2\\) s. $$h(2) = -5 \\cdot 4 + 20 \\cdot 2 = -20 + 40 = 20 \\text{ m}$$ Maximale Höhe: \\(20\\) m."
       },
       {
-        "id": 15,
-        "level": 3,
-        "typ": "numerisch",
-        "frage": "Ein Brückenbogen: \\(f(x) = -0{,}05x^2 + 2x\\) (in m). Bei welchem \\(x\\) (in m) ist der Bogen am höchsten?",
-        "loesung": 20,
-        "toleranz": 0,
+        id: 15,
+        level: 3,
+        typ: "numerisch",
+        frage: "Ein Brückenbogen: \\(f(x) = -0{,}05x^2 + 2x\\) (in m). Bei welchem \\(x\\) (in m) ist der Bogen am höchsten?",
+        loesung: 20,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "Scheitel: \\(x_s = -\\frac{b}{2a}\\).",
-        "loesungsweg": "\\(a = -0{,}05\\), \\(b = 2\\): $$x_s = -\\frac{2}{2 \\cdot (-0{,}05)} = -\\frac{2}{-0{,}1} = 20 \\text{ m}$$"
+        tipp: "Scheitel: \\(x_s = -\\frac{b}{2a}\\).",
+        loesungsweg: "\\(a = -0{,}05\\), \\(b = 2\\): $$x_s = -\\frac{2}{2 \\cdot (-0{,}05)} = -\\frac{2}{-0{,}1} = 20 \\text{ m}$$"
       },
       {
-        "id": 16,
-        "level": 3,
-        "typ": "numerisch",
-        "frage": "Beim Brückenbogen \\(f(x) = -0{,}05x^2 + 2x\\) (in m): Wie hoch ist der Bogen an seiner höchsten Stelle (in m)?",
-        "loesung": 20,
-        "toleranz": 0,
+        id: 16,
+        level: 3,
+        typ: "numerisch",
+        frage: "Beim Brückenbogen \\(f(x) = -0{,}05x^2 + 2x\\) (in m): Wie hoch ist der Bogen an seiner höchsten Stelle (in m)?",
+        loesung: 20,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "Zuerst \\(x_s = 20\\), dann \\(f(20)\\).",
-        "loesungsweg": "\\(x_s = 20\\) m. $$f(20) = -0{,}05 \\cdot 400 + 2 \\cdot 20 = -20 + 40 = 20 \\text{ m}$$ Der höchste Punkt liegt bei \\(20\\) m Höhe."
+        tipp: "Zuerst \\(x_s = 20\\), dann \\(f(20)\\).",
+        loesungsweg: "\\(x_s = 20\\) m. $$f(20) = -0{,}05 \\cdot 400 + 2 \\cdot 20 = -20 + 40 = 20 \\text{ m}$$ Der höchste Punkt liegt bei \\(20\\) m Höhe."
       },
       {
-        "id": 17,
-        "level": 3,
-        "typ": "mc",
-        "frage": "Der Gewinn ist \\(G(x) = -x^2 + 10x - 9\\) (in Tausend €). Bei welcher Stückzahl \\(x\\) ist der Gewinn maximal?",
-        "optionen": [
+        id: 17,
+        level: 3,
+        typ: "mc",
+        frage: "Der Gewinn ist \\(G(x) = -x^2 + 10x - 9\\) (in Tausend €). Bei welcher Stückzahl \\(x\\) ist der Gewinn maximal?",
+        optionen: [
           "\\(x = 3\\)",
           "\\(x = 5\\)",
           "\\(x = 9\\)",
           "\\(x = 10\\)"
         ],
-        "korrekt": 1,
+        korrekt: 1,
         "bereich": "Analysis",
-        "tipp": "Scheitel: \\(x_s = -\\frac{b}{2a}\\) mit \\(a = -1\\), \\(b = 10\\).",
-        "loesungsweg": "$$x_s = -\\frac{10}{2 \\cdot (-1)} = -\\frac{10}{-2} = 5$$ Bei \\(x = 5\\) Tausend Stück ist der Gewinn maximal."
+        tipp: "Scheitel: \\(x_s = -\\frac{b}{2a}\\) mit \\(a = -1\\), \\(b = 10\\).",
+        loesungsweg: "$$x_s = -\\frac{10}{2 \\cdot (-1)} = -\\frac{10}{-2} = 5$$ Bei \\(x = 5\\) Tausend Stück ist der Gewinn maximal."
       },
       {
-        "id": 18,
-        "level": 3,
-        "typ": "numerisch",
-        "frage": "Beim Gewinn \\(G(x) = -x^2 + 10x - 9\\) (in Tausend €): Wie hoch ist der maximale Gewinn (in Tausend €)?",
-        "loesung": 16,
-        "toleranz": 0,
+        id: 18,
+        level: 3,
+        typ: "numerisch",
+        frage: "Beim Gewinn \\(G(x) = -x^2 + 10x - 9\\) (in Tausend €): Wie hoch ist der maximale Gewinn (in Tausend €)?",
+        loesung: 16,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "\\(x_s = 5\\). Berechne \\(G(5)\\).",
-        "loesungsweg": "$$G(5) = -25 + 50 - 9 = 16 \\text{ Tausend €}$$ Der maximale Gewinn beträgt \\(16\\) Tausend €."
+        tipp: "\\(x_s = 5\\). Berechne \\(G(5)\\).",
+        loesungsweg: "$$G(5) = -25 + 50 - 9 = 16 \\text{ Tausend €}$$ Der maximale Gewinn beträgt \\(16\\) Tausend €."
       },
 
       // ========== LEVEL 4 — Nullstellen (Landepunkt) & einfache Modellierung (6 Aufgaben) ==========
       {
-        "id": 19,
-        "level": 4,
-        "typ": "numerisch",
-        "frage": "Ein Ball fliegt nach \\(h(t) = -5t^2 + 20t\\) (in m). Nach wie vielen Sekunden landet er wieder auf dem Boden?",
-        "loesung": 4,
-        "toleranz": 0,
+        id: 19,
+        level: 4,
+        typ: "numerisch",
+        frage: "Ein Ball fliegt nach \\(h(t) = -5t^2 + 20t\\) (in m). Nach wie vielen Sekunden landet er wieder auf dem Boden?",
+        loesung: 4,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "Setze \\(h(t) = 0\\). Klammere \\(t\\) aus.",
-        "loesungsweg": "$$-5t^2 + 20t = 0$$ $$t(-5t + 20) = 0$$ \\(t_1 = 0\\) (Start) oder \\(-5t + 20 = 0 \\Rightarrow t = 4\\). Der Ball landet nach \\(4\\) s."
+        tipp: "Setze \\(h(t) = 0\\). Klammere \\(t\\) aus.",
+        loesungsweg: "$$-5t^2 + 20t = 0$$ $$t(-5t + 20) = 0$$ \\(t_1 = 0\\) (Start) oder \\(-5t + 20 = 0 \\Rightarrow t = 4\\). Der Ball landet nach \\(4\\) s."
       },
       {
-        "id": 20,
-        "level": 4,
-        "typ": "numerisch",
-        "frage": "Ein Brückenbogen \\(f(x) = -0{,}05x^2 + 2x\\) (in m). Wie breit ist die Brücke (in m), also die Entfernung zwischen den beiden Fußpunkten?",
-        "loesung": 40,
-        "toleranz": 0,
+        id: 20,
+        level: 4,
+        typ: "numerisch",
+        frage: "Ein Brückenbogen \\(f(x) = -0{,}05x^2 + 2x\\) (in m). Wie breit ist die Brücke (in m), also die Entfernung zwischen den beiden Fußpunkten?",
+        loesung: 40,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "Nullstellen bestimmen: \\(f(x) = 0\\), \\(x\\) ausklammern.",
-        "loesungsweg": "$$-0{,}05x^2 + 2x = 0$$ $$x(-0{,}05x + 2) = 0$$ \\(x_1 = 0\\), \\(-0{,}05x + 2 = 0 \\Rightarrow x_2 = 40\\). Die Brücke ist \\(40\\) m breit."
+        tipp: "Nullstellen bestimmen: \\(f(x) = 0\\), \\(x\\) ausklammern.",
+        loesungsweg: "$$-0{,}05x^2 + 2x = 0$$ $$x(-0{,}05x + 2) = 0$$ \\(x_1 = 0\\), \\(-0{,}05x + 2 = 0 \\Rightarrow x_2 = 40\\). Die Brücke ist \\(40\\) m breit."
       },
       {
-        "id": 21,
-        "level": 4,
-        "typ": "numerisch",
-        "frage": "Ein Ball wird von einem \\(25\\) m hohen Turm fallen gelassen: \\(h(t) = -5t^2 + 25\\) (in m). Nach wie vielen Sekunden trifft er den Boden?",
-        "loesung": 2.236,
-        "toleranz": 0.01,
+        id: 21,
+        level: 4,
+        typ: "numerisch",
+        frage: "Ein Ball wird von einem \\(25\\) m hohen Turm fallen gelassen: \\(h(t) = -5t^2 + 25\\) (in m). Nach wie vielen Sekunden trifft er den Boden?",
+        loesung: 2.236,
+        toleranz: 0.01,
         "bereich": "Analysis",
-        "tipp": "\\(h(t) = 0\\) lösen: \\(-5t^2 + 25 = 0\\).",
-        "loesungsweg": "$$-5t^2 + 25 = 0 \\Rightarrow 5t^2 = 25 \\Rightarrow t^2 = 5$$ $$t = \\sqrt{5} \\approx 2{,}236 \\text{ s}$$ (negative Lösung physikalisch nicht sinnvoll)."
+        tipp: "\\(h(t) = 0\\) lösen: \\(-5t^2 + 25 = 0\\).",
+        loesungsweg: "$$-5t^2 + 25 = 0 \\Rightarrow 5t^2 = 25 \\Rightarrow t^2 = 5$$ $$t = \\sqrt{5} \\approx 2{,}236 \\text{ s}$$ (negative Lösung physikalisch nicht sinnvoll)."
       },
       {
-        "id": 22,
-        "level": 4,
-        "typ": "numerisch",
-        "frage": "Ein Ball fliegt gemäß \\(h(t) = -5t^2 + 30t\\) (in m). Wie hoch (in m) steigt er maximal?",
-        "loesung": 45,
-        "toleranz": 0,
+        id: 22,
+        level: 4,
+        typ: "numerisch",
+        frage: "Ein Ball fliegt gemäß \\(h(t) = -5t^2 + 30t\\) (in m). Wie hoch (in m) steigt er maximal?",
+        loesung: 45,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "Scheitel: \\(t_s = -\\frac{b}{2a}\\), dann \\(h(t_s)\\).",
-        "loesungsweg": "\\(t_s = -\\frac{30}{-10} = 3\\) s. $$h(3) = -5 \\cdot 9 + 30 \\cdot 3 = -45 + 90 = 45 \\text{ m}$$"
+        tipp: "Scheitel: \\(t_s = -\\frac{b}{2a}\\), dann \\(h(t_s)\\).",
+        loesungsweg: "\\(t_s = -\\frac{30}{-10} = 3\\) s. $$h(3) = -5 \\cdot 9 + 30 \\cdot 3 = -45 + 90 = 45 \\text{ m}$$"
       },
       {
-        "id": 23,
-        "level": 4,
-        "typ": "numerisch",
-        "frage": "Ein Tennisball wird vom Boden aus mit der Anfangsgeschwindigkeit \\(10\\) m/s senkrecht nach oben geworfen. Seine Höhe ist \\(h(t) = -5t^2 + 10t\\) (in m). Nach wie vielen Sekunden erreicht er den höchsten Punkt?",
-        "loesung": 1,
-        "toleranz": 0,
+        id: 23,
+        level: 4,
+        typ: "numerisch",
+        frage: "Ein Tennisball wird vom Boden aus mit der Anfangsgeschwindigkeit \\(10\\) m/s senkrecht nach oben geworfen. Seine Höhe ist \\(h(t) = -5t^2 + 10t\\) (in m). Nach wie vielen Sekunden erreicht er den höchsten Punkt?",
+        loesung: 1,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "\\(t_s = -\\frac{b}{2a}\\).",
-        "loesungsweg": "\\(a = -5\\), \\(b = 10\\): $$t_s = -\\frac{10}{-10} = 1 \\text{ s}$$ Nach \\(1\\) s ist der höchste Punkt erreicht."
+        tipp: "\\(t_s = -\\frac{b}{2a}\\).",
+        loesungsweg: "\\(a = -5\\), \\(b = 10\\): $$t_s = -\\frac{10}{-10} = 1 \\text{ s}$$ Nach \\(1\\) s ist der höchste Punkt erreicht."
       },
       {
-        "id": 24,
-        "level": 4,
-        "typ": "mc",
-        "frage": "Ein Ball fliegt nach \\(h(t) = -5t^2 + 10t + 15\\) (in m). Nach wie vielen Sekunden trifft er auf den Boden?",
-        "optionen": [
+        id: 24,
+        level: 4,
+        typ: "mc",
+        frage: "Ein Ball fliegt nach \\(h(t) = -5t^2 + 10t + 15\\) (in m). Nach wie vielen Sekunden trifft er auf den Boden?",
+        optionen: [
           "\\(1\\) s",
           "\\(2\\) s",
           "\\(3\\) s",
           "\\(5\\) s"
         ],
-        "korrekt": 2,
+        korrekt: 2,
         "bereich": "Analysis",
-        "tipp": "Setze \\(h(t)=0\\), teile durch \\(-5\\), nutze p-q-Formel.",
-        "loesungsweg": "$$-5t^2 + 10t + 15 = 0 \\quad | : (-5)$$ $$t^2 - 2t - 3 = 0$$ \\(p = -2\\), \\(q = -3\\): $$t_{1/2} = 1 \\pm \\sqrt{1 + 3} = 1 \\pm 2$$ \\(t_1 = 3\\), \\(t_2 = -1\\) (verwerfen). Der Ball landet nach \\(3\\) s."
+        tipp: "Setze \\(h(t)=0\\), teile durch \\(-5\\), nutze p-q-Formel.",
+        loesungsweg: "$$-5t^2 + 10t + 15 = 0 \\quad | : (-5)$$ $$t^2 - 2t - 3 = 0$$ \\(p = -2\\), \\(q = -3\\): $$t_{1/2} = 1 \\pm \\sqrt{1 + 3} = 1 \\pm 2$$ \\(t_1 = 3\\), \\(t_2 = -1\\) (verwerfen). Der Ball landet nach \\(3\\) s."
       },
 
       // ========== LEVEL 5 — Modellieren aus Text, Schnittpunkte, Scheitelform (6 Aufgaben) ==========
       {
-        "id": 25,
-        "level": 5,
-        "typ": "numerisch",
-        "frage": "Ein Stein wird von einer \\(20\\) m hohen Klippe mit \\(15\\) m/s senkrecht nach oben geworfen. Die Höhe ist \\(h(t) = -5t^2 + 15t + 20\\) (in m). Welche maximale Höhe (in m) erreicht der Stein?",
-        "loesung": 31.25,
-        "toleranz": 0.01,
+        id: 25,
+        level: 5,
+        typ: "numerisch",
+        frage: "Ein Stein wird von einer \\(20\\) m hohen Klippe mit \\(15\\) m/s senkrecht nach oben geworfen. Die Höhe ist \\(h(t) = -5t^2 + 15t + 20\\) (in m). Welche maximale Höhe (in m) erreicht der Stein?",
+        loesung: 31.25,
+        toleranz: 0.01,
         "bereich": "Analysis",
-        "tipp": "\\(t_s = -\\frac{b}{2a} = -\\frac{15}{-10} = 1{,}5\\). Dann \\(h(1{,}5)\\) berechnen.",
-        "loesungsweg": "\\(t_s = -\\frac{15}{-10} = 1{,}5\\) s. $$h(1{,}5) = -5 \\cdot 2{,}25 + 15 \\cdot 1{,}5 + 20$$ $$= -11{,}25 + 22{,}5 + 20 = 31{,}25 \\text{ m}$$"
+        tipp: "\\(t_s = -\\frac{b}{2a} = -\\frac{15}{-10} = 1{,}5\\). Dann \\(h(1{,}5)\\) berechnen.",
+        loesungsweg: "\\(t_s = -\\frac{15}{-10} = 1{,}5\\) s. $$h(1{,}5) = -5 \\cdot 2{,}25 + 15 \\cdot 1{,}5 + 20$$ $$= -11{,}25 + 22{,}5 + 20 = 31{,}25 \\text{ m}$$"
       },
       {
-        "id": 26,
-        "level": 5,
-        "typ": "numerisch",
-        "frage": "Der Gewinn eines Unternehmens ist \\(G(x) = -2x^2 + 20x - 18\\) (in Tausend €). Bei welcher Stückzahl \\(x\\) ist der Gewinn maximal?",
-        "loesung": 5,
-        "toleranz": 0,
+        id: 26,
+        level: 5,
+        typ: "numerisch",
+        frage: "Der Gewinn eines Unternehmens ist \\(G(x) = -2x^2 + 20x - 18\\) (in Tausend €). Bei welcher Stückzahl \\(x\\) ist der Gewinn maximal?",
+        loesung: 5,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "\\(x_s = -\\frac{b}{2a}\\) mit \\(a = -2\\), \\(b = 20\\).",
-        "loesungsweg": "$$x_s = -\\frac{20}{2 \\cdot (-2)} = -\\frac{20}{-4} = 5$$ Bei \\(x = 5\\) Tausend Stück ist der Gewinn maximal."
+        tipp: "\\(x_s = -\\frac{b}{2a}\\) mit \\(a = -2\\), \\(b = 20\\).",
+        loesungsweg: "$$x_s = -\\frac{20}{2 \\cdot (-2)} = -\\frac{20}{-4} = 5$$ Bei \\(x = 5\\) Tausend Stück ist der Gewinn maximal."
       },
       {
-        "id": 27,
-        "level": 5,
-        "typ": "numerisch",
-        "frage": "Gegeben sind \\(f(x) = x^2 - 2\\) und \\(g(x) = 2x + 1\\). Bestimme den größeren \\(x\\)-Wert der Schnittpunkte.",
-        "loesung": 3,
-        "toleranz": 0,
+        id: 27,
+        level: 5,
+        typ: "numerisch",
+        frage: "Gegeben sind \\(f(x) = x^2 - 2\\) und \\(g(x) = 2x + 1\\). Bestimme den größeren \\(x\\)-Wert der Schnittpunkte.",
+        loesung: 3,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "\\(f(x) = g(x)\\) gleichsetzen: \\(x^2 - 2 = 2x + 1\\).",
-        "loesungsweg": "$$x^2 - 2 = 2x + 1$$ $$x^2 - 2x - 3 = 0$$ \\(p = -2\\), \\(q = -3\\): $$x_{1/2} = 1 \\pm \\sqrt{1 + 3} = 1 \\pm 2$$ \\(x_1 = 3\\), \\(x_2 = -1\\). Der größere Wert ist \\(3\\)."
+        tipp: "\\(f(x) = g(x)\\) gleichsetzen: \\(x^2 - 2 = 2x + 1\\).",
+        loesungsweg: "$$x^2 - 2 = 2x + 1$$ $$x^2 - 2x - 3 = 0$$ \\(p = -2\\), \\(q = -3\\): $$x_{1/2} = 1 \\pm \\sqrt{1 + 3} = 1 \\pm 2$$ \\(x_1 = 3\\), \\(x_2 = -1\\). Der größere Wert ist \\(3\\)."
       },
       {
-        "id": 28,
-        "level": 5,
-        "typ": "numerisch",
-        "frage": "Ein rechteckiges Spielfeld hat den Umfang \\(40\\) m. Die Breite ist \\(x\\), die Länge \\(20 - x\\). Die Fläche ist \\(A(x) = x(20-x)\\). Bei welcher Breite \\(x\\) (in m) ist die Fläche maximal?",
-        "loesung": 10,
-        "toleranz": 0,
+        id: 28,
+        level: 5,
+        typ: "numerisch",
+        frage: "Ein rechteckiges Spielfeld hat den Umfang \\(40\\) m. Die Breite ist \\(x\\), die Länge \\(20 - x\\). Die Fläche ist \\(A(x) = x(20-x)\\). Bei welcher Breite \\(x\\) (in m) ist die Fläche maximal?",
+        loesung: 10,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "Ausmultiplizieren: \\(A(x) = -x^2 + 20x\\). Dann \\(x_s = -\\frac{b}{2a}\\).",
-        "loesungsweg": "$$A(x) = x(20 - x) = -x^2 + 20x$$ \\(a = -1\\), \\(b = 20\\): $$x_s = -\\frac{20}{-2} = 10 \\text{ m}$$ Das Rechteck ist ein Quadrat mit Seitenlänge \\(10\\) m."
+        tipp: "Ausmultiplizieren: \\(A(x) = -x^2 + 20x\\). Dann \\(x_s = -\\frac{b}{2a}\\).",
+        loesungsweg: "$$A(x) = x(20 - x) = -x^2 + 20x$$ \\(a = -1\\), \\(b = 20\\): $$x_s = -\\frac{20}{-2} = 10 \\text{ m}$$ Das Rechteck ist ein Quadrat mit Seitenlänge \\(10\\) m."
       },
       {
-        "id": 29,
-        "level": 5,
-        "typ": "numerisch",
-        "frage": "Rechteck mit Umfang \\(40\\) m, \\(A(x) = -x^2 + 20x\\): Wie groß ist die maximale Fläche (in m²)?",
-        "loesung": 100,
-        "toleranz": 0,
+        id: 29,
+        level: 5,
+        typ: "numerisch",
+        frage: "Rechteck mit Umfang \\(40\\) m, \\(A(x) = -x^2 + 20x\\): Wie groß ist die maximale Fläche (in m²)?",
+        loesung: 100,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "\\(x_s = 10\\) einsetzen.",
-        "loesungsweg": "$$A(10) = -100 + 200 = 100 \\text{ m}^2$$ Das Quadrat mit Seite \\(10\\) m liefert die maximale Fläche."
+        tipp: "\\(x_s = 10\\) einsetzen.",
+        loesungsweg: "$$A(10) = -100 + 200 = 100 \\text{ m}^2$$ Das Quadrat mit Seite \\(10\\) m liefert die maximale Fläche."
       },
       {
-        "id": 30,
-        "level": 5,
-        "typ": "numerisch",
-        "frage": "Zwei Parabeln \\(f(x) = x^2\\) und \\(g(x) = -x^2 + 8\\) schneiden sich. Berechne den positiven \\(x\\)-Wert eines Schnittpunktes.",
-        "loesung": 2,
-        "toleranz": 0,
+        id: 30,
+        level: 5,
+        typ: "numerisch",
+        frage: "Zwei Parabeln \\(f(x) = x^2\\) und \\(g(x) = -x^2 + 8\\) schneiden sich. Berechne den positiven \\(x\\)-Wert eines Schnittpunktes.",
+        loesung: 2,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "\\(x^2 = -x^2 + 8\\) umstellen zu \\(2x^2 = 8\\).",
-        "loesungsweg": "$$x^2 = -x^2 + 8$$ $$2x^2 = 8 \\Rightarrow x^2 = 4$$ $$x = \\pm 2$$ Der positive Schnittpunkt liegt bei \\(x = 2\\), also \\(P(2 \\mid 4)\\)."
+        tipp: "\\(x^2 = -x^2 + 8\\) umstellen zu \\(2x^2 = 8\\).",
+        loesungsweg: "$$x^2 = -x^2 + 8$$ $$2x^2 = 8 \\Rightarrow x^2 = 4$$ $$x = \\pm 2$$ Der positive Schnittpunkt liegt bei \\(x = 2\\), also \\(P(2 \\mid 4)\\)."
       },
 
       // ========== LEVEL 6 — Optimierung mit Nebenbedingung, anspruchsvolles Modellieren (6 Aufgaben) ==========
       {
-        "id": 31,
-        "level": 6,
-        "typ": "numerisch",
-        "frage": "Ein rechteckiger Garten soll an einer Hauswand mit \\(60\\) m Zaun auf drei Seiten eingezäunt werden. Welche Breite \\(x\\) (senkrecht zur Wand, in m) liefert die maximale Fläche?",
-        "loesung": 15,
-        "toleranz": 0,
+        id: 31,
+        level: 6,
+        typ: "numerisch",
+        frage: "Ein rechteckiger Garten soll an einer Hauswand mit \\(60\\) m Zaun auf drei Seiten eingezäunt werden. Welche Breite \\(x\\) (senkrecht zur Wand, in m) liefert die maximale Fläche?",
+        loesung: 15,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "\\(2x + y = 60 \\Rightarrow y = 60 - 2x\\). \\(A(x) = x \\cdot (60 - 2x)\\). Scheitel suchen.",
-        "loesungsweg": "$$A(x) = x(60 - 2x) = -2x^2 + 60x$$ \\(a = -2\\), \\(b = 60\\): $$x_s = -\\frac{60}{-4} = 15 \\text{ m}$$"
+        tipp: "\\(2x + y = 60 \\Rightarrow y = 60 - 2x\\). \\(A(x) = x \\cdot (60 - 2x)\\). Scheitel suchen.",
+        loesungsweg: "$$A(x) = x(60 - 2x) = -2x^2 + 60x$$ \\(a = -2\\), \\(b = 60\\): $$x_s = -\\frac{60}{-4} = 15 \\text{ m}$$"
       },
       {
-        "id": 32,
-        "level": 6,
-        "typ": "numerisch",
-        "frage": "Garten an der Hauswand mit \\(60\\) m Zaun (\\(A(x) = -2x^2 + 60x\\)): Welchen maximalen Flächeninhalt (in m²) erreicht der Garten?",
-        "loesung": 450,
-        "toleranz": 0,
+        id: 32,
+        level: 6,
+        typ: "numerisch",
+        frage: "Garten an der Hauswand mit \\(60\\) m Zaun (\\(A(x) = -2x^2 + 60x\\)): Welchen maximalen Flächeninhalt (in m²) erreicht der Garten?",
+        loesung: 450,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "\\(x_s = 15\\), Länge \\(y = 60 - 30 = 30\\).",
-        "loesungsweg": "Breite \\(x = 15\\) m, Länge \\(y = 60 - 2 \\cdot 15 = 30\\) m. $$A_{\\max} = 15 \\cdot 30 = 450 \\text{ m}^2$$"
+        tipp: "\\(x_s = 15\\), Länge \\(y = 60 - 30 = 30\\).",
+        loesungsweg: "Breite \\(x = 15\\) m, Länge \\(y = 60 - 2 \\cdot 15 = 30\\) m. $$A_{\\max} = 15 \\cdot 30 = 450 \\text{ m}^2$$"
       },
       {
-        "id": 33,
-        "level": 6,
-        "typ": "numerisch",
-        "frage": "Eine Parabolantenne hat im Querschnitt die Gleichung \\(f(x) = 0{,}25x^2\\) (in m, \\(-2 \\leq x \\leq 2\\)). Wie tief (in m) ist die Schüssel in der Mitte gegenüber dem Rand?",
-        "loesung": 1,
-        "toleranz": 0,
+        id: 33,
+        level: 6,
+        typ: "numerisch",
+        frage: "Eine Parabolantenne hat im Querschnitt die Gleichung \\(f(x) = 0{,}25x^2\\) (in m, \\(-2 \\leq x \\leq 2\\)). Wie tief (in m) ist die Schüssel in der Mitte gegenüber dem Rand?",
+        loesung: 1,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "Tiefe = \\(f(2) - f(0)\\) (Rand minus Mitte).",
-        "loesungsweg": "Mitte: \\(f(0) = 0\\). Rand: \\(f(2) = 0{,}25 \\cdot 4 = 1\\) m. Tiefe: \\(1 - 0 = 1\\) m."
+        tipp: "Tiefe = \\(f(2) - f(0)\\) (Rand minus Mitte).",
+        loesungsweg: "Mitte: \\(f(0) = 0\\). Rand: \\(f(2) = 0{,}25 \\cdot 4 = 1\\) m. Tiefe: \\(1 - 0 = 1\\) m."
       },
       {
-        "id": 34,
-        "level": 6,
-        "typ": "numerisch",
-        "frage": "Ein rechteckiges Grundstück mit Umfang \\(80\\) m soll maximale Fläche haben. Berechne diese maximale Fläche in m².",
-        "loesung": 400,
-        "toleranz": 0,
+        id: 34,
+        level: 6,
+        typ: "numerisch",
+        frage: "Ein rechteckiges Grundstück mit Umfang \\(80\\) m soll maximale Fläche haben. Berechne diese maximale Fläche in m².",
+        loesung: 400,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "\\(2x + 2y = 80 \\Rightarrow y = 40 - x\\). \\(A(x) = x(40-x)\\).",
-        "loesungsweg": "$$A(x) = x(40 - x) = -x^2 + 40x$$ \\(x_s = -\\frac{40}{-2} = 20\\) m, \\(y = 20\\) m. $$A_{\\max} = 20 \\cdot 20 = 400 \\text{ m}^2$$ Das Quadrat mit Seite \\(20\\) m liefert das Maximum."
+        tipp: "\\(2x + 2y = 80 \\Rightarrow y = 40 - x\\). \\(A(x) = x(40-x)\\).",
+        loesungsweg: "$$A(x) = x(40 - x) = -x^2 + 40x$$ \\(x_s = -\\frac{40}{-2} = 20\\) m, \\(y = 20\\) m. $$A_{\\max} = 20 \\cdot 20 = 400 \\text{ m}^2$$ Das Quadrat mit Seite \\(20\\) m liefert das Maximum."
       },
       {
-        "id": 35,
-        "level": 6,
-        "typ": "numerisch",
-        "frage": "Ein Ball wird von einem \\(1{,}25\\) m hohen Tisch mit \\(5\\) m/s horizontal geschossen. Die Höhe über dem Boden in Abhängigkeit von \\(x\\) (Wurfweite) ist \\(h(x) = -0{,}2x^2 + 1{,}25\\) (in m). Bei welcher Wurfweite \\(x\\) (in m) trifft er auf?",
-        "loesung": 2.5,
-        "toleranz": 0.01,
+        id: 35,
+        level: 6,
+        typ: "numerisch",
+        frage: "Ein Ball wird von einem \\(1{,}25\\) m hohen Tisch mit \\(5\\) m/s horizontal geschossen. Die Höhe über dem Boden in Abhängigkeit von \\(x\\) (Wurfweite) ist \\(h(x) = -0{,}2x^2 + 1{,}25\\) (in m). Bei welcher Wurfweite \\(x\\) (in m) trifft er auf?",
+        loesung: 2.5,
+        toleranz: 0.01,
         "bereich": "Analysis",
-        "tipp": "\\(h(x) = 0\\): \\(-0{,}2x^2 + 1{,}25 = 0\\).",
-        "loesungsweg": "$$-0{,}2x^2 + 1{,}25 = 0 \\Rightarrow 0{,}2x^2 = 1{,}25$$ $$x^2 = 6{,}25 \\Rightarrow x = 2{,}5 \\text{ m}$$ (negative Lösung verwerfen)."
+        tipp: "\\(h(x) = 0\\): \\(-0{,}2x^2 + 1{,}25 = 0\\).",
+        loesungsweg: "$$-0{,}2x^2 + 1{,}25 = 0 \\Rightarrow 0{,}2x^2 = 1{,}25$$ $$x^2 = 6{,}25 \\Rightarrow x = 2{,}5 \\text{ m}$$ (negative Lösung verwerfen)."
       },
       {
-        "id": 36,
-        "level": 6,
-        "typ": "numerisch",
-        "frage": "Gewinn \\(G(x) = -0{,}5x^2 + 8x - 14\\) (in Tausend €). Ab welcher Stückzahl \\(x\\) (in Tausend Stück, untere Gewinngrenze) wird überhaupt Gewinn erwirtschaftet (Nullstelle)?",
-        "loesung": 2,
-        "toleranz": 0,
+        id: 36,
+        level: 6,
+        typ: "numerisch",
+        frage: "Gewinn \\(G(x) = -0{,}5x^2 + 8x - 14\\) (in Tausend €). Ab welcher Stückzahl \\(x\\) (in Tausend Stück, untere Gewinngrenze) wird überhaupt Gewinn erwirtschaftet (Nullstelle)?",
+        loesung: 2,
+        toleranz: 0,
         "bereich": "Analysis",
-        "tipp": "\\(G(x) = 0\\). Teile durch \\(-0{,}5\\), dann p-q-Formel.",
-        "loesungsweg": "$$-0{,}5x^2 + 8x - 14 = 0 \\quad | : (-0{,}5)$$ $$x^2 - 16x + 28 = 0$$ \\(p = -16\\), \\(q = 28\\): $$x_{1/2} = 8 \\pm \\sqrt{64 - 28} = 8 \\pm \\sqrt{36} = 8 \\pm 6$$ \\(x_1 = 14\\), \\(x_2 = 2\\). Ab \\(x = 2\\) Tausend Stück beginnt die Gewinnzone (bis \\(x = 14\\))."
+        tipp: "\\(G(x) = 0\\). Teile durch \\(-0{,}5\\), dann p-q-Formel.",
+        loesungsweg: "$$-0{,}5x^2 + 8x - 14 = 0 \\quad | : (-0{,}5)$$ $$x^2 - 16x + 28 = 0$$ \\(p = -16\\), \\(q = 28\\): $$x_{1/2} = 8 \\pm \\sqrt{64 - 28} = 8 \\pm \\sqrt{36} = 8 \\pm 6$$ \\(x_1 = 14\\), \\(x_2 = 2\\). Ab \\(x = 2\\) Tausend Stück beginnt die Gewinnzone (bis \\(x = 14\\))."
       }
     ];
     </script>

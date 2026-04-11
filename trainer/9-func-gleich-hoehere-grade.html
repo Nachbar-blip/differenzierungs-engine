@@ -14,15 +14,14 @@
     <div class="spirale-container" id="app"></div>
     <script>
     const THEMA_KEY = '9-func-gleich-hoehere-grade';
-    const THEMA_CONFIG = { name: 'Gleichungen höheren Grades', bereich: 'Algebra' };
+    const THEMA_CONFIG = { name: 'Gleichungen höheren Grades', bereich: 'algebra' };
     const AUFGABEN = [
 
     // ══════════════════════════════════════════════════════════════
     // LEVEL 1 — Ausklammern von x, Produkt = 0
     // ══════════════════════════════════════════════════════════════
     {
-        id: 1, level: 1, typ: "mc", bereich: "Algebra",
-        frage: "Löse die Gleichung \\(x^2 - 3x = 0\\) durch Ausklammern.",
+        id: 1, level: 1, typ: "mc",        frage: "Löse die Gleichung \\(x^2 - 3x = 0\\) durch Ausklammern.",
         optionen: [
             "\\(x_1 = 0,\\ x_2 = 3\\)",
             "\\(x_1 = 0,\\ x_2 = -3\\)",
@@ -34,22 +33,19 @@
         loesungsweg: "\\(x^2 - 3x = x(x - 3) = 0\\). Nullproduktsatz: \\(x = 0\\) oder \\(x - 3 = 0 \\Rightarrow x = 3\\). Lösungen: \\(x_1 = 0,\\ x_2 = 3\\)."
     },
     {
-        id: 2, level: 1, typ: "numerisch", bereich: "Algebra",
-        frage: "Löse \\(x^3 - 4x = 0\\) durch Ausklammern von \\(x\\). Gib die <strong>größte</strong> Lösung an.",
+        id: 2, level: 1, typ: "numerisch",        frage: "Löse \\(x^3 - 4x = 0\\) durch Ausklammern von \\(x\\). Gib die <strong>größte</strong> Lösung an.",
         loesung: 2, toleranz: 0,
         tipp: "Klammere \\(x\\) aus: \\(x(x^2 - 4) = 0\\). Der zweite Faktor ergibt \\(x^2 = 4\\).",
         loesungsweg: "\\(x^3 - 4x = x(x^2 - 4) = 0\\). Also \\(x = 0\\) oder \\(x^2 = 4 \\Rightarrow x = \\pm 2\\). Lösungen: \\(\\{-2, 0, 2\\}\\). Größte: \\(x = 2\\)."
     },
     {
-        id: 3, level: 1, typ: "numerisch", bereich: "Algebra",
-        frage: "Löse \\(2x^3 - 8x = 0\\). Gib die <strong>kleinste</strong> Lösung an.",
+        id: 3, level: 1, typ: "numerisch",        frage: "Löse \\(2x^3 - 8x = 0\\). Gib die <strong>kleinste</strong> Lösung an.",
         loesung: -2, toleranz: 0,
         tipp: "Klammere \\(2x\\) aus: \\(2x(x^2 - 4) = 0\\).",
         loesungsweg: "\\(2x^3 - 8x = 2x(x^2 - 4) = 0\\). Also \\(x = 0\\) oder \\(x^2 = 4 \\Rightarrow x = \\pm 2\\). Lösungen: \\(\\{-2, 0, 2\\}\\). Kleinste: \\(x = -2\\)."
     },
     {
-        id: 4, level: 1, typ: "mc", bereich: "Algebra",
-        frage: "Welche Lösungsmenge hat \\(x^3 + 5x^2 = 0\\)?",
+        id: 4, level: 1, typ: "mc",        frage: "Welche Lösungsmenge hat \\(x^3 + 5x^2 = 0\\)?",
         optionen: [
             "\\(\\{0, -5\\}\\)",
             "\\(\\{0, 5\\}\\)",
@@ -61,15 +57,13 @@
         loesungsweg: "\\(x^3 + 5x^2 = x^2(x + 5) = 0\\). Also \\(x^2 = 0 \\Rightarrow x = 0\\) (doppelt) oder \\(x + 5 = 0 \\Rightarrow x = -5\\). Lösungsmenge: \\(\\{0, -5\\}\\)."
     },
     {
-        id: 5, level: 1, typ: "numerisch", bereich: "Algebra",
-        frage: "Löse \\(x^3 - 9x = 0\\). Gib die <strong>positive</strong> Lösung an.",
+        id: 5, level: 1, typ: "numerisch",        frage: "Löse \\(x^3 - 9x = 0\\). Gib die <strong>positive</strong> Lösung an.",
         loesung: 3, toleranz: 0,
         tipp: "Klammere \\(x\\) aus: \\(x(x^2 - 9) = 0\\).",
         loesungsweg: "\\(x(x^2 - 9) = 0\\). Also \\(x = 0\\) oder \\(x^2 = 9 \\Rightarrow x = \\pm 3\\). Positive Lösung: \\(x = 3\\)."
     },
     {
-        id: 6, level: 1, typ: "numerisch", bereich: "Algebra",
-        frage: "Löse \\(x^4 - x^2 = 0\\). Gib die <strong>größte</strong> Lösung an.",
+        id: 6, level: 1, typ: "numerisch",        frage: "Löse \\(x^4 - x^2 = 0\\). Gib die <strong>größte</strong> Lösung an.",
         loesung: 1, toleranz: 0,
         tipp: "Klammere \\(x^2\\) aus: \\(x^2(x^2 - 1) = 0\\).",
         loesungsweg: "\\(x^4 - x^2 = x^2(x^2 - 1) = 0\\). Also \\(x^2 = 0 \\Rightarrow x = 0\\) oder \\(x^2 = 1 \\Rightarrow x = \\pm 1\\). Lösungen: \\(\\{-1, 0, 1\\}\\). Größte: \\(x = 1\\)."
@@ -79,22 +73,19 @@
     // LEVEL 2 — Ausklammern mit pq-Formel im Restfaktor
     // ══════════════════════════════════════════════════════════════
     {
-        id: 7, level: 2, typ: "numerisch", bereich: "Algebra",
-        frage: "Löse \\(x^3 - 5x^2 + 6x = 0\\) durch Ausklammern. Gib die <strong>größte</strong> Lösung an.",
+        id: 7, level: 2, typ: "numerisch",        frage: "Löse \\(x^3 - 5x^2 + 6x = 0\\) durch Ausklammern. Gib die <strong>größte</strong> Lösung an.",
         loesung: 3, toleranz: 0,
         tipp: "Klammere \\(x\\) aus, dann pq-Formel auf \\(x^2 - 5x + 6 = 0\\) anwenden.",
         loesungsweg: "\\(x(x^2 - 5x + 6) = 0\\). Also \\(x = 0\\) oder \\(x^2 - 5x + 6 = 0\\). pq-Formel: \\(x_{1,2} = 2{,}5 \\pm \\sqrt{6{,}25 - 6} = 2{,}5 \\pm 0{,}5\\). Also \\(x = 2\\) oder \\(x = 3\\). Lösungen: \\(\\{0, 2, 3\\}\\). Größte: \\(x = 3\\)."
     },
     {
-        id: 8, level: 2, typ: "numerisch", bereich: "Algebra",
-        frage: "Löse \\(x^3 + 2x^2 - 3x = 0\\). Gib die <strong>kleinste</strong> Lösung an.",
+        id: 8, level: 2, typ: "numerisch",        frage: "Löse \\(x^3 + 2x^2 - 3x = 0\\). Gib die <strong>kleinste</strong> Lösung an.",
         loesung: -3, toleranz: 0,
         tipp: "Klammere \\(x\\) aus: \\(x(x^2 + 2x - 3) = 0\\). Dann pq-Formel.",
         loesungsweg: "\\(x(x^2 + 2x - 3) = 0\\). \\(x = 0\\) oder mit \\(p = 2,\\ q = -3\\): \\(x_{1,2} = -1 \\pm \\sqrt{1 + 3} = -1 \\pm 2\\). Also \\(x = 1\\) oder \\(x = -3\\). Lösungen: \\(\\{-3, 0, 1\\}\\). Kleinste: \\(x = -3\\)."
     },
     {
-        id: 9, level: 2, typ: "mc", bereich: "Algebra",
-        frage: "Welche Lösungsmenge hat \\(x^3 - 4x^2 + 4x = 0\\)?",
+        id: 9, level: 2, typ: "mc",        frage: "Welche Lösungsmenge hat \\(x^3 - 4x^2 + 4x = 0\\)?",
         optionen: [
             "\\(\\{0, 2\\}\\)",
             "\\(\\{0, 2, -2\\}\\)",
@@ -106,22 +97,19 @@
         loesungsweg: "\\(x(x^2 - 4x + 4) = x(x - 2)^2 = 0\\). Also \\(x = 0\\) oder \\(x = 2\\) (doppelte Nullstelle). Lösungsmenge: \\(\\{0, 2\\}\\)."
     },
     {
-        id: 10, level: 2, typ: "numerisch", bereich: "Algebra",
-        frage: "Löse \\(2x^3 - 6x^2 - 8x = 0\\). Gib die <strong>größte</strong> Lösung an.",
+        id: 10, level: 2, typ: "numerisch",        frage: "Löse \\(2x^3 - 6x^2 - 8x = 0\\). Gib die <strong>größte</strong> Lösung an.",
         loesung: 4, toleranz: 0,
         tipp: "Klammere \\(2x\\) aus: \\(2x(x^2 - 3x - 4) = 0\\).",
         loesungsweg: "\\(2x(x^2 - 3x - 4) = 0\\). \\(x = 0\\) oder mit \\(p = -3,\\ q = -4\\): \\(x_{1,2} = 1{,}5 \\pm \\sqrt{2{,}25 + 4} = 1{,}5 \\pm 2{,}5\\). Also \\(x = 4\\) oder \\(x = -1\\). Lösungen: \\(\\{-1, 0, 4\\}\\). Größte: \\(x = 4\\)."
     },
     {
-        id: 11, level: 2, typ: "numerisch", bereich: "Algebra",
-        frage: "Wie viele verschiedene Lösungen hat \\(x^3 - 6x^2 + 9x = 0\\)?",
+        id: 11, level: 2, typ: "numerisch",        frage: "Wie viele verschiedene Lösungen hat \\(x^3 - 6x^2 + 9x = 0\\)?",
         loesung: 2, toleranz: 0,
         tipp: "Klammere \\(x\\) aus. Der Restfaktor ist ein Quadrat (binomische Formel).",
         loesungsweg: "\\(x(x^2 - 6x + 9) = x(x - 3)^2 = 0\\). Also \\(x = 0\\) oder \\(x = 3\\) (doppelt). Es gibt genau 2 verschiedene Lösungen."
     },
     {
-        id: 12, level: 2, typ: "mc", bereich: "Algebra",
-        frage: "Welche Lösungsmenge hat \\((x - 1)(x^2 - 4) = 0\\)?",
+        id: 12, level: 2, typ: "mc",        frage: "Welche Lösungsmenge hat \\((x - 1)(x^2 - 4) = 0\\)?",
         optionen: [
             "\\(\\{-2, 1, 2\\}\\)",
             "\\(\\{1, 2\\}\\)",
@@ -137,36 +125,31 @@
     // LEVEL 3 — Biquadratische Gleichungen mit Substitution
     // ══════════════════════════════════════════════════════════════
     {
-        id: 13, level: 3, typ: "numerisch", bereich: "Algebra",
-        frage: "Löse die biquadratische Gleichung \\(x^4 - 5x^2 + 4 = 0\\) mit Substitution \\(u = x^2\\). Gib die <strong>größte</strong> Lösung für \\(x\\) an.",
+        id: 13, level: 3, typ: "numerisch",        frage: "Löse die biquadratische Gleichung \\(x^4 - 5x^2 + 4 = 0\\) mit Substitution \\(u = x^2\\). Gib die <strong>größte</strong> Lösung für \\(x\\) an.",
         loesung: 2, toleranz: 0,
         tipp: "Substituiere \\(u = x^2\\): \\(u^2 - 5u + 4 = 0\\). Löse nach \\(u\\), dann Wurzel für \\(x\\).",
         loesungsweg: "Mit \\(u = x^2\\): \\(u^2 - 5u + 4 = 0\\). pq-Formel: \\(u_{1,2} = 2{,}5 \\pm \\sqrt{6{,}25 - 4} = 2{,}5 \\pm 1{,}5\\). \\(u_1 = 4,\\ u_2 = 1\\). Rücksubstitution: \\(x^2 = 4 \\Rightarrow x = \\pm 2\\); \\(x^2 = 1 \\Rightarrow x = \\pm 1\\). Lösungen: \\(\\{-2, -1, 1, 2\\}\\). Größte: \\(x = 2\\)."
     },
     {
-        id: 14, level: 3, typ: "numerisch", bereich: "Algebra",
-        frage: "Löse \\(x^4 - 10x^2 + 9 = 0\\) biquadratisch. Gib die <strong>größte</strong> Lösung für \\(x\\) an.",
+        id: 14, level: 3, typ: "numerisch",        frage: "Löse \\(x^4 - 10x^2 + 9 = 0\\) biquadratisch. Gib die <strong>größte</strong> Lösung für \\(x\\) an.",
         loesung: 3, toleranz: 0,
         tipp: "Mit \\(u = x^2\\): \\(u^2 - 10u + 9 = 0\\). \\(p = -10,\\ q = 9\\).",
         loesungsweg: "\\(u^2 - 10u + 9 = 0\\). \\(u_{1,2} = 5 \\pm \\sqrt{25 - 9} = 5 \\pm 4\\). \\(u_1 = 9,\\ u_2 = 1\\). \\(x^2 = 9 \\Rightarrow x = \\pm 3\\); \\(x^2 = 1 \\Rightarrow x = \\pm 1\\). Lösungen: \\(\\{-3, -1, 1, 3\\}\\). Größte: \\(x = 3\\)."
     },
     {
-        id: 15, level: 3, typ: "numerisch", bereich: "Algebra",
-        frage: "Wie viele reelle Lösungen hat \\(x^4 - 5x^2 + 4 = 0\\)?",
+        id: 15, level: 3, typ: "numerisch",        frage: "Wie viele reelle Lösungen hat \\(x^4 - 5x^2 + 4 = 0\\)?",
         loesung: 4, toleranz: 0,
         tipp: "Substituiere \\(u = x^2\\) und prüfe, wie viele positive \\(u\\)-Werte herauskommen. Jedes positive \\(u\\) liefert zwei \\(x\\)-Werte.",
         loesungsweg: "\\(u^2 - 5u + 4 = 0\\) liefert \\(u_1 = 4,\\ u_2 = 1\\). Beide sind positiv, also jeweils zwei reelle \\(x\\)-Werte: \\(x = \\pm 2\\) und \\(x = \\pm 1\\). Insgesamt 4 reelle Lösungen."
     },
     {
-        id: 16, level: 3, typ: "numerisch", bereich: "Algebra",
-        frage: "Löse \\(x^4 - 13x^2 + 36 = 0\\). Gib die <strong>kleinste</strong> Lösung für \\(x\\) an.",
+        id: 16, level: 3, typ: "numerisch",        frage: "Löse \\(x^4 - 13x^2 + 36 = 0\\). Gib die <strong>kleinste</strong> Lösung für \\(x\\) an.",
         loesung: -3, toleranz: 0,
         tipp: "Mit \\(u = x^2\\): \\(u^2 - 13u + 36 = 0\\). pq-Formel mit \\(p = -13,\\ q = 36\\).",
         loesungsweg: "\\(u_{1,2} = 6{,}5 \\pm \\sqrt{42{,}25 - 36} = 6{,}5 \\pm 2{,}5\\). \\(u_1 = 9,\\ u_2 = 4\\). \\(x^2 = 9 \\Rightarrow x = \\pm 3\\); \\(x^2 = 4 \\Rightarrow x = \\pm 2\\). Lösungen: \\(\\{-3, -2, 2, 3\\}\\). Kleinste: \\(x = -3\\)."
     },
     {
-        id: 17, level: 3, typ: "mc", bereich: "Algebra",
-        frage: "Welche Lösungsmenge hat \\(x^4 - 8x^2 + 16 = 0\\)?",
+        id: 17, level: 3, typ: "mc",        frage: "Welche Lösungsmenge hat \\(x^4 - 8x^2 + 16 = 0\\)?",
         optionen: [
             "\\(\\{-2, 2\\}\\)",
             "\\(\\{-2, 2, -4, 4\\}\\)",
@@ -178,8 +161,7 @@
         loesungsweg: "\\(u^2 - 8u + 16 = (u - 4)^2 = 0 \\Rightarrow u = 4\\) (doppelt). \\(x^2 = 4 \\Rightarrow x = \\pm 2\\). Lösungsmenge: \\(\\{-2, 2\\}\\)."
     },
     {
-        id: 18, level: 3, typ: "numerisch", bereich: "Algebra",
-        frage: "Wie viele reelle Lösungen hat \\(x^4 + 3x^2 + 2 = 0\\)?",
+        id: 18, level: 3, typ: "numerisch",        frage: "Wie viele reelle Lösungen hat \\(x^4 + 3x^2 + 2 = 0\\)?",
         loesung: 0, toleranz: 0,
         tipp: "Mit \\(u = x^2\\): \\(u^2 + 3u + 2 = 0\\). Lösungen für \\(u\\) prüfen — sind sie positiv?",
         loesungsweg: "\\(u^2 + 3u + 2 = 0\\) liefert \\(u_{1,2} = -1{,}5 \\pm 0{,}5\\), also \\(u_1 = -1,\\ u_2 = -2\\). Beide sind negativ! Da \\(x^2 \\geq 0\\) für alle reellen \\(x\\), gibt es keine Lösung. Anzahl reeller Lösungen: 0."
@@ -189,36 +171,31 @@
     // LEVEL 4 — Biquadratisch mit gemischten Fällen, Substitution allgemein
     // ══════════════════════════════════════════════════════════════
     {
-        id: 19, level: 4, typ: "numerisch", bereich: "Algebra",
-        frage: "Löse \\(x^4 - 3x^2 - 4 = 0\\). Gib die <strong>positive</strong> Lösung an.",
+        id: 19, level: 4, typ: "numerisch",        frage: "Löse \\(x^4 - 3x^2 - 4 = 0\\). Gib die <strong>positive</strong> Lösung an.",
         loesung: 2, toleranz: 0,
         tipp: "Mit \\(u = x^2\\): \\(u^2 - 3u - 4 = 0\\). Ein negatives \\(u\\) liefert keine reelle Lösung!",
         loesungsweg: "\\(u^2 - 3u - 4 = 0\\). \\(u_{1,2} = 1{,}5 \\pm \\sqrt{2{,}25 + 4} = 1{,}5 \\pm 2{,}5\\). \\(u_1 = 4,\\ u_2 = -1\\). \\(x^2 = 4 \\Rightarrow x = \\pm 2\\); \\(x^2 = -1\\) hat keine reelle Lösung. Lösungen: \\(\\{-2, 2\\}\\). Positive: \\(x = 2\\)."
     },
     {
-        id: 20, level: 4, typ: "numerisch", bereich: "Algebra",
-        frage: "Wie viele reelle Lösungen hat \\(x^4 - 3x^2 - 4 = 0\\)?",
+        id: 20, level: 4, typ: "numerisch",        frage: "Wie viele reelle Lösungen hat \\(x^4 - 3x^2 - 4 = 0\\)?",
         loesung: 2, toleranz: 0,
         tipp: "Aus zwei \\(u\\)-Werten (einer positiv, einer negativ) entstehen nur beim positiven \\(u\\) reelle \\(x\\)-Werte.",
         loesungsweg: "\\(u_1 = 4\\) (positiv) liefert \\(x = \\pm 2\\). \\(u_2 = -1\\) (negativ) liefert keine reelle Lösung. Anzahl reeller Lösungen: 2."
     },
     {
-        id: 21, level: 4, typ: "numerisch", bereich: "Algebra",
-        frage: "Löse \\(x^4 - 2x^2 - 8 = 0\\). Gib die <strong>positive</strong> Lösung an.",
+        id: 21, level: 4, typ: "numerisch",        frage: "Löse \\(x^4 - 2x^2 - 8 = 0\\). Gib die <strong>positive</strong> Lösung an.",
         loesung: 2, toleranz: 0,
         tipp: "Mit \\(u = x^2\\): \\(u^2 - 2u - 8 = 0\\). \\(p = -2,\\ q = -8\\).",
         loesungsweg: "\\(u_{1,2} = 1 \\pm \\sqrt{1 + 8} = 1 \\pm 3\\). \\(u_1 = 4,\\ u_2 = -2\\). \\(x^2 = 4 \\Rightarrow x = \\pm 2\\); \\(x^2 = -2\\) nicht reell. Positive Lösung: \\(x = 2\\)."
     },
     {
-        id: 22, level: 4, typ: "numerisch", bereich: "Algebra",
-        frage: "Löse \\((x^2 - 3)^2 - 4(x^2 - 3) + 3 = 0\\) mit Substitution \\(u = x^2 - 3\\). Gib die <strong>größte</strong> Lösung für \\(x\\) an.",
+        id: 22, level: 4, typ: "numerisch",        frage: "Löse \\((x^2 - 3)^2 - 4(x^2 - 3) + 3 = 0\\) mit Substitution \\(u = x^2 - 3\\). Gib die <strong>größte</strong> Lösung für \\(x\\) an.",
         loesung: 2.449, toleranz: 0.01,
         tipp: "Substituiere \\(u = x^2 - 3\\): \\(u^2 - 4u + 3 = 0\\). Rücksubstitution: \\(x^2 = u + 3\\).",
         loesungsweg: "\\(u^2 - 4u + 3 = 0 \\Rightarrow u_{1,2} = 2 \\pm 1\\). \\(u_1 = 3,\\ u_2 = 1\\). Rück: \\(x^2 = u + 3\\). \\(x^2 = 6 \\Rightarrow x = \\pm\\sqrt{6} \\approx \\pm 2{,}449\\); \\(x^2 = 4 \\Rightarrow x = \\pm 2\\). Größte: \\(x = \\sqrt{6} \\approx 2{,}449\\)."
     },
     {
-        id: 23, level: 4, typ: "mc", bereich: "Algebra",
-        frage: "Welche Lösungsmenge hat \\(x^4 - 16 = 0\\)?",
+        id: 23, level: 4, typ: "mc",        frage: "Welche Lösungsmenge hat \\(x^4 - 16 = 0\\)?",
         optionen: [
             "\\(\\{-2, 2\\}\\)",
             "\\(\\{-2, 2, -4, 4\\}\\)",
@@ -230,8 +207,7 @@
         loesungsweg: "\\(u^2 - 16 = 0 \\Rightarrow u = \\pm 4\\). \\(x^2 = 4 \\Rightarrow x = \\pm 2\\); \\(x^2 = -4\\) hat keine reelle Lösung. Lösungsmenge: \\(\\{-2, 2\\}\\)."
     },
     {
-        id: 24, level: 4, typ: "numerisch", bereich: "Algebra",
-        frage: "Löse \\(x^4 - 6x^2 + 5 = 0\\). Gib die <strong>kleinste positive</strong> Lösung an.",
+        id: 24, level: 4, typ: "numerisch",        frage: "Löse \\(x^4 - 6x^2 + 5 = 0\\). Gib die <strong>kleinste positive</strong> Lösung an.",
         loesung: 1, toleranz: 0,
         tipp: "Mit \\(u = x^2\\): \\(u^2 - 6u + 5 = 0\\).",
         loesungsweg: "\\(u_{1,2} = 3 \\pm \\sqrt{9 - 5} = 3 \\pm 2\\). \\(u_1 = 5,\\ u_2 = 1\\). \\(x^2 = 5 \\Rightarrow x = \\pm\\sqrt{5}\\); \\(x^2 = 1 \\Rightarrow x = \\pm 1\\). Positive Lösungen: \\(1\\) und \\(\\sqrt{5} \\approx 2{,}236\\). Kleinste positive: \\(x = 1\\)."
@@ -241,36 +217,31 @@
     // LEVEL 5 — Mehrere Lösungen, kombinierte Verfahren
     // ══════════════════════════════════════════════════════════════
     {
-        id: 25, level: 5, typ: "numerisch", bereich: "Algebra",
-        frage: "Wie viele reelle Lösungen hat \\(x^5 - 4x^3 = 0\\)?",
+        id: 25, level: 5, typ: "numerisch",        frage: "Wie viele reelle Lösungen hat \\(x^5 - 4x^3 = 0\\)?",
         loesung: 3, toleranz: 0,
         tipp: "Klammere \\(x^3\\) aus: \\(x^3(x^2 - 4) = 0\\).",
         loesungsweg: "\\(x^3(x^2 - 4) = 0\\). Also \\(x^3 = 0 \\Rightarrow x = 0\\) oder \\(x^2 = 4 \\Rightarrow x = \\pm 2\\). Verschiedene Lösungen: \\(\\{-2, 0, 2\\}\\) — das sind 3."
     },
     {
-        id: 26, level: 5, typ: "numerisch", bereich: "Algebra",
-        frage: "Löse \\(x^5 - 5x^3 + 4x = 0\\). Gib die <strong>größte</strong> Lösung an.",
+        id: 26, level: 5, typ: "numerisch",        frage: "Löse \\(x^5 - 5x^3 + 4x = 0\\). Gib die <strong>größte</strong> Lösung an.",
         loesung: 2, toleranz: 0,
         tipp: "Klammere \\(x\\) aus: \\(x(x^4 - 5x^2 + 4) = 0\\). Im Restfaktor biquadratisch substituieren.",
         loesungsweg: "\\(x(x^4 - 5x^2 + 4) = 0\\). \\(x = 0\\) oder \\(x^4 - 5x^2 + 4 = 0\\). Mit \\(u = x^2\\): \\(u^2 - 5u + 4 = 0 \\Rightarrow u_1 = 4,\\ u_2 = 1\\). \\(x = \\pm 2\\) oder \\(x = \\pm 1\\). Lösungen: \\(\\{-2, -1, 0, 1, 2\\}\\). Größte: \\(x = 2\\)."
     },
     {
-        id: 27, level: 5, typ: "numerisch", bereich: "Algebra",
-        frage: "Wie viele verschiedene reelle Lösungen hat \\(x^5 - 5x^3 + 4x = 0\\)?",
+        id: 27, level: 5, typ: "numerisch",        frage: "Wie viele verschiedene reelle Lösungen hat \\(x^5 - 5x^3 + 4x = 0\\)?",
         loesung: 5, toleranz: 0,
         tipp: "Nach Ausklammern von \\(x\\) entsteht eine biquadratische Gleichung mit vier Lösungen, plus \\(x = 0\\).",
         loesungsweg: "\\(x(x^4 - 5x^2 + 4) = 0\\). Das liefert \\(x = 0\\) sowie aus der biquadratischen Gleichung \\(x = \\pm 1\\) und \\(x = \\pm 2\\). Insgesamt 5 verschiedene Lösungen."
     },
     {
-        id: 28, level: 5, typ: "numerisch", bereich: "Algebra",
-        frage: "Die Gleichung \\(x^4 - kx^2 + 4 = 0\\) mit \\(k > 0\\) soll die Lösung \\(x = 2\\) haben. Bestimme \\(k\\).",
+        id: 28, level: 5, typ: "numerisch",        frage: "Die Gleichung \\(x^4 - kx^2 + 4 = 0\\) mit \\(k > 0\\) soll die Lösung \\(x = 2\\) haben. Bestimme \\(k\\).",
         loesung: 5, toleranz: 0,
         tipp: "Setze \\(x = 2\\) ein: \\(16 - 4k + 4 = 0\\). Nach \\(k\\) auflösen.",
         loesungsweg: "Einsetzen von \\(x = 2\\): \\(2^4 - k \\cdot 2^2 + 4 = 16 - 4k + 4 = 20 - 4k = 0 \\Rightarrow k = 5\\). Kontrolle: \\(x^4 - 5x^2 + 4 = 0\\) hat tatsächlich \\(x = 2\\) als Lösung."
     },
     {
-        id: 29, level: 5, typ: "mc", bereich: "Algebra",
-        frage: "Wie viele reelle Lösungen hat \\(x^4 + 4 = 0\\)?",
+        id: 29, level: 5, typ: "mc",        frage: "Wie viele reelle Lösungen hat \\(x^4 + 4 = 0\\)?",
         optionen: [
             "Keine reelle Lösung",
             "Zwei Lösungen",
@@ -282,8 +253,7 @@
         loesungsweg: "Für alle reellen \\(x\\) gilt \\(x^4 \\geq 0\\), also \\(x^4 + 4 \\geq 4 > 0\\). Die Gleichung hat keine reelle Lösung."
     },
     {
-        id: 30, level: 5, typ: "numerisch", bereich: "Algebra",
-        frage: "Löse \\(x^3 - x^2 - 4x + 4 = 0\\) durch Gruppieren und Ausklammern. Gib die <strong>größte</strong> Lösung an.",
+        id: 30, level: 5, typ: "numerisch",        frage: "Löse \\(x^3 - x^2 - 4x + 4 = 0\\) durch Gruppieren und Ausklammern. Gib die <strong>größte</strong> Lösung an.",
         loesung: 2, toleranz: 0,
         tipp: "Gruppiere: \\(x^2(x - 1) - 4(x - 1) = (x - 1)(x^2 - 4)\\).",
         loesungsweg: "\\(x^3 - x^2 - 4x + 4 = x^2(x - 1) - 4(x - 1) = (x - 1)(x^2 - 4) = (x - 1)(x - 2)(x + 2)\\). Lösungen: \\(x = 1,\\ x = 2,\\ x = -2\\). Größte: \\(x = 2\\)."
@@ -293,15 +263,13 @@
     // LEVEL 6 — Parameter, Lösbarkeit begründen
     // ══════════════════════════════════════════════════════════════
     {
-        id: 31, level: 6, typ: "numerisch", bereich: "Algebra",
-        frage: "Für welchen Wert von \\(a\\) hat die Gleichung \\(x^4 - 6x^2 + a = 0\\) genau eine doppelte Lösung für \\(u = x^2\\)? (Diskriminante \\(= 0\\))",
+        id: 31, level: 6, typ: "numerisch",        frage: "Für welchen Wert von \\(a\\) hat die Gleichung \\(x^4 - 6x^2 + a = 0\\) genau eine doppelte Lösung für \\(u = x^2\\)? (Diskriminante \\(= 0\\))",
         loesung: 9, toleranz: 0,
         tipp: "Mit \\(u = x^2\\): \\(u^2 - 6u + a = 0\\). Doppelte Lösung \\(\\Leftrightarrow\\) Diskriminante \\(= 0 \\Leftrightarrow 9 - a = 0\\).",
         loesungsweg: "Substituiere \\(u = x^2\\): \\(u^2 - 6u + a = 0\\) mit \\(p = -6,\\ q = a\\). Bedingung: \\(D = \\left(\\frac{p}{2}\\right)^2 - q = 9 - a = 0 \\Rightarrow a = 9\\). (Dann: \\(u = 3\\) doppelt, \\(x = \\pm\\sqrt{3}\\).)"
     },
     {
-        id: 32, level: 6, typ: "mc", bereich: "Algebra",
-        frage: "Für welche Werte von \\(c\\) hat \\(x^4 + c = 0\\) keine reelle Lösung?",
+        id: 32, level: 6, typ: "mc",        frage: "Für welche Werte von \\(c\\) hat \\(x^4 + c = 0\\) keine reelle Lösung?",
         optionen: [
             "Für alle \\(c > 0\\)",
             "Für alle \\(c < 0\\)",
@@ -313,22 +281,19 @@
         loesungsweg: "\\(x^4 = -c\\). Da \\(x^4 \\geq 0\\), ist dies nur lösbar für \\(-c \\geq 0\\), also \\(c \\leq 0\\). Für \\(c > 0\\) ist \\(-c < 0\\), und es gibt keine reelle Lösung."
     },
     {
-        id: 33, level: 6, typ: "numerisch", bereich: "Algebra",
-        frage: "Für welchen Wert von \\(k\\) hat die Gleichung \\(x^4 - 2x^2 + k = 0\\) genau 3 verschiedene reelle Lösungen?",
+        id: 33, level: 6, typ: "numerisch",        frage: "Für welchen Wert von \\(k\\) hat die Gleichung \\(x^4 - 2x^2 + k = 0\\) genau 3 verschiedene reelle Lösungen?",
         loesung: 0, toleranz: 0,
         tipp: "Mit \\(u = x^2\\): \\(u^2 - 2u + k = 0\\). Genau 3 verschiedene \\(x\\)-Lösungen entstehen, wenn einer der \\(u\\)-Werte gleich 0 ist (liefert nur \\(x = 0\\)) und der andere positiv ist (liefert \\(\\pm\\sqrt{u}\\)).",
         loesungsweg: "Mit \\(u = x^2\\): \\(u^2 - 2u + k = 0\\). Nach Vieta: \\(u_1 \\cdot u_2 = k\\) und \\(u_1 + u_2 = 2\\). Damit \\(x = 0\\) Lösung wird, muss ein \\(u\\)-Wert \\(= 0\\) sein, also \\(k = 0\\). Dann ist \\(u^2 - 2u = u(u - 2) = 0\\) mit \\(u_1 = 0,\\ u_2 = 2\\). Rücksubstitution: \\(x = 0\\) (einfach) und \\(x = \\pm\\sqrt{2}\\). Insgesamt 3 verschiedene Lösungen: \\(\\{-\\sqrt{2},\\ 0,\\ \\sqrt{2}\\}\\)."
     },
     {
-        id: 34, level: 6, typ: "numerisch", bereich: "Algebra",
-        frage: "Die Gleichung \\(x^3 + ax = 0\\) hat \\(x = 3\\) als Lösung. Bestimme \\(a\\).",
+        id: 34, level: 6, typ: "numerisch",        frage: "Die Gleichung \\(x^3 + ax = 0\\) hat \\(x = 3\\) als Lösung. Bestimme \\(a\\).",
         loesung: -9, toleranz: 0,
         tipp: "Setze \\(x = 3\\) in die Gleichung ein: \\(27 + 3a = 0\\).",
         loesungsweg: "Einsetzen: \\(3^3 + a \\cdot 3 = 27 + 3a = 0 \\Rightarrow 3a = -27 \\Rightarrow a = -9\\). Kontrolle: \\(x^3 - 9x = x(x^2 - 9) = 0\\) hat Lösungen \\(0, \\pm 3\\)."
     },
     {
-        id: 35, level: 6, typ: "mc", bereich: "Algebra",
-        frage: "Begründe die Anzahl der Lösungen von \\(x^4 + 5x^2 + 6 = 0\\).",
+        id: 35, level: 6, typ: "mc",        frage: "Begründe die Anzahl der Lösungen von \\(x^4 + 5x^2 + 6 = 0\\).",
         optionen: [
             "Keine reelle Lösung, da beide \\(u\\)-Werte negativ sind",
             "Zwei reelle Lösungen",
@@ -340,8 +305,7 @@
         loesungsweg: "Mit \\(u = x^2\\): \\(u^2 + 5u + 6 = 0\\). \\(u_{1,2} = -2{,}5 \\pm \\sqrt{6{,}25 - 6} = -2{,}5 \\pm 0{,}5\\). \\(u_1 = -2,\\ u_2 = -3\\). Beide negativ, aber \\(x^2 \\geq 0\\). Daher keine reelle Lösung."
     },
     {
-        id: 36, level: 6, typ: "numerisch", bereich: "Algebra",
-        frage: "Die Gleichung \\(x^4 - bx^2 + 4 = 0\\) hat die Lösung \\(x = \\sqrt{2}\\). Bestimme \\(b\\).",
+        id: 36, level: 6, typ: "numerisch",        frage: "Die Gleichung \\(x^4 - bx^2 + 4 = 0\\) hat die Lösung \\(x = \\sqrt{2}\\). Bestimme \\(b\\).",
         loesung: 4, toleranz: 0,
         tipp: "Setze \\(x = \\sqrt{2}\\) ein, also \\(x^2 = 2\\) und \\(x^4 = 4\\).",
         loesungsweg: "Mit \\(x = \\sqrt{2}\\) gilt \\(x^2 = 2\\) und \\(x^4 = 4\\). Einsetzen: \\(4 - b \\cdot 2 + 4 = 0 \\Rightarrow 8 - 2b = 0 \\Rightarrow b = 4\\). Kontrolle: \\(x^4 - 4x^2 + 4 = (x^2 - 2)^2 = 0 \\Rightarrow x^2 = 2 \\Rightarrow x = \\pm\\sqrt{2}\\)."

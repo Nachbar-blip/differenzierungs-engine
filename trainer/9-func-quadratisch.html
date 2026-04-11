@@ -18,399 +18,399 @@
     const AUFGABEN = [
       // ========== LEVEL 1 — Scheitel ablesen & Öffnung (6 Aufgaben) ==========
       {
-        "id": 1,
-        "level": 1,
-        "typ": "mc",
-        "frage": "Gegeben ist \\(f(x) = (x-3)^2 + 2\\) in Scheitelform. Wie lautet der Scheitelpunkt \\(S\\)?",
-        "optionen": [
+        id: 1,
+        level: 1,
+        typ: "mc",
+        frage: "Gegeben ist \\(f(x) = (x-3)^2 + 2\\) in Scheitelform. Wie lautet der Scheitelpunkt \\(S\\)?",
+        optionen: [
           "\\(S(3 \\mid 2)\\)",
           "\\(S(-3 \\mid 2)\\)",
           "\\(S(3 \\mid -2)\\)",
           "\\(S(-3 \\mid -2)\\)"
         ],
-        "korrekt": 0,
-        "tipp": "In der Scheitelform \\(f(x) = a(x-d)^2 + e\\) ist \\(S(d \\mid e)\\). Achte auf das Vorzeichen von \\(d\\)!",
-        "loesungsweg": "In der Scheitelform \\(f(x) = a(x-d)^2 + e\\) liest man den Scheitel direkt ab: \\(S(d \\mid e)\\). Hier: \\(d = 3\\), \\(e = 2\\), also \\(S(3 \\mid 2)\\)."
+        korrekt: 0,
+        tipp: "In der Scheitelform \\(f(x) = a(x-d)^2 + e\\) ist \\(S(d \\mid e)\\). Achte auf das Vorzeichen von \\(d\\)!",
+        loesungsweg: "In der Scheitelform \\(f(x) = a(x-d)^2 + e\\) liest man den Scheitel direkt ab: \\(S(d \\mid e)\\). Hier: \\(d = 3\\), \\(e = 2\\), also \\(S(3 \\mid 2)\\)."
       },
       {
-        "id": 2,
-        "level": 1,
-        "typ": "mc",
-        "frage": "Gegeben ist \\(f(x) = (x+1)^2 - 4\\). Wie lautet der Scheitelpunkt?",
-        "optionen": [
+        id: 2,
+        level: 1,
+        typ: "mc",
+        frage: "Gegeben ist \\(f(x) = (x+1)^2 - 4\\). Wie lautet der Scheitelpunkt?",
+        optionen: [
           "\\(S(1 \\mid -4)\\)",
           "\\(S(-1 \\mid -4)\\)",
           "\\(S(-1 \\mid 4)\\)",
           "\\(S(1 \\mid 4)\\)"
         ],
-        "korrekt": 1,
-        "tipp": "Schreibe den Term als \\((x-d)^2 + e\\). Aus \\((x+1)^2\\) wird \\((x-(-1))^2\\).",
-        "loesungsweg": "\\((x+1)^2 - 4 = (x-(-1))^2 + (-4)\\). Also \\(d = -1\\) und \\(e = -4\\). Scheitel: \\(S(-1 \\mid -4)\\)."
+        korrekt: 1,
+        tipp: "Schreibe den Term als \\((x-d)^2 + e\\). Aus \\((x+1)^2\\) wird \\((x-(-1))^2\\).",
+        loesungsweg: "\\((x+1)^2 - 4 = (x-(-1))^2 + (-4)\\). Also \\(d = -1\\) und \\(e = -4\\). Scheitel: \\(S(-1 \\mid -4)\\)."
       },
       {
-        "id": 3,
-        "level": 1,
-        "typ": "mc",
-        "frage": "In welche Richtung öffnet sich die Parabel von \\(f(x) = 2(x-1)^2 + 3\\)?",
-        "optionen": [
+        id: 3,
+        level: 1,
+        typ: "mc",
+        frage: "In welche Richtung öffnet sich die Parabel von \\(f(x) = 2(x-1)^2 + 3\\)?",
+        optionen: [
           "nach oben",
           "nach unten",
           "nach rechts",
           "nach links"
         ],
-        "korrekt": 0,
-        "tipp": "Entscheidend ist das Vorzeichen von \\(a\\). Ist \\(a > 0\\), öffnet sich die Parabel nach oben.",
-        "loesungsweg": "Der Streckfaktor ist \\(a = 2 > 0\\). Die Parabel ist **nach oben geöffnet**."
+        korrekt: 0,
+        tipp: "Entscheidend ist das Vorzeichen von \\(a\\). Ist \\(a > 0\\), öffnet sich die Parabel nach oben.",
+        loesungsweg: "Der Streckfaktor ist \\(a = 2 > 0\\). Die Parabel ist **nach oben geöffnet**."
       },
       {
-        "id": 4,
-        "level": 1,
-        "typ": "mc",
-        "frage": "In welche Richtung öffnet sich die Parabel von \\(f(x) = -0{,}5(x+2)^2 + 1\\)?",
-        "optionen": [
+        id: 4,
+        level: 1,
+        typ: "mc",
+        frage: "In welche Richtung öffnet sich die Parabel von \\(f(x) = -0{,}5(x+2)^2 + 1\\)?",
+        optionen: [
           "nach oben",
           "nach unten",
           "gar nicht, sie ist eine Gerade",
           "nach rechts"
         ],
-        "korrekt": 1,
-        "tipp": "Achte auf das Vorzeichen von \\(a\\).",
-        "loesungsweg": "Hier ist \\(a = -0{,}5 < 0\\). Eine Parabel mit negativem \\(a\\) ist **nach unten geöffnet**. Der Scheitel ist dann der höchste Punkt (Maximum)."
+        korrekt: 1,
+        tipp: "Achte auf das Vorzeichen von \\(a\\).",
+        loesungsweg: "Hier ist \\(a = -0{,}5 < 0\\). Eine Parabel mit negativem \\(a\\) ist **nach unten geöffnet**. Der Scheitel ist dann der höchste Punkt (Maximum)."
       },
       {
-        "id": 5,
-        "level": 1,
-        "typ": "numerisch",
-        "frage": "Gegeben ist \\(f(x) = (x-5)^2 - 7\\). Gib die \\(y\\)-Koordinate des Scheitels an.",
-        "loesung": -7,
-        "toleranz": 0,
-        "tipp": "In der Scheitelform \\(f(x) = a(x-d)^2 + e\\) ist \\(e\\) die \\(y\\)-Koordinate.",
-        "loesungsweg": "Scheitelform: \\(f(x) = (x-5)^2 + (-7)\\). Also \\(d = 5\\) und \\(e = -7\\). Die \\(y\\)-Koordinate des Scheitels ist \\(-7\\)."
+        id: 5,
+        level: 1,
+        typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = (x-5)^2 - 7\\). Gib die \\(y\\)-Koordinate des Scheitels an.",
+        loesung: -7,
+        toleranz: 0,
+        tipp: "In der Scheitelform \\(f(x) = a(x-d)^2 + e\\) ist \\(e\\) die \\(y\\)-Koordinate.",
+        loesungsweg: "Scheitelform: \\(f(x) = (x-5)^2 + (-7)\\). Also \\(d = 5\\) und \\(e = -7\\). Die \\(y\\)-Koordinate des Scheitels ist \\(-7\\)."
       },
       {
-        "id": 6,
-        "level": 1,
-        "typ": "numerisch",
-        "frage": "Gegeben ist \\(f(x) = 3(x-4)^2 + 1\\). Gib die \\(x\\)-Koordinate des Scheitels an.",
-        "loesung": 4,
-        "toleranz": 0,
-        "tipp": "In \\(f(x) = a(x-d)^2 + e\\) ist \\(d\\) die \\(x\\)-Koordinate des Scheitels.",
-        "loesungsweg": "In \\(f(x) = 3(x-4)^2 + 1\\) ist \\(d = 4\\). Die \\(x\\)-Koordinate des Scheitels beträgt **4**."
+        id: 6,
+        level: 1,
+        typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = 3(x-4)^2 + 1\\). Gib die \\(x\\)-Koordinate des Scheitels an.",
+        loesung: 4,
+        toleranz: 0,
+        tipp: "In \\(f(x) = a(x-d)^2 + e\\) ist \\(d\\) die \\(x\\)-Koordinate des Scheitels.",
+        loesungsweg: "In \\(f(x) = 3(x-4)^2 + 1\\) ist \\(d = 4\\). Die \\(x\\)-Koordinate des Scheitels beträgt **4**."
       },
 
       // ========== LEVEL 2 — Wertetabelle, f(x) berechnen, y-Achsenabschnitt (6 Aufgaben) ==========
       {
-        "id": 7,
-        "level": 2,
-        "typ": "numerisch",
-        "frage": "Gegeben ist \\(f(x) = x^2 - 2x + 3\\). Berechne \\(f(2)\\).",
-        "loesung": 3,
-        "toleranz": 0,
-        "tipp": "Setze \\(x = 2\\) in den Funktionsterm ein und rechne sorgfältig aus.",
-        "loesungsweg": "$$f(2) = 2^2 - 2 \\cdot 2 + 3 = 4 - 4 + 3 = 3$$"
+        id: 7,
+        level: 2,
+        typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = x^2 - 2x + 3\\). Berechne \\(f(2)\\).",
+        loesung: 3,
+        toleranz: 0,
+        tipp: "Setze \\(x = 2\\) in den Funktionsterm ein und rechne sorgfältig aus.",
+        loesungsweg: "$$f(2) = 2^2 - 2 \\cdot 2 + 3 = 4 - 4 + 3 = 3$$"
       },
       {
-        "id": 8,
-        "level": 2,
-        "typ": "numerisch",
-        "frage": "Gegeben ist \\(f(x) = 2x^2 + x - 5\\). Berechne \\(f(3)\\).",
-        "loesung": 16,
-        "toleranz": 0,
-        "tipp": "Achte auf die Reihenfolge: Erst \\(x^2\\), dann mit 2 multiplizieren.",
-        "loesungsweg": "$$f(3) = 2 \\cdot 3^2 + 3 - 5 = 2 \\cdot 9 + 3 - 5 = 18 + 3 - 5 = 16$$"
+        id: 8,
+        level: 2,
+        typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = 2x^2 + x - 5\\). Berechne \\(f(3)\\).",
+        loesung: 16,
+        toleranz: 0,
+        tipp: "Achte auf die Reihenfolge: Erst \\(x^2\\), dann mit 2 multiplizieren.",
+        loesungsweg: "$$f(3) = 2 \\cdot 3^2 + 3 - 5 = 2 \\cdot 9 + 3 - 5 = 18 + 3 - 5 = 16$$"
       },
       {
-        "id": 9,
-        "level": 2,
-        "typ": "numerisch",
-        "frage": "Gegeben ist \\(f(x) = x^2 - 4x + 7\\). Bestimme den \\(y\\)-Achsenabschnitt.",
-        "loesung": 7,
-        "toleranz": 0,
-        "tipp": "Der \\(y\\)-Achsenabschnitt ist \\(f(0)\\).",
-        "loesungsweg": "$$f(0) = 0^2 - 4 \\cdot 0 + 7 = 7$$ In der Normalform \\(f(x) = ax^2 + bx + c\\) ist der \\(y\\)-Achsenabschnitt immer gleich \\(c\\)."
+        id: 9,
+        level: 2,
+        typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = x^2 - 4x + 7\\). Bestimme den \\(y\\)-Achsenabschnitt.",
+        loesung: 7,
+        toleranz: 0,
+        tipp: "Der \\(y\\)-Achsenabschnitt ist \\(f(0)\\).",
+        loesungsweg: "$$f(0) = 0^2 - 4 \\cdot 0 + 7 = 7$$ In der Normalform \\(f(x) = ax^2 + bx + c\\) ist der \\(y\\)-Achsenabschnitt immer gleich \\(c\\)."
       },
       {
-        "id": 10,
-        "level": 2,
-        "typ": "numerisch",
-        "frage": "Gegeben ist \\(f(x) = -x^2 + 6x - 2\\). Berechne \\(f(1)\\).",
-        "loesung": 3,
-        "toleranz": 0,
-        "tipp": "Vorsicht mit dem Minuszeichen vor \\(x^2\\): \\(-(1)^2 = -1\\).",
-        "loesungsweg": "$$f(1) = -(1)^2 + 6 \\cdot 1 - 2 = -1 + 6 - 2 = 3$$"
+        id: 10,
+        level: 2,
+        typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = -x^2 + 6x - 2\\). Berechne \\(f(1)\\).",
+        loesung: 3,
+        toleranz: 0,
+        tipp: "Vorsicht mit dem Minuszeichen vor \\(x^2\\): \\(-(1)^2 = -1\\).",
+        loesungsweg: "$$f(1) = -(1)^2 + 6 \\cdot 1 - 2 = -1 + 6 - 2 = 3$$"
       },
       {
-        "id": 11,
-        "level": 2,
-        "typ": "mc",
-        "frage": "Gegeben ist \\(f(x) = 3(x-2)^2 - 1\\). Welchen \\(y\\)-Achsenabschnitt hat der Graph?",
-        "optionen": [
+        id: 11,
+        level: 2,
+        typ: "mc",
+        frage: "Gegeben ist \\(f(x) = 3(x-2)^2 - 1\\). Welchen \\(y\\)-Achsenabschnitt hat der Graph?",
+        optionen: [
           "\\(-1\\)",
           "\\(11\\)",
           "\\(-13\\)",
           "\\(12\\)"
         ],
-        "korrekt": 1,
-        "tipp": "Berechne \\(f(0)\\) — setze also \\(x = 0\\) ein.",
-        "loesungsweg": "$$f(0) = 3(0-2)^2 - 1 = 3 \\cdot 4 - 1 = 12 - 1 = 11$$ Der \\(y\\)-Achsenabschnitt beträgt **11**."
+        korrekt: 1,
+        tipp: "Berechne \\(f(0)\\) — setze also \\(x = 0\\) ein.",
+        loesungsweg: "$$f(0) = 3(0-2)^2 - 1 = 3 \\cdot 4 - 1 = 12 - 1 = 11$$ Der \\(y\\)-Achsenabschnitt beträgt **11**."
       },
       {
-        "id": 12,
-        "level": 2,
-        "typ": "numerisch",
-        "frage": "Gegeben ist \\(f(x) = 0{,}5x^2 - 3x + 1\\). Berechne \\(f(4)\\).",
-        "loesung": -3,
-        "toleranz": 0,
-        "tipp": "\\(0{,}5 \\cdot 16 = 8\\). Danach weiter rechnen.",
-        "loesungsweg": "$$f(4) = 0{,}5 \\cdot 4^2 - 3 \\cdot 4 + 1 = 0{,}5 \\cdot 16 - 12 + 1 = 8 - 12 + 1 = -3$$"
+        id: 12,
+        level: 2,
+        typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = 0{,}5x^2 - 3x + 1\\). Berechne \\(f(4)\\).",
+        loesung: -3,
+        toleranz: 0,
+        tipp: "\\(0{,}5 \\cdot 16 = 8\\). Danach weiter rechnen.",
+        loesungsweg: "$$f(4) = 0{,}5 \\cdot 4^2 - 3 \\cdot 4 + 1 = 0{,}5 \\cdot 16 - 12 + 1 = 8 - 12 + 1 = -3$$"
       },
 
       // ========== LEVEL 3 — Normalform → Scheitelform (quadratische Ergänzung) (6 Aufgaben) ==========
       {
-        "id": 13,
-        "level": 3,
-        "typ": "numerisch",
-        "frage": "Wandle \\(f(x) = x^2 - 4x + 1\\) in die Scheitelform \\(f(x) = (x-d)^2 + e\\) um. Gib \\(e\\) an.",
-        "loesung": -3,
-        "toleranz": 0,
-        "tipp": "Quadratische Ergänzung: \\((x^2 - 4x) = (x-2)^2 - 4\\). Dann den fehlenden Summanden ausgleichen.",
-        "loesungsweg": "$$x^2 - 4x + 1 = \\underbrace{x^2 - 4x + 4}_{(x-2)^2} - 4 + 1 = (x-2)^2 - 3$$ Also \\(d = 2\\) und \\(e = -3\\)."
+        id: 13,
+        level: 3,
+        typ: "numerisch",
+        frage: "Wandle \\(f(x) = x^2 - 4x + 1\\) in die Scheitelform \\(f(x) = (x-d)^2 + e\\) um. Gib \\(e\\) an.",
+        loesung: -3,
+        toleranz: 0,
+        tipp: "Quadratische Ergänzung: \\((x^2 - 4x) = (x-2)^2 - 4\\). Dann den fehlenden Summanden ausgleichen.",
+        loesungsweg: "$$x^2 - 4x + 1 = \\underbrace{x^2 - 4x + 4}_{(x-2)^2} - 4 + 1 = (x-2)^2 - 3$$ Also \\(d = 2\\) und \\(e = -3\\)."
       },
       {
-        "id": 14,
-        "level": 3,
-        "typ": "numerisch",
-        "frage": "Wandle \\(f(x) = x^2 + 6x + 5\\) in Scheitelform um. Gib die \\(y\\)-Koordinate des Scheitels an.",
-        "loesung": -4,
-        "toleranz": 0,
-        "tipp": "Halbe den Koeffizienten von \\(x\\) und quadriere ihn: \\((6/2)^2 = 9\\). Addiere und subtrahiere 9.",
-        "loesungsweg": "$$x^2 + 6x + 5 = x^2 + 6x + 9 - 9 + 5 = (x+3)^2 - 4$$ Scheitel: \\(S(-3 \\mid -4)\\). Die \\(y\\)-Koordinate ist **\\(-4\\)**."
+        id: 14,
+        level: 3,
+        typ: "numerisch",
+        frage: "Wandle \\(f(x) = x^2 + 6x + 5\\) in Scheitelform um. Gib die \\(y\\)-Koordinate des Scheitels an.",
+        loesung: -4,
+        toleranz: 0,
+        tipp: "Halbe den Koeffizienten von \\(x\\) und quadriere ihn: \\((6/2)^2 = 9\\). Addiere und subtrahiere 9.",
+        loesungsweg: "$$x^2 + 6x + 5 = x^2 + 6x + 9 - 9 + 5 = (x+3)^2 - 4$$ Scheitel: \\(S(-3 \\mid -4)\\). Die \\(y\\)-Koordinate ist **\\(-4\\)**."
       },
       {
-        "id": 15,
-        "level": 3,
-        "typ": "numerisch",
-        "frage": "Wandle \\(f(x) = x^2 - 2x - 8\\) in Scheitelform um. Gib die \\(x\\)-Koordinate des Scheitels an.",
-        "loesung": 1,
-        "toleranz": 0,
-        "tipp": "Quadratische Ergänzung: \\((x-1)^2 = x^2 - 2x + 1\\).",
-        "loesungsweg": "$$x^2 - 2x - 8 = (x^2 - 2x + 1) - 1 - 8 = (x-1)^2 - 9$$ Scheitel: \\(S(1 \\mid -9)\\). Die \\(x\\)-Koordinate ist **1**."
+        id: 15,
+        level: 3,
+        typ: "numerisch",
+        frage: "Wandle \\(f(x) = x^2 - 2x - 8\\) in Scheitelform um. Gib die \\(x\\)-Koordinate des Scheitels an.",
+        loesung: 1,
+        toleranz: 0,
+        tipp: "Quadratische Ergänzung: \\((x-1)^2 = x^2 - 2x + 1\\).",
+        loesungsweg: "$$x^2 - 2x - 8 = (x^2 - 2x + 1) - 1 - 8 = (x-1)^2 - 9$$ Scheitel: \\(S(1 \\mid -9)\\). Die \\(x\\)-Koordinate ist **1**."
       },
       {
-        "id": 16,
-        "level": 3,
-        "typ": "numerisch",
-        "frage": "Wandle \\(f(x) = x^2 + 8x + 10\\) in Scheitelform um. Gib den \\(y\\)-Wert des Scheitels an.",
-        "loesung": -6,
-        "toleranz": 0,
-        "tipp": "\\((8/2)^2 = 16\\). Ergänze und subtrahiere 16.",
-        "loesungsweg": "$$x^2 + 8x + 10 = (x^2 + 8x + 16) - 16 + 10 = (x+4)^2 - 6$$ Scheitel: \\(S(-4 \\mid -6)\\)."
+        id: 16,
+        level: 3,
+        typ: "numerisch",
+        frage: "Wandle \\(f(x) = x^2 + 8x + 10\\) in Scheitelform um. Gib den \\(y\\)-Wert des Scheitels an.",
+        loesung: -6,
+        toleranz: 0,
+        tipp: "\\((8/2)^2 = 16\\). Ergänze und subtrahiere 16.",
+        loesungsweg: "$$x^2 + 8x + 10 = (x^2 + 8x + 16) - 16 + 10 = (x+4)^2 - 6$$ Scheitel: \\(S(-4 \\mid -6)\\)."
       },
       {
-        "id": 17,
-        "level": 3,
-        "typ": "numerisch",
-        "frage": "Wandle \\(f(x) = 2x^2 - 8x + 5\\) in Scheitelform um. Gib den \\(y\\)-Wert des Scheitels an.",
-        "loesung": -3,
-        "toleranz": 0,
-        "tipp": "Klammere zuerst \\(a = 2\\) aus den \\(x\\)-Termen aus: \\(2(x^2 - 4x) + 5\\).",
-        "loesungsweg": "$$2x^2 - 8x + 5 = 2(x^2 - 4x) + 5 = 2\\bigl((x-2)^2 - 4\\bigr) + 5 = 2(x-2)^2 - 8 + 5 = 2(x-2)^2 - 3$$ Scheitel: \\(S(2 \\mid -3)\\)."
+        id: 17,
+        level: 3,
+        typ: "numerisch",
+        frage: "Wandle \\(f(x) = 2x^2 - 8x + 5\\) in Scheitelform um. Gib den \\(y\\)-Wert des Scheitels an.",
+        loesung: -3,
+        toleranz: 0,
+        tipp: "Klammere zuerst \\(a = 2\\) aus den \\(x\\)-Termen aus: \\(2(x^2 - 4x) + 5\\).",
+        loesungsweg: "$$2x^2 - 8x + 5 = 2(x^2 - 4x) + 5 = 2\\bigl((x-2)^2 - 4\\bigr) + 5 = 2(x-2)^2 - 8 + 5 = 2(x-2)^2 - 3$$ Scheitel: \\(S(2 \\mid -3)\\)."
       },
       {
-        "id": 18,
-        "level": 3,
-        "typ": "numerisch",
-        "frage": "Wandle \\(f(x) = x^2 - 10x + 21\\) in Scheitelform um. Gib den \\(y\\)-Wert des Scheitels an.",
-        "loesung": -4,
-        "toleranz": 0,
-        "tipp": "\\((10/2)^2 = 25\\).",
-        "loesungsweg": "$$x^2 - 10x + 21 = (x^2 - 10x + 25) - 25 + 21 = (x-5)^2 - 4$$ Scheitel: \\(S(5 \\mid -4)\\)."
+        id: 18,
+        level: 3,
+        typ: "numerisch",
+        frage: "Wandle \\(f(x) = x^2 - 10x + 21\\) in Scheitelform um. Gib den \\(y\\)-Wert des Scheitels an.",
+        loesung: -4,
+        toleranz: 0,
+        tipp: "\\((10/2)^2 = 25\\).",
+        loesungsweg: "$$x^2 - 10x + 21 = (x^2 - 10x + 25) - 25 + 21 = (x-5)^2 - 4$$ Scheitel: \\(S(5 \\mid -4)\\)."
       },
 
       // ========== LEVEL 4 — Nullstellen mit pq-/Mitternachtsformel (6 Aufgaben) ==========
       {
-        "id": 19,
-        "level": 4,
-        "typ": "numerisch",
-        "frage": "Bestimme die größere Nullstelle von \\(f(x) = x^2 - 5x + 6\\).",
-        "loesung": 3,
-        "toleranz": 0,
-        "tipp": "\\(p\\)-\\(q\\)-Formel: \\(x_{1/2} = -\\frac{p}{2} \\pm \\sqrt{\\left(\\frac{p}{2}\\right)^2 - q}\\) mit \\(p = -5\\), \\(q = 6\\).",
-        "loesungsweg": "$$x_{1/2} = \\frac{5}{2} \\pm \\sqrt{\\frac{25}{4} - 6} = \\frac{5}{2} \\pm \\sqrt{\\frac{1}{4}} = \\frac{5}{2} \\pm \\frac{1}{2}$$ $$x_1 = 3, \\quad x_2 = 2$$ Die größere Nullstelle ist **3**."
+        id: 19,
+        level: 4,
+        typ: "numerisch",
+        frage: "Bestimme die größere Nullstelle von \\(f(x) = x^2 - 5x + 6\\).",
+        loesung: 3,
+        toleranz: 0,
+        tipp: "\\(p\\)-\\(q\\)-Formel: \\(x_{1/2} = -\\frac{p}{2} \\pm \\sqrt{\\left(\\frac{p}{2}\\right)^2 - q}\\) mit \\(p = -5\\), \\(q = 6\\).",
+        loesungsweg: "$$x_{1/2} = \\frac{5}{2} \\pm \\sqrt{\\frac{25}{4} - 6} = \\frac{5}{2} \\pm \\sqrt{\\frac{1}{4}} = \\frac{5}{2} \\pm \\frac{1}{2}$$ $$x_1 = 3, \\quad x_2 = 2$$ Die größere Nullstelle ist **3**."
       },
       {
-        "id": 20,
-        "level": 4,
-        "typ": "numerisch",
-        "frage": "Bestimme die größere Nullstelle von \\(f(x) = x^2 + 2x - 15\\).",
-        "loesung": 3,
-        "toleranz": 0,
-        "tipp": "\\(p = 2\\), \\(q = -15\\). Setze in die \\(p\\)-\\(q\\)-Formel ein.",
-        "loesungsweg": "$$x_{1/2} = -1 \\pm \\sqrt{1 - (-15)} = -1 \\pm \\sqrt{16} = -1 \\pm 4$$ $$x_1 = 3, \\quad x_2 = -5$$ Die größere Nullstelle ist **3**."
+        id: 20,
+        level: 4,
+        typ: "numerisch",
+        frage: "Bestimme die größere Nullstelle von \\(f(x) = x^2 + 2x - 15\\).",
+        loesung: 3,
+        toleranz: 0,
+        tipp: "\\(p = 2\\), \\(q = -15\\). Setze in die \\(p\\)-\\(q\\)-Formel ein.",
+        loesungsweg: "$$x_{1/2} = -1 \\pm \\sqrt{1 - (-15)} = -1 \\pm \\sqrt{16} = -1 \\pm 4$$ $$x_1 = 3, \\quad x_2 = -5$$ Die größere Nullstelle ist **3**."
       },
       {
-        "id": 21,
-        "level": 4,
-        "typ": "numerisch",
-        "frage": "Wie viele Nullstellen hat \\(f(x) = x^2 - 6x + 9\\)?",
-        "loesung": 1,
-        "toleranz": 0,
-        "tipp": "Berechne die Diskriminante \\(D = \\left(\\frac{p}{2}\\right)^2 - q\\). Ist \\(D = 0\\), gibt es genau eine (doppelte) Nullstelle.",
-        "loesungsweg": "$$D = \\left(\\frac{-6}{2}\\right)^2 - 9 = 9 - 9 = 0$$ Da \\(D = 0\\) ist, gibt es genau **eine** (doppelte) Nullstelle bei \\(x = 3\\). Man erkennt auch: \\(x^2 - 6x + 9 = (x-3)^2\\)."
+        id: 21,
+        level: 4,
+        typ: "numerisch",
+        frage: "Wie viele Nullstellen hat \\(f(x) = x^2 - 6x + 9\\)?",
+        loesung: 1,
+        toleranz: 0,
+        tipp: "Berechne die Diskriminante \\(D = \\left(\\frac{p}{2}\\right)^2 - q\\). Ist \\(D = 0\\), gibt es genau eine (doppelte) Nullstelle.",
+        loesungsweg: "$$D = \\left(\\frac{-6}{2}\\right)^2 - 9 = 9 - 9 = 0$$ Da \\(D = 0\\) ist, gibt es genau **eine** (doppelte) Nullstelle bei \\(x = 3\\). Man erkennt auch: \\(x^2 - 6x + 9 = (x-3)^2\\)."
       },
       {
-        "id": 22,
-        "level": 4,
-        "typ": "numerisch",
-        "frage": "Wie viele Nullstellen hat \\(f(x) = x^2 - 4x + 5\\)?",
-        "loesung": 0,
-        "toleranz": 0,
-        "tipp": "Berechne die Diskriminante. Wird unter der Wurzel eine negative Zahl stehen?",
-        "loesungsweg": "$$D = \\left(\\frac{-4}{2}\\right)^2 - 5 = 4 - 5 = -1 < 0$$ Da \\(D < 0\\) ist, hat die Funktion **keine** reellen Nullstellen."
+        id: 22,
+        level: 4,
+        typ: "numerisch",
+        frage: "Wie viele Nullstellen hat \\(f(x) = x^2 - 4x + 5\\)?",
+        loesung: 0,
+        toleranz: 0,
+        tipp: "Berechne die Diskriminante. Wird unter der Wurzel eine negative Zahl stehen?",
+        loesungsweg: "$$D = \\left(\\frac{-4}{2}\\right)^2 - 5 = 4 - 5 = -1 < 0$$ Da \\(D < 0\\) ist, hat die Funktion **keine** reellen Nullstellen."
       },
       {
-        "id": 23,
-        "level": 4,
-        "typ": "numerisch",
-        "frage": "Bestimme die kleinere Nullstelle von \\(f(x) = 2x^2 - 8x + 6\\).",
-        "loesung": 1,
-        "toleranz": 0,
-        "tipp": "Teile die Gleichung zuerst durch 2, um die Normalform für die \\(p\\)-\\(q\\)-Formel zu erhalten.",
-        "loesungsweg": "$$2x^2 - 8x + 6 = 0 \\;\\Leftrightarrow\\; x^2 - 4x + 3 = 0$$ $$x_{1/2} = 2 \\pm \\sqrt{4 - 3} = 2 \\pm 1$$ $$x_1 = 3, \\quad x_2 = 1$$ Die kleinere Nullstelle ist **1**."
+        id: 23,
+        level: 4,
+        typ: "numerisch",
+        frage: "Bestimme die kleinere Nullstelle von \\(f(x) = 2x^2 - 8x + 6\\).",
+        loesung: 1,
+        toleranz: 0,
+        tipp: "Teile die Gleichung zuerst durch 2, um die Normalform für die \\(p\\)-\\(q\\)-Formel zu erhalten.",
+        loesungsweg: "$$2x^2 - 8x + 6 = 0 \\;\\Leftrightarrow\\; x^2 - 4x + 3 = 0$$ $$x_{1/2} = 2 \\pm \\sqrt{4 - 3} = 2 \\pm 1$$ $$x_1 = 3, \\quad x_2 = 1$$ Die kleinere Nullstelle ist **1**."
       },
       {
-        "id": 24,
-        "level": 4,
-        "typ": "numerisch",
-        "frage": "Bestimme das Produkt der beiden Nullstellen von \\(f(x) = x^2 + x - 12\\).",
-        "loesung": -12,
-        "toleranz": 0,
-        "tipp": "Entweder Nullstellen ausrechnen und multiplizieren, oder Satz von Vieta nutzen: Produkt = \\(q\\).",
-        "loesungsweg": "Mit \\(p = 1\\) und \\(q = -12\\): $$x_{1/2} = -\\frac{1}{2} \\pm \\sqrt{\\frac{1}{4} + 12} = -\\frac{1}{2} \\pm \\sqrt{\\frac{49}{4}} = -\\frac{1}{2} \\pm \\frac{7}{2}$$ $$x_1 = 3, \\quad x_2 = -4$$ Produkt: \\(3 \\cdot (-4) = -12\\). Satz von Vieta bestätigt: Produkt \\(= q = -12\\)."
+        id: 24,
+        level: 4,
+        typ: "numerisch",
+        frage: "Bestimme das Produkt der beiden Nullstellen von \\(f(x) = x^2 + x - 12\\).",
+        loesung: -12,
+        toleranz: 0,
+        tipp: "Entweder Nullstellen ausrechnen und multiplizieren, oder Satz von Vieta nutzen: Produkt = \\(q\\).",
+        loesungsweg: "Mit \\(p = 1\\) und \\(q = -12\\): $$x_{1/2} = -\\frac{1}{2} \\pm \\sqrt{\\frac{1}{4} + 12} = -\\frac{1}{2} \\pm \\sqrt{\\frac{49}{4}} = -\\frac{1}{2} \\pm \\frac{7}{2}$$ $$x_1 = 3, \\quad x_2 = -4$$ Produkt: \\(3 \\cdot (-4) = -12\\). Satz von Vieta bestätigt: Produkt \\(= q = -12\\)."
       },
 
       // ========== LEVEL 5 — Scheitel direkt aus Normalform (x_s = -b/(2a)) (6 Aufgaben) ==========
       {
-        "id": 25,
-        "level": 5,
-        "typ": "numerisch",
-        "frage": "Gegeben ist \\(f(x) = x^2 - 6x + 5\\). Bestimme die \\(x\\)-Koordinate des Scheitels mit \\(x_s = -\\frac{b}{2a}\\).",
-        "loesung": 3,
-        "toleranz": 0,
-        "tipp": "Identifiziere \\(a\\) und \\(b\\) aus der Normalform \\(f(x) = ax^2 + bx + c\\). Hier: \\(a = 1\\), \\(b = -6\\).",
-        "loesungsweg": "Mit \\(a = 1\\) und \\(b = -6\\): $$x_s = -\\frac{b}{2a} = -\\frac{-6}{2 \\cdot 1} = \\frac{6}{2} = 3$$"
+        id: 25,
+        level: 5,
+        typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = x^2 - 6x + 5\\). Bestimme die \\(x\\)-Koordinate des Scheitels mit \\(x_s = -\\frac{b}{2a}\\).",
+        loesung: 3,
+        toleranz: 0,
+        tipp: "Identifiziere \\(a\\) und \\(b\\) aus der Normalform \\(f(x) = ax^2 + bx + c\\). Hier: \\(a = 1\\), \\(b = -6\\).",
+        loesungsweg: "Mit \\(a = 1\\) und \\(b = -6\\): $$x_s = -\\frac{b}{2a} = -\\frac{-6}{2 \\cdot 1} = \\frac{6}{2} = 3$$"
       },
       {
-        "id": 26,
-        "level": 5,
-        "typ": "numerisch",
-        "frage": "Gegeben ist \\(f(x) = x^2 + 4x - 1\\). Bestimme die \\(y\\)-Koordinate des Scheitels.",
-        "loesung": -5,
-        "toleranz": 0,
-        "tipp": "Erst \\(x_s = -\\frac{b}{2a}\\) berechnen, dann \\(y_s = f(x_s)\\).",
-        "loesungsweg": "Mit \\(a = 1\\), \\(b = 4\\): $$x_s = -\\frac{4}{2} = -2$$ $$y_s = f(-2) = (-2)^2 + 4 \\cdot (-2) - 1 = 4 - 8 - 1 = -5$$"
+        id: 26,
+        level: 5,
+        typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = x^2 + 4x - 1\\). Bestimme die \\(y\\)-Koordinate des Scheitels.",
+        loesung: -5,
+        toleranz: 0,
+        tipp: "Erst \\(x_s = -\\frac{b}{2a}\\) berechnen, dann \\(y_s = f(x_s)\\).",
+        loesungsweg: "Mit \\(a = 1\\), \\(b = 4\\): $$x_s = -\\frac{4}{2} = -2$$ $$y_s = f(-2) = (-2)^2 + 4 \\cdot (-2) - 1 = 4 - 8 - 1 = -5$$"
       },
       {
-        "id": 27,
-        "level": 5,
-        "typ": "numerisch",
-        "frage": "Gegeben ist \\(f(x) = 2x^2 - 8x + 3\\). Bestimme die \\(y\\)-Koordinate des Scheitels.",
-        "loesung": -5,
-        "toleranz": 0,
-        "tipp": "\\(a = 2\\), \\(b = -8\\). Berechne zuerst \\(x_s\\).",
-        "loesungsweg": "$$x_s = -\\frac{-8}{2 \\cdot 2} = \\frac{8}{4} = 2$$ $$y_s = f(2) = 2 \\cdot 4 - 8 \\cdot 2 + 3 = 8 - 16 + 3 = -5$$"
+        id: 27,
+        level: 5,
+        typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = 2x^2 - 8x + 3\\). Bestimme die \\(y\\)-Koordinate des Scheitels.",
+        loesung: -5,
+        toleranz: 0,
+        tipp: "\\(a = 2\\), \\(b = -8\\). Berechne zuerst \\(x_s\\).",
+        loesungsweg: "$$x_s = -\\frac{-8}{2 \\cdot 2} = \\frac{8}{4} = 2$$ $$y_s = f(2) = 2 \\cdot 4 - 8 \\cdot 2 + 3 = 8 - 16 + 3 = -5$$"
       },
       {
-        "id": 28,
-        "level": 5,
-        "typ": "numerisch",
-        "frage": "Gegeben ist \\(f(x) = -x^2 + 4x - 1\\). Bestimme die \\(y\\)-Koordinate des Scheitels.",
-        "loesung": 3,
-        "toleranz": 0,
-        "tipp": "Hier ist \\(a = -1\\). Die Parabel ist nach unten geöffnet — der Scheitel ist ein Hochpunkt.",
-        "loesungsweg": "$$x_s = -\\frac{4}{2 \\cdot (-1)} = -\\frac{4}{-2} = 2$$ $$y_s = f(2) = -4 + 8 - 1 = 3$$ Scheitel: \\(S(2 \\mid 3)\\) (Hochpunkt)."
+        id: 28,
+        level: 5,
+        typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = -x^2 + 4x - 1\\). Bestimme die \\(y\\)-Koordinate des Scheitels.",
+        loesung: 3,
+        toleranz: 0,
+        tipp: "Hier ist \\(a = -1\\). Die Parabel ist nach unten geöffnet — der Scheitel ist ein Hochpunkt.",
+        loesungsweg: "$$x_s = -\\frac{4}{2 \\cdot (-1)} = -\\frac{4}{-2} = 2$$ $$y_s = f(2) = -4 + 8 - 1 = 3$$ Scheitel: \\(S(2 \\mid 3)\\) (Hochpunkt)."
       },
       {
-        "id": 29,
-        "level": 5,
-        "typ": "numerisch",
-        "frage": "Gegeben ist \\(f(x) = 3x^2 + 12x + 7\\). Bestimme die \\(x\\)-Koordinate des Scheitels.",
-        "loesung": -2,
-        "toleranz": 0,
-        "tipp": "\\(a = 3\\), \\(b = 12\\).",
-        "loesungsweg": "$$x_s = -\\frac{b}{2a} = -\\frac{12}{2 \\cdot 3} = -\\frac{12}{6} = -2$$"
+        id: 29,
+        level: 5,
+        typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = 3x^2 + 12x + 7\\). Bestimme die \\(x\\)-Koordinate des Scheitels.",
+        loesung: -2,
+        toleranz: 0,
+        tipp: "\\(a = 3\\), \\(b = 12\\).",
+        loesungsweg: "$$x_s = -\\frac{b}{2a} = -\\frac{12}{2 \\cdot 3} = -\\frac{12}{6} = -2$$"
       },
       {
-        "id": 30,
-        "level": 5,
-        "typ": "numerisch",
-        "frage": "Gegeben ist \\(f(x) = -2x^2 + 8x - 3\\). Bestimme die \\(y\\)-Koordinate des Scheitels.",
-        "loesung": 5,
-        "toleranz": 0,
-        "tipp": "\\(a = -2\\), \\(b = 8\\). Beachte das Minus in \\(a\\).",
-        "loesungsweg": "$$x_s = -\\frac{8}{2 \\cdot (-2)} = -\\frac{8}{-4} = 2$$ $$y_s = f(2) = -2 \\cdot 4 + 8 \\cdot 2 - 3 = -8 + 16 - 3 = 5$$ Scheitel: \\(S(2 \\mid 5)\\)."
+        id: 30,
+        level: 5,
+        typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = -2x^2 + 8x - 3\\). Bestimme die \\(y\\)-Koordinate des Scheitels.",
+        loesung: 5,
+        toleranz: 0,
+        tipp: "\\(a = -2\\), \\(b = 8\\). Beachte das Minus in \\(a\\).",
+        loesungsweg: "$$x_s = -\\frac{8}{2 \\cdot (-2)} = -\\frac{8}{-4} = 2$$ $$y_s = f(2) = -2 \\cdot 4 + 8 \\cdot 2 - 3 = -8 + 16 - 3 = 5$$ Scheitel: \\(S(2 \\mid 5)\\)."
       },
 
       // ========== LEVEL 6 — Textaufgaben (6 Aufgaben) ==========
       {
-        "id": 31,
-        "level": 6,
-        "typ": "numerisch",
-        "frage": "Ein Rechteck hat einen Umfang von \\(40\\) m. Welchen maximalen Flächeninhalt (in m²) kann es haben?",
-        "loesung": 100,
-        "toleranz": 0,
-        "tipp": "Sei \\(x\\) eine Seite, dann ist die andere Seite \\(20 - x\\). Die Fläche \\(A(x) = x(20-x)\\) ist eine quadratische Funktion.",
-        "loesungsweg": "Umfang: \\(2x + 2y = 40 \\Rightarrow y = 20 - x\\). Fläche: $$A(x) = x(20 - x) = 20x - x^2 = -x^2 + 20x$$ Scheitel: \\(x_s = -\\frac{20}{2 \\cdot (-1)} = 10\\). $$A(10) = 10 \\cdot (20 - 10) = 10 \\cdot 10 = 100 \\text{ m}^2$$ Das Maximum ist das Quadrat mit Seitenlänge \\(10\\) m."
+        id: 31,
+        level: 6,
+        typ: "numerisch",
+        frage: "Ein Rechteck hat einen Umfang von \\(40\\) m. Welchen maximalen Flächeninhalt (in m²) kann es haben?",
+        loesung: 100,
+        toleranz: 0,
+        tipp: "Sei \\(x\\) eine Seite, dann ist die andere Seite \\(20 - x\\). Die Fläche \\(A(x) = x(20-x)\\) ist eine quadratische Funktion.",
+        loesungsweg: "Umfang: \\(2x + 2y = 40 \\Rightarrow y = 20 - x\\). Fläche: $$A(x) = x(20 - x) = 20x - x^2 = -x^2 + 20x$$ Scheitel: \\(x_s = -\\frac{20}{2 \\cdot (-1)} = 10\\). $$A(10) = 10 \\cdot (20 - 10) = 10 \\cdot 10 = 100 \\text{ m}^2$$ Das Maximum ist das Quadrat mit Seitenlänge \\(10\\) m."
       },
       {
-        "id": 32,
-        "level": 6,
-        "typ": "numerisch",
-        "frage": "Die Flugbahn eines senkrecht nach oben geworfenen Balls wird durch \\(h(t) = -5t^2 + 20t\\) beschrieben (\\(h\\) in Meter, \\(t\\) in Sekunden). Welche maximale Höhe (in m) erreicht der Ball?",
-        "loesung": 20,
-        "toleranz": 0,
-        "tipp": "Die maximale Höhe ist der \\(y\\)-Wert des Scheitels. Berechne \\(t_s = -\\frac{b}{2a}\\).",
-        "loesungsweg": "\\(a = -5\\), \\(b = 20\\): $$t_s = -\\frac{20}{2 \\cdot (-5)} = -\\frac{20}{-10} = 2 \\text{ s}$$ $$h(2) = -5 \\cdot 4 + 20 \\cdot 2 = -20 + 40 = 20 \\text{ m}$$ Nach \\(2\\) Sekunden erreicht der Ball seinen höchsten Punkt bei \\(20\\) m."
+        id: 32,
+        level: 6,
+        typ: "numerisch",
+        frage: "Die Flugbahn eines senkrecht nach oben geworfenen Balls wird durch \\(h(t) = -5t^2 + 20t\\) beschrieben (\\(h\\) in Meter, \\(t\\) in Sekunden). Welche maximale Höhe (in m) erreicht der Ball?",
+        loesung: 20,
+        toleranz: 0,
+        tipp: "Die maximale Höhe ist der \\(y\\)-Wert des Scheitels. Berechne \\(t_s = -\\frac{b}{2a}\\).",
+        loesungsweg: "\\(a = -5\\), \\(b = 20\\): $$t_s = -\\frac{20}{2 \\cdot (-5)} = -\\frac{20}{-10} = 2 \\text{ s}$$ $$h(2) = -5 \\cdot 4 + 20 \\cdot 2 = -20 + 40 = 20 \\text{ m}$$ Nach \\(2\\) Sekunden erreicht der Ball seinen höchsten Punkt bei \\(20\\) m."
       },
       {
-        "id": 33,
-        "level": 6,
-        "typ": "numerisch",
-        "frage": "Eine Brücke hat ein parabelförmiges Profil: \\(h(x) = -0{,}1x^2 + 4x\\) (\\(0 \\leq x \\leq 40\\), beide in Metern). Wie hoch ist der höchste Punkt der Brücke (in m)?",
-        "loesung": 40,
-        "toleranz": 0,
-        "tipp": "Der höchste Punkt ist der Scheitel der Parabel. Nutze \\(x_s = -\\frac{b}{2a}\\).",
-        "loesungsweg": "\\(a = -0{,}1\\), \\(b = 4\\): $$x_s = -\\frac{4}{2 \\cdot (-0{,}1)} = -\\frac{4}{-0{,}2} = 20 \\text{ m}$$ $$h(20) = -0{,}1 \\cdot 400 + 4 \\cdot 20 = -40 + 80 = 40 \\text{ m}$$ Der höchste Punkt liegt in der Mitte der Brücke bei \\(40\\) m Höhe."
+        id: 33,
+        level: 6,
+        typ: "numerisch",
+        frage: "Eine Brücke hat ein parabelförmiges Profil: \\(h(x) = -0{,}1x^2 + 4x\\) (\\(0 \\leq x \\leq 40\\), beide in Metern). Wie hoch ist der höchste Punkt der Brücke (in m)?",
+        loesung: 40,
+        toleranz: 0,
+        tipp: "Der höchste Punkt ist der Scheitel der Parabel. Nutze \\(x_s = -\\frac{b}{2a}\\).",
+        loesungsweg: "\\(a = -0{,}1\\), \\(b = 4\\): $$x_s = -\\frac{4}{2 \\cdot (-0{,}1)} = -\\frac{4}{-0{,}2} = 20 \\text{ m}$$ $$h(20) = -0{,}1 \\cdot 400 + 4 \\cdot 20 = -40 + 80 = 40 \\text{ m}$$ Der höchste Punkt liegt in der Mitte der Brücke bei \\(40\\) m Höhe."
       },
       {
-        "id": 34,
-        "level": 6,
-        "typ": "numerisch",
-        "frage": "Ein rechteckiger Garten soll an einer Hauswand mit \\(60\\) m Zaun auf drei Seiten eingezäunt werden. Welchen maximalen Flächeninhalt (in m²) kann der Garten haben?",
-        "loesung": 450,
-        "toleranz": 0,
-        "tipp": "Sei \\(x\\) die Breite (senkrecht zur Wand). Dann ist die Länge (parallel zur Wand) \\(y = 60 - 2x\\). Maximiere \\(A(x) = x \\cdot y\\).",
-        "loesungsweg": "Zaun: \\(2x + y = 60 \\Rightarrow y = 60 - 2x\\). Fläche: $$A(x) = x(60 - 2x) = 60x - 2x^2 = -2x^2 + 60x$$ Scheitel: \\(x_s = -\\frac{60}{2 \\cdot (-2)} = \\frac{60}{4} = 15\\) m. Dann \\(y = 60 - 30 = 30\\) m. $$A_{\\max} = 15 \\cdot 30 = 450 \\text{ m}^2$$"
+        id: 34,
+        level: 6,
+        typ: "numerisch",
+        frage: "Ein rechteckiger Garten soll an einer Hauswand mit \\(60\\) m Zaun auf drei Seiten eingezäunt werden. Welchen maximalen Flächeninhalt (in m²) kann der Garten haben?",
+        loesung: 450,
+        toleranz: 0,
+        tipp: "Sei \\(x\\) die Breite (senkrecht zur Wand). Dann ist die Länge (parallel zur Wand) \\(y = 60 - 2x\\). Maximiere \\(A(x) = x \\cdot y\\).",
+        loesungsweg: "Zaun: \\(2x + y = 60 \\Rightarrow y = 60 - 2x\\). Fläche: $$A(x) = x(60 - 2x) = 60x - 2x^2 = -2x^2 + 60x$$ Scheitel: \\(x_s = -\\frac{60}{2 \\cdot (-2)} = \\frac{60}{4} = 15\\) m. Dann \\(y = 60 - 30 = 30\\) m. $$A_{\\max} = 15 \\cdot 30 = 450 \\text{ m}^2$$"
       },
       {
-        "id": 35,
-        "level": 6,
-        "typ": "numerisch",
-        "frage": "Ein Ball wird von einem \\(15\\) m hohen Turm nach oben geworfen. Seine Höhe ist \\(h(t) = -5t^2 + 10t + 15\\) (\\(h\\) in m, \\(t\\) in s). Nach wie vielen Sekunden trifft der Ball auf dem Boden auf?",
-        "loesung": 3,
-        "toleranz": 0,
-        "tipp": "Setze \\(h(t) = 0\\). Teile zuerst durch \\(-5\\), um die Gleichung zu vereinfachen.",
-        "loesungsweg": "$$-5t^2 + 10t + 15 = 0 \\quad | : (-5)$$ $$t^2 - 2t - 3 = 0$$ \\(p\\)-\\(q\\)-Formel mit \\(p = -2\\), \\(q = -3\\): $$t_{1/2} = 1 \\pm \\sqrt{1 + 3} = 1 \\pm 2$$ $$t_1 = 3, \\quad t_2 = -1$$ Nur \\(t = 3\\) s ist physikalisch sinnvoll."
+        id: 35,
+        level: 6,
+        typ: "numerisch",
+        frage: "Ein Ball wird von einem \\(15\\) m hohen Turm nach oben geworfen. Seine Höhe ist \\(h(t) = -5t^2 + 10t + 15\\) (\\(h\\) in m, \\(t\\) in s). Nach wie vielen Sekunden trifft der Ball auf dem Boden auf?",
+        loesung: 3,
+        toleranz: 0,
+        tipp: "Setze \\(h(t) = 0\\). Teile zuerst durch \\(-5\\), um die Gleichung zu vereinfachen.",
+        loesungsweg: "$$-5t^2 + 10t + 15 = 0 \\quad | : (-5)$$ $$t^2 - 2t - 3 = 0$$ \\(p\\)-\\(q\\)-Formel mit \\(p = -2\\), \\(q = -3\\): $$t_{1/2} = 1 \\pm \\sqrt{1 + 3} = 1 \\pm 2$$ $$t_1 = 3, \\quad t_2 = -1$$ Nur \\(t = 3\\) s ist physikalisch sinnvoll."
       },
       {
-        "id": 36,
-        "level": 6,
-        "typ": "numerisch",
-        "frage": "Die Flugbahn eines Wasserstrahls wird durch \\(f(x) = -x^2 + 4x + 5\\) beschrieben (beides in Metern, \\(x \\geq 0\\)). Bei welcher Entfernung \\(x\\) (in m) trifft der Strahl auf den Boden?",
-        "loesung": 5,
-        "toleranz": 0,
-        "tipp": "Setze \\(f(x) = 0\\) und löse mit der \\(p\\)-\\(q\\)-Formel (nach Multiplikation mit \\(-1\\)).",
-        "loesungsweg": "$$-x^2 + 4x + 5 = 0 \\quad | \\cdot (-1)$$ $$x^2 - 4x - 5 = 0$$ \\(p\\)-\\(q\\)-Formel mit \\(p = -4\\), \\(q = -5\\): $$x_{1/2} = 2 \\pm \\sqrt{4 + 5} = 2 \\pm 3$$ $$x_1 = 5, \\quad x_2 = -1$$ Nur \\(x = 5\\) m liegt im sinnvollen Bereich. Der Strahl trifft \\(5\\) m vom Ursprung entfernt auf."
+        id: 36,
+        level: 6,
+        typ: "numerisch",
+        frage: "Die Flugbahn eines Wasserstrahls wird durch \\(f(x) = -x^2 + 4x + 5\\) beschrieben (beides in Metern, \\(x \\geq 0\\)). Bei welcher Entfernung \\(x\\) (in m) trifft der Strahl auf den Boden?",
+        loesung: 5,
+        toleranz: 0,
+        tipp: "Setze \\(f(x) = 0\\) und löse mit der \\(p\\)-\\(q\\)-Formel (nach Multiplikation mit \\(-1\\)).",
+        loesungsweg: "$$-x^2 + 4x + 5 = 0 \\quad | \\cdot (-1)$$ $$x^2 - 4x - 5 = 0$$ \\(p\\)-\\(q\\)-Formel mit \\(p = -4\\), \\(q = -5\\): $$x_{1/2} = 2 \\pm \\sqrt{4 + 5} = 2 \\pm 3$$ $$x_1 = 5, \\quad x_2 = -1$$ Nur \\(x = 5\\) m liegt im sinnvollen Bereich. Der Strahl trifft \\(5\\) m vom Ursprung entfernt auf."
       }
     ];
     </script>

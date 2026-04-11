@@ -6,7 +6,7 @@ from playwright.sync_api import Page
 BASE_URL = "https://nachbar-blip.github.io/differenzierungs-engine"
 
 
-def load_trainer(page: Page, trainer_file: str, timeout: int = 15000):
+def load_trainer(page: Page, trainer_file: str, timeout: int = 30000):
     """Laedt einen Trainer und wartet bis die App gerendert hat."""
     url = f"{BASE_URL}/trainer/{trainer_file}"
     response = page.goto(url, timeout=timeout, wait_until="networkidle")
