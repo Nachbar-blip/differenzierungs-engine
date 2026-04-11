@@ -88,17 +88,51 @@ def force_aufgabe_by_reload(page: Page, trainer_file: str, target_level: int):
     page.wait_for_selector("#app .aufgabe-karte", timeout=10000)
 
 
+def force_single_aufgabe(page: Page, trainer_file: str, aufgabe_id: int,
+                         level: int, all_level_ids: list):
+    """Setzt localStorage so, dass nur eine bestimmte Aufgabe uebrig bleibt.
+    Alle anderen Aufgaben des Levels werden als 'answered' markiert."""
+    thema_key = trainer_file.replace(".html", "")
+    # Alle IDs des Levels AUSSER der gewuenschten als beantwortet markieren
+    answered = [aid for aid in all_level_ids if aid != aufgabe_id]
+    state = {
+        "level": level,
+        "streak": 0,
+        "wrongStreak": 0,
+        "answered": answered,
+        "totalCorrect": 0,
+        "totalAttempts": 0,
+    }
+    state_json = json.dumps(state)
+    page.evaluate(f"localStorage.setItem('spirale-{thema_key}', '{state_json}')")
+    page.reload(wait_until="networkidle")
+    page.wait_for_selector("#app .aufgabe-karte", timeout=10000)
+
+
 def get_current_aufgabe_id(page: Page) -> int:
-    """Liest die ID der aktuell angezeigten Aufgabe aus dem DOM."""
+    """Liest die ID der aktuell angezeigten Aufgabe aus dem DOM.
+    Nutzt localStorage-State um Kandidaten einzugrenzen."""
     return page.evaluate("""
         (() => {
-            const frageEl = document.querySelector('.aufgabe-text');
-            if (!frageEl) return -1;
-            const frageHTML = frageEl.innerHTML;
-            for (const a of AUFGABEN) {
-                // Vergleiche die ersten 30 Zeichen des Frage-HTML
-                if (frageHTML.includes(a.frage.substring(0, 30))) return a.id;
-            }
-            return -1;
+            try {
+                const key = 'spirale-' + THEMA_KEY;
+                const s = JSON.parse(localStorage.getItem(key));
+                const lvl = s ? s.level : 3;
+                const answered = s ? (s.answered || []) : [];
+                const available = AUFGABEN.filter(a => a.level === lvl && !answered.includes(a.id));
+                if (available.length === 1) return available[0].id;
+                if (available.length === 0) {
+                    // Answered-Reset: alle des Levels sind Kandidaten
+                    const all = AUFGABEN.filter(a => a.level === lvl);
+                    return all.length > 0 ? all[0].id : -1;
+                }
+                // Mehrere Kandidaten: Typ-Filter
+                const mcBtns = document.querySelectorAll('.mc-option');
+                const numInput = document.getElementById('antwortInput');
+                const typ = mcBtns.length > 0 ? 'mc' : (numInput ? 'numerisch' : 'unknown');
+                const typed = available.filter(a => a.typ === typ);
+                if (typed.length === 1) return typed[0].id;
+                return typed.length > 0 ? typed[0].id : available[0].id;
+            } catch(e) { return -1; }
         })()
     """)

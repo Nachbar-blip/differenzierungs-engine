@@ -3,7 +3,8 @@
 import pytest
 from helpers import (
     load_trainer, get_aufgaben, setup_console_error_capture,
-    count_katex_errors, BASE_URL,
+    count_katex_errors, beantworte_aufgabe, klick_weiter,
+    force_single_aufgabe, BASE_URL,
 )
 
 
@@ -41,3 +42,41 @@ class TestTrainerStatisch:
         for level in range(1, 7):
             count = len([a for a in aufgaben if a["level"] == level])
             assert count == 6, f"{trainer_file}: Level {level} hat {count} statt 6 Aufgaben"
+
+
+class TestTrainerInteraktiv:
+    """Alle 36 Aufgaben werden korrekt beantwortet."""
+
+    def test_alle_aufgaben_durchspielbar(self, page, trainer_file):
+        """Jede der 36 Aufgaben wird mit der richtigen Antwort beantwortet."""
+        load_trainer(page, trainer_file)
+        aufgaben = get_aufgaben(page)
+        fehler = []
+        gesamt_beantwortet = set()
+
+        for level in range(1, 7):
+            level_aufgaben = [a for a in aufgaben if a["level"] == level]
+            level_ids = [a["id"] for a in level_aufgaben]
+
+            for aufgabe in level_aufgaben:
+                # Erzwinge genau diese eine Aufgabe
+                force_single_aufgabe(page, trainer_file, aufgabe["id"],
+                                     level, level_ids)
+
+                ok = beantworte_aufgabe(page, aufgabe)
+                if not ok:
+                    fehler.append(
+                        f"Level {level}, Aufgabe {aufgabe['id']} "
+                        f"(typ={aufgabe['typ']}): Antwort nicht akzeptiert"
+                    )
+                    continue
+
+                gesamt_beantwortet.add(aufgabe["id"])
+
+        assert len(fehler) == 0, (
+            f"{trainer_file}: {len(fehler)} Fehler, "
+            f"{len(gesamt_beantwortet)}/36 beantwortet:\n" + "\n".join(fehler)
+        )
+        assert len(gesamt_beantwortet) == 36, (
+            f"{trainer_file}: Nur {len(gesamt_beantwortet)}/36 Aufgaben beantwortet"
+        )
