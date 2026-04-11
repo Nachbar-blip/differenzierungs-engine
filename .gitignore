@@ -19,3 +19,6 @@ material/
 quellen-raw/
 *.mdb
 *.ctf
+
+# Playwright test reports
+tests/reports/*.html
