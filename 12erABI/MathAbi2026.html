@@ -1141,7 +1141,7 @@ document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
 document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
 document.getElementById(id).classList.add('active');
 (ev?ev.target:document.querySelector('.tab')).classList.add('active');
-if(window.MathJax)MathJax.typesetPromise();
+if(window.MathJax&&MathJax.startup&&MathJax.startup.promise){MathJax.startup.promise.then(()=>MathJax.typesetPromise&&MathJax.typesetPromise());}
 }
 function toggleM(el){el.parentElement.classList.toggle('open');}
 function flipCard(el){el.classList.toggle('flipped');}
