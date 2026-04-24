@@ -40,6 +40,50 @@
     }
   }
 
+  const STORAGE_HISTORY = 'p3-history-' + THEMA_KEY;
+  const P3_HISTORY_MAX = 50;
+
+  function readHistory() {
+    try {
+      const raw = localStorage.getItem(STORAGE_HISTORY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function writeHistory(history) {
+    try {
+      localStorage.setItem(STORAGE_HISTORY, JSON.stringify(history));
+    } catch (e) {
+      console.warn('P3: localStorage schreiben fehlgeschlagen');
+    }
+  }
+
+  function pushHistory(entry) {
+    const history = readHistory();
+    history.push(entry);
+    while (history.length > P3_HISTORY_MAX) {
+      history.shift();
+    }
+    writeHistory(history);
+  }
+
+  function onAnswered(data) {
+    if (!data || typeof data.aufgabeId !== 'number') return;
+    if (data.levelNach !== 6) return;
+
+    if (data.levelVor < 6) {
+      writeLevel6Reached(true);
+    }
+
+    pushHistory({
+      id: data.aufgabeId,
+      correct: !!data.correct,
+      ts: Date.now()
+    });
+  }
+
   function renderSessionEndButton(container) {
     if (!container) return;
     if (!readLevel6Reached()) return;
@@ -59,7 +103,7 @@
   }
 
   window.P3 = {
-    onAnswered: function (_data) { /* Task 12 */ },
+    onAnswered: onAnswered,
     renderSessionEndButton: renderSessionEndButton
   };
 })();

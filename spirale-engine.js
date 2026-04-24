@@ -395,6 +395,16 @@
     // Stats aktualisieren
     renderStats();
     saveState();
+
+    // P3-Hook: Antwort registrieren (nur wenn P3 aktiv)
+    if (window.P3 && typeof window.P3.onAnswered === 'function') {
+      window.P3.onAnswered({
+        aufgabeId: currentAufgabe.id,
+        correct: correct,
+        levelVor: spiralResult.prevLevel,
+        levelNach: spiralResult.newLevel
+      });
+    }
   }
 
   function disableEingabe(correct, mcIndex) {

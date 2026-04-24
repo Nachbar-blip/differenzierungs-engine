@@ -85,3 +85,34 @@ class TestButtonSichtbarkeit:
         """)
         btn = page.query_selector("#btnSessionEnden")
         assert btn is not None, "Button muss auch auf Level 5 bleiben, wenn Level 6 mal erreicht wurde"
+
+
+class TestHistorie:
+    def test_onAnswered_pusht_level6_eintrag(self, page):
+        load_trainer(page, PILOT_TRAINER)
+        page.evaluate("""
+            window.P3.onAnswered({ aufgabeId: 17, correct: true, levelVor: 5, levelNach: 6 });
+        """)
+        history = _get_p3_history(page)
+        assert history is not None
+        assert len(history) == 1
+        assert history[0]["id"] == 17
+        assert history[0]["correct"] is True
+
+    def test_onAnswered_ignoriert_andere_level(self, page):
+        load_trainer(page, PILOT_TRAINER)
+        page.evaluate("""
+            window.P3.onAnswered({ aufgabeId: 5, correct: true, levelVor: 3, levelNach: 4 });
+        """)
+        history = _get_p3_history(page)
+        assert history is None or history == []
+
+    def test_onAnswered_setzt_level6_flag_bei_erstkontakt(self, page):
+        load_trainer(page, PILOT_TRAINER)
+        flag_before = page.evaluate(f"localStorage.getItem('p3-level6-reached-{PILOT_KEY}')")
+        assert flag_before != "true"
+        page.evaluate("""
+            window.P3.onAnswered({ aufgabeId: 17, correct: true, levelVor: 5, levelNach: 6 });
+        """)
+        flag_after = page.evaluate(f"localStorage.getItem('p3-level6-reached-{PILOT_KEY}')")
+        assert flag_after == "true"
