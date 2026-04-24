@@ -204,3 +204,52 @@ class TestFehlertypKlick:
         page.wait_for_function("document.getElementById('p3Empfehlung').textContent.length > 0", timeout=3000)
         text = page.text_content("#p3Empfehlung")
         assert "Konzept" in text or "Diagnose" in text
+
+
+class TestZurueck:
+    def test_zurueck_raeumt_historie_und_reflexion(self, page):
+        load_trainer(page, PILOT_TRAINER)
+        _force_level(page, level=6, level6_reached=True)
+        _set_p3_history(page, [{"id": 17, "correct": True, "ts": 1000}])
+        page.evaluate(
+            "([key, val]) => localStorage.setItem(key, val)",
+            [f"p3-reflexion-{PILOT_KEY}", '{"0": "regel"}']
+        )
+        page.evaluate("""
+            const wrapper = document.createElement('div');
+            document.body.appendChild(wrapper);
+            window.P3.renderSessionEndButton(wrapper);
+            document.getElementById('btnSessionEnden').click();
+            document.getElementById('btnZurueckZumTraining').click();
+        """)
+        assert _get_p3_history(page) is None
+        assert _get_p3_reflexion(page) is None
+
+    def test_zurueck_behaelt_level6_flag(self, page):
+        load_trainer(page, PILOT_TRAINER)
+        _force_level(page, level=6, level6_reached=True)
+        _set_p3_history(page, [{"id": 17, "correct": True, "ts": 1000}])
+        page.evaluate("""
+            const wrapper = document.createElement('div');
+            document.body.appendChild(wrapper);
+            window.P3.renderSessionEndButton(wrapper);
+            document.getElementById('btnSessionEnden').click();
+            document.getElementById('btnZurueckZumTraining').click();
+        """)
+        flag = page.evaluate(f"localStorage.getItem('p3-level6-reached-{PILOT_KEY}')")
+        assert flag == "true"
+
+    def test_zurueck_behaelt_engine_state(self, page):
+        load_trainer(page, PILOT_TRAINER)
+        _force_level(page, level=6, level6_reached=True)
+        _set_p3_history(page, [{"id": 17, "correct": True, "ts": 1000}])
+        engine_state_before = page.evaluate(f"localStorage.getItem('spirale-{PILOT_KEY}')")
+        page.evaluate("""
+            const wrapper = document.createElement('div');
+            document.body.appendChild(wrapper);
+            window.P3.renderSessionEndButton(wrapper);
+            document.getElementById('btnSessionEnden').click();
+            document.getElementById('btnZurueckZumTraining').click();
+        """)
+        engine_state_after = page.evaluate(f"localStorage.getItem('spirale-{PILOT_KEY}')")
+        assert engine_state_before == engine_state_after

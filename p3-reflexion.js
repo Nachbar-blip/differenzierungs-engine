@@ -276,7 +276,33 @@
     });
   }
 
-  function bindZurueckButton(_container) { /* Task 19 */ }
+  function bindZurueckButton(container) {
+    const btn = container.querySelector('#btnZurueckZumTraining');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      try {
+        localStorage.removeItem(STORAGE_HISTORY);
+        localStorage.removeItem(STORAGE_REFLEXION);
+        // STORAGE_LEVEL6_FLAG bleibt!
+      } catch (e) { /* no-op */ }
+
+      const rueckblick = document.getElementById('p3Rueckblick');
+      if (rueckblick) rueckblick.remove();
+
+      // Aufgaben-UI wieder zeigen
+      const app = document.getElementById('app');
+      if (!app) return;
+      const aufgabenKarte = app.querySelector('.aufgabe-karte');
+      const feedback = app.querySelector('#feedback');
+      if (aufgabenKarte) aufgabenKarte.style.display = '';
+      if (feedback) feedback.style.display = '';
+
+      // Falls keine Aufgabe mehr sichtbar: neue anstossen (via Reload)
+      if (!aufgabenKarte || aufgabenKarte.style.display === 'none') {
+        window.location.reload();
+      }
+    });
+  }
 
   window.P3 = {
     onAnswered: onAnswered,
