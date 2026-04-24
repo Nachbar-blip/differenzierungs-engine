@@ -707,3 +707,148 @@ header p {
         transition: none;
     }
 }
+
+/* ==================== P3-Pilot ==================== */
+
+.btn-session-ende {
+  margin-left: 0.75rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  background: transparent;
+  color: var(--spirale-primary);
+  border: 1px solid var(--spirale-primary);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-session-ende:hover {
+  background: var(--spirale-primary);
+  color: #fff;
+}
+
+.p3-rueckblick {
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.p3-rueckblick h2 {
+  margin-top: 0;
+  color: var(--spirale-primary);
+}
+
+.p3-kacheln {
+  display: grid;
+  gap: 0.8rem;
+  margin: 1rem 0;
+}
+
+.p3-kachel {
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 0.8rem;
+  background: #fafafa;
+}
+
+.p3-kachel-kopf {
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.p3-badge.ok { color: #2e7d32; margin-left: 0.5rem; }
+.p3-badge.fehler { color: #c62828; margin-left: 0.5rem; }
+
+.p3-kachel-frage {
+  font-size: 0.95rem;
+  margin-bottom: 0.6rem;
+  color: #333;
+}
+
+.p3-kachel-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.p3-ft-btn {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.85rem;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.p3-ft-btn:hover:not(:disabled) {
+  border-color: var(--spirale-primary);
+}
+
+.p3-ft-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.p3-ft-btn.p3-ft-gewaehlt {
+  background: var(--spirale-primary);
+  color: #fff;
+  border-color: var(--spirale-primary);
+  opacity: 1 !important;
+}
+
+.p3-sammler {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #f5f5f5;
+  border-radius: 6px;
+}
+
+.p3-sammler h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
+.p3-balken {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.4rem;
+  margin: 0.6rem 0;
+}
+
+.p3-segment {
+  text-align: center;
+  padding: 0.5rem 0.3rem;
+  background: #fff;
+  border-left: 4px solid var(--spirale-primary);
+  border-radius: 4px;
+}
+
+.p3-segment .p3-label {
+  display: block;
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.p3-segment .p3-zahl {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.p3-empfehlung {
+  margin-top: 0.8rem;
+  font-style: italic;
+  color: #555;
+}
+
+.p3-leer-hinweis {
+  color: #666;
+  font-style: italic;
+  margin: 1rem 0;
+}
+
+@media (max-width: 480px) {
+  .p3-balken { grid-template-columns: repeat(2, 1fr); }
+  .p3-kachel-buttons { flex-direction: column; }
+  .p3-ft-btn { width: 100%; }
+}
