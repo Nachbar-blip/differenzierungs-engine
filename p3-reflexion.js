@@ -164,12 +164,6 @@
     return text.substring(0, maxLen - 1) + '…';
   }
 
-  function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, function (c) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-    });
-  }
-
   function openRueckblick() {
     const app = document.getElementById('app');
     if (!app) return;
@@ -297,9 +291,9 @@
       if (aufgabenKarte) aufgabenKarte.style.display = '';
       if (feedback) feedback.style.display = '';
 
-      // Falls keine Aufgabe mehr sichtbar: neue anstossen (via Reload)
-      if (!aufgabenKarte || aufgabenKarte.style.display === 'none') {
-        window.location.reload();
+      // Nächste Aufgabe direkt triggern — Engine-API
+      if (typeof window.naechsteAufgabe === 'function') {
+        window.naechsteAufgabe();
       }
     });
   }
