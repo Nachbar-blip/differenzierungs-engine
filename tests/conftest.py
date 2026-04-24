@@ -1,9 +1,10 @@
 """Shared fixtures and trainer list for Playwright tests."""
 
+import os
 import pytest
 from playwright.sync_api import sync_playwright
 
-BASE_URL = "https://nachbar-blip.github.io/differenzierungs-engine"
+BASE_URL = os.environ.get("DIFFENGINE_BASE_URL", "https://nachbar-blip.github.io/differenzierungs-engine")
 
 TRAINER_FILES = [
     "7-dreiecke-konstruktionen.html",

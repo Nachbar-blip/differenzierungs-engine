@@ -1,9 +1,10 @@
 """Hilfsfunktionen fuer DiffEngine Playwright-Tests."""
 
 import json
+import os
 from playwright.sync_api import Page
 
-BASE_URL = "https://nachbar-blip.github.io/differenzierungs-engine"
+BASE_URL = os.environ.get("DIFFENGINE_BASE_URL", "https://nachbar-blip.github.io/differenzierungs-engine")
 
 
 def load_trainer(page: Page, trainer_file: str, timeout: int = 30000):
