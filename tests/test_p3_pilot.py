@@ -40,3 +40,15 @@ def _force_level(page, level: int, level6_reached: bool = False):
         _set_p3_level6_reached(page, True)
     page.reload(wait_until="networkidle")
     page.wait_for_selector("#app", timeout=10000)
+
+
+class TestP3Modul:
+    def test_p3_object_verfuegbar(self, page):
+        load_trainer(page, PILOT_TRAINER)
+        p3_exists = page.evaluate("typeof window.P3 !== 'undefined'")
+        assert p3_exists, "window.P3 nicht definiert im Pilot-Trainer"
+
+    def test_p3_config_flag_gesetzt(self, page):
+        load_trainer(page, PILOT_TRAINER)
+        flag = page.evaluate("THEMA_CONFIG.p3Enabled === true")
+        assert flag, "THEMA_CONFIG.p3Enabled nicht true"
