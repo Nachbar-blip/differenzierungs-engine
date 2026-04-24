@@ -253,3 +253,18 @@ class TestZurueck:
         """)
         engine_state_after = page.evaluate(f"localStorage.getItem('spirale-{PILOT_KEY}')")
         assert engine_state_before == engine_state_after
+
+
+class TestEdgeCases:
+    def test_onAnswered_crasht_nicht_bei_storage_exception(self, page):
+        load_trainer(page, PILOT_TRAINER)
+        page.evaluate("""
+            const orig = Storage.prototype.setItem;
+            Storage.prototype.setItem = function () { throw new Error('QuotaExceeded'); };
+            try {
+                window.P3.onAnswered({ aufgabeId: 17, correct: true, levelVor: 5, levelNach: 6 });
+            } finally {
+                Storage.prototype.setItem = orig;
+            }
+        """)
+        assert True
