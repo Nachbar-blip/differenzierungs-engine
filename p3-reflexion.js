@@ -22,8 +22,44 @@
     return;
   }
 
+  const STORAGE_LEVEL6_FLAG = 'p3-level6-reached-' + THEMA_KEY;
+
+  function readLevel6Reached() {
+    try {
+      return localStorage.getItem(STORAGE_LEVEL6_FLAG) === 'true';
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function writeLevel6Reached(val) {
+    try {
+      localStorage.setItem(STORAGE_LEVEL6_FLAG, val ? 'true' : 'false');
+    } catch (e) {
+      console.warn('P3: localStorage nicht verfügbar');
+    }
+  }
+
+  function renderSessionEndButton(container) {
+    if (!container) return;
+    if (!readLevel6Reached()) return;
+    if (container.querySelector('#btnSessionEnden')) return;  // nicht doppelt
+
+    const btn = document.createElement('button');
+    btn.id = 'btnSessionEnden';
+    btn.className = 'btn btn-session-ende';
+    btn.textContent = 'Session beenden & Rückblick';
+    btn.addEventListener('click', openRueckblick);
+    container.appendChild(btn);
+  }
+
+  function openRueckblick() {
+    /* implementiert in Task 15 */
+    console.log('P3: Rückblick noch nicht implementiert');
+  }
+
   window.P3 = {
-    onAnswered: function (_data) { /* implementiert in Task 14 */ },
-    renderSessionEndButton: function (_container) { /* implementiert in Task 9 */ }
+    onAnswered: function (_data) { /* Task 12 */ },
+    renderSessionEndButton: renderSessionEndButton
   };
 })();

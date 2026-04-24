@@ -57,3 +57,31 @@ class TestP3Modul:
         load_trainer(page, PILOT_TRAINER)
         flag = page.evaluate("THEMA_CONFIG.p3Enabled === true")
         assert flag, "THEMA_CONFIG.p3Enabled nicht true"
+
+
+class TestButtonSichtbarkeit:
+    def test_kein_button_vor_level6(self, page):
+        load_trainer(page, PILOT_TRAINER)
+        _force_level(page, level=3, level6_reached=False)
+        btn = page.query_selector("#btnSessionEnden")
+        assert btn is None, "Button darf vor Level-6-Erstkontakt nicht existieren"
+
+    def test_button_bei_level6_reached_flag(self, page):
+        load_trainer(page, PILOT_TRAINER)
+        _force_level(page, level=6, level6_reached=True)
+        page.evaluate("""
+            const fb = document.getElementById('feedback');
+            window.P3.renderSessionEndButton(fb);
+        """)
+        btn = page.query_selector("#btnSessionEnden")
+        assert btn is not None, "Button muss ab level6_reached sichtbar sein"
+
+    def test_button_bleibt_bei_level5_wenn_erreicht(self, page):
+        load_trainer(page, PILOT_TRAINER)
+        _force_level(page, level=5, level6_reached=True)
+        page.evaluate("""
+            const fb = document.getElementById('feedback');
+            window.P3.renderSessionEndButton(fb);
+        """)
+        btn = page.query_selector("#btnSessionEnden")
+        assert btn is not None, "Button muss auch auf Level 5 bleiben, wenn Level 6 mal erreicht wurde"

@@ -467,6 +467,11 @@
       setTimeout(() => btnWeiter.focus(), 50);
     }
 
+    // P3-Hook: Session-beenden-Button rendern (wenn P3 aktiv)
+    if (window.P3 && typeof window.P3.renderSessionEndButton === 'function') {
+      window.P3.renderSessionEndButton(fb);
+    }
+
     // Tipp-Button ausblenden
     const btnTipp = document.getElementById('btnTipp');
     if (btnTipp) {
