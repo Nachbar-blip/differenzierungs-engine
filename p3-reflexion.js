@@ -97,10 +97,106 @@
     container.appendChild(btn);
   }
 
-  function openRueckblick() {
-    /* implementiert in Task 15 */
-    console.log('P3: Rückblick noch nicht implementiert');
+  function findAufgabe(id) {
+    if (typeof AUFGABEN === 'undefined') return null;
+    return AUFGABEN.find(function (a) { return a.id === id; });
   }
+
+  function kuerzeFrage(text, maxLen) {
+    if (!text) return '';
+    if (text.length <= maxLen) return text;
+    return text.substring(0, maxLen - 1) + '…';
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function openRueckblick() {
+    const app = document.getElementById('app');
+    if (!app) return;
+
+    // Aufgaben-UI ausblenden
+    const aufgabenKarte = app.querySelector('.aufgabe-karte');
+    const feedback = app.querySelector('#feedback');
+    if (aufgabenKarte) aufgabenKarte.style.display = 'none';
+    if (feedback) feedback.style.display = 'none';
+
+    // Alten Rückblick entfernen
+    const alt = document.getElementById('p3Rueckblick');
+    if (alt) alt.remove();
+
+    const history = readHistory();
+    const container = document.createElement('section');
+    container.id = 'p3Rueckblick';
+    container.className = 'p3-rueckblick';
+
+    if (history.length === 0) {
+      container.innerHTML = `
+        <h2>Rückblick</h2>
+        <p class="p3-leer-hinweis">Noch keine Aufgaben auf Level 6 in dieser Session.</p>
+        <button id="btnZurueckZumTraining" class="btn">Zurück zum Training</button>
+      `;
+    } else {
+      const kacheln = history.map(function (entry, idx) {
+        const auf = findAufgabe(entry.id);
+        const frage = auf ? kuerzeFrage(auf.frage, 120) : '(Aufgabe nicht gefunden)';
+        const badge = entry.correct
+          ? '<span class="p3-badge ok">&check; richtig</span>'
+          : '<span class="p3-badge fehler">&cross; falsch</span>';
+        return `
+          <div class="p3-kachel" data-idx="${idx}">
+            <div class="p3-kachel-kopf">Aufgabe #${entry.id} ${badge}</div>
+            <div class="p3-kachel-frage">${frage}</div>
+            <div class="p3-kachel-buttons">
+              <button class="p3-ft-btn" data-typ="richtig">Hatte ich richtig</button>
+              <button class="p3-ft-btn" data-typ="fluecht">Flüchtigkeit</button>
+              <button class="p3-ft-btn" data-typ="regel">Regel</button>
+              <button class="p3-ft-btn" data-typ="konzept">Konzept</button>
+            </div>
+          </div>
+        `;
+      }).join('\n');
+
+      container.innerHTML = `
+        <h2>Rückblick auf deine Level-6-Aufgaben</h2>
+        <div class="p3-kacheln">${kacheln}</div>
+        <aside class="p3-sammler" id="p3Sammler">
+          <h3>Dein Muster in dieser Session</h3>
+          <div class="p3-balken" id="p3Balken">
+            <div class="p3-segment" data-typ="richtig"><span class="p3-label">Richtig</span><span class="p3-zahl" id="p3-z-richtig">0</span></div>
+            <div class="p3-segment" data-typ="fluecht"><span class="p3-label">Flüchtigkeit</span><span class="p3-zahl" id="p3-z-fluecht">0</span></div>
+            <div class="p3-segment" data-typ="regel"><span class="p3-label">Regel</span><span class="p3-zahl" id="p3-z-regel">0</span></div>
+            <div class="p3-segment" data-typ="konzept"><span class="p3-label">Konzept</span><span class="p3-zahl" id="p3-z-konzept">0</span></div>
+          </div>
+          <p class="p3-empfehlung" id="p3Empfehlung"></p>
+        </aside>
+        <button id="btnZurueckZumTraining" class="btn">Zurück zum Training</button>
+      `;
+    }
+
+    app.appendChild(container);
+
+    // KaTeX-Rendering in Rückblick (wenn vorhanden)
+    if (typeof renderMathInElement === 'function') {
+      renderMathInElement(container, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '\\(', right: '\\)', display: false }
+        ],
+        throwOnError: false
+      });
+    }
+
+    // Klick-Listener (Task 17 + 19)
+    bindFehlertypButtons(container);
+    bindZurueckButton(container);
+  }
+
+  function bindFehlertypButtons(_container) { /* Task 17 */ }
+  function bindZurueckButton(_container) { /* Task 19 */ }
 
   window.P3 = {
     onAnswered: onAnswered,

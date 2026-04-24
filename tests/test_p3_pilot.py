@@ -128,3 +128,38 @@ class TestHistorie:
         assert len(history) == 50, f"Erwartet 50 Einträge, erhalten {len(history)}"
         assert history[0]["id"] == 5, "Älteste Einträge müssen rausgefallen sein (FIFO)"
         assert history[-1]["id"] == 54
+
+
+class TestRueckblick:
+    def test_klick_oeffnet_rueckblick_container(self, page):
+        load_trainer(page, PILOT_TRAINER)
+        _force_level(page, level=6, level6_reached=True)
+        _set_p3_history(page, [
+            {"id": 17, "correct": True, "ts": 1000},
+            {"id": 23, "correct": False, "ts": 2000},
+        ])
+        page.evaluate("""
+            const wrapper = document.createElement('div');
+            wrapper.id = 'testFeedback';
+            document.body.appendChild(wrapper);
+            window.P3.renderSessionEndButton(wrapper);
+            document.getElementById('btnSessionEnden').click();
+        """)
+        container = page.query_selector("#p3Rueckblick")
+        assert container is not None, "Rückblick-Container muss nach Klick existieren"
+        kacheln = page.query_selector_all(".p3-kachel")
+        assert len(kacheln) == 2, f"Erwartet 2 Kacheln, erhalten {len(kacheln)}"
+
+    def test_leere_historie_zeigt_hinweis(self, page):
+        load_trainer(page, PILOT_TRAINER)
+        _force_level(page, level=6, level6_reached=True)
+        page.evaluate("""
+            const wrapper = document.createElement('div');
+            document.body.appendChild(wrapper);
+            window.P3.renderSessionEndButton(wrapper);
+            document.getElementById('btnSessionEnden').click();
+        """)
+        container = page.query_selector("#p3Rueckblick")
+        assert container is not None
+        hinweis = page.query_selector(".p3-leer-hinweis")
+        assert hinweis is not None, "Leer-Hinweis muss bei leerer Historie erscheinen"
