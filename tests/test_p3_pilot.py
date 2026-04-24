@@ -163,3 +163,44 @@ class TestRueckblick:
         assert container is not None
         hinweis = page.query_selector(".p3-leer-hinweis")
         assert hinweis is not None, "Leer-Hinweis muss bei leerer Historie erscheinen"
+
+
+class TestFehlertypKlick:
+    def _oeffne_rueckblick(self, page, history):
+        load_trainer(page, PILOT_TRAINER)
+        _force_level(page, level=6, level6_reached=True)
+        _set_p3_history(page, history)
+        page.evaluate("""
+            const wrapper = document.createElement('div');
+            document.body.appendChild(wrapper);
+            window.P3.renderSessionEndButton(wrapper);
+            document.getElementById('btnSessionEnden').click();
+        """)
+
+    def test_klick_aktualisiert_zahl(self, page):
+        self._oeffne_rueckblick(page, [{"id": 17, "correct": True, "ts": 1000}])
+        page.click(".p3-kachel[data-idx='0'] .p3-ft-btn[data-typ='regel']")
+        zahl = page.text_content("#p3-z-regel")
+        assert zahl == "1"
+
+    def test_buttons_werden_disabled_nach_klick(self, page):
+        self._oeffne_rueckblick(page, [{"id": 17, "correct": True, "ts": 1000}])
+        page.click(".p3-kachel[data-idx='0'] .p3-ft-btn[data-typ='regel']")
+        btns = page.query_selector_all(".p3-kachel[data-idx='0'] .p3-ft-btn")
+        for b in btns:
+            assert b.is_disabled(), "Alle 4 Buttons müssen nach Klick disabled sein"
+
+    def test_reflexion_wird_in_localstorage_gespeichert(self, page):
+        self._oeffne_rueckblick(page, [{"id": 17, "correct": True, "ts": 1000}])
+        page.click(".p3-kachel[data-idx='0'] .p3-ft-btn[data-typ='konzept']")
+        reflexion = _get_p3_reflexion(page)
+        assert reflexion == {"0": "konzept"}
+
+    def test_empfehlung_ab_3_klicks(self, page):
+        history = [{"id": i, "correct": True, "ts": i * 1000} for i in range(1, 4)]
+        self._oeffne_rueckblick(page, history)
+        for idx in range(3):
+            page.click(f".p3-kachel[data-idx='{idx}'] .p3-ft-btn[data-typ='konzept']")
+        page.wait_for_function("document.getElementById('p3Empfehlung').textContent.length > 0", timeout=3000)
+        text = page.text_content("#p3Empfehlung")
+        assert "Konzept" in text or "Diagnose" in text

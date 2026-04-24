@@ -69,6 +69,62 @@
     writeHistory(history);
   }
 
+  const STORAGE_REFLEXION = 'p3-reflexion-' + THEMA_KEY;
+
+  function readReflexion() {
+    try {
+      const raw = localStorage.getItem(STORAGE_REFLEXION);
+      return raw ? JSON.parse(raw) : {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function writeReflexion(obj) {
+    try {
+      localStorage.setItem(STORAGE_REFLEXION, JSON.stringify(obj));
+    } catch (e) {
+      console.warn('P3: reflexion speichern fehlgeschlagen');
+    }
+  }
+
+  function zaehleTypen() {
+    const ref = readReflexion();
+    const zaehler = { richtig: 0, fluecht: 0, regel: 0, konzept: 0 };
+    Object.values(ref).forEach(function (typ) {
+      if (typ && zaehler.hasOwnProperty(typ)) zaehler[typ]++;
+    });
+    return zaehler;
+  }
+
+  function berechneEmpfehlung(zaehler) {
+    const total = zaehler.richtig + zaehler.fluecht + zaehler.regel + zaehler.konzept;
+    if (total < 3) return '';
+    if (zaehler.konzept >= 2) {
+      return 'Mehrere Konzeptfehler — nochmal zur Diagnose zurück, Grundlagen durcharbeiten.';
+    }
+    if (zaehler.regel >= 3) {
+      return 'Regelfehler häufen sich — die Rechenregel ist noch nicht automatisiert. Mehr gleichartige Aufgaben.';
+    }
+    if (zaehler.fluecht >= 3) {
+      return 'Viel Flüchtigkeit — Tempo raus, jeden Schritt aufschreiben.';
+    }
+    if (zaehler.richtig / total > 0.7) {
+      return 'Läuft. Beim nächsten Mal eine Stufe höher arbeiten.';
+    }
+    return '';
+  }
+
+  function updateSammelbalken() {
+    const zaehler = zaehleTypen();
+    Object.keys(zaehler).forEach(function (typ) {
+      const el = document.getElementById('p3-z-' + typ);
+      if (el) el.textContent = String(zaehler[typ]);
+    });
+    const emp = document.getElementById('p3Empfehlung');
+    if (emp) emp.textContent = berechneEmpfehlung(zaehler);
+  }
+
   function onAnswered(data) {
     if (!data || typeof data.aufgabeId !== 'number') return;
     if (data.levelNach !== 6) return;
@@ -195,7 +251,31 @@
     bindZurueckButton(container);
   }
 
-  function bindFehlertypButtons(_container) { /* Task 17 */ }
+  function bindFehlertypButtons(container) {
+    const buttons = container.querySelectorAll('.p3-ft-btn');
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const kachel = btn.closest('.p3-kachel');
+        if (!kachel || kachel.dataset.classified === 'true') return;
+
+        const idx = kachel.dataset.idx;
+        const typ = btn.dataset.typ;
+
+        const ref = readReflexion();
+        ref[idx] = typ;
+        writeReflexion(ref);
+
+        kachel.querySelectorAll('.p3-ft-btn').forEach(function (b) {
+          b.disabled = true;
+          if (b === btn) b.classList.add('p3-ft-gewaehlt');
+        });
+        kachel.dataset.classified = 'true';
+
+        updateSammelbalken();
+      });
+    });
+  }
+
   function bindZurueckButton(_container) { /* Task 19 */ }
 
   window.P3 = {
