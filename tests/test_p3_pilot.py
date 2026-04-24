@@ -116,3 +116,15 @@ class TestHistorie:
         """)
         flag_after = page.evaluate(f"localStorage.getItem('p3-level6-reached-{PILOT_KEY}')")
         assert flag_after == "true"
+
+    def test_historie_soft_cap_50(self, page):
+        load_trainer(page, PILOT_TRAINER)
+        page.evaluate("""
+            for (let i = 0; i < 55; i++) {
+                window.P3.onAnswered({ aufgabeId: i, correct: true, levelVor: 5, levelNach: 6 });
+            }
+        """)
+        history = _get_p3_history(page)
+        assert len(history) == 50, f"Erwartet 50 Einträge, erhalten {len(history)}"
+        assert history[0]["id"] == 5, "Älteste Einträge müssen rausgefallen sein (FIFO)"
+        assert history[-1]["id"] == 54
