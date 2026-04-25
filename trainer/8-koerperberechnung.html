@@ -14,7 +14,7 @@
     <div class="spirale-container" id="app"></div>
     <script>
     const THEMA_KEY = '8-koerperberechnung';
-    const THEMA_CONFIG = { name: 'Körperberechnung', bereich: 'geometrie' };
+    const THEMA_CONFIG = { name: 'Körperberechnung', bereich: 'geometrie', p3Enabled: true };
     const AUFGABEN = [
       // ========== LEVEL 1 -- Formeln kennen: V_Prisma = G*h, V_Zylinder = pi*r^2*h ==========
       {
@@ -384,6 +384,7 @@
       }
     ];
     </script>
+    <script src="../p3-reflexion.js"></script>
     <script src="../spirale-engine.js"></script>
 </body>
 </html>
