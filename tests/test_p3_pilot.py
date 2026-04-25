@@ -275,3 +275,137 @@ class TestEdgeCases:
             }
         """)
         assert True
+
+
+class TestPhaseJAutomated:
+    def test_katex_rendert_in_kacheln(self, page):
+        """Rückblick-Kacheln müssen KaTeX-gerenderte Formeln enthalten."""
+        load_trainer(page, PILOT_TRAINER)
+        _force_level(page, level=6, level6_reached=True)
+        # Aufgabe id=2 hat Latex in frage: "\\(f(x) = (x+1)^2 - 4\\)"
+        _set_p3_history(page, [{"id": 2, "correct": True, "ts": 1000}])
+        page.evaluate("""
+            const wrapper = document.createElement('div');
+            document.body.appendChild(wrapper);
+            window.P3.renderSessionEndButton(wrapper);
+            document.getElementById('btnSessionEnden').click();
+        """)
+        # Wait briefly for KaTeX async render
+        page.wait_for_selector('.p3-kachel-frage .katex', timeout=3000)
+        katex_in_kachel = page.query_selector_all('.p3-kachel-frage .katex')
+        assert len(katex_in_kachel) >= 1, "Rückblick-Kachel muss KaTeX-Element enthalten"
+
+    def test_mobile_layout_375px(self, page):
+        """Bei Viewport <=480px: balken ist 2x2 grid, buttons stacken vertikal."""
+        page.set_viewport_size({"width": 375, "height": 800})
+        load_trainer(page, PILOT_TRAINER)
+        _force_level(page, level=6, level6_reached=True)
+        _set_p3_history(page, [{"id": 1, "correct": True, "ts": 1000}])
+        page.evaluate("""
+            const wrapper = document.createElement('div');
+            document.body.appendChild(wrapper);
+            window.P3.renderSessionEndButton(wrapper);
+            document.getElementById('btnSessionEnden').click();
+        """)
+        # Sammelbalken: pruefe via getComputedStyle dass grid-template-columns 2 Spalten hat
+        grid_template = page.evaluate("""
+            getComputedStyle(document.querySelector('.p3-balken')).gridTemplateColumns
+        """)
+        # Bei 375px width aktiviert die Mobile-Breakpoint (max-width: 480px)
+        # 2 columns = 2 numbers in computed value (z.B. "171.5px 171.5px")
+        column_count = len(grid_template.split())
+        assert column_count == 2, f"Erwartet 2 Spalten bei 375px, computed: {grid_template}"
+        # Buttons: pruefe flex-direction column im kachel-buttons
+        flex_direction = page.evaluate("""
+            getComputedStyle(document.querySelector('.p3-kachel-buttons')).flexDirection
+        """)
+        assert flex_direction == "column", f"Erwartet column, bekam: {flex_direction}"
+
+    def test_reload_in_rueckblick_landet_in_aufgaben_ui(self, page):
+        """Reload waehrend Rueckblick offen: lande in Aufgaben-UI, Historie intakt."""
+        load_trainer(page, PILOT_TRAINER)
+        _force_level(page, level=6, level6_reached=True)
+        history_before = [{"id": 1, "correct": True, "ts": 1000}]
+        _set_p3_history(page, history_before)
+        page.evaluate("""
+            const wrapper = document.createElement('div');
+            document.body.appendChild(wrapper);
+            window.P3.renderSessionEndButton(wrapper);
+            document.getElementById('btnSessionEnden').click();
+        """)
+        # Rueckblick ist offen
+        assert page.query_selector('#p3Rueckblick') is not None
+        # Reload
+        page.reload(wait_until="networkidle")
+        page.wait_for_selector("#app .aufgabe-karte", timeout=10000)
+        # Rueckblick ist weg
+        assert page.query_selector('#p3Rueckblick') is None
+        # Aufgaben-UI ist da
+        assert page.query_selector('.aufgabe-karte') is not None
+        # Historie ist noch da
+        history_after = _get_p3_history(page)
+        assert history_after == history_before, "Historie muss nach Reload erhalten bleiben"
+
+    def test_empfehlung_regel_zweig(self, page):
+        """>=3 Regel-Klicks -> Empfehlung 'Regelfehler haeufen sich'."""
+        history = [{"id": i, "correct": True, "ts": i * 1000} for i in range(1, 4)]
+        load_trainer(page, PILOT_TRAINER)
+        _force_level(page, level=6, level6_reached=True)
+        _set_p3_history(page, history)
+        page.evaluate("""
+            const wrapper = document.createElement('div');
+            document.body.appendChild(wrapper);
+            window.P3.renderSessionEndButton(wrapper);
+            document.getElementById('btnSessionEnden').click();
+        """)
+        for idx in range(3):
+            page.click(f".p3-kachel[data-idx='{idx}'] .p3-ft-btn[data-typ='regel']")
+        page.wait_for_function(
+            "document.getElementById('p3Empfehlung').textContent.length > 0",
+            timeout=3000
+        )
+        text = page.text_content("#p3Empfehlung")
+        assert "Regelfehler" in text or "Rechenregel" in text, f"Erwartete Regel-Empfehlung, bekam: {text}"
+
+    def test_empfehlung_fluecht_zweig(self, page):
+        """>=3 fluecht-Klicks -> Empfehlung 'Tempo raus'."""
+        history = [{"id": i, "correct": True, "ts": i * 1000} for i in range(1, 4)]
+        load_trainer(page, PILOT_TRAINER)
+        _force_level(page, level=6, level6_reached=True)
+        _set_p3_history(page, history)
+        page.evaluate("""
+            const wrapper = document.createElement('div');
+            document.body.appendChild(wrapper);
+            window.P3.renderSessionEndButton(wrapper);
+            document.getElementById('btnSessionEnden').click();
+        """)
+        for idx in range(3):
+            page.click(f".p3-kachel[data-idx='{idx}'] .p3-ft-btn[data-typ='fluecht']")
+        page.wait_for_function(
+            "document.getElementById('p3Empfehlung').textContent.length > 0",
+            timeout=3000
+        )
+        text = page.text_content("#p3Empfehlung")
+        assert "Flüchtigkeit" in text or "Tempo" in text, f"Erwartete Fluechtigkeits-Empfehlung, bekam: {text}"
+
+    def test_empfehlung_richtig_zweig(self, page):
+        """>70% richtig (mindestens 3 Klicks) -> Empfehlung 'Laeuft'."""
+        history = [{"id": i, "correct": True, "ts": i * 1000} for i in range(1, 5)]
+        load_trainer(page, PILOT_TRAINER)
+        _force_level(page, level=6, level6_reached=True)
+        _set_p3_history(page, history)
+        page.evaluate("""
+            const wrapper = document.createElement('div');
+            document.body.appendChild(wrapper);
+            window.P3.renderSessionEndButton(wrapper);
+            document.getElementById('btnSessionEnden').click();
+        """)
+        # 4 Klicks: 4x richtig -> 100% richtig-Quote
+        for idx in range(4):
+            page.click(f".p3-kachel[data-idx='{idx}'] .p3-ft-btn[data-typ='richtig']")
+        page.wait_for_function(
+            "document.getElementById('p3Empfehlung').textContent.length > 0",
+            timeout=3000
+        )
+        text = page.text_content("#p3Empfehlung")
+        assert "Läuft" in text or "höher" in text, f"Erwartete Laeuft-Empfehlung, bekam: {text}"
