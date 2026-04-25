@@ -183,12 +183,19 @@ class TestFehlertypKlick:
         zahl = page.text_content("#p3-z-regel")
         assert zahl == "1"
 
-    def test_buttons_werden_disabled_nach_klick(self, page):
+    def test_klassifikation_kann_geaendert_werden(self, page):
         self._oeffne_rueckblick(page, [{"id": 17, "correct": True, "ts": 1000}])
+        # Erstklick: regel
         page.click(".p3-kachel[data-idx='0'] .p3-ft-btn[data-typ='regel']")
-        btns = page.query_selector_all(".p3-kachel[data-idx='0'] .p3-ft-btn")
-        for b in btns:
-            assert b.is_disabled(), "Alle 4 Buttons müssen nach Klick disabled sein"
+        assert page.text_content("#p3-z-regel") == "1"
+        assert page.text_content("#p3-z-konzept") == "0"
+        # Korrektur: konzept
+        page.click(".p3-kachel[data-idx='0'] .p3-ft-btn[data-typ='konzept']")
+        assert page.text_content("#p3-z-regel") == "0", "Regel-Zähler muss zurückfallen"
+        assert page.text_content("#p3-z-konzept") == "1", "Konzept-Zähler muss hochgehen"
+        # LocalStorage ist auf konzept aktualisiert
+        reflexion = _get_p3_reflexion(page)
+        assert reflexion == {"0": "konzept"}
 
     def test_reflexion_wird_in_localstorage_gespeichert(self, page):
         self._oeffne_rueckblick(page, [{"id": 17, "correct": True, "ts": 1000}])

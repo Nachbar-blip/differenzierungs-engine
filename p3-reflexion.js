@@ -250,7 +250,7 @@
     buttons.forEach(function (btn) {
       btn.addEventListener('click', function () {
         const kachel = btn.closest('.p3-kachel');
-        if (!kachel || kachel.dataset.classified === 'true') return;
+        if (!kachel) return;
 
         const idx = kachel.dataset.idx;
         const typ = btn.dataset.typ;
@@ -260,10 +260,9 @@
         writeReflexion(ref);
 
         kachel.querySelectorAll('.p3-ft-btn').forEach(function (b) {
-          b.disabled = true;
-          if (b === btn) b.classList.add('p3-ft-gewaehlt');
+          b.classList.remove('p3-ft-gewaehlt');
         });
-        kachel.dataset.classified = 'true';
+        btn.classList.add('p3-ft-gewaehlt');
 
         updateSammelbalken();
       });
