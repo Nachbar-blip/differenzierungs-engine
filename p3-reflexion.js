@@ -90,7 +90,7 @@
 
   function zaehleTypen() {
     const ref = readReflexion();
-    const zaehler = { richtig: 0, fluecht: 0, regel: 0, konzept: 0 };
+    const zaehler = { richtig: 0, rechenfehler: 0, idee: 0 };
     Object.values(ref).forEach(function (typ) {
       if (typ && zaehler.hasOwnProperty(typ)) zaehler[typ]++;
     });
@@ -98,16 +98,13 @@
   }
 
   function berechneEmpfehlung(zaehler) {
-    const total = zaehler.richtig + zaehler.fluecht + zaehler.regel + zaehler.konzept;
+    const total = zaehler.richtig + zaehler.rechenfehler + zaehler.idee;
     if (total < 3) return '';
-    if (zaehler.konzept >= 2) {
-      return 'Mehrere Konzeptfehler — nochmal zur Diagnose zurück, Grundlagen durcharbeiten.';
+    if (zaehler.idee >= 2) {
+      return 'Mehrere Verständnislücken — geh nochmal zu den Grundlagen / zur Definition.';
     }
-    if (zaehler.regel >= 3) {
-      return 'Regelfehler häufen sich — die Rechenregel ist noch nicht automatisiert. Mehr gleichartige Aufgaben.';
-    }
-    if (zaehler.fluecht >= 3) {
-      return 'Viel Flüchtigkeit — Tempo raus, jeden Schritt aufschreiben.';
+    if (zaehler.rechenfehler >= 3) {
+      return 'Rechenfehler häufen sich — Tempo raus, jeden Schritt aufschreiben.';
     }
     if (zaehler.richtig / total > 0.7) {
       return 'Läuft. Beim nächsten Mal eine Stufe höher arbeiten.';
@@ -201,10 +198,9 @@
             <div class="p3-kachel-kopf">Aufgabe #${entry.id} ${badge}</div>
             <div class="p3-kachel-frage">${frage}</div>
             <div class="p3-kachel-buttons">
-              <button class="p3-ft-btn" data-typ="richtig">Hatte ich richtig</button>
-              <button class="p3-ft-btn" data-typ="fluecht">Flüchtigkeit</button>
-              <button class="p3-ft-btn" data-typ="regel">Regel</button>
-              <button class="p3-ft-btn" data-typ="konzept">Konzept</button>
+              <button class="p3-ft-btn" data-typ="richtig">Konnte ich</button>
+              <button class="p3-ft-btn" data-typ="rechenfehler">Rechenfehler</button>
+              <button class="p3-ft-btn" data-typ="idee">Keine Idee</button>
             </div>
           </div>
         `;
@@ -216,10 +212,9 @@
         <aside class="p3-sammler" id="p3Sammler">
           <h3>Dein Muster in dieser Session</h3>
           <div class="p3-balken" id="p3Balken">
-            <div class="p3-segment" data-typ="richtig"><span class="p3-label">Richtig</span><span class="p3-zahl" id="p3-z-richtig">0</span></div>
-            <div class="p3-segment" data-typ="fluecht"><span class="p3-label">Flüchtigkeit</span><span class="p3-zahl" id="p3-z-fluecht">0</span></div>
-            <div class="p3-segment" data-typ="regel"><span class="p3-label">Regel</span><span class="p3-zahl" id="p3-z-regel">0</span></div>
-            <div class="p3-segment" data-typ="konzept"><span class="p3-label">Konzept</span><span class="p3-zahl" id="p3-z-konzept">0</span></div>
+            <div class="p3-segment" data-typ="richtig"><span class="p3-label">Konnte ich</span><span class="p3-zahl" id="p3-z-richtig">0</span></div>
+            <div class="p3-segment" data-typ="rechenfehler"><span class="p3-label">Rechenfehler</span><span class="p3-zahl" id="p3-z-rechenfehler">0</span></div>
+            <div class="p3-segment" data-typ="idee"><span class="p3-label">Keine Idee</span><span class="p3-zahl" id="p3-z-idee">0</span></div>
           </div>
           <p class="p3-empfehlung" id="p3Empfehlung"></p>
         </aside>

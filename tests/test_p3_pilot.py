@@ -179,38 +179,38 @@ class TestFehlertypKlick:
 
     def test_klick_aktualisiert_zahl(self, page):
         self._oeffne_rueckblick(page, [{"id": 17, "correct": True, "ts": 1000}])
-        page.click(".p3-kachel[data-idx='0'] .p3-ft-btn[data-typ='regel']")
-        zahl = page.text_content("#p3-z-regel")
+        page.click(".p3-kachel[data-idx='0'] .p3-ft-btn[data-typ='rechenfehler']")
+        zahl = page.text_content("#p3-z-rechenfehler")
         assert zahl == "1"
 
     def test_klassifikation_kann_geaendert_werden(self, page):
         self._oeffne_rueckblick(page, [{"id": 17, "correct": True, "ts": 1000}])
-        # Erstklick: regel
-        page.click(".p3-kachel[data-idx='0'] .p3-ft-btn[data-typ='regel']")
-        assert page.text_content("#p3-z-regel") == "1"
-        assert page.text_content("#p3-z-konzept") == "0"
-        # Korrektur: konzept
-        page.click(".p3-kachel[data-idx='0'] .p3-ft-btn[data-typ='konzept']")
-        assert page.text_content("#p3-z-regel") == "0", "Regel-Zähler muss zurückfallen"
-        assert page.text_content("#p3-z-konzept") == "1", "Konzept-Zähler muss hochgehen"
-        # LocalStorage ist auf konzept aktualisiert
+        # Erstklick: rechenfehler
+        page.click(".p3-kachel[data-idx='0'] .p3-ft-btn[data-typ='rechenfehler']")
+        assert page.text_content("#p3-z-rechenfehler") == "1"
+        assert page.text_content("#p3-z-idee") == "0"
+        # Korrektur: idee
+        page.click(".p3-kachel[data-idx='0'] .p3-ft-btn[data-typ='idee']")
+        assert page.text_content("#p3-z-rechenfehler") == "0", "Rechenfehler-Zähler muss zurückfallen"
+        assert page.text_content("#p3-z-idee") == "1", "Idee-Zähler muss hochgehen"
+        # LocalStorage ist auf idee aktualisiert
         reflexion = _get_p3_reflexion(page)
-        assert reflexion == {"0": "konzept"}
+        assert reflexion == {"0": "idee"}
 
     def test_reflexion_wird_in_localstorage_gespeichert(self, page):
         self._oeffne_rueckblick(page, [{"id": 17, "correct": True, "ts": 1000}])
-        page.click(".p3-kachel[data-idx='0'] .p3-ft-btn[data-typ='konzept']")
+        page.click(".p3-kachel[data-idx='0'] .p3-ft-btn[data-typ='idee']")
         reflexion = _get_p3_reflexion(page)
-        assert reflexion == {"0": "konzept"}
+        assert reflexion == {"0": "idee"}
 
     def test_empfehlung_ab_3_klicks(self, page):
         history = [{"id": i, "correct": True, "ts": i * 1000} for i in range(1, 4)]
         self._oeffne_rueckblick(page, history)
         for idx in range(3):
-            page.click(f".p3-kachel[data-idx='{idx}'] .p3-ft-btn[data-typ='konzept']")
+            page.click(f".p3-kachel[data-idx='{idx}'] .p3-ft-btn[data-typ='idee']")
         page.wait_for_function("document.getElementById('p3Empfehlung').textContent.length > 0", timeout=3000)
         text = page.text_content("#p3Empfehlung")
-        assert "Konzept" in text or "Diagnose" in text
+        assert "Verständnis" in text or "Grundlagen" in text
 
 
 class TestZurueck:
@@ -220,7 +220,7 @@ class TestZurueck:
         _set_p3_history(page, [{"id": 17, "correct": True, "ts": 1000}])
         page.evaluate(
             "([key, val]) => localStorage.setItem(key, val)",
-            [f"p3-reflexion-{PILOT_KEY}", '{"0": "regel"}']
+            [f"p3-reflexion-{PILOT_KEY}", '{"0": "rechenfehler"}']
         )
         page.evaluate("""
             const wrapper = document.createElement('div');
@@ -296,7 +296,7 @@ class TestPhaseJAutomated:
         assert len(katex_in_kachel) >= 1, "Rückblick-Kachel muss KaTeX-Element enthalten"
 
     def test_mobile_layout_375px(self, page):
-        """Bei Viewport <=480px: balken ist 2x2 grid, buttons stacken vertikal."""
+        """Bei Viewport <=480px: balken ist 1-Spalten-grid, buttons stacken vertikal."""
         page.set_viewport_size({"width": 375, "height": 800})
         load_trainer(page, PILOT_TRAINER)
         _force_level(page, level=6, level6_reached=True)
@@ -307,14 +307,14 @@ class TestPhaseJAutomated:
             window.P3.renderSessionEndButton(wrapper);
             document.getElementById('btnSessionEnden').click();
         """)
-        # Sammelbalken: pruefe via getComputedStyle dass grid-template-columns 2 Spalten hat
+        # Sammelbalken: pruefe via getComputedStyle dass grid-template-columns 1 Spalte hat
         grid_template = page.evaluate("""
             getComputedStyle(document.querySelector('.p3-balken')).gridTemplateColumns
         """)
         # Bei 375px width aktiviert die Mobile-Breakpoint (max-width: 480px)
-        # 2 columns = 2 numbers in computed value (z.B. "171.5px 171.5px")
+        # 1 column = 1 number in computed value
         column_count = len(grid_template.split())
-        assert column_count == 2, f"Erwartet 2 Spalten bei 375px, computed: {grid_template}"
+        assert column_count == 1, f"Erwartet 1 Spalte bei 375px, computed: {grid_template}"
         # Buttons: pruefe flex-direction column im kachel-buttons
         flex_direction = page.evaluate("""
             getComputedStyle(document.querySelector('.p3-kachel-buttons')).flexDirection
@@ -346,8 +346,8 @@ class TestPhaseJAutomated:
         history_after = _get_p3_history(page)
         assert history_after == history_before, "Historie muss nach Reload erhalten bleiben"
 
-    def test_empfehlung_regel_zweig(self, page):
-        """>=3 Regel-Klicks -> Empfehlung 'Regelfehler haeufen sich'."""
+    def test_empfehlung_rechenfehler_zweig(self, page):
+        """>=3 Rechenfehler-Klicks -> Empfehlung 'Rechenfehler haeufen sich'."""
         history = [{"id": i, "correct": True, "ts": i * 1000} for i in range(1, 4)]
         load_trainer(page, PILOT_TRAINER)
         _force_level(page, level=6, level6_reached=True)
@@ -359,34 +359,13 @@ class TestPhaseJAutomated:
             document.getElementById('btnSessionEnden').click();
         """)
         for idx in range(3):
-            page.click(f".p3-kachel[data-idx='{idx}'] .p3-ft-btn[data-typ='regel']")
+            page.click(f".p3-kachel[data-idx='{idx}'] .p3-ft-btn[data-typ='rechenfehler']")
         page.wait_for_function(
             "document.getElementById('p3Empfehlung').textContent.length > 0",
             timeout=3000
         )
         text = page.text_content("#p3Empfehlung")
-        assert "Regelfehler" in text or "Rechenregel" in text, f"Erwartete Regel-Empfehlung, bekam: {text}"
-
-    def test_empfehlung_fluecht_zweig(self, page):
-        """>=3 fluecht-Klicks -> Empfehlung 'Tempo raus'."""
-        history = [{"id": i, "correct": True, "ts": i * 1000} for i in range(1, 4)]
-        load_trainer(page, PILOT_TRAINER)
-        _force_level(page, level=6, level6_reached=True)
-        _set_p3_history(page, history)
-        page.evaluate("""
-            const wrapper = document.createElement('div');
-            document.body.appendChild(wrapper);
-            window.P3.renderSessionEndButton(wrapper);
-            document.getElementById('btnSessionEnden').click();
-        """)
-        for idx in range(3):
-            page.click(f".p3-kachel[data-idx='{idx}'] .p3-ft-btn[data-typ='fluecht']")
-        page.wait_for_function(
-            "document.getElementById('p3Empfehlung').textContent.length > 0",
-            timeout=3000
-        )
-        text = page.text_content("#p3Empfehlung")
-        assert "Flüchtigkeit" in text or "Tempo" in text, f"Erwartete Fluechtigkeits-Empfehlung, bekam: {text}"
+        assert "Rechenfehler" in text or "Tempo" in text, f"Erwartete Rechenfehler-Empfehlung, bekam: {text}"
 
     def test_empfehlung_richtig_zweig(self, page):
         """>70% richtig (mindestens 3 Klicks) -> Empfehlung 'Laeuft'."""

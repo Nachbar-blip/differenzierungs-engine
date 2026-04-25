@@ -810,7 +810,7 @@ header p {
 
 .p3-balken {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.4rem;
   margin: 0.6rem 0;
 }
@@ -848,7 +848,7 @@ header p {
 }
 
 @media (max-width: 480px) {
-  .p3-balken { grid-template-columns: repeat(2, 1fr); }
+  .p3-balken { grid-template-columns: repeat(1, 1fr); }
   .p3-kachel-buttons { flex-direction: column; }
   .p3-ft-btn { width: 100%; }
 }
