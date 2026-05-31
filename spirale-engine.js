@@ -165,7 +165,7 @@
   function buildHeader() {
     return `<header>
       <h1>${escapeHtml(THEMA_CONFIG.name)}</h1>
-      <a href="index.html" class="back-link">&larr; Zur Übersicht</a>
+      <a href="../index.html" class="back-link">&larr; Zur Übersicht</a>
     </header>`;
   }
 
@@ -529,7 +529,7 @@
         <p>Du hast ${state.totalCorrect} von ${state.totalAttempts} Aufgaben richtig beantwortet (${quote}%).</p>
         <p>Aktuelles Level: ${state.level} (${LEVEL_NAMEN[state.level]})</p>
         <button class="btn btn-weiter" id="btnNeustart">Nochmal starten</button>
-        <a href="index.html" class="btn btn-zurueck">Zur Übersicht</a>
+        <a href="../index.html" class="btn btn-zurueck">Zur Übersicht</a>
       </div>
       <button class="btn-reset" id="btnReset">Fortschritt zurücksetzen</button>
     `;
