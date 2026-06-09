@@ -356,8 +356,8 @@
       <div class="sol-head">c) Vergleich der Modelle &mdash; 2 Punkte</div>
       <p>Gesamtproduktion von \(g\) auf \([0;8]\) (mit CAS oder partieller Integration):</p>
       <div class="formula-c">\[\int_0^8 3t\,e^{-0{,}4t}\,dt = \left[-\frac{3t}{0{,}4}e^{-0{,}4t}\right]_0^8 + \int_0^8\frac{3}{0{,}4}e^{-0{,}4t}\,dt\]</div>
-      <p>Mit CAS: \(\approx 14{,}50\) Tonnen</p>
-      <p>Modell \(f\): 64 t &nbsp;|&nbsp; Modell \(g\): \(\approx 14{,}5\) t</p>
+      <p>Mit CAS: \(\approx 15{,}54\) Tonnen</p>
+      <p>Modell \(f\): 64 t &nbsp;|&nbsp; Modell \(g\): \(\approx 15{,}54\) t</p>
       <p><em>Empfehlung Modell \(f\): höhere Gesamtproduktion, realistische Peak-Rate bei \(t\approx4{,}3\) Std. Modell \(g\) zeigt sehr frühen Peak (2,5 h) mit rasch abfallender Rate, was für einen langen Arbeitstag wenig realistisch erscheint. Modell \(f\) würde jedoch für \(t>7{,}17\) negative Produktionsraten liefern (physikalisch unsinnig), was als Modellschwäche anzumerken ist.</em></p>
     </div>
     <div class="rubric">
@@ -366,7 +366,7 @@
         <tr><td>1P</td><td>\(g'(t)=e^{-0{,}4t}(3-1{,}2t)\) korrekt</td></tr>
         <tr><td>1P</td><td>Maximum bei \(t=2{,}5\) mit Nachweis</td></tr>
         <tr><td>1P</td><td>\(g(2{,}5)\approx2{,}76\) t/h angegeben</td></tr>
-        <tr><td>1P</td><td>Integral von \(g\) berechnet (\(\approx14{,}5\) t)</td></tr>
+        <tr><td>1P</td><td>Integral von \(g\) berechnet (\(\approx15{,}54\) t)</td></tr>
         <tr><td>1P</td><td>Begründete Empfehlung mit Vor-/Nachteilen beider Modelle</td></tr>
       </table>
     </div>
@@ -379,26 +379,25 @@
       <div class="sol-head">a) Schnittpunkte von f und g auf [0,8] &mdash; 2 Punkte</div>
       <p>\(f(t)=g(t)\): \(-0{,}5t^3+3t^2+2t = 3t\,e^{-0{,}4t}\)</p>
       <p>Bei \(t=0\): \(f(0)=0=g(0)\) &rarr; Schnittpunkt \(S_1(0\mid0)\)</p>
-      <p>Numerisch (CAS): weiterer Schnittpunkt bei \(t\approx 6{,}17\), \(f(6{,}17)\approx g(6{,}17)\approx 5{,}03\)</p>
-      <p>Also: \(S_1=(0\mid 0)\) und \(S_2\approx(6{,}17\mid5{,}03)\)</p>
+      <p>Numerisch (CAS): weiterer Schnittpunkt bei \(t\approx 6{,}54\), \(f(6{,}54)\approx g(6{,}54)\approx 1{,}43\)</p>
+      <p>Also: \(S_1=(0\mid 0)\) und \(S_2\approx(6{,}54\mid1{,}43)\)</p>
     </div>
     <div class="sol" style="margin-top:3mm">
-      <div class="sol-head">b) Flächeninhalt auf erstem gemeinsamen Teilintervall [0; 6,17] &mdash; 3 Punkte</div>
-      <p>Auf \([0;6{,}17]\): Überprüfung, welche Funktion größer ist (z.B. bei \(t=2\)):</p>
+      <div class="sol-head">b) Flächeninhalt auf erstem gemeinsamen Teilintervall [0; 6,54] &mdash; 3 Punkte</div>
+      <p>Auf \([0;6{,}54]\): Überprüfung, welche Funktion größer ist (z.B. bei \(t=2\)):</p>
       <p>\(f(2)=-4+12+4=12\) t/h &nbsp;;&nbsp; \(g(2)=6\cdot e^{-0{,}8}\approx 2{,}70\) t/h &nbsp; &rarr; \(f>g\)</p>
-      <div class="formula-c">\[A = \int_0^{6{,}17}\bigl(f(t)-g(t)\bigr)\,dt\]</div>
-      <p>Mit CAS: \(A \approx 64\cdot\frac{6{,}17}{8} - 14{,}5\cdot\frac{6{,}17}{8} \approx\) … (direkte Auswertung nötig)</p>
-      <p>CAS-Ergebnis: \(\displaystyle\int_0^{6{,}17}f(t)\,dt \approx 53{,}1\) t, \(\;\int_0^{6{,}17}g(t)\,dt\approx 13{,}5\) t</p>
-      <div class="formula-c">\[\boxed{A \approx 53{,}1 - 13{,}5 = 39{,}6 \text{ t}\cdot\text{h}^{-1}\cdot\text{h} = 39{,}6 \text{ Tonnen (als Differenz der Gesamtmengen)}}\]</div>
-      <p><em>Sachkontext: Der Wert gibt an, um wie viel Tonnen das Modell \(f\) im Zeitraum \([0;\,6{,}17\text{ h}]\) mehr produziert als Modell \(g\).</em></p>
+      <div class="formula-c">\[A = \int_0^{6{,}54}\bigl(f(t)-g(t)\bigr)\,dt\]</div>
+      <p>CAS-Ergebnis: \(\displaystyle\int_0^{6{,}54}f(t)\,dt \approx 93{,}8\) t, \(\;\int_0^{6{,}54}g(t)\,dt\approx 13{,}8\) t</p>
+      <div class="formula-c">\[\boxed{A = \int_0^{6{,}54}\bigl(f(t)-g(t)\bigr)\,dt \approx 93{,}8 - 13{,}8 = 80{,}0 \text{ Tonnen (als Differenz der Gesamtmengen)}}\]</div>
+      <p><em>Sachkontext: Der Wert gibt an, um wie viel Tonnen das Modell \(f\) im Zeitraum \([0;\,6{,}54\text{ h}]\) mehr produziert als Modell \(g\).</em></p>
     </div>
     <div class="rubric">
       <div class="r-head">Bewertung</div>
       <table>
         <tr><td>1P</td><td>Schnittpunkt \(t=0\) erkannt</td></tr>
-        <tr><td>1P</td><td>Zweiter Schnittpunkt \(t\approx6{,}17\) numerisch korrekt bestimmt</td></tr>
+        <tr><td>1P</td><td>Zweiter Schnittpunkt \(t\approx6{,}54\) numerisch korrekt bestimmt</td></tr>
         <tr><td>1P</td><td>Richtiges Vorzeichen im Integral (\(f-g\) auf dem Intervall)</td></tr>
-        <tr><td>1P</td><td>Integral korrekt berechnet (\(\approx 39{,}6\))</td></tr>
+        <tr><td>1P</td><td>Integral korrekt berechnet (\(\approx 80{,}0\))</td></tr>
         <tr><td>1P</td><td>Sachliche Interpretation des Flächeninhalts</td></tr>
       </table>
     </div>
@@ -428,7 +427,7 @@
     </div>
     <div class="sol" style="margin-top:3mm">
       <div class="sol-head">b) Wahrscheinlichkeiten &mdash; 2 Punkte</div>
-      <div class="formula-c">\[P(X=4)=\binom{25}{4}(0{,}15)^4(0{,}85)^{21} \approx \mathbf{0{,}1651}\]</div>
+      <div class="formula-c">\[P(X=4)=\binom{25}{4}(0{,}15)^4(0{,}85)^{21} \approx \mathbf{0{,}2110}\]</div>
       <div class="formula-c">\[P(X\leq3)=\sum_{k=0}^{3}\binom{25}{k}(0{,}15)^k(0{,}85)^{25-k} \approx \mathbf{0{,}4711}\]</div>
     </div>
     <div class="rubric">
@@ -436,7 +435,7 @@
       <table>
         <tr><td>1P</td><td>Mind. 2 Voraussetzungen korrekt genannt</td></tr>
         <tr><td>1P</td><td>Schluss auf \(B(25;0{,}15)\) korrekt formuliert</td></tr>
-        <tr><td>1P</td><td>\(P(X=4)\approx0{,}1651\)</td></tr>
+        <tr><td>1P</td><td>\(P(X=4)\approx0{,}2110\)</td></tr>
         <tr><td>1P</td><td>\(P(X\leq3)\approx0{,}4711\)</td></tr>
       </table>
     </div>
@@ -454,15 +453,15 @@
       <div class="sol-head">b) P(μ−σ ≤ X ≤ μ+σ) &mdash; 2 Punkte</div>
       <p>\(\mu-\sigma \approx 1{,}96\), \(\mu+\sigma\approx5{,}54\)</p>
       <p>Da \(X\) ganzzahlig: \(P(2\leq X\leq5)\)</p>
-      <div class="formula-c">\[P(2\leq X\leq5) = P(X\leq5)-P(X\leq1) \approx 0{,}8385-0{,}1483 = \mathbf{0{,}6902}\approx 69{,}0\,\%\]</div>
-      <p><em>Sachkontext: Mit etwa 69\,\% Wahrscheinlichkeit liegen die Anzahl der Schülerinnen und Schüler mit Sehproblemen im Kurs zwischen 2 und 5. Dies entspricht dem „typischen Bereich" der Verteilung.</em></p>
+      <div class="formula-c">\[P(2\leq X\leq5) = P(X\leq5)-P(X\leq1) \approx 0{,}8385-0{,}0931 = \mathbf{0{,}7454}\approx 74{,}5\,\%\]</div>
+      <p><em>Sachkontext: Mit etwa 74{,}5\,\% Wahrscheinlichkeit liegen die Anzahl der Schülerinnen und Schüler mit Sehproblemen im Kurs zwischen 2 und 5. Dies entspricht dem „typischen Bereich" der Verteilung.</em></p>
     </div>
     <div class="rubric">
       <div class="r-head">Bewertung</div>
       <table>
         <tr><td>1P</td><td>\(\mu=3{,}75\) und \(\sigma\approx1{,}786\) korrekt</td></tr>
         <tr><td>1P</td><td>Grenzen korrekt gerundet auf ganzzahlige Werte</td></tr>
-        <tr><td>1P</td><td>\(P(2\leq X\leq5)\approx0{,}6902\) korrekt</td></tr>
+        <tr><td>1P</td><td>\(P(2\leq X\leq5)\approx0{,}7454\) korrekt</td></tr>
         <tr><td>1P</td><td>Sachliche Interpretation</td></tr>
       </table>
     </div>
@@ -588,9 +587,9 @@
          Eine Normalapproximation ist hier <em>nicht geeignet</em>.</p>
       <p><strong>Schritt 3: Direkte Berechnung mit CAS (exakte Binomialverteilung).</strong></p>
       <div class="formula-c">\[P(Y \geq 20) = 1 - P(Y \leq 19) = 1 - \sum_{k=0}^{19}\binom{25}{k}(0{,}8413)^k(0{,}1587)^{25-k}\]</div>
-      <p>Mit CAS: \(P(Y \leq 19) \approx 0{,}3015\)</p>
-      <div class="formula-c">\[P(Y \geq 20) \approx 1 - 0{,}3015 \approx \mathbf{0{,}6985 \approx 69{,}9\,\%}\]</div>
-      <p><em>Mit einer Wahrscheinlichkeit von ca. 69,9&nbsp;% sind mindestens 20 der 25 männlichen Abiturienten kleiner als 187&nbsp;cm.</em></p>
+      <p>Mit CAS: \(P(Y \leq 19) \approx 0{,}1950\)</p>
+      <div class="formula-c">\[P(Y \geq 20) \approx 1 - 0{,}1950 \approx \mathbf{0{,}8050 \approx 80{,}5\,\%}\]</div>
+      <p><em>Mit einer Wahrscheinlichkeit von ca. 80,5&nbsp;% sind mindestens 20 der 25 männlichen Abiturienten kleiner als 187&nbsp;cm.</em></p>
     </div>
     <div class="rubric">
       <div class="r-head">Bewertung</div>
@@ -598,7 +597,7 @@
         <tr><td>1P</td><td>\(\sigma\)-Regel korrekt erkannt und angewendet: \(171 = \mu-\sigma\), \(187 = \mu+\sigma\) &rarr; 68,3&nbsp;%</td></tr>
         <tr><td>1P</td><td>CAS-Ansatz korrekt, \(P(X>190)\approx0{,}0846\) berechnet</td></tr>
         <tr><td>1P</td><td>Approximationsbedingungen geprüft, Fazit korrekt begründet (\(n(1-p)<5\))</td></tr>
-        <tr><td>1P</td><td>Korrekte Berechnung \(P(Y\geq20)\approx0{,}699\) (direkte Binomialverteilung oder gleichwertig)</td></tr>
+        <tr><td>1P</td><td>Korrekte Berechnung \(P(Y\geq20)\approx0{,}805\) (direkte Binomialverteilung oder gleichwertig)</td></tr>
       </table>
       <p style="font-size:9.5pt;color:#555;margin-top:2mm">
         Hinweis: Werden die Bedingungen nicht geprüft, aber das Ergebnis korrekt mit der Normalapproximation berechnet
