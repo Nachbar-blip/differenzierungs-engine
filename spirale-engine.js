@@ -335,6 +335,9 @@
       input.addEventListener('keydown', function (e) {
         if (e.key === 'Enter') {
           e.preventDefault();
+          // sonst erreicht derselbe Enter danach den document-Handler und
+          // springt sofort weiter — Feedback wuerde nie sichtbar
+          e.stopPropagation();
           if (feedbackShown) {
             naechsteAufgabe();
           } else {
@@ -424,9 +427,9 @@
       document.querySelectorAll('.mc-option').forEach((btn, i) => {
         btn.disabled = true;
         if (i === currentAufgabe.korrekt) {
-          btn.classList.add('mc-correct');
+          btn.classList.add('correct');
         } else if (i === mcIndex && !correct) {
-          btn.classList.add('mc-wrong');
+          btn.classList.add('wrong');
         }
       });
     }
