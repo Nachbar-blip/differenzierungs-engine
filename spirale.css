@@ -201,6 +201,16 @@ header p {
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
 
+#antwortInput.input-correct {
+    border-color: var(--spirale-correct);
+    background: #dcfce7;
+}
+
+#antwortInput.input-wrong {
+    border-color: var(--spirale-wrong);
+    background: #fee2e2;
+}
+
 .btn-pruefen {
     display: inline-block;
     margin-top: 12px;
