@@ -427,16 +427,16 @@
       },
       {
         id: 34, level: 6, typ: "mc",
-        frage: "Gegeben: \\(f(x) = x^5 - 5x^4 + 5x^3 + 5x^2 - 6x\\). Die Funktion hat drei Extremstellen. Welche Aussage über Monotonie und Krümmung ist korrekt?",
+        frage: "Gegeben: \\(f(x) = x^5 - 5x^4 + 5x^3 + 5x^2 - 6x\\). Welche Aussage über Monotonie und Krümmung ist korrekt?",
         optionen: [
           "\\(f'(x) = 5x^4 - 20x^3 + 15x^2 + 10x - 6\\); Vorzeichen wechselt dreimal → drei Extremstellen",
           "\\(f''(x) = 20x^3 - 60x^2 + 30x + 10\\); drei Wendepunkte",
           "\\(f\\) ist auf \\((- \\infty, \\infty)\\) steigend, da Grad 5 ungerade",
           "\\(f\\) hat genau einen Wendepunkt"
         ],
-        korrekt: 0,
-        tipp: "Leite \\(f\\) ab: \\(f'(x) = 5x^4 - 20x^3 + 15x^2 + 10x - 6\\). Drei Vorzeichenwechsel von \\(f'\\) bedeuten drei Extremstellen.",
-        loesungsweg: "\\(f'(x) = 5x^4 - 20x^3 + 15x^2 + 10x - 6\\). Diese Ableitung hat vier reelle Nullstellen (lässt sich numerisch bestätigen), wobei \\(f'\\) dreimal das Vorzeichen wechselt → drei Extremstellen. \\(f''(x) = 20x^3 - 60x^2 + 30x + 10\\) hat bis zu drei Nullstellen → bis zu drei Wendepunkte. Aussage A beschreibt die Situation korrekt."
+        korrekt: 1,
+        tipp: "Leite zweimal ab: \\(f''(x) = 20x^3 - 60x^2 + 30x + 10\\). Wie oft wechselt \\(f''\\) das Vorzeichen?",
+        loesungsweg: "\\(f'(x) = 5x^4 - 20x^3 + 15x^2 + 10x - 6\\) hat vier reelle Nullstellen mit Vorzeichenwechsel → vier Extremstellen (Aussage A ist falsch). \\(f''(x) = 20x^3 - 60x^2 + 30x + 10\\) hat drei reelle Nullstellen mit Vorzeichenwechsel → drei Wendepunkte. Aussage B ist korrekt."
       },
       {
         id: 35, level: 6, typ: "mc",
