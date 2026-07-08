@@ -192,7 +192,7 @@
     {
         id: 18, level: 3, typ: "numerisch",
         frage: "Für \\(n = 900\\) und \\(p = 0{,}4\\): Wie breit ist die 2-σ-Umgebung (obere minus untere Grenze)? Runde auf zwei Dezimalstellen.",
-        loesung: 58.79, toleranz: 0.01,
+        loesung: 58.79, toleranz: 0.02,
         tipp: "Breite \\(= 2 \\cdot 2\\sigma = 4\\sigma\\). Berechne \\(\\sigma\\) zuerst.",
         loesungsweg: "\\(\\sigma = \\sqrt{900 \\cdot 0{,}4 \\cdot 0{,}6} = \\sqrt{216} \\approx 14{,}70\\). Breite: \\(4\\sigma = 4 \\cdot \\sqrt{216} \\approx 58{,}79\\)."
     },
@@ -318,16 +318,16 @@
     // ══════════════════════════════════════════════════════════════
     {
         id: 31, level: 6, typ: "mc",
-        frage: "Ein Hersteller behauptet, seine Batterien halten mit \\(p = 0{,}9\\) mindestens 500 Stunden. Bei einer Stichprobe von \\(n = 200\\) halten nur \\(168\\) Batterien so lange. Die 2-σ-Umgebung bei \\(p = 0{,}9\\) ist \\([171{,}52;\\; 188{,}48]\\). Wird die Behauptung gestützt?",
+        frage: "Ein Hersteller behauptet, seine Batterien halten mit \\(p = 0{,}9\\) mindestens 500 Stunden. Bei einer Stichprobe von \\(n = 200\\) halten nur \\(168\\) Batterien so lange. Die 2-σ-Umgebung bei \\(p = 0{,}9\\) ist \\([171{,}51;\\; 188{,}49]\\). Wird die Behauptung gestützt?",
         optionen: [
-            "Nein, \\(168 < 171{,}52\\) liegt außerhalb — die Behauptung ist fragwürdig",
+            "Nein, \\(168 < 171{,}51\\) liegt außerhalb — die Behauptung ist fragwürdig",
             "Ja, \\(168\\) ist nahe genug am Erwartungswert",
             "Man kann nichts aussagen",
             "Ja, weil \\(168 > 100\\)"
         ],
         korrekt: 0,
         tipp: "\\(\\mu = 180\\), \\(\\sigma = \\sqrt{200 \\cdot 0{,}9 \\cdot 0{,}1} = \\sqrt{18} \\approx 4{,}24\\). Ist \\(168\\) im Intervall?",
-        loesungsweg: "\\(\\mu = 180\\), \\(\\sigma \\approx 4{,}24\\). Intervall: \\([180 - 8{,}49;\\; 180 + 8{,}49] = [171{,}52;\\; 188{,}48]\\). Da \\(168 < 171{,}52\\), liegt der beobachtete Wert außerhalb der 2-σ-Umgebung — die Behauptung des Herstellers ist fragwürdig."
+        loesungsweg: "\\(\\mu = 180\\), \\(\\sigma \\approx 4{,}24\\). Intervall: \\([180 - 8{,}49;\\; 180 + 8{,}49] = [171{,}51;\\; 188{,}49]\\). Da \\(168 < 171{,}51\\), liegt der beobachtete Wert außerhalb der 2-σ-Umgebung — die Behauptung des Herstellers ist fragwürdig."
     },
     {
         id: 32, level: 6, typ: "numerisch",
@@ -373,7 +373,7 @@
             "Man kann keine Entscheidung treffen, da \\(n\\) zu klein ist"
         ],
         korrekt: 0,
-        tipp: "\\(\\mu = 48\\), \\(\\sigma = \\sqrt{800 \\cdot 0{,}06 \\cdot 0{,}94} \\approx 6{,}72\\). Ist \\(70 > 64{,}81\\)?",
+        tipp: "\\(\\mu = 48\\), \\(\\sigma = \\sqrt{800 \\cdot 0{,}06 \\cdot 0{,}94} \\approx 6{,}72\\). Ist \\(70 > 61{,}43\\)?",
         loesungsweg: "\\(\\mu = 800 \\cdot 0{,}06 = 48\\), \\(\\sigma = \\sqrt{45{,}12} \\approx 6{,}72\\). Intervall: \\([48 - 13{,}43;\\; 48 + 13{,}43] = [34{,}57;\\; 61{,}43]\\). Da \\(70 > 61{,}43\\), wird \\(p = 0{,}06\\) abgelehnt — die Ausschussrate ist vermutlich höher."
     }
 
