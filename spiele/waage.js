@@ -44,11 +44,10 @@
   var fehlVersuche = 0;        // Fehl-Ops in der aktuellen Aufgabe
   var musterDieseAufgabe = {}; // Muster max. 1x je Aufgabe zaehlen
   var musterStufe = {};
-  var musterGesamt = {};
+  var musterProStufe = {};    // stufeIdx -> Muster-Zaehler; Replay UEBERSCHREIBT (keine Doppelzaehlung)
   var loesungGezeigt = false;  // "Zeig mir den naechsten Schritt" genutzt
   var selbstGeloestStufe = 0;
   var hilfeGenutztStufe = 0;
-  var gespielteStufen = 0;
   var aktiverTab = 'waage';
   var animId = null;
   var kippTimer = null;
@@ -160,7 +159,9 @@
     var mx = Math.min(z.xL, z.xR);
     if (mx > 0) ops.push({ art: 'sub_x', wert: mx, seite: 'beide' });
     if (stufe === 5) {
-      // x-Seite bestimmen und deren Konstante entfernen (darf negativ sein)
+      // x-Seite bestimmen und deren Konstante entfernen (darf negativ sein).
+      // Tie xL === xR: links gewaehlt - harmlos, denn dann deckt sub_x (mx > 0)
+      // den richtigen naechsten Schritt ab.
       var xsL = z.xL >= z.xR;
       var c5 = xsL ? z.cL : z.cR;
       if (c5 !== 0) ops.push({ art: 'sub_c', wert: c5, seite: 'beide' });
@@ -546,9 +547,11 @@
     var op = naechsterSchritt(zustand, aufgabe.stufe);
     if (!op) return;
     el.feedbackBereich.innerHTML = '';
-    loesungGezeigt = true;
     var res = wende_an(zustand, op, aufgabe.stufe === 5);
-    if (!res.fehler) schrittAnwenden(op, res, true);
+    if (!res.fehler) {
+      loesungGezeigt = true; // erst nach erfolgreichem Schritt als "mit Hilfe" markieren
+      schrittAnwenden(op, res, true);
+    }
   }
 
   function naechsteAufgabe() {
@@ -557,7 +560,6 @@
     else selbstGeloestStufe++;
     aufgabeIdx++;
     if (aufgabeIdx >= STUFEN[stufeIdx].aufgaben.length) {
-      gespielteStufen++;
       zeigeAuswertung();
     } else {
       zeigeAufgabe();
@@ -606,8 +608,15 @@
   function zeigeAuswertung() {
     var stufe = STUFEN[stufeIdx];
     var letzteStufe = stufeIdx >= STUFEN.length - 1;
-    for (var m in musterStufe) {
-      musterGesamt[m] = (musterGesamt[m] || 0) + musterStufe[m];
+    // Replay einer Stufe UEBERSCHREIBT deren Zaehler; Gesamt wird daraus abgeleitet
+    musterProStufe[stufeIdx] = musterStufe;
+    var musterGesamt = {};
+    var gespielteStufen = 0;
+    for (var si in musterProStufe) {
+      gespielteStufen++;
+      for (var ms in musterProStufe[si]) {
+        musterGesamt[ms] = (musterGesamt[ms] || 0) + musterProStufe[si][ms];
+      }
     }
     el.auswertungTitel.textContent = 'Stufe ' + (stufeIdx + 1) + ' geschafft!';
 
