@@ -1,0 +1,33 @@
+/* spirale-kids.css — Kids-Addon für Klasse-5/6-Trainer.
+   Wird NUR von den 5/6-Hüllen zusätzlich zu spirale.css geladen.
+   Engine und Bestandstrainer bleiben unangetastet.
+   Reale Struktur: <div class="spirale-container" id="app"> — MC-Optionen sind <button class="mc-option">. */
+
+:root {
+    --kids-touch: 48px; /* Mindestgröße für Touch-Ziele */
+}
+
+/* Größere Grundschrift für jüngere Augen */
+.spirale-container {
+    font-size: 1.15rem;
+}
+
+/* Alle Buttons (Prüfen, Weiter, Tipp, Reset, MC-Optionen) auf ≥48px Touch-Ziel */
+.spirale-container button,
+.spirale-container .mc-option {
+    min-height: var(--kids-touch);
+    padding: 0.6em 1em;
+    font-size: 1.1em;
+}
+
+/* Antwortfeld: groß und gut lesbar */
+.spirale-container #antwortInput {
+    min-height: var(--kids-touch);
+    font-size: 1.3em;
+    letter-spacing: 0.03em;
+}
+
+/* Etwas mehr Luft zwischen MC-Optionen (zusätzlich zum gap der .mc-bereich) */
+.spirale-container .mc-option + .mc-option {
+    margin-top: 0.5em;
+}
