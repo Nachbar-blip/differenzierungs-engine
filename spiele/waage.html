@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gleichungs-Waage: Balance - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <link rel="stylesheet" href="waage.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; --spirale-correct: #22c55e; --spirale-wrong: #ef4444; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app">
+        <header>
+            <h1>Gleichungs-Waage</h1>
+            <p>Halte die Waage im Gleichgewicht und finde heraus, was die Kiste wiegt</p>
+            <a class="back-link" href="../index.html">&larr; Zur&uuml;ck zur &Uuml;bersicht</a>
+        </header>
+
+        <!-- Startbildschirm: Stufenwahl -->
+        <section id="startScreen" class="aufgabe-karte">
+            <h2 class="wg-untertitel">W&auml;hle eine Stufe</h2>
+            <div class="stufen-grid">
+                <button class="stufe-karte" data-stufe="0">
+                    <span class="stufe-nr">Stufe 1</span>
+                    <span class="stufe-titel">Wegnehmen</span>
+                    <span class="stufe-text">Nimm auf beiden Seiten gleich viel weg, bis die x-Kiste allein steht.</span>
+                </button>
+                <button class="stufe-karte" data-stufe="1">
+                    <span class="stufe-nr">Stufe 2</span>
+                    <span class="stufe-titel">Aufteilen</span>
+                    <span class="stufe-text">Mehrere Kisten? Teile beide Seiten in gleich gro&szlig;e Portionen.</span>
+                </button>
+                <button class="stufe-karte" data-stufe="2">
+                    <span class="stufe-nr">Stufe 3</span>
+                    <span class="stufe-titel">Zwei Schritte</span>
+                    <span class="stufe-text">Erst Gewichte wegnehmen, dann aufteilen &ndash; die Reihenfolge z&auml;hlt!</span>
+                </button>
+                <button class="stufe-karte" data-stufe="3">
+                    <span class="stufe-nr">Stufe 4</span>
+                    <span class="stufe-titel">x auf beiden Seiten</span>
+                    <span class="stufe-text">Auf beiden Schalen stehen x-Kisten &ndash; sammle sie zuerst auf einer Seite.</span>
+                </button>
+                <button class="stufe-karte" data-stufe="4">
+                    <span class="stufe-nr">Stufe 5</span>
+                    <span class="stufe-titel">Ohne Waage weiterdenken</span>
+                    <span class="stufe-text">Negative Zahlen kann keine Waage wiegen &ndash; die Regeln gelten trotzdem.</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Spielbildschirm -->
+        <section id="spielScreen" class="aufgabe-karte" hidden>
+            <div class="wg-kopf">
+                <span id="stufeInfo"></span>
+                <span id="aufgabeInfo"></span>
+            </div>
+            <div class="aufgabe-text" id="aufgabeAnzeige"></div>
+
+            <div class="wg-tabs" role="tablist">
+                <button class="wg-tab" id="tabWaage" type="button" role="tab">Waage</button>
+                <button class="wg-tab" id="tabSkizze" type="button" role="tab">Skizze</button>
+                <button class="wg-tab" id="tabGleichung" type="button" role="tab">Gleichung</button>
+            </div>
+            <div class="wg-stufe5-hinweis" id="stufe5Hinweis" hidden>
+                Eine Waage kann keine &minus;3 wiegen &ndash; die Regel &bdquo;beide Seiten gleich behandeln&ldquo; gilt trotzdem.
+            </div>
+
+            <div id="panelWaage" role="tabpanel">
+                <div class="waage-wrap" id="waageWrap"></div>
+            </div>
+            <div id="panelSkizze" role="tabpanel" hidden>
+                <div class="skizze-wrap" id="skizzeWrap"></div>
+            </div>
+            <div id="panelGleichung" role="tabpanel" hidden>
+                <div class="mitschrift" id="mitschriftGleichung"></div>
+            </div>
+
+            <p class="op-frage">Was tust du &ndash; auf welcher Seite?</p>
+            <div class="op-leiste" id="opLeiste"></div>
+            <div class="wg-buttons">
+                <button class="btn-hilfe wg-outline" id="btnNaechsterSchritt" type="button" hidden>Zeig mir den n&auml;chsten Schritt</button>
+            </div>
+            <div id="feedbackBereich"></div>
+        </section>
+
+        <!-- Auswertung -->
+        <section id="auswertungScreen" class="aufgabe-karte" hidden>
+            <h2 class="wg-untertitel" id="auswertungTitel"></h2>
+            <div id="auswertungInhalt"></div>
+            <div id="auswertungGesamt"></div>
+            <div class="wg-buttons">
+                <button class="btn-weiter" id="btnNaechsteStufe" type="button"></button>
+                <button class="btn-hilfe wg-outline" id="btnStufenwahl" type="button">Zur Stufenwahl</button>
+            </div>
+        </section>
+    </div>
+    <footer>Gleichungs-Waage &middot; Balance &middot; Klasse 7 &middot; Mit KI erstellt (Anthropic Claude)</footer>
+    <script src="waage-daten.js"></script>
+    <script src="waage-logik.js"></script>
+    <script src="waage.js"></script>
+</body>
+</html>
