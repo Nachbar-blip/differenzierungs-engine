@@ -111,20 +111,37 @@ def test_seite_laedt(page):
     assert not kritische_fehler(errors), f"Konsolenfehler: {kritische_fehler(errors)}"
 
 
+def _tastatur_schritte(aufgabe):
+    """Schrittzahlen zum Ziel: grobe Shift-Schritte (+-tick), feine (+-tick/10).
+    None, wenn der Zielwert so nicht exakt erreichbar ist."""
+    strahl, tick = aufgabe["strahl"], aufgabe["strahl"]["tick"]
+    gesamt = aufgabe["zahl"] - strahl["min"]
+    shift = int(gesamt // tick)
+    fein = round((gesamt - shift * tick) / (tick / 10))
+    if abs(shift * tick + fein * tick / 10 - gesamt) > 1e-9:
+        return None
+    return shift, fein
+
+
 def test_richtig_pfad_tastatur(page):
-    """Stufe 3: Marker per Pfeiltasten exakt auf den Zielwert, Enter -> richtig."""
+    """Marker per Pfeiltasten exakt auf den Zielwert, Enter -> richtig.
+    Gewaehlt wird gezielt eine Aufgabe, deren Ziel KEIN Tick-Vielfaches ist,
+    damit auch die feine Schrittweite (+-tick/10) real ausgefuehrt wird."""
     errors = setup_console_error_capture(page)
     _lade(page)
-    _starte_stufe(page, 2)
-    aufgabe = _aufgabe(page, 2, 0)
-    strahl, tick = aufgabe["strahl"], aufgabe["strahl"]["tick"]
+    stufen = page.evaluate("STUFEN")
+    stufe_idx = aufgabe = schritte = None
+    for si, stufe in enumerate(stufen):
+        # Nur erste Aufgabe je Stufe: das Spiel startet deterministisch dort
+        s = _tastatur_schritte(stufe["aufgaben"][0])
+        if s and s[1] > 0:
+            stufe_idx, aufgabe, schritte = si, stufe["aufgaben"][0], s
+            break
+    assert aufgabe, "keine Stufe startet mit einem Nicht-Tick-Vielfachen als Ziel"
+    shift_schritte, fein_schritte = schritte
+    assert fein_schritte > 0  # Guard: Fein-Schrittweite muss real abgedeckt sein
 
-    # Schrittzahlen: erst grobe Shift-Schritte (+-tick), dann feine (+-tick/10)
-    gesamt = aufgabe["zahl"] - strahl["min"]
-    shift_schritte = int(gesamt // tick)
-    fein_schritte = round((gesamt - shift_schritte * tick) / (tick / 10))
-    assert abs(shift_schritte * tick + fein_schritte * tick / 10 - gesamt) < 1e-9, \
-        f"{aufgabe['id']}: Zielwert per Tastatur nicht exakt erreichbar"
+    _starte_stufe(page, stufe_idx)
 
     marker = page.locator("[role='slider']")
     marker.focus()
@@ -267,12 +284,14 @@ def test_kids_css_und_touch_hitbox(page):
 
 def test_localstorage_bleibt_leer(page):
     """Vor und nach einer gespielten Stufe: kein localStorage-Eintrag."""
+    errors = setup_console_error_capture(page)
     _lade(page)
     assert page.evaluate("Object.keys(localStorage).length") == 0, \
         "localStorage schon beim Laden befuellt"
     _spiele_stufe_korrekt(page, 0)
     assert page.evaluate("Object.keys(localStorage).length") == 0, \
         "Spiel schreibt in localStorage"
+    assert not kritische_fehler(errors), f"Konsolenfehler: {kritische_fehler(errors)}"
 
 
 def test_node_logiktests_gruen():
