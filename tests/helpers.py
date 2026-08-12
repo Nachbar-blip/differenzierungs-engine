@@ -28,6 +28,13 @@ def setup_console_error_capture(page: Page) -> list:
     return errors
 
 
+def kritische_fehler(errors: list) -> list:
+    """Filtert unkritische Konsolenmeldungen (CORS, deprecated, favicon)."""
+    return [e for e in errors
+            if "CORS" not in e and "deprecated" not in e.lower()
+            and "favicon" not in e.lower()]
+
+
 def count_katex_errors(page: Page) -> int:
     """Zaehlt KaTeX-Render-Fehler auf der Seite."""
     return page.evaluate("document.querySelectorAll('.katex-error').length")

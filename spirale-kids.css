@@ -12,9 +12,8 @@
     font-size: 1.15rem;
 }
 
-/* Alle Buttons (Prüfen, Weiter, Tipp, Reset, MC-Optionen) auf ≥48px Touch-Ziel */
-.spirale-container button,
-.spirale-container .mc-option {
+/* Alle Buttons (Prüfen, Weiter, Tipp, Reset — MC-Optionen sind ebenfalls <button>) */
+.spirale-container button {
     min-height: var(--kids-touch);
     padding: 0.6em 1em;
     font-size: 1.1em;

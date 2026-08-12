@@ -3,7 +3,7 @@
 import pytest
 from helpers import (
     load_trainer, get_aufgaben, setup_console_error_capture,
-    count_katex_errors, beantworte_aufgabe, klick_weiter,
+    count_katex_errors, kritische_fehler, beantworte_aufgabe, klick_weiter,
     force_single_aufgabe, BASE_URL,
 )
 
@@ -20,7 +20,7 @@ class TestTrainerStatisch:
         """Keine console.error beim Laden der Seite."""
         errors = setup_console_error_capture(page)
         load_trainer(page, trainer_file)
-        critical = [e for e in errors if "CORS" not in e and "deprecated" not in e.lower()]
+        critical = kritische_fehler(errors)
         assert len(critical) == 0, f"{trainer_file}: JS-Fehler: {critical}"
 
     def test_katex_rendert(self, page, trainer_file):
