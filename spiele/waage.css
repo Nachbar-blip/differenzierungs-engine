@@ -226,6 +226,15 @@
     100% { opacity: 0; transform: translateY(14px); }
 }
 
+/* A11y: reduzierte Bewegung -> Einblende-/Scherben-Animationen quasi sofort
+   (die JS-Dauern verkuerzt waage.js ueber dieselbe Media Query) */
+@media (prefers-reduced-motion: reduce) {
+    .wg-inhalt-neu,
+    .wg-bruch {
+        animation-duration: 0.01s;
+    }
+}
+
 /* ===== Skizze (ikonisch) ===== */
 
 .skizze-wrap {

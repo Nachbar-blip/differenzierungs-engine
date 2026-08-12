@@ -7,8 +7,11 @@ const path = require('path');
 
 const daten = require(path.join(__dirname, 'waage-daten.js'));
 const logik = require(path.join(__dirname, 'waage-logik.js'));
-const { STUFEN, EMPFEHLUNGEN, MUSTER_TEXTE } = daten;
-const { wende_an, ist_geloest, loesung, klassifiziere_fehlop } = logik;
+const { STUFEN, EMPFEHLUNGEN, MUSTER_TEXTE, TRAINER_NAMEN, EMPFEHLUNGS_SCHWELLE, TEXTE } = daten;
+const { wende_an, ist_geloest, loesung, klassifiziere_fehlop,
+        naechsterSchritt, kandidaten_ops, opKey,
+        formatTex, seiteTex, zustandTex, opTex, opLabel,
+        empfehlungs_hrefs } = logik;
 
 let anzahl = 0;
 function test(name, fn) {
@@ -205,21 +208,35 @@ test('Katalog: IDs eindeutig und im Format w<stufe>-NN', () => {
   }
 });
 
-// Kanonische Anzeige aus dem Startzustand generieren und vergleichen
-function seiteText(x, c) {
-  let s = '';
-  if (x !== 0) s = (x === 1 ? 'x' : x === -1 ? '-x' : x + 'x');
-  if (c !== 0 || x === 0) {
-    if (s) s += (c < 0 ? ' - ' + (-c) : ' + ' + c);
-    else s = String(c);
-  }
-  return s;
-}
-test('Katalog: anzeige entspricht dem Startzustand', () => {
-  for (const a of alleAufgaben) {
-    const soll = seiteText(a.start.xL, a.start.cL) + ' = ' + seiteText(a.start.xR, a.start.cR);
-    assert.strictEqual(a.anzeige, soll, a.id + ': anzeige "' + a.anzeige + '" != "' + soll + '"');
-  }
+// (Frueher gab es ein redundantes anzeige-Feld samt Konsistenz-Lint; die UI
+// rendert die Aufgabenstellung jetzt direkt via zustandTex(aufgabe.start).)
+test('Notation: zustandTex fuer typische Startzustaende', () => {
+  assert.strictEqual(zustandTex({ xL: 1, cL: 2, xR: 0, cR: 5 }), 'x + 2 = 5');
+  assert.strictEqual(zustandTex({ xL: 3, cL: 0, xR: 0, cR: 12 }), '3x = 12');
+  assert.strictEqual(zustandTex({ xL: 1, cL: -3, xR: 0, cR: -1 }), 'x - 3 = -1');
+  assert.strictEqual(zustandTex({ xL: 2, cL: -1, xR: 1, cR: -4 }), '2x - 1 = x - 4');
+  assert.strictEqual(zustandTex({ xL: 0, cL: 0, xR: 0, cR: 0 }), '0 = 0');
+});
+
+test('Notation: formatTex/seiteTex mit Dezimalkomma (KaTeX {,})', () => {
+  assert.strictEqual(formatTex(2), '2');
+  assert.strictEqual(formatTex(-1.5), '-1{,}5');
+  assert.strictEqual(seiteTex(0, -1.5), '-1{,}5');
+});
+
+test('Notation: opLabel-Sonderfaelle (wert 1, negatives sub_c, Distraktoren)', () => {
+  assert.strictEqual(opLabel({ art: 'sub_x', wert: 1, seite: 'beide' }), '&minus;x auf beiden Seiten');
+  assert.strictEqual(opLabel({ art: 'sub_c', wert: -3, seite: 'beide' }), '+3 auf beiden Seiten');
+  assert.strictEqual(opLabel({ art: 'sub_c', wert: 2, seite: 'links' }), '&minus;2 nur links');
+  assert.strictEqual(opLabel({ art: 'mul', wert: 4, seite: 'beide' }), '&middot;4 auf beiden Seiten');
+  assert.strictEqual(opLabel({ art: 'div', wert: 3, seite: 'rechts' }), ':3 nur rechts');
+});
+
+test('Notation: opTex (sub_c negativ wird zu +, sub_x 1 ohne Koeffizient)', () => {
+  assert.strictEqual(opTex({ art: 'sub_c', wert: 3, seite: 'beide' }), '- 3');
+  assert.strictEqual(opTex({ art: 'sub_c', wert: -3, seite: 'beide' }), '+ 3');
+  assert.strictEqual(opTex({ art: 'sub_x', wert: 1, seite: 'beide' }), '- x');
+  assert.strictEqual(opTex({ art: 'div', wert: 4, seite: 'beide' }), ': 4');
 });
 
 test('Katalog: Musterweg loest jede Aufgabe in <= 5 Schritten', () => {
@@ -313,8 +330,87 @@ test('EMPFEHLUNGEN + MUSTER_TEXTE: jedes Muster abgedeckt, jede Zieldatei existi
   }
 });
 
-test('ASCII-only: Datendatei und Logikdatei ohne Nicht-ASCII-Zeichen', () => {
-  for (const f of ['waage-daten.js', 'waage-logik.js']) {
+// ---------- Kandidaten & Hilfe-Schritt ----------
+test('kandidaten_ops: jede Stufen-1-4-Aufgabe hat im Start >= 1 einseitigen Kandidaten', () => {
+  for (const a of alleAufgaben) {
+    if (a.stufe === 5) continue;
+    const ops = kandidaten_ops(a, a.start);
+    assert.ok(ops.some(o => o.seite !== 'beide'), a.id + ': kein einseitiger Kandidat');
+  }
+});
+
+test('kandidaten_ops: dedupliziert (opKey eindeutig)', () => {
+  for (const a of alleAufgaben) {
+    const keys = kandidaten_ops(a, a.start).map(opKey);
+    assert.strictEqual(new Set(keys).size, keys.length, a.id + ': doppelte Kandidaten');
+  }
+});
+
+test('kandidaten_ops: jeder musterweg-Schritt ist Kandidat seines Zwischenzustands', () => {
+  for (const a of alleAufgaben) {
+    let z = a.start;
+    for (const op of a.musterweg) {
+      const keys = kandidaten_ops(a, z).map(opKey);
+      assert.ok(keys.indexOf(opKey(op)) !== -1,
+        a.id + ': Schritt ' + opKey(op) + ' fehlt in Kandidaten von ' + JSON.stringify(z));
+      z = wende_an(z, op, a.stufe === 5);
+    }
+  }
+});
+
+test('naechsterSchritt loest alle 30 Aufgaben in <= 5 Schritten', () => {
+  for (const a of alleAufgaben) {
+    let z = a.start;
+    let schritte = 0;
+    while (!ist_geloest(z).geloest) {
+      const op = naechsterSchritt(z, a.stufe);
+      assert.ok(op, a.id + ': kein naechster Schritt bei ' + JSON.stringify(z));
+      z = wende_an(z, op, a.stufe === 5);
+      assert.ok(!z.fehler, a.id + ': naechsterSchritt scheitert: ' + z.fehler);
+      schritte++;
+      assert.ok(schritte <= 5, a.id + ': mehr als 5 Schritte');
+    }
+  }
+});
+
+// ---------- Empfehlungs-Policy ----------
+test('empfehlungs_hrefs: Policy-Tabelle (Schwelle ' + EMPFEHLUNGS_SCHWELLE + ' / alleSelbst / Dedup)', () => {
+  // 1 Vorkommen + alles selbst geloest -> keine Links
+  assert.deepStrictEqual(empfehlungs_hrefs({ 'einseitig': 1 }, true, null), []);
+  // 2 Vorkommen -> Link trotz alleSelbst
+  assert.deepStrictEqual(empfehlungs_hrefs({ 'einseitig': 2 }, true, null),
+    EMPFEHLUNGEN['einseitig']);
+  // 1 Vorkommen + Hilfe genutzt (nicht alles selbst) -> Link
+  assert.deepStrictEqual(empfehlungs_hrefs({ 'einseitig': 1 }, false, null),
+    EMPFEHLUNGEN['einseitig']);
+  // Dedup ueber Muster hinweg + Ausschlussliste
+  const beide = empfehlungs_hrefs({ 'zu-frueh-teilen': 2, 'teilen-vor-sammeln': 2 }, true, null);
+  assert.deepStrictEqual(beide, EMPFEHLUNGEN['zu-frueh-teilen']);
+  assert.deepStrictEqual(
+    empfehlungs_hrefs({ 'zu-frueh-teilen': 2 }, true, EMPFEHLUNGEN['zu-frueh-teilen']), []);
+});
+
+test('TRAINER_NAMEN: jeder EMPFEHLUNGEN-href hat einen Anzeigenamen', () => {
+  for (const m in EMPFEHLUNGEN) {
+    for (const href of EMPFEHLUNGEN[m]) {
+      assert.ok(typeof TRAINER_NAMEN[href] === 'string' && TRAINER_NAMEN[href].length > 0,
+        m + ': kein TRAINER_NAMEN-Eintrag fuer ' + href);
+    }
+  }
+});
+
+test('TEXTE: alle wende_an-Fehlercodes haben einen Fallback-Text', () => {
+  for (const code of ['einseitig', 'nicht-teilbar', 'negativ', 'unbekannte-art']) {
+    assert.ok(typeof TEXTE.fehler[code] === 'string' && TEXTE.fehler[code].length >= 10,
+      code + ': kein Fallback-Text');
+  }
+  // abgeleiteter einseitig-Fallback: unveraenderter Wortlaut fuer die UI-Tests
+  assert.ok(TEXTE.fehler['einseitig'].indexOf('nur eine Seite ver\u00e4ndert') !== -1,
+    'einseitig-Fallback verliert den Kern aus MUSTER_TEXTE');
+});
+
+test('ASCII-only: Daten-, Logik- und UI-Datei ohne Nicht-ASCII-Zeichen', () => {
+  for (const f of ['waage-daten.js', 'waage-logik.js', 'waage.js']) {
     const inhalt = fs.readFileSync(path.join(__dirname, f), 'utf8');
     const m = inhalt.match(/[^\x00-\x7F]/);
     assert.ok(!m, f + ': Nicht-ASCII-Zeichen gefunden: ' + JSON.stringify(m && m[0]));

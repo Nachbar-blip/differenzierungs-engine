@@ -109,7 +109,9 @@ def browser():
 @pytest.fixture
 def page(browser):
     """Fresh browser context + page per test (isoliert localStorage)."""
-    context = browser.new_context()
+    # reduced_motion: die Waage verkuerzt damit ihre Animationen (A11y-Pfad),
+    # fuer die anderen Suiten harmlos -> ganze Suite deutlich schneller.
+    context = browser.new_context(reduced_motion="reduce")
     page = context.new_page()
     yield page
     context.close()

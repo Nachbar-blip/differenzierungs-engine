@@ -20,8 +20,7 @@ from helpers import (setup_console_error_capture, kritische_fehler,
 REPO = pathlib.Path(__file__).resolve().parent.parent
 SPIEL = REPO / "spiele" / "waage.html"
 
-MINUS = "−"   # opLabel nutzt &minus;
-MAL = "·"     # opLabel nutzt &middot;
+MINUS = "−"   # Feedback-Texte nutzen &minus;
 
 
 # ===== Helfer =====
@@ -42,42 +41,22 @@ def _aufgabe(page, stufe_idx, aufgabe_idx):
     return page.evaluate(f"STUFEN[{stufe_idx}].aufgaben[{aufgabe_idx}]")
 
 
-def _op_label(op):
-    """Button-Beschriftung wie opLabel() in waage.js (Werte sind ganzzahlig)."""
-    art, w, seite = op["art"], op["wert"], op["seite"]
-    if art == "sub_c":
-        kern = (MINUS + str(w)) if w >= 0 else ("+" + str(-w))
-    elif art == "add_c":
-        kern = ("+" + str(w)) if w >= 0 else (MINUS + str(-w))
-    elif art == "sub_x":
-        kern = MINUS + ("" if w == 1 else str(w)) + "x"
-    elif art == "add_x":
-        kern = "+" + ("" if w == 1 else str(w)) + "x"
-    elif art == "div":
-        kern = ":" + str(w)
-    elif art == "mul":
-        kern = MAL + str(w)
-    else:
-        kern = "?"
-    wo = {"beide": "auf beiden Seiten", "links": "nur links",
-          "rechts": "nur rechts"}[seite]
-    return kern + " " + wo
-
-
 def _klick_op(page, op):
-    """Klickt den Operations-Button mit exakt passender Beschriftung.
+    """Klickt den Operations-Button ueber sein data-op-Attribut (art|wert|seite).
 
     Wartet vorher, bis die Buttons freigegeben sind (die Kipp-Animation
-    sperrt die Eingabe ~1,5 s -- auf die Freigabe warten statt sleep)."""
+    sperrt die Eingabe -- auf die Freigabe warten statt sleep)."""
     page.wait_for_selector("#opLeiste button:not([disabled])", timeout=10000)
-    label = _op_label(op)
-    buttons = page.locator("#opLeiste button")
-    for i in range(buttons.count()):
-        if buttons.nth(i).inner_text().strip() == label:
-            buttons.nth(i).click()
-            return
-    texte = [buttons.nth(i).inner_text() for i in range(buttons.count())]
-    pytest.fail(f"Op-Button {label!r} nicht gefunden; vorhanden: {texte}")
+    wert = op["wert"]
+    if isinstance(wert, float) and wert.is_integer():
+        wert = int(wert)
+    key = f"{op['art']}|{wert}|{op['seite']}"
+    btn = page.locator(f'#opLeiste button[data-op="{key}"]')
+    if btn.count() == 0:
+        vorhanden = page.eval_on_selector_all(
+            "#opLeiste button", "bs => bs.map(b => b.getAttribute('data-op'))")
+        pytest.fail(f"Op-Button {key!r} nicht gefunden; vorhanden: {vorhanden}")
+    btn.click()
 
 
 def _naechster_zustand(page, zustand, op, stufe):
@@ -211,8 +190,8 @@ def test_distraktor_add_und_mul(page):
     assert falle["text"][:30] in page.locator("#feedbackBereich").inner_text()
     assert _mitschrift_zeilen(page) == 1, "add_c-Distraktor hat den Zustand veraendert"
 
-    # mul: Stufe 2, Aufgabe 1
-    page.reload(wait_until="networkidle")
+    # mul: Stufe 2, Aufgabe 1 (domcontentloaded reicht: Assets sind gecacht)
+    page.reload(wait_until="domcontentloaded")
     page.wait_for_selector("#startScreen .stufe-karte", timeout=10000)
     _starte_stufe(page, 1)
     aufgabe = _aufgabe(page, 1, 0)
@@ -459,12 +438,19 @@ def test_letzte_stufe_kein_weiter_button(page):
 
 
 def test_localstorage_bleibt_leer(page):
-    """Vor und nach einer komplett gespielten Stufe: kein localStorage-Eintrag."""
+    """Vor und nach einer gespielten Aufgabe (inkl. Fehl-Op): kein
+    localStorage-Eintrag. Eine Aufgabe reicht -- mehr Spielzeit deckt
+    keine weiteren Schreibpfade ab."""
     errors = setup_console_error_capture(page)
     _lade(page)
     assert page.evaluate("Object.keys(localStorage).length") == 0, \
         "localStorage schon beim Laden befuellt"
-    _spiele_stufe(page, 0, falle_bei=(0,))
+    _starte_stufe(page, 0)
+    aufgabe = _aufgabe(page, 0, 0)
+    _klick_op(page, aufgabe["fallen_ops"][0]["op"])
+    page.wait_for_selector("#feedbackBereich .feedback-falsch", timeout=5000)
+    _loese_aufgabe(page, aufgabe)
+    _weiter(page)
     assert page.evaluate("Object.keys(localStorage).length") == 0, \
         "Spiel schreibt in localStorage"
     assert not kritische_fehler(errors), f"Konsolenfehler: {kritische_fehler(errors)}"

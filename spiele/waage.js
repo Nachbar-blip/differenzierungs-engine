@@ -1,6 +1,8 @@
 // Gleichungs-Waage "Balance" - UI-Schicht.
-// Nutzt STUFEN/EMPFEHLUNGEN/MUSTER_TEXTE (waage-daten.js) und
-// wende_an/ist_geloest/klassifiziere_fehlop (waage-logik.js).
+// Daten: STUFEN/EMPFEHLUNGEN/MUSTER_TEXTE/TRAINER_NAMEN/TEXTE (waage-daten.js).
+// Logik: wende_an/ist_geloest/klassifiziere_fehlop + kandidaten_ops/
+// naechsterSchritt (Prioritaetsliste), Notation (opLabel/opTex/zustandTex/
+// formatHtml) und Empfehlungs-Policy (empfehlungs_hrefs) aus waage-logik.js.
 // WICHTIG: Alle JS-Strings sind ASCII-only; Umlaute nur als HTML-Entities
 // (werden via innerHTML gerendert) oder \u-Escapes.
 // Kontrakt der Logik-Schicht: Distraktor-Arten (add_c, mul, ...) werden NIE
@@ -18,19 +20,12 @@
   var ARM = 200;               // halbe Balkenlaenge
   var KIPP_WINKEL = 11;        // Grad der Was-waere-wenn-Kippung
 
-  // Anzeigenamen fuer Empfehlungs-Links (Entities erlaubt, Strings ASCII)
-  var TRAINER_NAMEN = {
-    '../trainer/7-gleichungen-linear.html': 'Lineare Gleichungen (Klasse 7)',
-    '../trainer/7-terme-vereinfachen.html': 'Terme vereinfachen (Klasse 7)'
-  };
-
-  // Standard-Texte, falls eine Fehl-Op keinen kuratierten Fallen-Text hat
-  var FEHLER_TEXTE = {
-    'einseitig': 'Du hast nur eine Seite ver&auml;ndert &ndash; das Gleichgewicht geht verloren. Immer beide Seiten gleich behandeln.',
-    'nicht-teilbar': 'So l&auml;sst sich nicht alles in gleich gro&szlig;e Portionen aufteilen &ndash; es entstehen Bruchst&uuml;cke. Versuch erst etwas anderes.',
-    'negativ': 'So viel liegt gar nicht auf der Waage &ndash; du kannst nicht mehr wegnehmen, als da ist.',
-    'unbekannte-art': 'Dieser Schritt bringt dich nicht weiter &ndash; er macht die Gleichung voller statt leerer.'
-  };
+  // A11y: bei reduzierter Bewegung Animations-Dauern/-Pausen auf ~0
+  var REDUZIERT = typeof matchMedia === 'function' &&
+    matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var KIPP_DAUER = REDUZIERT ? 1 : 350;
+  var KIPP_PAUSE = REDUZIERT ? 0 : 800;
+  var BRUCH_DAUER = REDUZIERT ? 0 : 1200;
 
   // ===== Spielzustand =====
   var stufeIdx = 0;
@@ -42,16 +37,14 @@
   var gesperrt = false;        // Eingabe gesperrt (Animation/Erfolg)
   var geloestFlag = false;
   var fehlVersuche = 0;        // Fehl-Ops in der aktuellen Aufgabe
-  var musterDieseAufgabe = {}; // Muster max. 1x je Aufgabe zaehlen
   var fehlKatAufgabe = {};     // Fehl-Kategorie -> Anzahl in DIESER Aufgabe (Eskalation)
-  var musterStufe = {};
   var musterProStufe = {};    // stufeIdx -> Muster-Zaehler; Replay UEBERSCHREIBT (keine Doppelzaehlung)
   var loesungGezeigt = false;  // "Zeig mir den naechsten Schritt" genutzt
   var selbstGeloestStufe = 0;
-  var hilfeGenutztStufe = 0;
   var aktiverTab = 'waage';
   var animId = null;
   var kippTimer = null;
+  var bruchTimer = null;
 
   // DOM-Referenzen
   var el = {};
@@ -83,114 +76,18 @@
     return n;
   }
 
-  // Deterministischer String-Hash (Button-Reihenfolge pro Aufgabe stabil mischen)
-  function hashStr(s) {
-    var h = 5381;
-    for (var i = 0; i < s.length; i++) h = ((h * 33) ^ s.charCodeAt(i)) >>> 0;
-    return h;
-  }
-
-  function opKey(op) { return op.art + '|' + op.wert + '|' + op.seite; }
-
-  function ggt(a, b) { while (b) { var t = a % b; a = b; b = t; } return a; }
-
-  // Zahl fuer KaTeX: ganzzahlig direkt, sonst Dezimalkomma via {,}
-  function formatTex(v) {
-    if (Number.isInteger(v)) return String(v);
-    return String(Math.round(v * 1000) / 1000).replace('.', '{,}');
-  }
-
-  // Zahl fuer HTML-Text: Dezimalkomma, echtes Minus
-  function formatHtml(v) {
-    var s = String(Math.round(v * 1000) / 1000).replace('.', ',');
-    return s.replace('-', '&minus;');
-  }
-
   function katexInto(node, tex) {
+    node.innerHTML = katexHtml(tex);
+  }
+
+  function katexHtml(tex) {
     if (typeof katex !== 'undefined') {
-      try { katex.render(tex, node, { throwOnError: false }); return; } catch (e) { /* Fallback unten */ }
+      try { return katex.renderToString(tex, { throwOnError: false }); }
+      catch (e) { /* Fallback unten */ }
     }
-    node.textContent = tex;
-  }
-
-  // ===== Gleichung als LaTeX =====
-
-  function seiteTex(x, c) {
-    var teile = [];
-    if (x !== 0) teile.push((x === 1 ? '' : formatTex(x)) + 'x');
-    if (c !== 0) {
-      if (teile.length === 0) teile.push(formatTex(c));
-      else teile.push((c > 0 ? '+ ' : '- ') + formatTex(Math.abs(c)));
-    }
-    if (teile.length === 0) return '0';
-    return teile.join(' ');
-  }
-
-  function zustandTex(z) {
-    return seiteTex(z.xL, z.cL) + ' = ' + seiteTex(z.xR, z.cR);
-  }
-
-  // Op-Notation fuer die Mitschrift (nur anwendbare Arten: sub_c, sub_x, div)
-  function opTex(op) {
-    if (op.art === 'sub_c') return op.wert >= 0 ? '- ' + formatTex(op.wert) : '+ ' + formatTex(-op.wert);
-    if (op.art === 'sub_x') return '- ' + (op.wert === 1 ? '' : formatTex(op.wert)) + 'x';
-    if (op.art === 'div') return ': ' + formatTex(op.wert);
-    return '';
-  }
-
-  // Button-Beschriftung (alle Arten inkl. Distraktoren)
-  function opLabel(op) {
-    var kern;
-    if (op.art === 'sub_c') kern = op.wert >= 0 ? '&minus;' + op.wert : '+' + (-op.wert);
-    else if (op.art === 'add_c') kern = op.wert >= 0 ? '+' + op.wert : '&minus;' + (-op.wert);
-    else if (op.art === 'sub_x') kern = '&minus;' + (op.wert === 1 ? '' : op.wert) + 'x';
-    else if (op.art === 'add_x') kern = '+' + (op.wert === 1 ? '' : op.wert) + 'x';
-    else if (op.art === 'div') kern = ':' + op.wert;
-    else if (op.art === 'mul') kern = '&middot;' + op.wert;
-    else kern = '?';
-    var wo = op.seite === 'beide' ? 'auf beiden Seiten'
-      : (op.seite === 'links' ? 'nur links' : 'nur rechts');
-    return kern + ' ' + wo;
-  }
-
-  // ===== Operations-Kandidaten aus dem Zustand ableiten =====
-
-  function standardOps(z, stufe) {
-    var ops = [];
-    var mx = Math.min(z.xL, z.xR);
-    if (mx > 0) ops.push({ art: 'sub_x', wert: mx, seite: 'beide' });
-    if (stufe === 5) {
-      // x-Seite bestimmen und deren Konstante entfernen (darf negativ sein).
-      // Tie xL === xR: links gewaehlt - harmlos, denn dann deckt sub_x (mx > 0)
-      // den richtigen naechsten Schritt ab.
-      var xsL = z.xL >= z.xR;
-      var c5 = xsL ? z.cL : z.cR;
-      if (c5 !== 0) ops.push({ art: 'sub_c', wert: c5, seite: 'beide' });
-      // Teilen erst, wenn die x-Seite nur noch x-Kisten traegt
-      var a5 = (z.xR === 0 && z.cL === 0) ? z.xL : ((z.xL === 0 && z.cR === 0) ? z.xR : 0);
-      if (a5 > 1) ops.push({ art: 'div', wert: a5, seite: 'beide' });
-    } else {
-      var mc = Math.min(z.cL, z.cR);
-      if (mc > 0) ops.push({ art: 'sub_c', wert: mc, seite: 'beide' });
-      // div nur, wenn ALLES glatt aufgeht (ggT aller belegten Felder)
-      var g = 0;
-      [z.xL, z.cL, z.xR, z.cR].forEach(function (v) { if (v !== 0) g = ggt(g, Math.abs(v)); });
-      if (g > 1) ops.push({ art: 'div', wert: g, seite: 'beide' });
-    }
-    return ops;
-  }
-
-  // Ein korrekter Loesungsschritt aus dem AKTUELLEN Zustand ("Zeig mir ..."):
-  // x sammeln -> Konstante der x-Seite raeumen -> aufteilen.
-  function naechsterSchritt(z, stufe) {
-    var mx = Math.min(z.xL, z.xR);
-    if (mx > 0) return { art: 'sub_x', wert: mx, seite: 'beide' };
-    var xsL = z.xL > 0;
-    var c = xsL ? z.cL : z.cR;
-    if (c !== 0 && (stufe === 5 || c > 0)) return { art: 'sub_c', wert: c, seite: 'beide' };
-    var a = xsL ? z.xL : z.xR;
-    if (a > 1) return { art: 'div', wert: a, seite: 'beide' };
-    return null;
+    var div = document.createElement('div');
+    div.textContent = tex;
+    return div.innerHTML;
   }
 
   // ===== Waage (SVG) =====
@@ -279,26 +176,33 @@
   // SVG-Rotation: positiver Winkel hebt das linke Balkenende (y-Achse zeigt nach unten).
   function kippAnimation(kippt, cb) {
     var ziel = kippt === 'links' ? KIPP_WINKEL : -KIPP_WINKEL;
-    animiereNeigung(0, ziel, 350, function () {
-      kippTimer = setTimeout(function () { animiereNeigung(ziel, 0, 350, cb); }, 800);
+    animiereNeigung(0, ziel, KIPP_DAUER, function () {
+      kippTimer = setTimeout(function () { animiereNeigung(ziel, 0, KIPP_DAUER, cb); }, KIPP_PAUSE);
     });
   }
 
-  // Kurze "Bruchstuecke"-Andeutung (zu frueh geteilt): rote Scherben rieseln
+  // Kurze "Bruchstuecke"-Andeutung (zu frueh geteilt): rote Scherben rieseln.
+  // Alle Scherben einer Seite in EINER Gruppe, EIN Aufraeum-Timer (dessen ID
+  // cancelt zeigeAufgabe beim Aufgabenwechsel mit).
   function zeigeBruchstuecke() {
+    if (bruchTimer) { clearTimeout(bruchTimer); bruchTimer = null; }
+    var gruppen = [];
     ['L', 'R'].forEach(function (s) {
+      var g = svgEl('g', {});
       for (var i = 0; i < 4; i++) {
         var px = (i - 1.5) * 26, py = 46;
-        var p = svgEl('polygon', {
+        g.appendChild(svgEl('polygon', {
           'class': 'wg-bruch',
           points: px + ',' + py + ' ' + (px + 9) + ',' + (py + 13) + ' ' + (px - 6) + ',' + (py + 14)
-        });
-        panG[s].g.appendChild(p);
-        setTimeout((function (node) {
-          return function () { if (node.parentNode) node.parentNode.removeChild(node); };
-        })(p), 1200);
+        }));
       }
+      panG[s].g.appendChild(g);
+      gruppen.push(g);
     });
+    bruchTimer = setTimeout(function () {
+      bruchTimer = null;
+      gruppen.forEach(function (g) { if (g.parentNode) g.parentNode.removeChild(g); });
+    }, BRUCH_DAUER);
   }
 
   // ===== Skizze (ikonisch) =====
@@ -328,25 +232,33 @@
   }
 
   // ===== Mitschrift (symbolisch) =====
+  // Inkrementell: zeigeAufgabe leert und setzt die Startzeile, jeder Schritt
+  // rendert nur die Vorzeile neu (Op-Anhang) und haengt EINE Zeile an.
 
-  function renderMitschrift() {
+  function mitschriftZeile(z) {
+    var zeile = document.createElement('div');
+    zeile.className = 'mitschrift-zeile';
+    katexInto(zeile, zustandTex(z));
+    el.mitschriftGleichung.appendChild(zeile);
+    return zeile;
+  }
+
+  function mitschriftReset() {
     el.mitschriftGleichung.innerHTML = '';
-    for (var i = 0; i < history.length; i++) {
-      var zeile = document.createElement('div');
-      zeile.className = 'mitschrift-zeile';
-      var tex = zustandTex(history[i]);
-      if (i < opsHist.length) tex += ' \\;\\big|\\; ' + opTex(opsHist[i]);
-      else if (i === history.length - 1 && ist_geloest(history[i]).geloest) {
-        zeile.className += ' mitschrift-ergebnis';
-      }
-      katexInto(zeile, tex);
-      el.mitschriftGleichung.appendChild(zeile);
-    }
+    mitschriftZeile(zustand);
+  }
+
+  function mitschriftSchritt(op, neu, geloest) {
+    var vor = el.mitschriftGleichung.lastElementChild;
+    katexInto(vor, zustandTex(history[history.length - 2]) + ' \\;\\big|\\; ' + opTex(op));
+    var zeile = mitschriftZeile(neu);
+    if (geloest) zeile.className += ' mitschrift-ergebnis';
   }
 
   function renderMini() {
-    katexInto(miniWaage, zustandTex(zustand));
-    katexInto(miniSkizze, zustandTex(zustand));
+    var html = katexHtml(zustandTex(zustand)); // 1x rendern, 2x einsetzen
+    miniWaage.innerHTML = html;
+    miniSkizze.innerHTML = html;
   }
 
   // ===== Operations-Buttons =====
@@ -354,41 +266,29 @@
   function renderButtons() {
     el.opLeiste.innerHTML = '';
     if (geloestFlag) return;
-    var ops = standardOps(zustand, aufgabe.stufe);
-    var vorhanden = {};
-    ops.forEach(function (o) { vorhanden[opKey(o)] = true; });
-    (aufgabe.fallen_ops || []).forEach(function (f) {
-      if (!vorhanden[opKey(f.op)]) { vorhanden[opKey(f.op)] = true; ops.push(f.op); }
-    });
-    // Einseitig-Diagnose ueberall: gibt es noch keinen einseitigen Button,
-    // die erste Standard-Op als "nur links"-Variante anbieten (Dedup via opKey).
-    // klassifiziere_fehlop liefert dafuer das Fallback-Muster "einseitig".
-    var hatEinseitig = ops.some(function (o) { return o.seite !== 'beide'; });
-    if (!hatEinseitig) {
-      var std = standardOps(zustand, aufgabe.stufe);
-      if (std.length > 0) {
-        var eins = { art: std[0].art, wert: std[0].wert, seite: 'links' };
-        if (!vorhanden[opKey(eins)]) { vorhanden[opKey(eins)] = true; ops.push(eins); }
-      }
-    }
-    // Deterministisch gemischt: Seed aus Aufgaben-id + Op-Schluessel
-    ops.sort(function (a, b) {
-      return hashStr(aufgabe.id + '#' + opKey(a)) - hashStr(aufgabe.id + '#' + opKey(b));
-    });
-    ops.forEach(function (op) {
+    kandidaten_ops(aufgabe, zustand).forEach(function (op) {
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'op-btn';
+      b.setAttribute('data-op', opKey(op));
       b.innerHTML = opLabel(op);
       b.disabled = gesperrt;
-      b.addEventListener('click', function () { opKlick(op); });
       el.opLeiste.appendChild(b);
     });
   }
 
-  function sperren() {
-    el.opLeiste.querySelectorAll('button').forEach(function (b) { b.disabled = gesperrt; });
-    el.btnNaechsterSchritt.disabled = gesperrt;
+  // Delegierter Click-Listener (ein Listener statt einer pro Button)
+  el.opLeiste.addEventListener('click', function (ev) {
+    var b = ev.target.closest('button.op-btn');
+    if (!b || b.disabled) return;
+    var teile = b.getAttribute('data-op').split('|');
+    opKlick({ art: teile[0], wert: Number(teile[1]), seite: teile[2] });
+  });
+
+  function setGesperrt(v) {
+    gesperrt = v;
+    el.opLeiste.querySelectorAll('button').forEach(function (b) { b.disabled = v; });
+    el.btnNaechsterSchritt.disabled = v;
   }
 
   // ===== Rendering-Sammler =====
@@ -400,7 +300,6 @@
       setNeigung(0);
     }
     renderSkizze();
-    renderMitschrift();
     renderMini();
     renderButtons();
   }
@@ -430,9 +329,8 @@
   function starteStufe(idx) {
     stufeIdx = idx;
     aufgabeIdx = 0;
-    musterStufe = {};
+    musterProStufe[stufeIdx] = {}; // Replay UEBERSCHREIBT den Stufen-Zaehler
     selbstGeloestStufe = 0;
-    hilfeGenutztStufe = 0;
     zeigeAufgabe();
     zeigeScreen('spiel');
   }
@@ -440,6 +338,7 @@
   function zeigeAufgabe() {
     if (animId) { cancelAnimationFrame(animId); animId = null; }
     if (kippTimer) { clearTimeout(kippTimer); kippTimer = null; }
+    if (bruchTimer) { clearTimeout(bruchTimer); bruchTimer = null; }
     aufgabe = STUFEN[stufeIdx].aufgaben[aufgabeIdx];
     zustand = aufgabe.start;
     history = [zustand];
@@ -447,7 +346,6 @@
     gesperrt = false;
     geloestFlag = false;
     fehlVersuche = 0;
-    musterDieseAufgabe = {};
     fehlKatAufgabe = {};
     loesungGezeigt = false;
     el.stufeInfo.textContent = 'Stufe ' + (stufeIdx + 1) + ': ' + STUFEN[stufeIdx].name;
@@ -460,16 +358,16 @@
     el.tabWaage.disabled = !aufgabe.waage;
     el.tabWaage.title = aufgabe.waage ? '' : 'Eine Waage kann keine negativen Zahlen wiegen';
     el.stufe5Hinweis.hidden = aufgabe.waage;
-    if (!aufgabe.waage && aktiverTab === 'waage') setTab('gleichung');
-    else setTab(aktiverTab);
+    setTab(!aufgabe.waage && aktiverTab === 'waage' ? 'gleichung' : aktiverTab);
 
     el.aufgabeAnzeige.innerHTML = 'L&ouml;se die Gleichung ';
     var span = document.createElement('span');
     el.aufgabeAnzeige.appendChild(span);
-    katexInto(span, aufgabe.anzeige);
+    katexInto(span, zustandTex(aufgabe.start));
 
     if (aufgabe.waage) baueWaage();
     else el.waageWrap.innerHTML = '';
+    mitschriftReset();
     renderZustand(false);
   }
 
@@ -492,32 +390,27 @@
 
   function fehlOp(op, muster, res) {
     fehlVersuche++;
-    if (muster && !musterDieseAufgabe[muster]) { // je Aufgabe max. 1x zaehlen
-      musterDieseAufgabe[muster] = true;
+    // Muster je Aufgabe max. 1x zaehlen. fehlKatAufgabe reicht als Duplikat-
+    // Merker: eine Schluesselkollision Muster vs. fehler-Code ist unmoeglich,
+    // denn der einzige gemeinsame Schluessel ist "einseitig" - und
+    // res.fehler === "einseitig" tritt nur bei seite !== "beide" auf, wo
+    // klassifiziere_fehlop immer ein Muster liefert (kat === muster).
+    var musterStufe = musterProStufe[stufeIdx];
+    if (muster && !fehlKatAufgabe[muster]) {
       musterStufe[muster] = (musterStufe[muster] || 0) + 1;
     }
     if (fehlVersuche >= 3) el.btnNaechsterSchritt.hidden = false;
-    var text = fallenText(op) || FEHLER_TEXTE[res.fehler] || FEHLER_TEXTE['unbekannte-art'];
+    var text = fallenText(op) || TEXTE.fehler[res.fehler];
     // Eskalation: dieselbe Fehl-Kategorie zum 2. Mal in DIESER Aufgabe
     var kat = muster || res.fehler;
     fehlKatAufgabe[kat] = (fehlKatAufgabe[kat] || 0) + 1;
-    if (fehlKatAufgabe[kat] >= 2) {
-      text = '<strong>Das war schon mal die gleiche Falle.</strong> Tipp: Schau, was auf ' +
-        'BEIDEN Seiten passiert &ndash; oder wirf einen Blick in den Gleichung-Tab.<br>' + text;
-    }
+    if (fehlKatAufgabe[kat] >= 2) text = TEXTE.eskalation + text;
 
     if (res.fehler === 'einseitig' && aufgabe.waage) {
       // kippt = Seite, die leichter wuerde -> geht nach OBEN
-      var seiteTxt = res.kippt === 'links'
-        ? 'Die linke Seite w&uuml;rde leichter und ginge nach oben.'
-        : 'Die rechte Seite w&uuml;rde leichter und ginge nach oben.';
-      gesperrt = true;
-      sperren();
-      zeigeFeedback('falsch', 'Die Waage kippt!', seiteTxt + '<br>' + text, false);
-      kippAnimation(res.kippt, function () {
-        gesperrt = false;
-        sperren();
-      });
+      setGesperrt(true);
+      zeigeFeedback('falsch', 'Die Waage kippt!', TEXTE.kipp[res.kippt] + '<br>' + text, false);
+      kippAnimation(res.kippt, function () { setGesperrt(false); });
     } else if (res.fehler === 'nicht-teilbar' && aufgabe.waage) {
       zeigeBruchstuecke();
       zeigeFeedback('falsch', 'Das gibt Bruchst&uuml;cke!', text, false);
@@ -537,14 +430,12 @@
       el.btnNaechsterSchritt.hidden = true;
     }
     renderZustand(true);
+    mitschriftSchritt(op, neu, g.geloest);
     if (g.geloest) {
       var n = formatHtml(g.loesung);
-      var satz = aufgabe.waage
-        ? 'x = ' + n + ' &ndash; die Kiste wiegt ' + n + '!'
-        : 'x = ' + n + ' &ndash; auch ohne Waage sicher gel&ouml;st!';
-      var zusatz = viaHilfe || loesungGezeigt
-        ? 'Du hast dir Schritte zeigen lassen &ndash; beim n&auml;chsten Mal schaffst du es allein.'
-        : 'Stark, das hast du selbst geschafft!';
+      var satz = (aufgabe.waage ? TEXTE.geloestWaage : TEXTE.geloestOhneWaage)
+        .replace(/\{n\}/g, n);
+      var zusatz = viaHilfe || loesungGezeigt ? TEXTE.geloestMitHilfe : TEXTE.geloestSelbst;
       zeigeFeedback('richtig', 'Gel&ouml;st!', satz + '<br>' + zusatz, true);
     }
   }
@@ -580,8 +471,7 @@
 
   function naechsteAufgabe() {
     if (animId) { cancelAnimationFrame(animId); animId = null; }
-    if (loesungGezeigt) hilfeGenutztStufe++;
-    else selbstGeloestStufe++;
+    if (!loesungGezeigt) selbstGeloestStufe++;
     aufgabeIdx++;
     if (aufgabeIdx >= STUFEN[stufeIdx].aufgaben.length) {
       zeigeAuswertung();
@@ -604,51 +494,22 @@
     return gefunden ? html : '';
   }
 
-  // Empfehlungs-Schwelle: Links nur fuer Muster mit >= 2 Vorkommen ODER wenn
-  // die Stufe nicht komplett selbst geloest wurde. Die Muster-LISTE (musterListeHtml)
-  // bleibt davon unberuehrt und zeigt weiterhin alles.
-  function filterEmpfehlung(zaehler, alleSelbst) {
-    var res = {};
-    for (var m in zaehler) {
-      if (zaehler[m] >= 2 || !alleSelbst) res[m] = zaehler[m];
-    }
-    return res;
-  }
-
-  // ausschluss: hrefs, die schon woanders angezeigt werden (Dedup Stufen-/Gesamt-Block)
-  function empfehlungenHtml(zaehler, ausschluss) {
-    var links = [], gesehen = {};
-    for (var h in (ausschluss || {})) gesehen[h] = true;
-    for (var m in zaehler) {
-      if (!zaehler[m] || !EMPFEHLUNGEN[m]) continue;
-      EMPFEHLUNGEN[m].forEach(function (href) {
-        if (gesehen[href]) return;
-        gesehen[href] = true;
-        links.push('<a class="wg-outline" href="' + href + '">' + (TRAINER_NAMEN[href] || href) + '</a>');
-      });
-    }
+  // Policy (Schwelle + Dedup) liegt in empfehlungs_hrefs (waage-logik.js);
+  // hier werden nur noch die <a>-Tags gebaut.
+  function empfehlungenHtml(zaehler, alleSelbst, ausschluss) {
+    var links = empfehlungs_hrefs(zaehler, alleSelbst, ausschluss).map(function (href) {
+      return '<a class="wg-outline" href="' + href + '">' + (TRAINER_NAMEN[href] || href) + '</a>';
+    });
     if (links.length === 0) return '';
     return '<div class="empfehlung-block"><h3>Diese Trainer helfen dir weiter:</h3>' + links.join('') + '</div>';
-  }
-
-  function empfehlungsHrefs(zaehler) {
-    var hrefs = {};
-    for (var m in zaehler) {
-      if (!zaehler[m] || !EMPFEHLUNGEN[m]) continue;
-      EMPFEHLUNGEN[m].forEach(function (href) { hrefs[href] = true; });
-    }
-    return hrefs;
   }
 
   function zeigeAuswertung() {
     var stufe = STUFEN[stufeIdx];
     var letzteStufe = stufeIdx >= STUFEN.length - 1;
-    // Replay einer Stufe UEBERSCHREIBT deren Zaehler; Gesamt wird daraus abgeleitet
-    musterProStufe[stufeIdx] = musterStufe;
+    var musterStufe = musterProStufe[stufeIdx];
     var musterGesamt = {};
-    var gespielteStufen = 0;
     for (var si in musterProStufe) {
-      gespielteStufen++;
       for (var ms in musterProStufe[si]) {
         musterGesamt[ms] = (musterGesamt[ms] || 0) + musterProStufe[si][ms];
       }
@@ -657,13 +518,14 @@
 
     var liste = musterListeHtml(musterStufe);
     var anzahl = stufe.aufgaben.length;
+    var hilfeGenutzt = anzahl - selbstGeloestStufe; // jede Aufgabe: selbst ODER mit Hilfe
     var alleSelbst = selbstGeloestStufe >= anzahl;
     var erfolgSatz = alleSelbst
       ? '<p class="wg-loesungstext">Alle ' + anzahl + ' Aufgaben hast du selbst gel&ouml;st &ndash; super!</p>'
       : '<p class="wg-loesungstext">' + selbstGeloestStufe + ' von ' + anzahl +
         ' Aufgaben hast du selbst gel&ouml;st.</p>';
-    var hilfeSatz = hilfeGenutztStufe > 0
-      ? '<p class="wg-loesungstext">Bei ' + hilfeGenutztStufe + ' von ' + anzahl +
+    var hilfeSatz = hilfeGenutzt > 0
+      ? '<p class="wg-loesungstext">Bei ' + hilfeGenutzt + ' von ' + anzahl +
         ' Aufgaben hast du dir Schritte zeigen lassen &ndash; auch so lernt man!</p>'
       : '';
     var html;
@@ -675,26 +537,25 @@
       // Stufe 5 laeuft ohne Waage -> gleichungsbezogene Formulierung
       var trickser = stufe.nr === 5 ? 'die Gleichung' : 'die Waage';
       html = '<p class="wg-loesungstext">Hier hat dich ' + trickser + ' ausgetrickst:</p>' + liste +
-        erfolgSatz + hilfeSatz + empfehlungenHtml(filterEmpfehlung(musterStufe, alleSelbst));
+        erfolgSatz + hilfeSatz + empfehlungenHtml(musterStufe, alleSelbst, null);
     }
     el.auswertungInhalt.innerHTML = html;
 
     // Gesamt-Block ab der zweiten gespielten Stufe (Empfehlungs-Dedup!)
-    if (gespielteStufen > 1) {
+    if (Object.keys(musterProStufe).length > 1) {
       var gesamtListe = musterListeHtml(musterGesamt);
-      var schonGezeigt = liste === '' ? {} : empfehlungsHrefs(filterEmpfehlung(musterStufe, alleSelbst));
+      var schonGezeigt = liste === '' ? [] : empfehlungs_hrefs(musterStufe, alleSelbst, null);
       el.auswertungGesamt.innerHTML = '<h3>Alle Stufen zusammen:</h3>' +
         (gesamtListe === ''
           ? '<div class="auswertung-positiv">Bisher keine einzige Fehl-Umformung &ndash; du formst um wie ein Profi!</div>'
-          : gesamtListe + empfehlungenHtml(filterEmpfehlung(musterGesamt, alleSelbst), schonGezeigt));
+          : gesamtListe + empfehlungenHtml(musterGesamt, alleSelbst, schonGezeigt));
     } else {
       el.auswertungGesamt.innerHTML = '';
     }
 
-    // hidden reicht nicht: .btn-weiter (spirale.css) setzt display:inline-block ->
-    // zusaetzlich per style.display UND scoped [hidden]-Regel in waage.css.
+    // [hidden] traegt: waage.css setzt scoped "#app [hidden] { display:none !important }"
+    // gegen .btn-weiter aus spirale.css (display:inline-block).
     el.btnNaechsteStufe.hidden = letzteStufe;
-    el.btnNaechsteStufe.style.display = letzteStufe ? 'none' : '';
     el.btnNaechsteStufe.textContent = letzteStufe ? '' : 'Weiter zu Stufe ' + (stufeIdx + 2);
     zeigeScreen('auswertung');
   }
