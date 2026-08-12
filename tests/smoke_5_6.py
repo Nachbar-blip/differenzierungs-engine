@@ -40,9 +40,28 @@ def _kritische_fehler(errors):
             and "favicon" not in e.lower()]
 
 
+def _ist_nicht_ganzzahlig(loesung):
+    """True bei Dezimal-Loesungen (z. B. 3.5) — die brauchen Komma-Eingabe."""
+    return isinstance(loesung, float) and loesung != int(loesung)
+
+
 def _finde_aufgabe(aufgaben, typ, mit_mathe=False):
-    """Erste Aufgabe des Typs; mit_mathe bevorzugt eine mit Inline-KaTeX."""
+    """Erste Aufgabe des Typs.
+
+    Bevorzugungen (mit Fallback auf die erstbeste, falls keine existiert):
+    - numerisch: nicht-ganzzahlige Loesung, damit die Komma-Eingabe
+      (Punkt→Komma) wirklich geprueft wird und nicht still leer laeuft
+    - mit_mathe: Frage mit Inline-KaTeX
+    """
     passend = [a for a in aufgaben if a["typ"] == typ]
+    if typ == "numerisch":
+        komma = [a for a in passend if _ist_nicht_ganzzahlig(a.get("loesung"))]
+        if mit_mathe:
+            for a in komma:
+                if "\\(" in a.get("frage", ""):
+                    return a
+        if komma:
+            return komma[0]
     if mit_mathe:
         for a in passend:
             if "\\(" in a.get("frage", ""):
@@ -74,7 +93,8 @@ def test_trainer_smoke(page, pfad):
     assert num is not None, f"{pfad.name}: keine numerische Aufgabe vorhanden"
     _zeige_aufgabe(page, pfad, num, aufgaben)
     inp = page.wait_for_selector("#antwortInput", timeout=10000)
-    # 2. KaTeX gerendert (Aufgabe mit Mathe wurde bevorzugt gewaehlt)
+    # 2. KaTeX gerendert (Aufgabe mit Mathe wurde bevorzugt gewaehlt;
+    #    falls kein Mathe in der Frage: nur Fehlerfreiheit geprueft)
     if "\\(" in num.get("frage", ""):
         page.wait_for_selector(".katex", state="attached", timeout=10000)
     assert count_katex_errors(page) == 0, f"{pfad.name}: KaTeX-Render-Fehler"
