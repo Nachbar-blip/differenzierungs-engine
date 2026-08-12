@@ -8,7 +8,7 @@ const path = require('path');
 const daten = require(path.join(__dirname, 'zahlenstrahl-daten.js'));
 const logik = require(path.join(__dirname, 'zahlenstrahl-logik.js'));
 const { STUFEN, EMPFEHLUNGEN } = daten;
-const { TOLERANZ_ANTEIL, wertZuPos, posZuWert, klassifiziere } = logik;
+const { TOLERANZ_ANTEIL, MAX_HILFSSTRICHE, toleranz, wertZuPos, posZuWert, klassifiziere } = logik;
 
 let anzahl = 0;
 function test(name, fn) {
@@ -155,7 +155,7 @@ test('Katalog: Fallen im Strahlbereich, mit Muster und Text', () => {
 
 test('Katalog: keine Falle innerhalb 2x Toleranz der Loesung', () => {
   for (const a of alleAufgaben) {
-    const tol = (a.strahl.max - a.strahl.min) * TOLERANZ_ANTEIL;
+    const tol = toleranz(a.strahl);
     for (const f of a.fallen || []) {
       assert.ok(Math.abs(f.pos - a.zahl) > 2 * tol,
         a.id + ': Falle ' + f.pos + ' zu nah an Loesung ' + a.zahl);
@@ -165,28 +165,33 @@ test('Katalog: keine Falle innerhalb 2x Toleranz der Loesung', () => {
 
 test('Katalog: keine Loesung innerhalb Toleranz von strahl.min (Marker-Start nie "richtig")', () => {
   for (const a of alleAufgaben) {
-    const tol = (a.strahl.max - a.strahl.min) * TOLERANZ_ANTEIL;
+    const tol = toleranz(a.strahl);
     assert.ok(Math.abs(a.zahl - a.strahl.min) > tol,
       a.id + ': zahl ' + a.zahl + ' liegt in der Richtig-Toleranz der Startposition ' + a.strahl.min);
   }
 });
 
-test('Katalog: hilfe gueltig (typ, unterteile teilt Spannweite, max. 25 Striche)', () => {
+test('Katalog: hilfe gueltig (typ, unterteile teilt Spannweite, max. Hilfsstriche)', () => {
   const TYPEN = ['natuerlich', 'dezimal', 'bruch'];
   for (const a of alleAufgaben) {
     assert.ok(TYPEN.indexOf(a.hilfe.typ) !== -1, a.id + ': hilfe.typ ungueltig: ' + a.hilfe.typ);
     assert.ok(a.hilfe.unterteile > 0, a.id + ': hilfe.unterteile <= 0');
     const n = (a.strahl.max - a.strahl.min) / a.hilfe.unterteile;
     assert.ok(Math.abs(n - Math.round(n)) < 1e-6, a.id + ': unterteile ' + a.hilfe.unterteile + ' teilt Spannweite nicht');
-    assert.ok(Math.round(n) <= 25, a.id + ': ' + Math.round(n) + ' Hilfsstriche (> 25, unlesbar)');
+    assert.ok(Math.round(n) <= MAX_HILFSSTRICHE, a.id + ': ' + Math.round(n) + ' Hilfsstriche (> ' + MAX_HILFSSTRICHE + ', unlesbar)');
   }
 });
 
-test('Katalog: Bruch-Aufgaben zeigen \\tfrac oder \\frac', () => {
+test('Katalog: Bruch-Aufgaben haben konsistente zaehler/nenner(/ganze)-Felder', () => {
   const brueche = alleAufgaben.filter(a => a.hilfe.typ === 'bruch');
   assert.ok(brueche.length >= 8, 'zu wenige Bruch-Aufgaben: ' + brueche.length);
   for (const a of brueche) {
-    assert.ok(/\\t?frac/.test(a.anzeige), a.id + ': anzeige ohne frac: ' + a.anzeige);
+    assert.ok(Number.isInteger(a.zaehler) && a.zaehler > 0, a.id + ': zaehler ungueltig: ' + a.zaehler);
+    assert.ok(Number.isInteger(a.nenner) && a.nenner > 0, a.id + ': nenner ungueltig: ' + a.nenner);
+    const ganze = a.ganze || 0;
+    assert.ok(Number.isInteger(ganze) && ganze >= 0, a.id + ': ganze ungueltig: ' + a.ganze);
+    assert.ok(Math.abs(ganze + a.zaehler / a.nenner - a.zahl) < EPS,
+      a.id + ': ' + ganze + ' + ' + a.zaehler + '/' + a.nenner + ' != ' + a.zahl);
   }
 });
 

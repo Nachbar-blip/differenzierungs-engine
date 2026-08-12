@@ -7,6 +7,21 @@ from playwright.sync_api import Page
 BASE_URL = os.environ.get("DIFFENGINE_BASE_URL", "https://nachbar-blip.github.io/differenzierungs-engine")
 
 
+def lade_lokal(page: Page, pfad, selektor: str, timeout: int = 30000):
+    """Laedt eine Seite per file://-URL und wartet auf den gegebenen Selektor."""
+    page.goto(pfad.as_uri(), wait_until="networkidle", timeout=timeout)
+    page.wait_for_selector(selektor, timeout=timeout)
+
+
+def min_touch(page: Page) -> float:
+    """Liest die Touch-Mindesthoehe aus der CSS-Variablen des Kids-Addons —
+    das CSS bleibt Single Source of Truth."""
+    wert = page.evaluate(
+        "getComputedStyle(document.documentElement).getPropertyValue('--kids-touch')")
+    assert wert.strip().endswith("px"), "--kids-touch fehlt (Kids-Addon nicht geladen?)"
+    return float(wert.strip()[:-2])
+
+
 def load_trainer(page: Page, trainer_file: str, timeout: int = 30000):
     """Laedt einen Trainer und wartet bis die App gerendert hat."""
     url = f"{BASE_URL}/trainer/{trainer_file}"

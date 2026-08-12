@@ -14,6 +14,7 @@ import pytest
 from helpers import (
     get_aufgaben, setup_console_error_capture, count_katex_errors,
     kritische_fehler, beantworte_aufgabe, force_single_aufgabe,
+    lade_lokal, min_touch,
 )
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
@@ -22,17 +23,7 @@ TRAINER_5_6 = sorted((REPO / "trainer").glob("[56]-*.html"))
 
 def _lade_lokal(page, pfad: pathlib.Path):
     """Laedt einen Trainer per file://-URL und wartet auf die App."""
-    page.goto(pfad.as_uri(), wait_until="networkidle", timeout=30000)
-    page.wait_for_selector("#app .aufgabe-karte", timeout=30000)
-
-
-def _min_touch(page) -> float:
-    """Liest die Touch-Mindesthoehe aus der CSS-Variablen des Kids-Addons —
-    das CSS bleibt Single Source of Truth."""
-    wert = page.evaluate(
-        "getComputedStyle(document.documentElement).getPropertyValue('--kids-touch')")
-    assert wert.strip().endswith("px"), "--kids-touch fehlt (Kids-Addon nicht geladen?)"
-    return float(wert.strip()[:-2])
+    lade_lokal(page, pfad, "#app .aufgabe-karte")
 
 
 def _ist_nicht_ganzzahlig(loesung):
@@ -61,12 +52,12 @@ def _zeige_aufgabe(page, pfad, aufgabe, aufgaben):
                          aufgabe["level"], level_ids)
 
 
-def _pruefe_und_beantworte(page, pfad, aufgabe, selektor, min_touch):
+def _pruefe_und_beantworte(page, pfad, aufgabe, selektor, mindesthoehe):
     """Prueft Touch-Hoehe des Elements der bereits angezeigten Aufgabe,
     beantwortet korrekt und verlangt Richtig-Feedback. Gibt das Element zurueck."""
     el = page.wait_for_selector(selektor, timeout=10000)
     box = el.bounding_box()
-    assert box and box["height"] >= min_touch, \
+    assert box and box["height"] >= mindesthoehe, \
         f"{pfad.name}: {selektor} nur {box and box['height']} px hoch"
     assert beantworte_aufgabe(page, aufgabe), \
         f"{pfad.name}: Antwort ({aufgabe['typ']}) nicht akzeptiert"
@@ -79,7 +70,7 @@ def _pruefe_und_beantworte(page, pfad, aufgabe, selektor, min_touch):
 def test_trainer_smoke(page, pfad):
     errors = setup_console_error_capture(page)
     _lade_lokal(page, pfad)
-    min_touch = _min_touch(page)
+    mt = min_touch(page)
 
     # 3. 36 Aufgaben
     aufgaben = get_aufgaben(page)
@@ -94,7 +85,7 @@ def test_trainer_smoke(page, pfad):
     if "\\(" in num.get("frage", ""):
         page.wait_for_selector(".katex", state="attached", timeout=10000)
     assert count_katex_errors(page) == 0, f"{pfad.name}: KaTeX-Render-Fehler"
-    inp = _pruefe_und_beantworte(page, pfad, num, "#antwortInput", min_touch)
+    inp = _pruefe_und_beantworte(page, pfad, num, "#antwortInput", mt)
     assert inp.get_attribute("inputmode") == "decimal", \
         f"{pfad.name}: inputmode fehlt (Kids-Addon nicht aktiv?)"
 
@@ -102,7 +93,7 @@ def test_trainer_smoke(page, pfad):
     mc = _finde_aufgabe(aufgaben, "mc")
     assert mc is not None, f"{pfad.name}: keine MC-Aufgabe vorhanden"
     _zeige_aufgabe(page, pfad, mc, aufgaben)
-    _pruefe_und_beantworte(page, pfad, mc, ".mc-option", min_touch)
+    _pruefe_und_beantworte(page, pfad, mc, ".mc-option", mt)
 
     # 1. Keine kritischen Konsolenfehler ueber den ganzen Lauf
     kritisch = kritische_fehler(errors)

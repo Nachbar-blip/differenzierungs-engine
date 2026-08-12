@@ -27,7 +27,6 @@
     border-radius: 14px;
     cursor: pointer;
     transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
-    min-height: var(--kids-touch, 48px);
     font-family: inherit;
 }
 
@@ -168,7 +167,6 @@
 /* ===== Buttons ===== */
 
 .zs-buttons {
-    text-align: center;
     margin-top: 14px;
     display: flex;
     justify-content: center;
@@ -176,23 +174,27 @@
     flex-wrap: wrap;
 }
 
-.btn-hilfe {
-    display: inline-block;
-    padding: 10px 24px;
+/* Gemeinsame Outline-Optik (Hilfe-Button + Empfehlungs-Links) */
+.zs-outline {
     background: white;
     border: 2px solid var(--spirale-primary);
     border-radius: 12px;
     color: var(--spirale-primary);
-    font-size: 1rem;
     font-weight: 600;
-    cursor: pointer;
     transition: background 0.2s, color 0.2s;
     min-height: 44px;
 }
 
-.btn-hilfe:hover {
+.zs-outline:hover {
     background: var(--spirale-primary);
     color: white;
+}
+
+.btn-hilfe {
+    display: inline-block;
+    padding: 10px 24px;
+    font-size: 1rem;
+    cursor: pointer;
 }
 
 /* ===== Hilfe-Panel (EIS) ===== */
@@ -328,7 +330,8 @@
     margin-top: 14px;
 }
 
-.empfehlung-block h3 {
+.empfehlung-block h3,
+#auswertungGesamt h3 {
     font-size: 1.05rem;
     color: #1f2937;
     margin-bottom: 8px;
@@ -338,31 +341,13 @@
     display: block;
     padding: 12px 16px;
     margin-bottom: 8px;
-    background: white;
-    border: 2px solid var(--spirale-primary);
-    border-radius: 12px;
-    color: var(--spirale-primary);
-    font-weight: 600;
     text-decoration: none;
-    transition: background 0.2s, color 0.2s;
-    min-height: 44px;
-}
-
-.empfehlung-block a:hover {
-    background: var(--spirale-primary);
-    color: white;
 }
 
 #auswertungGesamt {
     margin-top: 18px;
     border-top: 2px dashed #d1d5db;
     padding-top: 14px;
-}
-
-#auswertungGesamt h3 {
-    font-size: 1.05rem;
-    color: #1f2937;
-    margin-bottom: 8px;
 }
 
 /* ===== Footer ===== */

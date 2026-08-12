@@ -13,7 +13,8 @@ import shutil
 import subprocess
 
 import pytest
-from helpers import setup_console_error_capture, kritische_fehler, count_katex_errors
+from helpers import (setup_console_error_capture, kritische_fehler,
+                     count_katex_errors, lade_lokal, min_touch)
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
 SPIEL = REPO / "spiele" / "zahlenstrahl.html"
@@ -21,15 +22,13 @@ SPIEL = REPO / "spiele" / "zahlenstrahl.html"
 # SVG-Layout-Konstanten aus zahlenstrahl.js (fuer Maus-Positionierung)
 VIEW_W, VIEW_H, PAD, ACHSE_Y = 700, 130, 40, 65
 TRACK_W = VIEW_W - 2 * PAD
-TOLERANZ_ANTEIL = 0.015  # wie zahlenstrahl-logik.js
 
 
 # ===== Helfer =====
 
 def _lade(page):
     """Laedt das Spiel und wartet auf den Startbildschirm."""
-    page.goto(SPIEL.as_uri(), wait_until="networkidle", timeout=30000)
-    page.wait_for_selector("#startScreen .stufe-karte", timeout=30000)
+    lade_lokal(page, SPIEL, "#startScreen .stufe-karte")
 
 
 def _starte_stufe(page, stufe_idx):
@@ -43,13 +42,6 @@ def _aufgabe(page, stufe_idx, aufgabe_idx):
     return page.evaluate(f"STUFEN[{stufe_idx}].aufgaben[{aufgabe_idx}]")
 
 
-def _format_de(zahl):
-    """Deutsche Komma-Darstellung wie formatDe() in zahlenstrahl.js."""
-    g = round(zahl * 1000) / 1000
-    s = str(int(g)) if g == int(g) else repr(g)
-    return s.replace(".", ",")
-
-
 def _setze_marker_maus(page, strahl, wert):
     """Setzt den Marker per Mausklick exakt (Pixel-Fehler << Toleranz)."""
     page.locator("svg.strahl-svg").scroll_into_view_if_needed()
@@ -61,11 +53,12 @@ def _setze_marker_maus(page, strahl, wert):
     page.mouse.click(x, y)
 
 
-def _daneben_wert(aufgabe):
-    """Wert, der klar weder richtig noch Falle ist (> 2x Toleranz Abstand)."""
+def _daneben_wert(page, aufgabe):
+    """Wert, der klar weder richtig noch Falle ist (> 2x Toleranz Abstand).
+    Die Toleranz kommt aus toleranz() der Seite — keine Konstanten-Kopie."""
     strahl = aufgabe["strahl"]
     spanne = strahl["max"] - strahl["min"]
-    tol = spanne * TOLERANZ_ANTEIL
+    tol = page.evaluate("(s) => toleranz(s)", strahl)
     ziele = [aufgabe["zahl"]] + [f["pos"] for f in aufgabe.get("fallen", [])]
     kandidaten = [strahl["min"] + k * spanne / 40 for k in range(41)]
     bester = max(kandidaten, key=lambda w: min(abs(w - z) for z in ziele))
@@ -187,7 +180,7 @@ def test_daneben_pfad(page):
     _lade(page)
     _starte_stufe(page, 2)
     aufgabe = _aufgabe(page, 2, 0)
-    wert = _daneben_wert(aufgabe)
+    wert = _daneben_wert(page, aufgabe)
 
     _setze_marker_maus(page, aufgabe["strahl"], wert)
     _pruefen(page)
@@ -205,7 +198,7 @@ def test_loesung_nach_zwei_fehlversuchen(page):
     _lade(page)
     _starte_stufe(page, 2)
     aufgabe = _aufgabe(page, 2, 0)
-    wert = _daneben_wert(aufgabe)
+    wert = _daneben_wert(page, aufgabe)
 
     for _ in range(2):
         _setze_marker_maus(page, aufgabe["strahl"], wert)
@@ -219,7 +212,8 @@ def test_loesung_nach_zwei_fehlversuchen(page):
     marker = page.locator("[role='slider']")
     assert float(marker.get_attribute("aria-valuenow")) == pytest.approx(erwartet), \
         "Marker steht nach der Loesungsanimation nicht auf dem Zielwert"
-    assert marker.get_attribute("aria-valuetext") == _format_de(aufgabe["zahl"]), \
+    valuenow = marker.get_attribute("aria-valuenow")
+    assert marker.get_attribute("aria-valuetext") == valuenow.replace(".", ","), \
         "aria-valuetext ist keine deutsche Komma-Darstellung der Loesung"
     assert not kritische_fehler(errors), f"Konsolenfehler: {kritische_fehler(errors)}"
 
@@ -267,18 +261,16 @@ def test_stufen_ende_und_empfehlung(page):
 
 
 def test_kids_css_und_touch_hitbox(page):
-    """Kids-CSS aktiv (--kids-touch) und Marker-Hitbox >= 48 px."""
+    """Kids-CSS aktiv (--kids-touch) und Marker-Hitbox >= --kids-touch."""
     errors = setup_console_error_capture(page)
     _lade(page)
-    wert = page.evaluate(
-        "getComputedStyle(document.documentElement).getPropertyValue('--kids-touch')")
-    assert wert.strip().endswith("px"), "--kids-touch fehlt (Kids-CSS nicht geladen?)"
+    mt = min_touch(page)
 
     _starte_stufe(page, 0)
     box = page.locator(".marker-hitbox").bounding_box()
     assert box, "Marker-Hitbox nicht gefunden"
-    assert box["width"] >= 48, f"Hitbox nur {box['width']:.0f} px breit"
-    assert box["height"] >= 48, f"Hitbox nur {box['height']:.0f} px hoch"
+    assert box["width"] >= mt, f"Hitbox nur {box['width']:.0f} px breit"
+    assert box["height"] >= mt, f"Hitbox nur {box['height']:.0f} px hoch"
     assert not kritische_fehler(errors), f"Konsolenfehler: {kritische_fehler(errors)}"
 
 

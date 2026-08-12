@@ -42,6 +42,7 @@
   var musterGesamt = {};   // Muster-Zaehler ueber alle gespielten Stufen
   var hilfeGenutztStufe = 0;      // Aufgaben dieser Stufe, bei denen Hilfe offen war
   var hilfeDieseAufgabe = false;  // lokales mitHilfe-Flag (STUFEN bleibt unveraendert)
+  var tafelGebaut = false;        // Tafel-Hilfe der aktuellen Aufgabe schon gebaut?
   var gespielteStufen = 0;
   var animId = null;
 
@@ -120,7 +121,6 @@
     svg.appendChild(feinGruppe);
 
     // Marker (Startposition: linker Rand = strahl.min, nie auf der Loesung)
-    markerWert = strahl.min;
     marker = svgEl('g', {
       'class': 'zs-marker',
       role: 'slider',
@@ -142,36 +142,34 @@
 
   function setzeMarker(wert) {
     var strahl = aktuelleAufgabe().strahl;
-    markerWert = posZuWert(strahl, wertZuPos(strahl, wert)); // klemmen
+    markerWert = Math.min(strahl.max, Math.max(strahl.min, wert)); // klemmen
     marker.setAttribute('transform', 'translate(' + xVonWert(strahl, markerWert) + ',0)');
-    var gerundet = Math.round(markerWert * 1000) / 1000;
-    marker.setAttribute('aria-valuenow', gerundet);
-    marker.setAttribute('aria-valuetext', formatDe(gerundet));
+    marker.setAttribute('aria-valuenow', Math.round(markerWert * 1000) / 1000);
+    marker.setAttribute('aria-valuetext', formatDe(markerWert));
   }
 
-  function wertVonClientX(clientX) {
-    var rect = svg.getBoundingClientRect();
+  function wertVonClientX(clientX, rect) {
     var xView = (clientX - rect.left) * (VIEW_W / rect.width);
     return posZuWert(aktuelleAufgabe().strahl, (xView - PAD) / TRACK_W);
   }
 
   function verdrahteMarker(aufgabe) {
-    var ziehen = false;
+    var dragRect = null; // bei pointerdown gecacht (kein Layout-Read pro pointermove)
 
     svg.addEventListener('pointerdown', function (ev) {
       if (gesperrt) return;
-      ziehen = true;
+      dragRect = svg.getBoundingClientRect();
       svg.setPointerCapture(ev.pointerId);
-      setzeMarker(wertVonClientX(ev.clientX));
+      setzeMarker(wertVonClientX(ev.clientX, dragRect));
       marker.focus();
       ev.preventDefault();
     });
     svg.addEventListener('pointermove', function (ev) {
-      if (!ziehen || gesperrt) return;
-      setzeMarker(wertVonClientX(ev.clientX));
+      if (!dragRect || gesperrt) return;
+      setzeMarker(wertVonClientX(ev.clientX, dragRect));
     });
-    svg.addEventListener('pointerup', function () { ziehen = false; });
-    svg.addEventListener('pointercancel', function () { ziehen = false; });
+    svg.addEventListener('pointerup', function () { dragRect = null; });
+    svg.addEventListener('pointercancel', function () { dragRect = null; });
 
     // Tastatur: Pfeiltasten +-tick/10, mit Shift +-tick
     marker.addEventListener('keydown', function (ev) {
@@ -206,7 +204,7 @@
         feinGruppe.appendChild(svgEl('line', { x1: x, y1: ACHSE_Y - 14, x2: x, y2: ACHSE_Y }));
         if (i % 5 === 0) {
           var t = svgEl('text', { x: x, y: ACHSE_Y - 18 });
-          t.textContent = formatDe(Math.round(w * 1000) / 1000);
+          t.textContent = formatDe(w);
           feinGruppe.appendChild(t);
         }
       }
@@ -259,12 +257,11 @@
     return '<table class="swt-tafel"><tr>' + kopfHtml + '</tr><tr>' + zeileHtml + '</tr></table>';
   }
 
-  // Bruchstreifen: Nenner/Zaehler aus der KaTeX-Anzeige lesen (z. B. "1\tfrac{1}{2}")
+  // Bruchstreifen: Nenner/Zaehler/Ganze aus den Datenfeldern der Aufgabe
   function baueBruchstreifen(aufgabe) {
-    var m = aufgabe.anzeige.match(/^(\d*)\\tfrac\{(\d+)\}\{(\d+)\}$/);
-    var ganze = m && m[1] ? parseInt(m[1], 10) : 0;
-    var z = m ? parseInt(m[2], 10) : 1;
-    var n = m ? parseInt(m[3], 10) : 2;
+    var ganze = aufgabe.ganze || 0;
+    var z = aufgabe.zaehler;
+    var n = aufgabe.nenner;
     var streifen = ganze + Math.max(1, Math.ceil(z / n)); // volle Ganze + Bruchteil-Streifen
     var teileGefuellt = ganze * n + z;                    // gefuellte Teile insgesamt
     var bw = 300, bh = 34, gap = 10;
@@ -286,15 +283,24 @@
     return sv;
   }
 
-  function hilfeUmschalten() {
-    var offen = el.hilfePanel.hidden;
+  // Hilfe-Panel-Zustand (hidden + aria-expanded + Button-Label) an EINER Stelle
+  function setzeHilfePanel(offen) {
     el.hilfePanel.hidden = !offen;
     el.btnHilfe.setAttribute('aria-expanded', String(offen));
-    el.btnHilfe.innerHTML = offen ? 'Hilfe ausblenden' : 'Hilfe anzeigen';
+    el.btnHilfe.textContent = offen ? 'Hilfe ausblenden' : 'Hilfe anzeigen';
+  }
+
+  function hilfeUmschalten() {
+    var offen = el.hilfePanel.hidden;
+    setzeHilfePanel(offen);
     if (offen) {
       if (!hilfeDieseAufgabe) { // Nutzung zaehlt als "mit Hilfe" (1x pro Aufgabe)
         hilfeDieseAufgabe = true;
         hilfeGenutztStufe++;
+      }
+      if (!tafelGebaut) { // Tafel lazy: erst beim ersten Hilfe-Oeffnen der Aufgabe
+        baueTafel(aktuelleAufgabe());
+        tafelGebaut = true;
       }
       if (el.tabBild.classList.contains('aktiv')) zeigeUnterteilung();
     }
@@ -307,7 +313,7 @@
     el.tabTafel.setAttribute('aria-selected', String(!bild));
     el.hilfeBild.hidden = !bild;
     el.hilfeTafel.hidden = bild;
-    if (bild) zeigeUnterteilung();
+    if (bild && !el.hilfePanel.hidden) zeigeUnterteilung();
   }
 
   // ===== Spielablauf =====
@@ -326,14 +332,13 @@
     versuche = 0;
     gesperrt = false;
     hilfeDieseAufgabe = false;
+    tafelGebaut = false;
     el.stufeInfo.textContent = 'Stufe ' + (stufeIdx + 1);
     el.aufgabeInfo.textContent = 'Aufgabe ' + (aufgabeIdx + 1) + ' von ' + STUFEN[stufeIdx].aufgaben.length;
     el.feedbackBereich.innerHTML = '';
-    el.hilfePanel.hidden = true;
-    el.btnHilfe.setAttribute('aria-expanded', 'false');
-    el.btnHilfe.innerHTML = 'Hilfe anzeigen';
+    setzeHilfePanel(false);
     el.btnPruefen.disabled = false;
-    tabWaehlenOhneBild();
+    tabWaehlen(true);
     el.aufgabeAnzeige.innerHTML = 'Stelle die Zahl \\(' + aufgabe.anzeige + '\\) ein!';
     if (typeof renderMathInElement === 'function') {
       renderMathInElement(el.aufgabeAnzeige, {
@@ -342,17 +347,6 @@
       });
     }
     baueStrahl(aufgabe);
-    baueTafel(aufgabe);
-  }
-
-  // Tabs zuruecksetzen, ohne die Unterteilung sofort einzublenden
-  function tabWaehlenOhneBild() {
-    el.tabBild.classList.add('aktiv');
-    el.tabTafel.classList.remove('aktiv');
-    el.tabBild.setAttribute('aria-selected', 'true');
-    el.tabTafel.setAttribute('aria-selected', 'false');
-    el.hilfeBild.hidden = false;
-    el.hilfeTafel.hidden = true;
   }
 
   function pruefen() {
@@ -371,7 +365,6 @@
     versuche++;
     if (resultat.ergebnis === 'falle') {
       musterStufe[resultat.muster] = (musterStufe[resultat.muster] || 0) + 1;
-      musterGesamt[resultat.muster] = (musterGesamt[resultat.muster] || 0) + 1;
       zeigeUnterteilung(); // ikonische Hilfe: Strahl unterteilt sich
       if (versuche >= 2) {
         zeigeLoesung(resultat.text);
@@ -413,7 +406,7 @@
       if (t0 === null) t0 = ts;
       var f = Math.min(1, (ts - t0) / dauer);
       var eased = 1 - (1 - f) * (1 - f); // sanftes Abbremsen
-      setzeMarkerAnimiert(start + (ziel - start) * eased);
+      setzeMarker(start + (ziel - start) * eased);
       if (f < 1) {
         animId = requestAnimationFrame(schritt);
       } else {
@@ -423,16 +416,6 @@
       }
     }
     animId = requestAnimationFrame(schritt);
-  }
-
-  // Marker-Position waehrend der Animation setzen (ohne Klemm-Logik-Umweg)
-  function setzeMarkerAnimiert(wert) {
-    var strahl = aktuelleAufgabe().strahl;
-    markerWert = wert;
-    marker.setAttribute('transform', 'translate(' + xVonWert(strahl, wert) + ',0)');
-    var gerundet = Math.round(wert * 1000) / 1000;
-    marker.setAttribute('aria-valuenow', gerundet);
-    marker.setAttribute('aria-valuetext', formatDe(gerundet));
   }
 
   function naechsteAufgabe() {
@@ -467,7 +450,7 @@
       EMPFEHLUNGEN[m].forEach(function (href) {
         if (gesehen[href]) return;
         gesehen[href] = true;
-        links.push('<a href="' + href + '">' + (TRAINER_NAMEN[href] || href) + '</a>');
+        links.push('<a class="zs-outline" href="' + href + '">' + (TRAINER_NAMEN[href] || href) + '</a>');
       });
     }
     if (links.length === 0) return '';
@@ -477,7 +460,11 @@
   function zeigeAuswertung() {
     var stufe = STUFEN[stufeIdx];
     var letzteStufe = stufeIdx >= STUFEN.length - 1;
-    el.auswertungTitel.innerHTML = 'Stufe ' + (stufeIdx + 1) + ' geschafft!';
+    // Stufen-Muster erst am Stufenende in die Gesamt-Zaehlung mergen
+    for (var m in musterStufe) {
+      musterGesamt[m] = (musterGesamt[m] || 0) + musterStufe[m];
+    }
+    el.auswertungTitel.textContent = 'Stufe ' + (stufeIdx + 1) + ' geschafft!';
 
     var liste = musterListeHtml(musterStufe);
     var hilfeSatz = hilfeGenutztStufe > 0
@@ -506,7 +493,7 @@
     }
 
     el.btnNaechsteStufe.hidden = letzteStufe;
-    el.btnNaechsteStufe.innerHTML = 'Weiter zu Stufe ' + (stufeIdx + 2);
+    el.btnNaechsteStufe.textContent = 'Weiter zu Stufe ' + (stufeIdx + 2);
     zeigeScreen('auswertung');
   }
 

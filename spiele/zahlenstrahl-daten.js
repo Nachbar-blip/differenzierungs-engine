@@ -212,14 +212,14 @@ const STUFEN = [
 
   // ---------- Stufe 4: Einfache Brueche (auch >1 als gemischte Zahl) ----------
   { nr: 4, name: "Brueche", aufgaben: [
-    { id: "s4-01", stufe: 4, zahl: 0.5, anzeige: "\\tfrac{1}{2}",
+    { id: "s4-01", stufe: 4, zahl: 0.5, zaehler: 1, nenner: 2, anzeige: "\\tfrac{1}{2}",
       strahl: { min: 0, max: 3, tick: 0.25, beschriftet: [0, 1, 2, 3] },
       fallen: [
         { pos: 2, muster: "bruch-als-paar",
           text: "Ein Bruch ist EINE Zahl, nicht 1 und 2. Ein Halbes liegt zwischen 0 und 1." }
       ],
       hilfe: { typ: "bruch", unterteile: 0.5 } },
-    { id: "s4-02", stufe: 4, zahl: 0.25, anzeige: "\\tfrac{1}{4}",
+    { id: "s4-02", stufe: 4, zahl: 0.25, zaehler: 1, nenner: 4, anzeige: "\\tfrac{1}{4}",
       strahl: { min: 0, max: 5, tick: 0.25, beschriftet: [0, 1, 2, 3, 4, 5] },
       fallen: [
         { pos: 4, muster: "bruch-als-paar",
@@ -228,7 +228,7 @@ const STUFEN = [
           text: "Ein Viertel ist auch nicht 1,4. Teile die Strecke von 0 bis 1 in 4 gleiche Teile." }
       ],
       hilfe: { typ: "bruch", unterteile: 0.25 } },
-    { id: "s4-03", stufe: 4, zahl: 0.75, anzeige: "\\tfrac{3}{4}",
+    { id: "s4-03", stufe: 4, zahl: 0.75, zaehler: 3, nenner: 4, anzeige: "\\tfrac{3}{4}",
       strahl: { min: 0, max: 4, tick: 0.25, beschriftet: [0, 1, 2, 3, 4] },
       fallen: [
         { pos: 3, muster: "bruch-als-paar",
@@ -237,35 +237,35 @@ const STUFEN = [
           text: "Drei Viertel sind auch nicht 3,4. Der Bruchstrich ist kein Komma." }
       ],
       hilfe: { typ: "bruch", unterteile: 0.25 } },
-    { id: "s4-04", stufe: 4, zahl: 0.2, anzeige: "\\tfrac{1}{5}",
+    { id: "s4-04", stufe: 4, zahl: 0.2, zaehler: 1, nenner: 5, anzeige: "\\tfrac{1}{5}",
       strahl: { min: 0, max: 1, tick: 0.2, beschriftet: [0, 1] },
       fallen: [
         { pos: 0.5, muster: "bruch-als-paar",
           text: "Die 5 unten sagt: 5 gleiche Teile. Ein Fuenftel ist KLEINER als ein Halbes." }
       ],
       hilfe: { typ: "bruch", unterteile: 0.2 } },
-    { id: "s4-05", stufe: 4, zahl: 0.1, anzeige: "\\tfrac{1}{10}",
+    { id: "s4-05", stufe: 4, zahl: 0.1, zaehler: 1, nenner: 10, anzeige: "\\tfrac{1}{10}",
       strahl: { min: 0, max: 1, tick: 0.1, beschriftet: [0, 0.5, 1] },
       fallen: [
         { pos: 0.9, muster: "bruch-als-paar",
           text: "Die 10 sieht gross aus, aber ein Zehntel ist klein: 1 von 10 Teilen, nah an der 0." }
       ],
       hilfe: { typ: "bruch", unterteile: 0.1 } },
-    { id: "s4-06", stufe: 4, zahl: 1.5, anzeige: "1\\tfrac{1}{2}",
+    { id: "s4-06", stufe: 4, zahl: 1.5, ganze: 1, zaehler: 1, nenner: 2, anzeige: "1\\tfrac{1}{2}",
       strahl: { min: 0, max: 2, tick: 0.25, beschriftet: [0, 1, 2] },
       fallen: [
         { pos: 0.5, muster: "bruch-als-paar",
           text: "1 1/2 heisst: ein Ganzes UND ein Halbes. Starte bei der 1, nicht bei der 0." }
       ],
       hilfe: { typ: "bruch", unterteile: 0.5 } },
-    { id: "s4-07", stufe: 4, zahl: 2.25, anzeige: "2\\tfrac{1}{4}",
+    { id: "s4-07", stufe: 4, zahl: 2.25, ganze: 2, zaehler: 1, nenner: 4, anzeige: "2\\tfrac{1}{4}",
       strahl: { min: 0, max: 3, tick: 0.25, beschriftet: [0, 1, 2, 3] },
       fallen: [
         { pos: 0.25, muster: "bruch-als-paar",
           text: "2 1/4 sind zwei Ganze und ein Viertel dazu - kurz hinter der 2." }
       ],
       hilfe: { typ: "bruch", unterteile: 0.25 } },
-    { id: "s4-08", stufe: 4, zahl: 0.7, anzeige: "\\tfrac{7}{10}",
+    { id: "s4-08", stufe: 4, zahl: 0.7, zaehler: 7, nenner: 10, anzeige: "\\tfrac{7}{10}",
       strahl: { min: 0, max: 1, tick: 0.1, beschriftet: [0, 0.5, 1] },
       fallen: [
         { pos: 0.07, muster: "stellenwert",
@@ -283,7 +283,7 @@ const STUFEN = [
           text: "0,5 ist dasselbe wie ein Halbes - genau die Mitte." }
       ],
       hilfe: { typ: "dezimal", unterteile: 0.1 } },
-    { id: "s5-02", stufe: 5, zahl: 0.75, anzeige: "\\tfrac{3}{4}",
+    { id: "s5-02", stufe: 5, zahl: 0.75, zaehler: 3, nenner: 4, anzeige: "\\tfrac{3}{4}",
       strahl: { min: 0, max: 4, tick: 0.25, beschriftet: [0, 1, 2, 3, 4] },
       fallen: [
         { pos: 3, muster: "bruch-als-paar",
@@ -299,7 +299,7 @@ const STUFEN = [
           text: "1,25 hat mehr Ziffern als 1,5 - ist aber kleiner. 25 Hundertstel sind ein Viertel." }
       ],
       hilfe: { typ: "dezimal", unterteile: 0.25 } },
-    { id: "s5-04", stufe: 5, zahl: 0.1, anzeige: "\\tfrac{1}{10}",
+    { id: "s5-04", stufe: 5, zahl: 0.1, zaehler: 1, nenner: 10, anzeige: "\\tfrac{1}{10}",
       strahl: { min: 0, max: 1, tick: 0.05, beschriftet: [0, 0.5, 1] },
       fallen: [
         { pos: 0.9, muster: "bruch-als-paar",
@@ -313,7 +313,7 @@ const STUFEN = [
           text: "0,60 sind 60 Hundertstel = 6 Zehntel. Die End-Null aendert nichts." }
       ],
       hilfe: { typ: "dezimal", unterteile: 0.1 } },
-    { id: "s5-06", stufe: 5, zahl: 2.5, anzeige: "\\tfrac{5}{2}",
+    { id: "s5-06", stufe: 5, zahl: 2.5, zaehler: 5, nenner: 2, anzeige: "\\tfrac{5}{2}",
       strahl: { min: 0, max: 3, tick: 0.5, beschriftet: [0, 1, 2, 3] },
       fallen: [
         { pos: 0.4, muster: "bruch-als-paar",
