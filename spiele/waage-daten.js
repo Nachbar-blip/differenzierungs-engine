@@ -94,7 +94,7 @@ const STUFEN = [
     { id: "w1-05", stufe: 1, start: { xL: 1, cL: 1, xR: 0, cR: 8 }, waage: true,
       fallen_ops: [
         { op: { art: "sub_c", wert: 1, seite: "rechts" }, muster: "einseitig",
-          text: "Du hast nur rechts weggenommen - rechts wird leichter und die Waage kippt zur rechten Seite." }
+          text: "Du hast nur rechts weggenommen - rechts wird leichter und geht nach oben, die Waage kippt." }
       ],
       musterweg: [{ art: "sub_c", wert: 1, seite: "beide" }] },
     { id: "w1-06", stufe: 1, start: { xL: 1, cL: 6, xR: 0, cR: 10 }, waage: true,
