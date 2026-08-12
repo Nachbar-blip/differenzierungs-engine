@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vierecke - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <link rel="stylesheet" href="../spirale-kids.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+// Vierecke — DiffEngine Klasse 5/6 Content (Roadmap Welle 2, Item 3)
+const THEMA_KEY = '6-vierecke';
+const THEMA_CONFIG = { name: 'Vierecke', bereich: 'geometrie', p3Enabled: true };
+const AUFGABEN = [
+  // ========== LEVEL 1 — babyleicht: Vierecksarten erkennen ==========
+  {
+    id: 1,
+    level: 1,
+    typ: "mc",
+    frage: "Ein Viereck hat vier gleich lange Seiten und vier rechte Winkel. Wie heißt dieses Viereck?",
+    optionen: ["Rechteck", "Raute", "Quadrat", "Trapez"],
+    korrekt: 2,
+    tipp: "Es müssen beide Bedingungen gleichzeitig stimmen: gleich lange Seiten UND rechte Winkel.",
+    loesungsweg: "Vier gleich lange Seiten UND vier rechte Winkel — das schafft nur das Quadrat. Ein Rechteck hat zwar vier rechte Winkel, aber nicht immer vier gleich lange Seiten. Eine Raute hat vier gleich lange Seiten, aber nicht immer rechte Winkel."
+  },
+  {
+    id: 2,
+    level: 1,
+    typ: "numerisch",
+    frage: "Wie viele Paare paralleler Seiten hat ein Parallelogramm?",
+    loesung: 2,
+    toleranz: 0,
+    tipp: "Schau dir den Namen genau an: Parallelo-gramm. Welche Seiten liegen sich gegenüber?",
+    loesungsweg: "In einem Parallelogramm sind die gegenüberliegenden Seiten parallel. Es gibt zwei Paare gegenüberliegender Seiten — also \\(2\\) Paare paralleler Seiten."
+  },
+  {
+    id: 3,
+    level: 1,
+    typ: "mc",
+    frage: "Ein Viereck hat genau ein Paar paralleler Seiten. Wie heißt dieses Viereck?",
+    optionen: ["Trapez", "Parallelogramm", "Quadrat", "Raute"],
+    korrekt: 0,
+    tipp: "Bei drei der vier Antworten sind BEIDE Seitenpaare parallel. Welches Viereck bleibt übrig?",
+    loesungsweg: "Beim Trapez ist mindestens ein Paar gegenüberliegender Seiten parallel. Parallelogramm, Quadrat und Raute haben immer zwei Paare paralleler Seiten — hier ist es aber genau ein Paar. Also: Trapez."
+  },
+  {
+    id: 4,
+    level: 1,
+    typ: "numerisch",
+    frage: "Wie viele rechte Winkel hat ein Rechteck?",
+    loesung: 4,
+    toleranz: 0,
+    tipp: "Der Name verrät es fast: RECHTeck. Zähle alle Ecken.",
+    loesungsweg: "Ein Rechteck hat an jeder seiner vier Ecken einen rechten Winkel \\((90^\\circ)\\). Also hat es \\(4\\) rechte Winkel."
+  },
+  {
+    id: 5,
+    level: 1,
+    typ: "mc",
+    frage: "Ein Viereck hat vier gleich lange Seiten, aber seine Winkel sind nicht alle \\(90^\\circ\\). Wie heißt dieses Viereck?",
+    optionen: ["Quadrat", "Rechteck", "Trapez", "Raute"],
+    korrekt: 3,
+    tipp: "Stell dir ein Quadrat vor, das du an zwei gegenüberliegenden Ecken schräg zusammendrückst.",
+    loesungsweg: "Vier gleich lange Seiten ohne rechte Winkel — das ist die Raute (auch Rhombus genannt). Beim Quadrat wären zusätzlich alle Winkel \\(90^\\circ\\)."
+  },
+  {
+    id: 6,
+    level: 1,
+    typ: "numerisch",
+    frage: "Wie viele Diagonalen kannst du in ein Viereck einzeichnen?",
+    loesung: 2,
+    toleranz: 0,
+    tipp: "Eine Diagonale verbindet zwei Ecken, die nicht direkt nebeneinander liegen.",
+    loesungsweg: "Ein Viereck hat die Ecken \\(A, B, C, D\\). Diagonalen verbinden gegenüberliegende Ecken: \\(A\\) mit \\(C\\) und \\(B\\) mit \\(D\\). Das sind \\(2\\) Diagonalen."
+  },
+  // ========== LEVEL 2 — leicht: Eigenschaften von Seiten und Winkeln ==========
+  {
+    id: 7,
+    level: 2,
+    typ: "mc",
+    frage: "Welches Viereck hat immer vier rechte Winkel, aber nicht unbedingt vier gleich lange Seiten?",
+    optionen: ["Raute", "Rechteck", "Drachenviereck", "Trapez"],
+    korrekt: 1,
+    tipp: "Denk an eine Tür oder ein Blatt Papier: alle Ecken \\(90^\\circ\\), aber länger als breit.",
+    loesungsweg: "Das Rechteck hat vier rechte Winkel. Seine gegenüberliegenden Seiten sind gleich lang, aber Länge und Breite können verschieden sein. Die Raute hat gleich lange Seiten, aber meist keine rechten Winkel."
+  },
+  {
+    id: 8,
+    level: 2,
+    typ: "numerisch",
+    frage: "In einem Parallelogramm ist ein Winkel \\(70^\\circ\\) groß. Wie groß ist der gegenüberliegende Winkel? Gib das Ergebnis in Grad an.",
+    loesung: 70,
+    toleranz: 0,
+    tipp: "Im Parallelogramm gibt es eine Regel für gegenüberliegende Winkel: Sie sind gleich groß.",
+    loesungsweg: "Im Parallelogramm sind gegenüberliegende Winkel immer gleich groß. $$\\alpha = \\gamma = 70^\\circ$$ Der gegenüberliegende Winkel ist also auch \\(70^\\circ\\)."
+  },
+  {
+    id: 9,
+    level: 2,
+    typ: "mc",
+    frage: "In welchem Viereck sind die gegenüberliegenden Seiten immer parallel UND gleich lang?",
+    optionen: ["Trapez", "Drachenviereck", "Parallelogramm", "allgemeines Viereck"],
+    korrekt: 2,
+    tipp: "Beim Trapez muss nur EIN Seitenpaar parallel sein. Gesucht ist ein Viereck, bei dem es BEIDE sind.",
+    loesungsweg: "Im Parallelogramm sind beide Paare gegenüberliegender Seiten parallel und gleich lang. Beim Trapez gilt das nur für ein Paar (parallel), beim Drachenviereck sind benachbarte Seiten gleich lang."
+  },
+  {
+    id: 10,
+    level: 2,
+    typ: "numerisch",
+    frage: "In einem Parallelogramm ist ein Winkel \\(110^\\circ\\) groß. Wie groß ist ein benachbarter Winkel? Gib das Ergebnis in Grad an.",
+    loesung: 70,
+    toleranz: 0,
+    tipp: "Benachbarte Winkel im Parallelogramm ergeben zusammen \\(180^\\circ\\).",
+    loesungsweg: "Benachbarte Winkel im Parallelogramm ergänzen sich zu \\(180^\\circ\\): $$180^\\circ - 110^\\circ = 70^\\circ$$ Der benachbarte Winkel ist \\(70^\\circ\\) groß."
+  },
+  {
+    id: 11,
+    level: 2,
+    typ: "numerisch",
+    frage: "Eine Raute hat den Umfang \\(20\\) cm. Wie lang ist eine Seite? Gib das Ergebnis in cm an.",
+    loesung: 5,
+    toleranz: 0,
+    tipp: "Bei einer Raute sind alle vier Seiten gleich lang. Teile den Umfang durch die Anzahl der Seiten.",
+    loesungsweg: "Alle vier Seiten der Raute sind gleich lang: $$a = 20 \\text{ cm} : 4 = 5 \\text{ cm}$$ Jede Seite ist \\(5\\) cm lang."
+  },
+  {
+    id: 12,
+    level: 2,
+    typ: "mc",
+    frage: "Was gilt für die Seiten eines Drachenvierecks 🪁?",
+    optionen: ["Alle vier Seiten sind gleich lang.", "Je zwei benachbarte Seiten sind gleich lang.", "Je zwei gegenüberliegende Seiten sind parallel.", "Alle Seiten sind verschieden lang."],
+    korrekt: 1,
+    tipp: "Stell dir einen Flugdrachen vor: oben zwei kurze Stäbe, unten zwei lange.",
+    loesungsweg: "Beim Drachenviereck sind je zwei BENACHBARTE Seiten gleich lang — zum Beispiel oben zwei kurze und unten zwei lange Seiten. Wären alle vier gleich lang, wäre es eine Raute."
+  },
+  // ========== LEVEL 3 — nervenschonend: Innenwinkelsumme 360° ==========
+  {
+    id: 13,
+    level: 3,
+    typ: "numerisch",
+    frage: "In einem Viereck sind drei Winkel bekannt: \\(110^\\circ\\), \\(85^\\circ\\) und \\(75^\\circ\\). Wie groß ist der vierte Winkel? Gib das Ergebnis in Grad an.",
+    loesung: 90,
+    toleranz: 0,
+    tipp: "Alle vier Winkel zusammen ergeben \\(360^\\circ\\). Addiere erst die drei bekannten Winkel.",
+    loesungsweg: "Innenwinkelsumme im Viereck: \\(360^\\circ\\). $$110^\\circ + 85^\\circ + 75^\\circ = 270^\\circ$$ $$\\delta = 360^\\circ - 270^\\circ = 90^\\circ$$"
+  },
+  {
+    id: 14,
+    level: 3,
+    typ: "mc",
+    frage: "Wie groß ist die Summe aller Innenwinkel in einem Viereck — egal, wie es aussieht?",
+    optionen: ["\\(180^\\circ\\)", "\\(270^\\circ\\)", "\\(360^\\circ\\)", "\\(400^\\circ\\)"],
+    korrekt: 2,
+    tipp: "Zerlege das Viereck mit einer Diagonale in zwei Dreiecke. Wie groß ist die Winkelsumme in jedem Dreieck?",
+    loesungsweg: "Eine Diagonale teilt jedes Viereck in zwei Dreiecke. Jedes Dreieck hat die Winkelsumme \\(180^\\circ\\): $$2 \\cdot 180^\\circ = 360^\\circ$$"
+  },
+  {
+    id: 15,
+    level: 3,
+    typ: "numerisch",
+    frage: "Ein Viereck hat die Winkel \\(100^\\circ\\), \\(100^\\circ\\) und \\(80^\\circ\\). Berechne den vierten Winkel. Gib das Ergebnis in Grad an.",
+    loesung: 80,
+    toleranz: 0,
+    tipp: "Rechne \\(360^\\circ\\) minus die Summe der drei bekannten Winkel.",
+    loesungsweg: "$$100^\\circ + 100^\\circ + 80^\\circ = 280^\\circ$$ $$\\delta = 360^\\circ - 280^\\circ = 80^\\circ$$ Der vierte Winkel ist \\(80^\\circ\\) groß."
+  },
+  {
+    id: 16,
+    level: 3,
+    typ: "mc",
+    frage: "In einem Viereck messen drei Winkel \\(120^\\circ\\), \\(90^\\circ\\) und \\(60^\\circ\\). Wie groß ist der vierte Winkel?",
+    optionen: ["\\(270^\\circ\\)", "\\(90^\\circ\\)", "\\(120^\\circ\\)", "\\(180^\\circ\\)"],
+    korrekt: 1,
+    tipp: "Erst die drei Winkel addieren — und dann? Denk an die Innenwinkelsumme im Viereck.",
+    loesungsweg: "$$120^\\circ + 90^\\circ + 60^\\circ = 270^\\circ$$ $$\\delta = 360^\\circ - 270^\\circ = 90^\\circ$$ Achtung: \\(270^\\circ\\) ist nur die Summe der drei Winkel, nicht der vierte Winkel!"
+  },
+  {
+    id: 17,
+    level: 3,
+    typ: "numerisch",
+    frage: "In einem Viereck sind drei Winkel gleich groß, jeder misst \\(100^\\circ\\). Wie groß ist der vierte Winkel? Gib das Ergebnis in Grad an.",
+    loesung: 60,
+    toleranz: 0,
+    tipp: "Rechne zuerst \\(3 \\cdot 100^\\circ\\) und ziehe das Ergebnis von \\(360^\\circ\\) ab.",
+    loesungsweg: "$$3 \\cdot 100^\\circ = 300^\\circ$$ $$\\delta = 360^\\circ - 300^\\circ = 60^\\circ$$ Der vierte Winkel ist \\(60^\\circ\\) groß."
+  },
+  {
+    id: 18,
+    level: 3,
+    typ: "mc",
+    frage: "Können in einem Viereck alle vier Winkel \\(100^\\circ\\) groß sein?",
+    optionen: ["Ja, wenn das Viereck groß genug ist.", "Ja, in einer Raute geht das.", "Nein, denn alle Winkel müssen verschieden groß sein.", "Nein, denn \\(4 \\cdot 100^\\circ = 400^\\circ\\) ist mehr als \\(360^\\circ\\)."],
+    korrekt: 3,
+    tipp: "Rechne aus, was \\(4 \\cdot 100^\\circ\\) ergibt, und vergleiche mit der Innenwinkelsumme.",
+    loesungsweg: "Die Innenwinkelsumme im Viereck ist immer genau \\(360^\\circ\\). $$4 \\cdot 100^\\circ = 400^\\circ \\neq 360^\\circ$$ Also ist das unmöglich — egal, wie groß das Viereck ist."
+  },
+  // ========== LEVEL 4 — mittel: Haus der Vierecke, Diagonalen und Symmetrie ==========
+  {
+    id: 19,
+    level: 4,
+    typ: "mc",
+    frage: "Ist jedes Quadrat auch ein Rechteck?",
+    optionen: ["Ja, denn ein Quadrat hat vier rechte Winkel — genau wie jedes Rechteck.", "Nein, denn ein Quadrat hat vier gleich lange Seiten.", "Nur wenn das Quadrat besonders groß ist.", "Nein, Quadrat und Rechteck sind völlig verschiedene Formen."],
+    korrekt: 0,
+    tipp: "Prüfe: Erfüllt ein Quadrat alle Bedingungen, die ein Rechteck haben muss?",
+    loesungsweg: "Ein Rechteck ist ein Viereck mit vier rechten Winkeln. Jedes Quadrat hat vier rechte Winkel — also erfüllt es die Rechteck-Bedingung. Im Haus der Vierecke ist das Quadrat ein besonderes Rechteck (mit vier gleich langen Seiten)."
+  },
+  {
+    id: 20,
+    level: 4,
+    typ: "mc",
+    frage: "Welches Viereck hat gleich lange Diagonalen, die sich gegenseitig halbieren?",
+    optionen: ["Raute", "allgemeines Trapez", "Rechteck", "Drachenviereck"],
+    korrekt: 2,
+    tipp: "Bei der Raute halbieren sich die Diagonalen zwar auch — aber sind sie dort gleich lang?",
+    loesungsweg: "Im Rechteck sind beide Diagonalen gleich lang und halbieren sich gegenseitig. Bei der Raute halbieren sie sich zwar (sogar senkrecht), sind aber verschieden lang. Beim Drachenviereck halbiert nur eine Diagonale die andere."
+  },
+  {
+    id: 21,
+    level: 4,
+    typ: "numerisch",
+    frage: "Wie viele Symmetrieachsen hat ein Quadrat?",
+    loesung: 4,
+    toleranz: 0,
+    tipp: "Denke an beide Diagonalen und an die Linien durch die Seitenmitten.",
+    loesungsweg: "Ein Quadrat hat \\(4\\) Symmetrieachsen: die \\(2\\) Diagonalen und die \\(2\\) Mittellinien durch die gegenüberliegenden Seitenmitten."
+  },
+  {
+    id: 22,
+    level: 4,
+    typ: "mc",
+    frage: "Ist jedes Rechteck auch ein Quadrat?",
+    optionen: ["Ja, immer.", "Nein, nur wenn alle vier Seiten gleich lang sind.", "Ja, wenn es vier rechte Winkel hat.", "Nein, ein Rechteck kann niemals ein Quadrat sein."],
+    korrekt: 1,
+    tipp: "Was fehlt einem normalen Rechteck (z. B. \\(5\\) cm mal \\(3\\) cm) noch zum Quadrat?",
+    loesungsweg: "Ein Quadrat braucht vier rechte Winkel UND vier gleich lange Seiten. Ein Rechteck mit \\(5\\) cm und \\(3\\) cm hat die rechten Winkel, aber keine gleich langen Seiten — es ist kein Quadrat. Nur Rechtecke mit vier gleich langen Seiten sind Quadrate."
+  },
+  {
+    id: 23,
+    level: 4,
+    typ: "numerisch",
+    frage: "Wie viele Symmetrieachsen hat ein Rechteck, das kein Quadrat ist?",
+    loesung: 2,
+    toleranz: 0,
+    tipp: "Vorsicht: Die Diagonalen sind hier KEINE Symmetrieachsen. Probiere es gedanklich mit einem Blatt Papier aus.",
+    loesungsweg: "Ein Rechteck (kein Quadrat) hat \\(2\\) Symmetrieachsen: die beiden Mittellinien durch die Seitenmitten. Faltet man es entlang einer Diagonale, liegen die Teile NICHT aufeinander — die Diagonalen zählen also nicht."
+  },
+  {
+    id: 24,
+    level: 4,
+    typ: "mc",
+    frage: "In welchem Viereck stehen die Diagonalen senkrecht aufeinander UND halbieren sich gegenseitig?",
+    optionen: ["Rechteck", "gleichschenkliges Trapez", "Parallelogramm", "Raute"],
+    korrekt: 3,
+    tipp: "Im Rechteck halbieren sich die Diagonalen zwar auch — aber stehen sie dort senkrecht aufeinander?",
+    loesungsweg: "In der Raute stehen die Diagonalen senkrecht aufeinander und halbieren sich gegenseitig. Im Rechteck halbieren sie sich zwar, stehen aber nicht senkrecht. Im allgemeinen Parallelogramm ebenfalls nicht."
+  },
+  // ========== LEVEL 5 — anspruchsvoll: Flächeninhalt Parallelogramm und Trapez ==========
+  {
+    id: 25,
+    level: 5,
+    typ: "numerisch",
+    frage: "Ein Parallelogramm hat die Grundseite \\(g = 8\\) cm und die Höhe \\(h = 5\\) cm. Berechne den Flächeninhalt. Gib das Ergebnis in cm² an.",
+    loesung: 40,
+    toleranz: 0,
+    tipp: "Formel für das Parallelogramm: \\(A = g \\cdot h\\).",
+    loesungsweg: "$$A = g \\cdot h$$ $$A = 8 \\text{ cm} \\cdot 5 \\text{ cm} = 40 \\text{ cm}^2$$"
+  },
+  {
+    id: 26,
+    level: 5,
+    typ: "mc",
+    frage: "Mit welcher Formel berechnest du den Flächeninhalt eines Trapezes mit den parallelen Seiten \\(a\\) und \\(c\\) und der Höhe \\(h\\)?",
+    optionen: ["\\(A = a \\cdot c \\cdot h\\)", "\\(A = a \\cdot h\\)", "\\(A = \\dfrac{a + c}{2} \\cdot h\\)", "\\(A = 2 \\cdot (a + c)\\)"],
+    korrekt: 2,
+    tipp: "Beim Trapez rechnet man mit der MITTLEREN Länge der beiden parallelen Seiten.",
+    loesungsweg: "Die parallelen Seiten \\(a\\) und \\(c\\) sind verschieden lang. Man nimmt ihren Mittelwert und multipliziert mit der Höhe: $$A = \\frac{a + c}{2} \\cdot h$$"
+  },
+  {
+    id: 27,
+    level: 5,
+    typ: "numerisch",
+    frage: "Ein Trapez hat die parallelen Seiten \\(a = 10\\) cm und \\(c = 6\\) cm, die Höhe beträgt \\(h = 4\\) cm. Berechne den Flächeninhalt. Gib das Ergebnis in cm² an.",
+    loesung: 32,
+    toleranz: 0,
+    tipp: "Erst den Mittelwert von \\(a\\) und \\(c\\) bilden, dann mit \\(h\\) multiplizieren.",
+    loesungsweg: "$$A = \\frac{a + c}{2} \\cdot h = \\frac{10 + 6}{2} \\cdot 4$$ $$A = \\frac{16}{2} \\cdot 4 = 8 \\cdot 4 = 32 \\text{ cm}^2$$"
+  },
+  {
+    id: 28,
+    level: 5,
+    typ: "numerisch",
+    frage: "Ein Parallelogramm hat den Flächeninhalt \\(A = 54\\) cm² und die Grundseite \\(g = 9\\) cm. Wie groß ist die Höhe \\(h\\)? Gib das Ergebnis in cm an.",
+    loesung: 6,
+    toleranz: 0,
+    tipp: "Stelle die Formel \\(A = g \\cdot h\\) nach \\(h\\) um: Teile \\(A\\) durch \\(g\\).",
+    loesungsweg: "$$A = g \\cdot h \\quad \\Rightarrow \\quad h = A : g$$ $$h = 54 \\text{ cm}^2 : 9 \\text{ cm} = 6 \\text{ cm}$$"
+  },
+  {
+    id: 29,
+    level: 5,
+    typ: "mc",
+    frage: "Ein Parallelogramm hat die Grundseite \\(g = 7\\) cm und die Höhe \\(h = 4\\) cm. Wie groß ist der Flächeninhalt?",
+    optionen: ["\\(28 \\text{ cm}^2\\)", "\\(22 \\text{ cm}^2\\)", "\\(11 \\text{ cm}^2\\)", "\\(14 \\text{ cm}^2\\)"],
+    korrekt: 0,
+    tipp: "Fläche heißt multiplizieren: \\(g \\cdot h\\). Nicht mit dem Umfang verwechseln!",
+    loesungsweg: "$$A = g \\cdot h = 7 \\text{ cm} \\cdot 4 \\text{ cm} = 28 \\text{ cm}^2$$ Achtung: \\(22 \\text{ cm}^2\\) sieht aus wie der Umfang \\(2 \\cdot (7 + 4) = 22\\) — das wäre aber eine ganz andere Rechnung."
+  },
+  {
+    id: 30,
+    level: 5,
+    typ: "numerisch",
+    frage: "Ein Trapez hat die parallelen Seiten \\(a = 12\\) cm und \\(c = 8\\) cm sowie die Höhe \\(h = 5\\) cm. Berechne den Flächeninhalt. Gib das Ergebnis in cm² an.",
+    loesung: 50,
+    toleranz: 0,
+    tipp: "Trapezformel: \\(A = \\dfrac{a + c}{2} \\cdot h\\). Rechne Schritt für Schritt.",
+    loesungsweg: "$$A = \\frac{a + c}{2} \\cdot h = \\frac{12 + 8}{2} \\cdot 5$$ $$A = \\frac{20}{2} \\cdot 5 = 10 \\cdot 5 = 50 \\text{ cm}^2$$"
+  },
+  // ========== LEVEL 6 — wagnerisch: Sachaufgaben und Begründungen ==========
+  {
+    id: 31,
+    level: 6,
+    typ: "numerisch",
+    frage: "Familie Yilmaz hat ein rechteckiges Grundstück 🏡, das \\(25\\) m lang und \\(18\\) m breit ist. Sie möchte einen Zaun um das ganze Grundstück bauen. Wie viele Meter Zaun braucht sie? Gib das Ergebnis in m an.",
+    loesung: 86,
+    toleranz: 0,
+    tipp: "Ein Zaun läuft am Rand entlang — gesucht ist also der Umfang: \\(U = 2 \\cdot (l + b)\\).",
+    loesungsweg: "Der Zaun umschließt das Rechteck, gesucht ist der Umfang: $$U = 2 \\cdot (25 \\text{ m} + 18 \\text{ m})$$ $$U = 2 \\cdot 43 \\text{ m} = 86 \\text{ m}$$ Familie Yilmaz braucht \\(86\\) m Zaun."
+  },
+  {
+    id: 32,
+    level: 6,
+    typ: "numerisch",
+    frage: "Ein Gemüsebeet hat die Form eines Trapezes: Die parallelen Seiten sind \\(30\\) m und \\(20\\) m lang, ihr Abstand beträgt \\(12\\) m. Wie groß ist die Fläche des Beets? Gib das Ergebnis in m² an.",
+    loesung: 300,
+    toleranz: 0,
+    tipp: "Der Abstand der parallelen Seiten ist die Höhe \\(h\\). Nutze die Trapezformel.",
+    loesungsweg: "$$A = \\frac{a + c}{2} \\cdot h = \\frac{30 + 20}{2} \\cdot 12$$ $$A = \\frac{50}{2} \\cdot 12 = 25 \\cdot 12 = 300 \\text{ m}^2$$ Das Beet ist \\(300\\) m² groß."
+  },
+  {
+    id: 33,
+    level: 6,
+    typ: "numerisch",
+    frage: "Amir baut einen Flugdrachen 🪁 in Form eines Drachenvierecks: zwei benachbarte Seiten sind je \\(40\\) cm lang, die anderen beiden je \\(60\\) cm. Er spannt eine Schnur einmal um den ganzen Rand. Wie lang muss die Schnur mindestens sein? Gib das Ergebnis in cm an.",
+    loesung: 200,
+    toleranz: 0,
+    tipp: "Die Schnur läuft am Rand entlang — addiere alle vier Seitenlängen.",
+    loesungsweg: "Umfang des Drachenvierecks: $$U = 2 \\cdot 40 \\text{ cm} + 2 \\cdot 60 \\text{ cm}$$ $$U = 80 \\text{ cm} + 120 \\text{ cm} = 200 \\text{ cm}$$ Amir braucht mindestens \\(200\\) cm Schnur."
+  },
+  {
+    id: 34,
+    level: 6,
+    typ: "mc",
+    frage: "Selin behauptet: „Jede Raute ist auch ein Parallelogramm.“ Welche Begründung ist richtig?",
+    optionen: ["Selin hat recht: In jeder Raute sind die gegenüberliegenden Seiten parallel.", "Selin irrt sich: Eine Raute hat keine parallelen Seiten.", "Selin hat recht: Jede Raute hat vier rechte Winkel.", "Selin irrt sich: Ein Parallelogramm muss gleich lange Diagonalen haben."],
+    korrekt: 0,
+    tipp: "Prüfe die Definition: Ein Parallelogramm braucht zwei Paare paralleler Seiten. Hat eine Raute das?",
+    loesungsweg: "Ein Parallelogramm ist ein Viereck, in dem die gegenüberliegenden Seiten parallel sind. Das gilt in jeder Raute — also ist jede Raute ein Parallelogramm. Im Haus der Vierecke steht die Raute deshalb unter dem Parallelogramm. Rechte Winkel braucht dafür niemand."
+  },
+  {
+    id: 35,
+    level: 6,
+    typ: "mc",
+    frage: "Ein Sportplatz ⚽ ist ein Rechteck mit \\(40\\) m Länge und \\(25\\) m Breite. Lena sagt: „Die Fläche beträgt \\(130\\) m².“ Was ist an Lenas Rechnung falsch?",
+    optionen: ["Sie hat Länge und Breite verwechselt.", "Nichts — \\(130\\) m² ist richtig.", "Sie hat den Umfang berechnet statt der Fläche.", "Sie hat vergessen, durch \\(2\\) zu teilen."],
+    korrekt: 2,
+    tipp: "Rechne selbst: Was ergibt \\(40 \\cdot 25\\)? Und was ergibt \\(2 \\cdot (40 + 25)\\)?",
+    loesungsweg: "Die richtige Fläche: $$A = 40 \\text{ m} \\cdot 25 \\text{ m} = 1000 \\text{ m}^2$$ Lenas Zahl kommt vom Umfang: $$U = 2 \\cdot (40 + 25) = 2 \\cdot 65 = 130 \\text{ m}$$ Sie hat also Umfang und Fläche verwechselt — außerdem wird der Umfang in m gemessen, nicht in m²."
+  },
+  {
+    id: 36,
+    level: 6,
+    typ: "mc",
+    frage: "Herr Okafor legt ein Blumenbeet in Form eines Parallelogramms an: eine Seite ist \\(6\\) m lang, die schräge Nachbarseite \\(4\\) m, und die Höhe zur \\(6\\)-m-Seite beträgt \\(3\\) m. Mit welcher Rechnung bestimmt er den Flächeninhalt richtig?",
+    optionen: ["\\(6 \\cdot 4 = 24\\) m²", "\\(2 \\cdot (6 + 4) = 20\\) m²", "\\(4 \\cdot 3 = 12\\) m²", "\\(6 \\cdot 3 = 18\\) m²"],
+    korrekt: 3,
+    tipp: "Für die Fläche zählt nicht die schräge Seite, sondern die Höhe, die senkrecht auf der Grundseite steht.",
+    loesungsweg: "Beim Parallelogramm gilt \\(A = g \\cdot h\\): Grundseite mal zugehörige Höhe. $$A = 6 \\text{ m} \\cdot 3 \\text{ m} = 18 \\text{ m}^2$$ Der häufigste Fehler ist \\(6 \\cdot 4\\) — aber die schräge Seite ist keine Höhe! Und \\(2 \\cdot (6+4)\\) wäre der Umfang."
+  }
+];
+    </script>
+    <script src="../p3-reflexion.js"></script>
+    <script src="../spirale-engine.js"></script>
+    <script src="../spirale-kids.js"></script>
+</body>
+</html>

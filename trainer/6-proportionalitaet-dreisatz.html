@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zuordnungen, Proportionalität & Dreisatz - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <link rel="stylesheet" href="../spirale-kids.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+// Zuordnungen, Proportionalität & Dreisatz — DiffEngine Klasse 5/6 Content (Roadmap Welle 2, Item 3)
+const THEMA_KEY = '6-proportionalitaet-dreisatz';
+const THEMA_CONFIG = { name: 'Zuordnungen, Proportionalität & Dreisatz', bereich: 'funktionen', p3Enabled: true };
+const AUFGABEN = [
+  // ========== LEVEL 1 — babyleicht: Zuordnung vervollständigen (doppelt/halb) ==========
+  {
+    id: 1,
+    level: 1,
+    typ: "numerisch",
+    frage: "Auf dem Markt: \\(2\\) kg Äpfel kosten \\(3\\) €. Du kaufst \\(4\\) kg. 🍎 Wie viel € bezahlst du? Gib das Ergebnis in € an.",
+    loesung: 6,
+    toleranz: 0,
+    tipp: "Doppelte Menge bedeutet doppelter Preis. Was ist das Doppelte von \\(3\\) €?",
+    loesungsweg: "Von \\(2\\) kg auf \\(4\\) kg ist die doppelte Menge. Also auch der doppelte Preis: $$3 \\cdot 2 = 6$$ \\(4\\) kg Äpfel kosten \\(6\\) €."
+  },
+  {
+    id: 2,
+    level: 1,
+    typ: "mc",
+    frage: "Im Schreibwarenladen kosten \\(3\\) Hefte zusammen \\(2\\) €. Wie viel kosten \\(6\\) Hefte?",
+    optionen: ["\\(3\\) €", "\\(4\\) €", "\\(6\\) €", "\\(12\\) €"],
+    korrekt: 1,
+    tipp: "\\(6\\) Hefte sind doppelt so viele wie \\(3\\) Hefte. Was passiert dann mit dem Preis?",
+    loesungsweg: "Doppelte Anzahl Hefte, also doppelter Preis: $$2 \\cdot 2 = 4$$ \\(6\\) Hefte kosten \\(4\\) €. Achtung: \\(6\\) € wäre die Heftanzahl, kein Preis!"
+  },
+  {
+    id: 3,
+    level: 1,
+    typ: "numerisch",
+    frage: "Beim Schulbasar kosten \\(4\\) Muffins \\(6\\) €. Wie viel € kosten \\(8\\) Muffins? Gib das Ergebnis in € an.",
+    loesung: 12,
+    toleranz: 0,
+    tipp: "Von \\(4\\) auf \\(8\\) Muffins verdoppelt sich die Anzahl. Verdopple auch den Preis.",
+    loesungsweg: "\\(8\\) Muffins sind doppelt so viele wie \\(4\\) Muffins. $$6 \\cdot 2 = 12$$ \\(8\\) Muffins kosten \\(12\\) €."
+  },
+  {
+    id: 4,
+    level: 1,
+    typ: "mc",
+    frage: "\\(6\\) Flaschen Saft kosten \\(9\\) €. Wie viel kosten \\(3\\) Flaschen?",
+    optionen: ["\\(4{,}50\\) €", "\\(18\\) €", "\\(3\\) €", "\\(6\\) €"],
+    korrekt: 0,
+    tipp: "\\(3\\) Flaschen sind die Hälfte von \\(6\\) Flaschen. Halbiere also auch den Preis.",
+    loesungsweg: "Halbe Anzahl, halber Preis: $$9 : 2 = 4{,}5$$ \\(3\\) Flaschen kosten \\(4{,}50\\) €. Wer verdoppelt statt halbiert, kommt auf \\(18\\) € — aber weniger Flaschen können nicht mehr kosten!"
+  },
+  {
+    id: 5,
+    level: 1,
+    typ: "numerisch",
+    frage: "Selin fährt Fahrrad, immer gleich schnell. Die Tabelle sagt: 1 Stunde → \\(12\\) km, 2 Stunden → \\(24\\) km, 3 Stunden → ? km. 🚲 Welche Zahl fehlt?",
+    loesung: 36,
+    toleranz: 0,
+    tipp: "Pro Stunde kommen \\(12\\) km dazu. Wie viele km sind es nach \\(3\\) Stunden?",
+    loesungsweg: "Jede Stunde schafft Selin \\(12\\) km: $$3 \\cdot 12 = 36$$ Nach \\(3\\) Stunden ist sie \\(36\\) km gefahren."
+  },
+  {
+    id: 6,
+    level: 1,
+    typ: "mc",
+    frage: "Lina kauft Sticker: \\(2\\) Sticker kosten \\(50\\) Cent. Wie viele Cent kosten \\(8\\) Sticker?",
+    optionen: ["\\(100\\) Cent", "\\(150\\) Cent", "\\(200\\) Cent", "\\(400\\) Cent"],
+    korrekt: 2,
+    tipp: "Von \\(2\\) auf \\(8\\) Sticker: Wie oft passt die \\(2\\) in die \\(8\\)?",
+    loesungsweg: "\\(8\\) Sticker sind \\(4\\)-mal so viele wie \\(2\\) Sticker: $$8 : 2 = 4$$ Also auch der \\(4\\)-fache Preis: $$50 \\cdot 4 = 200$$ \\(8\\) Sticker kosten \\(200\\) Cent. Nur zu verdoppeln (\\(100\\) Cent) reicht nicht!"
+  },
+  // ========== LEVEL 2 — leicht: proportional ja oder nein? ==========
+  {
+    id: 7,
+    level: 2,
+    typ: "mc",
+    frage: "Ist die Zuordnung „Alter eines Kindes → Körpergröße“ proportional?",
+    optionen: [
+      "Ja, denn größere Kinder sind meistens älter.",
+      "Nein, denn ein doppelt so altes Kind ist nicht automatisch doppelt so groß.",
+      "Ja, denn beide Zahlen werden mit der Zeit größer.",
+      "Nein, denn Alter kann man nicht in Zahlen angeben."
+    ],
+    korrekt: 1,
+    tipp: "Proportional heißt: doppelter Wert links → doppelter Wert rechts. Ist ein \\(12\\)-Jähriger doppelt so groß wie ein \\(6\\)-Jähriger?",
+    loesungsweg: "Prüfe die Verdopplungs-Regel: Ein \\(6\\)-jähriges Kind ist etwa \\(1{,}20\\) m groß. Ein \\(12\\)-jähriges Kind müsste dann \\(2{,}40\\) m groß sein — das stimmt nicht! Die Zuordnung ist also nicht proportional. Dass beide Zahlen größer werden, reicht für „proportional“ nicht aus."
+  },
+  {
+    id: 8,
+    level: 2,
+    typ: "mc",
+    frage: "Beim Bäcker kostet jedes Brötchen \\(40\\) Cent. Ist die Zuordnung „Anzahl Brötchen → Gesamtpreis“ proportional?",
+    optionen: [
+      "Ja, denn die doppelte Anzahl Brötchen kostet auch doppelt so viel.",
+      "Nein, denn der Preis ändert sich jeden Tag.",
+      "Ja, denn Brötchen kann man gut zählen.",
+      "Nein, denn \\(40\\) ist eine gerade Zahl."
+    ],
+    korrekt: 0,
+    tipp: "Was kosten \\(2\\) Brötchen, was kosten \\(4\\) Brötchen? Vergleiche die Preise.",
+    loesungsweg: "\\(2\\) Brötchen kosten \\(80\\) Cent, \\(4\\) Brötchen kosten \\(160\\) Cent — genau das Doppelte. Doppelte Anzahl → doppelter Preis gilt hier immer. Die Zuordnung ist proportional mit dem Faktor \\(40\\) Cent pro Brötchen."
+  },
+  {
+    id: 9,
+    level: 2,
+    typ: "mc",
+    frage: "Eine Tabelle zeigt: 2 → \\(6\\), 4 → \\(12\\), 6 → \\(18\\). Ist diese Zuordnung proportional?",
+    optionen: [
+      "Nein, denn die rechten Zahlen sind größer als die linken.",
+      "Ja, denn alle Zahlen in der Tabelle sind gerade.",
+      "Nein, denn \\(18\\) ist keine Verdopplung von \\(6\\).",
+      "Ja, denn jede rechte Zahl ist das Dreifache der linken Zahl."
+    ],
+    korrekt: 3,
+    tipp: "Teile jede rechte Zahl durch die linke Zahl daneben. Kommt immer dasselbe heraus?",
+    loesungsweg: "Prüfe: $$6 : 2 = 3, \\quad 12 : 4 = 3, \\quad 18 : 6 = 3$$ Überall kommt \\(3\\) heraus — das ist der Proportionalitätsfaktor. Die Zuordnung ist proportional. Dass die Zahlen gerade sind, hat damit nichts zu tun."
+  },
+  {
+    id: 10,
+    level: 2,
+    typ: "mc",
+    frage: "Eine Kerze brennt ab. 🕯️ Ist die Zuordnung „Brenndauer → Restlänge der Kerze“ proportional?",
+    optionen: [
+      "Ja, denn Zeit und Länge gehören zusammen.",
+      "Ja, denn man kann beides genau messen.",
+      "Nein, denn bei doppelter Brenndauer ist die Restlänge nicht doppelt so groß — sie wird ja kleiner.",
+      "Nein, denn jede Kerze brennt unterschiedlich schnell."
+    ],
+    korrekt: 2,
+    tipp: "Proportional heißt: doppelt so viel links → doppelt so viel rechts. Wird die Kerze bei doppelter Zeit doppelt so lang?",
+    loesungsweg: "Je länger die Kerze brennt, desto kürzer wird sie. Bei doppelter Brenndauer müsste die Restlänge doppelt so groß sein — sie ist aber kleiner! Also nicht proportional. (Proportional wäre stattdessen: Brenndauer → abgebrannte Länge.)"
+  },
+  {
+    id: 11,
+    level: 2,
+    typ: "mc",
+    frage: "Eine Tabelle zeigt: 1 → \\(5\\), 2 → \\(8\\), 3 → \\(11\\). Ist diese Zuordnung proportional?",
+    optionen: [
+      "Nein, denn zur \\(2\\) müsste das Doppelte von \\(5\\) gehören, also \\(10\\) — es steht aber \\(8\\) da.",
+      "Ja, denn rechts kommt immer \\(3\\) dazu.",
+      "Ja, denn die Zahlen werden gleichmäßig größer.",
+      "Nein, denn \\(5\\), \\(8\\) und \\(11\\) sind keine Zehnerzahlen."
+    ],
+    korrekt: 0,
+    tipp: "Verdopple die linke Zahl \\(1\\) zur \\(2\\). Verdoppelt sich dabei auch die rechte Zahl?",
+    loesungsweg: "Verdopplungs-Test: Zu \\(1\\) gehört \\(5\\). Bei proportionalen Zuordnungen müsste zu \\(2\\) dann \\(10\\) gehören — in der Tabelle steht aber \\(8\\). Also nicht proportional. Dass rechts immer \\(3\\) dazukommt, macht die Zuordnung zwar gleichmäßig, aber nicht proportional."
+  },
+  {
+    id: 12,
+    level: 2,
+    typ: "mc",
+    frage: "Welche dieser Zuordnungen ist proportional?",
+    optionen: [
+      "Alter eines Kindes → Taschengeld",
+      "Anzahl Kinokarten → Gesamtpreis",
+      "Körpergröße → Schuhgröße",
+      "Anzahl Bauarbeiter → Dauer der Baustelle"
+    ],
+    korrekt: 1,
+    tipp: "Suche die Zuordnung, bei der die doppelte Menge immer genau das Doppelte ergibt.",
+    loesungsweg: "Jede Kinokarte kostet gleich viel — doppelt so viele Karten kosten doppelt so viel. Das ist proportional. Taschengeld und Schuhgröße wachsen nicht im gleichen Takt wie Alter oder Körpergröße. Und mehr Bauarbeiter brauchen sogar weniger Zeit, nicht mehr!"
+  },
+  // ========== LEVEL 3 — nervenschonend: Proportionalitätsfaktor ermitteln ==========
+  {
+    id: 13,
+    level: 3,
+    typ: "numerisch",
+    frage: "\\(3\\) kg Kartoffeln kosten \\(6\\) €. Wie viel € kostet \\(1\\) kg? Gib das Ergebnis in € an.",
+    loesung: 2,
+    toleranz: 0,
+    tipp: "Teile den Gesamtpreis durch die Anzahl der Kilogramm.",
+    loesungsweg: "Preis pro Kilogramm: $$6 : 3 = 2$$ \\(1\\) kg Kartoffeln kostet \\(2\\) €. Das ist der Proportionalitätsfaktor."
+  },
+  {
+    id: 14,
+    level: 3,
+    typ: "mc",
+    frage: "\\(4\\) kg Äpfel kosten \\(10\\) €. Wie hoch ist der Preis pro Kilogramm?",
+    optionen: ["\\(2\\) €", "\\(2{,}50\\) €", "\\(0{,}40\\) €", "\\(40\\) €"],
+    korrekt: 1,
+    tipp: "Rechne Gesamtpreis geteilt durch Gewicht: \\(10 : 4\\).",
+    loesungsweg: "$$10 : 4 = 2{,}5$$ Ein Kilogramm kostet \\(2{,}50\\) €. Achtung Zahlendreher: \\(4 : 10 = 0{,}4\\) wäre falsch herum gerechnet — dann käme \\(0{,}40\\) € heraus."
+  },
+  {
+    id: 15,
+    level: 3,
+    typ: "numerisch",
+    frage: "Ein Zug fährt in \\(3\\) Stunden \\(240\\) km, immer gleich schnell. 🚆 Wie viele km schafft er in \\(1\\) Stunde? Gib das Ergebnis in km an.",
+    loesung: 80,
+    toleranz: 0,
+    tipp: "Teile die Strecke durch die Anzahl der Stunden.",
+    loesungsweg: "Kilometer pro Stunde: $$240 : 3 = 80$$ In \\(1\\) Stunde fährt der Zug \\(80\\) km."
+  },
+  {
+    id: 16,
+    level: 3,
+    typ: "mc",
+    frage: "Eine proportionale Tabelle zeigt: 2 → \\(9\\), 4 → \\(18\\), 6 → \\(27\\). Wie groß ist der Proportionalitätsfaktor?",
+    optionen: ["\\(4{,}5\\)", "\\(7\\)", "\\(2\\)", "\\(9\\)"],
+    korrekt: 0,
+    tipp: "Der Faktor ist die Zahl, mit der du links malnehmen musst, um rechts anzukommen: \\(9 : 2 = \\,?\\)",
+    loesungsweg: "$$9 : 2 = 4{,}5, \\quad 18 : 4 = 4{,}5, \\quad 27 : 6 = 4{,}5$$ Der Proportionalitätsfaktor ist \\(4{,}5\\). Die \\(7\\) ist nur der Abstand zwischen \\(2\\) und \\(9\\) — das ist nicht der Faktor!"
+  },
+  {
+    id: 17,
+    level: 3,
+    typ: "numerisch",
+    frage: "\\(6\\) Flaschen Limo kosten zusammen \\(9\\) €. Wie viel € kostet \\(1\\) Flasche? Gib das Ergebnis in € an.",
+    loesung: 1.5,
+    toleranz: 0,
+    tipp: "Rechne \\(9 : 6\\). Das Ergebnis ist keine ganze Zahl.",
+    loesungsweg: "$$9 : 6 = 1{,}5$$ Eine Flasche kostet \\(1{,}50\\) €."
+  },
+  {
+    id: 18,
+    level: 3,
+    typ: "mc",
+    frage: "\\(5\\) Hefte kosten \\(4\\) €. Mit welcher Rechnung findest du den Preis für \\(1\\) Heft?",
+    optionen: ["\\(5 : 4\\)", "\\(4 \\cdot 5\\)", "\\(4 : 5\\)", "\\(5 - 4\\)"],
+    korrekt: 2,
+    tipp: "Du willst den Preis auf die Hefte verteilen. Was wird geteilt — der Preis oder die Heftanzahl?",
+    loesungsweg: "Der Gesamtpreis wird auf die \\(5\\) Hefte verteilt: $$4 : 5 = 0{,}8$$ Ein Heft kostet \\(0{,}80\\) €. Bei \\(5 : 4\\) wäre die Reihenfolge vertauscht — dann käme \\(1{,}25\\) heraus, das wäre der falsche Wert."
+  },
+  // ========== LEVEL 4 — mittel: Dreisatz über die Einheit ==========
+  {
+    id: 19,
+    level: 4,
+    typ: "numerisch",
+    frage: "\\(5\\) Hefte kosten \\(4\\) €. Was kosten \\(8\\) Hefte? Gib das Ergebnis in € an.",
+    loesung: 6.4,
+    toleranz: 0,
+    tipp: "Erst der Schritt zur Einheit: Was kostet \\(1\\) Heft? Dann mal \\(8\\).",
+    loesungsweg: "Schritt 1 — auf \\(1\\) Heft: $$4 : 5 = 0{,}8$$ Schritt 2 — auf \\(8\\) Hefte: $$0{,}8 \\cdot 8 = 6{,}4$$ \\(8\\) Hefte kosten \\(6{,}40\\) €."
+  },
+  {
+    id: 20,
+    level: 4,
+    typ: "mc",
+    frage: "\\(3\\) kg Bananen kosten \\(4{,}50\\) €. 🍌 Was kosten \\(5\\) kg?",
+    optionen: ["\\(7{,}50\\) €", "\\(6{,}50\\) €", "\\(9\\) €", "\\(22{,}50\\) €"],
+    korrekt: 0,
+    tipp: "Rechne zuerst aus, was \\(1\\) kg kostet: \\(4{,}50 : 3\\).",
+    loesungsweg: "Schritt 1: $$4{,}5 : 3 = 1{,}5$$ Ein Kilogramm kostet \\(1{,}50\\) €. Schritt 2: $$1{,}5 \\cdot 5 = 7{,}5$$ \\(5\\) kg kosten \\(7{,}50\\) €. Wer \\(4{,}50 \\cdot 5\\) rechnet und den Einheitsschritt vergisst, landet bei \\(22{,}50\\) € — viel zu teuer!"
+  },
+  {
+    id: 21,
+    level: 4,
+    typ: "numerisch",
+    frage: "Ein Drucker druckt \\(6\\) Seiten in \\(2\\) Minuten. Wie viele Seiten schafft er in \\(5\\) Minuten?",
+    loesung: 15,
+    toleranz: 0,
+    tipp: "Wie viele Seiten schafft der Drucker in \\(1\\) Minute?",
+    loesungsweg: "Schritt 1 — auf \\(1\\) Minute: $$6 : 2 = 3$$ Der Drucker schafft \\(3\\) Seiten pro Minute. Schritt 2 — auf \\(5\\) Minuten: $$3 \\cdot 5 = 15$$ In \\(5\\) Minuten druckt er \\(15\\) Seiten."
+  },
+  {
+    id: 22,
+    level: 4,
+    typ: "mc",
+    frage: "\\(7\\) gleiche Stifte kosten \\(5{,}60\\) €. Was kosten \\(3\\) Stifte?",
+    optionen: ["\\(1{,}80\\) €", "\\(3{,}60\\) €", "\\(2{,}40\\) €", "\\(16{,}80\\) €"],
+    korrekt: 2,
+    tipp: "Erst durch \\(7\\) teilen (Preis für einen Stift), dann mal \\(3\\).",
+    loesungsweg: "Schritt 1: $$5{,}6 : 7 = 0{,}8$$ Ein Stift kostet \\(0{,}80\\) €. Schritt 2: $$0{,}8 \\cdot 3 = 2{,}4$$ \\(3\\) Stifte kosten \\(2{,}40\\) €. \\(16{,}80\\) € wäre \\(5{,}60 \\cdot 3\\) — da wurde der erste Schritt vergessen."
+  },
+  {
+    id: 23,
+    level: 4,
+    typ: "numerisch",
+    frage: "In \\(4\\) gleiche Gläser passen zusammen \\(600\\) ml Saft. Wie viele ml passen in \\(7\\) solcher Gläser? Gib das Ergebnis in ml an.",
+    loesung: 1050,
+    toleranz: 0,
+    tipp: "Wie viel ml passen in \\(1\\) Glas? Teile \\(600\\) durch \\(4\\).",
+    loesungsweg: "Schritt 1 — ein Glas: $$600 : 4 = 150$$ In ein Glas passen \\(150\\) ml. Schritt 2 — sieben Gläser: $$150 \\cdot 7 = 1050$$ In \\(7\\) Gläser passen \\(1050\\) ml."
+  },
+  {
+    id: 24,
+    level: 4,
+    typ: "mc",
+    frage: "Für \\(6\\) Personen braucht man \\(300\\) g Nudeln. Wie viel Gramm braucht man für \\(4\\) Personen?",
+    optionen: ["\\(250\\) g", "\\(450\\) g", "\\(120\\) g", "\\(200\\) g"],
+    korrekt: 3,
+    tipp: "Rechne zuerst aus, wie viel Gramm eine Person bekommt.",
+    loesungsweg: "Schritt 1 — eine Person: $$300 : 6 = 50$$ Jede Person bekommt \\(50\\) g. Schritt 2 — vier Personen: $$50 \\cdot 4 = 200$$ Für \\(4\\) Personen braucht man \\(200\\) g. \\(450\\) g käme heraus, wenn man \\(300 : 4 \\cdot 6\\) rechnet — die Zahlen wurden vertauscht."
+  },
+  // ========== LEVEL 5 — anspruchsvoll: unbequeme Zahlen & Runden im Sachkontext ==========
+  {
+    id: 25,
+    level: 5,
+    typ: "numerisch",
+    frage: "An der Käsetheke kosten \\(250\\) g Käse \\(3{,}20\\) €. 🧀 Was kosten \\(400\\) g? Gib das Ergebnis in € an.",
+    loesung: 5.12,
+    toleranz: 0,
+    tipp: "Rechne über \\(50\\) g: \\(250\\) g sind \\(5\\) Portionen zu \\(50\\) g, \\(400\\) g sind \\(8\\) Portionen.",
+    loesungsweg: "Schritt 1 — Preis für \\(50\\) g: $$3{,}2 : 5 = 0{,}64$$ Schritt 2 — \\(400\\) g sind \\(8\\) Portionen zu \\(50\\) g: $$0{,}64 \\cdot 8 = 5{,}12$$ \\(400\\) g Käse kosten \\(5{,}12\\) €."
+  },
+  {
+    id: 26,
+    level: 5,
+    typ: "mc",
+    frage: "Ein Rezept für \\(4\\) Personen braucht \\(3\\) Eier. Oma kocht für \\(10\\) Personen. Wie viele Eier muss sie mindestens nehmen?",
+    optionen: ["\\(7\\)", "\\(8\\)", "\\(7{,}5\\)", "\\(9\\)"],
+    korrekt: 1,
+    tipp: "Rechne erst genau: \\(3 : 4 \\cdot 10\\). Überlege dann: Kann man ein halbes Ei kaufen?",
+    loesungsweg: "Dreisatz: $$3 : 4 = 0{,}75, \\quad 0{,}75 \\cdot 10 = 7{,}5$$ Rechnerisch braucht Oma \\(7{,}5\\) Eier. Halbe Eier gibt es aber nicht — im Sachkontext muss sie aufrunden: \\(8\\) Eier. Mit \\(7\\) Eiern (abgerundet) würde es nicht reichen!"
+  },
+  {
+    id: 27,
+    level: 5,
+    typ: "numerisch",
+    frage: "\\(3\\) kg Orangen kosten \\(7\\) €. Was kosten \\(5\\) kg? Gib das Ergebnis in € an, gerundet auf \\(2\\) Nachkommastellen.",
+    loesung: 11.67,
+    toleranz: 0,
+    tipp: "Rechne erst mal \\(5\\), dann geteilt durch \\(3\\) — so bleiben die Zahlen länger glatt.",
+    loesungsweg: "Geschickte Reihenfolge: $$7 \\cdot 5 = 35, \\quad 35 : 3 = 11{,}666\\ldots$$ Gerundet auf ganze Cent: \\(5\\) kg Orangen kosten \\(11{,}67\\) €."
+  },
+  {
+    id: 28,
+    level: 5,
+    typ: "mc",
+    frage: "In \\(6\\) Minuten laufen \\(27\\) Liter Wasser in die Badewanne. Wie viele Liter sind es nach \\(10\\) Minuten?",
+    optionen: ["\\(40\\) Liter", "\\(54\\) Liter", "\\(45\\) Liter", "\\(37\\) Liter"],
+    korrekt: 2,
+    tipp: "Wie viele Liter laufen in \\(1\\) Minute? \\(27 : 6\\) ist keine ganze Zahl — das ist okay!",
+    loesungsweg: "Schritt 1: $$27 : 6 = 4{,}5$$ Pro Minute laufen \\(4{,}5\\) Liter ein. Schritt 2: $$4{,}5 \\cdot 10 = 45$$ Nach \\(10\\) Minuten sind es \\(45\\) Liter. \\(37\\) Liter käme heraus, wenn man \\(27 + 10\\) addiert — beim Dreisatz wird aber multipliziert, nicht addiert!"
+  },
+  {
+    id: 29,
+    level: 5,
+    typ: "numerisch",
+    frage: "Ein Auto verbraucht auf \\(100\\) km genau \\(6{,}5\\) Liter Benzin. Wie viel Liter braucht es für \\(250\\) km? Gib das Ergebnis in Litern an.",
+    loesung: 16.25,
+    toleranz: 0,
+    tipp: "\\(250\\) km sind \\(2{,}5\\)-mal so weit wie \\(100\\) km.",
+    loesungsweg: "Der Faktor von \\(100\\) km auf \\(250\\) km ist $$250 : 100 = 2{,}5$$ Also: $$6{,}5 \\cdot 2{,}5 = 16{,}25$$ Für \\(250\\) km braucht das Auto \\(16{,}25\\) Liter."
+  },
+  {
+    id: 30,
+    level: 5,
+    typ: "numerisch",
+    frage: "Ein Eimer Farbe reicht für \\(12\\) m² Wand. Familie Yilmaz will \\(40\\) m² streichen. 🎨 Wie viele Eimer muss sie kaufen?",
+    loesung: 4,
+    toleranz: 0,
+    tipp: "Rechne \\(40 : 12\\). Das Ergebnis ist keine ganze Zahl — überlege, ob du auf- oder abrunden musst.",
+    loesungsweg: "$$40 : 12 = 3{,}33\\ldots$$ Rechnerisch braucht die Familie gut \\(3\\) Eimer. Mit nur \\(3\\) Eimern schafft sie aber bloß \\(36\\) m² — das reicht nicht. Im Sachkontext wird aufgerundet: Sie muss \\(4\\) Eimer kaufen."
+  },
+  // ========== LEVEL 6 — wagnerisch: mehrschrittige Sachaufgaben ==========
+  {
+    id: 31,
+    level: 6,
+    typ: "numerisch",
+    frage: "Amir kauft für das Klassenfest ein: \\(3\\) kg Äpfel kosten \\(5{,}40\\) €, er braucht aber \\(5\\) kg. Dazu nimmt er \\(2\\) Flaschen Saft für je \\(1{,}80\\) €. Wie viel € bezahlt Amir insgesamt? Gib das Ergebnis in € an.",
+    loesung: 12.6,
+    toleranz: 0,
+    tipp: "Drei Schritte: Preis für \\(1\\) kg Äpfel, dann für \\(5\\) kg, dann den Saft dazurechnen.",
+    loesungsweg: "Äpfel pro kg: $$5{,}4 : 3 = 1{,}8$$ Äpfel gesamt: $$1{,}8 \\cdot 5 = 9$$ Saft: $$2 \\cdot 1{,}8 = 3{,}6$$ Alles zusammen: $$9 + 3{,}6 = 12{,}6$$ Amir bezahlt \\(12{,}60\\) €."
+  },
+  {
+    id: 32,
+    level: 6,
+    typ: "mc",
+    frage: "Ein Pizzateig-Rezept für \\(4\\) Personen braucht \\(300\\) g Mehl und \\(180\\) ml Wasser. 🍕 Nele backt für \\(6\\) Personen. Wie viel braucht sie?",
+    optionen: [
+      "\\(450\\) g Mehl und \\(270\\) ml Wasser",
+      "\\(600\\) g Mehl und \\(360\\) ml Wasser",
+      "\\(350\\) g Mehl und \\(230\\) ml Wasser",
+      "\\(450\\) g Mehl und \\(240\\) ml Wasser"
+    ],
+    korrekt: 0,
+    tipp: "Von \\(4\\) auf \\(6\\) Personen: Rechne für Mehl und Wasser jeweils erst die Menge pro Person aus.",
+    loesungsweg: "Pro Person: $$300 : 4 = 75 \\text{ g Mehl}, \\quad 180 : 4 = 45 \\text{ ml Wasser}$$ Für \\(6\\) Personen: $$75 \\cdot 6 = 450, \\quad 45 \\cdot 6 = 270$$ Nele braucht \\(450\\) g Mehl und \\(270\\) ml Wasser. Verdoppeln (\\(600\\) g) wäre die Menge für \\(8\\) Personen. Und einfach \\(50\\) dazuzählen funktioniert bei Zuordnungen nicht — es wird multipliziert!"
+  },
+  {
+    id: 33,
+    level: 6,
+    typ: "numerisch",
+    frage: "Eine Abfüllmaschine schafft \\(500\\) Flaschen in \\(4\\) Stunden. Wie viele Stunden braucht sie für \\(875\\) Flaschen?",
+    loesung: 7,
+    toleranz: 0,
+    tipp: "Wie viele Flaschen schafft die Maschine in \\(1\\) Stunde? Teile dann \\(875\\) durch diese Zahl.",
+    loesungsweg: "Flaschen pro Stunde: $$500 : 4 = 125$$ Benötigte Zeit: $$875 : 125 = 7$$ Die Maschine braucht \\(7\\) Stunden für \\(875\\) Flaschen."
+  },
+  {
+    id: 34,
+    level: 6,
+    typ: "mc",
+    frage: "Im Supermarkt: Packung A enthält \\(6\\) Müsliriegel für \\(3\\) €. Packung B enthält \\(10\\) Riegel für \\(4{,}50\\) €. Welche Aussage stimmt?",
+    optionen: [
+      "Packung A ist pro Riegel günstiger.",
+      "Beide Packungen kosten pro Riegel gleich viel.",
+      "Das kann man ohne Waage nicht vergleichen.",
+      "Packung B ist pro Riegel günstiger."
+    ],
+    korrekt: 3,
+    tipp: "Vergleiche die Preise pro Riegel: Teile bei jeder Packung den Preis durch die Anzahl.",
+    loesungsweg: "Packung A: $$3 : 6 = 0{,}5$$ Ein Riegel kostet \\(0{,}50\\) €. Packung B: $$4{,}5 : 10 = 0{,}45$$ Ein Riegel kostet \\(0{,}45\\) €. Packung B ist pro Riegel günstiger — der Proportionalitätsfaktor macht den Vergleich möglich!"
+  },
+  {
+    id: 35,
+    level: 6,
+    typ: "numerisch",
+    frage: "Jonas' Drucker druckt \\(45\\) Seiten in \\(9\\) Minuten. Jonas muss \\(120\\) Seiten drucken und braucht danach noch \\(6\\) Minuten zum Heften. Wie viele Minuten dauert alles zusammen?",
+    loesung: 30,
+    toleranz: 0,
+    tipp: "Erst die Seiten pro Minute ausrechnen, dann die Druckzeit für \\(120\\) Seiten — und das Heften nicht vergessen!",
+    loesungsweg: "Seiten pro Minute: $$45 : 9 = 5$$ Druckzeit: $$120 : 5 = 24 \\text{ Minuten}$$ Mit Heften: $$24 + 6 = 30$$ Jonas braucht insgesamt \\(30\\) Minuten."
+  },
+  {
+    id: 36,
+    level: 6,
+    typ: "mc",
+    frage: "Für \\(8\\) Muffins braucht man \\(200\\) g Zucker. Frau Okafor backt \\(24\\) Muffins. Eine Packung Zucker enthält \\(500\\) g. Wie viele Packungen muss sie öffnen?",
+    optionen: ["\\(1\\) Packung", "\\(2\\) Packungen", "\\(3\\) Packungen", "\\(5\\) Packungen"],
+    korrekt: 1,
+    tipp: "Rechne zuerst aus, wie viel Zucker \\(24\\) Muffins brauchen. Vergleiche dann mit dem Packungsinhalt.",
+    loesungsweg: "Zucker pro Muffin: $$200 : 8 = 25 \\text{ g}$$ Für \\(24\\) Muffins: $$25 \\cdot 24 = 600 \\text{ g}$$ Eine Packung hat nur \\(500\\) g — das reicht nicht. Also: $$600 : 500 = 1{,}2$$ Aufrunden: Frau Okafor muss \\(2\\) Packungen öffnen. (\\(3\\) wäre die Anzahl der Rezept-Durchgänge, nicht der Packungen!)"
+  }
+];
+    </script>
+    <script src="../p3-reflexion.js"></script>
+    <script src="../spirale-engine.js"></script>
+    <script src="../spirale-kids.js"></script>
+</body>
+</html>

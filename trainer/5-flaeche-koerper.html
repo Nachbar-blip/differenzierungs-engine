@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umfang, Flächeninhalt & Körper - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <link rel="stylesheet" href="../spirale-kids.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+// Umfang, Flächeninhalt & Körper — DiffEngine Klasse 5/6 Content (Roadmap Welle 2, Item 3)
+const THEMA_KEY = '5-flaeche-koerper';
+const THEMA_CONFIG = { name: 'Umfang, Flächeninhalt & Körper', bereich: 'geometrie', p3Enabled: true };
+const AUFGABEN = [
+  // ========== LEVEL 1 — babyleicht: Umfang von Rechteck und Quadrat ==========
+  {
+    id: 1,
+    level: 1,
+    typ: "numerisch",
+    frage: "Ein Rechteck ist 5 cm lang und 3 cm breit. Berechne den Umfang. Gib das Ergebnis in cm an.",
+    loesung: 16,
+    toleranz: 0,
+    tipp: "Der Umfang ist der Weg einmal außen herum. Rechne \\(2 \\cdot (\\text{Länge} + \\text{Breite})\\).",
+    loesungsweg: "$$U = 2 \\cdot (5 + 3)$$ $$U = 2 \\cdot 8 = 16$$ Der Umfang beträgt \\(16\\ \\text{cm}\\)."
+  },
+  {
+    id: 2,
+    level: 1,
+    typ: "mc",
+    frage: "Ein Quadrat hat die Seitenlänge 7 cm. Wie groß ist sein Umfang?",
+    optionen: ["\\(14\\ \\text{cm}\\)", "\\(49\\ \\text{cm}\\)", "\\(28\\ \\text{cm}\\)", "\\(21\\ \\text{cm}\\)"],
+    korrekt: 2,
+    tipp: "Ein Quadrat hat vier gleich lange Seiten. Wie oft musst du die 7 nehmen?",
+    loesungsweg: "$$U = 4 \\cdot 7 = 28$$ Der Umfang beträgt \\(28\\ \\text{cm}\\). Achtung: \\(49\\ \\text{cm}\\) wäre \\(7 \\cdot 7\\) — das ist der Flächeninhalt, nicht der Umfang!"
+  },
+  {
+    id: 3,
+    level: 1,
+    typ: "numerisch",
+    frage: "Amiras Gemüsebeet ist ein Rechteck: 8 m lang und 4 m breit. Wie lang ist der Weg einmal außen herum? Gib das Ergebnis in m an.",
+    loesung: 24,
+    toleranz: 0,
+    tipp: "Zwei lange und zwei kurze Seiten: \\(2 \\cdot 8 + 2 \\cdot 4\\).",
+    loesungsweg: "$$U = 2 \\cdot 8 + 2 \\cdot 4$$ $$U = 16 + 8 = 24$$ Der Weg ist \\(24\\ \\text{m}\\) lang."
+  },
+  {
+    id: 4,
+    level: 1,
+    typ: "mc",
+    frage: "Mit welcher Formel berechnest du den Umfang eines Rechtecks mit den Seiten \\(a\\) und \\(b\\)?",
+    optionen: ["\\(U = a \\cdot b\\)", "\\(U = 2 \\cdot (a + b)\\)", "\\(U = a + b\\)", "\\(U = 4 \\cdot a\\)"],
+    korrekt: 1,
+    tipp: "Ein Rechteck hat vier Seiten: zweimal \\(a\\) und zweimal \\(b\\).",
+    loesungsweg: "Der Umfang zählt alle vier Seiten zusammen: $$U = a + b + a + b = 2 \\cdot (a + b)$$ \\(a \\cdot b\\) wäre der Flächeninhalt, und \\(4 \\cdot a\\) gilt nur beim Quadrat."
+  },
+  {
+    id: 5,
+    level: 1,
+    typ: "numerisch",
+    frage: "Ein quadratisches Fotorähmchen hat die Seitenlänge 9 cm. Berechne den Umfang. Gib das Ergebnis in cm an.",
+    loesung: 36,
+    toleranz: 0,
+    tipp: "Beim Quadrat sind alle vier Seiten gleich lang: \\(U = 4 \\cdot a\\).",
+    loesungsweg: "$$U = 4 \\cdot 9 = 36$$ Der Umfang beträgt \\(36\\ \\text{cm}\\)."
+  },
+  {
+    id: 6,
+    level: 1,
+    typ: "mc",
+    frage: "Jonas klebt Zierband einmal ringsherum an den Rand eines rechteckigen Bildes: 30 cm lang, 20 cm breit. Wie viel Band braucht er mindestens?",
+    optionen: ["\\(100\\ \\text{cm}\\)", "\\(50\\ \\text{cm}\\)", "\\(600\\ \\text{cm}\\)", "\\(60\\ \\text{cm}\\)"],
+    korrekt: 0,
+    tipp: "Ringsherum heißt: alle vier Seiten. Rechne \\(2 \\cdot (30 + 20)\\).",
+    loesungsweg: "$$U = 2 \\cdot (30 + 20) = 2 \\cdot 50 = 100$$ Jonas braucht \\(100\\ \\text{cm}\\) Band. \\(50\\ \\text{cm}\\) wäre nur eine lange und eine kurze Seite, \\(600\\ \\text{cm}^2\\) wäre die Fläche."
+  },
+  // ========== LEVEL 2 — leicht: Flächeninhalt von Rechteck und Quadrat ==========
+  {
+    id: 7,
+    level: 2,
+    typ: "numerisch",
+    frage: "Ein Rechteck ist 6 cm lang und 4 cm breit. Berechne den Flächeninhalt. Gib das Ergebnis in cm² an.",
+    loesung: 24,
+    toleranz: 0,
+    tipp: "Flächeninhalt beim Rechteck: Länge mal Breite.",
+    loesungsweg: "$$A = 6 \\cdot 4 = 24$$ Der Flächeninhalt beträgt \\(24\\ \\text{cm}^2\\)."
+  },
+  {
+    id: 8,
+    level: 2,
+    typ: "mc",
+    frage: "Ein Quadrat hat die Seitenlänge 8 cm. Wie groß ist sein Flächeninhalt?",
+    optionen: ["\\(32\\ \\text{cm}^2\\)", "\\(64\\ \\text{cm}^2\\)", "\\(16\\ \\text{cm}^2\\)", "\\(24\\ \\text{cm}^2\\)"],
+    korrekt: 1,
+    tipp: "Flächeninhalt beim Quadrat: Seite mal Seite, also \\(8 \\cdot 8\\).",
+    loesungsweg: "$$A = 8 \\cdot 8 = 64$$ Der Flächeninhalt beträgt \\(64\\ \\text{cm}^2\\). Achtung: \\(32\\ \\text{cm}\\) wäre der Umfang (\\(4 \\cdot 8\\))."
+  },
+  {
+    id: 9,
+    level: 2,
+    typ: "numerisch",
+    frage: "Der Schulhof-Basketballplatz ist ein Rechteck: 12 m lang und 5 m breit. Berechne den Flächeninhalt. Gib das Ergebnis in m² an. 🏀",
+    loesung: 60,
+    toleranz: 0,
+    tipp: "Rechne Länge mal Breite: \\(12 \\cdot 5\\).",
+    loesungsweg: "$$A = 12 \\cdot 5 = 60$$ Der Platz hat einen Flächeninhalt von \\(60\\ \\text{m}^2\\)."
+  },
+  {
+    id: 10,
+    level: 2,
+    typ: "mc",
+    frage: "In welcher Einheit gibst du den Flächeninhalt eines Blattes Papier an?",
+    optionen: ["\\(\\text{cm}\\)", "\\(\\text{cm}^3\\)", "\\(\\text{cm}^2\\)", "\\(\\text{m}\\)"],
+    korrekt: 2,
+    tipp: "Eine Fläche misst man in Quadrat-Einheiten — das kleine Hochzeichen verrät es.",
+    loesungsweg: "Flächen werden in Quadrateinheiten gemessen: \\(\\text{cm}^2\\) (Quadratzentimeter). \\(\\text{cm}\\) ist für Längen, \\(\\text{cm}^3\\) für Rauminhalte (Volumen)."
+  },
+  {
+    id: 11,
+    level: 2,
+    typ: "numerisch",
+    frage: "Milas Mäppchen ist rechteckig: 7 cm lang und 3 cm breit. Wie groß ist die Fläche? Gib das Ergebnis in cm² an.",
+    loesung: 21,
+    toleranz: 0,
+    tipp: "Flächeninhalt = Länge \\(\\cdot\\) Breite.",
+    loesungsweg: "$$A = 7 \\cdot 3 = 21$$ Die Fläche beträgt \\(21\\ \\text{cm}^2\\)."
+  },
+  {
+    id: 12,
+    level: 2,
+    typ: "mc",
+    frage: "Eine Postkarte ist 15 cm lang und 10 cm breit. Wie groß ist ihr Flächeninhalt?",
+    optionen: ["\\(50\\ \\text{cm}^2\\)", "\\(25\\ \\text{cm}^2\\)", "\\(105\\ \\text{cm}^2\\)", "\\(150\\ \\text{cm}^2\\)"],
+    korrekt: 3,
+    tipp: "Multipliziere die beiden Seitenlängen: \\(15 \\cdot 10\\).",
+    loesungsweg: "$$A = 15 \\cdot 10 = 150$$ Der Flächeninhalt beträgt \\(150\\ \\text{cm}^2\\). \\(50\\ \\text{cm}\\) wäre der Umfang, \\(25\\) nur die Summe der beiden Seiten."
+  },
+  // ========== LEVEL 3 — nervenschonend: Rückwärtsaufgaben & Umfang vs. Fläche ==========
+  {
+    id: 13,
+    level: 3,
+    typ: "numerisch",
+    frage: "Ein Rechteck hat den Flächeninhalt 40 cm² und ist 8 cm lang. Wie breit ist es? Gib das Ergebnis in cm an.",
+    loesung: 5,
+    toleranz: 0,
+    tipp: "Es gilt \\(A = \\text{Länge} \\cdot \\text{Breite}\\). Welche Zahl mal \\(8\\) ergibt \\(40\\)?",
+    loesungsweg: "$$40 = 8 \\cdot b$$ $$b = 40 : 8 = 5$$ Das Rechteck ist \\(5\\ \\text{cm}\\) breit."
+  },
+  {
+    id: 14,
+    level: 3,
+    typ: "mc",
+    frage: "Ein Quadrat hat den Flächeninhalt \\(36\\ \\text{cm}^2\\). Wie lang ist eine Seite?",
+    optionen: ["\\(6\\ \\text{cm}\\)", "\\(9\\ \\text{cm}\\)", "\\(18\\ \\text{cm}\\)", "\\(12\\ \\text{cm}\\)"],
+    korrekt: 0,
+    tipp: "Gesucht ist eine Zahl, die mal sich selbst \\(36\\) ergibt.",
+    loesungsweg: "$$a \\cdot a = 36$$ $$6 \\cdot 6 = 36 \\quad \\checkmark$$ Die Seite ist \\(6\\ \\text{cm}\\) lang. \\(9\\ \\text{cm}\\) wäre \\(36 : 4\\) — das passt nur, wenn \\(36\\ \\text{cm}\\) der Umfang wäre."
+  },
+  {
+    id: 15,
+    level: 3,
+    typ: "numerisch",
+    frage: "Ein Rechteck hat den Umfang 24 cm und ist 7 cm lang. Wie breit ist es? Gib das Ergebnis in cm an.",
+    loesung: 5,
+    toleranz: 0,
+    tipp: "Länge und Breite zusammen sind der halbe Umfang: \\(24 : 2 = 12\\).",
+    loesungsweg: "Der halbe Umfang ist Länge + Breite: $$24 : 2 = 12$$ $$b = 12 - 7 = 5$$ Das Rechteck ist \\(5\\ \\text{cm}\\) breit."
+  },
+  {
+    id: 16,
+    level: 3,
+    typ: "mc",
+    frage: "Leon rechnet für ein Rechteck mit den Seiten 6 cm und 4 cm: \\(6 \\cdot 4 = 24\\). Was hat er berechnet?",
+    optionen: ["den Umfang", "den Flächeninhalt", "die halbe Fläche", "den halben Umfang"],
+    korrekt: 1,
+    tipp: "Bei welcher Größe wird multipliziert — beim Umfang oder bei der Fläche?",
+    loesungsweg: "Länge mal Breite ist die Formel für den Flächeninhalt: $$A = 6 \\cdot 4 = 24\\ \\text{cm}^2$$ Für den Umfang müsste Leon addieren und verdoppeln: \\(U = 2 \\cdot (6 + 4) = 20\\ \\text{cm}\\)."
+  },
+  {
+    id: 17,
+    level: 3,
+    typ: "numerisch",
+    frage: "Ein quadratisches Trampolin-Tuch hat den Umfang 32 dm. Wie lang ist eine Seite? Gib das Ergebnis in dm an.",
+    loesung: 8,
+    toleranz: 0,
+    tipp: "Beim Quadrat sind alle vier Seiten gleich lang: teile den Umfang durch \\(4\\).",
+    loesungsweg: "$$a = 32 : 4 = 8$$ Eine Seite ist \\(8\\ \\text{dm}\\) lang."
+  },
+  {
+    id: 18,
+    level: 3,
+    typ: "mc",
+    frage: "Ein Rechteck ist 9 cm lang und 2 cm breit. Welche Aussage stimmt?",
+    optionen: ["Der Flächeninhalt beträgt \\(22\\ \\text{cm}^2\\).", "Der Umfang beträgt \\(18\\ \\text{cm}\\).", "Der Umfang beträgt \\(22\\ \\text{cm}\\).", "Der Flächeninhalt beträgt \\(11\\ \\text{cm}^2\\)."],
+    korrekt: 2,
+    tipp: "Rechne beides getrennt aus: \\(U = 2 \\cdot (9 + 2)\\) und \\(A = 9 \\cdot 2\\).",
+    loesungsweg: "$$U = 2 \\cdot (9 + 2) = 2 \\cdot 11 = 22\\ \\text{cm}$$ $$A = 9 \\cdot 2 = 18\\ \\text{cm}^2$$ Also stimmt: Der Umfang beträgt \\(22\\ \\text{cm}\\). Vertausche Umfang und Fläche nicht!"
+  },
+  // ========== LEVEL 4 — mittel: Körper erkennen, Ecken/Kanten/Flächen, Würfelnetze ==========
+  {
+    id: 19,
+    level: 4,
+    typ: "mc",
+    frage: "Welcher Körper wird von 6 gleich großen quadratischen Flächen begrenzt?",
+    optionen: ["Quader", "Würfel", "Pyramide", "Zylinder"],
+    korrekt: 1,
+    tipp: "Denke an einen Spielwürfel: Wie sehen seine Seiten aus?",
+    loesungsweg: "Der Würfel hat 6 Flächen, und alle sind gleich große Quadrate. Beim Quader sind die Flächen Rechtecke, die nicht alle gleich groß sein müssen."
+  },
+  {
+    id: 20,
+    level: 4,
+    typ: "numerisch",
+    frage: "Wie viele Kanten hat ein Quader? Gib die Anzahl an.",
+    loesung: 12,
+    toleranz: 0,
+    tipp: "Zähle in Gedanken an einem Schuhkarton: unten 4 Kanten, oben 4 Kanten — und die senkrechten?",
+    loesungsweg: "Unten 4 Kanten, oben 4 Kanten, dazu 4 senkrechte Kanten: $$4 + 4 + 4 = 12$$ Ein Quader hat \\(12\\) Kanten (und \\(8\\) Ecken und \\(6\\) Flächen)."
+  },
+  {
+    id: 21,
+    level: 4,
+    typ: "mc",
+    frage: "Eine Konservendose hat die Form von welchem Körper?",
+    optionen: ["Kegel", "Kugel", "Zylinder", "Quader"],
+    korrekt: 2,
+    tipp: "Der Körper hat oben und unten je einen Kreis und ist rundherum gebogen.",
+    loesungsweg: "Eine Dose ist ein Zylinder: zwei gleich große Kreisflächen und eine gebogene Mantelfläche. Ein Kegel läuft spitz zu (wie eine Eistüte), eine Kugel ist rundherum rund."
+  },
+  {
+    id: 22,
+    level: 4,
+    typ: "numerisch",
+    frage: "Wie viele Ecken hat ein Würfel? Gib die Anzahl an.",
+    loesung: 8,
+    toleranz: 0,
+    tipp: "Stelle dir einen Spielwürfel vor: 4 Ecken unten und 4 Ecken oben.",
+    loesungsweg: "Unten 4 Ecken, oben 4 Ecken: $$4 + 4 = 8$$ Ein Würfel hat \\(8\\) Ecken (und \\(12\\) Kanten und \\(6\\) Flächen)."
+  },
+  {
+    id: 23,
+    level: 4,
+    typ: "mc",
+    frage: "Lena legt sechs gleich große Quadrate in eine lange Reihe nebeneinander. Kann sie daraus einen Würfel falten?",
+    optionen: ["Ja, jedes Netz aus 6 Quadraten lässt sich zu einem Würfel falten.", "Nein, für einen Würfel braucht man 8 Quadrate.", "Ja, aber nur, wenn sie zwei Quadrate abschneidet.", "Nein, beim Falten überdecken sich Flächen, und der Würfel bleibt offen."],
+    korrekt: 3,
+    tipp: "Falte die Reihe in Gedanken Schritt für Schritt: Wo landen das fünfte und sechste Quadrat?",
+    loesungsweg: "Beim Falten der Reihe wickeln sich die Quadrate wie ein Ring um den Würfel: Nach 4 Quadraten ist der Ring geschlossen, Quadrat 5 und 6 liegen doppelt auf schon belegten Seiten — Deckel und Boden fehlen. Ein echtes Würfelnetz braucht 6 Quadrate in einer geschickten Anordnung, z. B. 4 in einer Reihe mit je einem Quadrat oben und unten."
+  },
+  {
+    id: 24,
+    level: 4,
+    typ: "mc",
+    frage: "Ein Körper hat 8 Ecken, 12 Kanten und 6 rechteckige Flächen, die nicht alle gleich groß sind. Welcher Körper ist das?",
+    optionen: ["Pyramide", "Würfel", "Kugel", "Quader"],
+    korrekt: 3,
+    tipp: "Denke an einen Schuhkarton: Vorderseite und Deckel sind verschieden groß.",
+    loesungsweg: "Ein Quader hat 8 Ecken, 12 Kanten und 6 rechteckige Flächen. Der Würfel hat zwar dieselben Anzahlen, aber bei ihm sind alle 6 Flächen gleich große Quadrate — hier sind die Flächen verschieden groß, also ist es ein Quader."
+  },
+  // ========== LEVEL 5 — anspruchsvoll: Oberflächeninhalt und Volumen von Quader/Würfel ==========
+  {
+    id: 25,
+    level: 5,
+    typ: "numerisch",
+    frage: "Ein Würfel hat die Kantenlänge 3 cm. Berechne sein Volumen. Gib das Ergebnis in cm³ an.",
+    loesung: 27,
+    toleranz: 0,
+    tipp: "Volumen beim Würfel: Kante mal Kante mal Kante.",
+    loesungsweg: "$$V = 3 \\cdot 3 \\cdot 3 = 27$$ Das Volumen beträgt \\(27\\ \\text{cm}^3\\)."
+  },
+  {
+    id: 26,
+    level: 5,
+    typ: "mc",
+    frage: "Ein Quader ist 4 cm lang, 3 cm breit und 2 cm hoch. Wie groß ist sein Volumen?",
+    optionen: ["\\(24\\ \\text{cm}^3\\)", "\\(9\\ \\text{cm}^3\\)", "\\(52\\ \\text{cm}^3\\)", "\\(12\\ \\text{cm}^3\\)"],
+    korrekt: 0,
+    tipp: "Multipliziere alle drei Kantenlängen miteinander.",
+    loesungsweg: "$$V = 4 \\cdot 3 \\cdot 2 = 24$$ Das Volumen beträgt \\(24\\ \\text{cm}^3\\). \\(9\\) wäre nur die Summe \\(4+3+2\\), und \\(52\\ \\text{cm}^2\\) wäre der Oberflächeninhalt."
+  },
+  {
+    id: 27,
+    level: 5,
+    typ: "numerisch",
+    frage: "Ein Würfel hat die Kantenlänge 4 cm. Berechne seinen Oberflächeninhalt. Gib das Ergebnis in cm² an.",
+    loesung: 96,
+    toleranz: 0,
+    tipp: "Eine Fläche ist \\(4 \\cdot 4\\) groß — und der Würfel hat 6 davon.",
+    loesungsweg: "Eine Fläche: $$4 \\cdot 4 = 16\\ \\text{cm}^2$$ Alle 6 Flächen: $$O = 6 \\cdot 16 = 96$$ Der Oberflächeninhalt beträgt \\(96\\ \\text{cm}^2\\)."
+  },
+  {
+    id: 28,
+    level: 5,
+    typ: "mc",
+    frage: "Mit welcher Formel berechnest du das Volumen eines Quaders mit den Kanten \\(a\\), \\(b\\) und \\(c\\)?",
+    optionen: ["\\(V = a + b + c\\)", "\\(V = 2 \\cdot (a + b + c)\\)", "\\(V = a \\cdot b \\cdot c\\)", "\\(V = 6 \\cdot a \\cdot b\\)"],
+    korrekt: 2,
+    tipp: "Volumen heißt: Wie viele Einheitswürfel passen hinein? Länge mal Breite mal Höhe.",
+    loesungsweg: "In die unterste Schicht passen \\(a \\cdot b\\) Einheitswürfel, und es gibt \\(c\\) solcher Schichten: $$V = a \\cdot b \\cdot c$$"
+  },
+  {
+    id: 29,
+    level: 5,
+    typ: "numerisch",
+    frage: "Ein Quader ist 5 cm lang, 4 cm breit und 3 cm hoch. Berechne seinen Oberflächeninhalt. Gib das Ergebnis in cm² an.",
+    loesung: 94,
+    toleranz: 0,
+    tipp: "Der Quader hat 3 verschieden große Flächenpaare: \\(5 \\cdot 4\\), \\(5 \\cdot 3\\) und \\(4 \\cdot 3\\) — jedes doppelt.",
+    loesungsweg: "$$O = 2 \\cdot (5 \\cdot 4) + 2 \\cdot (5 \\cdot 3) + 2 \\cdot (4 \\cdot 3)$$ $$O = 2 \\cdot 20 + 2 \\cdot 15 + 2 \\cdot 12$$ $$O = 40 + 30 + 24 = 94$$ Der Oberflächeninhalt beträgt \\(94\\ \\text{cm}^2\\)."
+  },
+  {
+    id: 30,
+    level: 5,
+    typ: "mc",
+    frage: "Ein Spielwürfel hat die Kantenlänge 2 cm. Wie groß ist sein Volumen? 🎲",
+    optionen: ["\\(6\\ \\text{cm}^3\\)", "\\(4\\ \\text{cm}^3\\)", "\\(24\\ \\text{cm}^3\\)", "\\(8\\ \\text{cm}^3\\)"],
+    korrekt: 3,
+    tipp: "Rechne \\(2 \\cdot 2 \\cdot 2\\) — nicht \\(2 \\cdot 3\\)!",
+    loesungsweg: "$$V = 2 \\cdot 2 \\cdot 2 = 8$$ Das Volumen beträgt \\(8\\ \\text{cm}^3\\). \\(4\\ \\text{cm}^2\\) wäre nur eine Fläche (\\(2 \\cdot 2\\)), \\(24\\ \\text{cm}^2\\) der Oberflächeninhalt und \\(6\\) die Anzahl der Flächen."
+  },
+  // ========== LEVEL 6 — wagnerisch: Sachaufgaben (Zimmer, Aquarium, Geschenkpapier) ==========
+  {
+    id: 31,
+    level: 6,
+    typ: "numerisch",
+    frage: "Nadias Zimmer ist 5 m lang und 4 m breit. Der Boden soll komplett mit Teppich ausgelegt werden. Wie viel Teppich wird gebraucht? Gib das Ergebnis in m² an.",
+    loesung: 20,
+    toleranz: 0,
+    tipp: "Der Boden ist ein Rechteck. Gesucht ist sein Flächeninhalt, nicht der Umfang.",
+    loesungsweg: "$$A = 5 \\cdot 4 = 20$$ Nadia braucht \\(20\\ \\text{m}^2\\) Teppich."
+  },
+  {
+    id: 32,
+    level: 6,
+    typ: "mc",
+    frage: "Yusufs Aquarium ist 40 cm lang, 30 cm breit und 20 cm hoch. Wie viele Liter Wasser passen hinein, wenn er es bis zum Rand füllt? (1 Liter = 1000 cm³) 🐠",
+    optionen: ["\\(240\\ \\text{Liter}\\)", "\\(24\\ \\text{Liter}\\)", "\\(2400\\ \\text{Liter}\\)", "\\(90\\ \\text{Liter}\\)"],
+    korrekt: 1,
+    tipp: "Berechne erst das Volumen in \\(\\text{cm}^3\\), teile dann durch \\(1000\\).",
+    loesungsweg: "$$V = 40 \\cdot 30 \\cdot 20 = 24\\,000\\ \\text{cm}^3$$ $$24\\,000 : 1000 = 24$$ Es passen \\(24\\) Liter hinein. Tipp zur Kontrolle: \\(240\\) Liter wären schon eine volle Badewanne — viel zu viel für dieses Aquarium!"
+  },
+  {
+    id: 33,
+    level: 6,
+    typ: "numerisch",
+    frage: "Finn verpackt eine würfelförmige Geschenkbox mit der Kantenlänge 10 cm. Wie viel Geschenkpapier braucht er mindestens, um alle Flächen zu bedecken? Gib das Ergebnis in cm² an. 🎁",
+    loesung: 600,
+    toleranz: 0,
+    tipp: "Gesucht ist der Oberflächeninhalt: 6 gleich große quadratische Flächen.",
+    loesungsweg: "Eine Fläche: $$10 \\cdot 10 = 100\\ \\text{cm}^2$$ Alle 6 Flächen: $$O = 6 \\cdot 100 = 600$$ Finn braucht mindestens \\(600\\ \\text{cm}^2\\) Geschenkpapier."
+  },
+  {
+    id: 34,
+    level: 6,
+    typ: "mc",
+    frage: "Eine Wand in Elifs Zimmer ist 6 m lang und 3 m hoch. In der Wand ist ein Fenster mit 2 m² Fläche, das nicht gestrichen wird. Wie viel Wandfläche muss gestrichen werden?",
+    optionen: ["\\(16\\ \\text{m}^2\\)", "\\(18\\ \\text{m}^2\\)", "\\(20\\ \\text{m}^2\\)", "\\(7\\ \\text{m}^2\\)"],
+    korrekt: 0,
+    tipp: "Berechne erst die ganze Wandfläche, ziehe dann das Fenster ab.",
+    loesungsweg: "Ganze Wand: $$6 \\cdot 3 = 18\\ \\text{m}^2$$ Fenster abziehen: $$18 - 2 = 16$$ Es müssen \\(16\\ \\text{m}^2\\) gestrichen werden. Wer \\(18\\ \\text{m}^2\\) wählt, hat das Fenster vergessen."
+  },
+  {
+    id: 35,
+    level: 6,
+    typ: "numerisch",
+    frage: "Pauls Kaninchengehege im Garten ist ein Rechteck: 3 m lang und 2 m breit. Er baut rundherum einen Zaun. Wie viele Meter Zaun braucht er? Gib das Ergebnis in m an. 🐰",
+    loesung: 10,
+    toleranz: 0,
+    tipp: "Rundherum heißt Umfang: \\(2 \\cdot (3 + 2)\\).",
+    loesungsweg: "$$U = 2 \\cdot (3 + 2) = 2 \\cdot 5 = 10$$ Paul braucht \\(10\\ \\text{m}\\) Zaun. Achtung: \\(3 \\cdot 2 = 6\\ \\text{m}^2\\) wäre die Fläche des Geheges — die hilft beim Zaun nicht."
+  },
+  {
+    id: 36,
+    level: 6,
+    typ: "mc",
+    frage: "Ein Sandkasten ist quaderförmig: 2 m lang, 2 m breit und \\(0{,}5\\) m tief. Wie viel Sand passt hinein, wenn er ganz gefüllt wird?",
+    optionen: ["\\(2\\ \\text{m}^3\\)", "\\(4\\ \\text{m}^3\\)", "\\(4{,}5\\ \\text{m}^3\\)", "\\(1\\ \\text{m}^3\\)"],
+    korrekt: 0,
+    tipp: "Volumen = Länge \\(\\cdot\\) Breite \\(\\cdot\\) Tiefe. \\(0{,}5\\ \\text{m}\\) ist ein halber Meter.",
+    loesungsweg: "$$V = 2 \\cdot 2 \\cdot 0{,}5$$ $$V = 4 \\cdot 0{,}5 = 2$$ Es passen \\(2\\ \\text{m}^3\\) Sand hinein. \\(4\\ \\text{m}^2\\) wäre nur die Grundfläche — die Tiefe darf nicht vergessen werden!"
+  }
+];
+    </script>
+    <script src="../p3-reflexion.js"></script>
+    <script src="../spirale-engine.js"></script>
+    <script src="../spirale-kids.js"></script>
+</body>
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teilbarkeit & Primzahlen - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <link rel="stylesheet" href="../spirale-kids.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+// Teilbarkeit & Primzahlen — DiffEngine Klasse 5/6 Content (Roadmap Welle 2, Item 3)
+const THEMA_KEY = '5-teilbarkeit';
+const THEMA_CONFIG = { name: 'Teilbarkeit & Primzahlen', bereich: 'arithmetik', p3Enabled: true };
+const AUFGABEN = [
+  // ========== LEVEL 1 — babyleicht: gerade/ungerade, Teiler kleiner Zahlen ==========
+  {
+    id: 1,
+    level: 1,
+    typ: "numerisch",
+    frage: "Die Zahl \\(6\\) hat die Teiler \\(1\\), \\(2\\), \\(3\\) und \\(6\\). Wie viele Teiler hat die Zahl \\(8\\)?",
+    loesung: 4,
+    toleranz: 0,
+    tipp: "Gehe die Zahlen von \\(1\\) bis \\(8\\) durch: Bei welchen bleibt kein Rest, wenn du \\(8\\) durch sie teilst?",
+    loesungsweg: "Teiler von \\(8\\): $$8 : 1 = 8, \\quad 8 : 2 = 4, \\quad 8 : 4 = 2, \\quad 8 : 8 = 1$$ Die Teiler sind \\(1\\), \\(2\\), \\(4\\) und \\(8\\). Das sind \\(4\\) Teiler."
+  },
+  {
+    id: 2,
+    level: 1,
+    typ: "mc",
+    frage: "Welche dieser Zahlen ist gerade?",
+    optionen: ["\\(13\\)", "\\(27\\)", "\\(34\\)", "\\(41\\)"],
+    korrekt: 2,
+    tipp: "Schau nur auf die letzte Ziffer: Gerade Zahlen enden auf \\(0\\), \\(2\\), \\(4\\), \\(6\\) oder \\(8\\).",
+    loesungsweg: "Eine Zahl ist gerade, wenn ihre letzte Ziffer gerade ist. $$34 \\text{ endet auf } 4$$ Also ist \\(34\\) gerade. Die Zahlen \\(13\\), \\(27\\) und \\(41\\) enden auf \\(3\\), \\(7\\) und \\(1\\) — sie sind ungerade."
+  },
+  {
+    id: 3,
+    level: 1,
+    typ: "numerisch",
+    frage: "Wie heißt der größte Teiler von \\(12\\), der kleiner als \\(12\\) ist?",
+    loesung: 6,
+    toleranz: 0,
+    tipp: "Schreibe alle Teiler von \\(12\\) auf und nimm den zweitgrößten.",
+    loesungsweg: "Teiler von \\(12\\): $$1, 2, 3, 4, 6, 12$$ Der größte Teiler ist \\(12\\) selbst. Der größte Teiler, der kleiner als \\(12\\) ist, heißt \\(6\\)."
+  },
+  {
+    id: 4,
+    level: 1,
+    typ: "mc",
+    frage: "Welche Zahl ist ein Teiler von \\(10\\)?",
+    optionen: ["\\(5\\)", "\\(3\\)", "\\(4\\)", "\\(7\\)"],
+    korrekt: 0,
+    tipp: "Ein Teiler teilt die \\(10\\) ohne Rest. Probiere jede Zahl aus.",
+    loesungsweg: "$$10 : 5 = 2 \\quad \\checkmark \\text{ (kein Rest)}$$ Bei den anderen bleibt ein Rest: \\(10 : 3 = 3\\) Rest \\(1\\), \\(10 : 4 = 2\\) Rest \\(2\\), \\(10 : 7 = 1\\) Rest \\(3\\)."
+  },
+  {
+    id: 5,
+    level: 1,
+    typ: "numerisch",
+    frage: "Wie viele gerade Zahlen liegen zwischen \\(1\\) und \\(11\\)?",
+    loesung: 5,
+    toleranz: 0,
+    tipp: "Zähle die geraden Zahlen einfach auf: \\(2\\), \\(4\\), ...",
+    loesungsweg: "Die geraden Zahlen zwischen \\(1\\) und \\(11\\) sind: $$2, 4, 6, 8, 10$$ Das sind \\(5\\) Zahlen."
+  },
+  {
+    id: 6,
+    level: 1,
+    typ: "mc",
+    frage: "Welche Liste zeigt ALLE Teiler von \\(9\\)?",
+    optionen: ["\\(1, 3, 9\\)", "\\(1, 9\\)", "\\(1, 3, 6, 9\\)", "\\(3, 9\\)"],
+    korrekt: 0,
+    tipp: "Vergiss die \\(1\\) und die Zahl selbst nicht — und prüfe jede Zahl in der Liste: Teilt sie die \\(9\\) wirklich?",
+    loesungsweg: "Prüfe alle Zahlen bis \\(9\\): $$9 : 1 = 9, \\quad 9 : 3 = 3, \\quad 9 : 9 = 1$$ Die Teiler sind \\(1\\), \\(3\\) und \\(9\\). Die \\(6\\) ist KEIN Teiler, denn \\(9 : 6\\) geht nicht ohne Rest."
+  },
+  // ========== LEVEL 2 — leicht: Teilbarkeitsregeln für 2, 5 und 10 ==========
+  {
+    id: 7,
+    level: 2,
+    typ: "mc",
+    frage: "Welche Zahl ist durch \\(5\\) teilbar?",
+    optionen: ["\\(52\\)", "\\(85\\)", "\\(43\\)", "\\(501\\)"],
+    korrekt: 1,
+    tipp: "Eine Zahl ist durch \\(5\\) teilbar, wenn sie auf \\(0\\) oder \\(5\\) endet.",
+    loesungsweg: "Regel: durch \\(5\\) teilbar bedeutet Endziffer \\(0\\) oder \\(5\\). $$85 \\text{ endet auf } 5 \\quad \\checkmark$$ \\(52\\), \\(43\\) und \\(501\\) enden auf \\(2\\), \\(3\\) und \\(1\\) — nicht durch \\(5\\) teilbar. Probe: \\(85 : 5 = 17\\)."
+  },
+  {
+    id: 8,
+    level: 2,
+    typ: "numerisch",
+    frage: "Wie heißt die kleinste Zahl, die größer als \\(63\\) ist und durch \\(10\\) teilbar ist?",
+    loesung: 70,
+    toleranz: 0,
+    tipp: "Zahlen, die durch \\(10\\) teilbar sind, enden auf \\(0\\). Welche kommt nach \\(63\\) als Erste?",
+    loesungsweg: "Durch \\(10\\) teilbare Zahlen enden auf \\(0\\): $$..., 50, 60, 70, 80, ...$$ Die \\(60\\) ist kleiner als \\(63\\). Die nächste ist \\(70\\)."
+  },
+  {
+    id: 9,
+    level: 2,
+    typ: "mc",
+    frage: "Welche Zahl ist durch \\(2\\) teilbar?",
+    optionen: ["\\(123\\)", "\\(87\\)", "\\(405\\)", "\\(348\\)"],
+    korrekt: 3,
+    tipp: "Nur die letzte Ziffer entscheidet: Ist sie gerade?",
+    loesungsweg: "Regel: durch \\(2\\) teilbar bedeutet gerade Endziffer (\\(0, 2, 4, 6, 8\\)). $$348 \\text{ endet auf } 8 \\quad \\checkmark$$ Die anderen enden auf \\(3\\), \\(7\\) und \\(5\\) — alle ungerade."
+  },
+  {
+    id: 10,
+    level: 2,
+    typ: "numerisch",
+    frage: "Lina schreibt alle Zahlen von \\(1\\) bis \\(50\\) auf, die durch \\(10\\) teilbar sind. Wie viele Zahlen findet sie?",
+    loesung: 5,
+    toleranz: 0,
+    tipp: "Zähle die Zahlen mit Endziffer \\(0\\) auf: \\(10\\), \\(20\\), ...",
+    loesungsweg: "Durch \\(10\\) teilbar von \\(1\\) bis \\(50\\): $$10, 20, 30, 40, 50$$ Das sind \\(5\\) Zahlen."
+  },
+  {
+    id: 11,
+    level: 2,
+    typ: "mc",
+    frage: "Eine Zahl endet auf \\(0\\). Welche Aussage stimmt IMMER?",
+    optionen: ["Sie ist durch \\(2\\), \\(5\\) und \\(10\\) teilbar", "Sie ist nur durch \\(10\\) teilbar", "Sie ist nur durch \\(5\\) teilbar", "Sie ist ungerade"],
+    korrekt: 0,
+    tipp: "Denke an ein Beispiel wie \\(30\\): Durch welche Zahlen kannst du sie ohne Rest teilen?",
+    loesungsweg: "Beispiel \\(30\\): $$30 : 2 = 15, \\quad 30 : 5 = 6, \\quad 30 : 10 = 3$$ Jede Zahl mit Endziffer \\(0\\) ist durch \\(2\\) teilbar (gerade Endziffer), durch \\(5\\) (Endziffer \\(0\\) oder \\(5\\)) und durch \\(10\\) (Endziffer \\(0\\))."
+  },
+  {
+    id: 12,
+    level: 2,
+    typ: "numerisch",
+    frage: "Welche Ziffer musst du für \\(\\square\\) einsetzen, damit die Zahl \\(47\\square\\) durch \\(10\\) teilbar ist?",
+    loesung: 0,
+    toleranz: 0,
+    tipp: "Auf welche Ziffer enden alle Zahlen, die durch \\(10\\) teilbar sind?",
+    loesungsweg: "Durch \\(10\\) teilbare Zahlen enden immer auf \\(0\\). $$470 : 10 = 47 \\quad \\checkmark$$ Die gesuchte Ziffer ist \\(0\\)."
+  },
+  // ========== LEVEL 3 — nervenschonend: Regeln für 3 und 9, Quersumme ==========
+  {
+    id: 13,
+    level: 3,
+    typ: "numerisch",
+    frage: "Berechne die Quersumme von \\(583\\).",
+    loesung: 16,
+    toleranz: 0,
+    tipp: "Quersumme bedeutet: Addiere alle Ziffern der Zahl.",
+    loesungsweg: "Die Quersumme ist die Summe aller Ziffern: $$5 + 8 + 3 = 16$$"
+  },
+  {
+    id: 14,
+    level: 3,
+    typ: "mc",
+    frage: "Welche Zahl ist durch \\(3\\) teilbar?",
+    optionen: ["\\(124\\)", "\\(217\\)", "\\(342\\)", "\\(481\\)"],
+    korrekt: 2,
+    tipp: "Bilde von jeder Zahl die Quersumme. Ist die Quersumme durch \\(3\\) teilbar, dann auch die Zahl.",
+    loesungsweg: "Quersummen: $$124: 1+2+4=7, \\quad 217: 2+1+7=10$$ $$342: 3+4+2=9, \\quad 481: 4+8+1=13$$ Nur \\(9\\) ist durch \\(3\\) teilbar, also ist \\(342\\) durch \\(3\\) teilbar. Probe: \\(342 : 3 = 114\\)."
+  },
+  {
+    id: 15,
+    level: 3,
+    typ: "numerisch",
+    frage: "Welche Ziffer musst du für \\(\\square\\) einsetzen, damit \\(4\\square 1\\) durch \\(9\\) teilbar ist?",
+    loesung: 4,
+    toleranz: 0,
+    tipp: "Die Quersumme muss durch \\(9\\) teilbar sein. Rechne: \\(4 + \\square + 1 = \\,?\\)",
+    loesungsweg: "Quersumme: $$4 + \\square + 1 = 5 + \\square$$ Damit die Quersumme \\(9\\) wird, muss \\(\\square = 4\\) sein. Probe: \\(441 : 9 = 49\\)."
+  },
+  {
+    id: 16,
+    level: 3,
+    typ: "mc",
+    frage: "Welche Zahl ist durch \\(9\\) teilbar?",
+    optionen: ["\\(234\\)", "\\(123\\)", "\\(415\\)", "\\(902\\)"],
+    korrekt: 0,
+    tipp: "Für die \\(9\\) gilt: Die Quersumme muss durch \\(9\\) teilbar sein — durch \\(3\\) allein reicht nicht.",
+    loesungsweg: "Quersummen: $$234: 2+3+4=9 \\quad \\checkmark$$ $$123: 6, \\quad 415: 10, \\quad 902: 11$$ Achtung: \\(123\\) ist durch \\(3\\) teilbar (Quersumme \\(6\\)), aber NICHT durch \\(9\\). Nur \\(234\\) hat die Quersumme \\(9\\). Probe: \\(234 : 9 = 26\\)."
+  },
+  {
+    id: 17,
+    level: 3,
+    typ: "numerisch",
+    frage: "Wie viele Zahlen zwischen \\(10\\) und \\(30\\) sind durch \\(3\\) teilbar? Die \\(10\\) und die \\(30\\) zählen dabei nicht mit.",
+    loesung: 6,
+    toleranz: 0,
+    tipp: "Zähle in \\(3\\)er-Schritten: \\(12\\), \\(15\\), ... Die \\(10\\) und die \\(30\\) zählen nicht mit.",
+    loesungsweg: "Durch \\(3\\) teilbare Zahlen zwischen \\(10\\) und \\(30\\): $$12, 15, 18, 21, 24, 27$$ Das sind \\(6\\) Zahlen."
+  },
+  {
+    id: 18,
+    level: 3,
+    typ: "mc",
+    frage: "Die Zahl \\(981\\) hat die Quersumme \\(18\\). Welche Aussage stimmt?",
+    optionen: ["\\(981\\) ist nur durch \\(3\\) teilbar", "\\(981\\) ist durch \\(3\\) und durch \\(9\\) teilbar", "\\(981\\) ist nur durch \\(9\\) teilbar", "\\(981\\) ist durch \\(2\\) und \\(3\\) teilbar"],
+    korrekt: 1,
+    tipp: "Prüfe die Quersumme \\(18\\): Durch welche der beiden Zahlen \\(3\\) und \\(9\\) ist sie teilbar? Und ist \\(981\\) gerade?",
+    loesungsweg: "Die Quersumme \\(18\\) ist durch \\(3\\) teilbar (\\(18 : 3 = 6\\)) UND durch \\(9\\) (\\(18 : 9 = 2\\)). $$981 : 3 = 327, \\quad 981 : 9 = 109$$ Durch \\(2\\) ist \\(981\\) nicht teilbar, denn die Endziffer \\(1\\) ist ungerade."
+  },
+  // ========== LEVEL 4 — mittel: Teilermengen, gemeinsame Teiler und Vielfache ==========
+  {
+    id: 19,
+    level: 4,
+    typ: "numerisch",
+    frage: "Welches ist der größte gemeinsame Teiler von \\(12\\) und \\(18\\)?",
+    loesung: 6,
+    toleranz: 0,
+    tipp: "Schreibe die Teiler beider Zahlen auf und suche die größte Zahl, die in beiden Listen steht.",
+    loesungsweg: "Teiler von \\(12\\): $$1, 2, 3, 4, 6, 12$$ Teiler von \\(18\\): $$1, 2, 3, 6, 9, 18$$ Gemeinsame Teiler: \\(1, 2, 3, 6\\). Der größte ist \\(6\\)."
+  },
+  {
+    id: 20,
+    level: 4,
+    typ: "mc",
+    frage: "Welche Zahl ist ein gemeinsames Vielfaches von \\(4\\) und \\(6\\)?",
+    optionen: ["\\(8\\)", "\\(12\\)", "\\(18\\)", "\\(10\\)"],
+    korrekt: 1,
+    tipp: "Schreibe die Vielfachen von \\(4\\) und von \\(6\\) auf. Welche Zahl kommt in BEIDEN Reihen vor?",
+    loesungsweg: "Vielfache von \\(4\\): $$4, 8, 12, 16, ...$$ Vielfache von \\(6\\): $$6, 12, 18, 24, ...$$ Die \\(12\\) steht in beiden Reihen. \\(8\\) ist nur Vielfaches von \\(4\\), \\(18\\) nur von \\(6\\), und \\(10\\) von keiner der beiden Zahlen."
+  },
+  {
+    id: 21,
+    level: 4,
+    typ: "numerisch",
+    frage: "Wie viele Teiler hat die Zahl \\(24\\)?",
+    loesung: 8,
+    toleranz: 0,
+    tipp: "Suche Teiler-Paare: \\(1 \\cdot 24\\), \\(2 \\cdot 12\\), \\(3 \\cdot 8\\), ... So vergisst du keinen.",
+    loesungsweg: "Teiler-Paare von \\(24\\): $$1 \\cdot 24, \\quad 2 \\cdot 12, \\quad 3 \\cdot 8, \\quad 4 \\cdot 6$$ Die Teiler sind \\(1, 2, 3, 4, 6, 8, 12, 24\\) — das sind \\(8\\) Teiler."
+  },
+  {
+    id: 22,
+    level: 4,
+    typ: "mc",
+    frage: "Welches ist der größte gemeinsame Teiler von \\(16\\) und \\(24\\)?",
+    optionen: ["\\(4\\)", "\\(6\\)", "\\(8\\)", "\\(12\\)"],
+    korrekt: 2,
+    tipp: "Prüfe jede Zahl: Teilt sie sowohl \\(16\\) als auch \\(24\\) ohne Rest?",
+    loesungsweg: "Teiler von \\(16\\): $$1, 2, 4, 8, 16$$ Teiler von \\(24\\): $$1, 2, 3, 4, 6, 8, 12, 24$$ Gemeinsam: \\(1, 2, 4, 8\\). Der größte ist \\(8\\). Achtung: \\(6\\) und \\(12\\) teilen zwar die \\(24\\), aber nicht die \\(16\\)."
+  },
+  {
+    id: 23,
+    level: 4,
+    typ: "numerisch",
+    frage: "Welches ist das kleinste gemeinsame Vielfache von \\(6\\) und \\(8\\)?",
+    loesung: 24,
+    toleranz: 0,
+    tipp: "Schreibe beide Vielfachen-Reihen auf, bis du die erste gemeinsame Zahl findest.",
+    loesungsweg: "Vielfache von \\(6\\): $$6, 12, 18, 24, 30, ...$$ Vielfache von \\(8\\): $$8, 16, 24, 32, ...$$ Die erste Zahl in beiden Reihen ist \\(24\\)."
+  },
+  {
+    id: 24,
+    level: 4,
+    typ: "mc",
+    frage: "Welche Liste zeigt ALLE Teiler von \\(20\\)?",
+    optionen: ["\\(1, 2, 5, 10, 20\\)", "\\(2, 4, 5, 10\\)", "\\(1, 4, 5, 10, 20\\)", "\\(1, 2, 4, 5, 10, 20\\)"],
+    korrekt: 3,
+    tipp: "Suche Teiler-Paare: \\(1 \\cdot 20\\), \\(2 \\cdot 10\\), \\(4 \\cdot 5\\). Fehlt in einer Liste etwas?",
+    loesungsweg: "Teiler-Paare von \\(20\\): $$1 \\cdot 20, \\quad 2 \\cdot 10, \\quad 4 \\cdot 5$$ Alle Teiler: \\(1, 2, 4, 5, 10, 20\\). In den anderen Listen fehlt die \\(4\\) oder die \\(2\\) — oder die \\(1\\) und die \\(20\\)."
+  },
+  // ========== LEVEL 5 — anspruchsvoll: Primzahlen und Primfaktorzerlegung ==========
+  {
+    id: 25,
+    level: 5,
+    typ: "mc",
+    frage: "Welche dieser Zahlen ist eine Primzahl?",
+    optionen: ["\\(21\\)", "\\(17\\)", "\\(15\\)", "\\(27\\)"],
+    korrekt: 1,
+    tipp: "Eine Primzahl hat genau zwei Teiler: \\(1\\) und sich selbst. Prüfe bei jeder Zahl, ob sie noch andere Teiler hat.",
+    loesungsweg: "$$21 = 3 \\cdot 7, \\quad 15 = 3 \\cdot 5, \\quad 27 = 3 \\cdot 9$$ Diese drei haben mehr als zwei Teiler. Die \\(17\\) lässt sich nur als \\(1 \\cdot 17\\) schreiben — sie ist eine Primzahl."
+  },
+  {
+    id: 26,
+    level: 5,
+    typ: "numerisch",
+    frage: "Wie viele Primzahlen gibt es zwischen \\(1\\) und \\(20\\)?",
+    loesung: 8,
+    toleranz: 0,
+    tipp: "Gehe alle Zahlen von \\(2\\) bis \\(19\\) durch und streiche jede, die sich als Produkt schreiben lässt. Achtung: Die \\(1\\) ist KEINE Primzahl.",
+    loesungsweg: "Die Primzahlen zwischen \\(1\\) und \\(20\\): $$2, 3, 5, 7, 11, 13, 17, 19$$ Das sind \\(8\\) Primzahlen. Die \\(1\\) zählt nicht mit, denn sie hat nur einen Teiler."
+  },
+  {
+    id: 27,
+    level: 5,
+    typ: "mc",
+    frage: "Welches ist die richtige Primfaktorzerlegung von \\(36\\)?",
+    optionen: ["\\(2 \\cdot 2 \\cdot 3 \\cdot 3\\)", "\\(2 \\cdot 3 \\cdot 6\\)", "\\(4 \\cdot 9\\)", "\\(2 \\cdot 2 \\cdot 9\\)"],
+    korrekt: 0,
+    tipp: "Bei einer Primfaktorzerlegung müssen ALLE Faktoren Primzahlen sein. Sind \\(4\\), \\(6\\) und \\(9\\) Primzahlen?",
+    loesungsweg: "Zerlege Schritt für Schritt: $$36 = 2 \\cdot 18 = 2 \\cdot 2 \\cdot 9 = 2 \\cdot 2 \\cdot 3 \\cdot 3$$ Die anderen Produkte ergeben zwar auch \\(36\\), aber \\(6\\), \\(4\\) und \\(9\\) sind keine Primzahlen."
+  },
+  {
+    id: 28,
+    level: 5,
+    typ: "numerisch",
+    frage: "Ergänze die Primfaktorzerlegung: \\(30 = 2 \\cdot 3 \\cdot \\square\\). Welche Zahl fehlt?",
+    loesung: 5,
+    toleranz: 0,
+    tipp: "Rechne zuerst \\(2 \\cdot 3\\). Mit welcher Zahl musst du das Ergebnis multiplizieren, um \\(30\\) zu erhalten?",
+    loesungsweg: "$$2 \\cdot 3 = 6$$ $$30 : 6 = 5$$ Also: \\(30 = 2 \\cdot 3 \\cdot 5\\). Die \\(5\\) ist eine Primzahl — die Zerlegung ist vollständig."
+  },
+  {
+    id: 29,
+    level: 5,
+    typ: "mc",
+    frage: "Welche dieser Zahlen ist KEINE Primzahl?",
+    optionen: ["\\(31\\)", "\\(41\\)", "\\(51\\)", "\\(61\\)"],
+    korrekt: 2,
+    tipp: "Prüfe die Quersummen: Ist eine der Zahlen durch \\(3\\) teilbar?",
+    loesungsweg: "Quersumme von \\(51\\): $$5 + 1 = 6$$ Die \\(6\\) ist durch \\(3\\) teilbar, also auch \\(51\\): $$51 = 3 \\cdot 17$$ Damit ist \\(51\\) keine Primzahl. \\(31\\), \\(41\\) und \\(61\\) haben nur die Teiler \\(1\\) und sich selbst."
+  },
+  {
+    id: 30,
+    level: 5,
+    typ: "numerisch",
+    frage: "Zerlege \\(42\\) in Primfaktoren. Wie heißt der GRÖSSTE Primfaktor von \\(42\\)?",
+    loesung: 7,
+    toleranz: 0,
+    tipp: "Teile zuerst durch \\(2\\), dann prüfe die \\(3\\) — und schau, was übrig bleibt.",
+    loesungsweg: "$$42 = 2 \\cdot 21 = 2 \\cdot 3 \\cdot 7$$ Die Primfaktoren sind \\(2\\), \\(3\\) und \\(7\\). Der größte ist \\(7\\)."
+  },
+  // ========== LEVEL 6 — wagnerisch: Sachaufgaben ==========
+  {
+    id: 31,
+    level: 6,
+    typ: "numerisch",
+    frage: "🚌 Am Marktplatz fährt Bus A alle \\(12\\) Minuten ab, Bus B alle \\(15\\) Minuten. Um 12:00 Uhr fahren beide gleichzeitig los. Nach wie vielen Minuten fahren sie das nächste Mal wieder gleichzeitig ab? Gib das Ergebnis in Minuten an.",
+    loesung: 60,
+    toleranz: 0,
+    tipp: "Schreibe die Abfahrtszeiten als Vielfache auf: Bus A bei \\(12, 24, 36, ...\\), Bus B bei \\(15, 30, 45, ...\\) Wo treffen sich die Reihen zum ersten Mal?",
+    loesungsweg: "Vielfache von \\(12\\): $$12, 24, 36, 48, 60, ...$$ Vielfache von \\(15\\): $$15, 30, 45, 60, ...$$ Das kleinste gemeinsame Vielfache ist \\(60\\). Nach \\(60\\) Minuten (um 13:00 Uhr) fahren beide wieder gleichzeitig ab."
+  },
+  {
+    id: 32,
+    level: 6,
+    typ: "mc",
+    frage: "🎁 Tarek packt Geschenktüten für seinen Geburtstag. Er hat \\(20\\) Gummibärchen und \\(30\\) Schokotaler. Jede Tüte soll genau gleich gefüllt sein, und nichts darf übrig bleiben. Wie viele Tüten kann er HÖCHSTENS packen?",
+    optionen: ["\\(5\\)", "\\(10\\)", "\\(20\\)", "\\(50\\)"],
+    korrekt: 1,
+    tipp: "Die Anzahl der Tüten muss ein Teiler von \\(20\\) UND von \\(30\\) sein. Suche den größten gemeinsamen Teiler.",
+    loesungsweg: "Teiler von \\(20\\): $$1, 2, 4, 5, 10, 20$$ Teiler von \\(30\\): $$1, 2, 3, 5, 6, 10, 15, 30$$ Der größte gemeinsame Teiler ist \\(10\\). Also: \\(10\\) Tüten mit je \\(2\\) Gummibärchen und \\(3\\) Schokotalern. Mit \\(5\\) Tüten ginge es auch, aber das sind nicht die meisten."
+  },
+  {
+    id: 33,
+    level: 6,
+    typ: "numerisch",
+    frage: "🌷 Ein Gärtner hat \\(24\\) Tulpen und \\(36\\) Narzissen. Er will sie auf gleich bepflanzte Beete verteilen — jedes Beet bekommt gleich viele Tulpen und gleich viele Narzissen, und keine Blume bleibt übrig. Wie viele Beete kann er höchstens anlegen?",
+    loesung: 12,
+    toleranz: 0,
+    tipp: "Die Anzahl der Beete muss ein gemeinsamer Teiler von \\(24\\) und \\(36\\) sein. Suche den größten.",
+    loesungsweg: "Teiler von \\(24\\): $$1, 2, 3, 4, 6, 8, 12, 24$$ Teiler von \\(36\\): $$1, 2, 3, 4, 6, 9, 12, 18, 36$$ Der größte gemeinsame Teiler ist \\(12\\). Also \\(12\\) Beete mit je \\(2\\) Tulpen und \\(3\\) Narzissen."
+  },
+  {
+    id: 34,
+    level: 6,
+    typ: "mc",
+    frage: "Aylin und Ben hüpfen auf dem Zahlenstrahl, beide starten bei \\(0\\). Aylin springt in \\(4\\)er-Schritten, Ben in \\(6\\)er-Schritten. Auf welcher Zahl landen beide zum ersten Mal gemeinsam?",
+    optionen: ["\\(10\\)", "\\(24\\)", "\\(12\\)", "\\(8\\)"],
+    korrekt: 2,
+    tipp: "Schreibe auf, wo Aylin landet (\\(4, 8, 12, ...\\)) und wo Ben landet (\\(6, 12, ...\\)).",
+    loesungsweg: "Aylin landet auf: $$4, 8, 12, 16, ...$$ Ben landet auf: $$6, 12, 18, ...$$ Die erste gemeinsame Zahl ist \\(12\\). Die \\(24\\) erreichen beide auch — aber erst später. \\(10\\) und \\(8\\) erreicht Ben gar nicht."
+  },
+  {
+    id: 35,
+    level: 6,
+    typ: "numerisch",
+    frage: "🍬 Opa Karl verteilt \\(45\\) Bonbons an seine Enkelkinder. Jedes Kind bekommt gleich viele, und kein Bonbon bleibt übrig. Es sind mehr als \\(5\\) und weniger als \\(10\\) Enkelkinder. Wie viele Enkelkinder hat Opa Karl?",
+    loesung: 9,
+    toleranz: 0,
+    tipp: "Die Anzahl der Kinder muss ein Teiler von \\(45\\) sein. Schreibe alle Teiler auf und suche den passenden.",
+    loesungsweg: "Teiler von \\(45\\): $$1, 3, 5, 9, 15, 45$$ Gesucht ist ein Teiler zwischen \\(5\\) und \\(10\\): Das ist die \\(9\\). Jedes der \\(9\\) Enkelkinder bekommt \\(45 : 9 = 5\\) Bonbons."
+  },
+  {
+    id: 36,
+    level: 6,
+    typ: "mc",
+    frage: "In der Klasse von Herrn Kaya sind \\(23\\) Kinder. Er möchte gleich große Gruppen bilden — jede Gruppe mit mehr als \\(1\\) und weniger als \\(23\\) Kindern. Das klappt nicht. Warum?",
+    optionen: ["Weil \\(23\\) eine Primzahl ist", "Weil \\(23\\) eine ungerade Zahl ist", "Weil \\(23\\) zu klein ist", "Weil \\(23\\) durch \\(3\\) teilbar ist"],
+    korrekt: 0,
+    tipp: "Suche die Teiler von \\(23\\). Wie viele findest du? Und Vorsicht: Auch aus \\(15\\) Kindern (ungerade!) könnte man Gruppen bilden.",
+    loesungsweg: "Die \\(23\\) hat nur die Teiler \\(1\\) und \\(23\\) — sie ist eine Primzahl. Darum gibt es keine passende Gruppengröße dazwischen. Ungerade allein ist nicht der Grund: Aus \\(15\\) Kindern könnte man z. B. \\(3\\) Gruppen zu je \\(5\\) Kindern bilden. Und \\(23\\) ist nicht durch \\(3\\) teilbar, denn die Quersumme \\(5\\) ist es nicht."
+  }
+];
+    </script>
+    <script src="../p3-reflexion.js"></script>
+    <script src="../spirale-engine.js"></script>
+    <script src="../spirale-kids.js"></script>
+</body>
+</html>

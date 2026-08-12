@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daten erfassen & Diagramme lesen - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <link rel="stylesheet" href="../spirale-kids.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+// Daten erfassen & Diagramme lesen — DiffEngine Klasse 5/6 Content (Roadmap Welle 2, Item 3)
+const THEMA_KEY = '5-daten-diagramme';
+const THEMA_CONFIG = { name: 'Daten erfassen & Diagramme lesen', bereich: 'stochastik', p3Enabled: true };
+const AUFGABEN = [
+  // ========== LEVEL 1 — babyleicht: Werte aus Tabellen ablesen ==========
+  {
+    id: 1,
+    level: 1,
+    typ: "numerisch",
+    frage: "Klassenumfrage Lieblingstier: Hund \\(8\\), Katze \\(6\\), Hamster \\(3\\), Fisch \\(2\\). Wie viele Kinder haben Katze gewählt?",
+    loesung: 6,
+    toleranz: 0,
+    tipp: "Suche in der Aufzählung das Wort „Katze“ und lies die Zahl direkt dahinter ab.",
+    loesungsweg: "In der Tabelle steht hinter „Katze“ die Zahl \\(6\\). $$\\text{Katze: } 6 \\text{ Kinder}$$"
+  },
+  {
+    id: 2,
+    level: 1,
+    typ: "mc",
+    frage: "Die Tabelle zeigt die Sonnentage: März \\(9\\), April \\(12\\), Mai \\(15\\), Juni \\(20\\). Wie viele Sonnentage hatte der Mai? ☀️",
+    optionen: ["\\(12\\)", "\\(15\\)", "\\(20\\)", "\\(9\\)"],
+    korrekt: 1,
+    tipp: "Gehe die Monate der Reihe nach durch, bis du beim Mai bist.",
+    loesungsweg: "Hinter „Mai“ steht in der Tabelle die Zahl \\(15\\). Der Mai hatte also \\(15\\) Sonnentage. \\(12\\) gehört zum April, \\(20\\) zum Juni und \\(9\\) zum März."
+  },
+  {
+    id: 3,
+    level: 1,
+    typ: "numerisch",
+    frage: "Der Pausenkiosk führt eine Verkaufstabelle: Apfel \\(14\\), Banane \\(9\\), Brezel \\(11\\), Muffin \\(7\\). Wie viele Brezeln wurden verkauft?",
+    loesung: 11,
+    toleranz: 0,
+    tipp: "Suche „Brezel“ in der Tabelle und lies die Zahl daneben ab.",
+    loesungsweg: "In der Tabelle steht hinter „Brezel“ die Zahl \\(11\\). $$\\text{Brezel: } 11 \\text{ Stück}$$"
+  },
+  {
+    id: 4,
+    level: 1,
+    typ: "mc",
+    frage: "Haustier-Tabelle der Klasse 5a: Hund \\(7\\), Katze \\(9\\), Vogel \\(4\\), kein Haustier \\(5\\). Welches Tier wurde am häufigsten genannt?",
+    optionen: ["Hund", "Vogel", "Katze", "kein Haustier"],
+    korrekt: 2,
+    tipp: "Vergleiche die vier Zahlen: Welche ist die größte?",
+    loesungsweg: "Vergleiche die Zahlen: \\(7\\), \\(9\\), \\(4\\) und \\(5\\). Die größte Zahl ist \\(9\\) — sie steht bei „Katze“. Also wurde Katze am häufigsten genannt."
+  },
+  {
+    id: 5,
+    level: 1,
+    typ: "numerisch",
+    frage: "Ausgeliehene Bücher der Schulbücherei: Montag \\(25\\), Dienstag \\(18\\), Mittwoch \\(30\\), Donnerstag \\(22\\). Wie viele Bücher wurden am Mittwoch ausgeliehen? 📚",
+    loesung: 30,
+    toleranz: 0,
+    tipp: "Suche den Mittwoch in der Tabelle und lies die Zahl daneben ab.",
+    loesungsweg: "Hinter „Mittwoch“ steht die Zahl \\(30\\). $$\\text{Mittwoch: } 30 \\text{ Bücher}$$"
+  },
+  {
+    id: 6,
+    level: 1,
+    typ: "mc",
+    frage: "Weitsprung-Tabelle beim Sportfest: Lena \\(3{,}20\\ \\mathrm{m}\\), Ali \\(3{,}45\\ \\mathrm{m}\\), Mia \\(3{,}05\\ \\mathrm{m}\\), Tom \\(3{,}30\\ \\mathrm{m}\\). Wer ist am weitesten gesprungen?",
+    optionen: ["Lena", "Tom", "Mia", "Ali"],
+    korrekt: 3,
+    tipp: "Alle Weiten beginnen mit \\(3\\) Metern. Vergleiche die Stellen nach dem Komma.",
+    loesungsweg: "Vergleiche die Nachkommastellen: \\(3{,}45 > 3{,}30 > 3{,}20 > 3{,}05\\). Die größte Weite \\(3{,}45\\ \\mathrm{m}\\) gehört zu Ali."
+  },
+  // ========== LEVEL 2 — leicht: Strichlisten auszählen ==========
+  {
+    id: 7,
+    level: 2,
+    typ: "numerisch",
+    frage: "Bei der Pausenumfrage „Lieblingsobst“ steht neben Apfel diese Strichliste: ||||| ||||| |||. Wie viele Kinder haben Apfel gewählt? 🍎",
+    loesung: 13,
+    toleranz: 0,
+    tipp: "Zähle in Fünferschritten: Jede volle Gruppe hat \\(5\\) Striche.",
+    loesungsweg: "Zwei volle Fünfergruppen und drei einzelne Striche: $$5 + 5 + 3 = 13$$ Also haben \\(13\\) Kinder Apfel gewählt."
+  },
+  {
+    id: 8,
+    level: 2,
+    typ: "mc",
+    frage: "Strichliste für den Schulweg „mit dem Fahrrad“: ||||| ||||| ||||| ||. Wie viele Kinder kommen mit dem Fahrrad?",
+    optionen: ["\\(15\\)", "\\(16\\)", "\\(17\\)", "\\(18\\)"],
+    korrekt: 2,
+    tipp: "Zähle zuerst die vollen Fünfergruppen, dann die einzelnen Striche.",
+    loesungsweg: "Drei volle Fünfergruppen und zwei einzelne Striche: $$3 \\cdot 5 + 2 = 15 + 2 = 17$$ Wer \\(15\\) rechnet, hat die letzten beiden Striche vergessen."
+  },
+  {
+    id: 9,
+    level: 2,
+    typ: "numerisch",
+    frage: "Bei der Vogelzählung im Schulgarten notiert Samira für Amseln: ||||| ||||| ||||| ||||. Wie viele Amseln hat sie gezählt?",
+    loesung: 19,
+    toleranz: 0,
+    tipp: "Wie viele volle Fünfergruppen siehst du? Wie viele Striche bleiben übrig?",
+    loesungsweg: "Drei volle Fünfergruppen und vier einzelne Striche: $$3 \\cdot 5 + 4 = 15 + 4 = 19$$"
+  },
+  {
+    id: 10,
+    level: 2,
+    typ: "mc",
+    frage: "Die Tore der Schulmannschaft in dieser Saison als Strichliste: ||||| |||. Wie viele Tore sind das? ⚽",
+    optionen: ["\\(9\\)", "\\(7\\)", "\\(8\\)", "\\(10\\)"],
+    korrekt: 2,
+    tipp: "Eine volle Fünfergruppe plus die restlichen Striche.",
+    loesungsweg: "Eine volle Fünfergruppe und drei einzelne Striche: $$5 + 3 = 8$$ Die Mannschaft hat \\(8\\) Tore geschossen."
+  },
+  {
+    id: 11,
+    level: 2,
+    typ: "numerisch",
+    frage: "Jonas zählt vor der Schule die Autofarben. Für Rot notiert er: ||||| ||||| |. Wie viele rote Autos hat er gezählt?",
+    loesung: 11,
+    toleranz: 0,
+    tipp: "Zähle die vollen Fünfergruppen und addiere die einzelnen Striche.",
+    loesungsweg: "Zwei volle Fünfergruppen und ein einzelner Strich: $$2 \\cdot 5 + 1 = 10 + 1 = 11$$"
+  },
+  {
+    id: 12,
+    level: 2,
+    typ: "mc",
+    frage: "Umfrage „Lieblingsfach“: Mathe ||||| ||||| || und Sport ||||| ||||| ||||. Wie viele Kinder mehr haben Sport gewählt als Mathe?",
+    optionen: ["\\(2\\)", "\\(26\\)", "\\(14\\)", "\\(12\\)"],
+    korrekt: 0,
+    tipp: "Zähle zuerst beide Strichlisten einzeln aus. Vergleiche dann die beiden Zahlen.",
+    loesungsweg: "Mathe: \\(5 + 5 + 2 = 12\\) Kinder. Sport: \\(5 + 5 + 4 = 14\\) Kinder. Unterschied: $$14 - 12 = 2$$ Also haben \\(2\\) Kinder mehr Sport gewählt. \\(26\\) wäre die Summe beider Listen."
+  },
+  // ========== LEVEL 3 — nervenschonend: Summen und Differenzen aus Tabellen ==========
+  {
+    id: 13,
+    level: 3,
+    typ: "numerisch",
+    frage: "Eisverkauf am Samstag: Vanille \\(24\\), Schoko \\(31\\), Erdbeere \\(17\\), Zitrone \\(8\\) Kugeln. Wie viele Kugeln wurden insgesamt verkauft? 🍦",
+    loesung: 80,
+    toleranz: 0,
+    tipp: "„Insgesamt“ bedeutet: Addiere alle vier Zahlen.",
+    loesungsweg: "$$24 + 31 + 17 + 8 = 80$$ Geschickt rechnen: \\(24 + 31 = 55\\), dann \\(55 + 17 = 72\\), dann \\(72 + 8 = 80\\). Es wurden \\(80\\) Kugeln verkauft."
+  },
+  {
+    id: 14,
+    level: 3,
+    typ: "mc",
+    frage: "In der Schulbücherei stehen laut Tabelle \\(45\\) Comics und \\(62\\) Romane. Wie viele Romane gibt es mehr als Comics?",
+    optionen: ["\\(107\\)", "\\(23\\)", "\\(17\\)", "\\(27\\)"],
+    korrekt: 2,
+    tipp: "„Wie viele mehr“ heißt: Rechne die Differenz, nicht die Summe.",
+    loesungsweg: "$$62 - 45 = 17$$ Es gibt \\(17\\) Romane mehr. \\(107\\) wäre die Summe. \\(23\\) und \\(27\\) entstehen durch Fehler beim Übertrag."
+  },
+  {
+    id: 15,
+    level: 3,
+    typ: "numerisch",
+    frage: "Kostentabelle für den Ausflug der Klasse 5b: Busfahrt \\(120\\) €, Eintritt \\(95\\) €, Eis \\(35\\) €. Wie teuer war der Ausflug insgesamt? Gib das Ergebnis in Euro an.",
+    loesung: 250,
+    toleranz: 0,
+    tipp: "Addiere alle drei Beträge. Tipp: \\(95 + 35\\) ergibt eine glatte Zahl.",
+    loesungsweg: "$$120 + 95 + 35 = 250$$ Geschickt: \\(95 + 35 = 130\\), dann \\(120 + 130 = 250\\). Der Ausflug kostete \\(250\\) €."
+  },
+  {
+    id: 16,
+    level: 3,
+    typ: "mc",
+    frage: "Besuchertabelle des Schwimmbads: Samstag \\(348\\), Sonntag \\(412\\). Wie viele Besucher kamen am ganzen Wochenende?",
+    optionen: ["\\(750\\)", "\\(760\\)", "\\(770\\)", "\\(64\\)"],
+    korrekt: 1,
+    tipp: "Beide Tageszahlen addieren. Achte auf den Übertrag bei den Einern.",
+    loesungsweg: "$$348 + 412 = 760$$ Schrittweise: \\(348 + 400 = 748\\), dann \\(748 + 12 = 760\\). \\(64\\) wäre der Unterschied der beiden Tage, nicht die Summe."
+  },
+  {
+    id: 17,
+    level: 3,
+    typ: "numerisch",
+    frage: "Brötchen-Verkauf am Pausenkiosk: Montag \\(32\\), Dienstag \\(28\\), Mittwoch \\(35\\). Wie viele Brötchen wurden am Mittwoch mehr verkauft als am Dienstag?",
+    loesung: 7,
+    toleranz: 0,
+    tipp: "Du brauchst nur zwei Zahlen aus der Tabelle: Mittwoch und Dienstag.",
+    loesungsweg: "Mittwoch: \\(35\\), Dienstag: \\(28\\). $$35 - 28 = 7$$ Am Mittwoch wurden \\(7\\) Brötchen mehr verkauft. Der Montag spielt hier keine Rolle."
+  },
+  {
+    id: 18,
+    level: 3,
+    typ: "mc",
+    frage: "Altpapier-Sammlung der fünften Klassen: 5a \\(74\\ \\mathrm{kg}\\), 5b \\(68\\ \\mathrm{kg}\\), 5c \\(81\\ \\mathrm{kg}\\). Wie viel kg hat die 5c mehr gesammelt als die 5b?",
+    optionen: ["\\(13\\ \\mathrm{kg}\\)", "\\(27\\ \\mathrm{kg}\\)", "\\(23\\ \\mathrm{kg}\\)", "\\(149\\ \\mathrm{kg}\\)"],
+    korrekt: 0,
+    tipp: "Lies nur die Werte der 5c und der 5b ab und bilde die Differenz.",
+    loesungsweg: "$$81 - 68 = 13$$ Die 5c hat \\(13\\ \\mathrm{kg}\\) mehr gesammelt. \\(149\\) wäre die Summe von 5b und 5c. \\(27\\) entsteht, wenn man den Übertrag vergisst."
+  },
+  // ========== LEVEL 4 — mittel: Diagramme interpretieren ==========
+  {
+    id: 19,
+    level: 4,
+    typ: "mc",
+    frage: "Ein Säulendiagramm zeigt den Lieblingssport der Klasse 5c: Fußball \\(10\\), Schwimmen \\(6\\), Turnen \\(4\\), Basketball \\(8\\). Welche Aussage stimmt?",
+    optionen: ["Die Säule für Turnen ist die höchste.", "Genau \\(8\\) Kinder wählten Basketball.", "Schwimmen wurde häufiger gewählt als Basketball.", "Insgesamt wurden \\(30\\) Kinder befragt."],
+    korrekt: 1,
+    tipp: "Prüfe jede Aussage einzeln mit den Zahlen aus dem Diagramm.",
+    loesungsweg: "Basketball hat den Wert \\(8\\) — die zweite Aussage stimmt. Turnen (\\(4\\)) ist die niedrigste Säule, Schwimmen (\\(6\\)) liegt unter Basketball (\\(8\\)), und insgesamt sind es $$10 + 6 + 4 + 8 = 28$$ Kinder, nicht \\(30\\)."
+  },
+  {
+    id: 20,
+    level: 4,
+    typ: "mc",
+    frage: "Ein Balkendiagramm zeigt die Mittagstemperatur: Montag \\(18\\,^\\circ\\mathrm{C}\\), Dienstag \\(21\\,^\\circ\\mathrm{C}\\), Mittwoch \\(16\\,^\\circ\\mathrm{C}\\), Donnerstag \\(21\\,^\\circ\\mathrm{C}\\), Freitag \\(24\\,^\\circ\\mathrm{C}\\). Welche Aussage stimmt?",
+    optionen: ["Am Mittwoch war es am wärmsten.", "Am Dienstag war es kälter als am Montag.", "An allen Tagen war es wärmer als \\(18\\,^\\circ\\mathrm{C}\\).", "Am Dienstag und am Donnerstag war es gleich warm."],
+    korrekt: 3,
+    tipp: "Suche zwei Tage mit genau demselben Wert.",
+    loesungsweg: "Dienstag und Donnerstag haben beide \\(21\\,^\\circ\\mathrm{C}\\) — diese Aussage stimmt. Am wärmsten war der Freitag (\\(24\\,^\\circ\\mathrm{C}\\)), Dienstag (\\(21\\)) war wärmer als Montag (\\(18\\)), und am Mittwoch waren es nur \\(16\\,^\\circ\\mathrm{C}\\)."
+  },
+  {
+    id: 21,
+    level: 4,
+    typ: "numerisch",
+    frage: "Ein Säulendiagramm zeigt, wie viele Bücher die Kinder in den Ferien gelesen haben: Emma \\(4\\), Jonas \\(7\\), Ayla \\(5\\), Ben \\(2\\). Wie viele Bücher haben die vier Kinder zusammen gelesen?",
+    loesung: 18,
+    toleranz: 0,
+    tipp: "Lies alle vier Säulenwerte ab und addiere sie.",
+    loesungsweg: "$$4 + 7 + 5 + 2 = 18$$ Die vier Kinder haben zusammen \\(18\\) Bücher gelesen."
+  },
+  {
+    id: 22,
+    level: 4,
+    typ: "mc",
+    frage: "Ein Kreisdiagramm zeigt den Schulweg der \\(24\\) Kinder der Klasse 5a: Die Hälfte kommt zu Fuß, ein Viertel fährt mit dem Bus, der Rest kommt mit dem Fahrrad. Welche Aussage stimmt?",
+    optionen: ["\\(6\\) Kinder kommen mit dem Fahrrad.", "\\(12\\) Kinder fahren mit dem Bus.", "Mehr Kinder fahren mit dem Bus, als zu Fuß kommen.", "\\(8\\) Kinder kommen zu Fuß."],
+    korrekt: 0,
+    tipp: "Rechne zuerst: die Hälfte von \\(24\\) und ein Viertel von \\(24\\). Was bleibt übrig?",
+    loesungsweg: "Zu Fuß: die Hälfte von \\(24\\), also \\(12\\) Kinder. Bus: ein Viertel von \\(24\\), also \\(6\\) Kinder. Fahrrad: $$24 - 12 - 6 = 6$$ Also kommen \\(6\\) Kinder mit dem Fahrrad — die erste Aussage stimmt."
+  },
+  {
+    id: 23,
+    level: 4,
+    typ: "mc",
+    frage: "In einem Bilddiagramm steht ein 🍎-Symbol für \\(5\\) verkaufte Äpfel. Für Montag sind \\(4\\) Symbole gezeichnet. Welche Aussage stimmt?",
+    optionen: ["Am Montag wurden \\(4\\) Äpfel verkauft.", "Am Montag wurden \\(9\\) Äpfel verkauft.", "Am Montag wurden \\(20\\) Äpfel verkauft.", "Am Montag wurden \\(45\\) Äpfel verkauft."],
+    korrekt: 2,
+    tipp: "Jedes Symbol steht für \\(5\\) Äpfel — du musst multiplizieren, nicht nur Symbole zählen.",
+    loesungsweg: "$$4 \\cdot 5 = 20$$ Am Montag wurden \\(20\\) Äpfel verkauft. Wer \\(4\\) antwortet, hat nur die Symbole gezählt. Wer \\(9\\) antwortet, hat \\(4 + 5\\) gerechnet statt \\(4 \\cdot 5\\)."
+  },
+  {
+    id: 24,
+    level: 4,
+    typ: "mc",
+    frage: "Ein Liniendiagramm zeigt Annas Sparbetrag: Januar \\(5\\) €, Februar \\(8\\) €, März \\(12\\) €, April \\(10\\) €. Welche Aussage stimmt?",
+    optionen: ["Von März auf April ist der Betrag um \\(2\\) € gesunken.", "Der Betrag ist jeden Monat gestiegen.", "Im Februar hatte Anna am meisten gespart.", "Im Januar hatte Anna mehr gespart als im April."],
+    korrekt: 0,
+    tipp: "Schau dir besonders den Übergang von März zu April an: Geht die Linie hoch oder runter?",
+    loesungsweg: "Von März (\\(12\\) €) auf April (\\(10\\) €) sinkt der Betrag: $$12 - 10 = 2$$ Also stimmt die erste Aussage. Die Linie steigt nicht jeden Monat (April sinkt), am meisten war es im März, und Januar (\\(5\\) €) ist weniger als April (\\(10\\) €)."
+  },
+  // ========== LEVEL 5 — knifflig: passende Darstellung wählen, Fehler erkennen ==========
+  {
+    id: 25,
+    level: 5,
+    typ: "mc",
+    frage: "Du willst zeigen, wie sich die Temperatur im Laufe eines Tages verändert. Welche Darstellung passt am besten?",
+    optionen: ["Strichliste", "Liniendiagramm", "Kreisdiagramm", "ungeordnete Liste"],
+    korrekt: 1,
+    tipp: "Bei welcher Darstellung kann man eine Entwicklung über die Zeit gut verfolgen?",
+    loesungsweg: "Ein Liniendiagramm zeigt Veränderungen über die Zeit am besten: Die Linie steigt und fällt mit der Temperatur. Strichlisten zählen nur, Kreisdiagramme zeigen Anteile am Ganzen, und eine ungeordnete Liste zeigt keinen Verlauf."
+  },
+  {
+    id: 26,
+    level: 5,
+    typ: "mc",
+    frage: "Du stehst in der Pause auf dem Schulhof und zählst, wie viele Kinder Apfel, Banane oder Birne essen. Womit erfasst du die Daten beim Zählen am besten?",
+    optionen: ["Kreisdiagramm", "Liniendiagramm", "Strichliste", "Säulendiagramm"],
+    korrekt: 2,
+    tipp: "Beim Zählen kommt immer wieder ein Kind dazu. Wo kannst du schnell einen Eintrag ergänzen?",
+    loesungsweg: "Mit einer Strichliste kannst du bei jedem Kind sofort einen Strich ergänzen — perfekt zum Erfassen. Diagramme zeichnet man erst danach, wenn alle Daten gesammelt sind."
+  },
+  {
+    id: 27,
+    level: 5,
+    typ: "mc",
+    frage: "Du willst zeigen, welchen Anteil die Mädchen an der ganzen Klasse haben. Welches Diagramm zeigt Anteile am Ganzen am besten?",
+    optionen: ["Säulendiagramm", "Liniendiagramm", "Strichliste", "Kreisdiagramm"],
+    korrekt: 3,
+    tipp: "Denke an eine Pizza, die in Stücke geteilt wird. 🍕",
+    loesungsweg: "Ein Kreisdiagramm teilt den ganzen Kreis wie eine Pizza in Stücke auf — so sieht man sofort, wie groß jeder Anteil am Ganzen ist. Säulen vergleichen Werte, Linien zeigen Verläufe, Strichlisten dienen dem Zählen."
+  },
+  {
+    id: 28,
+    level: 5,
+    typ: "mc",
+    frage: "Leo zeichnet ein Säulendiagramm zur Umfrage „Lieblingsfarbe“: Blau \\(8\\), Rot \\(6\\), Grün \\(4\\). In seinem Diagramm ist die Säule für Rot genauso hoch wie die für Blau. Welcher Fehler ist das?",
+    optionen: ["Die Achsenbeschriftung fehlt.", "Die Säulenhöhe passt nicht zum Wert aus der Tabelle.", "Er hat die falschen Farben für die Säulen benutzt.", "Er hat zu viele Säulen gezeichnet."],
+    korrekt: 1,
+    tipp: "Vergleiche die Werte in der Tabelle: Dürfen die Säulen für Blau und Rot gleich hoch sein?",
+    loesungsweg: "Blau hat den Wert \\(8\\), Rot nur \\(6\\) — die Säulen dürfen also nicht gleich hoch sein. Leos Säulenhöhe passt nicht zu den Werten. Die Säulenhöhe muss immer genau den Wert aus der Tabelle zeigen."
+  },
+  {
+    id: 29,
+    level: 5,
+    typ: "mc",
+    frage: "In Mias Säulendiagramm beginnt die senkrechte Achse erst bei \\(20\\) statt bei \\(0\\). Die Werte: Klasse 5a \\(22\\) Punkte, Klasse 5b \\(26\\) Punkte. Die Säule der 5b sieht dreimal so hoch aus wie die der 5a. Welche Aussage stimmt?",
+    optionen: ["Die Klasse 5b hat wirklich dreimal so viele Punkte.", "Die Klasse 5a hat mehr Punkte als die 5b.", "Das Diagramm ist fehlerfrei und nicht irreführend.", "Das Diagramm täuscht, weil die Achse nicht bei \\(0\\) beginnt."],
+    korrekt: 3,
+    tipp: "Vergleiche die echten Zahlen: Ist \\(26\\) wirklich dreimal so viel wie \\(22\\)?",
+    loesungsweg: "\\(26\\) ist nur wenig mehr als \\(22\\) — auf keinen Fall dreimal so viel. Weil die Achse erst bei \\(20\\) beginnt, sieht man nur die Spitzen: \\(2\\) über \\(20\\) gegen \\(6\\) über \\(20\\). So wirkt der Unterschied viel größer, als er ist. Das Diagramm täuscht."
+  },
+  {
+    id: 30,
+    level: 5,
+    typ: "mc",
+    frage: "In einem Bilddiagramm steht ein ⚽-Symbol für \\(2\\) Tore. Paul hat \\(7\\) Tore geschossen. Sein Trainer zeichnet dafür \\(3\\) Symbole. Welche Aussage stimmt?",
+    optionen: ["\\(3\\) Symbole zeigen nur \\(6\\) Tore — es fehlt ein halbes Symbol.", "\\(3\\) Symbole sind genau richtig.", "Man müsste \\(7\\) Symbole zeichnen.", "Man müsste \\(14\\) Symbole zeichnen."],
+    korrekt: 0,
+    tipp: "Rechne aus, für wie viele Tore \\(3\\) Symbole stehen. Passt das zu \\(7\\)?",
+    loesungsweg: "$$3 \\cdot 2 = 6$$ Drei Symbole zeigen nur \\(6\\) Tore, Paul hat aber \\(7\\) geschossen. Richtig wären \\(3\\) ganze und ein halbes Symbol, denn \\(3{,}5 \\cdot 2 = 7\\). \\(7\\) Symbole wären \\(14\\) Tore, \\(14\\) Symbole sogar \\(28\\) Tore."
+  },
+  // ========== LEVEL 6 — schwer: mehrschrittige Interpretation und Sachaufgaben ==========
+  {
+    id: 31,
+    level: 6,
+    typ: "numerisch",
+    frage: "Kuchenverkauf beim Schulfest laut Tabelle: Schokokuchen \\(24\\) Stück, Apfelkuchen \\(18\\) Stück, Käsekuchen \\(13\\) Stück. Jedes Stück kostet \\(2\\) €. Wie viel Geld wurde insgesamt eingenommen? Gib das Ergebnis in Euro an. 🎪",
+    loesung: 110,
+    toleranz: 0,
+    tipp: "Erst alle Stücke zusammenzählen, dann mit dem Preis pro Stück multiplizieren.",
+    loesungsweg: "Anzahl der Stücke: $$24 + 18 + 13 = 55$$ Einnahmen: $$55 \\cdot 2 = 110$$ Es wurden \\(110\\) € eingenommen."
+  },
+  {
+    id: 32,
+    level: 6,
+    typ: "mc",
+    frage: "Umfrage „Lieblingsjahreszeit“ in der Klasse 5a mit \\(28\\) Kindern: Sommer \\(12\\), Winter \\(7\\), Frühling \\(5\\). Alle übrigen Kinder wählten Herbst. Wie viele Kinder wählten Herbst?",
+    optionen: ["\\(6\\)", "\\(24\\)", "\\(4\\)", "\\(5\\)"],
+    korrekt: 2,
+    tipp: "Zähle zuerst zusammen, wie viele Kinder schon in der Tabelle stehen. Wie viele fehlen dann noch bis \\(28\\)?",
+    loesungsweg: "In der Tabelle stehen schon $$12 + 7 + 5 = 24$$ Kinder. Für Herbst bleiben: $$28 - 24 = 4$$ Kinder. \\(24\\) ist nur die Zwischensumme, nicht die Antwort."
+  },
+  {
+    id: 33,
+    level: 6,
+    typ: "numerisch",
+    frage: "Ein Liniendiagramm zeigt die Besucher der Schülerbücherei: Am Montag kamen \\(40\\) Kinder, danach jeden Tag \\(10\\) mehr als am Vortag — bis Donnerstag. Am Freitag kamen nur halb so viele Kinder wie am Donnerstag. Wie viele Kinder kamen am Freitag?",
+    loesung: 35,
+    toleranz: 0,
+    tipp: "Schreibe die Werte Tag für Tag auf: Montag \\(40\\), Dienstag …, und arbeite dich bis Freitag vor.",
+    loesungsweg: "Montag \\(40\\), Dienstag \\(50\\), Mittwoch \\(60\\), Donnerstag \\(70\\). Freitag ist die Hälfte von Donnerstag: $$70 : 2 = 35$$ Am Freitag kamen \\(35\\) Kinder."
+  },
+  {
+    id: 34,
+    level: 6,
+    typ: "numerisch",
+    frage: "Die Strichliste des Pausenverkaufs zeigt für Trinkpäckchen: ||||| ||||| |||||. Ein Päckchen kostet \\(50\\) Cent. Wie viel Geld wurde mit den Trinkpäckchen eingenommen? Gib das Ergebnis in Euro an.",
+    loesung: 7.5,
+    toleranz: 0,
+    tipp: "Zähle erst die Strichliste aus. Denke daran: \\(2\\) Päckchen kosten zusammen \\(1\\) €.",
+    loesungsweg: "Strichliste: $$3 \\cdot 5 = 15$$ Päckchen. Je \\(2\\) Päckchen kosten \\(1\\) €, also: $$15 \\cdot 0{,}50\\ € = 7{,}50\\ €$$ Es wurden \\(7{,}50\\) € eingenommen — als Zahl: \\(7{,}5\\)."
+  },
+  {
+    id: 35,
+    level: 6,
+    typ: "mc",
+    frage: "Tabelle der Regentage: April \\(14\\), Mai \\(9\\), Juni \\(6\\). Welche Aussage stimmt? 🌧️",
+    optionen: ["Die Zahl der Regentage ist von April bis Juni immer kleiner geworden.", "Im Mai gab es mehr Regentage als im April.", "Zusammen waren es \\(30\\) Regentage.", "Im Juni gab es halb so viele Regentage wie im April."],
+    korrekt: 0,
+    tipp: "Prüfe jede Aussage einzeln nach — auch die mit Rechnung: Was ist die Hälfte von \\(14\\)? Was ergibt die Summe?",
+    loesungsweg: "\\(14 > 9 > 6\\): Die Zahl wird immer kleiner — die erste Aussage stimmt. Die Summe ist $$14 + 9 + 6 = 29$$, nicht \\(30\\). Die Hälfte von \\(14\\) ist \\(7\\), der Juni hatte aber \\(6\\) Regentage — also nicht genau die Hälfte."
+  },
+  {
+    id: 36,
+    level: 6,
+    typ: "numerisch",
+    frage: "Klassensprecherwahl in der 5b, Stimmen laut Tabelle: Ela \\(9\\), Ben \\(7\\), Chris \\(5\\). Wie viele Stimmen fehlen Chris, um genauso viele Stimmen wie Ela zu haben?",
+    loesung: 4,
+    toleranz: 0,
+    tipp: "Vergleiche nur Chris und Ela. Wie groß ist der Abstand zwischen ihren Stimmen?",
+    loesungsweg: "Ela hat \\(9\\) Stimmen, Chris hat \\(5\\). $$9 - 5 = 4$$ Chris fehlen \\(4\\) Stimmen. Bens Ergebnis wird für diese Frage nicht gebraucht."
+  }
+];
+    </script>
+    <script src="../p3-reflexion.js"></script>
+    <script src="../spirale-engine.js"></script>
+    <script src="../spirale-kids.js"></script>
+</body>
+</html>

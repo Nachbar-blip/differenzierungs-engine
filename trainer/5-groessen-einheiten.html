@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Größen & Einheiten umrechnen - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <link rel="stylesheet" href="../spirale-kids.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+// Größen & Einheiten umrechnen — DiffEngine Klasse 5/6 Content (Roadmap Welle 2, Item 3)
+const THEMA_KEY = '5-groessen-einheiten';
+const THEMA_CONFIG = { name: 'Größen & Einheiten umrechnen', bereich: 'arithmetik', p3Enabled: true };
+const AUFGABEN = [
+  // ========== LEVEL 1 — babyleicht: Einfache Umrechnungen ==========
+  {
+    id: 1,
+    level: 1,
+    typ: "numerisch",
+    frage: "Rechne um: \\(3\\ \\text{m}\\). Gib das Ergebnis in cm an.",
+    loesung: 300,
+    toleranz: 0,
+    tipp: "Ein Meter hat \\(100\\) Zentimeter. Rechne also \\(3 \\cdot 100\\).",
+    loesungsweg: "$$1\\ \\text{m} = 100\\ \\text{cm}$$ $$3\\ \\text{m} = 3 \\cdot 100\\ \\text{cm} = 300\\ \\text{cm}$$"
+  },
+  {
+    id: 2,
+    level: 1,
+    typ: "mc",
+    frage: "Wie viele Gramm sind \\(2\\ \\text{kg}\\)?",
+    optionen: ["\\(200\\ \\text{g}\\)", "\\(20\\ \\text{g}\\)", "\\(2000\\ \\text{g}\\)", "\\(20000\\ \\text{g}\\)"],
+    korrekt: 2,
+    tipp: "Ein Kilogramm hat \\(1000\\) Gramm.",
+    loesungsweg: "$$1\\ \\text{kg} = 1000\\ \\text{g}$$ $$2\\ \\text{kg} = 2 \\cdot 1000\\ \\text{g} = 2000\\ \\text{g}$$"
+  },
+  {
+    id: 3,
+    level: 1,
+    typ: "numerisch",
+    frage: "Mia hat \\(4{,}50\\) € Taschengeld dabei. Wie viel ist das in Cent? Gib das Ergebnis in ct an.",
+    loesung: 450,
+    toleranz: 0,
+    tipp: "Ein Euro hat \\(100\\) Cent. Das Komma verschiebt sich um zwei Stellen.",
+    loesungsweg: "$$1\\ € = 100\\ \\text{ct}$$ $$4{,}50\\ € = 4 \\cdot 100\\ \\text{ct} + 50\\ \\text{ct} = 450\\ \\text{ct}$$"
+  },
+  {
+    id: 4,
+    level: 1,
+    typ: "mc",
+    frage: "Wie viele Millimeter sind \\(5\\ \\text{cm}\\)?",
+    optionen: ["\\(50\\ \\text{mm}\\)", "\\(500\\ \\text{mm}\\)", "\\(5\\ \\text{mm}\\)", "\\(0{,}5\\ \\text{mm}\\)"],
+    korrekt: 0,
+    tipp: "Ein Zentimeter hat \\(10\\) Millimeter.",
+    loesungsweg: "$$1\\ \\text{cm} = 10\\ \\text{mm}$$ $$5\\ \\text{cm} = 5 \\cdot 10\\ \\text{mm} = 50\\ \\text{mm}$$"
+  },
+  {
+    id: 5,
+    level: 1,
+    typ: "numerisch",
+    frage: "Der Schulweg von Emre ist \\(7\\ \\text{km}\\) lang. Gib die Länge in m an.",
+    loesung: 7000,
+    toleranz: 0,
+    tipp: "Ein Kilometer hat \\(1000\\) Meter.",
+    loesungsweg: "$$1\\ \\text{km} = 1000\\ \\text{m}$$ $$7\\ \\text{km} = 7 \\cdot 1000\\ \\text{m} = 7000\\ \\text{m}$$"
+  },
+  {
+    id: 6,
+    level: 1,
+    typ: "mc",
+    frage: "Wie viel Euro sind \\(300\\ \\text{ct}\\)?",
+    optionen: ["\\(30\\ €\\)", "\\(3\\ €\\)", "\\(0{,}30\\ €\\)", "\\(300\\ €\\)"],
+    korrekt: 1,
+    tipp: "Hier rechnest du rückwärts: Wie oft passen \\(100\\) Cent in \\(300\\) Cent?",
+    loesungsweg: "$$100\\ \\text{ct} = 1\\ €$$ $$300\\ \\text{ct} = 300 : 100\\ € = 3\\ €$$"
+  },
+  // ========== LEVEL 2 — leicht: Gemischte Angaben & Zeit ==========
+  {
+    id: 7,
+    level: 2,
+    typ: "numerisch",
+    frage: "Lina ist \\(1\\ \\text{m}\\) \\(42\\ \\text{cm}\\) groß. Gib ihre Größe in cm an.",
+    loesung: 142,
+    toleranz: 0,
+    tipp: "Rechne zuerst den Meter in Zentimeter um, dann addiere die restlichen Zentimeter.",
+    loesungsweg: "$$1\\ \\text{m} = 100\\ \\text{cm}$$ $$1\\ \\text{m}\\ 42\\ \\text{cm} = 100\\ \\text{cm} + 42\\ \\text{cm} = 142\\ \\text{cm}$$"
+  },
+  {
+    id: 8,
+    level: 2,
+    typ: "mc",
+    frage: "Wie viele Minuten sind \\(3\\ \\text{h}\\)?",
+    optionen: ["\\(300\\ \\text{min}\\)", "\\(90\\ \\text{min}\\)", "\\(130\\ \\text{min}\\)", "\\(180\\ \\text{min}\\)"],
+    korrekt: 3,
+    tipp: "Vorsicht: Eine Stunde hat nicht \\(100\\), sondern \\(60\\) Minuten!",
+    loesungsweg: "$$1\\ \\text{h} = 60\\ \\text{min}$$ $$3\\ \\text{h} = 3 \\cdot 60\\ \\text{min} = 180\\ \\text{min}$$"
+  },
+  {
+    id: 9,
+    level: 2,
+    typ: "numerisch",
+    frage: "Ein Mehlsack wiegt \\(1\\ \\text{kg}\\) \\(250\\ \\text{g}\\). Gib die Masse in g an.",
+    loesung: 1250,
+    toleranz: 0,
+    tipp: "Rechne das Kilogramm in Gramm um und addiere dann die \\(250\\ \\text{g}\\).",
+    loesungsweg: "$$1\\ \\text{kg} = 1000\\ \\text{g}$$ $$1\\ \\text{kg}\\ 250\\ \\text{g} = 1000\\ \\text{g} + 250\\ \\text{g} = 1250\\ \\text{g}$$"
+  },
+  {
+    id: 10,
+    level: 2,
+    typ: "mc",
+    frage: "Ein Lied dauert \\(2\\ \\text{min}\\) \\(30\\ \\text{s}\\). Wie viele Sekunden sind das? 🎵",
+    optionen: ["\\(150\\ \\text{s}\\)", "\\(230\\ \\text{s}\\)", "\\(120\\ \\text{s}\\)", "\\(90\\ \\text{s}\\)"],
+    korrekt: 0,
+    tipp: "Eine Minute hat \\(60\\) Sekunden. Rechne erst die Minuten um.",
+    loesungsweg: "$$2\\ \\text{min} = 2 \\cdot 60\\ \\text{s} = 120\\ \\text{s}$$ $$120\\ \\text{s} + 30\\ \\text{s} = 150\\ \\text{s}$$"
+  },
+  {
+    id: 11,
+    level: 2,
+    typ: "numerisch",
+    frage: "Jonas findet in seiner Jackentasche \\(4\\ €\\) und \\(5\\ \\text{ct}\\). Gib den Betrag in ct an.",
+    loesung: 405,
+    toleranz: 0,
+    tipp: "Vorsicht: \\(4\\ €\\) und \\(5\\ \\text{ct}\\) sind nicht \\(45\\ \\text{ct}\\)! Rechne die Euro zuerst um.",
+    loesungsweg: "$$4\\ € = 400\\ \\text{ct}$$ $$400\\ \\text{ct} + 5\\ \\text{ct} = 405\\ \\text{ct}$$"
+  },
+  {
+    id: 12,
+    level: 2,
+    typ: "mc",
+    frage: "Ein Fußballspiel mit Pause dauert \\(1\\ \\text{h}\\) \\(45\\ \\text{min}\\). Wie viele Minuten sind das? ⚽",
+    optionen: ["\\(145\\ \\text{min}\\)", "\\(60\\ \\text{min}\\)", "\\(105\\ \\text{min}\\)", "\\(85\\ \\text{min}\\)"],
+    korrekt: 2,
+    tipp: "Rechne die Stunde in Minuten um und addiere dann \\(45\\ \\text{min}\\).",
+    loesungsweg: "$$1\\ \\text{h} = 60\\ \\text{min}$$ $$60\\ \\text{min} + 45\\ \\text{min} = 105\\ \\text{min}$$"
+  },
+  // ========== LEVEL 3 — nervenschonend: Vergleichen, Ordnen & passende Einheit ==========
+  {
+    id: 13,
+    level: 3,
+    typ: "mc",
+    frage: "Welche Länge ist am größten?",
+    optionen: ["\\(2\\ \\text{km}\\)", "\\(2500\\ \\text{m}\\)", "\\(25000\\ \\text{cm}\\)", "\\(199\\ \\text{m}\\)"],
+    korrekt: 1,
+    tipp: "Rechne alle Längen in Meter um, dann kannst du sie vergleichen.",
+    loesungsweg: "Alles in Meter umrechnen: $$2\\ \\text{km} = 2000\\ \\text{m}$$ $$25000\\ \\text{cm} = 250\\ \\text{m}$$ Vergleich: \\(2500\\ \\text{m} > 2000\\ \\text{m} > 250\\ \\text{m} > 199\\ \\text{m}\\). Am größten ist \\(2500\\ \\text{m}\\)."
+  },
+  {
+    id: 14,
+    level: 3,
+    typ: "mc",
+    frage: "In welcher Einheit gibst du die Masse eines Apfels am besten an? 🍎",
+    optionen: ["Gramm", "Kilogramm", "Tonnen", "Milligramm"],
+    korrekt: 0,
+    tipp: "Ein Apfel ist leichter als ein Kilogramm, aber viel schwerer als ein Reiskorn.",
+    loesungsweg: "Ein Apfel wiegt ungefähr \\(150\\ \\text{g}\\) bis \\(200\\ \\text{g}\\). Kilogramm und Tonnen sind zu groß, Milligramm ist viel zu klein (ein Reiskorn wiegt etwa \\(30\\ \\text{mg}\\)). Gramm passt am besten."
+  },
+  {
+    id: 15,
+    level: 3,
+    typ: "mc",
+    frage: "Welche Zeitspanne ist am kürzesten?",
+    optionen: ["\\(90\\ \\text{s}\\)", "\\(2\\ \\text{min}\\)", "\\(1\\ \\text{min}\\ 20\\ \\text{s}\\)", "\\(100\\ \\text{s}\\)"],
+    korrekt: 2,
+    tipp: "Rechne alle Angaben in Sekunden um.",
+    loesungsweg: "Alles in Sekunden: $$2\\ \\text{min} = 120\\ \\text{s}$$ $$1\\ \\text{min}\\ 20\\ \\text{s} = 60\\ \\text{s} + 20\\ \\text{s} = 80\\ \\text{s}$$ Vergleich: \\(80 < 90 < 100 < 120\\). Am kürzesten ist \\(1\\ \\text{min}\\ 20\\ \\text{s}\\)."
+  },
+  {
+    id: 16,
+    level: 3,
+    typ: "mc",
+    frage: "In welcher Einheit gibst du die Entfernung von deiner Schule bis zur Nachbarstadt am besten an?",
+    optionen: ["Millimeter", "Zentimeter", "Meter", "Kilometer"],
+    korrekt: 3,
+    tipp: "Überlege: Wie weit ist so eine Strecke ungefähr? Länger als ein Fußballplatz?",
+    loesungsweg: "Bis zur Nachbarstadt sind es meist mehrere tausend Meter. Damit die Zahl übersichtlich bleibt, nimmt man Kilometer: statt \\(12000\\ \\text{m}\\) schreibt man einfach \\(12\\ \\text{km}\\)."
+  },
+  {
+    id: 17,
+    level: 3,
+    typ: "numerisch",
+    frage: "Beim Weitsprung springt Aylin \\(1\\ \\text{m}\\) \\(85\\ \\text{cm}\\), Ben springt \\(179\\ \\text{cm}\\). Wie viel weiter springt Aylin? Gib das Ergebnis in cm an.",
+    loesung: 6,
+    toleranz: 0,
+    tipp: "Rechne zuerst beide Weiten in Zentimeter um, dann kannst du subtrahieren.",
+    loesungsweg: "$$1\\ \\text{m}\\ 85\\ \\text{cm} = 185\\ \\text{cm}$$ $$185\\ \\text{cm} - 179\\ \\text{cm} = 6\\ \\text{cm}$$ Aylin springt \\(6\\ \\text{cm}\\) weiter."
+  },
+  {
+    id: 18,
+    level: 3,
+    typ: "numerisch",
+    frage: "Ein Paket wiegt \\(3500\\ \\text{g}\\), ein zweites wiegt \\(3\\ \\text{kg}\\) \\(800\\ \\text{g}\\). Wie viel schwerer ist das zweite Paket? Gib das Ergebnis in g an. 📦",
+    loesung: 300,
+    toleranz: 0,
+    tipp: "Bringe beide Massen in dieselbe Einheit (Gramm), bevor du vergleichst.",
+    loesungsweg: "$$3\\ \\text{kg}\\ 800\\ \\text{g} = 3000\\ \\text{g} + 800\\ \\text{g} = 3800\\ \\text{g}$$ $$3800\\ \\text{g} - 3500\\ \\text{g} = 300\\ \\text{g}$$ Das zweite Paket ist \\(300\\ \\text{g}\\) schwerer."
+  },
+  // ========== LEVEL 4 — mittel: Mit Größen rechnen ==========
+  {
+    id: 19,
+    level: 4,
+    typ: "numerisch",
+    frage: "Samira kauft \\(3\\ \\text{kg}\\) \\(200\\ \\text{g}\\) Äpfel und \\(1\\ \\text{kg}\\) \\(900\\ \\text{g}\\) Birnen. Wie schwer ist ihr Einkauf zusammen? Gib das Ergebnis in g an.",
+    loesung: 5100,
+    toleranz: 0,
+    tipp: "Rechne beide Angaben erst in Gramm um, dann addiere.",
+    loesungsweg: "$$3\\ \\text{kg}\\ 200\\ \\text{g} = 3200\\ \\text{g}$$ $$1\\ \\text{kg}\\ 900\\ \\text{g} = 1900\\ \\text{g}$$ $$3200\\ \\text{g} + 1900\\ \\text{g} = 5100\\ \\text{g}$$"
+  },
+  {
+    id: 20,
+    level: 4,
+    typ: "mc",
+    frage: "Von einer \\(5\\ \\text{m}\\) langen Schnur schneidet Timo \\(2\\ \\text{m}\\) \\(40\\ \\text{cm}\\) ab. Wie lang ist der Rest?",
+    optionen: ["\\(3\\ \\text{m}\\ 60\\ \\text{cm}\\)", "\\(2\\ \\text{m}\\ 60\\ \\text{cm}\\)", "\\(2\\ \\text{m}\\ 40\\ \\text{cm}\\)", "\\(3\\ \\text{m}\\ 40\\ \\text{cm}\\)"],
+    korrekt: 1,
+    tipp: "Rechne in Zentimetern: \\(500\\ \\text{cm} - 240\\ \\text{cm}\\).",
+    loesungsweg: "$$5\\ \\text{m} = 500\\ \\text{cm}$$ $$2\\ \\text{m}\\ 40\\ \\text{cm} = 240\\ \\text{cm}$$ $$500\\ \\text{cm} - 240\\ \\text{cm} = 260\\ \\text{cm} = 2\\ \\text{m}\\ 60\\ \\text{cm}$$"
+  },
+  {
+    id: 21,
+    level: 4,
+    typ: "numerisch",
+    frage: "Eine Trainingseinheit dauert \\(1\\ \\text{h}\\) \\(15\\ \\text{min}\\). Noah trainiert \\(4\\)-mal pro Woche. Wie lange trainiert er in einer Woche insgesamt? Gib das Ergebnis in min an.",
+    loesung: 300,
+    toleranz: 0,
+    tipp: "Rechne \\(1\\ \\text{h}\\ 15\\ \\text{min}\\) erst in Minuten um, dann multipliziere mit \\(4\\).",
+    loesungsweg: "$$1\\ \\text{h}\\ 15\\ \\text{min} = 60\\ \\text{min} + 15\\ \\text{min} = 75\\ \\text{min}$$ $$4 \\cdot 75\\ \\text{min} = 300\\ \\text{min}$$"
+  },
+  {
+    id: 22,
+    level: 4,
+    typ: "mc",
+    frage: "Vier Freundinnen teilen sich die Kosten für ein Geschenk von \\(7{,}20\\ €\\) gerecht. Wie viel zahlt jede? 🎁",
+    optionen: ["\\(1{,}80\\ €\\)", "\\(2{,}80\\ €\\)", "\\(1{,}30\\ €\\)", "\\(1{,}05\\ €\\)"],
+    korrekt: 0,
+    tipp: "Rechne in Cent: \\(720\\ \\text{ct} : 4\\).",
+    loesungsweg: "$$7{,}20\\ € = 720\\ \\text{ct}$$ $$720\\ \\text{ct} : 4 = 180\\ \\text{ct} = 1{,}80\\ €$$ Jede zahlt \\(1{,}80\\ €\\)."
+  },
+  {
+    id: 23,
+    level: 4,
+    typ: "numerisch",
+    frage: "Für einen Kuchen braucht man \\(2\\ \\text{kg}\\) \\(450\\ \\text{g}\\) Teig. Der Bäcker backt \\(3\\) Kuchen. Wie viel Teig braucht er insgesamt? Gib das Ergebnis in g an.",
+    loesung: 7350,
+    toleranz: 0,
+    tipp: "Rechne die Teigmenge erst in Gramm um, dann multipliziere mit \\(3\\).",
+    loesungsweg: "$$2\\ \\text{kg}\\ 450\\ \\text{g} = 2450\\ \\text{g}$$ $$3 \\cdot 2450\\ \\text{g} = 7350\\ \\text{g}$$"
+  },
+  {
+    id: 24,
+    level: 4,
+    typ: "mc",
+    frage: "Frieda hat \\(2\\ \\text{h}\\) Zeit für ihre Hausaufgaben. Nach \\(35\\ \\text{min}\\) ist Mathe fertig. Wie viel Zeit bleibt noch?",
+    optionen: ["\\(95\\ \\text{min}\\)", "\\(125\\ \\text{min}\\)", "\\(85\\ \\text{min}\\)", "\\(65\\ \\text{min}\\)"],
+    korrekt: 2,
+    tipp: "Rechne \\(2\\ \\text{h}\\) in Minuten um, dann subtrahiere \\(35\\ \\text{min}\\).",
+    loesungsweg: "$$2\\ \\text{h} = 120\\ \\text{min}$$ $$120\\ \\text{min} - 35\\ \\text{min} = 85\\ \\text{min}$$"
+  },
+  // ========== LEVEL 5 — anspruchsvoll: Flächen & Volumen ==========
+  {
+    id: 25,
+    level: 5,
+    typ: "numerisch",
+    frage: "Rechne um: \\(3\\ \\text{m}^2\\). Gib das Ergebnis in cm² an.",
+    loesung: 30000,
+    toleranz: 0,
+    tipp: "Bei Flächen ist der Umrechnungsfaktor \\(100 \\cdot 100 = 10000\\), nicht \\(100\\)!",
+    loesungsweg: "Ein Quadrat mit \\(1\\ \\text{m}\\) Seitenlänge hat \\(100\\ \\text{cm} \\cdot 100\\ \\text{cm} = 10000\\ \\text{cm}^2\\). $$3\\ \\text{m}^2 = 3 \\cdot 10000\\ \\text{cm}^2 = 30000\\ \\text{cm}^2$$"
+  },
+  {
+    id: 26,
+    level: 5,
+    typ: "mc",
+    frage: "Ein Bauernhof hat \\(2\\ \\text{ha}\\) Weidefläche. Wie viele Quadratmeter sind das? 🐄",
+    optionen: ["\\(2000\\ \\text{m}^2\\)", "\\(20000\\ \\text{m}^2\\)", "\\(200000\\ \\text{m}^2\\)", "\\(200\\ \\text{m}^2\\)"],
+    korrekt: 1,
+    tipp: "Ein Hektar ist ein Quadrat mit \\(100\\ \\text{m}\\) Seitenlänge.",
+    loesungsweg: "$$1\\ \\text{ha} = 100\\ \\text{m} \\cdot 100\\ \\text{m} = 10000\\ \\text{m}^2$$ $$2\\ \\text{ha} = 2 \\cdot 10000\\ \\text{m}^2 = 20000\\ \\text{m}^2$$"
+  },
+  {
+    id: 27,
+    level: 5,
+    typ: "numerisch",
+    frage: "In einer Flasche sind \\(1{,}5\\) Liter Apfelsaft. Gib die Menge in ml an.",
+    loesung: 1500,
+    toleranz: 0,
+    tipp: "Ein Liter hat \\(1000\\) Milliliter.",
+    loesungsweg: "$$1\\ \\text{l} = 1000\\ \\text{ml}$$ $$1{,}5\\ \\text{l} = 1000\\ \\text{ml} + 500\\ \\text{ml} = 1500\\ \\text{ml}$$"
+  },
+  {
+    id: 28,
+    level: 5,
+    typ: "mc",
+    frage: "Ein Sportplatz hat eine Fläche von \\(45000\\ \\text{m}^2\\). Wie viel ist das in Hektar?",
+    optionen: ["\\(450\\ \\text{ha}\\)", "\\(45\\ \\text{ha}\\)", "\\(4{,}5\\ \\text{ha}\\)", "\\(0{,}45\\ \\text{ha}\\)"],
+    korrekt: 2,
+    tipp: "\\(10000\\ \\text{m}^2\\) sind \\(1\\ \\text{ha}\\). Wie oft passt das in \\(45000\\ \\text{m}^2\\)?",
+    loesungsweg: "$$10000\\ \\text{m}^2 = 1\\ \\text{ha}$$ $$45000\\ \\text{m}^2 = 45000 : 10000\\ \\text{ha} = 4{,}5\\ \\text{ha}$$"
+  },
+  {
+    id: 29,
+    level: 5,
+    typ: "numerisch",
+    frage: "Rechne um: \\(5\\ \\text{dm}^2\\). Gib das Ergebnis in cm² an.",
+    loesung: 500,
+    toleranz: 0,
+    tipp: "Ein Quadratdezimeter ist ein Quadrat mit \\(10\\ \\text{cm}\\) Seitenlänge.",
+    loesungsweg: "$$1\\ \\text{dm}^2 = 10\\ \\text{cm} \\cdot 10\\ \\text{cm} = 100\\ \\text{cm}^2$$ $$5\\ \\text{dm}^2 = 5 \\cdot 100\\ \\text{cm}^2 = 500\\ \\text{cm}^2$$"
+  },
+  {
+    id: 30,
+    level: 5,
+    typ: "mc",
+    frage: "Aus einer \\(1\\)-Liter-Flasche werden Becher mit je \\(200\\ \\text{ml}\\) gefüllt. Wie viele volle Becher schafft man? 🥤",
+    optionen: ["\\(4\\) Becher", "\\(10\\) Becher", "\\(2\\) Becher", "\\(5\\) Becher"],
+    korrekt: 3,
+    tipp: "Rechne den Liter erst in Milliliter um, dann teile durch \\(200\\).",
+    loesungsweg: "$$1\\ \\text{l} = 1000\\ \\text{ml}$$ $$1000\\ \\text{ml} : 200\\ \\text{ml} = 5$$ Man kann \\(5\\) Becher füllen."
+  },
+  // ========== LEVEL 6 — wagnerisch: Sachaufgaben & Schätzen ==========
+  {
+    id: 31,
+    level: 6,
+    typ: "numerisch",
+    frage: "Leon kauft ein Brot für \\(2{,}45\\ €\\), Milch für \\(1{,}15\\ €\\) und Saft für \\(1{,}90\\ €\\). Er zahlt mit einem \\(10\\ €\\)-Schein. Wie viel Rückgeld bekommt er? Gib das Ergebnis in € an. 🥖",
+    loesung: 4.5,
+    toleranz: 0,
+    tipp: "Rechne in Cent: Addiere erst alle Preise, dann ziehe die Summe von \\(1000\\ \\text{ct}\\) ab.",
+    loesungsweg: "In Cent rechnen: $$245\\ \\text{ct} + 115\\ \\text{ct} + 190\\ \\text{ct} = 550\\ \\text{ct}$$ $$1000\\ \\text{ct} - 550\\ \\text{ct} = 450\\ \\text{ct} = 4{,}50\\ €$$ Leon bekommt \\(4{,}50\\ €\\) zurück."
+  },
+  {
+    id: 32,
+    level: 6,
+    typ: "mc",
+    frage: "Schätze: Wie schwer ist ein voll gepackter Schulranzen ungefähr? 🎒",
+    optionen: ["\\(500\\ \\text{g}\\)", "\\(50\\ \\text{kg}\\)", "\\(5\\ \\text{kg}\\)", "\\(50\\ \\text{g}\\)"],
+    korrekt: 2,
+    tipp: "Vergleiche: Eine Tüte Mehl wiegt \\(1\\ \\text{kg}\\). Wie viele Tüten Mehl fühlen sich wie dein Ranzen an?",
+    loesungsweg: "Ein voller Schulranzen mit Büchern und Heften wiegt etwa so viel wie \\(5\\) Tüten Mehl, also ungefähr \\(5\\ \\text{kg}\\). \\(500\\ \\text{g}\\) wäre nur ein einzelnes Buch, \\(50\\ \\text{kg}\\) könnte kein Kind tragen, und \\(50\\ \\text{g}\\) wiegt gerade mal ein Brief."
+  },
+  {
+    id: 33,
+    level: 6,
+    typ: "numerisch",
+    frage: "Für einen Pfannkuchenteig für \\(4\\) Personen braucht man \\(300\\ \\text{g}\\) Mehl. Zeynep kocht für \\(6\\) Personen. Wie viel Mehl braucht sie? Gib das Ergebnis in g an. 🥞",
+    loesung: 450,
+    toleranz: 0,
+    tipp: "Rechne zuerst aus, wie viel Mehl eine Person braucht.",
+    loesungsweg: "Für \\(1\\) Person: $$300\\ \\text{g} : 4 = 75\\ \\text{g}$$ Für \\(6\\) Personen: $$6 \\cdot 75\\ \\text{g} = 450\\ \\text{g}$$"
+  },
+  {
+    id: 34,
+    level: 6,
+    typ: "mc",
+    frage: "Schätze: Wie hoch ist eine Zimmertür ungefähr? 🚪",
+    optionen: ["\\(2\\ \\text{m}\\)", "\\(20\\ \\text{cm}\\)", "\\(20\\ \\text{m}\\)", "\\(2\\ \\text{km}\\)"],
+    korrekt: 0,
+    tipp: "Vergleiche mit deiner eigenen Körpergröße: Passt du durch die Tür, ohne dich zu bücken?",
+    loesungsweg: "Eine Zimmertür ist etwas höher als ein Erwachsener, also ungefähr \\(2\\ \\text{m}\\). \\(20\\ \\text{cm}\\) ist so lang wie ein Stift, \\(20\\ \\text{m}\\) so hoch wie ein Haus mit \\(6\\) Stockwerken, und \\(2\\ \\text{km}\\) ist eine halbe Stunde Fußweg."
+  },
+  {
+    id: 35,
+    level: 6,
+    typ: "numerisch",
+    frage: "Milans Zug fährt um 8:35 Uhr ab und kommt um 10:20 Uhr an. Wie lange dauert die Fahrt? Gib das Ergebnis in min an. 🚆",
+    loesung: 105,
+    toleranz: 0,
+    tipp: "Rechne in Etappen: erst bis 9:00 Uhr, dann bis 10:00 Uhr, dann bis 10:20 Uhr.",
+    loesungsweg: "Von 8:35 bis 9:00 Uhr: \\(25\\ \\text{min}\\). Von 9:00 bis 10:00 Uhr: \\(60\\ \\text{min}\\). Von 10:00 bis 10:20 Uhr: \\(20\\ \\text{min}\\). $$25\\ \\text{min} + 60\\ \\text{min} + 20\\ \\text{min} = 105\\ \\text{min}$$"
+  },
+  {
+    id: 36,
+    level: 6,
+    typ: "mc",
+    frage: "Schätze: Wie viel Wasser passt ungefähr in eine volle Badewanne? 🛁",
+    optionen: ["\\(15\\ \\text{l}\\)", "\\(1{,}5\\ \\text{l}\\)", "\\(15000\\ \\text{l}\\)", "\\(150\\ \\text{l}\\)"],
+    korrekt: 3,
+    tipp: "Vergleiche mit einem Wassereimer: In einen Eimer passen etwa \\(10\\) Liter.",
+    loesungsweg: "In eine Badewanne passen ungefähr \\(15\\) volle Eimer Wasser, also etwa \\(150\\ \\text{l}\\). \\(1{,}5\\ \\text{l}\\) ist nur eine große Flasche, \\(15\\ \\text{l}\\) sind eineinhalb Eimer, und \\(15000\\ \\text{l}\\) wären ein kleines Schwimmbecken."
+  }
+];
+    </script>
+    <script src="../p3-reflexion.js"></script>
+    <script src="../spirale-engine.js"></script>
+    <script src="../spirale-kids.js"></script>
+</body>
+</html>

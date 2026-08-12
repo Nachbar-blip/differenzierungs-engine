@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natürliche Zahlen & Stellenwert - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <link rel="stylesheet" href="../spirale-kids.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+// Natürliche Zahlen & Stellenwert — DiffEngine Klasse 5/6 Content (Roadmap Welle 2, Item 3)
+const THEMA_KEY = '5-zahlen-stellenwert';
+const THEMA_CONFIG = { name: 'Natürliche Zahlen & Stellenwert', bereich: 'arithmetik', p3Enabled: true };
+const AUFGABEN = [
+  // ========== LEVEL 1 — babyleicht: Kleine Zahlen ordnen & auf Zehner runden ==========
+  {
+    id: 1,
+    level: 1,
+    typ: "numerisch",
+    frage: "Runde \\(47\\) auf den nächsten Zehner.",
+    loesung: 50,
+    toleranz: 0,
+    tipp: "Schau auf die Einerziffer: Ist sie \\(5\\) oder größer, rundest du auf.",
+    loesungsweg: "Die Einerziffer von \\(47\\) ist \\(7\\). $$7 \\geq 5 \\Rightarrow \\text{aufrunden}$$ Also: \\(47 \\approx 50\\)."
+  },
+  {
+    id: 2,
+    level: 1,
+    typ: "mc",
+    frage: "Welche Zahl ist am größten?",
+    optionen: ["\\(89\\)", "\\(79\\)", "\\(98\\)", "\\(97\\)"],
+    korrekt: 2,
+    tipp: "Vergleiche zuerst die Zehnerziffern. Nur bei Gleichstand entscheiden die Einer.",
+    loesungsweg: "Zehnerziffern vergleichen: \\(98\\) und \\(97\\) haben beide \\(9\\) Zehner, \\(89\\) und \\(79\\) weniger. Dann Einer: \\(8 > 7\\). $$98 > 97 > 89 > 79$$"
+  },
+  {
+    id: 3,
+    level: 1,
+    typ: "numerisch",
+    frage: "Runde \\(83\\) auf den nächsten Zehner.",
+    loesung: 80,
+    toleranz: 0,
+    tipp: "Die Einerziffer entscheidet: Ist sie kleiner als \\(5\\), rundest du ab.",
+    loesungsweg: "Die Einerziffer von \\(83\\) ist \\(3\\). $$3 < 5 \\Rightarrow \\text{abrunden}$$ Also: \\(83 \\approx 80\\)."
+  },
+  {
+    id: 4,
+    level: 1,
+    typ: "mc",
+    frage: "Welche Zahl liegt zwischen \\(34\\) und \\(36\\)?",
+    optionen: ["\\(33\\)", "\\(35\\)", "\\(37\\)", "\\(43\\)"],
+    korrekt: 1,
+    tipp: "Zähle von \\(34\\) aus einen Schritt weiter.",
+    loesungsweg: "Zwischen \\(34\\) und \\(36\\) liegt genau eine natürliche Zahl: $$34 < 35 < 36$$ \\(33\\) ist zu klein, \\(37\\) und \\(43\\) sind zu groß."
+  },
+  {
+    id: 5,
+    level: 1,
+    typ: "numerisch",
+    frage: "Emre, Lea und Jonas sammeln Sticker: Emre hat \\(62\\), Lea hat \\(26\\), Jonas hat \\(60\\). Wie viele Sticker hat das Kind mit den wenigsten?",
+    loesung: 26,
+    toleranz: 0,
+    tipp: "Achtung Zahlendreher: \\(62\\) und \\(26\\) sehen ähnlich aus, sind aber verschieden groß!",
+    loesungsweg: "Vergleiche die Zehner: \\(26\\) hat nur \\(2\\) Zehner, \\(60\\) und \\(62\\) haben \\(6\\) Zehner. $$26 < 60 < 62$$ Lea hat mit \\(26\\) Stickern die wenigsten."
+  },
+  {
+    id: 6,
+    level: 1,
+    typ: "mc",
+    frage: "Runde \\(65\\) auf den nächsten Zehner.",
+    optionen: ["\\(60\\)", "\\(65\\)", "\\(100\\)", "\\(70\\)"],
+    korrekt: 3,
+    tipp: "Was sagt die Rundungsregel, wenn die Einerziffer genau \\(5\\) ist?",
+    loesungsweg: "Die Einerziffer ist genau \\(5\\). Die Regel sagt: Bei \\(5\\) wird aufgerundet. $$65 \\approx 70$$"
+  },
+  // ========== LEVEL 2 — leicht: Große Zahlen lesen & schreiben, auf Tausender runden ==========
+  {
+    id: 7,
+    level: 2,
+    typ: "numerisch",
+    frage: "Schreibe als Zahl: „dreihunderttausendfünfhundert“.",
+    loesung: 300500,
+    toleranz: 0,
+    tipp: "Trage die Zahl in eine Stellentafel ein: Hunderttausender, Zehntausender, Tausender, Hunderter, Zehner, Einer. Nicht besetzte Stellen bekommen eine \\(0\\).",
+    loesungsweg: "„dreihunderttausend“ = \\(300\\,000\\), „fünfhundert“ = \\(500\\). $$300\\,000 + 500 = 300\\,500$$ Die Zehntausender-, Tausender-, Zehner- und Einerstelle sind mit \\(0\\) besetzt."
+  },
+  {
+    id: 8,
+    level: 2,
+    typ: "mc",
+    frage: "Wie liest man die Zahl \\(42\\,007\\)?",
+    optionen: ["zweiundvierzigtausendsieben", "zweiundvierzigtausendsiebzig", "viertausendzweihundertsieben", "vierhundertzwanzigtausendsieben"],
+    korrekt: 0,
+    tipp: "Zerlege die Zahl: Wie viele Tausender stecken drin, was bleibt übrig?",
+    loesungsweg: "\\(42\\,007 = 42\\,000 + 7\\). Also: zweiundvierzigtausend und sieben. „siebzig“ wäre \\(42\\,070\\), „vierhundertzwanzigtausendsieben“ wäre \\(420\\,007\\)."
+  },
+  {
+    id: 9,
+    level: 2,
+    typ: "numerisch",
+    frage: "Runde \\(7\\,482\\) auf den nächsten Tausender.",
+    loesung: 7000,
+    toleranz: 0,
+    tipp: "Beim Runden auf Tausender entscheidet die Hunderterziffer.",
+    loesungsweg: "Die Hunderterziffer von \\(7\\,482\\) ist \\(4\\). $$4 < 5 \\Rightarrow \\text{abrunden}$$ Also: \\(7\\,482 \\approx 7\\,000\\)."
+  },
+  {
+    id: 10,
+    level: 2,
+    typ: "mc",
+    frage: "Runde \\(3\\,500\\) auf den nächsten Tausender.",
+    optionen: ["\\(3\\,000\\)", "\\(3\\,500\\)", "\\(4\\,000\\)", "\\(35\\,000\\)"],
+    korrekt: 2,
+    tipp: "Die Hunderterziffer ist genau \\(5\\) — was sagt die Rundungsregel dann?",
+    loesungsweg: "Die Hunderterziffer ist \\(5\\). Bei \\(5\\) wird aufgerundet: $$3\\,500 \\approx 4\\,000$$ \\(3\\,500\\) selbst ist kein Tausender, es liegt genau in der Mitte."
+  },
+  {
+    id: 11,
+    level: 2,
+    typ: "numerisch",
+    frage: "Schreibe als Zahl: „achtzigtausendzwölf“.",
+    loesung: 80012,
+    toleranz: 0,
+    tipp: "Vorsicht: Zwischen den Tausendern und der \\(12\\) sind Stellen unbesetzt — dort stehen Nullen.",
+    loesungsweg: "„achtzigtausend“ = \\(80\\,000\\), „zwölf“ = \\(12\\). $$80\\,000 + 12 = 80\\,012$$ Die Tausender- und Hunderterstelle sind mit \\(0\\) besetzt. Häufiger Fehler: \\(8\\,012\\) oder \\(80\\,120\\)."
+  },
+  {
+    id: 12,
+    level: 2,
+    typ: "mc",
+    frage: "Welche Zahl liegt zwischen \\(49\\,000\\) und \\(51\\,000\\)?",
+    optionen: ["\\(48\\,900\\)", "\\(50\\,200\\)", "\\(51\\,100\\)", "\\(54\\,000\\)"],
+    korrekt: 1,
+    tipp: "Vergleiche zuerst die Zehntausenderziffer, dann die Tausenderziffer.",
+    loesungsweg: "Gesucht ist eine Zahl größer als \\(49\\,000\\) und kleiner als \\(51\\,000\\). $$49\\,000 < 50\\,200 < 51\\,000 \\quad \\checkmark$$ \\(48\\,900\\) ist zu klein, \\(51\\,100\\) und \\(54\\,000\\) sind zu groß."
+  },
+  // ========== LEVEL 3 — nervenschonend: Zahlen über 1 Million, auf Zehntausender runden ==========
+  {
+    id: 13,
+    level: 3,
+    typ: "numerisch",
+    frage: "Schreibe als Zahl: „zwei Millionen vierzigtausend“.",
+    loesung: 2040000,
+    toleranz: 0,
+    tipp: "Eine Million hat \\(6\\) Nullen. Wo landen die \\(40\\) Tausender in der Stellentafel?",
+    loesungsweg: "„zwei Millionen“ = \\(2\\,000\\,000\\), „vierzigtausend“ = \\(40\\,000\\). $$2\\,000\\,000 + 40\\,000 = 2\\,040\\,000$$ Achtung: \\(2\\,400\\,000\\) wäre „zwei Millionen vierhunderttausend“ — ein typischer Fehler!"
+  },
+  {
+    id: 14,
+    level: 3,
+    typ: "mc",
+    frage: "Wie liest man die Zahl \\(3\\,204\\,056\\)?",
+    optionen: ["drei Millionen zwanzigtausendsechsundfünfzig", "drei Millionen zweihundertvierzigtausendsechsundfünfzig", "dreihundertzwanzigtausendvierhundertsechsundfünfzig", "drei Millionen zweihundertviertausendsechsundfünfzig"],
+    korrekt: 3,
+    tipp: "Teile die Zahl in Dreierblöcke: \\(3\\) | \\(204\\) | \\(056\\). Jeder Block wird für sich gelesen.",
+    loesungsweg: "Dreierblöcke von rechts: \\(3\\,|\\,204\\,|\\,056\\). Das heißt: \\(3\\) Millionen, \\(204\\) Tausender, \\(56\\) Einer. Also: drei Millionen zweihundertviertausendsechsundfünfzig."
+  },
+  {
+    id: 15,
+    level: 3,
+    typ: "numerisch",
+    frage: "Runde \\(486\\,352\\) auf den nächsten Zehntausender.",
+    loesung: 490000,
+    toleranz: 0,
+    tipp: "Beim Runden auf Zehntausender entscheidet die Tausenderziffer.",
+    loesungsweg: "Die Tausenderziffer von \\(486\\,352\\) ist \\(6\\). $$6 \\geq 5 \\Rightarrow \\text{aufrunden}$$ Also: \\(486\\,352 \\approx 490\\,000\\)."
+  },
+  {
+    id: 16,
+    level: 3,
+    typ: "mc",
+    frage: "Runde \\(1\\,249\\,999\\) auf den nächsten Zehntausender.",
+    optionen: ["\\(1\\,250\\,000\\)", "\\(1\\,240\\,000\\)", "\\(1\\,200\\,000\\)", "\\(1\\,300\\,000\\)"],
+    korrekt: 0,
+    tipp: "Welche Ziffer steht an der Tausenderstelle? Sie entscheidet über Auf- oder Abrunden.",
+    loesungsweg: "Die Tausenderziffer ist \\(9\\). $$9 \\geq 5 \\Rightarrow \\text{aufrunden}$$ Aus \\(1\\,24\\ldots\\) wird \\(1\\,25\\ldots\\): $$1\\,249\\,999 \\approx 1\\,250\\,000$$"
+  },
+  {
+    id: 17,
+    level: 3,
+    typ: "numerisch",
+    frage: "Schreibe als Zahl: „eine Million dreihunderttausendsieben“.",
+    loesung: 1300007,
+    toleranz: 0,
+    tipp: "Zwischen den Hunderttausendern und der \\(7\\) sind mehrere Stellen unbesetzt — zähle die Nullen genau.",
+    loesungsweg: "„eine Million“ = \\(1\\,000\\,000\\), „dreihunderttausend“ = \\(300\\,000\\), „sieben“ = \\(7\\). $$1\\,000\\,000 + 300\\,000 + 7 = 1\\,300\\,007$$"
+  },
+  {
+    id: 18,
+    level: 3,
+    typ: "mc",
+    frage: "Welche Zahl ist am größten?",
+    optionen: ["\\(987\\,654\\)", "\\(998\\,999\\)", "\\(1\\,023\\,456\\)", "\\(1\\,019\\,999\\)"],
+    korrekt: 2,
+    tipp: "Zähle zuerst die Stellen: Eine Zahl mit mehr Stellen ist immer größer.",
+    loesungsweg: "\\(987\\,654\\) und \\(998\\,999\\) haben nur \\(6\\) Stellen, die beiden anderen \\(7\\). Bei den siebenstelligen vergleichen wir von links: \\(1\\,023\\ldots > 1\\,019\\ldots\\), denn \\(2 > 1\\) an der Zehntausenderstelle. $$1\\,023\\,456 > 1\\,019\\,999 > 998\\,999 > 987\\,654$$"
+  },
+  // ========== LEVEL 4 — mittel: Stellenwerte, Nachbarzahlen & Zahlenstrahl ==========
+  {
+    id: 19,
+    level: 4,
+    typ: "numerisch",
+    frage: "Welchen Wert hat die Ziffer \\(7\\) in der Zahl \\(274\\,503\\)?",
+    loesung: 70000,
+    toleranz: 0,
+    tipp: "An welcher Stelle steht die \\(7\\)? Zähle von rechts: Einer, Zehner, Hunderter, …",
+    loesungsweg: "Stellentafel für \\(274\\,503\\): \\(2\\) Hunderttausender, \\(7\\) Zehntausender, \\(4\\) Tausender, \\(5\\) Hunderter, \\(0\\) Zehner, \\(3\\) Einer. Die \\(7\\) steht an der Zehntausenderstelle: $$7 \\cdot 10\\,000 = 70\\,000$$"
+  },
+  {
+    id: 20,
+    level: 4,
+    typ: "mc",
+    frage: "Welche Ziffer steht in der Zahl \\(58\\,213\\) an der Tausenderstelle?",
+    optionen: ["\\(5\\)", "\\(8\\)", "\\(2\\)", "\\(1\\)"],
+    korrekt: 1,
+    tipp: "Zähle die Stellen von rechts: Einer, Zehner, Hunderter, Tausender, Zehntausender.",
+    loesungsweg: "Von rechts: \\(3\\) Einer, \\(1\\) Zehner, \\(2\\) Hunderter, \\(8\\) Tausender, \\(5\\) Zehntausender. An der Tausenderstelle steht also die \\(8\\)."
+  },
+  {
+    id: 21,
+    level: 4,
+    typ: "numerisch",
+    frage: "Wie heißt der größere Nachbartausender von \\(45\\,780\\)?",
+    loesung: 46000,
+    toleranz: 0,
+    tipp: "Zwischen welchen zwei Tausendern liegt \\(45\\,780\\)? Gesucht ist der größere davon.",
+    loesungsweg: "\\(45\\,780\\) liegt zwischen den Tausendern \\(45\\,000\\) und \\(46\\,000\\): $$45\\,000 < 45\\,780 < 46\\,000$$ Der größere Nachbartausender ist \\(46\\,000\\)."
+  },
+  {
+    id: 22,
+    level: 4,
+    typ: "mc",
+    frage: "Ein Zahlenstrahl geht von \\(600\\) bis \\(700\\) und ist in \\(10\\) gleich große Abschnitte unterteilt. Ein Pfeil zeigt auf den dritten Strich nach \\(600\\). Auf welche Zahl zeigt der Pfeil?",
+    optionen: ["\\(603\\)", "\\(660\\)", "\\(690\\)", "\\(630\\)"],
+    korrekt: 3,
+    tipp: "Wie groß ist ein Abschnitt? Teile die Strecke von \\(600\\) bis \\(700\\) durch \\(10\\).",
+    loesungsweg: "Von \\(600\\) bis \\(700\\) sind es \\(100\\). Ein Abschnitt: $$100 : 10 = 10$$ Der dritte Strich liegt also bei $$600 + 3 \\cdot 10 = 630$$"
+  },
+  {
+    id: 23,
+    level: 4,
+    typ: "numerisch",
+    frage: "Ein Zahlenstrahl geht von \\(2\\,000\\) bis \\(3\\,000\\) und ist in \\(10\\) gleich große Abschnitte unterteilt. Welche Zahl steht am siebten Strich nach \\(2\\,000\\)?",
+    loesung: 2700,
+    toleranz: 0,
+    tipp: "Berechne zuerst, wie viel ein Abschnitt wert ist: \\(1\\,000 : 10\\).",
+    loesungsweg: "Von \\(2\\,000\\) bis \\(3\\,000\\) sind es \\(1\\,000\\). Ein Abschnitt: $$1\\,000 : 10 = 100$$ Der siebte Strich: $$2\\,000 + 7 \\cdot 100 = 2\\,700$$"
+  },
+  {
+    id: 24,
+    level: 4,
+    typ: "mc",
+    frage: "Welche Zahl besteht aus \\(4\\) Zehntausendern, \\(0\\) Tausendern, \\(6\\) Hundertern, \\(2\\) Zehnern und \\(5\\) Einern?",
+    optionen: ["\\(40\\,625\\)", "\\(4\\,625\\)", "\\(40\\,652\\)", "\\(46\\,250\\)"],
+    korrekt: 0,
+    tipp: "Trage die Ziffern der Reihe nach in eine Stellentafel ein — vergiss die \\(0\\) bei den Tausendern nicht!",
+    loesungsweg: "$$4 \\cdot 10\\,000 + 0 \\cdot 1\\,000 + 6 \\cdot 100 + 2 \\cdot 10 + 5 \\cdot 1$$ $$= 40\\,000 + 600 + 20 + 5 = 40\\,625$$ Wer die \\(0\\) weglässt, erhält fälschlich \\(4\\,625\\)."
+  },
+  // ========== LEVEL 5 — anspruchsvoll: Römische Zahlen lesen & schreiben ==========
+  {
+    id: 25,
+    level: 5,
+    typ: "numerisch",
+    frage: "Welche Zahl bedeutet die römische Zahl XIV?",
+    loesung: 14,
+    toleranz: 0,
+    tipp: "Steht ein kleineres Zeichen vor einem größeren, wird es abgezogen: IV bedeutet \\(5 - 1\\).",
+    loesungsweg: "X = \\(10\\), IV = \\(5 - 1 = 4\\) (I steht vor V, also abziehen). $$10 + 4 = 14$$"
+  },
+  {
+    id: 26,
+    level: 5,
+    typ: "mc",
+    frage: "Wie schreibt man die Zahl \\(40\\) als römische Zahl?",
+    optionen: ["XXXX", "LX", "XL", "VL"],
+    korrekt: 2,
+    tipp: "Vier gleiche Zeichen hintereinander sind verboten. Nutze die Abzieh-Regel mit L = \\(50\\).",
+    loesungsweg: "X vor L bedeutet: \\(50 - 10 = 40\\), also XL. XXXX ist verboten (höchstens drei gleiche Zeichen), LX wäre \\(60\\), und V darf nie abgezogen werden."
+  },
+  {
+    id: 27,
+    level: 5,
+    typ: "numerisch",
+    frage: "Welche Zahl bedeutet die römische Zahl CXLV?",
+    loesung: 145,
+    toleranz: 0,
+    tipp: "Zerlege in Gruppen: C, dann XL, dann V. Bei XL steht das kleinere Zeichen vor dem größeren.",
+    loesungsweg: "C = \\(100\\), XL = \\(50 - 10 = 40\\), V = \\(5\\). $$100 + 40 + 5 = 145$$"
+  },
+  {
+    id: 28,
+    level: 5,
+    typ: "mc",
+    frage: "Wie schreibt man das Jahr \\(2026\\) als römische Zahl?",
+    optionen: ["MMXXIV", "MMXXVI", "MXXVI", "MMVI"],
+    korrekt: 1,
+    tipp: "Zerlege: \\(2026 = 2000 + 20 + 6\\). Setze jeden Teil einzeln um.",
+    loesungsweg: "\\(2000\\) = MM, \\(20\\) = XX, \\(6\\) = VI. Zusammen: MMXXVI. MMXXIV wäre \\(2024\\), MXXVI wäre \\(1026\\), MMVI wäre \\(2006\\)."
+  },
+  {
+    id: 29,
+    level: 5,
+    typ: "numerisch",
+    frage: "Welche Zahl bedeutet die römische Zahl MDCCLX?",
+    loesung: 1760,
+    toleranz: 0,
+    tipp: "Hier steht kein kleineres Zeichen vor einem größeren — du kannst einfach alle Werte addieren.",
+    loesungsweg: "M = \\(1000\\), D = \\(500\\), CC = \\(200\\), L = \\(50\\), X = \\(10\\). $$1000 + 500 + 200 + 50 + 10 = 1760$$"
+  },
+  {
+    id: 30,
+    level: 5,
+    typ: "mc",
+    frage: "Welche Schreibweise für die Zahl \\(99\\) ist richtig?",
+    optionen: ["XCIX", "IC", "XCVIIII", "LXXXXIX"],
+    korrekt: 0,
+    tipp: "Zerlege \\(99 = 90 + 9\\). Abgezogen werden darf immer nur ein Zeichen, und nur I, X oder C.",
+    loesungsweg: "\\(90\\) = XC (\\(100 - 10\\)), \\(9\\) = IX (\\(10 - 1\\)). Zusammen: XCIX. IC ist verboten (I darf nur vor V und X stehen), XCVIIII und LXXXXIX verstoßen gegen die Regel „höchstens drei gleiche Zeichen“."
+  },
+  // ========== LEVEL 6 — wagnerisch: Sachkontexte & Zahlenrätsel ==========
+  {
+    id: 31,
+    level: 6,
+    typ: "numerisch",
+    frage: "Die Stadt Halle hat \\(226\\,586\\) Einwohner. 🏙️ Für ein Plakat soll die Zahl auf den nächsten Zehntausender gerundet werden. Welche Zahl steht auf dem Plakat?",
+    loesung: 230000,
+    toleranz: 0,
+    tipp: "Beim Runden auf Zehntausender entscheidet die Tausenderziffer — welche ist das hier?",
+    loesungsweg: "Die Tausenderziffer von \\(226\\,586\\) ist \\(6\\). $$6 \\geq 5 \\Rightarrow \\text{aufrunden}$$ Aus \\(22\\ldots\\) wird \\(23\\ldots\\): $$226\\,586 \\approx 230\\,000$$"
+  },
+  {
+    id: 32,
+    level: 6,
+    typ: "mc",
+    frage: "Der Mond ist im Durchschnitt \\(384\\,400\\) km von der Erde entfernt. 🌕 Wie liest man diese Zahl?",
+    optionen: ["drei Millionen vierundachtzigtausendvierhundert", "dreihundertachtundvierzigtausendvierhundert", "dreihundertvierundachtzigtausendvierhundertvierzig", "dreihundertvierundachtzigtausendvierhundert"],
+    korrekt: 3,
+    tipp: "Teile die Zahl in Dreierblöcke: \\(384\\) | \\(400\\). Der linke Block sind die Tausender.",
+    loesungsweg: "Dreierblöcke: \\(384\\,|\\,400\\), also \\(384\\) Tausender und \\(400\\) Einer: dreihundertvierundachtzigtausendvierhundert. Achtung Zahlendreher: „achtundvierzig“ wäre \\(348\\,400\\)."
+  },
+  {
+    id: 33,
+    level: 6,
+    typ: "numerisch",
+    frage: "Zahlenrätsel: Ich bin eine dreistellige Zahl. Meine Hunderterziffer ist \\(4\\), meine Zehnerziffer ist doppelt so groß wie meine Hunderterziffer, meine Einerziffer ist \\(0\\). Wer bin ich?",
+    loesung: 480,
+    toleranz: 0,
+    tipp: "Bestimme die Ziffern einzeln und setze sie dann in die Stellentafel: Hunderter, Zehner, Einer.",
+    loesungsweg: "Hunderter: \\(4\\). Zehner: \\(2 \\cdot 4 = 8\\). Einer: \\(0\\). $$4 \\cdot 100 + 8 \\cdot 10 + 0 = 480$$"
+  },
+  {
+    id: 34,
+    level: 6,
+    typ: "mc",
+    frage: "In einem Stadion wurden \\(38\\,716\\) Eintrittskarten verkauft. ⚽ Die Zeitung rundet auf den nächsten Tausender. Welche Zahl steht in der Zeitung?",
+    optionen: ["\\(38\\,000\\)", "\\(38\\,700\\)", "\\(39\\,000\\)", "\\(40\\,000\\)"],
+    korrekt: 2,
+    tipp: "Beim Runden auf Tausender entscheidet die Hunderterziffer.",
+    loesungsweg: "Die Hunderterziffer von \\(38\\,716\\) ist \\(7\\). $$7 \\geq 5 \\Rightarrow \\text{aufrunden}$$ $$38\\,716 \\approx 39\\,000$$ \\(38\\,700\\) wäre auf Hunderter gerundet, \\(40\\,000\\) auf Zehntausender."
+  },
+  {
+    id: 35,
+    level: 6,
+    typ: "numerisch",
+    frage: "Zahlenrätsel: Bilde aus den Ziffern \\(3\\), \\(7\\), \\(0\\) und \\(5\\) die größte vierstellige Zahl. Jede Ziffer darf genau einmal vorkommen.",
+    loesung: 7530,
+    toleranz: 0,
+    tipp: "Die größte Ziffer muss an die Stelle mit dem größten Wert — ganz nach vorn.",
+    loesungsweg: "Ordne die Ziffern absteigend: \\(7 > 5 > 3 > 0\\). Die größte Ziffer an die Tausenderstelle, die kleinste an die Einerstelle: $$7530$$"
+  },
+  {
+    id: 36,
+    level: 6,
+    typ: "mc",
+    frage: "Vier Freunde vergleichen ihre Schrittzahlen von gestern: 👟 Ayla \\(12\\,408\\), Ben \\(12\\,480\\), Chidi \\(12\\,084\\), Dana \\(12\\,840\\). Welche Schrittzahl ist die zweitgrößte?",
+    optionen: ["\\(12\\,408\\)", "\\(12\\,480\\)", "\\(12\\,840\\)", "\\(12\\,084\\)"],
+    korrekt: 1,
+    tipp: "Ordne alle vier Zahlen erst der Größe nach. Vergleiche Stelle für Stelle von links.",
+    loesungsweg: "Alle beginnen mit \\(12\\), also entscheidet die Hunderterstelle: $$12\\,840 > 12\\,480 > 12\\,408 > 12\\,084$$ Die zweitgrößte Schrittzahl ist \\(12\\,480\\) (Ben)."
+  }
+];
+    </script>
+    <script src="../p3-reflexion.js"></script>
+    <script src="../spirale-engine.js"></script>
+    <script src="../spirale-kids.js"></script>
+</body>
+</html>

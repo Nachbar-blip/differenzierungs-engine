@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kenngrößen von Daten - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <link rel="stylesheet" href="../spirale-kids.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+// Kenngrößen von Daten — DiffEngine Klasse 5/6 Content (Roadmap Welle 2, Item 3)
+const THEMA_KEY = '6-daten-kenngroessen';
+const THEMA_CONFIG = { name: 'Kenngrößen von Daten', bereich: 'stochastik', p3Enabled: true };
+const AUFGABEN = [
+  // ========== LEVEL 1 — babyleicht: Mittelwert von 2–3 bequemen Zahlen ==========
+  {
+    id: 1,
+    level: 1,
+    typ: "numerisch",
+    frage: "Berechne das arithmetische Mittel der Zahlen \\(4\\) und \\(8\\).",
+    loesung: 6,
+    toleranz: 0,
+    tipp: "Addiere beide Zahlen und teile die Summe durch \\(2\\).",
+    loesungsweg: "$$\\bar{x} = \\frac{4 + 8}{2} = \\frac{12}{2} = 6$$"
+  },
+  {
+    id: 2,
+    level: 1,
+    typ: "mc",
+    frage: "Was ist der Mittelwert der Zahlen \\(3\\) und \\(7\\)?",
+    optionen: ["\\(4\\)", "\\(10\\)", "\\(5\\)", "\\(3{,}5\\)"],
+    korrekt: 2,
+    tipp: "Rechne zuerst \\(3 + 7\\). Was machst du danach mit der Summe?",
+    loesungsweg: "$$\\bar{x} = \\frac{3 + 7}{2} = \\frac{10}{2} = 5$$ Achtung: \\(10\\) ist nur die Summe — du musst noch durch die Anzahl der Werte teilen!"
+  },
+  {
+    id: 3,
+    level: 1,
+    typ: "numerisch",
+    frage: "Berechne den Mittelwert der Zahlen \\(2\\), \\(4\\) und \\(6\\).",
+    loesung: 4,
+    toleranz: 0,
+    tipp: "Es sind drei Zahlen. Teile die Summe also durch \\(3\\).",
+    loesungsweg: "$$\\bar{x} = \\frac{2 + 4 + 6}{3} = \\frac{12}{3} = 4$$"
+  },
+  {
+    id: 4,
+    level: 1,
+    typ: "mc",
+    frage: "Was ist der Mittelwert der Zahlen \\(5\\), \\(10\\) und \\(15\\)?",
+    optionen: ["\\(10\\)", "\\(30\\)", "\\(15\\)", "\\(5\\)"],
+    korrekt: 0,
+    tipp: "Summe bilden, dann durch die Anzahl der Zahlen teilen.",
+    loesungsweg: "$$\\bar{x} = \\frac{5 + 10 + 15}{3} = \\frac{30}{3} = 10$$ \\(30\\) ist nur die Summe, \\(15\\) nur der größte Wert."
+  },
+  {
+    id: 5,
+    level: 1,
+    typ: "numerisch",
+    frage: "⚽ Ben schießt in zwei Spielen \\(3\\) und \\(5\\) Tore. Wie viele Tore schießt er im Durchschnitt pro Spiel?",
+    loesung: 4,
+    toleranz: 0,
+    tipp: "Durchschnitt heißt: alle Tore zusammenzählen und durch die Anzahl der Spiele teilen.",
+    loesungsweg: "$$\\bar{x} = \\frac{3 + 5}{2} = \\frac{8}{2} = 4$$ Ben schießt im Durchschnitt 4 Tore pro Spiel."
+  },
+  {
+    id: 6,
+    level: 1,
+    typ: "mc",
+    frage: "Wie berechnet man das arithmetische Mittel (den Durchschnitt)?",
+    optionen: ["Man nimmt den häufigsten Wert.", "Man nimmt den Wert in der Mitte der geordneten Liste.", "Man rechnet größter Wert minus kleinster Wert.", "Man teilt die Summe aller Werte durch ihre Anzahl."],
+    korrekt: 3,
+    tipp: "Denk an das Wort „Durchschnitt“: Alles wird zusammengelegt und gerecht verteilt.",
+    loesungsweg: "Das arithmetische Mittel: $$\\bar{x} = \\frac{\\text{Summe aller Werte}}{\\text{Anzahl der Werte}}$$ Die anderen Antworten beschreiben Modalwert, Median und Spannweite."
+  },
+  // ========== LEVEL 2 — leicht: Mittelwert von 4–5 Werten ==========
+  {
+    id: 7,
+    level: 2,
+    typ: "numerisch",
+    frage: "Mia schreibt vier Tests. Ihre Noten: \\(2\\), \\(3\\), \\(2\\), \\(1\\). Berechne ihren Notendurchschnitt.",
+    loesung: 2,
+    toleranz: 0,
+    tipp: "Addiere alle vier Noten und teile durch \\(4\\).",
+    loesungsweg: "$$\\bar{x} = \\frac{2 + 3 + 2 + 1}{4} = \\frac{8}{4} = 2$$ Mias Notendurchschnitt ist 2."
+  },
+  {
+    id: 8,
+    level: 2,
+    typ: "mc",
+    frage: "An fünf Tagen wurden diese Temperaturen gemessen: \\(4\\,^\\circ\\text{C}\\), \\(6\\,^\\circ\\text{C}\\), \\(8\\,^\\circ\\text{C}\\), \\(10\\,^\\circ\\text{C}\\), \\(12\\,^\\circ\\text{C}\\). Wie hoch ist die Durchschnittstemperatur?",
+    optionen: ["\\(40\\,^\\circ\\text{C}\\)", "\\(8\\,^\\circ\\text{C}\\)", "\\(10\\,^\\circ\\text{C}\\)", "\\(12\\,^\\circ\\text{C}\\)"],
+    korrekt: 1,
+    tipp: "Es sind fünf Messwerte — teile die Summe also durch \\(5\\), nicht durch \\(4\\).",
+    loesungsweg: "$$\\bar{x} = \\frac{4 + 6 + 8 + 10 + 12}{5} = \\frac{40}{5} = 8$$ Die Durchschnittstemperatur beträgt \\(8\\,^\\circ\\text{C}\\). Wer durch \\(4\\) teilt, bekommt fälschlich \\(10\\,^\\circ\\text{C}\\)."
+  },
+  {
+    id: 9,
+    level: 2,
+    typ: "numerisch",
+    frage: "Tarek gibt an vier Tagen Taschengeld aus: \\(3\\) €, \\(5\\) €, \\(2\\) € und \\(6\\) €. Wie viel gibt er im Durchschnitt pro Tag aus? Gib das Ergebnis in Euro an.",
+    loesung: 4,
+    toleranz: 0,
+    tipp: "Zähle alle Ausgaben zusammen und teile durch die Anzahl der Tage.",
+    loesungsweg: "$$\\bar{x} = \\frac{3 + 5 + 2 + 6}{4} = \\frac{16}{4} = 4$$ Tarek gibt im Durchschnitt 4 € pro Tag aus."
+  },
+  {
+    id: 10,
+    level: 2,
+    typ: "mc",
+    frage: "Aylin springt beim Weitsprung fünfmal: \\(3{,}0\\) m, \\(3{,}2\\) m, \\(3{,}4\\) m, \\(3{,}6\\) m und \\(3{,}8\\) m. Wie weit springt sie im Durchschnitt?",
+    optionen: ["\\(17\\,\\text{m}\\)", "\\(3{,}2\\,\\text{m}\\)", "\\(3{,}4\\,\\text{m}\\)", "\\(3{,}8\\,\\text{m}\\)"],
+    korrekt: 2,
+    tipp: "Addiere alle fünf Weiten. Die Summe muss noch durch \\(5\\) geteilt werden.",
+    loesungsweg: "$$\\bar{x} = \\frac{3{,}0 + 3{,}2 + 3{,}4 + 3{,}6 + 3{,}8}{5} = \\frac{17}{5} = 3{,}4$$ Aylin springt im Durchschnitt \\(3{,}4\\) m weit. \\(17\\) m wäre nur die Summe."
+  },
+  {
+    id: 11,
+    level: 2,
+    typ: "numerisch",
+    frage: "💪 Jonas macht an fünf Tagen Klimmzüge: \\(6\\), \\(8\\), \\(7\\), \\(9\\) und \\(10\\). Wie viele Klimmzüge schafft er im Durchschnitt pro Tag?",
+    loesung: 8,
+    toleranz: 0,
+    tipp: "Summe der fünf Werte bilden, dann durch \\(5\\) teilen.",
+    loesungsweg: "$$\\bar{x} = \\frac{6 + 8 + 7 + 9 + 10}{5} = \\frac{40}{5} = 8$$ Jonas schafft im Durchschnitt 8 Klimmzüge pro Tag."
+  },
+  {
+    id: 12,
+    level: 2,
+    typ: "mc",
+    frage: "Lene hat vier Vokabeltests geschrieben: Noten \\(1\\), \\(2\\), \\(2\\), \\(3\\). Welchen Notendurchschnitt hat sie?",
+    optionen: ["\\(2\\)", "\\(8\\)", "\\(2{,}5\\)", "\\(3\\)"],
+    korrekt: 0,
+    tipp: "Vier Noten — also die Summe durch \\(4\\) teilen.",
+    loesungsweg: "$$\\bar{x} = \\frac{1 + 2 + 2 + 3}{4} = \\frac{8}{4} = 2$$ \\(8\\) ist nur die Summe, \\(3\\) nur die schlechteste Note."
+  },
+  // ========== LEVEL 3 — nervenschonend: Modalwert und Spannweite ==========
+  {
+    id: 13,
+    level: 3,
+    typ: "numerisch",
+    frage: "Bestimme die Spannweite der Datenreihe \\(3\\), \\(7\\), \\(5\\), \\(9\\), \\(4\\).",
+    loesung: 6,
+    toleranz: 0,
+    tipp: "Suche zuerst den größten und den kleinsten Wert.",
+    loesungsweg: "Größter Wert: \\(9\\), kleinster Wert: \\(3\\). $$\\text{Spannweite} = 9 - 3 = 6$$"
+  },
+  {
+    id: 14,
+    level: 3,
+    typ: "mc",
+    frage: "Bestimme den Modalwert der Datenreihe \\(2\\), \\(5\\), \\(2\\), \\(8\\), \\(2\\), \\(5\\).",
+    optionen: ["\\(5\\)", "\\(2\\)", "\\(8\\)", "\\(4\\)"],
+    korrekt: 1,
+    tipp: "Der Modalwert ist der Wert, der am häufigsten vorkommt. Zähle nach!",
+    loesungsweg: "Häufigkeiten: \\(2\\) kommt dreimal vor, \\(5\\) zweimal, \\(8\\) einmal. $$\\text{Modalwert} = 2$$ \\(4\\) wäre der Mittelwert — das ist hier nicht gefragt."
+  },
+  {
+    id: 15,
+    level: 3,
+    typ: "numerisch",
+    frage: "👟 In einer Sportgruppe haben die Kinder diese Schuhgrößen: \\(36\\), \\(38\\), \\(37\\), \\(36\\), \\(40\\). Bestimme den Modalwert.",
+    loesung: 36,
+    toleranz: 0,
+    tipp: "Welche Schuhgröße kommt am häufigsten vor?",
+    loesungsweg: "Die Größe \\(36\\) kommt zweimal vor, alle anderen nur einmal. $$\\text{Modalwert} = 36$$"
+  },
+  {
+    id: 16,
+    level: 3,
+    typ: "mc",
+    frage: "An fünf Wintertagen wurden diese Temperaturen gemessen: \\(-2\\,^\\circ\\text{C}\\), \\(1\\,^\\circ\\text{C}\\), \\(4\\,^\\circ\\text{C}\\), \\(3\\,^\\circ\\text{C}\\), \\(0\\,^\\circ\\text{C}\\). Wie groß ist die Spannweite?",
+    optionen: ["\\(2\\,^\\circ\\text{C}\\)", "\\(4\\,^\\circ\\text{C}\\)", "\\(5\\,^\\circ\\text{C}\\)", "\\(6\\,^\\circ\\text{C}\\)"],
+    korrekt: 3,
+    tipp: "Achtung: Der kleinste Wert ist negativ! Zähle auf der Zahlengeraden die Schritte vom kleinsten zum größten Wert.",
+    loesungsweg: "Größter Wert: \\(4\\,^\\circ\\text{C}\\), kleinster Wert: \\(-2\\,^\\circ\\text{C}\\). Auf der Zahlengeraden sind es von \\(-2\\) bis \\(0\\) zwei Schritte und von \\(0\\) bis \\(4\\) noch vier Schritte: $$2 + 4 = 6$$ Die Spannweite beträgt \\(6\\,^\\circ\\text{C}\\). Wer das Minuszeichen übersieht, rechnet \\(4 - 2 = 2\\) — das ist falsch."
+  },
+  {
+    id: 17,
+    level: 3,
+    typ: "numerisch",
+    frage: "Eine Handballmannschaft erzielt in sieben Spielen diese Tore: \\(1\\), \\(3\\), \\(0\\), \\(5\\), \\(2\\), \\(4\\), \\(1\\). Bestimme die Spannweite.",
+    loesung: 5,
+    toleranz: 0,
+    tipp: "Spannweite = größter Wert minus kleinster Wert. Vergiss die \\(0\\) nicht!",
+    loesungsweg: "Größter Wert: \\(5\\), kleinster Wert: \\(0\\). $$\\text{Spannweite} = 5 - 0 = 5$$"
+  },
+  {
+    id: 18,
+    level: 3,
+    typ: "mc",
+    frage: "Welche Aussage über den Modalwert stimmt?",
+    optionen: ["Er ist immer der größte Wert der Datenreihe.", "Er ist die Summe aller Werte geteilt durch ihre Anzahl.", "Er ist der Wert, der am häufigsten vorkommt.", "Er ist der Unterschied zwischen größtem und kleinstem Wert."],
+    korrekt: 2,
+    tipp: "„Modal“ kommt von Mode — was gerade „in Mode“ ist, kommt oft vor.",
+    loesungsweg: "Der Modalwert ist der häufigste Wert einer Datenreihe. Die anderen Antworten beschreiben den größten Wert, den Mittelwert und die Spannweite."
+  },
+  // ========== LEVEL 4 — mittel: Median (ungerade und gerade Anzahl) ==========
+  {
+    id: 19,
+    level: 4,
+    typ: "numerisch",
+    frage: "Bestimme den Median der Datenreihe \\(4\\), \\(9\\), \\(2\\), \\(7\\), \\(5\\).",
+    loesung: 5,
+    toleranz: 0,
+    tipp: "Ordne die Werte zuerst der Größe nach. Der Median steht dann genau in der Mitte.",
+    loesungsweg: "Geordnet: $$2,\\ 4,\\ \\underline{5},\\ 7,\\ 9$$ Bei fünf Werten steht der dritte Wert in der Mitte: $$\\text{Median} = 5$$"
+  },
+  {
+    id: 20,
+    level: 4,
+    typ: "mc",
+    frage: "Bestimme den Median der Datenreihe \\(12\\), \\(7\\), \\(9\\), \\(15\\), \\(11\\).",
+    optionen: ["\\(9\\)", "\\(11\\)", "\\(10{,}8\\)", "\\(8\\)"],
+    korrekt: 1,
+    tipp: "Nicht den mittleren Wert der ungeordneten Liste nehmen — erst sortieren!",
+    loesungsweg: "Geordnet: $$7,\\ 9,\\ \\underline{11},\\ 12,\\ 15$$ $$\\text{Median} = 11$$ \\(9\\) wäre die Mitte der ungeordneten Liste, \\(10{,}8\\) ist der Mittelwert, \\(8\\) die Spannweite."
+  },
+  {
+    id: 21,
+    level: 4,
+    typ: "numerisch",
+    frage: "Bestimme den Median der Datenreihe \\(2\\), \\(6\\), \\(4\\), \\(8\\).",
+    loesung: 5,
+    toleranz: 0,
+    tipp: "Bei einer geraden Anzahl von Werten liegt der Median genau zwischen den beiden mittleren Werten.",
+    loesungsweg: "Geordnet: $$2,\\ \\underline{4},\\ \\underline{6},\\ 8$$ Die beiden mittleren Werte sind \\(4\\) und \\(6\\): $$\\text{Median} = \\frac{4 + 6}{2} = 5$$"
+  },
+  {
+    id: 22,
+    level: 4,
+    typ: "mc",
+    frage: "Bestimme den Median der Datenreihe \\(10\\), \\(14\\), \\(12\\), \\(20\\), \\(16\\), \\(18\\).",
+    optionen: ["\\(14\\)", "\\(16\\)", "\\(12\\)", "\\(15\\)"],
+    korrekt: 3,
+    tipp: "Sechs Werte — der Median ist der Mittelwert der beiden mittleren Werte.",
+    loesungsweg: "Geordnet: $$10,\\ 12,\\ \\underline{14},\\ \\underline{16},\\ 18,\\ 20$$ $$\\text{Median} = \\frac{14 + 16}{2} = \\frac{30}{2} = 15$$ \\(14\\) oder \\(16\\) allein reichen nicht — bei gerader Anzahl musst du mitteln."
+  },
+  {
+    id: 23,
+    level: 4,
+    typ: "numerisch",
+    frage: "🏃 Samira joggt an sieben Tagen. Ihre Zeiten in Minuten: \\(12\\), \\(9\\), \\(15\\), \\(10\\), \\(11\\), \\(14\\), \\(13\\). Bestimme den Median. Gib das Ergebnis in Minuten an.",
+    loesung: 12,
+    toleranz: 0,
+    tipp: "Ordne die sieben Zeiten. Der vierte Wert der geordneten Liste ist der Median.",
+    loesungsweg: "Geordnet: $$9,\\ 10,\\ 11,\\ \\underline{12},\\ 13,\\ 14,\\ 15$$ Bei sieben Werten ist der vierte Wert die Mitte: $$\\text{Median} = 12$$"
+  },
+  {
+    id: 24,
+    level: 4,
+    typ: "mc",
+    frage: "Was musst du als Erstes tun, um den Median einer Datenreihe zu bestimmen?",
+    optionen: ["Alle Werte addieren.", "Die Werte der Größe nach ordnen.", "Den größten Wert suchen.", "Jeden Wert verdoppeln."],
+    korrekt: 1,
+    tipp: "Der Median ist der Wert „in der Mitte“ — aber in der Mitte wovon?",
+    loesungsweg: "Zuerst wird die Datenreihe der Größe nach geordnet. Erst dann kannst du den Wert in der Mitte ablesen (oder bei gerader Anzahl die beiden mittleren Werte mitteln)."
+  },
+  // ========== LEVEL 5 — anspruchsvoll: Rückwärtsaufgaben & Kenngröße wählen ==========
+  {
+    id: 25,
+    level: 5,
+    typ: "numerisch",
+    frage: "Der Mittelwert von fünf Zahlen ist \\(8\\). Vier Zahlen sind bekannt: \\(6\\), \\(9\\), \\(7\\) und \\(10\\). Wie lautet die fünfte Zahl?",
+    loesung: 8,
+    toleranz: 0,
+    tipp: "Wenn der Mittelwert \\(8\\) ist, muss die Summe aller fünf Zahlen \\(5 \\cdot 8\\) sein.",
+    loesungsweg: "Gesamtsumme: $$5 \\cdot 8 = 40$$ Summe der bekannten Zahlen: $$6 + 9 + 7 + 10 = 32$$ Fünfte Zahl: $$40 - 32 = 8$$"
+  },
+  {
+    id: 26,
+    level: 5,
+    typ: "numerisch",
+    frage: "Noah möchte in Mathe einen Notendurchschnitt von genau \\(2\\) erreichen. Seine ersten drei Noten: \\(1\\), \\(3\\), \\(2\\). Welche Note braucht er in der vierten Arbeit?",
+    loesung: 2,
+    toleranz: 0,
+    tipp: "Vier Noten mit Durchschnitt \\(2\\) — wie groß muss die Summe aller vier Noten sein?",
+    loesungsweg: "Nötige Gesamtsumme: $$4 \\cdot 2 = 8$$ Bisherige Summe: $$1 + 3 + 2 = 6$$ Vierte Note: $$8 - 6 = 2$$ Noah braucht eine \\(2\\)."
+  },
+  {
+    id: 27,
+    level: 5,
+    typ: "mc",
+    frage: "Deine Klasse stimmt über die Lieblingsfarbe ab. Du willst wissen, welche Farbe am beliebtesten ist. Welche Kenngröße hilft dir?",
+    optionen: ["Mittelwert", "Spannweite", "Modalwert", "Median"],
+    korrekt: 2,
+    tipp: "Farben kann man nicht addieren oder ordnen — aber man kann zählen, welche am häufigsten genannt wird.",
+    loesungsweg: "Der Modalwert ist der häufigste Wert — genau das ist die beliebteste Farbe. Mittelwert und Median brauchen Zahlen, die man rechnen bzw. ordnen kann. Die Spannweite misst nur den Abstand zwischen Extremen."
+  },
+  {
+    id: 28,
+    level: 5,
+    typ: "mc",
+    frage: "Welche Kenngröße zeigt dir, wie weit die Werte einer Datenreihe auseinanderliegen?",
+    optionen: ["Median", "Modalwert", "Mittelwert", "Spannweite"],
+    korrekt: 3,
+    tipp: "Gesucht ist ein Maß für den Abstand zwischen dem größten und dem kleinsten Wert.",
+    loesungsweg: "Die Spannweite = größter Wert minus kleinster Wert. Sie beschreibt, wie stark die Daten streuen. Mittelwert, Median und Modalwert beschreiben dagegen die „Mitte“ der Daten."
+  },
+  {
+    id: 29,
+    level: 5,
+    typ: "numerisch",
+    frage: "Eine Datenreihe hat die Spannweite \\(12\\). Der kleinste Wert ist \\(5\\). Wie groß ist der größte Wert?",
+    loesung: 17,
+    toleranz: 0,
+    tipp: "Spannweite = größter Wert \\(-\\) kleinster Wert. Stelle die Rechnung um.",
+    loesungsweg: "$$\\text{größter Wert} = \\text{kleinster Wert} + \\text{Spannweite}$$ $$= 5 + 12 = 17$$"
+  },
+  {
+    id: 30,
+    level: 5,
+    typ: "mc",
+    frage: "Der Mittelwert von fünf Zahlen ist \\(10\\). Wie groß ist die Summe der fünf Zahlen?",
+    optionen: ["\\(50\\)", "\\(2\\)", "\\(15\\)", "\\(10\\)"],
+    korrekt: 0,
+    tipp: "Mittelwert = Summe : Anzahl. Rechne rückwärts: Summe = Mittelwert \\(\\cdot\\) Anzahl.",
+    loesungsweg: "$$\\text{Summe} = \\bar{x} \\cdot \\text{Anzahl} = 10 \\cdot 5 = 50$$"
+  },
+  // ========== LEVEL 6 — wagnerisch: Interpretation & Sachkontexte ==========
+  {
+    id: 31,
+    level: 6,
+    typ: "mc",
+    frage: "Eine Klassenarbeit hat den Notendurchschnitt \\(2{,}5\\). Welche Aussage stimmt sicher?",
+    optionen: ["Die meisten Kinder haben eine \\(2{,}5\\) geschrieben.", "Der Mittelwert aller Noten ist \\(2{,}5\\).", "Genau die Hälfte der Klasse hat eine \\(2\\) oder besser.", "Niemand hat eine \\(5\\) geschrieben."],
+    korrekt: 1,
+    tipp: "„Durchschnitt“ ist nur ein anderes Wort für eine der vier Kenngrößen. Für welche?",
+    loesungsweg: "Der Notendurchschnitt ist das arithmetische Mittel — mehr sagt er nicht aus. Es kann sein, dass niemand genau \\(2{,}5\\) hat (Noten sind ganze Zahlen!), und auch eine \\(5\\) ist möglich, wenn andere sehr gut sind."
+  },
+  {
+    id: 32,
+    level: 6,
+    typ: "numerisch",
+    frage: "🏊 Emil schwimmt fünfmal \\(50\\) m. Seine Zeiten in Sekunden: \\(62\\), \\(58\\), \\(60\\), \\(64\\), \\(56\\). Berechne seine Durchschnittszeit. Gib das Ergebnis in Sekunden an.",
+    loesung: 60,
+    toleranz: 0,
+    tipp: "Addiere geschickt: \\(62 + 58\\) und \\(64 + 56\\) ergeben runde Zahlen.",
+    loesungsweg: "$$62 + 58 + 60 + 64 + 56 = 300$$ $$\\bar{x} = \\frac{300}{5} = 60$$ Emil braucht im Durchschnitt 60 Sekunden."
+  },
+  {
+    id: 33,
+    level: 6,
+    typ: "mc",
+    frage: "Fünf Kinder haben gespart: \\(5\\) €, \\(6\\) €, \\(6\\) €, \\(7\\) € und \\(46\\) €. Welche Aussage stimmt?",
+    optionen: ["Der Mittelwert beträgt \\(6\\) €.", "Die meisten Kinder haben etwa \\(14\\) € gespart.", "Der Median (\\(6\\) €) beschreibt die Gruppe besser als der Mittelwert (\\(14\\) €).", "Die Spannweite beträgt \\(46\\) €."],
+    korrekt: 2,
+    tipp: "Berechne Mittelwert und Median. Was macht der Ausreißer \\(46\\) € mit dem Mittelwert?",
+    loesungsweg: "Mittelwert: $$\\frac{5 + 6 + 6 + 7 + 46}{5} = \\frac{70}{5} = 14$$ Median (geordnete Mitte): \\(6\\) €. Vier von fünf Kindern haben \\(5\\) bis \\(7\\) € — der Ausreißer \\(46\\) € zieht den Mittelwert hoch. Der Median beschreibt die Gruppe darum besser. Die Spannweite wäre \\(46 - 5 = 41\\) €."
+  },
+  {
+    id: 34,
+    level: 6,
+    typ: "numerisch",
+    frage: "🏀 Aisha erzielt in sechs Basketballspielen im Durchschnitt \\(12\\) Punkte pro Spiel. Wie viele Punkte hat sie insgesamt erzielt?",
+    loesung: 72,
+    toleranz: 0,
+    tipp: "Rückwärts denken: Summe = Durchschnitt mal Anzahl der Spiele.",
+    loesungsweg: "$$\\text{Gesamtpunkte} = 12 \\cdot 6 = 72$$ Aisha hat insgesamt 72 Punkte erzielt."
+  },
+  {
+    id: 35,
+    level: 6,
+    typ: "mc",
+    frage: "In einem Team sind die Körpergrößen (in cm): \\(150\\), \\(152\\), \\(155\\), \\(158\\), \\(170\\). Der Median ist \\(155\\) cm. Was bedeutet das?",
+    optionen: ["\\(155\\) cm ist die häufigste Körpergröße im Team.", "Alle im Team sind ungefähr \\(155\\) cm groß.", "Der Mittelwert der Größen beträgt \\(155\\) cm.", "\\(155\\) cm steht genau in der Mitte der geordneten Liste."],
+    korrekt: 3,
+    tipp: "Erinnere dich: Wie wird der Median bestimmt?",
+    loesungsweg: "Der Median ist der mittlere Wert der geordneten Liste — hier der dritte von fünf Werten. Er ist nicht der häufigste Wert (jede Größe kommt nur einmal vor) und auch nicht der Mittelwert: $$\\bar{x} = \\frac{150 + 152 + 155 + 158 + 170}{5} = \\frac{785}{5} = 157$$"
+  },
+  {
+    id: 36,
+    level: 6,
+    typ: "numerisch",
+    frage: "Eine Woche lang wird mittags die Temperatur gemessen (in \\(^\\circ\\text{C}\\)): \\(18\\), \\(21\\), \\(19\\), \\(22\\), \\(20\\), \\(23\\), \\(17\\). Bestimme den Median der Temperaturen. Gib das Ergebnis in Grad Celsius an.",
+    loesung: 20,
+    toleranz: 0,
+    tipp: "Sieben Werte: Ordnen, dann ist der vierte Wert der Median.",
+    loesungsweg: "Geordnet: $$17,\\ 18,\\ 19,\\ \\underline{20},\\ 21,\\ 22,\\ 23$$ Der vierte von sieben Werten steht in der Mitte: $$\\text{Median} = 20$$ Der Median ist \\(20\\,^\\circ\\text{C}\\)."
+  }
+];
+    </script>
+    <script src="../p3-reflexion.js"></script>
+    <script src="../spirale-engine.js"></script>
+    <script src="../spirale-kids.js"></script>
+</body>
+</html>

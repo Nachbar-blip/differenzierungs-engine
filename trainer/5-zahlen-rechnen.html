@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rechnen mit natürlichen Zahlen - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <link rel="stylesheet" href="../spirale-kids.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+// Rechnen mit natürlichen Zahlen — DiffEngine Klasse 5/6 Content (Roadmap Welle 2, Item 3)
+const THEMA_KEY = '5-zahlen-rechnen';
+const THEMA_CONFIG = { name: 'Rechnen mit natürlichen Zahlen', bereich: 'arithmetik', p3Enabled: true };
+const AUFGABEN = [
+  // ========== LEVEL 1 — babyleicht: Kopfrechnen klein ==========
+  {
+    id: 1,
+    level: 1,
+    typ: "numerisch",
+    frage: "Rechne im Kopf: \\(47 + 38\\)",
+    loesung: 85,
+    toleranz: 0,
+    tipp: "Rechne erst \\(47 + 40\\) und ziehe dann \\(2\\) wieder ab.",
+    loesungsweg: "$$47 + 40 = 87$$ $$87 - 2 = 85$$ Also: \\(47 + 38 = 85\\)."
+  },
+  {
+    id: 2,
+    level: 1,
+    typ: "mc",
+    frage: "Was ergibt \\(63 - 27\\)?",
+    optionen: ["\\(44\\)", "\\(46\\)", "\\(36\\)", "\\(34\\)"],
+    korrekt: 2,
+    tipp: "Ziehe erst \\(20\\) ab, dann noch \\(7\\).",
+    loesungsweg: "$$63 - 20 = 43$$ $$43 - 7 = 36$$ Also: \\(63 - 27 = 36\\)."
+  },
+  {
+    id: 3,
+    level: 1,
+    typ: "numerisch",
+    frage: "Rechne im Kopf: \\(7 \\cdot 8\\)",
+    loesung: 56,
+    toleranz: 0,
+    tipp: "Denke an die Achterreihe: \\(8, 16, 24, \\dots\\)",
+    loesungsweg: "Aus dem Einmaleins: $$7 \\cdot 8 = 56$$"
+  },
+  {
+    id: 4,
+    level: 1,
+    typ: "mc",
+    frage: "Was ergibt \\(72 : 9\\)?",
+    optionen: ["\\(8\\)", "\\(9\\)", "\\(7\\)", "\\(6\\)"],
+    korrekt: 0,
+    tipp: "Frage dich: Welche Zahl mal \\(9\\) ergibt \\(72\\)?",
+    loesungsweg: "Umkehraufgabe: $$8 \\cdot 9 = 72$$ Also: \\(72 : 9 = 8\\)."
+  },
+  {
+    id: 5,
+    level: 1,
+    typ: "numerisch",
+    frage: "Rechne im Kopf: \\(300 - 175\\)",
+    loesung: 125,
+    toleranz: 0,
+    tipp: "Zähle von \\(175\\) bis \\(300\\) hoch: erst bis \\(200\\), dann bis \\(300\\).",
+    loesungsweg: "Ergänzen: $$175 + 25 = 200$$ $$200 + 100 = 300$$ Zusammen: \\(25 + 100 = 125\\)."
+  },
+  {
+    id: 6,
+    level: 1,
+    typ: "mc",
+    frage: "Welche Rechnung ergibt \\(24\\)?",
+    optionen: ["\\(4 \\cdot 7\\)", "\\(6 \\cdot 5\\)", "\\(27 - 4\\)", "\\(3 \\cdot 8\\)"],
+    korrekt: 3,
+    tipp: "Rechne alle vier Ergebnisse im Kopf aus und vergleiche.",
+    loesungsweg: "$$3 \\cdot 8 = 24 \\quad \\checkmark$$ Die anderen: \\(4 \\cdot 7 = 28\\), \\(6 \\cdot 5 = 30\\), \\(27 - 4 = 23\\)."
+  },
+  // ========== LEVEL 2 — leicht: Punkt-vor-Strich und Klammern ==========
+  {
+    id: 7,
+    level: 2,
+    typ: "numerisch",
+    frage: "Berechne: \\(5 + 3 \\cdot 4\\)",
+    loesung: 17,
+    toleranz: 0,
+    tipp: "Punkt vor Strich: Rechne zuerst \\(3 \\cdot 4\\).",
+    loesungsweg: "$$5 + 3 \\cdot 4 = 5 + 12 = 17$$ Wer erst \\(5 + 3\\) rechnet, bekommt fälschlich \\(32\\)."
+  },
+  {
+    id: 8,
+    level: 2,
+    typ: "mc",
+    frage: "Was ergibt \\(20 - 12 : 4\\)?",
+    optionen: ["\\(2\\)", "\\(17\\)", "\\(8\\)", "\\(23\\)"],
+    korrekt: 1,
+    tipp: "Geteilt gehört zu den Punktrechnungen — sie kommt vor dem Minus dran.",
+    loesungsweg: "$$20 - 12 : 4 = 20 - 3 = 17$$ Falsch wäre: erst \\(20 - 12 = 8\\) und dann \\(8 : 4 = 2\\)."
+  },
+  {
+    id: 9,
+    level: 2,
+    typ: "numerisch",
+    frage: "Berechne: \\((7 + 5) \\cdot 3\\)",
+    loesung: 36,
+    toleranz: 0,
+    tipp: "Die Klammer kommt immer zuerst dran.",
+    loesungsweg: "$$(7 + 5) \\cdot 3 = 12 \\cdot 3 = 36$$"
+  },
+  {
+    id: 10,
+    level: 2,
+    typ: "mc",
+    frage: "Was ergibt \\(4 \\cdot (9 - 3)\\)?",
+    optionen: ["\\(24\\)", "\\(33\\)", "\\(10\\)", "\\(6\\)"],
+    korrekt: 0,
+    tipp: "Rechne zuerst die Klammer aus: \\(9 - 3\\).",
+    loesungsweg: "$$4 \\cdot (9 - 3) = 4 \\cdot 6 = 24$$ Falsch wäre \\(4 \\cdot 9 - 3 = 33\\) — die Klammer darf man nicht weglassen!"
+  },
+  {
+    id: 11,
+    level: 2,
+    typ: "numerisch",
+    frage: "Berechne: \\(18 : 3 + 2 \\cdot 5\\)",
+    loesung: 16,
+    toleranz: 0,
+    tipp: "Zwei Punktrechnungen! Rechne \\(18 : 3\\) und \\(2 \\cdot 5\\) einzeln aus, dann addiere.",
+    loesungsweg: "$$18 : 3 + 2 \\cdot 5 = 6 + 10 = 16$$"
+  },
+  {
+    id: 12,
+    level: 2,
+    typ: "mc",
+    frage: "Welcher Ausdruck hat den Wert \\(20\\)?",
+    optionen: ["\\(2 + 3 \\cdot 4\\)", "\\(2 \\cdot 3 + 4\\)", "\\((2 + 3) \\cdot 4\\)", "\\(2 + 3 + 4\\)"],
+    korrekt: 2,
+    tipp: "Achte genau darauf, wo Klammern stehen — rechne jeden Ausdruck einzeln aus.",
+    loesungsweg: "$$(2 + 3) \\cdot 4 = 5 \\cdot 4 = 20 \\quad \\checkmark$$ Die anderen: \\(2 + 3 \\cdot 4 = 14\\), \\(2 \\cdot 3 + 4 = 10\\), \\(2 + 3 + 4 = 9\\)."
+  },
+  // ========== LEVEL 3 — nervenschonend: Schriftliche Verfahren und Überschlag ==========
+  {
+    id: 13,
+    level: 3,
+    typ: "numerisch",
+    frage: "Rechne schriftlich: \\(4738 + 2895\\)",
+    loesung: 7633,
+    toleranz: 0,
+    tipp: "Schreibe die Zahlen stellengerecht untereinander und starte bei den Einern. Denk an die Überträge!",
+    loesungsweg: "Schriftlich untereinander: $$4738 + 2895 = 7633$$ Einer: \\(8+5=13\\), schreibe \\(3\\), Übertrag \\(1\\). Zehner: \\(3+9+1=13\\), schreibe \\(3\\), Übertrag \\(1\\). Hunderter: \\(7+8+1=16\\), schreibe \\(6\\), Übertrag \\(1\\). Tausender: \\(4+2+1=7\\)."
+  },
+  {
+    id: 14,
+    level: 3,
+    typ: "numerisch",
+    frage: "Rechne schriftlich: \\(347 \\cdot 26\\)",
+    loesung: 9022,
+    toleranz: 0,
+    tipp: "Zerlege: erst \\(347 \\cdot 20\\), dann \\(347 \\cdot 6\\), zum Schluss addieren.",
+    loesungsweg: "$$347 \\cdot 20 = 6940$$ $$347 \\cdot 6 = 2082$$ $$6940 + 2082 = 9022$$"
+  },
+  {
+    id: 15,
+    level: 3,
+    typ: "numerisch",
+    frage: "Rechne schriftlich: \\(2808 : 8\\)",
+    loesung: 351,
+    toleranz: 0,
+    tipp: "Teile Schritt für Schritt: Wie oft passt \\(8\\) in \\(28\\)?",
+    loesungsweg: "$$28 : 8 = 3 \\text{ Rest } 4$$ $$40 : 8 = 5 \\text{ Rest } 0$$ $$8 : 8 = 1$$ Also: \\(2808 : 8 = 351\\). Probe: \\(351 \\cdot 8 = 2808\\) \\(\\checkmark\\)"
+  },
+  {
+    id: 16,
+    level: 3,
+    typ: "mc",
+    frage: "Überschlage: \\(498 + 305\\) ist ungefähr ...",
+    optionen: ["\\(700\\)", "\\(900\\)", "\\(1100\\)", "\\(800\\)"],
+    korrekt: 3,
+    tipp: "Runde beide Zahlen auf Hunderter, bevor du rechnest.",
+    loesungsweg: "Runden: \\(498 \\approx 500\\) und \\(305 \\approx 300\\). $$500 + 300 = 800$$ Genau wäre es \\(803\\) — der Überschlag passt."
+  },
+  {
+    id: 17,
+    level: 3,
+    typ: "mc",
+    frage: "Überschlage: \\(39 \\cdot 21\\) ist ungefähr ...",
+    optionen: ["\\(80\\)", "\\(800\\)", "\\(8000\\)", "\\(600\\)"],
+    korrekt: 1,
+    tipp: "Runde: \\(39 \\approx 40\\) und \\(21 \\approx 20\\).",
+    loesungsweg: "$$40 \\cdot 20 = 800$$ Genau wäre es \\(819\\) — also liegt \\(800\\) richtig. Achte auf die Nullen: \\(4 \\cdot 2 = 8\\), dann zwei Nullen anhängen."
+  },
+  {
+    id: 18,
+    level: 3,
+    typ: "mc",
+    frage: "Überschlage: \\(812 : 19\\) ist ungefähr ...",
+    optionen: ["\\(40\\)", "\\(4\\)", "\\(400\\)", "\\(80\\)"],
+    korrekt: 0,
+    tipp: "Runde auf Zahlen, die sich gut teilen lassen: \\(800\\) und \\(20\\).",
+    loesungsweg: "$$800 : 20 = 40$$ Denn \\(40 \\cdot 20 = 800\\). Der genaue Wert liegt bei knapp \\(43\\) — der Überschlag \\(40\\) passt."
+  },
+  // ========== LEVEL 4 — mittel: Rechenvorteile und Distributivgesetz ==========
+  {
+    id: 19,
+    level: 4,
+    typ: "numerisch",
+    frage: "Rechne geschickt: \\(25 \\cdot 17 \\cdot 4\\)",
+    loesung: 1700,
+    toleranz: 0,
+    tipp: "Du darfst die Reihenfolge tauschen. Welche zwei Zahlen ergeben malgenommen \\(100\\)?",
+    loesungsweg: "Tauschen (Kommutativgesetz): $$25 \\cdot 4 \\cdot 17 = 100 \\cdot 17 = 1700$$ So sparst du dir die schwere Rechnung \\(25 \\cdot 17\\)."
+  },
+  {
+    id: 20,
+    level: 4,
+    typ: "numerisch",
+    frage: "Rechne geschickt: \\(4 \\cdot 36 + 4 \\cdot 64\\)",
+    loesung: 400,
+    toleranz: 0,
+    tipp: "Beide Produkte enthalten die \\(4\\). Klammere sie aus: \\(4 \\cdot (36 + 64)\\).",
+    loesungsweg: "Distributivgesetz rückwärts: $$4 \\cdot 36 + 4 \\cdot 64 = 4 \\cdot (36 + 64) = 4 \\cdot 100 = 400$$"
+  },
+  {
+    id: 21,
+    level: 4,
+    typ: "numerisch",
+    frage: "Rechne geschickt: \\(2 \\cdot 47 \\cdot 50\\)",
+    loesung: 4700,
+    toleranz: 0,
+    tipp: "Suche zuerst das Paar, das eine glatte Hunderterzahl ergibt.",
+    loesungsweg: "$$2 \\cdot 50 = 100$$ $$100 \\cdot 47 = 4700$$"
+  },
+  {
+    id: 22,
+    level: 4,
+    typ: "mc",
+    frage: "Welcher Ausdruck ist gleich \\(7 \\cdot (20 + 3)\\)?",
+    optionen: ["\\(7 \\cdot 20 + 3\\)", "\\(20 + 7 \\cdot 3\\)", "\\(7 \\cdot 20 + 7 \\cdot 3\\)", "\\(7 \\cdot 20 \\cdot 3\\)"],
+    korrekt: 2,
+    tipp: "Beim Distributivgesetz bekommt jeder Summand in der Klammer die \\(7\\) ab.",
+    loesungsweg: "Distributivgesetz: $$7 \\cdot (20 + 3) = 7 \\cdot 20 + 7 \\cdot 3 = 140 + 21 = 161$$ Bei \\(7 \\cdot 20 + 3 = 143\\) wurde die \\(3\\) vergessen zu multiplizieren."
+  },
+  {
+    id: 23,
+    level: 4,
+    typ: "mc",
+    frage: "Rechne geschickt: \\(98 \\cdot 5\\). Was kommt heraus?",
+    optionen: ["\\(490\\)", "\\(500\\)", "\\(480\\)", "\\(510\\)"],
+    korrekt: 0,
+    tipp: "Denke dir \\(98\\) als \\(100 - 2\\) und multipliziere beides mit \\(5\\).",
+    loesungsweg: "$$98 \\cdot 5 = (100 - 2) \\cdot 5 = 500 - 10 = 490$$"
+  },
+  {
+    id: 24,
+    level: 4,
+    typ: "mc",
+    frage: "Mira rechnet \\(8 + 27 + 2\\) so um: \\(8 + 2 + 27\\). Welches Rechengesetz nutzt sie?",
+    optionen: ["Assoziativgesetz", "Kommutativgesetz", "Distributivgesetz", "Punkt-vor-Strich-Regel"],
+    korrekt: 1,
+    tipp: "Mira hat nur die Reihenfolge der Zahlen vertauscht — wie heißt das Vertauschungsgesetz?",
+    loesungsweg: "Das Vertauschen von Summanden ist das **Kommutativgesetz**. So wird die Rechnung leicht: $$8 + 2 + 27 = 10 + 27 = 37$$"
+  },
+  // ========== LEVEL 5 — anspruchsvoll: Potenzen und verschachtelte Ausdrücke ==========
+  {
+    id: 25,
+    level: 5,
+    typ: "numerisch",
+    frage: "Berechne: \\(2^3 + 3^2\\)",
+    loesung: 17,
+    toleranz: 0,
+    tipp: "\\(2^3\\) heißt \\(2 \\cdot 2 \\cdot 2\\) — nicht \\(2 \\cdot 3\\)!",
+    loesungsweg: "$$2^3 = 2 \\cdot 2 \\cdot 2 = 8$$ $$3^2 = 3 \\cdot 3 = 9$$ $$8 + 9 = 17$$"
+  },
+  {
+    id: 26,
+    level: 5,
+    typ: "numerisch",
+    frage: "Berechne: \\(10^4\\)",
+    loesung: 10000,
+    toleranz: 0,
+    tipp: "Bei Zehnerpotenzen zeigt der Exponent, wie viele Nullen die Zahl hat.",
+    loesungsweg: "$$10^4 = 10 \\cdot 10 \\cdot 10 \\cdot 10 = 10\\,000$$ Der Exponent \\(4\\) bedeutet: eine \\(1\\) mit \\(4\\) Nullen."
+  },
+  {
+    id: 27,
+    level: 5,
+    typ: "numerisch",
+    frage: "Berechne: \\(100 - 4 \\cdot (3 + 2^2)\\)",
+    loesung: 72,
+    toleranz: 0,
+    tipp: "Reihenfolge: erst die Potenz in der Klammer, dann die Klammer, dann mal, dann minus.",
+    loesungsweg: "$$2^2 = 4$$ $$3 + 4 = 7$$ $$4 \\cdot 7 = 28$$ $$100 - 28 = 72$$"
+  },
+  {
+    id: 28,
+    level: 5,
+    typ: "mc",
+    frage: "Was bedeutet \\(3^4\\)?",
+    optionen: ["\\(3 \\cdot 4\\)", "\\(4 \\cdot 4 \\cdot 4\\)", "\\(3 + 3 + 3 + 3\\)", "\\(3 \\cdot 3 \\cdot 3 \\cdot 3\\)"],
+    korrekt: 3,
+    tipp: "Die Basis \\(3\\) wird so oft mit sich selbst multipliziert, wie der Exponent \\(4\\) angibt.",
+    loesungsweg: "$$3^4 = 3 \\cdot 3 \\cdot 3 \\cdot 3 = 81$$ Vorsicht: \\(3 \\cdot 4 = 12\\) ist der häufigste Fehler — Potenz heißt malnehmen mit sich selbst, nicht mal dem Exponenten."
+  },
+  {
+    id: 29,
+    level: 5,
+    typ: "mc",
+    frage: "Was ergibt \\((18 - 2 \\cdot 5) : 4 + 6\\)?",
+    optionen: ["\\(2\\)", "\\(8\\)", "\\(26\\)", "\\(38\\)"],
+    korrekt: 1,
+    tipp: "In der Klammer gilt auch Punkt vor Strich: rechne dort zuerst \\(2 \\cdot 5\\).",
+    loesungsweg: "$$18 - 2 \\cdot 5 = 18 - 10 = 8$$ $$8 : 4 = 2$$ $$2 + 6 = 8$$ Wer stur von links rechnet (\\(18-2=16\\), \\(16 \\cdot 5 = 80\\), ...), landet fälschlich bei \\(26\\)."
+  },
+  {
+    id: 30,
+    level: 5,
+    typ: "mc",
+    frage: "Welche Aussage stimmt?",
+    optionen: ["\\(2^3 = 6\\)", "\\(3^2 = 6\\)", "\\(2^3 = 8\\)", "\\(2^3 = 9\\)"],
+    korrekt: 2,
+    tipp: "Schreibe die Potenzen als Malkette aus und rechne nach.",
+    loesungsweg: "$$2^3 = 2 \\cdot 2 \\cdot 2 = 8 \\quad \\checkmark$$ Dagegen: \\(3^2 = 3 \\cdot 3 = 9\\). Die \\(6\\) entsteht durch den Fehler \\(2 \\cdot 3\\)."
+  },
+  // ========== LEVEL 6 — wagnerisch: Sachaufgaben und einfache Gleichungen ==========
+  {
+    id: 31,
+    level: 6,
+    typ: "numerisch",
+    frage: "Welche Zahl \\(x\\) macht die Gleichung wahr? \\(x + 17 = 45\\)",
+    loesung: 28,
+    toleranz: 0,
+    tipp: "Nutze die Umkehraufgabe: Rechne \\(45 - 17\\).",
+    loesungsweg: "Umkehraufgabe: $$x = 45 - 17 = 28$$ Probe: \\(28 + 17 = 45\\) \\(\\checkmark\\)"
+  },
+  {
+    id: 32,
+    level: 6,
+    typ: "numerisch",
+    frage: "Ein Kinosaal hat 12 Reihen mit je 18 Sitzen. Für die Vorstellung wurden 178 Karten verkauft. 🎬 Wie viele Plätze bleiben frei?",
+    loesung: 38,
+    toleranz: 0,
+    tipp: "Berechne zuerst, wie viele Plätze der Saal insgesamt hat.",
+    loesungsweg: "Plätze insgesamt: $$12 \\cdot 18 = 216$$ Freie Plätze: $$216 - 178 = 38$$"
+  },
+  {
+    id: 33,
+    level: 6,
+    typ: "numerisch",
+    frage: "Amara denkt sich eine Zahl. Sie multipliziert sie mit 4 und addiert 7. Das Ergebnis ist 55. Welche Zahl hat Amara sich gedacht?",
+    loesung: 12,
+    toleranz: 0,
+    tipp: "Rechne rückwärts: erst \\(55 - 7\\), dann durch \\(4\\) teilen.",
+    loesungsweg: "Rückwärts mit Umkehroperationen: $$55 - 7 = 48$$ $$48 : 4 = 12$$ Probe: \\(12 \\cdot 4 + 7 = 48 + 7 = 55\\) \\(\\checkmark\\)"
+  },
+  {
+    id: 34,
+    level: 6,
+    typ: "mc",
+    frage: "Löse die Gleichung \\(x - 23 = 58\\). Was ist \\(x\\)?",
+    optionen: ["\\(81\\)", "\\(35\\)", "\\(75\\)", "\\(71\\)"],
+    korrekt: 0,
+    tipp: "Denke an die Umkehroperation: Was macht das \\(- 23\\) rückgängig?",
+    loesungsweg: "$$x = 58 + 23 = 81$$ Probe: \\(81 - 23 = 58\\) \\(\\checkmark\\) Wer \\(58 - 23 = 35\\) rechnet, hat die falsche Umkehroperation gewählt."
+  },
+  {
+    id: 35,
+    level: 6,
+    typ: "mc",
+    frage: "Jonas hat schon 14 Euro gespart und legt jede Woche 6 Euro dazu. 💰 Nach wie vielen Wochen hat er genau 50 Euro?",
+    optionen: ["8 Wochen", "9 Wochen", "6 Wochen", "36 Wochen"],
+    korrekt: 2,
+    tipp: "Wie viel Geld fehlt Jonas noch bis 50 Euro? Teile diesen Betrag durch 6.",
+    loesungsweg: "Es fehlen: $$50 - 14 = 36 \\text{ Euro}$$ Wochen: $$36 : 6 = 6$$ Wer die \\(14\\) Euro Startgeld vergisst und \\(50 : 6\\) rechnet, kommt auf gut \\(8\\) Wochen — das ist falsch."
+  },
+  {
+    id: 36,
+    level: 6,
+    typ: "mc",
+    frage: "Familie Yilmaz bestellt 3 Pizzen zu je 8 Euro und ein Getränk für 4 Euro. 🍕 Sie bezahlt mit einem 50-Euro-Schein. Wie viel Rückgeld bekommt sie?",
+    optionen: ["\\(28\\) Euro", "\\(22\\) Euro", "\\(26\\) Euro", "\\(14\\) Euro"],
+    korrekt: 1,
+    tipp: "Berechne zuerst den Gesamtpreis: \\(3 \\cdot 8 + 4\\).",
+    loesungsweg: "Gesamtpreis: $$3 \\cdot 8 + 4 = 24 + 4 = 28 \\text{ Euro}$$ Rückgeld: $$50 - 28 = 22 \\text{ Euro}$$ Vorsicht: \\(28\\) Euro ist nur der Preis — das Rückgeld muss man noch ausrechnen!"
+  }
+];
+    </script>
+    <script src="../p3-reflexion.js"></script>
+    <script src="../spirale-engine.js"></script>
+    <script src="../spirale-kids.js"></script>
+</body>
+</html>

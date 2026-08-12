@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dezimalbrüche: alle Rechenarten & negative Zahlen - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <link rel="stylesheet" href="../spirale-kids.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+// Dezimalbrüche: alle Rechenarten & negative Zahlen — DiffEngine Klasse 5/6 Content (Roadmap Welle 2, Item 3)
+const THEMA_KEY = '6-dezimalbrueche-rechnen';
+const THEMA_CONFIG = { name: 'Dezimalbrüche: alle Rechenarten & negative Zahlen', bereich: 'arithmetik', p3Enabled: true };
+const AUFGABEN = [
+  // ========== LEVEL 1 — babyleicht: Addieren & Subtrahieren ==========
+  {
+    id: 1,
+    level: 1,
+    typ: "numerisch",
+    frage: "Rechne: \\(2{,}3 + 1{,}4\\)",
+    loesung: 3.7,
+    toleranz: 0,
+    tipp: "Addiere Einer mit Einern und Zehntel mit Zehnteln.",
+    loesungsweg: "Schreibe die Zahlen untereinander, Komma unter Komma: $$2{,}3 + 1{,}4 = 3{,}7$$ Einer: \\(2 + 1 = 3\\). Zehntel: \\(3 + 4 = 7\\)."
+  },
+  {
+    id: 2,
+    level: 1,
+    typ: "mc",
+    frage: "Was ergibt \\(5{,}6 - 2{,}3\\)?",
+    optionen: ["\\(2{,}3\\)", "\\(3{,}7\\)", "\\(3{,}3\\)", "\\(33\\)"],
+    korrekt: 2,
+    tipp: "Rechne stellenweise: erst die Einer, dann die Zehntel.",
+    loesungsweg: "Komma unter Komma schreiben: $$5{,}6 - 2{,}3 = 3{,}3$$ Einer: \\(5 - 2 = 3\\). Zehntel: \\(6 - 3 = 3\\)."
+  },
+  {
+    id: 3,
+    level: 1,
+    typ: "numerisch",
+    frage: "Rechne: \\(4{,}25 + 3{,}8\\)",
+    loesung: 8.05,
+    toleranz: 0,
+    tipp: "Schreibe \\(3{,}8\\) als \\(3{,}80\\) und setze Komma unter Komma.",
+    loesungsweg: "Fülle mit einer Null auf: \\(3{,}8 = 3{,}80\\). $$4{,}25 + 3{,}80 = 8{,}05$$ Hundertstel: \\(5 + 0 = 5\\). Zehntel: \\(2 + 8 = 10\\) — schreibe \\(0\\), merke \\(1\\). Einer: \\(4 + 3 + 1 = 8\\)."
+  },
+  {
+    id: 4,
+    level: 1,
+    typ: "mc",
+    frage: "Was ergibt \\(0{,}9 + 0{,}4\\)?",
+    optionen: ["\\(0{,}13\\)", "\\(1{,}3\\)", "\\(0{,}94\\)", "\\(1{,}4\\)"],
+    korrekt: 1,
+    tipp: "\\(9\\) Zehntel plus \\(4\\) Zehntel sind \\(13\\) Zehntel. Wie viel ist das?",
+    loesungsweg: "$$0{,}9 + 0{,}4 = 13 \\text{ Zehntel} = 1{,}3$$ Aus \\(10\\) Zehnteln wird ein ganzer Einer. \\(0{,}13\\) wäre falsch — das sind nur \\(13\\) Hundertstel, viel weniger!"
+  },
+  {
+    id: 5,
+    level: 1,
+    typ: "numerisch",
+    frage: "Emil hat \\(7\\) Euro Taschengeld. Er kauft ein Eis für \\(2{,}60\\) Euro. Wie viel Euro bleiben ihm? 🍦",
+    loesung: 4.4,
+    toleranz: 0,
+    tipp: "Schreibe \\(7\\) als \\(7{,}00\\) und rechne dann \\(7{,}00 - 2{,}60\\).",
+    loesungsweg: "$$7{,}00 - 2{,}60 = 4{,}40$$ Erst bis \\(3\\) Euro sind es \\(0{,}40\\) Euro, dann noch \\(4\\) Euro bis \\(7\\). Emil bleiben \\(4{,}40\\) Euro."
+  },
+  {
+    id: 6,
+    level: 1,
+    typ: "mc",
+    frage: "Was ergibt \\(3{,}05 + 1{,}95\\)?",
+    optionen: ["\\(4{,}10\\)", "\\(5\\)", "\\(4{,}90\\)", "\\(5{,}90\\)"],
+    korrekt: 1,
+    tipp: "Schau auf die Hundertstel: \\(5 + 95 = 100\\) Hundertstel — das ist ein ganzer Einer.",
+    loesungsweg: "$$3{,}05 + 1{,}95 = 5{,}00 = 5$$ Die Nachkommastellen ergeben zusammen \\(1{,}00\\): \\(0{,}05 + 0{,}95 = 1\\). Dazu \\(3 + 1 = 4\\), also insgesamt \\(5\\)."
+  },
+  // ========== LEVEL 2 — leicht: Mal 10, 100 und einfaches Multiplizieren ==========
+  {
+    id: 7,
+    level: 2,
+    typ: "numerisch",
+    frage: "Rechne: \\(3{,}45 \\cdot 10\\)",
+    loesung: 34.5,
+    toleranz: 0,
+    tipp: "Bei \\(\\cdot 10\\) wandert das Komma um eine Stelle nach rechts.",
+    loesungsweg: "Mal \\(10\\) heißt: Komma eine Stelle nach rechts. $$3{,}45 \\cdot 10 = 34{,}5$$"
+  },
+  {
+    id: 8,
+    level: 2,
+    typ: "mc",
+    frage: "Was ergibt \\(0{,}7 \\cdot 100\\)?",
+    optionen: ["\\(70\\)", "\\(7\\)", "\\(700\\)", "\\(0{,}700\\)"],
+    korrekt: 0,
+    tipp: "Bei \\(\\cdot 100\\) wandert das Komma um zwei Stellen nach rechts. Hänge dafür eine Null an.",
+    loesungsweg: "Komma zwei Stellen nach rechts: aus \\(0{,}7 = 0{,}70\\) wird $$0{,}70 \\cdot 100 = 70$$ Achtung: \\(0{,}700\\) ist genauso viel wie \\(0{,}7\\) — da hat sich gar nichts verändert!"
+  },
+  {
+    id: 9,
+    level: 2,
+    typ: "numerisch",
+    frage: "Rechne: \\(62{,}5 : 10\\)",
+    loesung: 6.25,
+    toleranz: 0,
+    tipp: "Bei \\(: 10\\) wandert das Komma um eine Stelle nach links.",
+    loesungsweg: "Geteilt durch \\(10\\) heißt: Komma eine Stelle nach links. $$62{,}5 : 10 = 6{,}25$$"
+  },
+  {
+    id: 10,
+    level: 2,
+    typ: "mc",
+    frage: "Was ergibt \\(2{,}5 \\cdot 3\\)?",
+    optionen: ["\\(6{,}15\\)", "\\(75\\)", "\\(5{,}5\\)", "\\(7{,}5\\)"],
+    korrekt: 3,
+    tipp: "Rechne \\(25 \\cdot 3\\) und setze danach das Komma: Das Ergebnis braucht eine Nachkommastelle.",
+    loesungsweg: "Ohne Komma: \\(25 \\cdot 3 = 75\\). \\(2{,}5\\) hat eine Nachkommastelle, also bekommt auch das Ergebnis eine: $$2{,}5 \\cdot 3 = 7{,}5$$ Probe: \\(2{,}5 + 2{,}5 + 2{,}5 = 7{,}5\\)."
+  },
+  {
+    id: 11,
+    level: 2,
+    typ: "numerisch",
+    frage: "Rechne: \\(0{,}4 \\cdot 0{,}2\\)",
+    loesung: 0.08,
+    toleranz: 0,
+    tipp: "Rechne erst \\(4 \\cdot 2\\). Zähle dann die Nachkommastellen beider Zahlen zusammen.",
+    loesungsweg: "Ohne Komma: \\(4 \\cdot 2 = 8\\). Beide Zahlen haben je eine Nachkommastelle, das Ergebnis braucht also zwei: $$0{,}4 \\cdot 0{,}2 = 0{,}08$$"
+  },
+  {
+    id: 12,
+    level: 2,
+    typ: "mc",
+    frage: "Was ergibt \\(1{,}25 \\cdot 4\\)?",
+    optionen: ["\\(4{,}100\\)", "\\(5\\)", "\\(4{,}25\\)", "\\(500\\)"],
+    korrekt: 1,
+    tipp: "Rechne \\(125 \\cdot 4\\) und setze dann das Komma um zwei Stellen.",
+    loesungsweg: "Ohne Komma: \\(125 \\cdot 4 = 500\\). \\(1{,}25\\) hat zwei Nachkommastellen, also: $$1{,}25 \\cdot 4 = 5{,}00 = 5$$ Probe: \\(4\\) mal ein Viertel mehr als \\(1\\), also \\(4 + 1 = 5\\). ✓"
+  },
+  // ========== LEVEL 3 — nervenschonend: Dividieren, auch durch Dezimalbrüche ==========
+  {
+    id: 13,
+    level: 3,
+    typ: "numerisch",
+    frage: "Rechne: \\(9{,}6 : 4\\)",
+    loesung: 2.4,
+    toleranz: 0,
+    tipp: "Teile erst die \\(9\\) Einer, dann die \\(16\\) Zehntel. Setze das Komma im Ergebnis, sobald du am Komma vorbeikommst.",
+    loesungsweg: "$$9{,}6 : 4 = 2{,}4$$ \\(9 : 4 = 2\\), Rest \\(1\\). Jetzt kommt das Komma — auch ins Ergebnis! Weiter: \\(16\\) Zehntel \\(: 4 = 4\\) Zehntel. Probe: \\(2{,}4 \\cdot 4 = 9{,}6\\). ✓"
+  },
+  {
+    id: 14,
+    level: 3,
+    typ: "mc",
+    frage: "Was ergibt \\(7{,}2 : 0{,}8\\)?",
+    optionen: ["\\(0{,}9\\)", "\\(90\\)", "\\(9\\)", "\\(6{,}4\\)"],
+    korrekt: 2,
+    tipp: "Verschiebe das Komma bei beiden Zahlen um eine Stelle nach rechts. Dann teilst du ganze Zahlen.",
+    loesungsweg: "Komma bei beiden Zahlen eine Stelle nach rechts: $$7{,}2 : 0{,}8 = 72 : 8 = 9$$ Der Wert ändert sich dabei nicht, weil beide Zahlen mal \\(10\\) genommen werden."
+  },
+  {
+    id: 15,
+    level: 3,
+    typ: "numerisch",
+    frage: "Wie oft passt \\(0{,}5\\) in \\(3{,}5\\)? Rechne \\(3{,}5 : 0{,}5\\).",
+    loesung: 7,
+    toleranz: 0,
+    tipp: "Verschiebe das Komma bei beiden Zahlen um eine Stelle: Dann steht da \\(35 : 5\\).",
+    loesungsweg: "$$3{,}5 : 0{,}5 = 35 : 5 = 7$$ Vorstellen kannst du es dir so: \\(0{,}5\\) ist ein halber Euro — und \\(7\\) halbe Euro sind \\(3{,}50\\) Euro."
+  },
+  {
+    id: 16,
+    level: 3,
+    typ: "mc",
+    frage: "Du willst \\(4{,}8 : 0{,}12\\) rechnen. Um wie viele Stellen musst du das Komma bei beiden Zahlen verschieben, damit der Divisor eine ganze Zahl wird?",
+    optionen: ["um 1 Stelle", "um 2 Stellen", "um 3 Stellen", "gar nicht"],
+    korrekt: 1,
+    tipp: "Schau auf den Divisor \\(0{,}12\\): Wie viele Nachkommastellen hat er?",
+    loesungsweg: "\\(0{,}12\\) hat zwei Nachkommastellen. Also beide Zahlen um zwei Stellen verschieben: $$4{,}8 : 0{,}12 = 480 : 12 = 40$$ Beim Dividend \\(4{,}8\\) musst du dafür eine Null anhängen."
+  },
+  {
+    id: 17,
+    level: 3,
+    typ: "numerisch",
+    frage: "Rechne: \\(0{,}72 : 6\\)",
+    loesung: 0.12,
+    toleranz: 0,
+    tipp: "\\(0 : 6 = 0\\) — dann Komma setzen und mit \\(72\\) Hundertsteln weiterrechnen.",
+    loesungsweg: "$$0{,}72 : 6 = 0{,}12$$ \\(0\\) Einer \\(: 6 = 0\\), Komma setzen. \\(7\\) Zehntel \\(: 6 = 1\\) Zehntel, Rest \\(1\\). \\(12\\) Hundertstel \\(: 6 = 2\\) Hundertstel. Probe: \\(0{,}12 \\cdot 6 = 0{,}72\\). ✓"
+  },
+  {
+    id: 18,
+    level: 3,
+    typ: "mc",
+    frage: "Was ergibt \\(12{,}6 : 0{,}3\\)?",
+    optionen: ["\\(4{,}2\\)", "\\(420\\)", "\\(0{,}42\\)", "\\(42\\)"],
+    korrekt: 3,
+    tipp: "Komma bei beiden Zahlen um eine Stelle nach rechts verschieben: \\(126 : 3\\).",
+    loesungsweg: "$$12{,}6 : 0{,}3 = 126 : 3 = 42$$ Wichtig: Das Komma bei beiden Zahlen gleich weit verschieben, sonst stimmt das Ergebnis um das Zehnfache nicht."
+  },
+  // ========== LEVEL 4 — mittel: Rechenausdrücke, Überschlag & sinnvolle Genauigkeit ==========
+  {
+    id: 19,
+    level: 4,
+    typ: "numerisch",
+    frage: "Rechne: \\(2{,}5 + 3 \\cdot 1{,}2\\)",
+    loesung: 6.1,
+    toleranz: 0,
+    tipp: "Punktrechnung vor Strichrechnung: Rechne zuerst \\(3 \\cdot 1{,}2\\).",
+    loesungsweg: "Erst mal, dann plus: $$3 \\cdot 1{,}2 = 3{,}6$$ $$2{,}5 + 3{,}6 = 6{,}1$$"
+  },
+  {
+    id: 20,
+    level: 4,
+    typ: "mc",
+    frage: "Überschlage: \\(19{,}7 \\cdot 4{,}1 \\approx \\;?\\)",
+    optionen: ["\\(8\\)", "\\(80\\)", "\\(800\\)", "\\(60\\)"],
+    korrekt: 1,
+    tipp: "Runde beide Zahlen auf glatte Werte: \\(19{,}7 \\approx 20\\) und \\(4{,}1 \\approx 4\\).",
+    loesungsweg: "Runden und im Kopf rechnen: $$19{,}7 \\cdot 4{,}1 \\approx 20 \\cdot 4 = 80$$ Das genaue Ergebnis \\(80{,}77\\) liegt ganz nah dran — der Überschlag zeigt dir, wo das Komma hingehört."
+  },
+  {
+    id: 21,
+    level: 4,
+    typ: "numerisch",
+    frage: "Rechne: \\((7{,}8 - 3{,}3) : 0{,}9\\)",
+    loesung: 5,
+    toleranz: 0,
+    tipp: "Die Klammer zuerst! Danach beim Teilen das Komma bei beiden Zahlen verschieben.",
+    loesungsweg: "Klammer zuerst: $$7{,}8 - 3{,}3 = 4{,}5$$ Dann dividieren: $$4{,}5 : 0{,}9 = 45 : 9 = 5$$"
+  },
+  {
+    id: 22,
+    level: 4,
+    typ: "mc",
+    frage: "Überschlage: \\(61{,}8 : 2{,}9 \\approx \\;?\\)",
+    optionen: ["\\(20\\)", "\\(2\\)", "\\(200\\)", "\\(30\\)"],
+    korrekt: 0,
+    tipp: "Runde so, dass die Division glatt aufgeht: \\(61{,}8 \\approx 60\\) und \\(2{,}9 \\approx 3\\).",
+    loesungsweg: "$$61{,}8 : 2{,}9 \\approx 60 : 3 = 20$$ Beim Überschlagen darfst du so runden, dass die Rechnung im Kopf leicht wird."
+  },
+  {
+    id: 23,
+    level: 4,
+    typ: "numerisch",
+    frage: "Rechne: \\(10 - 2 \\cdot 3{,}4\\)",
+    loesung: 3.2,
+    toleranz: 0,
+    tipp: "Punkt vor Strich: Erst \\(2 \\cdot 3{,}4\\), dann von \\(10\\) abziehen.",
+    loesungsweg: "$$2 \\cdot 3{,}4 = 6{,}8$$ $$10 - 6{,}8 = 3{,}2$$ Wer von links nach rechts rechnet, bekommt \\(8 \\cdot 3{,}4 = 27{,}2\\) — das ist falsch!"
+  },
+  {
+    id: 24,
+    level: 4,
+    typ: "mc",
+    frage: "Lina misst ihre Körpergröße mit dem Zollstock. Welche Angabe ist sinnvoll genau?",
+    optionen: ["\\(1{,}5236 \\text{ m}\\)", "\\(2 \\text{ m}\\)", "\\(1{,}52 \\text{ m}\\)", "\\(1{,}523645 \\text{ m}\\)"],
+    korrekt: 2,
+    tipp: "Mit einem Zollstock kannst du ungefähr auf einen Zentimeter genau messen. Wie viele Nachkommastellen sind das bei Metern?",
+    loesungsweg: "Ein Zentimeter ist ein Hundertstel Meter — also sind zwei Nachkommastellen sinnvoll: $$1{,}52 \\text{ m}$$ Mehr Stellen kann der Zollstock gar nicht messen, und \\(2 \\text{ m}\\) ist viel zu grob gerundet."
+  },
+  // ========== LEVEL 5 — anspruchsvoll: Negative Zahlen im Alltag ==========
+  {
+    id: 25,
+    level: 5,
+    typ: "numerisch",
+    frage: "Am Morgen zeigt das Thermometer \\(-3\\,^\\circ\\text{C}\\), am Mittag \\(5\\,^\\circ\\text{C}\\). Um wie viele Grad ist die Temperatur gestiegen? 🌡️",
+    loesung: 8,
+    toleranz: 0,
+    tipp: "Zähle an der Zahlengeraden: von \\(-3\\) bis \\(0\\), dann von \\(0\\) bis \\(5\\).",
+    loesungsweg: "An der Zahlengeraden: von \\(-3\\) bis \\(0\\) sind es \\(3\\) Schritte, von \\(0\\) bis \\(5\\) noch \\(5\\) Schritte. $$3 + 5 = 8$$ Die Temperatur ist um \\(8\\) Grad gestiegen."
+  },
+  {
+    id: 26,
+    level: 5,
+    typ: "mc",
+    frage: "Vier Städte melden ihre Nachttemperatur. Welche ist die kälteste?",
+    optionen: ["\\(-2\\,^\\circ\\text{C}\\)", "\\(-7\\,^\\circ\\text{C}\\)", "\\(0\\,^\\circ\\text{C}\\)", "\\(3\\,^\\circ\\text{C}\\)"],
+    korrekt: 1,
+    tipp: "Je weiter links eine Zahl auf der Zahlengeraden liegt, desto kleiner ist sie.",
+    loesungsweg: "Auf der Zahlengeraden liegt \\(-7\\) am weitesten links: $$-7 < -2 < 0 < 3$$ Bei negativen Zahlen gilt: Je größer die Zahl hinter dem Minus, desto kälter!"
+  },
+  {
+    id: 27,
+    level: 5,
+    typ: "numerisch",
+    frage: "Bens Kontostand ist \\(-4\\) Euro — er hat also Schulden. Nun werden \\(10\\) Euro Taschengeld eingezahlt. Wie lautet der neue Kontostand in Euro?",
+    loesung: 6,
+    toleranz: 0,
+    tipp: "Erst gleichen die \\(10\\) Euro die \\(4\\) Euro Schulden aus. Was bleibt übrig?",
+    loesungsweg: "$$-4 + 10 = 6$$ Von den \\(10\\) Euro gehen \\(4\\) Euro für die Schulden weg, es bleiben \\(6\\) Euro. Der neue Kontostand ist \\(6\\) Euro."
+  },
+  {
+    id: 28,
+    level: 5,
+    typ: "mc",
+    frage: "Welche Reihenfolge ist richtig geordnet — von der kleinsten zur größten Zahl?",
+    optionen: ["\\(-1 < -5 < 0 < 2\\)", "\\(0 < -1 < -5 < 2\\)", "\\(-5 < -1 < 0 < 2\\)", "\\(2 < 0 < -1 < -5\\)"],
+    korrekt: 2,
+    tipp: "Male dir die Zahlengerade auf: Links stehen die kleinen Zahlen, rechts die großen.",
+    loesungsweg: "Auf der Zahlengeraden von links nach rechts: $$-5 < -1 < 0 < 2$$ \\(-5\\) liegt am weitesten links und ist deshalb die kleinste Zahl — kleiner als \\(-1\\)!"
+  },
+  {
+    id: 29,
+    level: 5,
+    typ: "numerisch",
+    frage: "Welche Zahl liegt auf der Zahlengeraden genau in der Mitte zwischen \\(-6\\) und \\(2\\)?",
+    loesung: -2,
+    toleranz: 0,
+    tipp: "Wie weit ist es von \\(-6\\) bis \\(2\\)? Gehe dann die Hälfte dieses Weges von \\(-6\\) aus nach rechts.",
+    loesungsweg: "Von \\(-6\\) bis \\(2\\) sind es \\(8\\) Schritte. Die Hälfte davon sind \\(4\\) Schritte. $$-6 + 4 = -2$$ Probe: Von \\(-2\\) sind es \\(4\\) Schritte nach links bis \\(-6\\) und \\(4\\) nach rechts bis \\(2\\). ✓"
+  },
+  {
+    id: 30,
+    level: 5,
+    typ: "mc",
+    frage: "Es sind \\(4\\,^\\circ\\text{C}\\). In der Nacht sinkt die Temperatur um \\(9\\) Grad. Welche Temperatur wird erreicht?",
+    optionen: ["\\(5\\,^\\circ\\text{C}\\)", "\\(-13\\,^\\circ\\text{C}\\)", "\\(13\\,^\\circ\\text{C}\\)", "\\(-5\\,^\\circ\\text{C}\\)"],
+    korrekt: 3,
+    tipp: "Gehe an der Zahlengeraden von \\(4\\) aus \\(9\\) Schritte nach links — dabei geht es an der \\(0\\) vorbei.",
+    loesungsweg: "$$4 - 9 = -5$$ Von \\(4\\) bis \\(0\\) sind es \\(4\\) Schritte, dann noch \\(5\\) Schritte weiter unter null: \\(-5\\,^\\circ\\text{C}\\)."
+  },
+  // ========== LEVEL 6 — wagnerisch: Sachaufgaben ==========
+  {
+    id: 31,
+    level: 6,
+    typ: "numerisch",
+    frage: "Mila kauft \\(3\\) Hefte für je \\(1{,}25\\) Euro und einen Kleber für \\(2{,}40\\) Euro. Sie bezahlt mit einem \\(10\\)-Euro-Schein. Wie viel Euro Rückgeld bekommt sie? 🛒",
+    loesung: 3.85,
+    toleranz: 0,
+    tipp: "Rechne erst den Gesamtpreis aus: \\(3 \\cdot 1{,}25 + 2{,}40\\). Ziehe ihn dann von \\(10\\) Euro ab.",
+    loesungsweg: "Hefte: $$3 \\cdot 1{,}25 = 3{,}75$$ Gesamtpreis: $$3{,}75 + 2{,}40 = 6{,}15$$ Rückgeld: $$10 - 6{,}15 = 3{,}85$$ Mila bekommt \\(3{,}85\\) Euro zurück."
+  },
+  {
+    id: 32,
+    level: 6,
+    typ: "mc",
+    frage: "Familie Yilmaz tankt \\(32{,}5\\) Liter Benzin. Ein Liter kostet \\(1{,}80\\) Euro. Wie viel muss die Familie bezahlen? ⛽",
+    optionen: ["\\(58{,}50 \\text{ €}\\)", "\\(5{,}85 \\text{ €}\\)", "\\(585 \\text{ €}\\)", "\\(34{,}30 \\text{ €}\\)"],
+    korrekt: 0,
+    tipp: "Rechne \\(32{,}5 \\cdot 1{,}80\\). Mit einem Überschlag (\\(30 \\cdot 2 = 60\\)) prüfst du, wo das Komma hingehört.",
+    loesungsweg: "$$32{,}5 \\cdot 1{,}80 = 58{,}50$$ Überschlag: \\(30 \\cdot 2 = 60\\) — passt zu \\(58{,}50\\) Euro. \\(5{,}85\\) € oder \\(585\\) € wären viel zu wenig oder viel zu viel."
+  },
+  {
+    id: 33,
+    level: 6,
+    typ: "numerisch",
+    frage: "Morgens sind es \\(-6\\,^\\circ\\text{C}\\). Bis mittags wird es \\(12\\) Grad wärmer, bis zum Abend dann wieder \\(4\\) Grad kälter. Welche Temperatur in \\(^\\circ\\text{C}\\) ist es am Abend?",
+    loesung: 2,
+    toleranz: 0,
+    tipp: "Rechne Schritt für Schritt: erst \\(-6 + 12\\), dann vom Ergebnis \\(4\\) abziehen.",
+    loesungsweg: "Mittags: $$-6 + 12 = 6$$ Abends: $$6 - 4 = 2$$ Am Abend sind es \\(2\\,^\\circ\\text{C}\\)."
+  },
+  {
+    id: 34,
+    level: 6,
+    typ: "mc",
+    frage: "Jonas hat \\(20\\) Euro. Er möchte ein Buch für \\(7{,}95\\) Euro, ein Spiel für \\(6{,}10\\) Euro und Stifte für \\(4{,}85\\) Euro kaufen. Reicht sein Geld?",
+    optionen: ["Nein, es fehlen etwa \\(2\\) Euro", "Ja, es bleibt genau \\(5\\) Euro übrig", "Nein, es fehlen etwa \\(10\\) Euro", "Ja, es bleibt sogar etwas mehr als \\(1\\) Euro übrig"],
+    korrekt: 3,
+    tipp: "Überschlage zuerst: \\(8 + 6 + 5 = 19\\). Rechne dann genau nach.",
+    loesungsweg: "Genau gerechnet: $$7{,}95 + 6{,}10 + 4{,}85 = 18{,}90$$ Jonas hat \\(20\\) Euro: $$20 - 18{,}90 = 1{,}10$$ Sein Geld reicht, und es bleiben \\(1{,}10\\) Euro übrig — etwas mehr als \\(1\\) Euro."
+  },
+  {
+    id: 35,
+    level: 6,
+    typ: "numerisch",
+    frage: "Papa tankt \\(25\\) Liter und bezahlt \\(42{,}50\\) Euro. Wie viel kostet ein Liter? Gib den Preis in Euro an.",
+    loesung: 1.7,
+    toleranz: 0,
+    tipp: "Teile den Gesamtpreis durch die Litermenge: \\(42{,}50 : 25\\).",
+    loesungsweg: "$$42{,}50 : 25 = 1{,}70$$ Rechne schriftlich: \\(42 : 25 = 1\\), Rest \\(17\\). Komma setzen. \\(175 : 25 = 7\\), dann \\(0\\). Probe: \\(25 \\cdot 1{,}70 = 42{,}50\\). ✓ Ein Liter kostet \\(1{,}70\\) Euro."
+  },
+  {
+    id: 36,
+    level: 6,
+    typ: "mc",
+    frage: "In der Nacht waren es \\(-8\\,^\\circ\\text{C}\\), am Nachmittag zeigt das Thermometer \\(3\\,^\\circ\\text{C}\\). Um wie viele Grad ist die Temperatur gestiegen?",
+    optionen: ["\\(5\\) Grad", "\\(8\\) Grad", "\\(11\\) Grad", "\\(-5\\) Grad"],
+    korrekt: 2,
+    tipp: "Zerlege den Weg an der Zahlengeraden: von \\(-8\\) bis \\(0\\) und von \\(0\\) bis \\(3\\).",
+    loesungsweg: "Von \\(-8\\) bis \\(0\\) sind es \\(8\\) Grad, von \\(0\\) bis \\(3\\) noch \\(3\\) Grad: $$8 + 3 = 11$$ Die Temperatur ist um \\(11\\) Grad gestiegen. Wer nur \\(8 - 3 = 5\\) rechnet, vergisst, dass es über die \\(0\\) hinweggeht."
+  }
+];
+    </script>
+    <script src="../p3-reflexion.js"></script>
+    <script src="../spirale-engine.js"></script>
+    <script src="../spirale-kids.js"></script>
+</body>
+</html>

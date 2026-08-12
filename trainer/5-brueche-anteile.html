@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brüche & Anteile - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <link rel="stylesheet" href="../spirale-kids.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+// Brüche & Anteile — DiffEngine Klasse 5/6 Content (Roadmap Welle 2, Item 3)
+const THEMA_KEY = '5-brueche-anteile';
+const THEMA_CONFIG = { name: 'Brüche & Anteile', bereich: 'arithmetik', p3Enabled: true };
+const AUFGABEN = [
+  // ========== LEVEL 1 — babyleicht: Anteile ablesen und benennen ==========
+  {
+    id: 1,
+    level: 1,
+    typ: "mc",
+    frage: "Eine Pizza 🍕 ist in 8 gleich große Stücke geschnitten. Mia isst 3 Stücke. Welcher Anteil der Pizza ist das?",
+    optionen: ["\\(\\frac{8}{3}\\)", "\\(\\frac{3}{5}\\)", "\\(\\frac{3}{8}\\)", "\\(\\frac{5}{8}\\)"],
+    korrekt: 2,
+    tipp: "Unten steht, in wie viele Stücke die Pizza geteilt ist. Oben steht, wie viele Stücke Mia isst.",
+    loesungsweg: "Die Pizza hat 8 gleich große Stücke, also ist der Nenner 8. Mia isst 3 Stücke, also ist der Zähler 3. $$\\text{Anteil} = \\frac{3}{8}$$"
+  },
+  {
+    id: 2,
+    level: 1,
+    typ: "numerisch",
+    frage: "Schau dir den Bruch \\(\\frac{3}{7}\\) an. Wie heißt der Zähler?",
+    loesung: 3,
+    toleranz: 0,
+    tipp: "Der Zähler ist die Zahl über dem Bruchstrich.",
+    loesungsweg: "Bei \\(\\frac{3}{7}\\) steht die \\(3\\) über dem Bruchstrich. $$\\text{Zähler} = 3$$ Die \\(7\\) unter dem Strich ist der Nenner."
+  },
+  {
+    id: 3,
+    level: 1,
+    typ: "mc",
+    frage: "Was gibt der Nenner eines Bruchs an?",
+    optionen: ["Wie viele Teile gefärbt sind", "In wie viele gleich große Teile das Ganze geteilt ist", "Wie groß das Ganze ist", "Wie viele Teile übrig bleiben"],
+    korrekt: 1,
+    tipp: "Der Nenner steht unter dem Bruchstrich. Denk an eine Pizza: Was sagt dir die untere Zahl?",
+    loesungsweg: "Der Nenner (unten) sagt, in wie viele gleich große Teile das Ganze geteilt ist. Beispiel: Bei \\(\\frac{3}{8}\\) ist das Ganze in \\(8\\) Teile geteilt. Der Zähler (oben) sagt, wie viele davon gemeint sind."
+  },
+  {
+    id: 4,
+    level: 1,
+    typ: "numerisch",
+    frage: "Jedes Stück einer Schokoladentafel 🍫 ist genau \\(\\frac{1}{24}\\) der Tafel. Wie viele Stücke hat die Tafel?",
+    loesung: 24,
+    toleranz: 0,
+    tipp: "Der Nenner verrät dir, in wie viele gleich große Stücke die Tafel geteilt ist.",
+    loesungsweg: "Ein Stück ist \\(\\frac{1}{24}\\) der Tafel. Der Nenner \\(24\\) sagt: Die Tafel ist in \\(24\\) gleich große Stücke geteilt. $$\\text{Anzahl Stücke} = 24$$"
+  },
+  {
+    id: 5,
+    level: 1,
+    typ: "mc",
+    frage: "Welcher Bruch liegt am Zahlenstrahl genau in der Mitte zwischen \\(0\\) und \\(1\\)?",
+    optionen: ["\\(\\frac{1}{2}\\)", "\\(\\frac{1}{4}\\)", "\\(\\frac{2}{1}\\)", "\\(\\frac{1}{3}\\)"],
+    korrekt: 0,
+    tipp: "Die Mitte teilt die Strecke von \\(0\\) bis \\(1\\) in zwei gleich große Teile.",
+    loesungsweg: "Die Mitte zwischen \\(0\\) und \\(1\\) teilt die Strecke in \\(2\\) gleiche Teile. Ein Teil davon ist $$\\frac{1}{2}$$ \\(\\frac{1}{4}\\) liegt näher an der \\(0\\), \\(\\frac{2}{1} = 2\\) liegt rechts von der \\(1\\)."
+  },
+  {
+    id: 6,
+    level: 1,
+    typ: "mc",
+    frage: "Emre isst 5 von 20 Gummibärchen. Welcher Bruch beschreibt den Anteil, den Emre isst?",
+    optionen: ["\\(\\frac{20}{5}\\)", "\\(\\frac{5}{15}\\)", "\\(\\frac{1}{5}\\)", "\\(\\frac{5}{20}\\)"],
+    korrekt: 3,
+    tipp: "Gegessene Gummibärchen nach oben, alle Gummibärchen nach unten.",
+    loesungsweg: "Es gibt insgesamt \\(20\\) Gummibärchen, das ist der Nenner. Emre isst \\(5\\), das ist der Zähler. $$\\text{Anteil} = \\frac{5}{20}$$"
+  },
+  // ========== LEVEL 2 — leicht: Erweitern und Kürzen ==========
+  {
+    id: 7,
+    level: 2,
+    typ: "numerisch",
+    frage: "Erweitere \\(\\frac{2}{3}\\) mit \\(4\\). Welcher Zähler ergibt sich?",
+    loesung: 8,
+    toleranz: 0,
+    tipp: "Erweitern heißt: Zähler UND Nenner mit derselben Zahl malnehmen.",
+    loesungsweg: "Erweitern mit \\(4\\): Zähler und Nenner mal \\(4\\). $$\\frac{2}{3} = \\frac{2 \\cdot 4}{3 \\cdot 4} = \\frac{8}{12}$$ Der neue Zähler ist \\(8\\)."
+  },
+  {
+    id: 8,
+    level: 2,
+    typ: "mc",
+    frage: "Kürze \\(\\frac{12}{18}\\) vollständig. Was kommt heraus?",
+    optionen: ["\\(\\frac{3}{4}\\)", "\\(\\frac{2}{3}\\)", "\\(\\frac{2}{9}\\)", "\\(\\frac{1}{3}\\)"],
+    korrekt: 1,
+    tipp: "Suche die größte Zahl, durch die du \\(12\\) und \\(18\\) beide teilen kannst.",
+    loesungsweg: "Die größte gemeinsame Zahl von \\(12\\) und \\(18\\) ist \\(6\\). $$\\frac{12}{18} = \\frac{12 : 6}{18 : 6} = \\frac{2}{3}$$"
+  },
+  {
+    id: 9,
+    level: 2,
+    typ: "numerisch",
+    frage: "Fülle die Lücke: \\(\\frac{3}{4} = \\frac{\\square}{20}\\). Welche Zahl gehört in die Lücke?",
+    loesung: 15,
+    toleranz: 0,
+    tipp: "Womit wurde der Nenner \\(4\\) malgenommen, damit \\(20\\) herauskommt? Nimm den Zähler mit derselben Zahl mal.",
+    loesungsweg: "Von \\(4\\) nach \\(20\\): mal \\(5\\). Also auch den Zähler mal \\(5\\): $$\\frac{3}{4} = \\frac{3 \\cdot 5}{4 \\cdot 5} = \\frac{15}{20}$$ In die Lücke gehört \\(15\\)."
+  },
+  {
+    id: 10,
+    level: 2,
+    typ: "mc",
+    frage: "Welcher Bruch ist gleichwertig zu \\(\\frac{1}{2}\\)?",
+    optionen: ["\\(\\frac{3}{6}\\)", "\\(\\frac{2}{3}\\)", "\\(\\frac{1}{4}\\)", "\\(\\frac{3}{5}\\)"],
+    korrekt: 0,
+    tipp: "Gleichwertig heißt: Du kannst den Bruch durch Kürzen in \\(\\frac{1}{2}\\) verwandeln.",
+    loesungsweg: "Kürze \\(\\frac{3}{6}\\) mit \\(3\\): $$\\frac{3}{6} = \\frac{3 : 3}{6 : 3} = \\frac{1}{2}$$ Die anderen Brüche haben einen anderen Wert."
+  },
+  {
+    id: 11,
+    level: 2,
+    typ: "numerisch",
+    frage: "Kürze \\(\\frac{15}{25}\\) vollständig. Wie heißt der Nenner des gekürzten Bruchs?",
+    loesung: 5,
+    toleranz: 0,
+    tipp: "\\(15\\) und \\(25\\) kann man beide durch dieselbe Zahl teilen. Welche?",
+    loesungsweg: "\\(15\\) und \\(25\\) lassen sich beide durch \\(5\\) teilen. $$\\frac{15}{25} = \\frac{15 : 5}{25 : 5} = \\frac{3}{5}$$ Der Nenner ist \\(5\\)."
+  },
+  {
+    id: 12,
+    level: 2,
+    typ: "mc",
+    frage: "Welcher Bruch lässt sich NICHT weiter kürzen?",
+    optionen: ["\\(\\frac{4}{8}\\)", "\\(\\frac{3}{9}\\)", "\\(\\frac{5}{7}\\)", "\\(\\frac{6}{10}\\)"],
+    korrekt: 2,
+    tipp: "Suche bei jedem Bruch eine Zahl größer als \\(1\\), durch die Zähler und Nenner beide teilbar sind.",
+    loesungsweg: "\\(\\frac{4}{8}\\) kürzt man mit \\(4\\), \\(\\frac{3}{9}\\) mit \\(3\\), \\(\\frac{6}{10}\\) mit \\(2\\). Nur bei $$\\frac{5}{7}$$ haben Zähler und Nenner keinen gemeinsamen Teiler außer \\(1\\)."
+  },
+  // ========== LEVEL 3 — nervenschonend: Gleichnamige Brüche vergleichen, addieren, subtrahieren ==========
+  {
+    id: 13,
+    level: 3,
+    typ: "numerisch",
+    frage: "Rechne: \\(\\frac{2}{9} + \\frac{5}{9} = \\frac{\\square}{9}\\). Welcher Zähler gehört in die Lücke?",
+    loesung: 7,
+    toleranz: 0,
+    tipp: "Bei gleichem Nenner rechnest du nur mit den Zählern. Der Nenner bleibt.",
+    loesungsweg: "Gleiche Nenner: Nur die Zähler addieren. $$\\frac{2}{9} + \\frac{5}{9} = \\frac{2 + 5}{9} = \\frac{7}{9}$$ Der Zähler ist \\(7\\)."
+  },
+  {
+    id: 14,
+    level: 3,
+    typ: "mc",
+    frage: "Rechne: \\(\\frac{3}{8} + \\frac{2}{8}\\)",
+    optionen: ["\\(\\frac{5}{16}\\)", "\\(\\frac{6}{8}\\)", "\\(\\frac{1}{8}\\)", "\\(\\frac{5}{8}\\)"],
+    korrekt: 3,
+    tipp: "Achtung: Der Nenner bleibt beim Addieren gleich!",
+    loesungsweg: "$$\\frac{3}{8} + \\frac{2}{8} = \\frac{3 + 2}{8} = \\frac{5}{8}$$ Wer die Nenner mit addiert, bekommt fälschlich \\(\\frac{5}{16}\\)."
+  },
+  {
+    id: 15,
+    level: 3,
+    typ: "numerisch",
+    frage: "Ida hat schon \\(\\frac{2}{5}\\) ihres Weges geschafft. Wie viele Fünftel fehlen ihr noch bis zum Ganzen? Gib nur den Zähler an.",
+    loesung: 3,
+    toleranz: 0,
+    tipp: "Ein Ganzes sind \\(\\frac{5}{5}\\). Wie viele Fünftel fehlen von \\(\\frac{2}{5}\\) bis dahin?",
+    loesungsweg: "Ein Ganzes ist \\(\\frac{5}{5}\\). $$\\frac{5}{5} - \\frac{2}{5} = \\frac{3}{5}$$ Es fehlen noch \\(3\\) Fünftel."
+  },
+  {
+    id: 16,
+    level: 3,
+    typ: "mc",
+    frage: "Welcher Bruch ist der größte?",
+    optionen: ["\\(\\frac{5}{12}\\)", "\\(\\frac{7}{12}\\)", "\\(\\frac{3}{12}\\)", "\\(\\frac{6}{12}\\)"],
+    korrekt: 1,
+    tipp: "Alle Nenner sind gleich. Vergleiche also nur die Zähler.",
+    loesungsweg: "Bei gleichem Nenner ist der Bruch mit dem größten Zähler am größten. $$\\frac{3}{12} < \\frac{5}{12} < \\frac{6}{12} < \\frac{7}{12}$$"
+  },
+  {
+    id: 17,
+    level: 3,
+    typ: "numerisch",
+    frage: "Lena trinkt \\(\\frac{3}{8}\\) einer Saftflasche 🧃, Tom trinkt \\(\\frac{2}{8}\\) derselben Flasche. Wie viele Achtel trinken sie zusammen? Gib nur den Zähler an.",
+    loesung: 5,
+    toleranz: 0,
+    tipp: "Beide Anteile haben denselben Nenner. Addiere die Zähler.",
+    loesungsweg: "$$\\frac{3}{8} + \\frac{2}{8} = \\frac{5}{8}$$ Zusammen trinken sie \\(5\\) Achtel der Flasche."
+  },
+  {
+    id: 18,
+    level: 3,
+    typ: "mc",
+    frage: "Rechne: \\(\\frac{9}{11} - \\frac{4}{11}\\)",
+    optionen: ["\\(\\frac{5}{11}\\)", "\\(\\frac{13}{11}\\)", "\\(\\frac{5}{22}\\)", "\\(\\frac{4}{11}\\)"],
+    korrekt: 0,
+    tipp: "Ziehe nur die Zähler voneinander ab. Der Nenner bleibt.",
+    loesungsweg: "$$\\frac{9}{11} - \\frac{4}{11} = \\frac{9 - 4}{11} = \\frac{5}{11}$$"
+  },
+  // ========== LEVEL 4 — fordernd: Gemischte Zahlen ↔ unechte Brüche ==========
+  {
+    id: 19,
+    level: 4,
+    typ: "mc",
+    frage: "Schreibe \\(\\frac{7}{4}\\) als gemischte Zahl.",
+    optionen: ["\\(1\\frac{1}{4}\\)", "\\(2\\frac{3}{4}\\)", "\\(1\\frac{3}{4}\\)", "\\(3\\frac{1}{4}\\)"],
+    korrekt: 2,
+    tipp: "Wie oft passt \\(\\frac{4}{4}\\) (ein Ganzes) in \\(\\frac{7}{4}\\)? Was bleibt übrig?",
+    loesungsweg: "\\(\\frac{4}{4}\\) ist ein Ganzes. In \\(\\frac{7}{4}\\) steckt einmal \\(\\frac{4}{4}\\), übrig bleiben \\(\\frac{3}{4}\\). $$\\frac{7}{4} = \\frac{4}{4} + \\frac{3}{4} = 1\\frac{3}{4}$$"
+  },
+  {
+    id: 20,
+    level: 4,
+    typ: "numerisch",
+    frage: "Wandle \\(2\\frac{1}{3}\\) in einen unechten Bruch mit Nenner \\(3\\) um. Wie heißt der Zähler?",
+    loesung: 7,
+    toleranz: 0,
+    tipp: "Zwei Ganze sind \\(\\frac{6}{3}\\). Zähle die Drittel zusammen.",
+    loesungsweg: "$$2\\frac{1}{3} = \\frac{2 \\cdot 3}{3} + \\frac{1}{3} = \\frac{6}{3} + \\frac{1}{3} = \\frac{7}{3}$$ Der Zähler ist \\(7\\)."
+  },
+  {
+    id: 21,
+    level: 4,
+    typ: "mc",
+    frage: "Welcher unechte Bruch ist gleich \\(3\\frac{1}{2}\\)?",
+    optionen: ["\\(\\frac{6}{2}\\)", "\\(\\frac{5}{2}\\)", "\\(\\frac{31}{2}\\)", "\\(\\frac{7}{2}\\)"],
+    korrekt: 3,
+    tipp: "Rechne die \\(3\\) Ganzen in Halbe um und zähle das eine Halbe dazu.",
+    loesungsweg: "\\(3\\) Ganze sind \\(3 \\cdot 2 = 6\\) Halbe. Dazu noch \\(1\\) Halbes: $$3\\frac{1}{2} = \\frac{6}{2} + \\frac{1}{2} = \\frac{7}{2}$$ Achtung: Man darf die \\(3\\) und die \\(1\\) nicht einfach aneinanderhängen!"
+  },
+  {
+    id: 22,
+    level: 4,
+    typ: "numerisch",
+    frage: "Für eine Klassenfeier gibt es \\(\\frac{13}{4}\\) Pizzen 🍕. Wie viele GANZE Pizzen stecken darin?",
+    loesung: 3,
+    toleranz: 0,
+    tipp: "Eine ganze Pizza sind \\(\\frac{4}{4}\\). Wie oft passt das in \\(\\frac{13}{4}\\)?",
+    loesungsweg: "$$\\frac{13}{4} = \\frac{12}{4} + \\frac{1}{4} = 3\\frac{1}{4}$$ Es stecken \\(3\\) ganze Pizzen darin, dazu noch ein Viertel."
+  },
+  {
+    id: 23,
+    level: 4,
+    typ: "mc",
+    frage: "Schreibe \\(\\frac{9}{5}\\) als gemischte Zahl.",
+    optionen: ["\\(2\\frac{4}{5}\\)", "\\(1\\frac{4}{5}\\)", "\\(1\\frac{1}{5}\\)", "\\(\\frac{4}{5}\\)"],
+    korrekt: 1,
+    tipp: "Wie oft passen \\(\\frac{5}{5}\\) in \\(\\frac{9}{5}\\)? Wie viele Fünftel bleiben übrig?",
+    loesungsweg: "\\(\\frac{5}{5}\\) ist ein Ganzes. $$\\frac{9}{5} = \\frac{5}{5} + \\frac{4}{5} = 1\\frac{4}{5}$$"
+  },
+  {
+    id: 24,
+    level: 4,
+    typ: "numerisch",
+    frage: "Wandle \\(4\\frac{2}{5}\\) in einen unechten Bruch mit Nenner \\(5\\) um. Wie heißt der Zähler?",
+    loesung: 22,
+    toleranz: 0,
+    tipp: "Rechne zuerst die \\(4\\) Ganzen in Fünftel um.",
+    loesungsweg: "\\(4\\) Ganze sind \\(4 \\cdot 5 = 20\\) Fünftel. $$4\\frac{2}{5} = \\frac{20}{5} + \\frac{2}{5} = \\frac{22}{5}$$ Der Zähler ist \\(22\\)."
+  },
+  // ========== LEVEL 5 — knifflig: Anteile von Zahlen und Größen berechnen ==========
+  {
+    id: 25,
+    level: 5,
+    typ: "numerisch",
+    frage: "Samira bekommt \\(\\frac{3}{4}\\) von \\(20\\) € Taschengeld ausgezahlt. Wie viel ist das? Gib das Ergebnis in € an.",
+    loesung: 15,
+    toleranz: 0,
+    tipp: "Teile erst durch den Nenner, nimm dann mit dem Zähler mal.",
+    loesungsweg: "Erst durch den Nenner teilen: $$20 : 4 = 5$$ Dann mit dem Zähler malnehmen: $$5 \\cdot 3 = 15$$ Samira bekommt \\(15\\) €."
+  },
+  {
+    id: 26,
+    level: 5,
+    typ: "numerisch",
+    frage: "In der Klasse 5a sind \\(27\\) Kinder. \\(\\frac{2}{3}\\) davon spielen ein Instrument. Wie viele Kinder sind das?",
+    loesung: 18,
+    toleranz: 0,
+    tipp: "Wie groß ist ein Drittel von \\(27\\)? Dann brauchst du zwei davon.",
+    loesungsweg: "Ein Drittel: $$27 : 3 = 9$$ Zwei Drittel: $$9 \\cdot 2 = 18$$ Es sind \\(18\\) Kinder."
+  },
+  {
+    id: 27,
+    level: 5,
+    typ: "numerisch",
+    frage: "Wie viel ist \\(\\frac{1}{5}\\) von \\(1\\) kg? Gib das Ergebnis in g an.",
+    loesung: 200,
+    toleranz: 0,
+    tipp: "Rechne das Kilogramm zuerst in Gramm um: \\(1\\) kg \\(= 1000\\) g.",
+    loesungsweg: "Umrechnen: \\(1\\) kg \\(= 1000\\) g. Dann durch den Nenner teilen: $$1000 : 5 = 200$$ \\(\\frac{1}{5}\\) von \\(1\\) kg sind \\(200\\) g."
+  },
+  {
+    id: 28,
+    level: 5,
+    typ: "mc",
+    frage: "Wie berechnest du \\(\\frac{3}{8}\\) von \\(40\\) am geschicktesten?",
+    optionen: ["Erst \\(40 : 8\\), dann das Ergebnis mal \\(3\\)", "Erst \\(40 \\cdot 8\\), dann das Ergebnis durch \\(3\\)", "Erst \\(40 : 3\\), dann das Ergebnis mal \\(8\\)", "Erst \\(40 - 8\\), dann das Ergebnis mal \\(3\\)"],
+    korrekt: 0,
+    tipp: "Der Nenner sagt dir, in wie viele gleiche Teile du die \\(40\\) zerlegst.",
+    loesungsweg: "Merkregel: durch den Nenner teilen, mit dem Zähler malnehmen. $$40 : 8 = 5$$ $$5 \\cdot 3 = 15$$ Also ist \\(\\frac{3}{8}\\) von \\(40\\) gleich \\(15\\)."
+  },
+  {
+    id: 29,
+    level: 5,
+    typ: "numerisch",
+    frage: "Ein Fußballtraining ⚽ dauert \\(\\frac{5}{6}\\) einer Stunde. Wie viele Minuten sind das? Gib das Ergebnis in min an.",
+    loesung: 50,
+    toleranz: 0,
+    tipp: "Eine Stunde hat \\(60\\) Minuten. Wie lang ist ein Sechstel davon?",
+    loesungsweg: "Ein Sechstel einer Stunde: $$60 : 6 = 10 \\text{ min}$$ Fünf Sechstel: $$10 \\cdot 5 = 50 \\text{ min}$$ Das Training dauert \\(50\\) Minuten."
+  },
+  {
+    id: 30,
+    level: 5,
+    typ: "mc",
+    frage: "Luca spart \\(\\frac{3}{10}\\) von \\(50\\) €. Wie viel Geld spart er?",
+    optionen: ["30 €", "5 €", "15 €", "20 €"],
+    korrekt: 2,
+    tipp: "Berechne zuerst ein Zehntel von \\(50\\) €.",
+    loesungsweg: "Ein Zehntel: $$50 : 10 = 5 \\text{ €}$$ Drei Zehntel: $$5 \\cdot 3 = 15 \\text{ €}$$ Luca spart \\(15\\) €. Wer nur \\(50 : 10\\) rechnet, vergisst den Zähler und landet bei \\(5\\) €."
+  },
+  // ========== LEVEL 6 — Boss-Level: Sachaufgaben ==========
+  {
+    id: 31,
+    level: 6,
+    typ: "numerisch",
+    frage: "In der Klasse 5b sind \\(24\\) Kinder. \\(\\frac{3}{8}\\) von ihnen fahren mit dem Bus zur Schule. Wie viele Kinder fahren mit dem Bus?",
+    loesung: 9,
+    toleranz: 0,
+    tipp: "Teile die \\(24\\) Kinder zuerst in \\(8\\) gleich große Gruppen.",
+    loesungsweg: "Ein Achtel der Klasse: $$24 : 8 = 3 \\text{ Kinder}$$ Drei Achtel: $$3 \\cdot 3 = 9 \\text{ Kinder}$$ \\(9\\) Kinder fahren mit dem Bus."
+  },
+  {
+    id: 32,
+    level: 6,
+    typ: "mc",
+    frage: "Eine Pizza 🍕 ist in 8 Stücke geteilt. Aylin isst \\(\\frac{2}{8}\\), ihr Bruder isst \\(\\frac{3}{8}\\). Welcher Anteil der Pizza bleibt übrig?",
+    optionen: ["\\(\\frac{5}{8}\\)", "\\(\\frac{3}{8}\\)", "\\(\\frac{1}{8}\\)", "\\(\\frac{3}{16}\\)"],
+    korrekt: 1,
+    tipp: "Rechne zuerst aus, wie viel die beiden zusammen essen. Die ganze Pizza ist \\(\\frac{8}{8}\\).",
+    loesungsweg: "Zusammen gegessen: $$\\frac{2}{8} + \\frac{3}{8} = \\frac{5}{8}$$ Übrig bleibt: $$\\frac{8}{8} - \\frac{5}{8} = \\frac{3}{8}$$"
+  },
+  {
+    id: 33,
+    level: 6,
+    typ: "numerisch",
+    frage: "Der Schulweg von Jonas ist \\(2\\) km lang. Er hat schon \\(\\frac{3}{4}\\) des Weges geschafft. Wie viele Meter fehlen ihm noch? Gib das Ergebnis in m an.",
+    loesung: 500,
+    toleranz: 0,
+    tipp: "Rechne die \\(2\\) km in Meter um. Wenn \\(\\frac{3}{4}\\) geschafft sind — welcher Anteil fehlt dann noch?",
+    loesungsweg: "Umrechnen: \\(2\\) km \\(= 2000\\) m. Es fehlt noch \\(\\frac{1}{4}\\) des Weges: $$\\frac{4}{4} - \\frac{3}{4} = \\frac{1}{4}$$ $$2000 : 4 = 500 \\text{ m}$$ Jonas fehlen noch \\(500\\) m."
+  },
+  {
+    id: 34,
+    level: 6,
+    typ: "mc",
+    frage: "In Bens Heimatort hat es in \\(3\\) von \\(12\\) Monaten des Jahres geschneit ❄️. Welcher Anteil des Jahres ist das, vollständig gekürzt?",
+    optionen: ["\\(\\frac{1}{4}\\)", "\\(\\frac{1}{3}\\)", "\\(\\frac{3}{4}\\)", "\\(\\frac{1}{6}\\)"],
+    korrekt: 0,
+    tipp: "Schreibe zuerst den Anteil als Bruch mit Nenner \\(12\\) und kürze dann.",
+    loesungsweg: "Anteil: $$\\frac{3}{12}$$ Kürzen mit \\(3\\): $$\\frac{3}{12} = \\frac{3 : 3}{12 : 3} = \\frac{1}{4}$$ Es hat in einem Viertel des Jahres geschneit."
+  },
+  {
+    id: 35,
+    level: 6,
+    typ: "numerisch",
+    frage: "Familie Nowak fährt \\(300\\) km in den Urlaub. Sie haben schon \\(\\frac{2}{3}\\) der Strecke geschafft. Wie viele Kilometer müssen sie noch fahren? Gib das Ergebnis in km an.",
+    loesung: 100,
+    toleranz: 0,
+    tipp: "Wenn \\(\\frac{2}{3}\\) geschafft sind, fehlt noch \\(\\frac{1}{3}\\). Wie viel ist ein Drittel von \\(300\\) km?",
+    loesungsweg: "Es fehlt noch: $$\\frac{3}{3} - \\frac{2}{3} = \\frac{1}{3}$$ Ein Drittel der Strecke: $$300 : 3 = 100 \\text{ km}$$ Die Familie muss noch \\(100\\) km fahren."
+  },
+  {
+    id: 36,
+    level: 6,
+    typ: "mc",
+    frage: "Ein Geburtstagskuchen 🎂 wird in \\(12\\) gleich große Stücke geteilt. Die Gäste essen \\(7\\) Stücke. Welcher Anteil des Kuchens ist noch übrig?",
+    optionen: ["\\(\\frac{7}{12}\\)", "\\(\\frac{5}{7}\\)", "\\(\\frac{1}{2}\\)", "\\(\\frac{5}{12}\\)"],
+    korrekt: 3,
+    tipp: "Wie viele der \\(12\\) Stücke bleiben übrig? Das ist der Zähler.",
+    loesungsweg: "Übrige Stücke: $$12 - 7 = 5$$ Anteil am ganzen Kuchen: $$\\frac{5}{12}$$ \\(\\frac{7}{12}\\) wäre der GEGESSENE Anteil — genau lesen!"
+  }
+];
+    </script>
+    <script src="../p3-reflexion.js"></script>
+    <script src="../spirale-engine.js"></script>
+    <script src="../spirale-kids.js"></script>
+</body>
+</html>

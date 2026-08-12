@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dreiecke & Winkelbeziehungen - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <link rel="stylesheet" href="../spirale-kids.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+// Dreiecke & Winkelbeziehungen — DiffEngine Klasse 5/6 Content (Roadmap Welle 2, Item 3)
+const THEMA_KEY = '6-dreiecke-winkel';
+const THEMA_CONFIG = { name: 'Dreiecke & Winkelbeziehungen', bereich: 'geometrie', p3Enabled: true };
+const AUFGABEN = [
+  // ========== LEVEL 1 — babyleicht: Dreiecksarten erkennen und benennen ==========
+  {
+    id: 1,
+    level: 1,
+    typ: "mc",
+    frage: "Ein Dreieck hat drei gleich lange Seiten. Wie heißt diese Dreiecksart?",
+    optionen: ["rechtwinkliges Dreieck", "gleichschenkliges Dreieck", "gleichseitiges Dreieck", "stumpfwinkliges Dreieck"],
+    korrekt: 2,
+    tipp: "Der Name verrät es: Schau auf die Seiten. Alle drei sind gleich.",
+    loesungsweg: "Ein Dreieck mit drei gleich langen Seiten heißt **gleichseitiges Dreieck**. Bei nur zwei gleich langen Seiten wäre es gleichschenklig."
+  },
+  {
+    id: 2,
+    level: 1,
+    typ: "numerisch",
+    frage: "In einem gleichseitigen Dreieck sind alle drei Winkel gleich groß. Wie groß ist jeder Winkel? Gib das Ergebnis in Grad an.",
+    loesung: 60,
+    toleranz: 0,
+    tipp: "Alle drei Winkel zusammen ergeben \\(180^\\circ\\). Teile durch \\(3\\).",
+    loesungsweg: "Die Winkelsumme im Dreieck ist \\(180^\\circ\\). Alle drei Winkel sind gleich groß: $$180^\\circ : 3 = 60^\\circ$$"
+  },
+  {
+    id: 3,
+    level: 1,
+    typ: "mc",
+    frage: "Ein Dreieck hat die Winkel \\(90^\\circ\\), \\(45^\\circ\\) und \\(45^\\circ\\). Welche Aussage stimmt?",
+    optionen: ["Es ist rechtwinklig und gleichschenklig.", "Es ist gleichseitig.", "Es ist stumpfwinklig.", "Es ist rechtwinklig, aber alle Seiten sind verschieden lang."],
+    korrekt: 0,
+    tipp: "Prüfe zwei Dinge: Gibt es einen \\(90^\\circ\\)-Winkel? Gibt es zwei gleich große Winkel?",
+    loesungsweg: "Der Winkel \\(90^\\circ\\) macht das Dreieck **rechtwinklig**. Die zwei gleichen Winkel \\(45^\\circ\\) bedeuten: Zwei Seiten sind gleich lang, das Dreieck ist auch **gleichschenklig**. Beides zusammen stimmt."
+  },
+  {
+    id: 4,
+    level: 1,
+    typ: "mc",
+    frage: "Wie nennt man ein Dreieck, das einen Winkel hat, der größer als \\(90^\\circ\\) ist?",
+    optionen: ["spitzwinkliges Dreieck", "rechtwinkliges Dreieck", "gleichseitiges Dreieck", "stumpfwinkliges Dreieck"],
+    korrekt: 3,
+    tipp: "Ein Winkel über \\(90^\\circ\\) sieht „aufgeklappt“ aus — wie nennt man so einen Winkel?",
+    loesungsweg: "Ein Winkel größer als \\(90^\\circ\\) heißt stumpfer Winkel. Ein Dreieck mit einem stumpfen Winkel heißt darum **stumpfwinkliges Dreieck**."
+  },
+  {
+    id: 5,
+    level: 1,
+    typ: "numerisch",
+    frage: "Wie viele Seiten eines gleichschenkligen Dreiecks sind mindestens gleich lang? Gib die Anzahl an.",
+    loesung: 2,
+    toleranz: 0,
+    tipp: "Denk an die beiden „Schenkel“ des Dreiecks.",
+    loesungsweg: "Ein gleichschenkliges Dreieck hat mindestens **2** gleich lange Seiten — die beiden Schenkel. Die dritte Seite heißt Basis."
+  },
+  {
+    id: 6,
+    level: 1,
+    typ: "mc",
+    frage: "Ein Dreieck hat die Winkel \\(100^\\circ\\), \\(40^\\circ\\) und \\(40^\\circ\\). Welche Aussage stimmt?",
+    optionen: ["Es ist rechtwinklig.", "Es ist stumpfwinklig und gleichschenklig.", "Es ist gleichseitig.", "Es ist spitzwinklig."],
+    korrekt: 1,
+    tipp: "Schau auf den größten Winkel: Ist er größer als \\(90^\\circ\\)? Und gibt es zwei gleiche Winkel?",
+    loesungsweg: "\\(100^\\circ\\) ist größer als \\(90^\\circ\\) — das Dreieck ist **stumpfwinklig**. Die zwei gleichen Winkel \\(40^\\circ\\) zeigen: Es ist auch **gleichschenklig**. Kontrolle: $$100^\\circ + 40^\\circ + 40^\\circ = 180^\\circ$$"
+  },
+  // ========== LEVEL 2 — leicht: Scheitel- und Nebenwinkel berechnen ==========
+  {
+    id: 7,
+    level: 2,
+    typ: "numerisch",
+    frage: "Zwei Geraden schneiden sich. Einer der Winkel misst \\(70^\\circ\\). Wie groß ist sein Scheitelwinkel? Gib das Ergebnis in Grad an.",
+    loesung: 70,
+    toleranz: 0,
+    tipp: "Scheitelwinkel liegen sich gegenüber. Was weißt du über ihre Größe?",
+    loesungsweg: "Scheitelwinkel liegen sich am Schnittpunkt genau gegenüber und sind **immer gleich groß**: $$\\text{Scheitelwinkel} = 70^\\circ$$"
+  },
+  {
+    id: 8,
+    level: 2,
+    typ: "numerisch",
+    frage: "Ein Winkel misst \\(110^\\circ\\). Wie groß ist sein Nebenwinkel? Gib das Ergebnis in Grad an.",
+    loesung: 70,
+    toleranz: 0,
+    tipp: "Winkel und Nebenwinkel ergeben zusammen \\(180^\\circ\\).",
+    loesungsweg: "Nebenwinkel ergänzen sich zu \\(180^\\circ\\): $$180^\\circ - 110^\\circ = 70^\\circ$$"
+  },
+  {
+    id: 9,
+    level: 2,
+    typ: "mc",
+    frage: "Der Winkel \\(\\alpha\\) misst \\(35^\\circ\\). Wie groß ist sein Nebenwinkel?",
+    optionen: ["\\(145^\\circ\\)", "\\(55^\\circ\\)", "\\(35^\\circ\\)", "\\(325^\\circ\\)"],
+    korrekt: 0,
+    tipp: "Beide Winkel zusammen bilden eine gerade Linie. Wie viel Grad hat eine gerade Linie?",
+    loesungsweg: "Winkel und Nebenwinkel ergeben zusammen \\(180^\\circ\\): $$180^\\circ - 35^\\circ = 145^\\circ$$ Achtung: \\(55^\\circ\\) wäre die Ergänzung zu \\(90^\\circ\\), und \\(35^\\circ\\) wäre der Scheitelwinkel."
+  },
+  {
+    id: 10,
+    level: 2,
+    typ: "numerisch",
+    frage: "An einer Kreuzung schneiden sich zwei gerade Wege. 🛣️ Einer der vier Winkel misst \\(42^\\circ\\). Wie groß ist der Winkel direkt daneben (Nebenwinkel)? Gib das Ergebnis in Grad an.",
+    loesung: 138,
+    toleranz: 0,
+    tipp: "Die beiden Winkel liegen an einer geraden Linie. Rechne \\(180^\\circ\\) minus \\(42^\\circ\\).",
+    loesungsweg: "Nebenwinkel ergänzen sich zu \\(180^\\circ\\): $$180^\\circ - 42^\\circ = 138^\\circ$$"
+  },
+  {
+    id: 11,
+    level: 2,
+    typ: "mc",
+    frage: "Zwei Geraden schneiden sich. Was gilt immer für zwei Scheitelwinkel?",
+    optionen: ["Sie ergeben zusammen \\(180^\\circ\\).", "Sie ergeben zusammen \\(90^\\circ\\).", "Sie sind gleich groß.", "Der eine ist doppelt so groß wie der andere."],
+    korrekt: 2,
+    tipp: "Stell dir eine Schere vor: Öffnest du sie, ändern sich beide gegenüberliegende Öffnungen gleich.",
+    loesungsweg: "Scheitelwinkel liegen sich am Schnittpunkt gegenüber und sind **immer gleich groß**. Die Regel „zusammen \\(180^\\circ\\)“ gilt dagegen für Nebenwinkel."
+  },
+  {
+    id: 12,
+    level: 2,
+    typ: "mc",
+    frage: "Wie groß ist die Summe aus einem Winkel und seinem Nebenwinkel?",
+    optionen: ["\\(90^\\circ\\)", "\\(180^\\circ\\)", "\\(360^\\circ\\)", "Das hängt vom Winkel ab."],
+    korrekt: 1,
+    tipp: "Die beiden Winkel liegen zusammen an einer geraden Linie.",
+    loesungsweg: "Ein Winkel und sein Nebenwinkel füllen zusammen genau eine gerade Linie aus — das sind immer $$180^\\circ$$ ganz egal, wie groß der einzelne Winkel ist."
+  },
+  // ========== LEVEL 3 — nervenschonend: Innenwinkelsatz anwenden ==========
+  {
+    id: 13,
+    level: 3,
+    typ: "numerisch",
+    frage: "In einem Dreieck sind zwei Winkel bekannt: \\(\\alpha = 50^\\circ\\) und \\(\\beta = 60^\\circ\\). Wie groß ist der dritte Winkel \\(\\gamma\\)? Gib das Ergebnis in Grad an.",
+    loesung: 70,
+    toleranz: 0,
+    tipp: "Alle drei Winkel im Dreieck ergeben zusammen \\(180^\\circ\\).",
+    loesungsweg: "Innenwinkelsatz: $$\\alpha + \\beta + \\gamma = 180^\\circ$$ $$\\gamma = 180^\\circ - 50^\\circ - 60^\\circ = 70^\\circ$$"
+  },
+  {
+    id: 14,
+    level: 3,
+    typ: "numerisch",
+    frage: "Ein rechtwinkliges Dreieck hat bei \\(\\gamma\\) den rechten Winkel (\\(90^\\circ\\)). Außerdem ist \\(\\alpha = 35^\\circ\\). Wie groß ist \\(\\beta\\)? Gib das Ergebnis in Grad an.",
+    loesung: 55,
+    toleranz: 0,
+    tipp: "Rechne zuerst \\(90^\\circ + 35^\\circ\\), dann bis \\(180^\\circ\\) auffüllen.",
+    loesungsweg: "Innenwinkelsatz: $$\\beta = 180^\\circ - 90^\\circ - 35^\\circ = 55^\\circ$$"
+  },
+  {
+    id: 15,
+    level: 3,
+    typ: "mc",
+    frage: "In einem Dreieck gilt \\(\\alpha = 120^\\circ\\) und \\(\\beta = 20^\\circ\\). Wie groß ist \\(\\gamma\\)?",
+    optionen: ["\\(140^\\circ\\)", "\\(60^\\circ\\)", "\\(220^\\circ\\)", "\\(40^\\circ\\)"],
+    korrekt: 3,
+    tipp: "Addiere erst die beiden bekannten Winkel. Wie viel fehlt dann noch bis \\(180^\\circ\\)?",
+    loesungsweg: "$$120^\\circ + 20^\\circ = 140^\\circ$$ $$\\gamma = 180^\\circ - 140^\\circ = 40^\\circ$$ Achtung: \\(140^\\circ\\) ist nur die Zwischensumme, nicht der gesuchte Winkel!"
+  },
+  {
+    id: 16,
+    level: 3,
+    typ: "numerisch",
+    frage: "Samira misst in einem Dreieck die Winkel \\(\\alpha = 73^\\circ\\) und \\(\\beta = 48^\\circ\\). Wie groß muss der dritte Winkel \\(\\gamma\\) sein? Gib das Ergebnis in Grad an.",
+    loesung: 59,
+    toleranz: 0,
+    tipp: "Erst \\(73^\\circ + 48^\\circ\\) rechnen, dann von \\(180^\\circ\\) abziehen.",
+    loesungsweg: "$$73^\\circ + 48^\\circ = 121^\\circ$$ $$\\gamma = 180^\\circ - 121^\\circ = 59^\\circ$$"
+  },
+  {
+    id: 17,
+    level: 3,
+    typ: "mc",
+    frage: "Kann ein Dreieck zwei rechte Winkel (je \\(90^\\circ\\)) haben?",
+    optionen: ["Nein, denn \\(90^\\circ + 90^\\circ = 180^\\circ\\) — für den dritten Winkel bliebe nichts übrig.", "Ja, das nennt man doppelt-rechtwinklig.", "Ja, aber nur bei gleichschenkligen Dreiecken.", "Nein, denn rechte Winkel gibt es nur in Vierecken."],
+    korrekt: 0,
+    tipp: "Addiere die zwei rechten Winkel. Wie viel bleibt von \\(180^\\circ\\) für den dritten Winkel übrig?",
+    loesungsweg: "Die Winkelsumme im Dreieck ist \\(180^\\circ\\). Zwei rechte Winkel ergeben schon $$90^\\circ + 90^\\circ = 180^\\circ$$ Der dritte Winkel müsste \\(0^\\circ\\) sein — das ist kein Dreieck mehr. Also: unmöglich."
+  },
+  {
+    id: 18,
+    level: 3,
+    typ: "mc",
+    frage: "Eine Zeltwand hat die Form eines Dreiecks. ⛺ Zwei Winkel messen \\(90^\\circ\\) und \\(28^\\circ\\). Wie groß ist der dritte Winkel?",
+    optionen: ["\\(118^\\circ\\)", "\\(152^\\circ\\)", "\\(62^\\circ\\)", "\\(90^\\circ\\)"],
+    korrekt: 2,
+    tipp: "Innenwinkelsatz: Alle drei Winkel zusammen ergeben \\(180^\\circ\\).",
+    loesungsweg: "$$180^\\circ - 90^\\circ - 28^\\circ = 62^\\circ$$ Achtung: \\(118^\\circ\\) ist nur \\(90^\\circ + 28^\\circ\\) — das ist die Summe der bekannten Winkel, nicht der gesuchte."
+  },
+  // ========== LEVEL 4 — mittel: Basiswinkel & Dreiecksungleichung ==========
+  {
+    id: 19,
+    level: 4,
+    typ: "numerisch",
+    frage: "In einem gleichschenkligen Dreieck misst der Winkel an der Spitze \\(40^\\circ\\). Die beiden Basiswinkel sind gleich groß. Wie groß ist ein Basiswinkel? Gib das Ergebnis in Grad an.",
+    loesung: 70,
+    toleranz: 0,
+    tipp: "Ziehe \\(40^\\circ\\) von \\(180^\\circ\\) ab. Der Rest verteilt sich gleichmäßig auf zwei Winkel.",
+    loesungsweg: "$$180^\\circ - 40^\\circ = 140^\\circ$$ Die \\(140^\\circ\\) teilen sich auf die zwei gleichen Basiswinkel auf: $$140^\\circ : 2 = 70^\\circ$$"
+  },
+  {
+    id: 20,
+    level: 4,
+    typ: "numerisch",
+    frage: "Ein gleichschenkliges Dreieck hat zwei Basiswinkel von je \\(65^\\circ\\). Wie groß ist der Winkel an der Spitze? Gib das Ergebnis in Grad an.",
+    loesung: 50,
+    toleranz: 0,
+    tipp: "Rechne zuerst \\(65^\\circ + 65^\\circ\\). Wie viel fehlt bis \\(180^\\circ\\)?",
+    loesungsweg: "$$65^\\circ + 65^\\circ = 130^\\circ$$ $$180^\\circ - 130^\\circ = 50^\\circ$$ Der Spitzenwinkel misst \\(50^\\circ\\)."
+  },
+  {
+    id: 21,
+    level: 4,
+    typ: "mc",
+    frage: "Malik möchte ein Dreieck mit den Seiten \\(3 \\text{ cm}\\), \\(4 \\text{ cm}\\) und \\(8 \\text{ cm}\\) zeichnen. Geht das?",
+    optionen: ["Ja, denn \\(8\\) ist die längste Seite.", "Nein, denn \\(3 + 4 < 8\\) — die kurzen Seiten kommen nicht zusammen.", "Ja, denn \\(3 + 4 + 8 = 15\\).", "Nein, denn Dreiecksseiten müssen alle gleich lang sein."],
+    korrekt: 1,
+    tipp: "Dreiecksungleichung: Die zwei kürzeren Seiten müssen zusammen länger sein als die längste Seite.",
+    loesungsweg: "Prüfe die Dreiecksungleichung: $$3 + 4 = 7 < 8$$ Die beiden kurzen Seiten sind zusammen kürzer als die lange Seite — sie können sich nicht treffen. Das Dreieck ist **nicht konstruierbar**."
+  },
+  {
+    id: 22,
+    level: 4,
+    typ: "mc",
+    frage: "Aus welchen drei Seitenlängen kann man ein Dreieck bauen?",
+    optionen: ["\\(2 \\text{ cm}, 3 \\text{ cm}, 6 \\text{ cm}\\)", "\\(1 \\text{ cm}, 2 \\text{ cm}, 3 \\text{ cm}\\)", "\\(2 \\text{ cm}, 2 \\text{ cm}, 5 \\text{ cm}\\)", "\\(4 \\text{ cm}, 5 \\text{ cm}, 6 \\text{ cm}\\)"],
+    korrekt: 3,
+    tipp: "Prüfe bei jeder Möglichkeit: Sind die zwei kürzeren Seiten zusammen länger als die längste?",
+    loesungsweg: "Dreiecksungleichung prüfen: $$4 + 5 = 9 > 6 \\quad \\checkmark$$ Die anderen scheitern: \\(2+3=5<6\\), \\(1+2=3\\) (nur gleich, nicht größer) und \\(2+2=4<5\\)."
+  },
+  {
+    id: 23,
+    level: 4,
+    typ: "numerisch",
+    frage: "Zwei Seiten eines Dreiecks sind \\(5 \\text{ cm}\\) und \\(9 \\text{ cm}\\) lang. Die dritte Seite soll eine ganze Zentimeterzahl haben. Wie lang darf sie höchstens sein? Gib das Ergebnis in cm an.",
+    loesung: 13,
+    toleranz: 0,
+    tipp: "Die dritte Seite muss kürzer sein als die beiden anderen zusammen.",
+    loesungsweg: "Dreiecksungleichung: Die dritte Seite muss kleiner als $$5 + 9 = 14$$ sein. Die größte ganze Zahl unter \\(14\\) ist $$13 \\text{ cm}$$"
+  },
+  {
+    id: 24,
+    level: 4,
+    typ: "mc",
+    frage: "Ein Dreieck hat die Winkel \\(50^\\circ\\), \\(65^\\circ\\) und \\(65^\\circ\\). Welche Aussage stimmt?",
+    optionen: ["Es ist gleichschenklig.", "Es ist gleichseitig.", "Es ist rechtwinklig.", "Es ist stumpfwinklig."],
+    korrekt: 0,
+    tipp: "Zwei gleiche Winkel bedeuten auch zwei gleiche Seiten.",
+    loesungsweg: "Die beiden gleichen Winkel \\(65^\\circ\\) zeigen: Zwei Seiten sind gleich lang — das Dreieck ist **gleichschenklig**. Gleichseitig wäre es nur bei drei mal \\(60^\\circ\\). Kein Winkel ist \\(90^\\circ\\) oder größer."
+  },
+  // ========== LEVEL 5 — anspruchsvoll: Fläche, Umfang & besondere Linien ==========
+  {
+    id: 25,
+    level: 5,
+    typ: "numerisch",
+    frage: "Ein Dreieck hat die Grundseite \\(g = 8 \\text{ cm}\\) und die zugehörige Höhe \\(h = 5 \\text{ cm}\\). Berechne den Flächeninhalt. Gib das Ergebnis in cm² an.",
+    loesung: 20,
+    toleranz: 0,
+    tipp: "Formel: \\(A = \\dfrac{g \\cdot h}{2}\\). Vergiss das Teilen durch \\(2\\) nicht!",
+    loesungsweg: "$$A = \\frac{g \\cdot h}{2} = \\frac{8 \\cdot 5}{2} = \\frac{40}{2} = 20 \\text{ cm}^2$$"
+  },
+  {
+    id: 26,
+    level: 5,
+    typ: "numerisch",
+    frage: "Ein Dreieck hat die Seiten \\(6 \\text{ cm}\\), \\(7 \\text{ cm}\\) und \\(9 \\text{ cm}\\). Berechne den Umfang. Gib das Ergebnis in cm an.",
+    loesung: 22,
+    toleranz: 0,
+    tipp: "Der Umfang ist der Weg einmal außen herum: Addiere alle drei Seiten.",
+    loesungsweg: "$$U = 6 + 7 + 9 = 22 \\text{ cm}$$"
+  },
+  {
+    id: 27,
+    level: 5,
+    typ: "mc",
+    frage: "Welche besondere Linie im Dreieck steht senkrecht auf einer Seite und geht durch deren Mittelpunkt?",
+    optionen: ["die Höhe", "die Winkelhalbierende", "die Mittelsenkrechte", "die Grundseite"],
+    korrekt: 2,
+    tipp: "Der Name der Linie beschreibt genau, was sie tut: „Mitte“ und „senkrecht“.",
+    loesungsweg: "Die **Mittelsenkrechte** steht senkrecht (im \\(90^\\circ\\)-Winkel) auf einer Seite und geht durch deren Mittelpunkt. Die Höhe steht zwar auch senkrecht, geht aber durch die gegenüberliegende Ecke — nicht unbedingt durch die Seitenmitte."
+  },
+  {
+    id: 28,
+    level: 5,
+    typ: "numerisch",
+    frage: "Ein Dreieck hat den Flächeninhalt \\(A = 24 \\text{ cm}^2\\) und die Grundseite \\(g = 6 \\text{ cm}\\). Wie lang ist die zugehörige Höhe \\(h\\)? Gib das Ergebnis in cm an.",
+    loesung: 8,
+    toleranz: 0,
+    tipp: "Stelle die Formel um: Aus \\(A = \\dfrac{g \\cdot h}{2}\\) wird \\(h = \\dfrac{2 \\cdot A}{g}\\).",
+    loesungsweg: "$$A = \\frac{g \\cdot h}{2} \\quad \\Rightarrow \\quad h = \\frac{2 \\cdot A}{g}$$ $$h = \\frac{2 \\cdot 24}{6} = \\frac{48}{6} = 8 \\text{ cm}$$"
+  },
+  {
+    id: 29,
+    level: 5,
+    typ: "mc",
+    frage: "Was macht die Winkelhalbierende in einem Dreieck?",
+    optionen: ["Sie teilt eine Seite in zwei gleich lange Hälften.", "Sie teilt einen Winkel in zwei gleich große Teile.", "Sie steht senkrecht auf einer Seite.", "Sie verbindet die Mittelpunkte zweier Seiten."],
+    korrekt: 1,
+    tipp: "Der Name sagt es schon: Was wird hier halbiert — eine Seite oder ein Winkel?",
+    loesungsweg: "Die **Winkelhalbierende** startet in einer Ecke und teilt den dortigen Winkel in zwei gleich große Teile. Das Halbieren einer Seite übernimmt dagegen die Seitenhalbierende bzw. die Mittelsenkrechte."
+  },
+  {
+    id: 30,
+    level: 5,
+    typ: "mc",
+    frage: "Ein gleichseitiges Dreieck hat die Seitenlänge \\(7 \\text{ cm}\\). Wie groß ist sein Umfang?",
+    optionen: ["\\(21 \\text{ cm}\\)", "\\(14 \\text{ cm}\\)", "\\(49 \\text{ cm}\\)", "\\(24{,}5 \\text{ cm}\\)"],
+    korrekt: 0,
+    tipp: "Wie viele Seiten hat das Dreieck — und wie lang ist jede davon?",
+    loesungsweg: "Alle drei Seiten sind gleich lang: $$U = 3 \\cdot 7 = 21 \\text{ cm}$$ Achtung: \\(49\\) wäre \\(7 \\cdot 7\\) — das ist keine Umfangsrechnung!"
+  },
+  // ========== LEVEL 6 — wagnerisch: Kombinationen & Sachkontexte ==========
+  {
+    id: 31,
+    level: 6,
+    typ: "numerisch",
+    frage: "In einem Dreieck gilt \\(\\alpha = 55^\\circ\\) und \\(\\beta = 75^\\circ\\). Verlängert man eine Seite über die Ecke \\(C\\) hinaus, entsteht dort der Nebenwinkel von \\(\\gamma\\). Wie groß ist dieser Nebenwinkel? Gib das Ergebnis in Grad an.",
+    loesung: 130,
+    toleranz: 0,
+    tipp: "Berechne zuerst \\(\\gamma\\) mit dem Innenwinkelsatz. Dann: Nebenwinkel \\(= 180^\\circ - \\gamma\\).",
+    loesungsweg: "Schritt 1 — Innenwinkelsatz: $$\\gamma = 180^\\circ - 55^\\circ - 75^\\circ = 50^\\circ$$ Schritt 2 — Nebenwinkel: $$180^\\circ - 50^\\circ = 130^\\circ$$"
+  },
+  {
+    id: 32,
+    level: 6,
+    typ: "numerisch",
+    frage: "Bei einem Dreieck misst der Nebenwinkel von \\(\\alpha\\) genau \\(110^\\circ\\). Außerdem ist \\(\\beta = 45^\\circ\\). Wie groß ist \\(\\gamma\\)? Gib das Ergebnis in Grad an.",
+    loesung: 65,
+    toleranz: 0,
+    tipp: "Berechne zuerst \\(\\alpha = 180^\\circ - 110^\\circ\\). Danach hilft der Innenwinkelsatz.",
+    loesungsweg: "Schritt 1 — \\(\\alpha\\) über den Nebenwinkel: $$\\alpha = 180^\\circ - 110^\\circ = 70^\\circ$$ Schritt 2 — Innenwinkelsatz: $$\\gamma = 180^\\circ - 70^\\circ - 45^\\circ = 65^\\circ$$"
+  },
+  {
+    id: 33,
+    level: 6,
+    typ: "mc",
+    frage: "Bei einem gleichschenkligen Dreieck misst der Nebenwinkel des Spitzenwinkels \\(100^\\circ\\). Wie groß ist ein Basiswinkel?",
+    optionen: ["\\(100^\\circ\\)", "\\(80^\\circ\\)", "\\(40^\\circ\\)", "\\(50^\\circ\\)"],
+    korrekt: 3,
+    tipp: "Erst den Spitzenwinkel bestimmen: \\(180^\\circ - 100^\\circ\\). Dann den Rest auf zwei gleiche Basiswinkel verteilen.",
+    loesungsweg: "Schritt 1 — Spitzenwinkel: $$180^\\circ - 100^\\circ = 80^\\circ$$ Schritt 2 — Basiswinkel: $$\\frac{180^\\circ - 80^\\circ}{2} = \\frac{100^\\circ}{2} = 50^\\circ$$ Achtung: \\(80^\\circ\\) ist der Spitzenwinkel, nicht der Basiswinkel!"
+  },
+  {
+    id: 34,
+    level: 6,
+    typ: "numerisch",
+    frage: "Ayşe näht ein dreieckiges Segel für ihr Modellboot. ⛵ Die Grundseite ist \\(4 \\text{ dm}\\) lang, die zugehörige Höhe misst \\(6 \\text{ dm}\\). Wie viel Stoff braucht sie? Gib das Ergebnis in dm² an.",
+    loesung: 12,
+    toleranz: 0,
+    tipp: "Das Segel ist ein Dreieck: \\(A = \\dfrac{g \\cdot h}{2}\\).",
+    loesungsweg: "$$A = \\frac{g \\cdot h}{2} = \\frac{4 \\cdot 6}{2} = \\frac{24}{2} = 12 \\text{ dm}^2$$ Ayşe braucht \\(12 \\text{ dm}^2\\) Stoff."
+  },
+  {
+    id: 35,
+    level: 6,
+    typ: "mc",
+    frage: "In einem Dreieck ist \\(\\beta\\) doppelt so groß wie \\(\\alpha\\). Außerdem gilt \\(\\gamma = 60^\\circ\\). Wie groß ist \\(\\alpha\\)?",
+    optionen: ["\\(30^\\circ\\)", "\\(40^\\circ\\)", "\\(80^\\circ\\)", "\\(60^\\circ\\)"],
+    korrekt: 1,
+    tipp: "Schreibe \\(\\beta = 2 \\cdot \\alpha\\). Dann gilt: \\(\\alpha + 2\\alpha + 60^\\circ = 180^\\circ\\).",
+    loesungsweg: "$$\\alpha + 2\\alpha + 60^\\circ = 180^\\circ$$ $$3\\alpha = 120^\\circ$$ $$\\alpha = 40^\\circ$$ Kontrolle: \\(40^\\circ + 80^\\circ + 60^\\circ = 180^\\circ\\) ✓ Achtung: \\(80^\\circ\\) ist \\(\\beta\\), nicht \\(\\alpha\\)!"
+  },
+  {
+    id: 36,
+    level: 6,
+    typ: "mc",
+    frage: "Ein Radweg kreuzt eine gerade Straße. 🚴 Der stumpfe Winkel an der Kreuzung misst \\(120^\\circ\\). Sein Nebenwinkel ist zugleich ein Innenwinkel eines dreieckigen Parks. Ein zweiter Innenwinkel des Parks misst \\(70^\\circ\\). Wie groß ist der dritte Innenwinkel?",
+    optionen: ["\\(60^\\circ\\)", "\\(110^\\circ\\)", "\\(50^\\circ\\)", "\\(40^\\circ\\)"],
+    korrekt: 2,
+    tipp: "Erst den Nebenwinkel von \\(120^\\circ\\) berechnen — das ist der erste Innenwinkel. Dann der Innenwinkelsatz.",
+    loesungsweg: "Schritt 1 — Nebenwinkel: $$180^\\circ - 120^\\circ = 60^\\circ$$ Schritt 2 — Innenwinkelsatz: $$180^\\circ - 60^\\circ - 70^\\circ = 50^\\circ$$ Achtung: \\(60^\\circ\\) ist nur der erste Innenwinkel, nicht der gesuchte dritte!"
+  }
+];
+    </script>
+    <script src="../p3-reflexion.js"></script>
+    <script src="../spirale-engine.js"></script>
+    <script src="../spirale-kids.js"></script>
+</body>
+</html>

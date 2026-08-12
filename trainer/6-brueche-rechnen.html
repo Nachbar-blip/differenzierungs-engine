@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bruchrechnung - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <link rel="stylesheet" href="../spirale-kids.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+// Bruchrechnung — DiffEngine Klasse 5/6 Content (Roadmap Welle 2, Item 3)
+const THEMA_KEY = '6-brueche-rechnen';
+const THEMA_CONFIG = { name: 'Bruchrechnung', bereich: 'arithmetik', p3Enabled: true };
+const AUFGABEN = [
+  // ========== LEVEL 1 — babyleicht: Gleichnamige Brüche addieren/subtrahieren, kürzen ==========
+  {
+    id: 1,
+    level: 1,
+    typ: "numerisch",
+    frage: "Rechne: \\(\\dfrac{2}{5} + \\dfrac{3}{5}\\). Gib das Ergebnis als ganze Zahl an. 🍫",
+    loesung: 1,
+    toleranz: 0,
+    tipp: "Bei gleichem Nenner addierst du nur die Zähler. Was ergibt \\(\\dfrac{5}{5}\\)?",
+    loesungsweg: "$$\\frac{2}{5} + \\frac{3}{5} = \\frac{2+3}{5} = \\frac{5}{5} = 1$$ Fünf Fünftel sind ein Ganzes — wie 5 von 5 Stücken einer Schokolade."
+  },
+  {
+    id: 2,
+    level: 1,
+    typ: "mc",
+    frage: "Rechne: \\(\\dfrac{3}{8} + \\dfrac{2}{8}\\)",
+    optionen: ["\\(\\dfrac{5}{16}\\)", "\\(\\dfrac{6}{8}\\)", "\\(\\dfrac{5}{8}\\)", "\\(\\dfrac{1}{8}\\)"],
+    korrekt: 2,
+    tipp: "Der Nenner bleibt gleich. Du addierst nur die Zähler.",
+    loesungsweg: "Gleiche Nenner: nur die Zähler addieren. $$\\frac{3}{8} + \\frac{2}{8} = \\frac{3+2}{8} = \\frac{5}{8}$$ Achtung: Die Nenner werden NICHT addiert — \\(\\dfrac{5}{16}\\) wäre falsch."
+  },
+  {
+    id: 3,
+    level: 1,
+    typ: "mc",
+    frage: "Kürze \\(\\dfrac{12}{18}\\) vollständig.",
+    optionen: ["\\(\\dfrac{2}{3}\\)", "\\(\\dfrac{6}{9}\\)", "\\(\\dfrac{3}{4}\\)", "\\(\\dfrac{4}{6}\\)"],
+    korrekt: 0,
+    tipp: "Suche die größte Zahl, durch die du 12 UND 18 teilen kannst.",
+    loesungsweg: "Die größte gemeinsame Zahl von 12 und 18 ist 6. $$\\frac{12}{18} = \\frac{12:6}{18:6} = \\frac{2}{3}$$ \\(\\dfrac{6}{9}\\) und \\(\\dfrac{4}{6}\\) sind nur halb gekürzt — da geht noch mehr!"
+  },
+  {
+    id: 4,
+    level: 1,
+    typ: "numerisch",
+    frage: "Rechne: \\(\\dfrac{9}{4} - \\dfrac{1}{4}\\). Gib das Ergebnis als ganze Zahl an.",
+    loesung: 2,
+    toleranz: 0,
+    tipp: "Zähler minus Zähler, der Nenner bleibt. Kürze dann \\(\\dfrac{8}{4}\\).",
+    loesungsweg: "$$\\frac{9}{4} - \\frac{1}{4} = \\frac{9-1}{4} = \\frac{8}{4} = 2$$ Acht Viertel sind zwei Ganze."
+  },
+  {
+    id: 5,
+    level: 1,
+    typ: "mc",
+    frage: "Rechne und kürze vollständig: \\(\\dfrac{5}{12} + \\dfrac{1}{12}\\)",
+    optionen: ["\\(\\dfrac{6}{24}\\)", "\\(\\dfrac{1}{2}\\)", "\\(\\dfrac{6}{12}\\)", "\\(\\dfrac{1}{3}\\)"],
+    korrekt: 1,
+    tipp: "Erst die Zähler addieren, dann schauen: Kannst du das Ergebnis noch kürzen?",
+    loesungsweg: "$$\\frac{5}{12} + \\frac{1}{12} = \\frac{6}{12}$$ Jetzt kürzen mit 6: $$\\frac{6}{12} = \\frac{1}{2}$$ \\(\\dfrac{6}{12}\\) ist richtig gerechnet, aber noch nicht vollständig gekürzt."
+  },
+  {
+    id: 6,
+    level: 1,
+    typ: "numerisch",
+    frage: "Mit welcher größten Zahl kannst du den Bruch \\(\\dfrac{16}{24}\\) kürzen?",
+    loesung: 8,
+    toleranz: 0,
+    tipp: "Suche die größte Zahl, die sowohl in 16 als auch in 24 steckt. Probiere Teiler von 16 durch.",
+    loesungsweg: "Teiler von 16: 1, 2, 4, 8, 16. Teiler von 24: 1, 2, 3, 4, 6, 8, 12, 24. Der größte gemeinsame Teiler ist 8. $$\\frac{16}{24} = \\frac{16:8}{24:8} = \\frac{2}{3}$$"
+  },
+  // ========== LEVEL 2 — leicht: Ungleichnamige Brüche vergleichen (Hauptnenner) ==========
+  {
+    id: 7,
+    level: 2,
+    typ: "mc",
+    frage: "Mira und Samir vergleichen: Welcher Bruch ist größer, \\(\\dfrac{2}{3}\\) oder \\(\\dfrac{3}{5}\\)?",
+    optionen: ["\\(\\dfrac{3}{5}\\)", "Beide sind gleich groß", "Das kann man nicht entscheiden", "\\(\\dfrac{2}{3}\\)"],
+    korrekt: 3,
+    tipp: "Bringe beide Brüche auf den Hauptnenner 15 und vergleiche dann die Zähler.",
+    loesungsweg: "Hauptnenner 15: $$\\frac{2}{3} = \\frac{10}{15} \\qquad \\frac{3}{5} = \\frac{9}{15}$$ Weil \\(10 > 9\\), ist \\(\\dfrac{2}{3}\\) größer als \\(\\dfrac{3}{5}\\)."
+  },
+  {
+    id: 8,
+    level: 2,
+    typ: "numerisch",
+    frage: "Du willst \\(\\dfrac{3}{4}\\) und \\(\\dfrac{5}{6}\\) vergleichen. Wie lautet der kleinste gemeinsame Nenner (Hauptnenner)?",
+    loesung: 12,
+    toleranz: 0,
+    tipp: "Zähle die Vielfachen von 4 und von 6 auf. Welche Zahl kommt in beiden Reihen zuerst vor?",
+    loesungsweg: "Vielfache von 4: 4, 8, 12, 16, … Vielfache von 6: 6, 12, 18, … Die kleinste gemeinsame Zahl ist 12. $$\\frac{3}{4} = \\frac{9}{12} \\qquad \\frac{5}{6} = \\frac{10}{12}$$"
+  },
+  {
+    id: 9,
+    level: 2,
+    typ: "mc",
+    frage: "Ordne die Brüche \\(\\dfrac{2}{5}\\), \\(\\dfrac{1}{2}\\) und \\(\\dfrac{3}{4}\\) der Größe nach — der kleinste zuerst.",
+    optionen: [
+      "\\(\\dfrac{1}{2} < \\dfrac{2}{5} < \\dfrac{3}{4}\\)",
+      "\\(\\dfrac{3}{4} < \\dfrac{1}{2} < \\dfrac{2}{5}\\)",
+      "\\(\\dfrac{2}{5} < \\dfrac{1}{2} < \\dfrac{3}{4}\\)",
+      "\\(\\dfrac{2}{5} < \\dfrac{3}{4} < \\dfrac{1}{2}\\)"
+    ],
+    korrekt: 2,
+    tipp: "Der Hauptnenner von 5, 2 und 4 ist 20. Erweitere alle drei Brüche auf Zwanzigstel.",
+    loesungsweg: "Alle auf Zwanzigstel erweitern: $$\\frac{2}{5} = \\frac{8}{20} \\qquad \\frac{1}{2} = \\frac{10}{20} \\qquad \\frac{3}{4} = \\frac{15}{20}$$ Also gilt: \\(\\dfrac{2}{5} < \\dfrac{1}{2} < \\dfrac{3}{4}\\)."
+  },
+  {
+    id: 10,
+    level: 2,
+    typ: "numerisch",
+    frage: "Erweitern: \\(\\dfrac{3}{4} = \\dfrac{?}{20}\\). Welche Zahl gehört in den Zähler?",
+    loesung: 15,
+    toleranz: 0,
+    tipp: "Der Nenner wurde von 4 auf 20 erweitert. Mit welcher Zahl wurde also multipliziert?",
+    loesungsweg: "Von 4 auf 20 kommt man mit \\(\\cdot\\,5\\). Also auch den Zähler mit 5 multiplizieren: $$\\frac{3}{4} = \\frac{3 \\cdot 5}{4 \\cdot 5} = \\frac{15}{20}$$"
+  },
+  {
+    id: 11,
+    level: 2,
+    typ: "mc",
+    frage: "Welcher Bruch liegt zwischen \\(\\dfrac{1}{3}\\) und \\(\\dfrac{1}{2}\\)?",
+    optionen: ["\\(\\dfrac{5}{12}\\)", "\\(\\dfrac{1}{4}\\)", "\\(\\dfrac{7}{12}\\)", "\\(\\dfrac{2}{6}\\)"],
+    korrekt: 0,
+    tipp: "Erweitere \\(\\dfrac{1}{3}\\) und \\(\\dfrac{1}{2}\\) auf Zwölftel. Welche Zwölftel-Zahl liegt dazwischen?",
+    loesungsweg: "Auf Zwölftel: $$\\frac{1}{3} = \\frac{4}{12} \\qquad \\frac{1}{2} = \\frac{6}{12}$$ Dazwischen liegt \\(\\dfrac{5}{12}\\). \\(\\dfrac{2}{6}\\) ist gleich \\(\\dfrac{1}{3}\\) — das liegt nicht dazwischen, sondern genau am Rand."
+  },
+  {
+    id: 12,
+    level: 2,
+    typ: "numerisch",
+    frage: "Du vergleichst \\(\\dfrac{5}{8}\\) und \\(\\dfrac{7}{12}\\) mit dem Hauptnenner 24. Wie viele Vierundzwanzigstel sind \\(\\dfrac{5}{8}\\)?",
+    loesung: 15,
+    toleranz: 0,
+    tipp: "Von 8 auf 24: Mit welcher Zahl musst du erweitern?",
+    loesungsweg: "Von 8 auf 24 kommt man mit \\(\\cdot\\,3\\): $$\\frac{5}{8} = \\frac{5 \\cdot 3}{8 \\cdot 3} = \\frac{15}{24}$$ Zum Vergleich: \\(\\dfrac{7}{12} = \\dfrac{14}{24}\\) — also ist \\(\\dfrac{5}{8}\\) größer."
+  },
+  // ========== LEVEL 3 — nervenschonend: Ungleichnamige Brüche addieren/subtrahieren ==========
+  {
+    id: 13,
+    level: 3,
+    typ: "mc",
+    frage: "Rechne: \\(\\dfrac{1}{2} + \\dfrac{1}{3}\\)",
+    optionen: ["\\(\\dfrac{2}{5}\\)", "\\(\\dfrac{5}{6}\\)", "\\(\\dfrac{1}{6}\\)", "\\(\\dfrac{2}{6}\\)"],
+    korrekt: 1,
+    tipp: "Erst gleichnamig machen! Der Hauptnenner von 2 und 3 ist 6.",
+    loesungsweg: "$$\\frac{1}{2} + \\frac{1}{3} = \\frac{3}{6} + \\frac{2}{6} = \\frac{5}{6}$$ Achtung: \\(\\dfrac{2}{5}\\) (Zähler plus Zähler, Nenner plus Nenner) ist der klassische Fehler!"
+  },
+  {
+    id: 14,
+    level: 3,
+    typ: "numerisch",
+    frage: "Rechne: \\(\\dfrac{1}{2} + \\dfrac{1}{4}\\). Gib das Ergebnis als Dezimalzahl an.",
+    loesung: 0.75,
+    toleranz: 0,
+    tipp: "Erweitere \\(\\dfrac{1}{2}\\) auf Viertel und addiere. Wie schreibt man \\(\\dfrac{3}{4}\\) als Dezimalzahl?",
+    loesungsweg: "$$\\frac{1}{2} + \\frac{1}{4} = \\frac{2}{4} + \\frac{1}{4} = \\frac{3}{4}$$ Und \\(\\dfrac{3}{4} = 0{,}75\\), denn \\(3 : 4 = 0{,}75\\)."
+  },
+  {
+    id: 15,
+    level: 3,
+    typ: "mc",
+    frage: "Rechne: \\(\\dfrac{5}{6} - \\dfrac{1}{4}\\)",
+    optionen: ["\\(\\dfrac{4}{2}\\)", "\\(\\dfrac{13}{12}\\)", "\\(\\dfrac{7}{12}\\)", "\\(\\dfrac{1}{2}\\)"],
+    korrekt: 2,
+    tipp: "Hauptnenner von 6 und 4 ist 12. Erweitere beide Brüche auf Zwölftel.",
+    loesungsweg: "$$\\frac{5}{6} - \\frac{1}{4} = \\frac{10}{12} - \\frac{3}{12} = \\frac{7}{12}$$ \\(\\dfrac{4}{2}\\) käme heraus, wenn man Zähler minus Zähler und Nenner minus Nenner rechnet — das ist verboten!"
+  },
+  {
+    id: 16,
+    level: 3,
+    typ: "numerisch",
+    frage: "Rechne: \\(\\dfrac{7}{10} - \\dfrac{1}{5}\\). Gib das Ergebnis als Dezimalzahl an.",
+    loesung: 0.5,
+    toleranz: 0,
+    tipp: "Erweitere \\(\\dfrac{1}{5}\\) auf Zehntel. Zehntel kannst du leicht als Dezimalzahl schreiben.",
+    loesungsweg: "$$\\frac{7}{10} - \\frac{1}{5} = \\frac{7}{10} - \\frac{2}{10} = \\frac{5}{10} = \\frac{1}{2}$$ Als Dezimalzahl: \\(0{,}5\\)."
+  },
+  {
+    id: 17,
+    level: 3,
+    typ: "mc",
+    frage: "Rechne: \\(\\dfrac{2}{3} + \\dfrac{1}{6}\\)",
+    optionen: ["\\(\\dfrac{3}{9}\\)", "\\(\\dfrac{1}{2}\\)", "\\(\\dfrac{3}{4}\\)", "\\(\\dfrac{5}{6}\\)"],
+    korrekt: 3,
+    tipp: "Der Nenner 6 ist schon der Hauptnenner. Erweitere nur \\(\\dfrac{2}{3}\\) auf Sechstel.",
+    loesungsweg: "$$\\frac{2}{3} + \\frac{1}{6} = \\frac{4}{6} + \\frac{1}{6} = \\frac{5}{6}$$ \\(\\dfrac{3}{9}\\) entsteht durch den Fehler „Zähler plus Zähler, Nenner plus Nenner“."
+  },
+  {
+    id: 18,
+    level: 3,
+    typ: "numerisch",
+    frage: "Emma trinkt morgens \\(\\dfrac{1}{4}\\) Liter Milch, mittags \\(\\dfrac{1}{2}\\) Liter und abends noch einmal \\(\\dfrac{1}{4}\\) Liter. 🥛 Wie viele Liter sind das zusammen? Gib das Ergebnis als ganze Zahl an.",
+    loesung: 1,
+    toleranz: 0,
+    tipp: "Mache alle drei Brüche gleichnamig: Viertel. Wie viele Viertel sind es zusammen?",
+    loesungsweg: "$$\\frac{1}{4} + \\frac{1}{2} + \\frac{1}{4} = \\frac{1}{4} + \\frac{2}{4} + \\frac{1}{4} = \\frac{4}{4} = 1$$ Emma trinkt genau 1 Liter Milch am Tag."
+  },
+  // ========== LEVEL 4 — mittel: Brüche multiplizieren (auch „von“-Aufgaben) ==========
+  {
+    id: 19,
+    level: 4,
+    typ: "numerisch",
+    frage: "In Linas Klasse sind 20 Kinder. \\(\\dfrac{3}{4}\\) von ihnen kommen mit dem Rad zur Schule. 🚲 Wie viele Kinder sind das?",
+    loesung: 15,
+    toleranz: 0,
+    tipp: "„Von“ bedeutet mal: Teile 20 erst durch den Nenner 4, dann nimm das Ergebnis mal 3.",
+    loesungsweg: "$$\\frac{3}{4} \\text{ von } 20 = \\frac{3}{4} \\cdot 20$$ Erst durch 4 teilen: \\(20 : 4 = 5\\). Dann mal 3: \\(5 \\cdot 3 = 15\\). Es sind 15 Kinder."
+  },
+  {
+    id: 20,
+    level: 4,
+    typ: "mc",
+    frage: "Rechne und kürze vollständig: \\(\\dfrac{2}{3} \\cdot \\dfrac{3}{5}\\)",
+    optionen: ["\\(\\dfrac{2}{5}\\)", "\\(\\dfrac{5}{8}\\)", "\\(\\dfrac{6}{8}\\)", "\\(\\dfrac{2}{15}\\)"],
+    korrekt: 0,
+    tipp: "Zähler mal Zähler, Nenner mal Nenner. Kürze am Ende (oder schon vorher über Kreuz).",
+    loesungsweg: "$$\\frac{2}{3} \\cdot \\frac{3}{5} = \\frac{2 \\cdot 3}{3 \\cdot 5} = \\frac{6}{15} = \\frac{2}{5}$$ Trick: Die 3 im Zähler und die 3 im Nenner kannst du schon vor dem Rechnen wegkürzen. \\(\\dfrac{5}{8}\\) entsteht durch den Fehler „Zähler plus Zähler, Nenner plus Nenner“."
+  },
+  {
+    id: 21,
+    level: 4,
+    typ: "numerisch",
+    frage: "Timo hat 40 Euro gespart. Er gibt \\(\\dfrac{5}{8}\\) davon für ein Skateboard aus. Wie viel gibt er aus? Gib das Ergebnis in Euro an.",
+    loesung: 25,
+    toleranz: 0,
+    tipp: "Teile 40 durch den Nenner 8 — das ist ein Achtel. Dann brauchst du 5 solcher Achtel.",
+    loesungsweg: "Ein Achtel von 40 Euro: \\(40 : 8 = 5\\) Euro. Fünf Achtel: $$\\frac{5}{8} \\cdot 40 = 5 \\cdot 5 = 25$$ Timo gibt 25 Euro aus."
+  },
+  {
+    id: 22,
+    level: 4,
+    typ: "mc",
+    frage: "Rechne und kürze vollständig: \\(\\dfrac{3}{4} \\cdot \\dfrac{8}{9}\\)",
+    optionen: ["\\(\\dfrac{11}{13}\\)", "\\(\\dfrac{2}{3}\\)", "\\(\\dfrac{27}{32}\\)", "\\(\\dfrac{3}{2}\\)"],
+    korrekt: 1,
+    tipp: "Kürze vor dem Multiplizieren über Kreuz: 3 mit 9 und 8 mit 4.",
+    loesungsweg: "Über Kreuz kürzen: 3 und 9 mit 3, dann 8 und 4 mit 4. $$\\frac{3}{4} \\cdot \\frac{8}{9} = \\frac{1}{1} \\cdot \\frac{2}{3} = \\frac{2}{3}$$ Kontrolle ohne Kürzen: \\(\\dfrac{24}{36} = \\dfrac{2}{3}\\). ✓"
+  },
+  {
+    id: 23,
+    level: 4,
+    typ: "mc",
+    frage: "Rechne: \\(4 \\cdot \\dfrac{2}{3}\\)",
+    optionen: ["\\(\\dfrac{8}{12}\\)", "\\(\\dfrac{14}{3}\\)", "\\(\\dfrac{8}{3}\\)", "\\(\\dfrac{6}{3}\\)"],
+    korrekt: 2,
+    tipp: "Eine ganze Zahl multipliziert nur den Zähler. Der Nenner bleibt unverändert.",
+    loesungsweg: "$$4 \\cdot \\frac{2}{3} = \\frac{4 \\cdot 2}{3} = \\frac{8}{3}$$ Bei \\(\\dfrac{8}{12}\\) wurde fälschlich auch der Nenner mit 4 multipliziert — dann hätte sich der Wert gar nicht geändert!"
+  },
+  {
+    id: 24,
+    level: 4,
+    typ: "numerisch",
+    frage: "Leons Schulweg ist 10 km lang. \\(\\dfrac{2}{5}\\) davon fährt er mit dem Bus. Wie lang ist die Busstrecke? Gib das Ergebnis in km an.",
+    loesung: 4,
+    toleranz: 0,
+    tipp: "Ein Fünftel von 10 km sind 2 km. Und zwei Fünftel?",
+    loesungsweg: "$$\\frac{2}{5} \\cdot 10 = \\frac{2 \\cdot 10}{5} = \\frac{20}{5} = 4$$ Die Busstrecke ist 4 km lang."
+  },
+  // ========== LEVEL 5 — anspruchsvoll: Division (Kehrwert), Bruch ↔ Dezimalbruch ==========
+  {
+    id: 25,
+    level: 5,
+    typ: "numerisch",
+    frage: "Wandle \\(\\dfrac{3}{5}\\) in eine Dezimalzahl um.",
+    loesung: 0.6,
+    toleranz: 0,
+    tipp: "Erweitere den Bruch auf Zehntel — oder rechne 3 geteilt durch 5.",
+    loesungsweg: "$$\\frac{3}{5} = \\frac{3 \\cdot 2}{5 \\cdot 2} = \\frac{6}{10} = 0{,}6$$ Kontrolle: \\(3 : 5 = 0{,}6\\). ✓"
+  },
+  {
+    id: 26,
+    level: 5,
+    typ: "mc",
+    frage: "Rechne: \\(\\dfrac{2}{3} : \\dfrac{4}{5}\\)",
+    optionen: ["\\(\\dfrac{8}{15}\\)", "\\(\\dfrac{6}{5}\\)", "\\(\\dfrac{3}{10}\\)", "\\(\\dfrac{5}{6}\\)"],
+    korrekt: 3,
+    tipp: "Durch einen Bruch teilst du, indem du mit seinem Kehrwert multiplizierst: \\(\\cdot \\dfrac{5}{4}\\).",
+    loesungsweg: "$$\\frac{2}{3} : \\frac{4}{5} = \\frac{2}{3} \\cdot \\frac{5}{4} = \\frac{10}{12} = \\frac{5}{6}$$ Wichtig: Der ZWEITE Bruch wird gestürzt, nicht der erste! \\(\\dfrac{8}{15}\\) entsteht, wenn man einfach multipliziert."
+  },
+  {
+    id: 27,
+    level: 5,
+    typ: "numerisch",
+    frage: "Ein Eimer fasst 6 Liter. Eine Gießkanne fasst \\(\\dfrac{3}{4}\\) Liter. 🪴 Wie oft kannst du die Gießkanne aus dem vollen Eimer füllen?",
+    loesung: 8,
+    toleranz: 0,
+    tipp: "Gesucht ist \\(6 : \\dfrac{3}{4}\\). Multipliziere mit dem Kehrwert \\(\\dfrac{4}{3}\\).",
+    loesungsweg: "$$6 : \\frac{3}{4} = 6 \\cdot \\frac{4}{3} = \\frac{24}{3} = 8$$ Du kannst die Gießkanne 8-mal füllen. Probe: \\(8 \\cdot \\dfrac{3}{4} = 6\\). ✓"
+  },
+  {
+    id: 28,
+    level: 5,
+    typ: "mc",
+    frage: "Schreibe \\(0{,}4\\) als vollständig gekürzten Bruch.",
+    optionen: ["\\(\\dfrac{2}{5}\\)", "\\(\\dfrac{1}{4}\\)", "\\(\\dfrac{4}{100}\\)", "\\(\\dfrac{1}{40}\\)"],
+    korrekt: 0,
+    tipp: "\\(0{,}4\\) bedeutet 4 Zehntel. Schreibe das als Bruch und kürze.",
+    loesungsweg: "$$0{,}4 = \\frac{4}{10} = \\frac{2}{5}$$ Vorsicht: \\(0{,}4\\) ist NICHT \\(\\dfrac{1}{4}\\) — ein Viertel wäre \\(0{,}25\\). Und \\(\\dfrac{4}{100}\\) wäre \\(0{,}04\\)."
+  },
+  {
+    id: 29,
+    level: 5,
+    typ: "numerisch",
+    frage: "Wandle \\(\\dfrac{7}{2}\\) in eine Dezimalzahl um.",
+    loesung: 3.5,
+    toleranz: 0,
+    tipp: "Rechne 7 geteilt durch 2. Es kommt mehr als ein Ganzes heraus.",
+    loesungsweg: "$$\\frac{7}{2} = 7 : 2 = 3{,}5$$ Anders gedacht: \\(\\dfrac{7}{2} = \\dfrac{6}{2} + \\dfrac{1}{2} = 3 + 0{,}5 = 3{,}5\\)."
+  },
+  {
+    id: 30,
+    level: 5,
+    typ: "mc",
+    frage: "Wie oft passt \\(\\dfrac{1}{8}\\) in \\(\\dfrac{1}{2}\\)? Berechne \\(\\dfrac{1}{2} : \\dfrac{1}{8}\\). 🍰",
+    optionen: ["\\(\\dfrac{1}{16}\\)", "\\(4\\)", "\\(\\dfrac{1}{4}\\)", "\\(16\\)"],
+    korrekt: 1,
+    tipp: "Stürze den zweiten Bruch: \\(\\dfrac{1}{2} \\cdot \\dfrac{8}{1}\\). Oder denk an eine Torte: Wie viele Achtelstücke sind eine halbe Torte?",
+    loesungsweg: "$$\\frac{1}{2} : \\frac{1}{8} = \\frac{1}{2} \\cdot \\frac{8}{1} = \\frac{8}{2} = 4$$ Eine halbe Torte besteht aus 4 Achtelstücken. \\(\\dfrac{1}{16}\\) entsteht, wenn man multipliziert statt dividiert."
+  },
+  // ========== LEVEL 6 — wagnerisch: Sachaufgaben & gemischte Rechenausdrücke ==========
+  {
+    id: 31,
+    level: 6,
+    typ: "numerisch",
+    frage: "Ein Pfannkuchen-Rezept für 4 Personen braucht \\(\\dfrac{3}{4}\\) Liter Milch. Ayla kocht für 8 Personen. Wie viel Milch braucht sie? Gib das Ergebnis als Dezimalzahl in Litern an.",
+    loesung: 1.5,
+    toleranz: 0,
+    tipp: "8 Personen sind doppelt so viele wie 4. Verdopple also \\(\\dfrac{3}{4}\\) Liter.",
+    loesungsweg: "Doppelte Menge: $$2 \\cdot \\frac{3}{4} = \\frac{6}{4} = \\frac{3}{2} = 1{,}5$$ Ayla braucht \\(1{,}5\\) Liter Milch."
+  },
+  {
+    id: 32,
+    level: 6,
+    typ: "mc",
+    frage: "Ben isst \\(\\dfrac{3}{8}\\) einer Pizza, seine Schwester Noor isst \\(\\dfrac{1}{4}\\). 🍕 Welcher Anteil der Pizza bleibt übrig?",
+    optionen: ["\\(\\dfrac{5}{8}\\)", "\\(\\dfrac{1}{4}\\)", "\\(\\dfrac{3}{8}\\)", "\\(\\dfrac{1}{2}\\)"],
+    korrekt: 2,
+    tipp: "Rechne erst aus, wie viel die beiden zusammen essen. Die ganze Pizza ist \\(\\dfrac{8}{8}\\).",
+    loesungsweg: "Zusammen gegessen: $$\\frac{3}{8} + \\frac{1}{4} = \\frac{3}{8} + \\frac{2}{8} = \\frac{5}{8}$$ Übrig bleibt: $$\\frac{8}{8} - \\frac{5}{8} = \\frac{3}{8}$$ Achtung: \\(\\dfrac{5}{8}\\) ist der gegessene Anteil, nicht der Rest!"
+  },
+  {
+    id: 33,
+    level: 6,
+    typ: "numerisch",
+    frage: "Berechne den Wert des Ausdrucks: \\(\\dfrac{3}{4} \\cdot 2 + \\dfrac{1}{2}\\). Gib das Ergebnis als ganze Zahl an.",
+    loesung: 2,
+    toleranz: 0,
+    tipp: "Punkt vor Strich: Rechne zuerst \\(\\dfrac{3}{4} \\cdot 2\\).",
+    loesungsweg: "Erst multiplizieren: $$\\frac{3}{4} \\cdot 2 = \\frac{6}{4} = \\frac{3}{2}$$ Dann addieren: $$\\frac{3}{2} + \\frac{1}{2} = \\frac{4}{2} = 2$$"
+  },
+  {
+    id: 34,
+    level: 6,
+    typ: "mc",
+    frage: "Malia liest am Samstag \\(\\dfrac{1}{5}\\) ihres Buchs und am Sonntag \\(\\dfrac{1}{4}\\). 📖 Welchen Anteil des Buchs hat sie am Wochenende gelesen?",
+    optionen: ["\\(\\dfrac{2}{9}\\)", "\\(\\dfrac{1}{9}\\)", "\\(\\dfrac{11}{20}\\)", "\\(\\dfrac{9}{20}\\)"],
+    korrekt: 3,
+    tipp: "Hauptnenner von 5 und 4 ist 20. Erweitere beide Brüche auf Zwanzigstel.",
+    loesungsweg: "$$\\frac{1}{5} + \\frac{1}{4} = \\frac{4}{20} + \\frac{5}{20} = \\frac{9}{20}$$ \\(\\dfrac{2}{9}\\) wäre der Fehler „Zähler plus Zähler, Nenner plus Nenner“ — damit hätte Malia weniger gelesen als am Sonntag allein, denn \\(\\dfrac{2}{9} = \\dfrac{8}{36}\\) ist kleiner als \\(\\dfrac{1}{4} = \\dfrac{9}{36}\\)!"
+  },
+  {
+    id: 35,
+    level: 6,
+    typ: "numerisch",
+    frage: "Jonas bekommt 24 Euro Taschengeld. Er gibt \\(\\dfrac{1}{3}\\) davon für ein Comic aus und \\(\\dfrac{1}{4}\\) für Süßigkeiten. Wie viel Geld bleibt ihm? Gib das Ergebnis in Euro an.",
+    loesung: 10,
+    toleranz: 0,
+    tipp: "Rechne beide Anteile einzeln aus: \\(\\dfrac{1}{3}\\) von 24 und \\(\\dfrac{1}{4}\\) von 24. Ziehe dann beides ab.",
+    loesungsweg: "Comic: \\(\\dfrac{1}{3} \\cdot 24 = 8\\) Euro. Süßigkeiten: \\(\\dfrac{1}{4} \\cdot 24 = 6\\) Euro. $$24 - 8 - 6 = 10$$ Jonas bleiben 10 Euro."
+  },
+  {
+    id: 36,
+    level: 6,
+    typ: "mc",
+    frage: "Berechne den Wert des Ausdrucks: \\(\\dfrac{1}{2} + \\dfrac{1}{3} \\cdot \\dfrac{3}{4}\\)",
+    optionen: ["\\(\\dfrac{3}{4}\\)", "\\(\\dfrac{5}{8}\\)", "\\(\\dfrac{1}{4}\\)", "\\(\\dfrac{5}{6}\\)"],
+    korrekt: 0,
+    tipp: "Punkt vor Strich! Berechne zuerst das Produkt \\(\\dfrac{1}{3} \\cdot \\dfrac{3}{4}\\).",
+    loesungsweg: "Erst multiplizieren: $$\\frac{1}{3} \\cdot \\frac{3}{4} = \\frac{3}{12} = \\frac{1}{4}$$ Dann addieren: $$\\frac{1}{2} + \\frac{1}{4} = \\frac{2}{4} + \\frac{1}{4} = \\frac{3}{4}$$ \\(\\dfrac{5}{8}\\) kommt heraus, wenn man von links nach rechts rechnet und Punkt-vor-Strich vergisst."
+  }
+];
+    </script>
+    <script src="../p3-reflexion.js"></script>
+    <script src="../spirale-engine.js"></script>
+    <script src="../spirale-kids.js"></script>
+</body>
+</html>

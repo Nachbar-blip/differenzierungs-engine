@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gleichungen & Ungleichungen - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <link rel="stylesheet" href="../spirale-kids.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+// Gleichungen & Ungleichungen — DiffEngine Klasse 5/6 Content (Roadmap Welle 2, Item 3)
+const THEMA_KEY = '6-gleichungen-ungleichungen';
+const THEMA_CONFIG = { name: 'Gleichungen & Ungleichungen', bereich: 'algebra', p3Enabled: true };
+const AUFGABEN = [
+  // ========== LEVEL 1 — babyleicht: Lücken- und Umkehraufgaben (x + a = b) ==========
+  {
+    id: 1,
+    level: 1,
+    typ: "numerisch",
+    frage: "Löse die Gleichung: \\(x + 5 = 12\\)",
+    loesung: 7,
+    toleranz: 0,
+    tipp: "Frage dich: Welche Zahl plus \\(5\\) ergibt \\(12\\)?",
+    loesungsweg: "Umkehraufgabe: Rechne rückwärts mit Minus. $$x = 12 - 5 = 7$$ Probe: \\(7 + 5 = 12\\) — stimmt!"
+  },
+  {
+    id: 2,
+    level: 1,
+    typ: "mc",
+    frage: "Welche Zahl passt in die Lücke? \\(\\square + 8 = 14\\)",
+    optionen: ["\\(6\\)", "\\(22\\)", "\\(8\\)", "\\(5\\)"],
+    korrekt: 0,
+    tipp: "Denke rückwärts: \\(14\\) minus \\(8\\) ergibt die gesuchte Zahl.",
+    loesungsweg: "Gesucht ist die Zahl, die plus \\(8\\) genau \\(14\\) ergibt. $$14 - 8 = 6$$ Probe: \\(6 + 8 = 14\\) — passt! (\\(22\\) wäre \\(14 + 8\\), das ist die falsche Richtung.)"
+  },
+  {
+    id: 3,
+    level: 1,
+    typ: "numerisch",
+    frage: "Löse die Gleichung: \\(x + 9 = 20\\)",
+    loesung: 11,
+    toleranz: 0,
+    tipp: "Umkehraufgabe: Wie weit ist es von \\(9\\) bis \\(20\\)?",
+    loesungsweg: "Rückwärts gerechnet: $$x = 20 - 9 = 11$$ Probe: \\(11 + 9 = 20\\) — stimmt!"
+  },
+  {
+    id: 4,
+    level: 1,
+    typ: "mc",
+    frage: "Wie nennt man eine Zahl, die eine Gleichung wahr macht, wenn du sie für \\(x\\) einsetzt?",
+    optionen: ["Variable", "Lösung", "Probe", "Summe"],
+    korrekt: 1,
+    tipp: "Du suchst diese Zahl, wenn du eine Gleichung löst.",
+    loesungsweg: "Setzt du die Zahl für \\(x\\) ein und die Gleichung stimmt, dann heißt diese Zahl <b>Lösung</b>. Beispiel: \\(4\\) ist die Lösung von \\(x + 1 = 5\\), denn \\(4 + 1 = 5\\). Die <b>Variable</b> ist der Platzhalter \\(x\\), die <b>Probe</b> ist das Nachrechnen am Ende."
+  },
+  {
+    id: 5,
+    level: 1,
+    typ: "numerisch",
+    frage: "Welche Zahl muss für \\(x\\) stehen? \\(7 + x = 16\\)",
+    loesung: 9,
+    toleranz: 0,
+    tipp: "Wie viel fehlt von \\(7\\) bis \\(16\\)?",
+    loesungsweg: "Von \\(7\\) bis \\(16\\) fehlen: $$16 - 7 = 9$$ Probe: \\(7 + 9 = 16\\) — stimmt!"
+  },
+  {
+    id: 6,
+    level: 1,
+    typ: "mc",
+    frage: "Welche Gleichung hat die Lösung \\(x = 4\\)?",
+    optionen: ["\\(x + 4 = 4\\)", "\\(x + 1 = 6\\)", "\\(x + 2 = 6\\)", "\\(x + 6 = 8\\)"],
+    korrekt: 2,
+    tipp: "Setze \\(4\\) in jede Gleichung ein und prüfe, wo es stimmt.",
+    loesungsweg: "Einsetzen von \\(x = 4\\): $$4 + 2 = 6 \\quad \\checkmark$$ Bei den anderen klappt es nicht: \\(4 + 4 = 8 \\neq 4\\), \\(4 + 1 = 5 \\neq 6\\), \\(4 + 6 = 10 \\neq 8\\)."
+  },
+  // ========== LEVEL 2 — leicht: x − a = b und a · x = b ==========
+  {
+    id: 7,
+    level: 2,
+    typ: "numerisch",
+    frage: "Löse die Gleichung: \\(x - 6 = 9\\)",
+    loesung: 15,
+    toleranz: 0,
+    tipp: "Die Umkehrung von „minus \\(6\\)“ ist „plus \\(6\\)“.",
+    loesungsweg: "Von \\(x\\) wurden \\(6\\) abgezogen und es blieben \\(9\\). Rückwärts: $$x = 9 + 6 = 15$$ Probe: \\(15 - 6 = 9\\) — stimmt!"
+  },
+  {
+    id: 8,
+    level: 2,
+    typ: "mc",
+    frage: "Löse die Gleichung \\(4 \\cdot x = 28\\). Was ist \\(x\\)?",
+    optionen: ["\\(6\\)", "\\(24\\)", "\\(7\\)", "\\(32\\)"],
+    korrekt: 2,
+    tipp: "Die Umkehrung von „mal \\(4\\)“ ist „geteilt durch \\(4\\)“.",
+    loesungsweg: "Rückwärts gerechnet: $$x = 28 : 4 = 7$$ Probe: \\(4 \\cdot 7 = 28\\) — stimmt! (\\(24\\) wäre \\(28 - 4\\) — aber Minus ist hier die falsche Umkehroperation.)"
+  },
+  {
+    id: 9,
+    level: 2,
+    typ: "numerisch",
+    frage: "Löse die Gleichung: \\(x - 13 = 27\\)",
+    loesung: 40,
+    toleranz: 0,
+    tipp: "Rechne rückwärts: Addiere \\(13\\) zu \\(27\\).",
+    loesungsweg: "Umkehraufgabe: $$x = 27 + 13 = 40$$ Probe: \\(40 - 13 = 27\\) — stimmt!"
+  },
+  {
+    id: 10,
+    level: 2,
+    typ: "mc",
+    frage: "Welche Zahl ist die Lösung von \\(x - 8 = 8\\)?",
+    optionen: ["\\(0\\)", "\\(16\\)", "\\(8\\)", "\\(64\\)"],
+    korrekt: 1,
+    tipp: "Von welcher Zahl kannst du \\(8\\) abziehen, sodass \\(8\\) übrig bleibt?",
+    loesungsweg: "Rückwärts: $$x = 8 + 8 = 16$$ Probe: \\(16 - 8 = 8\\) — stimmt! (\\(0\\) wäre die Lösung von \\(x + 8 = 8\\), nicht von \\(x - 8 = 8\\).)"
+  },
+  {
+    id: 11,
+    level: 2,
+    typ: "numerisch",
+    frage: "Löse die Gleichung: \\(6 \\cdot x = 54\\)",
+    loesung: 9,
+    toleranz: 0,
+    tipp: "Frage dich: \\(6\\) mal welche Zahl ergibt \\(54\\)? Das Einmaleins hilft.",
+    loesungsweg: "Umkehraufgabe mit Geteilt: $$x = 54 : 6 = 9$$ Probe: \\(6 \\cdot 9 = 54\\) — stimmt!"
+  },
+  {
+    id: 12,
+    level: 2,
+    typ: "mc",
+    frage: "Mit welcher Rechnung findest du die Lösung von \\(5 \\cdot x = 45\\)?",
+    optionen: ["\\(45 - 5\\)", "\\(45 + 5\\)", "\\(45 \\cdot 5\\)", "\\(45 : 5\\)"],
+    korrekt: 3,
+    tipp: "Welche Rechenart macht „mal \\(5\\)“ wieder rückgängig?",
+    loesungsweg: "„Mal \\(5\\)“ machst du mit „geteilt durch \\(5\\)“ rückgängig: $$x = 45 : 5 = 9$$ Probe: \\(5 \\cdot 9 = 45\\) — stimmt!"
+  },
+  // ========== LEVEL 3 — nervenschonend: zweischrittige Gleichungen inhaltlich lösen ==========
+  {
+    id: 13,
+    level: 3,
+    typ: "numerisch",
+    frage: "Löse die Gleichung: \\(2x + 3 = 11\\)",
+    loesung: 4,
+    toleranz: 0,
+    tipp: "Überlege zuerst: Wie groß muss \\(2x\\) sein, damit plus \\(3\\) genau \\(11\\) herauskommt?",
+    loesungsweg: "Rückwärts in zwei Schritten: $$2x = 11 - 3 = 8$$ $$x = 8 : 2 = 4$$ Probe: \\(2 \\cdot 4 + 3 = 8 + 3 = 11\\) — stimmt!"
+  },
+  {
+    id: 14,
+    level: 3,
+    typ: "mc",
+    frage: "Löse die Gleichung \\(3x + 4 = 19\\). Was ist \\(x\\)?",
+    optionen: ["\\(15\\)", "\\(5\\)", "\\(6\\)", "\\(23\\)"],
+    korrekt: 1,
+    tipp: "Erst überlegen, was \\(3x\\) sein muss — dann durch \\(3\\) teilen.",
+    loesungsweg: "$$3x = 19 - 4 = 15$$ $$x = 15 : 3 = 5$$ Probe: \\(3 \\cdot 5 + 4 = 19\\) — stimmt! (Wer \\(15\\) wählt, hat das Teilen durch \\(3\\) vergessen.)"
+  },
+  {
+    id: 15,
+    level: 3,
+    typ: "numerisch",
+    frage: "Löse die Gleichung: \\(4x - 5 = 15\\)",
+    loesung: 5,
+    toleranz: 0,
+    tipp: "Wie groß muss \\(4x\\) sein, wenn nach dem Abziehen von \\(5\\) noch \\(15\\) übrig sind?",
+    loesungsweg: "Rückwärts: $$4x = 15 + 5 = 20$$ $$x = 20 : 4 = 5$$ Probe: \\(4 \\cdot 5 - 5 = 20 - 5 = 15\\) — stimmt!"
+  },
+  {
+    id: 16,
+    level: 3,
+    typ: "mc",
+    frage: "Löse die Gleichung \\(5x + 2 = 37\\). Was ist \\(x\\)?",
+    optionen: ["\\(7\\)", "\\(8\\)", "\\(35\\)", "\\(6\\)"],
+    korrekt: 0,
+    tipp: "Zuerst herausfinden, was \\(5x\\) ist. Dann kennst du \\(x\\) über das Einmaleins.",
+    loesungsweg: "$$5x = 37 - 2 = 35$$ $$x = 35 : 5 = 7$$ Probe: \\(5 \\cdot 7 + 2 = 35 + 2 = 37\\) — stimmt! (\\(35\\) ist nur der Zwischenschritt, noch nicht die Lösung.)"
+  },
+  {
+    id: 17,
+    level: 3,
+    typ: "numerisch",
+    frage: "Löse die Gleichung: \\(2x - 7 = 13\\)",
+    loesung: 10,
+    toleranz: 0,
+    tipp: "Rechne rückwärts: erst plus \\(7\\), dann durch \\(2\\).",
+    loesungsweg: "$$2x = 13 + 7 = 20$$ $$x = 20 : 2 = 10$$ Probe: \\(2 \\cdot 10 - 7 = 20 - 7 = 13\\) — stimmt!"
+  },
+  {
+    id: 18,
+    level: 3,
+    typ: "mc",
+    frage: "Eine Zahl wird verdreifacht, dann wird \\(2\\) addiert. Das Ergebnis ist \\(17\\). Was ist beim Rückwärtsrechnen der erste Schritt?",
+    optionen: ["\\(17 - 2\\) rechnen", "\\(17 : 3\\) rechnen", "\\(17 + 2\\) rechnen", "\\(17 \\cdot 3\\) rechnen"],
+    korrekt: 0,
+    tipp: "Beim Rückwärtsrechnen machst du den letzten Schritt zuerst rückgängig.",
+    loesungsweg: "Vorwärts: mal \\(3\\), dann plus \\(2\\). Rückwärts geht es in umgekehrter Reihenfolge: erst minus \\(2\\), dann geteilt durch \\(3\\). $$17 - 2 = 15, \\quad 15 : 3 = 5$$ Die gedachte Zahl ist \\(5\\). Probe: \\(3 \\cdot 5 + 2 = 17\\) — stimmt!"
+  },
+  // ========== LEVEL 4 — mittel: Ungleichungen und Probe ==========
+  {
+    id: 19,
+    level: 4,
+    typ: "mc",
+    frage: "Welche natürlichen Zahlen (die \\(0\\) zählt mit) erfüllen die Ungleichung \\(x + 3 < 8\\)?",
+    optionen: ["\\(0, 1, 2, 3, 4\\)", "\\(1, 2, 3, 4\\)", "\\(0, 1, 2, 3, 4, 5\\)", "alle Zahlen ab \\(5\\)"],
+    korrekt: 0,
+    tipp: "Probiere Zahlen aus: Ist \\(x + 3\\) dann wirklich kleiner als \\(8\\)? Prüfe auch die \\(5\\) genau.",
+    loesungsweg: "Einsetzen und prüfen: $$0 + 3 = 3 < 8 \\; \\checkmark \\quad \\ldots \\quad 4 + 3 = 7 < 8 \\; \\checkmark$$ Aber: \\(5 + 3 = 8\\), und \\(8 < 8\\) ist falsch — die \\(5\\) gehört nicht dazu! Lösungen: \\(0, 1, 2, 3, 4\\)."
+  },
+  {
+    id: 20,
+    level: 4,
+    typ: "mc",
+    frage: "Mache die Probe: Welche Zahl ist die Lösung der Gleichung \\(4x - 1 = 19\\)?",
+    optionen: ["\\(4\\)", "\\(5\\)", "\\(6\\)", "\\(20\\)"],
+    korrekt: 1,
+    tipp: "Setze jede Zahl für \\(x\\) ein und rechne aus. Bei welcher kommt \\(19\\) heraus?",
+    loesungsweg: "Probe durch Einsetzen: $$4 \\cdot 5 - 1 = 20 - 1 = 19 \\quad \\checkmark$$ Die anderen passen nicht: \\(4 \\cdot 4 - 1 = 15\\), \\(4 \\cdot 6 - 1 = 23\\), \\(4 \\cdot 20 - 1 = 79\\)."
+  },
+  {
+    id: 21,
+    level: 4,
+    typ: "numerisch",
+    frage: "Wie viele natürliche Zahlen erfüllen beide Ungleichungen gleichzeitig: \\(x > 2\\) und \\(x < 6\\)?",
+    loesung: 3,
+    toleranz: 0,
+    tipp: "Schreibe alle Zahlen auf, die größer als \\(2\\) und zugleich kleiner als \\(6\\) sind.",
+    loesungsweg: "Größer als \\(2\\) und kleiner als \\(6\\) sind genau die Zahlen $$3, \\; 4, \\; 5$$ Die \\(2\\) und die \\(6\\) selbst gehören nicht dazu (es heißt \\(>\\) und \\(<\\), nicht „gleich“). Das sind \\(3\\) Zahlen."
+  },
+  {
+    id: 22,
+    level: 4,
+    typ: "mc",
+    frage: "Welche Zahl erfüllt die Ungleichung \\(x - 4 > 6\\)?",
+    optionen: ["\\(9\\)", "\\(10\\)", "\\(8\\)", "\\(12\\)"],
+    korrekt: 3,
+    tipp: "Setze jede Zahl ein: Ist das Ergebnis wirklich größer als \\(6\\) — oder nur gleich \\(6\\)?",
+    loesungsweg: "Einsetzen: $$12 - 4 = 8 > 6 \\quad \\checkmark$$ Vorsicht bei \\(10\\): \\(10 - 4 = 6\\), aber \\(6 > 6\\) ist falsch — gleich reicht nicht! Auch \\(9 - 4 = 5\\) und \\(8 - 4 = 4\\) sind nicht größer als \\(6\\)."
+  },
+  {
+    id: 23,
+    level: 4,
+    typ: "numerisch",
+    frage: "Welche ist die größte natürliche Zahl, die die Ungleichung \\(x + 5 < 12\\) erfüllt?",
+    loesung: 6,
+    toleranz: 0,
+    tipp: "Taste dich heran: Passt \\(x = 7\\) noch? Passt \\(x = 6\\)?",
+    loesungsweg: "Ausprobieren: $$7 + 5 = 12, \\quad \\text{aber } 12 < 12 \\text{ ist falsch!}$$ $$6 + 5 = 11 < 12 \\quad \\checkmark$$ Die größte passende Zahl ist \\(6\\)."
+  },
+  {
+    id: 24,
+    level: 4,
+    typ: "mc",
+    frage: "Leon behauptet: „\\(x = 6\\) ist die Lösung von \\(3x + 2 = 18\\).“ Stimmt das?",
+    optionen: ["Ja, denn \\(3 \\cdot 6 + 2 = 18\\)", "Nein, denn \\(3 \\cdot 6 + 2 = 20\\)", "Nein, denn \\(3 \\cdot 6 + 2 = 16\\)", "Ja, denn \\(3 \\cdot 6 = 18\\)"],
+    korrekt: 1,
+    tipp: "Mache die Probe: Setze \\(6\\) für \\(x\\) ein und rechne die linke Seite komplett aus.",
+    loesungsweg: "Probe: $$3 \\cdot 6 + 2 = 18 + 2 = 20$$ Es kommt \\(20\\) heraus, nicht \\(18\\) — Leon hat das \\(+\\,2\\) vergessen. Also ist \\(6\\) keine Lösung."
+  },
+  // ========== LEVEL 5 — anspruchsvoll: Lösbarkeit im Zahlenbereich ==========
+  {
+    id: 25,
+    level: 5,
+    typ: "mc",
+    frage: "Hat die Gleichung \\(x + 7 = 3\\) eine Lösung in den natürlichen Zahlen?",
+    optionen: ["Nein — \\(x\\) müsste \\(-4\\) sein, und das ist keine natürliche Zahl", "Ja, \\(x = 4\\)", "Ja, \\(x = 10\\)", "Ja, \\(x = -4\\)"],
+    korrekt: 0,
+    tipp: "Kann eine natürliche Zahl plus \\(7\\) jemals nur \\(3\\) ergeben? \\(7\\) ist doch schon größer als \\(3\\).",
+    loesungsweg: "Schon \\(0 + 7 = 7\\) ist größer als \\(3\\) — jede natürliche Zahl macht die linke Seite noch größer. Es müsste $$x = 3 - 7 = -4$$ gelten, aber \\(-4\\) ist keine natürliche Zahl. Also: keine Lösung in den natürlichen Zahlen."
+  },
+  {
+    id: 26,
+    level: 5,
+    typ: "mc",
+    frage: "Hat die Gleichung \\(3 \\cdot x = 7\\) eine Lösung in den natürlichen Zahlen?",
+    optionen: ["Ja, \\(x = 2\\)", "Ja, \\(x = 3\\)", "Nein, denn \\(7 : 3\\) geht nicht ohne Rest auf", "Ja, \\(x = 21\\)"],
+    korrekt: 2,
+    tipp: "Gibt es eine Zahl in der Dreierreihe, die genau \\(7\\) ergibt?",
+    loesungsweg: "Die Dreierreihe: \\(3, 6, 9, \\ldots\\) — die \\(7\\) kommt nicht vor. $$7 : 3 = 2 \\text{ Rest } 1$$ Also gibt es keine natürliche Zahl als Lösung. (\\(3 \\cdot 2 = 6\\) und \\(3 \\cdot 3 = 9\\) verfehlen die \\(7\\) beide.)"
+  },
+  {
+    id: 27,
+    level: 5,
+    typ: "mc",
+    frage: "Welche dieser Gleichungen hat KEINE Lösung in den natürlichen Zahlen?",
+    optionen: ["\\(x + 2 = 9\\)", "\\(x - 3 = 1\\)", "\\(2x = 8\\)", "\\(x + 10 = 4\\)"],
+    korrekt: 3,
+    tipp: "Bei welcher Gleichung müsste \\(x\\) kleiner als \\(0\\) sein?",
+    loesungsweg: "Bei \\(x + 10 = 4\\) müsste $$x = 4 - 10 = -6$$ sein — keine natürliche Zahl. Die anderen sind lösbar: \\(x + 2 = 9\\) mit \\(x = 7\\), \\(x - 3 = 1\\) mit \\(x = 4\\), \\(2x = 8\\) mit \\(x = 4\\)."
+  },
+  {
+    id: 28,
+    level: 5,
+    typ: "numerisch",
+    frage: "Die Gleichung \\(2 \\cdot x = 9\\) hat in den natürlichen Zahlen keine Lösung. Erlaubt man aber Kommazahlen, gibt es eine. Gib sie als Dezimalzahl an.",
+    loesung: 4.5,
+    toleranz: 0,
+    tipp: "Welche Zahl liegt genau in der Mitte zwischen \\(4\\) und \\(5\\)? Denn \\(2 \\cdot 4 = 8\\) und \\(2 \\cdot 5 = 10\\).",
+    loesungsweg: "In den natürlichen Zahlen: \\(2 \\cdot 4 = 8\\) und \\(2 \\cdot 5 = 10\\) — die \\(9\\) wird übersprungen. Mit Kommazahlen: $$x = 9 : 2 = 4{,}5$$ Probe: \\(2 \\cdot 4{,}5 = 9\\) — stimmt! Der Zahlenbereich entscheidet also, ob eine Gleichung lösbar ist."
+  },
+  {
+    id: 29,
+    level: 5,
+    typ: "mc",
+    frage: "Hat die Gleichung \\(x + 4 = 4\\) eine Lösung in den natürlichen Zahlen (die \\(0\\) zählt mit)?",
+    optionen: ["Ja, \\(x = 0\\)", "Nein, es gibt keine", "Ja, \\(x = 4\\)", "Ja, \\(x = 8\\)"],
+    korrekt: 0,
+    tipp: "Gibt es eine Zahl, die beim Addieren gar nichts verändert?",
+    loesungsweg: "Es gilt $$0 + 4 = 4 \\quad \\checkmark$$ Die \\(0\\) ist eine natürliche Zahl und verändert beim Addieren nichts. Also ist \\(x = 0\\) die Lösung. (\\(4 + 4 = 8\\) und \\(8 + 4 = 12\\) passen nicht.)"
+  },
+  {
+    id: 30,
+    level: 5,
+    typ: "mc",
+    frage: "Wie viele natürliche Zahlen (die \\(0\\) zählt mit) erfüllen die Ungleichung \\(x + 2 < 2\\)?",
+    optionen: ["genau eine", "keine", "zwei", "unendlich viele"],
+    korrekt: 1,
+    tipp: "Prüfe schon die kleinste natürliche Zahl: Was ergibt \\(0 + 2\\)? Ist das kleiner als \\(2\\)?",
+    loesungsweg: "Schon die kleinste Zahl scheitert: $$0 + 2 = 2, \\quad \\text{aber } 2 < 2 \\text{ ist falsch.}$$ Jede größere Zahl macht die linke Seite nur noch größer. Also erfüllt keine einzige natürliche Zahl diese Ungleichung."
+  },
+  // ========== LEVEL 6 — wagnerisch: Sachaufgaben als Gleichung aufstellen und lösen ==========
+  {
+    id: 31,
+    level: 6,
+    typ: "numerisch",
+    frage: "Zahlenrätsel: Su denkt sich eine Zahl, verdoppelt sie und addiert \\(6\\). Sie erhält \\(30\\). Welche Zahl hat sich Su gedacht?",
+    loesung: 12,
+    toleranz: 0,
+    tipp: "Nenne die gedachte Zahl \\(x\\). Die Gleichung lautet: \\(2x + 6 = 30\\). Rechne rückwärts.",
+    loesungsweg: "Gleichung: $$2x + 6 = 30$$ Rückwärts: $$2x = 30 - 6 = 24$$ $$x = 24 : 2 = 12$$ Probe: \\(2 \\cdot 12 + 6 = 24 + 6 = 30\\) — stimmt! Su hat sich die \\(12\\) gedacht."
+  },
+  {
+    id: 32,
+    level: 6,
+    typ: "mc",
+    frage: "Ben ist \\(4\\) Jahre älter als seine Schwester Aylin. Zusammen sind sie \\(20\\) Jahre alt. Wie alt ist Aylin?",
+    optionen: ["\\(12\\)", "\\(10\\)", "\\(8\\)", "\\(16\\)"],
+    korrekt: 2,
+    tipp: "Nenne Aylins Alter \\(x\\). Dann ist Ben \\(x + 4\\). Zusammen: \\(x + (x + 4) = 20\\).",
+    loesungsweg: "Sei \\(x\\) = Aylins Alter, Ben ist \\(x + 4\\). $$x + (x + 4) = 20$$ $$2x + 4 = 20$$ Rückwärts: \\(2x = 16\\), also \\(x = 8\\). Probe: Aylin \\(8\\), Ben \\(12\\), zusammen \\(20\\) — stimmt! (\\(12\\) ist Bens Alter, nicht Aylins.)"
+  },
+  {
+    id: 33,
+    level: 6,
+    typ: "numerisch",
+    frage: "💰 Jonas hat schon \\(7\\) Euro gespart. Ab jetzt spart er jede Woche \\(3\\) Euro dazu. Nach wie vielen Wochen hat er genau \\(25\\) Euro?",
+    loesung: 6,
+    toleranz: 0,
+    tipp: "Nenne die Anzahl der Wochen \\(x\\). Gleichung: \\(3x + 7 = 25\\).",
+    loesungsweg: "Gleichung: $$3x + 7 = 25$$ Rückwärts: $$3x = 25 - 7 = 18$$ $$x = 18 : 3 = 6$$ Probe: \\(3 \\cdot 6 + 7 = 18 + 7 = 25\\) — stimmt! Nach \\(6\\) Wochen hat Jonas \\(25\\) Euro."
+  },
+  {
+    id: 34,
+    level: 6,
+    typ: "numerisch",
+    frage: "🐧 Im Zoo leben dreimal so viele Pinguine wie Robben. Zusammen sind es \\(24\\) Tiere. Wie viele Robben sind es?",
+    loesung: 6,
+    toleranz: 0,
+    tipp: "Nenne die Anzahl der Robben \\(x\\). Dann gibt es \\(3x\\) Pinguine. Zusammen: \\(x + 3x = 24\\).",
+    loesungsweg: "Sei \\(x\\) = Anzahl der Robben, Pinguine: \\(3x\\). $$x + 3x = 24$$ $$4x = 24$$ $$x = 24 : 4 = 6$$ Probe: \\(6\\) Robben und \\(3 \\cdot 6 = 18\\) Pinguine, zusammen \\(24\\) — stimmt!"
+  },
+  {
+    id: 35,
+    level: 6,
+    typ: "mc",
+    frage: "Lena kauft \\(4\\) gleiche Hefte. Sie bezahlt mit einem \\(10\\)-Euro-Schein und bekommt \\(2\\) Euro zurück. \\(x\\) ist der Preis eines Hefts. Welche Gleichung passt zum Text?",
+    optionen: ["\\(4x - 2 = 10\\)", "\\(4x + 2 = 10\\)", "\\(4x + 10 = 2\\)", "\\(x + 4 = 10\\)"],
+    korrekt: 1,
+    tipp: "Preis der Hefte plus Rückgeld ergibt zusammen die \\(10\\) Euro vom Schein.",
+    loesungsweg: "Die \\(4\\) Hefte kosten \\(4x\\) Euro. Kosten plus Rückgeld = bezahlter Schein: $$4x + 2 = 10$$ Rückwärts: \\(4x = 8\\), also \\(x = 2\\). Ein Heft kostet \\(2\\) Euro. Probe: \\(4 \\cdot 2 + 2 = 10\\) — stimmt!"
+  },
+  {
+    id: 36,
+    level: 6,
+    typ: "numerisch",
+    frage: "📖 Amir liest ein Buch. An drei Tagen liest er jeweils \\(40\\) Seiten. Danach bleiben ihm noch \\(35\\) Seiten übrig. Wie viele Seiten hat das ganze Buch?",
+    loesung: 155,
+    toleranz: 0,
+    tipp: "Nenne die Seitenzahl des Buchs \\(x\\). Gelesen hat Amir \\(3 \\cdot 40\\) Seiten. Gleichung: \\(x - 120 = 35\\).",
+    loesungsweg: "Gelesen: \\(3 \\cdot 40 = 120\\) Seiten. Gleichung: $$x - 120 = 35$$ Rückwärts: $$x = 35 + 120 = 155$$ Probe: \\(155 - 120 = 35\\) — stimmt! Das Buch hat \\(155\\) Seiten."
+  }
+];
+    </script>
+    <script src="../p3-reflexion.js"></script>
+    <script src="../spirale-engine.js"></script>
+    <script src="../spirale-kids.js"></script>
+</body>
+</html>

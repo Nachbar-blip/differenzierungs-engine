@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometrische Grundbegriffe, Winkel & Symmetrie - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <link rel="stylesheet" href="../spirale-kids.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app"></div>
+    <script>
+// Geometrische Grundbegriffe, Winkel & Symmetrie — DiffEngine Klasse 5/6 Content (Roadmap Welle 2, Item 3)
+const THEMA_KEY = '5-geo-grundbegriffe';
+const THEMA_CONFIG = { name: 'Geometrische Grundbegriffe, Winkel & Symmetrie', bereich: 'geometrie', p3Enabled: true };
+const AUFGABEN = [
+  // ========== LEVEL 1 — babyleicht: Punkt, Gerade, Strahl, Strecke ==========
+  {
+    id: 1,
+    level: 1,
+    typ: "mc",
+    frage: "Du verbindest zwei Punkte \\(A\\) und \\(B\\) mit dem Lineal — nur das Stück von \\(A\\) bis \\(B\\). Wie heißt diese Linie?",
+    optionen: ["Gerade", "Strahl", "Kreis", "Strecke"],
+    korrekt: 3,
+    tipp: "Die Linie hat einen Anfang und ein Ende — sie hört an beiden Punkten auf.",
+    loesungsweg: "Eine Linie mit Anfangspunkt \\(A\\) und Endpunkt \\(B\\) heißt Strecke \\(\\overline{AB}\\). Eine Gerade und ein Strahl gehen dagegen ohne Ende weiter."
+  },
+  {
+    id: 2,
+    level: 1,
+    typ: "mc",
+    frage: "Welche Linie hat keinen Anfang und kein Ende — sie geht auf beiden Seiten immer weiter?",
+    optionen: ["Strecke", "Gerade", "Strahl", "Winkel"],
+    korrekt: 1,
+    tipp: "Stell dir vor, du könntest die Linie an beiden Enden unendlich weit verlängern.",
+    loesungsweg: "Eine Gerade hat weder Anfang noch Ende. Die Strecke hat zwei Endpunkte, der Strahl hat genau einen Anfangspunkt."
+  },
+  {
+    id: 3,
+    level: 1,
+    typ: "numerisch",
+    frage: "Eine Strecke \\(\\overline{AB}\\) hört auf beiden Seiten auf. Wie viele Endpunkte hat sie insgesamt?",
+    loesung: 2,
+    toleranz: 0,
+    tipp: "Zähle die Punkte, an denen die Strecke aufhört — auf beiden Seiten!",
+    loesungsweg: "Eine Strecke hört an beiden Seiten auf: bei \\(A\\) und bei \\(B\\). Sie hat also \\(2\\) Endpunkte."
+  },
+  {
+    id: 4,
+    level: 1,
+    typ: "mc",
+    frage: "Ein Laserpointer 🔦 startet an einem Punkt und leuchtet von dort immer weiter geradeaus. Welche Linie beschreibt den Lichtstrahl am besten?",
+    optionen: ["Strecke", "Gerade", "Strahl", "Punkt"],
+    korrekt: 2,
+    tipp: "Das Licht hat einen klaren Startpunkt — aber wo hört es auf?",
+    loesungsweg: "Der Lichtstrahl beginnt am Laserpointer (Anfangspunkt) und geht in eine Richtung immer weiter. Genau das ist ein Strahl (auch Halbgerade genannt)."
+  },
+  {
+    id: 5,
+    level: 1,
+    typ: "numerisch",
+    frage: "Durch wie viele verschiedene Punkte ist eine Gerade eindeutig festgelegt?",
+    loesung: 2,
+    toleranz: 0,
+    tipp: "Lege dein Lineal an: Wie viele Punkte brauchst du mindestens, damit es nicht mehr wackeln kann?",
+    loesungsweg: "Durch einen einzelnen Punkt gehen unendlich viele Geraden. Erst mit einem zweiten Punkt liegt die Gerade fest. Es sind also \\(2\\) Punkte."
+  },
+  {
+    id: 6,
+    level: 1,
+    typ: "mc",
+    frage: "Milan zeichnet einen Strahl. Welche Aussage stimmt?",
+    optionen: ["Er hat einen Anfangspunkt, aber kein Ende", "Er hat zwei Endpunkte", "Er hat weder Anfang noch Ende", "Er ist immer genau \\(10\\) cm lang"],
+    korrekt: 0,
+    tipp: "Denk an einen Sonnenstrahl: Er startet an der Sonne — und dann?",
+    loesungsweg: "Ein Strahl beginnt an einem Anfangspunkt und läuft von dort in eine Richtung unendlich weiter. Zwei Endpunkte hat die Strecke, weder Anfang noch Ende hat die Gerade — und eine feste Länge kann ein Strahl nie haben."
+  },
+  // ========== LEVEL 2 — leicht: parallel & senkrecht, Koordinaten ablesen ==========
+  {
+    id: 7,
+    level: 2,
+    typ: "mc",
+    frage: "Zwei Geraden verlaufen wie die Schienen einer Bahnstrecke 🚆: Sie haben überall den gleichen Abstand und schneiden sich nie. Wie nennt man solche Geraden?",
+    optionen: ["senkrecht", "parallel", "gekreuzt", "deckungsgleich"],
+    korrekt: 1,
+    tipp: "Der Abstand zwischen den Geraden bleibt immer gleich — egal wo du misst.",
+    loesungsweg: "Geraden mit überall gleichem Abstand, die sich nie schneiden, heißen parallel. Man schreibt: \\(g \\parallel h\\). Senkrechte Geraden schneiden sich dagegen im rechten Winkel."
+  },
+  {
+    id: 8,
+    level: 2,
+    typ: "numerisch",
+    frage: "Der Punkt \\(P(4|7)\\) liegt im Koordinatensystem. Wie lautet seine x-Koordinate?",
+    loesung: 4,
+    toleranz: 0,
+    tipp: "Bei \\(P(x|y)\\) steht die x-Koordinate immer an erster Stelle.",
+    loesungsweg: "Ein Punkt wird als \\(P(x|y)\\) geschrieben: zuerst die x-Koordinate (nach rechts), dann die y-Koordinate (nach oben). Bei \\(P(4|7)\\) ist die x-Koordinate also \\(4\\)."
+  },
+  {
+    id: 9,
+    level: 2,
+    typ: "mc",
+    frage: "Zwei Geraden schneiden sich und bilden dabei vier rechte Winkel. Wie stehen die Geraden zueinander?",
+    optionen: ["parallel", "schief", "senkrecht", "gestreckt"],
+    korrekt: 2,
+    tipp: "Denk an das Pluszeichen \\(+\\): Welche Winkel entstehen in der Mitte?",
+    loesungsweg: "Schneiden sich zwei Geraden im rechten Winkel (\\(90^\\circ\\)), stehen sie senkrecht aufeinander. Man schreibt: \\(g \\perp h\\). Parallele Geraden schneiden sich dagegen gar nicht."
+  },
+  {
+    id: 10,
+    level: 2,
+    typ: "numerisch",
+    frage: "Punkt \\(Q\\) liegt vom Ursprung aus \\(3\\) Schritte nach rechts und \\(6\\) Schritte nach oben. Wie lautet seine y-Koordinate?",
+    loesung: 6,
+    toleranz: 0,
+    tipp: "Die y-Koordinate zählt die Schritte nach oben.",
+    loesungsweg: "Nach rechts gehen ist die x-Richtung, nach oben die y-Richtung. Also gilt \\(Q(3|6)\\) — die y-Koordinate ist \\(6\\)."
+  },
+  {
+    id: 11,
+    level: 2,
+    typ: "mc",
+    frage: "Der Punkt \\(A(0|5)\\) liegt im Koordinatensystem. Wo genau liegt er?",
+    optionen: ["Auf der x-Achse", "Auf der y-Achse", "Genau im Ursprung", "Rechts neben der y-Achse"],
+    korrekt: 1,
+    tipp: "Seine x-Koordinate ist \\(0\\) — er geht also keinen Schritt nach rechts oder links.",
+    loesungsweg: "Wegen \\(x = 0\\) geht der Punkt keinen Schritt zur Seite, nur \\(5\\) nach oben. Er liegt also direkt auf der y-Achse. Im Ursprung läge er nur bei \\(A(0|0)\\)."
+  },
+  {
+    id: 12,
+    level: 2,
+    typ: "numerisch",
+    frage: "Die Punkte \\(A(2|3)\\) und \\(B(7|3)\\) haben die gleiche y-Koordinate — sie liegen auf einer waagerechten Linie. Wie lang ist die Strecke \\(\\overline{AB}\\) in Längeneinheiten?",
+    loesung: 5,
+    toleranz: 0,
+    tipp: "Zähle, wie viele Schritte es von \\(x = 2\\) bis \\(x = 7\\) sind.",
+    loesungsweg: "Beide Punkte liegen auf gleicher Höhe. Der Abstand ist die Differenz der x-Koordinaten: $$7 - 2 = 5$$ Die Strecke \\(\\overline{AB}\\) ist \\(5\\) Längeneinheiten lang."
+  },
+  // ========== LEVEL 3 — nervenschonend: Winkelarten erkennen ==========
+  {
+    id: 13,
+    level: 3,
+    typ: "mc",
+    frage: "Ein Winkel misst \\(\\alpha = 35^\\circ\\). Welche Winkelart ist das?",
+    optionen: ["spitzer Winkel", "rechter Winkel", "stumpfer Winkel", "gestreckter Winkel"],
+    korrekt: 0,
+    tipp: "Vergleiche mit dem rechten Winkel: Ist \\(35^\\circ\\) mehr oder weniger als \\(90^\\circ\\)?",
+    loesungsweg: "Es gilt \\(0^\\circ < 35^\\circ < 90^\\circ\\). Winkel unter \\(90^\\circ\\) heißen spitze Winkel. Rechter Winkel: genau \\(90^\\circ\\), stumpf: zwischen \\(90^\\circ\\) und \\(180^\\circ\\), gestreckt: genau \\(180^\\circ\\)."
+  },
+  {
+    id: 14,
+    level: 3,
+    typ: "numerisch",
+    frage: "Wie viele Grad hat ein rechter Winkel genau?",
+    loesung: 90,
+    toleranz: 0,
+    tipp: "Denk an die Ecke eines Blattes Papier — das ist ein rechter Winkel.",
+    loesungsweg: "Ein rechter Winkel misst genau \\(90^\\circ\\). Man erkennt ihn zum Beispiel an jeder Ecke eines Rechtecks."
+  },
+  {
+    id: 15,
+    level: 3,
+    typ: "mc",
+    frage: "Ein Winkel misst \\(\\beta = 124^\\circ\\). Welche Winkelart ist das?",
+    optionen: ["spitzer Winkel", "rechter Winkel", "stumpfer Winkel", "überstumpfer Winkel"],
+    korrekt: 2,
+    tipp: "Liegt \\(124^\\circ\\) zwischen \\(90^\\circ\\) und \\(180^\\circ\\)?",
+    loesungsweg: "Es gilt \\(90^\\circ < 124^\\circ < 180^\\circ\\). Solche Winkel heißen stumpfe Winkel. Überstumpf wäre der Winkel erst über \\(180^\\circ\\)."
+  },
+  {
+    id: 16,
+    level: 3,
+    typ: "numerisch",
+    frage: "Wie viele Grad hat ein gestreckter Winkel?",
+    loesung: 180,
+    toleranz: 0,
+    tipp: "Bei diesem Winkel bilden die beiden Schenkel zusammen eine gerade Linie.",
+    loesungsweg: "Ein gestreckter Winkel misst genau \\(180^\\circ\\) — die beiden Schenkel liegen dann auf einer Geraden, der Winkel ist ganz „ausgestreckt“."
+  },
+  {
+    id: 17,
+    level: 3,
+    typ: "mc",
+    frage: "Ein Winkel misst \\(\\gamma = 210^\\circ\\). Welche Winkelart ist das?",
+    optionen: ["gestreckter Winkel", "stumpfer Winkel", "spitzer Winkel", "überstumpfer Winkel"],
+    korrekt: 3,
+    tipp: "Ist \\(210^\\circ\\) größer als ein gestreckter Winkel (\\(180^\\circ\\))?",
+    loesungsweg: "Es gilt \\(180^\\circ < 210^\\circ < 360^\\circ\\). Winkel zwischen \\(180^\\circ\\) und \\(360^\\circ\\) heißen überstumpfe Winkel. Stumpf wäre nur ein Winkel zwischen \\(90^\\circ\\) und \\(180^\\circ\\)."
+  },
+  {
+    id: 18,
+    level: 3,
+    typ: "numerisch",
+    frage: "Ein voller Winkel — einmal ganz herum wie ein Riesenrad 🎡 — hat wie viele Grad?",
+    loesung: 360,
+    toleranz: 0,
+    tipp: "Er ist doppelt so groß wie ein gestreckter Winkel.",
+    loesungsweg: "Einmal ganz herum sind es \\(360^\\circ\\): $$2 \\cdot 180^\\circ = 360^\\circ$$ Das nennt man einen vollen Winkel."
+  },
+  // ========== LEVEL 4 — mittel: Winkel schätzen & Symmetrieachsen zählen ==========
+  {
+    id: 19,
+    level: 4,
+    typ: "mc",
+    frage: "Eine Pizzaschachtel 🍕 wird nur einen kleinen Spalt weit geöffnet. Welche Winkelgröße passt am besten zum Öffnungswinkel des Deckels?",
+    optionen: ["\\(15^\\circ\\)", "\\(90^\\circ\\)", "\\(150^\\circ\\)", "\\(180^\\circ\\)"],
+    korrekt: 0,
+    tipp: "Vergleiche den Spalt mit einem rechten Winkel (\\(90^\\circ\\)): Ist er größer oder kleiner?",
+    loesungsweg: "Ein kleiner Spalt ist ein sehr spitzer Winkel, also deutlich unter \\(90^\\circ\\). Von den Antworten passt nur \\(15^\\circ\\). Bei \\(90^\\circ\\) stünde der Deckel schon senkrecht nach oben, bei \\(180^\\circ\\) läge er flach hinten."
+  },
+  {
+    id: 20,
+    level: 4,
+    typ: "numerisch",
+    frage: "Wie viele Symmetrieachsen hat der Großbuchstabe A?",
+    loesung: 1,
+    toleranz: 0,
+    tipp: "Stell dir einen Spiegel vor, den du mitten durch den Buchstaben stellst. Wo passen beide Hälften genau aufeinander?",
+    loesungsweg: "Beim A passt nur die senkrechte Linie genau durch die Spitze: Die linke und die rechte Hälfte sind spiegelgleich. Waagerecht klappt es nicht. Also hat das A genau \\(1\\) Symmetrieachse."
+  },
+  {
+    id: 21,
+    level: 4,
+    typ: "mc",
+    frage: "Der große Zeiger einer Uhr wandert von der 12 zur 3. Welchen Winkel überstreicht er dabei?",
+    optionen: ["\\(30^\\circ\\)", "\\(45^\\circ\\)", "\\(90^\\circ\\)", "\\(180^\\circ\\)"],
+    korrekt: 2,
+    tipp: "Von 12 bis 3 ist genau ein Viertel der ganzen Uhr.",
+    loesungsweg: "Eine ganze Runde sind \\(360^\\circ\\). Von 12 bis 3 ist ein Viertel davon: $$360^\\circ : 4 = 90^\\circ$$ Das ist genau ein rechter Winkel."
+  },
+  {
+    id: 22,
+    level: 4,
+    typ: "numerisch",
+    frage: "Wie viele Symmetrieachsen hat ein Quadrat?",
+    loesung: 4,
+    toleranz: 0,
+    tipp: "Denk an die Linien durch die Seitenmitten UND an die Diagonalen.",
+    loesungsweg: "Ein Quadrat hat \\(2\\) Achsen durch die Seitenmitten (waagerecht und senkrecht) und \\(2\\) Achsen durch die Ecken (die Diagonalen). Zusammen: $$2 + 2 = 4$$ Symmetrieachsen."
+  },
+  {
+    id: 23,
+    level: 4,
+    typ: "mc",
+    frage: "Du öffnest eine Tür so weit, dass sie fast flach an der Wand liegt — nur ein kleines Stück fehlt noch. Welche Winkelgröße passt am besten?",
+    optionen: ["\\(30^\\circ\\)", "\\(60^\\circ\\)", "\\(95^\\circ\\)", "\\(170^\\circ\\)"],
+    korrekt: 3,
+    tipp: "Überlege zuerst: Wie viele Grad wären es, wenn die Tür ganz flach an der Wand läge?",
+    loesungsweg: "Läge die Tür ganz flach an der Wand, wären es \\(180^\\circ\\) (gestreckter Winkel). „Fast flach“ heißt also knapp darunter — \\(170^\\circ\\) passt am besten. \\(95^\\circ\\) wäre erst wenig mehr als eine halb geöffnete Tür."
+  },
+  {
+    id: 24,
+    level: 4,
+    typ: "numerisch",
+    frage: "Wie viele Symmetrieachsen hat der Großbuchstabe H?",
+    loesung: 2,
+    toleranz: 0,
+    tipp: "Probiere den Spiegel einmal senkrecht und einmal waagerecht durch die Mitte.",
+    loesungsweg: "Beim H funktioniert der Spiegel senkrecht durch die Mitte (links/rechts gleich) UND waagerecht durch den Querbalken (oben/unten gleich). Das H hat also \\(2\\) Symmetrieachsen."
+  },
+  // ========== LEVEL 5 — schwerer: Spiegelpunkt-Koordinaten berechnen ==========
+  {
+    id: 25,
+    level: 5,
+    typ: "numerisch",
+    frage: "Der Punkt \\(P(3|5)\\) wird an der waagerechten Spiegelgeraden durch \\(y = 6\\) gespiegelt. Wie lautet die y-Koordinate des Spiegelpunkts \\(P'\\)?",
+    loesung: 7,
+    toleranz: 0,
+    tipp: "Wie weit liegt \\(P\\) unter der Spiegelgeraden? Genauso weit liegt \\(P'\\) darüber.",
+    loesungsweg: "Abstand von \\(P\\) zur Spiegelgeraden: $$6 - 5 = 1$$ \\(P'\\) liegt \\(1\\) Schritt über der Spiegelgeraden: $$6 + 1 = 7$$ Also \\(P'(3|7)\\) — die y-Koordinate von \\(P'\\) ist \\(7\\)."
+  },
+  {
+    id: 26,
+    level: 5,
+    typ: "mc",
+    frage: "Der Punkt \\(A(2|6)\\) wird an der senkrechten Spiegelgeraden durch \\(x = 4\\) gespiegelt. Wo landet der Spiegelpunkt \\(A'\\)?",
+    optionen: ["\\(A'(0|6)\\)", "\\(A'(6|6)\\)", "\\(A'(2|4)\\)", "\\(A'(4|6)\\)"],
+    korrekt: 1,
+    tipp: "Bei einer senkrechten Spiegelgeraden ändert sich nur die x-Koordinate. Wie weit liegt \\(A\\) links von der Geraden?",
+    loesungsweg: "\\(A\\) liegt \\(2\\) Schritte links von der Spiegelgeraden \\(x = 4\\). Also liegt \\(A'\\) genau \\(2\\) Schritte rechts davon: $$4 + 2 = 6$$ Damit gilt \\(A'(6|6)\\). Wer \\(A'(0|6)\\) wählt, hat in die falsche Richtung gespiegelt — und \\(A'(4|6)\\) läge direkt auf der Spiegelgeraden."
+  },
+  {
+    id: 27,
+    level: 5,
+    typ: "numerisch",
+    frage: "Der Punkt \\(B(4|7)\\) wird an der waagerechten Spiegelgeraden durch \\(y = 5\\) gespiegelt. Wie lautet die y-Koordinate des Spiegelpunkts \\(B'\\)?",
+    loesung: 3,
+    toleranz: 0,
+    tipp: "\\(B\\) liegt \\(2\\) Schritte über der Spiegelgeraden. Wie weit liegt \\(B'\\) darunter?",
+    loesungsweg: "Abstand von \\(B\\) zur Spiegelgeraden: $$7 - 5 = 2$$ \\(B'\\) liegt \\(2\\) Schritte unter der Spiegelgeraden: $$5 - 2 = 3$$ Also \\(B'(4|3)\\) — die y-Koordinate ist \\(3\\)."
+  },
+  {
+    id: 28,
+    level: 5,
+    typ: "mc",
+    frage: "Der Punkt \\(C(5|1)\\) wird an der senkrechten Spiegelgeraden durch \\(x = 7\\) gespiegelt. Wo liegt der Spiegelpunkt \\(C'\\)?",
+    optionen: ["\\(C'(3|1)\\)", "\\(C'(7|1)\\)", "\\(C'(9|1)\\)", "\\(C'(1|5)\\)"],
+    korrekt: 2,
+    tipp: "Bei einer senkrechten Spiegelgeraden ändert sich nur die x-Koordinate. Wie weit liegt \\(C\\) von der Geraden entfernt?",
+    loesungsweg: "\\(C\\) liegt \\(2\\) Schritte links von der Spiegelgeraden \\(x = 7\\). Also liegt \\(C'\\) genau \\(2\\) Schritte rechts davon: $$7 + 2 = 9$$ Damit gilt \\(C'(9|1)\\). \\(C'(3|1)\\) wäre in die falsche Richtung gespiegelt, \\(C'(7|1)\\) läge auf der Spiegelgeraden und \\(C'(1|5)\\) ist nur ein Zahlendreher."
+  },
+  {
+    id: 29,
+    level: 5,
+    typ: "numerisch",
+    frage: "Der Punkt \\(D(2|3)\\) wird an der senkrechten Spiegelgeraden durch \\(x = 5\\) gespiegelt. Wie lautet die x-Koordinate des Spiegelpunkts \\(D'\\)?",
+    loesung: 8,
+    toleranz: 0,
+    tipp: "Wie weit ist \\(D\\) von der Spiegelgeraden entfernt? Genauso weit liegt \\(D'\\) auf der anderen Seite.",
+    loesungsweg: "Abstand von \\(D\\) zur Spiegelgeraden: $$5 - 2 = 3$$ \\(D'\\) liegt \\(3\\) Schritte auf der anderen Seite: $$5 + 3 = 8$$ Also \\(D'(8|3)\\) — die x-Koordinate ist \\(8\\)."
+  },
+  {
+    id: 30,
+    level: 5,
+    typ: "numerisch",
+    frage: "Der Punkt \\(E(2|3)\\) wird zuerst an der senkrechten Geraden durch \\(x = 4\\) gespiegelt. Das Ergebnis wird danach an der senkrechten Geraden durch \\(x = 7\\) gespiegelt. Wie lautet die x-Koordinate des Punktes am Ende?",
+    loesung: 8,
+    toleranz: 0,
+    tipp: "Mache die beiden Spiegelungen nacheinander: Wie weit liegt der Punkt jeweils von der Spiegelgeraden entfernt?",
+    loesungsweg: "Schritt 1 — Spiegelung an \\(x = 4\\): \\(E(2|3)\\) liegt \\(2\\) Schritte links davon, also $$4 + 2 = 6$$ Das ergibt \\(E'(6|3)\\). Schritt 2 — Spiegelung an \\(x = 7\\): \\(E'\\) liegt \\(1\\) Schritt links davon, also $$7 + 1 = 8$$ Das ergibt \\(E''(8|3)\\). Die x-Koordinate am Ende ist \\(8\\)."
+  },
+  // ========== LEVEL 6 — knifflig: Kombination & Begründung ==========
+  {
+    id: 31,
+    level: 6,
+    typ: "mc",
+    frage: "Die Gerade \\(g\\) ist parallel zu \\(h\\), und \\(h\\) ist parallel zu \\(k\\). Was gilt dann für \\(g\\) und \\(k\\)?",
+    optionen: ["\\(g\\) steht senkrecht auf \\(k\\)", "\\(g\\) ist parallel zu \\(k\\)", "\\(g\\) schneidet \\(k\\) in genau einem Punkt", "Das kann man nicht wissen"],
+    korrekt: 1,
+    tipp: "Stell dir drei Bahnschienen nebeneinander vor: Schiene 1 parallel zu 2, Schiene 2 parallel zu 3.",
+    loesungsweg: "Alle drei Geraden laufen in dieselbe Richtung: Wenn \\(g \\parallel h\\) und \\(h \\parallel k\\) gilt, dann gilt auch \\(g \\parallel k\\). Parallelität „vererbt“ sich — die Geraden können sich nie schneiden."
+  },
+  {
+    id: 32,
+    level: 6,
+    typ: "mc",
+    frage: "Die Gerade \\(g\\) steht senkrecht auf \\(h\\), und \\(h\\) steht senkrecht auf \\(k\\). Wie liegen \\(g\\) und \\(k\\) zueinander?",
+    optionen: ["parallel", "senkrecht", "Sie bilden einen Winkel von \\(45^\\circ\\)", "Das kann man nicht wissen"],
+    korrekt: 0,
+    tipp: "Zeichne es im Kopf: \\(h\\) waagerecht — wie verlaufen dann \\(g\\) und \\(k\\)?",
+    loesungsweg: "Wenn \\(h\\) waagerecht liegt, stehen \\(g\\) und \\(k\\) beide senkrecht dazu — beide verlaufen also senkrecht nach oben, in dieselbe Richtung. Damit gilt: \\(g \\parallel k\\). Zweimal senkrecht abbiegen bedeutet: wieder in die ursprüngliche Richtung schauen."
+  },
+  {
+    id: 33,
+    level: 6,
+    typ: "mc",
+    frage: "Zwei Winkel ergeben zusammen einen gestreckten Winkel. Der erste misst \\(65^\\circ\\). Wie groß ist der zweite — und welche Winkelart hat er?",
+    optionen: ["\\(25^\\circ\\), spitzer Winkel", "\\(125^\\circ\\), spitzer Winkel", "\\(115^\\circ\\), stumpfer Winkel", "\\(295^\\circ\\), überstumpfer Winkel"],
+    korrekt: 2,
+    tipp: "Überlege zuerst: Wie viele Grad hat ein gestreckter Winkel insgesamt?",
+    loesungsweg: "Zusammen \\(180^\\circ\\), also: $$180^\\circ - 65^\\circ = 115^\\circ$$ Wegen \\(90^\\circ < 115^\\circ < 180^\\circ\\) ist das ein stumpfer Winkel. Wer \\(25^\\circ\\) rechnet, hat mit \\(90^\\circ\\) statt \\(180^\\circ\\) gerechnet; \\(295^\\circ\\) käme bei \\(360^\\circ\\) heraus."
+  },
+  {
+    id: 34,
+    level: 6,
+    typ: "mc",
+    frage: "Ein Punkt liegt genau auf der Spiegelachse. Was passiert mit ihm bei der Spiegelung?",
+    optionen: ["Er wandert auf die andere Seite der Achse", "Er verschwindet aus der Figur", "Er landet immer im Ursprung", "Er bleibt genau an seinem Platz"],
+    korrekt: 3,
+    tipp: "Wie weit ist ein Punkt AUF dem Spiegel vom Spiegel entfernt?",
+    loesungsweg: "Der Spiegelpunkt liegt immer genauso weit hinter der Achse wie das Original davor. Ein Punkt auf der Achse hat den Abstand \\(0\\) — sein Spiegelbild liegt also ebenfalls im Abstand \\(0\\): Er bleibt, wo er ist. Solche Punkte nennt man Fixpunkte."
+  },
+  {
+    id: 35,
+    level: 6,
+    typ: "mc",
+    frage: "Ein Dreieck wird um \\(4\\) Kästchen nach rechts verschoben. Was gilt für das Original und das verschobene Bild?",
+    optionen: ["Das Bild ist größer als das Original", "Original und Bild sind deckungsgleich", "Das Bild ist spiegelverkehrt", "Das Bild ist um \\(90^\\circ\\) gedreht"],
+    korrekt: 1,
+    tipp: "Ändert eine Verschiebung irgendetwas an Form oder Größe der Figur?",
+    loesungsweg: "Beim Verschieben (und auch beim Spiegeln und Drehen) bleiben alle Seitenlängen und Winkel gleich — nur der Ort ändert sich. Original und Bild passen exakt aufeinander: Sie sind deckungsgleich. Gespiegelt oder gedreht wird bei einer reinen Verschiebung nichts."
+  },
+  {
+    id: 36,
+    level: 6,
+    typ: "mc",
+    frage: "Welche Aussage ist wahr?",
+    optionen: ["Jeder stumpfe Winkel ist größer als \\(90^\\circ\\) und kleiner als \\(180^\\circ\\)", "Ein spitzer Winkel misst immer genau \\(45^\\circ\\)", "Ein überstumpfer Winkel ist kleiner als \\(180^\\circ\\)", "Zwei parallele Geraden schneiden sich in genau einem Punkt"],
+    korrekt: 0,
+    tipp: "Gehe die Aussagen einzeln durch und suche für jede ein Gegenbeispiel.",
+    loesungsweg: "Stumpfe Winkel liegen zwischen \\(90^\\circ\\) und \\(180^\\circ\\) — die erste Aussage stimmt. Spitze Winkel können alles zwischen \\(0^\\circ\\) und \\(90^\\circ\\) sein (nicht nur \\(45^\\circ\\)). Überstumpfe Winkel sind GRÖSSER als \\(180^\\circ\\). Und parallele Geraden schneiden sich nie."
+  }
+];
+    </script>
+    <script src="../p3-reflexion.js"></script>
+    <script src="../spirale-engine.js"></script>
+    <script src="../spirale-kids.js"></script>
+</body>
+</html>
