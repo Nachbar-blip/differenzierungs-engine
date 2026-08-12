@@ -117,7 +117,7 @@ const STUFEN = [
         { pos: 1.15, muster: "skala",
           text: "Ein Strich ist hier ein Halbes (0,5) wert. 2,3 liegt kurz hinter der 2." }
       ],
-      hilfe: { typ: "dezimal", unterteile: 0.1 } },
+      hilfe: { typ: "dezimal", unterteile: 0.5 } },
     { id: "s2-05", stufe: 2, zahl: 0.9, anzeige: "0{,}9",
       strahl: { min: 0, max: 2, tick: 0.1, beschriftet: [0, 1, 2] },
       fallen: [
@@ -186,7 +186,7 @@ const STUFEN = [
         { pos: 2.65, muster: "laengere-zahl",
           text: "2,15 hat mehr Ziffern als 2,5 - ist aber KLEINER. 15 Hundertstel sind weniger als 5 Zehntel." }
       ],
-      hilfe: { typ: "dezimal", unterteile: 0.05 } },
+      hilfe: { typ: "dezimal", unterteile: 0.25 } },
     { id: "s3-06", stufe: 3, zahl: 0.375, anzeige: "0{,}375",
       strahl: { min: 0, max: 1, tick: 0.125, beschriftet: [0, 0.5, 1] },
       fallen: [
@@ -200,7 +200,7 @@ const STUFEN = [
         { pos: 1.5, muster: "komma-trennt",
           text: "1,05 ist nicht 1,5! Die Null haelt die Zehntel-Stelle frei: nur 5 Hundertstel hinter der 1." }
       ],
-      hilfe: { typ: "dezimal", unterteile: 0.05 } },
+      hilfe: { typ: "dezimal", unterteile: 0.1 } },
     { id: "s3-08", stufe: 3, zahl: 0.09, anzeige: "0{,}09",
       strahl: { min: 0, max: 1, tick: 0.1, beschriftet: [0, 0.5, 1] },
       fallen: [
@@ -333,7 +333,7 @@ const STUFEN = [
         { pos: 3.5, muster: "komma-trennt",
           text: "3,05 ist nicht 3,5! Die Null haelt die Zehntel-Stelle frei: nur 5 Hundertstel hinter der 3." }
       ],
-      hilfe: { typ: "dezimal", unterteile: 0.05 } }
+      hilfe: { typ: "dezimal", unterteile: 0.25 } }
   ] }
 ];
 

@@ -163,6 +163,17 @@ test('Katalog: keine Falle innerhalb 2x Toleranz der Loesung', () => {
   }
 });
 
+test('Katalog: hilfe gueltig (typ, unterteile teilt Spannweite, max. 25 Striche)', () => {
+  const TYPEN = ['natuerlich', 'dezimal', 'bruch'];
+  for (const a of alleAufgaben) {
+    assert.ok(TYPEN.indexOf(a.hilfe.typ) !== -1, a.id + ': hilfe.typ ungueltig: ' + a.hilfe.typ);
+    assert.ok(a.hilfe.unterteile > 0, a.id + ': hilfe.unterteile <= 0');
+    const n = (a.strahl.max - a.strahl.min) / a.hilfe.unterteile;
+    assert.ok(Math.abs(n - Math.round(n)) < 1e-6, a.id + ': unterteile ' + a.hilfe.unterteile + ' teilt Spannweite nicht');
+    assert.ok(Math.round(n) <= 25, a.id + ': ' + Math.round(n) + ' Hilfsstriche (> 25, unlesbar)');
+  }
+});
+
 test('Katalog: Bruch-Aufgaben zeigen \\tfrac oder \\frac', () => {
   const brueche = alleAufgaben.filter(a => a.hilfe.typ === 'bruch');
   assert.ok(brueche.length >= 8, 'zu wenige Bruch-Aufgaben: ' + brueche.length);
