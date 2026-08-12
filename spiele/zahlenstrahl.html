@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zahlenstrahl-Spiel: Stelle die Zahl - DifferenzierungsEngine</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="../spirale.css">
+    <link rel="stylesheet" href="../spirale-kids.css">
+    <link rel="stylesheet" href="zahlenstrahl.css">
+    <style>:root { --spirale-primary: #667eea; --spirale-secondary: #764ba2; --spirale-correct: #22c55e; --spirale-wrong: #ef4444; }</style>
+</head>
+<body>
+    <div class="spirale-container" id="app">
+        <header>
+            <h1>Stelle die Zahl</h1>
+            <p>Zieh den Marker an die richtige Stelle auf dem Zahlenstrahl</p>
+            <a class="back-link" href="../index.html">&larr; Zur&uuml;ck zur &Uuml;bersicht</a>
+        </header>
+
+        <!-- Startbildschirm: Stufenwahl -->
+        <section id="startScreen" class="aufgabe-karte">
+            <h2 class="zs-untertitel">W&auml;hle eine Stufe</h2>
+            <div class="stufen-grid">
+                <button class="stufe-karte" data-stufe="0">
+                    <span class="stufe-nr">Stufe 1</span>
+                    <span class="stufe-titel">Zahlen bis 1000</span>
+                    <span class="stufe-text">Lies genau, was ein Strich wert ist &ndash; die Skala wechselt!</span>
+                </button>
+                <button class="stufe-karte" data-stufe="1">
+                    <span class="stufe-nr">Stufe 2</span>
+                    <span class="stufe-titel">Kommazahlen (Zehntel)</span>
+                    <span class="stufe-text">Wo wohnt 0,5? Kommazahlen mit einer Stelle nach dem Komma.</span>
+                </button>
+                <button class="stufe-karte" data-stufe="2">
+                    <span class="stufe-nr">Stufe 3</span>
+                    <span class="stufe-titel">Kommazahlen (Hundertstel)</span>
+                    <span class="stufe-text">Der gro&szlig;e Unterschied zwischen 0,7 und 0,07.</span>
+                </button>
+                <button class="stufe-karte" data-stufe="3">
+                    <span class="stufe-nr">Stufe 4</span>
+                    <span class="stufe-titel">Br&uuml;che</span>
+                    <span class="stufe-text">Ein Bruch ist EINE Zahl &ndash; finde ihren Platz auf dem Strahl.</span>
+                </button>
+                <button class="stufe-karte" data-stufe="4">
+                    <span class="stufe-nr">Stufe 5</span>
+                    <span class="stufe-titel">Alles gemischt</span>
+                    <span class="stufe-text">Br&uuml;che und Kommazahlen durcheinander &ndash; das Finale!</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Spielbildschirm -->
+        <section id="spielScreen" class="aufgabe-karte" hidden>
+            <div class="zs-kopf">
+                <span id="stufeInfo"></span>
+                <span id="aufgabeInfo"></span>
+            </div>
+            <div class="aufgabe-text" id="aufgabeAnzeige"></div>
+            <div class="strahl-wrap" id="strahlWrap"></div>
+            <div class="zs-buttons">
+                <button class="btn-pruefen" id="btnPruefen" type="button">Pr&uuml;fen</button>
+                <button class="btn-hilfe" id="btnHilfe" type="button" aria-expanded="false">Hilfe anzeigen</button>
+            </div>
+            <div class="hilfe-panel" id="hilfePanel" hidden>
+                <div class="hilfe-tabs" role="tablist">
+                    <button class="hilfe-tab aktiv" id="tabBild" type="button" role="tab" aria-selected="true">Bild</button>
+                    <button class="hilfe-tab" id="tabTafel" type="button" role="tab" aria-selected="false">Tafel</button>
+                </div>
+                <div class="hilfe-inhalt" id="hilfeBild" role="tabpanel">
+                    <p class="hilfe-erklaerung">Schau auf den Strahl: Er ist jetzt fein unterteilt und beschriftet.</p>
+                </div>
+                <div class="hilfe-inhalt" id="hilfeTafel" role="tabpanel" hidden></div>
+            </div>
+            <div id="feedbackBereich"></div>
+        </section>
+
+        <!-- Auswertung -->
+        <section id="auswertungScreen" class="aufgabe-karte" hidden>
+            <h2 class="zs-untertitel" id="auswertungTitel"></h2>
+            <div id="auswertungInhalt"></div>
+            <div id="auswertungGesamt"></div>
+            <div class="zs-buttons">
+                <button class="btn-weiter" id="btnNaechsteStufe" type="button"></button>
+                <button class="btn-hilfe" id="btnStufenwahl" type="button">Zur Stufenwahl</button>
+            </div>
+        </section>
+    </div>
+    <footer>Zahlenstrahl-Spiel &middot; Stelle die Zahl &middot; Klasse 5/6 &middot; Mit KI erstellt (Anthropic Claude)</footer>
+    <script src="zahlenstrahl-daten.js"></script>
+    <script src="zahlenstrahl-logik.js"></script>
+    <script src="zahlenstrahl.js"></script>
+</body>
+</html>

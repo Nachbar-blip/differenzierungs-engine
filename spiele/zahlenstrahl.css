@@ -1,0 +1,376 @@
+/* zahlenstrahl.css - nur Spiel-Spezifisches (Strahl, Marker, Hilfe, Stufenkarten, Auswertung).
+   Basis-Optik kommt aus ../spirale.css + ../spirale-kids.css. */
+
+.zs-untertitel {
+    text-align: center;
+    color: #1f2937;
+    margin-bottom: 18px;
+    font-size: 1.4rem;
+}
+
+/* ===== Stufenkarten (Startbildschirm) ===== */
+
+.stufen-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.stufe-karte {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+    padding: 16px;
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+    min-height: var(--kids-touch, 48px);
+    font-family: inherit;
+}
+
+.stufe-karte:hover {
+    border-color: var(--spirale-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.stufe-nr {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--spirale-primary);
+}
+
+.stufe-titel {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.stufe-text {
+    font-size: 0.92rem;
+    color: #4b5563;
+    line-height: 1.45;
+}
+
+/* ===== Spiel-Kopfzeile ===== */
+
+.zs-kopf {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #6b7280;
+    margin-bottom: 10px;
+}
+
+/* ===== Zahlenstrahl (SVG) ===== */
+
+.strahl-wrap {
+    margin: 10px 0 6px;
+}
+
+.strahl-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    touch-action: none; /* Drag statt Scroll auf Touch-Geraeten */
+    user-select: none;
+}
+
+.strahl-linie {
+    stroke: #1f2937;
+    stroke-width: 3;
+    stroke-linecap: round;
+}
+
+.strahl-tick {
+    stroke: #6b7280;
+    stroke-width: 2;
+}
+
+.strahl-label {
+    fill: #1f2937;
+    font-size: 16px;
+    font-weight: 600;
+    text-anchor: middle;
+}
+
+/* Feine Hilfs-Unterteilung (Falle-Einblendung / Hilfe-Bild) */
+.strahl-fein {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.strahl-fein.sichtbar {
+    opacity: 1;
+}
+
+.strahl-fein line {
+    stroke: var(--spirale-primary);
+    stroke-width: 1.5;
+}
+
+.strahl-fein text {
+    fill: var(--spirale-primary);
+    font-size: 12px;
+    font-weight: 600;
+    text-anchor: middle;
+}
+
+/* Marker */
+.zs-marker {
+    cursor: grab;
+    outline: none;
+}
+
+.zs-marker:active {
+    cursor: grabbing;
+}
+
+.zs-marker circle.marker-kopf {
+    fill: var(--spirale-primary);
+    stroke: white;
+    stroke-width: 3;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.zs-marker line.marker-griff {
+    stroke: var(--spirale-primary);
+    stroke-width: 3;
+}
+
+.zs-marker:focus circle.marker-kopf,
+.zs-marker:focus-visible circle.marker-kopf {
+    stroke: #fbbf24;
+    stroke-width: 4;
+}
+
+.zs-marker rect.marker-hitbox {
+    fill: transparent;
+    stroke: none;
+}
+
+.zs-marker.geloest circle.marker-kopf,
+.zs-marker.geloest line.marker-griff {
+    fill: var(--spirale-correct);
+    stroke: var(--spirale-correct);
+}
+
+.zs-marker.geloest circle.marker-kopf {
+    stroke: white;
+}
+
+/* ===== Buttons ===== */
+
+.zs-buttons {
+    text-align: center;
+    margin-top: 14px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn-hilfe {
+    display: inline-block;
+    padding: 10px 24px;
+    background: white;
+    border: 2px solid var(--spirale-primary);
+    border-radius: 12px;
+    color: var(--spirale-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    min-height: 44px;
+}
+
+.btn-hilfe:hover {
+    background: var(--spirale-primary);
+    color: white;
+}
+
+/* ===== Hilfe-Panel (EIS) ===== */
+
+.hilfe-panel {
+    margin-top: 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 14px;
+    background: #f8fafc;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.hilfe-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.hilfe-tab {
+    padding: 8px 22px;
+    border: 2px solid #d1d5db;
+    border-radius: 999px;
+    background: white;
+    color: #4b5563;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 44px;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.hilfe-tab.aktiv {
+    border-color: var(--spirale-primary);
+    background: var(--spirale-primary);
+    color: white;
+}
+
+.hilfe-erklaerung {
+    color: #374151;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Stellenwerttafel */
+.swt-tafel {
+    border-collapse: collapse;
+    margin: 8px auto;
+}
+
+.swt-tafel th,
+.swt-tafel td {
+    border: 2px solid #9ca3af;
+    padding: 8px 18px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.swt-tafel th {
+    background: #e0e7ff;
+    color: #3730a3;
+    font-size: 0.9rem;
+}
+
+.swt-tafel td {
+    font-weight: 700;
+    color: #1f2937;
+    background: white;
+}
+
+.swt-komma {
+    border: none !important;
+    background: transparent !important;
+    font-size: 1.4rem !important;
+    padding: 8px 2px !important;
+}
+
+/* Bruchstreifen */
+.bruchstreifen-svg {
+    display: block;
+    margin: 8px auto;
+    max-width: 100%;
+}
+
+.bruch-teil {
+    fill: white;
+    stroke: #1f2937;
+    stroke-width: 2;
+}
+
+.bruch-teil.gefuellt {
+    fill: var(--spirale-primary);
+}
+
+/* ===== Feedback ===== */
+
+.zs-loesungstext {
+    margin-top: 8px;
+    color: #374151;
+    line-height: 1.6;
+}
+
+/* ===== Auswertung ===== */
+
+.auswertung-liste {
+    list-style: none;
+    margin: 12px 0;
+    padding: 0;
+}
+
+.auswertung-liste li {
+    background: #fef3c7;
+    border-left: 4px solid #f59e0b;
+    border-radius: 0 10px 10px 0;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    color: #92400e;
+    line-height: 1.55;
+}
+
+.auswertung-positiv {
+    background: #dcfce7;
+    border: 2px solid var(--spirale-correct);
+    border-radius: 12px;
+    padding: 16px;
+    color: #166534;
+    font-weight: 600;
+    text-align: center;
+    margin: 12px 0;
+}
+
+.empfehlung-block {
+    margin-top: 14px;
+}
+
+.empfehlung-block h3 {
+    font-size: 1.05rem;
+    color: #1f2937;
+    margin-bottom: 8px;
+}
+
+.empfehlung-block a {
+    display: block;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    background: white;
+    border: 2px solid var(--spirale-primary);
+    border-radius: 12px;
+    color: var(--spirale-primary);
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    min-height: 44px;
+}
+
+.empfehlung-block a:hover {
+    background: var(--spirale-primary);
+    color: white;
+}
+
+#auswertungGesamt {
+    margin-top: 18px;
+    border-top: 2px dashed #d1d5db;
+    padding-top: 14px;
+}
+
+#auswertungGesamt h3 {
+    font-size: 1.05rem;
+    color: #1f2937;
+    margin-bottom: 8px;
+}
+
+/* ===== Footer ===== */
+
+footer {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.85rem;
+    margin-top: 24px;
+    padding-bottom: 10px;
+}
