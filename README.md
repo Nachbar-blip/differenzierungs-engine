@@ -2,6 +2,8 @@
 
 Adaptives Mathe-Trainingstool für Klasse 5–12 (Oberstufe mit GK + LK).
 
+> **Hinweis:** Dieses Tool wurde mit KI-Unterstützung erstellt (Anthropic Claude) — Aufgaben, Engine und QA; fachlich geprüft (adversariale Nachrechnung + Wolfram-Numerik).
+
 **103 Themen, 3708 Aufgaben** von Arithmetik/Geometrie der Unterstufe bis Analysis, Analytische Geometrie und Stochastik.
 
 ## Bedienung
