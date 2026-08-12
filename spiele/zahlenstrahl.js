@@ -40,7 +40,8 @@
   var gesperrt = false;    // Eingabe gesperrt (Feedback/Loesung laeuft)
   var musterStufe = {};    // Muster-Zaehler der aktuellen Stufe
   var musterGesamt = {};   // Muster-Zaehler ueber alle gespielten Stufen
-  var hilfeGenutztStufe = 0;
+  var hilfeGenutztStufe = 0;      // Aufgaben dieser Stufe, bei denen Hilfe offen war
+  var hilfeDieseAufgabe = false;  // lokales mitHilfe-Flag (STUFEN bleibt unveraendert)
   var gespielteStufen = 0;
   var animId = null;
 
@@ -100,10 +101,10 @@
     svg.appendChild(svgEl('line', { 'class': 'strahl-linie', x1: PAD - 10, y1: ACHSE_Y, x2: VIEW_W - PAD + 14, y2: ACHSE_Y }));
     svg.appendChild(svgEl('path', { 'class': 'strahl-linie', d: 'M ' + (VIEW_W - PAD + 8) + ' ' + (ACHSE_Y - 6) + ' L ' + (VIEW_W - PAD + 16) + ' ' + ACHSE_Y + ' L ' + (VIEW_W - PAD + 8) + ' ' + (ACHSE_Y + 6), fill: 'none' }));
 
-    // Ticks
-    var w;
-    for (w = strahl.min; w <= strahl.max + strahl.tick / 2; w += strahl.tick) {
-      var x = xVonWert(strahl, w);
+    // Ticks (index-basiert statt w += tick, sonst Float-Drift)
+    var anzahlTicks = Math.round((strahl.max - strahl.min) / strahl.tick);
+    for (var ti = 0; ti <= anzahlTicks; ti++) {
+      var x = xVonWert(strahl, strahl.min + ti * strahl.tick);
       svg.appendChild(svgEl('line', { 'class': 'strahl-tick', x1: x, y1: ACHSE_Y - 7, x2: x, y2: ACHSE_Y + 7 }));
     }
 
@@ -197,8 +198,10 @@
     var strahl = aufgabe.strahl;
     var schritt = aufgabe.hilfe.unterteile;
     if (feinGruppe.childNodes.length === 0) {
-      var i = 0;
-      for (var w = strahl.min; w <= strahl.max + schritt / 2; w += schritt, i++) {
+      // index-basiert statt w += schritt, sonst Float-Drift
+      var anzahl = Math.round((strahl.max - strahl.min) / schritt);
+      for (var i = 0; i <= anzahl; i++) {
+        var w = strahl.min + i * schritt;
         var x = xVonWert(strahl, w);
         feinGruppe.appendChild(svgEl('line', { x1: x, y1: ACHSE_Y - 14, x2: x, y2: ACHSE_Y }));
         if (i % 5 === 0) {
@@ -289,8 +292,10 @@
     el.btnHilfe.setAttribute('aria-expanded', String(offen));
     el.btnHilfe.innerHTML = offen ? 'Hilfe ausblenden' : 'Hilfe anzeigen';
     if (offen) {
-      aktuelleAufgabe().mitHilfe = true; // Nutzung zaehlt als "mit Hilfe"
-      hilfeGenutztStufe++;
+      if (!hilfeDieseAufgabe) { // Nutzung zaehlt als "mit Hilfe" (1x pro Aufgabe)
+        hilfeDieseAufgabe = true;
+        hilfeGenutztStufe++;
+      }
       if (el.tabBild.classList.contains('aktiv')) zeigeUnterteilung();
     }
   }
@@ -320,7 +325,7 @@
     var aufgabe = aktuelleAufgabe();
     versuche = 0;
     gesperrt = false;
-    aufgabe.mitHilfe = false;
+    hilfeDieseAufgabe = false;
     el.stufeInfo.textContent = 'Stufe ' + (stufeIdx + 1);
     el.aufgabeInfo.textContent = 'Aufgabe ' + (aufgabeIdx + 1) + ' von ' + STUFEN[stufeIdx].aufgaben.length;
     el.feedbackBereich.innerHTML = '';
@@ -425,7 +430,9 @@
     var strahl = aktuelleAufgabe().strahl;
     markerWert = wert;
     marker.setAttribute('transform', 'translate(' + xVonWert(strahl, wert) + ',0)');
-    marker.setAttribute('aria-valuenow', Math.round(wert * 1000) / 1000);
+    var gerundet = Math.round(wert * 1000) / 1000;
+    marker.setAttribute('aria-valuenow', gerundet);
+    marker.setAttribute('aria-valuetext', formatDe(gerundet));
   }
 
   function naechsteAufgabe() {
@@ -473,13 +480,17 @@
     el.auswertungTitel.innerHTML = 'Stufe ' + (stufeIdx + 1) + ' geschafft!';
 
     var liste = musterListeHtml(musterStufe);
+    var hilfeSatz = hilfeGenutztStufe > 0
+      ? '<p class="hilfe-erklaerung">' + hilfeGenutztStufe + ' von ' + stufe.aufgaben.length +
+        ' Aufgaben hast du mit Hilfe gel&ouml;st &ndash; Hilfe holen ist schlau!</p>'
+      : '';
     var html;
     if (liste === '') {
-      html = '<div class="auswertung-positiv">Klasse! Du bist in keine einzige Falle getappt' +
-        (hilfeGenutztStufe > 0 ? ' &ndash; die Hilfe hast du dabei clever genutzt' : '') + '.' +
-        (letzteStufe ? ' Du hast alle Stufen gemeistert!' : ' Trau dich an die n&auml;chste Stufe!') + '</div>';
+      html = '<div class="auswertung-positiv">Klasse! Du bist in keine einzige Falle getappt.' +
+        (letzteStufe ? ' Du hast alle Stufen gemeistert!' : ' Trau dich an die n&auml;chste Stufe!') + '</div>' + hilfeSatz;
     } else {
-      html = '<p class="hilfe-erklaerung">Hier hat dich der Zahlenstrahl ausgetrickst:</p>' + liste + empfehlungenHtml(musterStufe);
+      html = '<p class="hilfe-erklaerung">Hier hat dich der Zahlenstrahl ausgetrickst:</p>' + liste +
+        hilfeSatz + empfehlungenHtml(musterStufe);
     }
     el.auswertungInhalt.innerHTML = html;
 

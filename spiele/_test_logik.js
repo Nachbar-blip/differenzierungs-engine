@@ -163,6 +163,14 @@ test('Katalog: keine Falle innerhalb 2x Toleranz der Loesung', () => {
   }
 });
 
+test('Katalog: keine Loesung innerhalb Toleranz von strahl.min (Marker-Start nie "richtig")', () => {
+  for (const a of alleAufgaben) {
+    const tol = (a.strahl.max - a.strahl.min) * TOLERANZ_ANTEIL;
+    assert.ok(Math.abs(a.zahl - a.strahl.min) > tol,
+      a.id + ': zahl ' + a.zahl + ' liegt in der Richtig-Toleranz der Startposition ' + a.strahl.min);
+  }
+});
+
 test('Katalog: hilfe gueltig (typ, unterteile teilt Spannweite, max. 25 Striche)', () => {
   const TYPEN = ['natuerlich', 'dezimal', 'bruch'];
   for (const a of alleAufgaben) {
