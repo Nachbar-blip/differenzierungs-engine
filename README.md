@@ -1,8 +1,8 @@
 # DifferenzierungsEngine
 
-Adaptives Mathe-Trainingstool für die Oberstufe (Klasse 11/12, GK + LK).
+Adaptives Mathe-Trainingstool für Klasse 5–12 (Oberstufe mit GK + LK).
 
-**33 Themen, 1188 Aufgaben** in den Bereichen Analysis, Analytische Geometrie und Stochastik.
+**103 Themen, 3708 Aufgaben** von Arithmetik/Geometrie der Unterstufe bis Analysis, Analytische Geometrie und Stochastik.
 
 ## Bedienung
 
