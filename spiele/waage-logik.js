@@ -20,6 +20,8 @@ function macht_leichter(op) {
 //  - nicht-teilbar: div ginge nicht ganzzahlig auf (nur ohne erlaubeNegativ)
 //  - unbekannte-art: Distraktor-Arten (add_c, mul, ...) - werden nie angewendet,
 //                    nur von klassifiziere_fehlop eingeordnet
+// Kontrakt: die einseitig-Pruefung kommt VOR der Art-Pruefung - eine einseitige
+// Op unbekannter Art liefert also "einseitig", nicht "unbekannte-art" (gewollt).
 function wende_an(z, op, erlaubeNegativ) {
   if (op.seite !== 'beide') {
     var leichter = macht_leichter(op);
