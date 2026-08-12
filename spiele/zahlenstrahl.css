@@ -56,6 +56,17 @@
     line-height: 1.45;
 }
 
+/* ===== Aufgabensatz einzeilig =====
+   .aufgabe-text in spirale.css ist flex-column -> "Stelle die Zahl / 0,7 / ein!"
+   braeche dreizeilig. Hier scoped auf eine Zeile umgestellt. */
+
+#spielScreen .aufgabe-text {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.3em;
+}
+
 /* ===== Spiel-Kopfzeile ===== */
 
 .zs-kopf {
@@ -348,6 +359,13 @@
     margin-top: 18px;
     border-top: 2px dashed #d1d5db;
     padding-top: 14px;
+}
+
+/* Sicherheitsnetz: .btn-weiter (spirale.css) setzt display:inline-block und
+   wuerde das [hidden]-Attribut ueberstimmen -> nach der letzten Stufe darf
+   kein "Weiter zu Stufe 6"-Button erscheinen. */
+#auswertungScreen [hidden] {
+    display: none !important;
 }
 
 /* ===== Footer ===== */

@@ -34,7 +34,7 @@ const STUFEN = [
       strahl: { min: 0, max: 20, tick: 1, beschriftet: [0, 10, 20] },
       fallen: [
         { pos: 13, muster: "skala",
-          text: "Zaehle vom Nullpunkt aus nach rechts, nicht von der 20 zurueck. Die 7 liegt links von der 10." }
+          text: "Z\u00e4hle vom Nullpunkt aus nach rechts, nicht von der 20 zur\u00fcck. Die 7 liegt links von der 10." }
       ],
       hilfe: { typ: "natuerlich", unterteile: 1 } },
     { id: "s1-02", stufe: 1, zahl: 14, anzeige: "14",
@@ -62,7 +62,7 @@ const STUFEN = [
       strahl: { min: 0, max: 1000, tick: 50, beschriftet: [0, 500, 1000] },
       fallen: [
         { pos: 175, muster: "skala",
-          text: "Ein Strich ist hier 50 wert, nicht 100. Fuer 350 brauchst du 7 Striche." }
+          text: "Ein Strich ist hier 50 wert, nicht 100. F\u00fcr 350 brauchst du 7 Striche." }
       ],
       hilfe: { typ: "natuerlich", unterteile: 50 } },
     { id: "s1-06", stufe: 1, zahl: 800, anzeige: "800",
@@ -76,7 +76,7 @@ const STUFEN = [
       strahl: { min: 0, max: 20, tick: 1, beschriftet: [0, 10, 20] },
       fallen: [
         { pos: 8, muster: "skala",
-          text: "Die 12 ist groesser als 10, sie liegt also rechts von der Mitte. Zaehle von 0 aus." }
+          text: "Die 12 ist gr\u00f6\u00dfer als 10, sie liegt also rechts von der Mitte. Z\u00e4hle von 0 aus." }
       ],
       hilfe: { typ: "natuerlich", unterteile: 1 } },
     { id: "s1-08", stufe: 1, zahl: 90, anzeige: "90",
@@ -101,14 +101,14 @@ const STUFEN = [
       strahl: { min: 0, max: 1, tick: 0.1, beschriftet: [0, 0.5, 1] },
       fallen: [
         { pos: 0.08, muster: "stellenwert",
-          text: "0,8 sind 8 Zehntel - fast eine ganze 1. Ein Zehntel ist ein grosses Stueck!" }
+          text: "0,8 sind 8 Zehntel - fast eine ganze 1. Ein Zehntel ist ein gro\u00dfes St\u00fcck!" }
       ],
       hilfe: { typ: "dezimal", unterteile: 0.1 } },
     { id: "s2-03", stufe: 2, zahl: 1.5, anzeige: "1{,}5",
       strahl: { min: 0, max: 2, tick: 0.1, beschriftet: [0, 1, 2] },
       fallen: [
         { pos: 1.05, muster: "stellenwert",
-          text: "1,5 ist 1 und 5 Zehntel - genau zwischen 1 und 2. Nicht nur ein kleines Stueck hinter der 1." }
+          text: "1,5 ist 1 und 5 Zehntel - genau zwischen 1 und 2. Nicht nur ein kleines St\u00fcck hinter der 1." }
       ],
       hilfe: { typ: "dezimal", unterteile: 0.1 } },
     { id: "s2-04", stufe: 2, zahl: 2.3, anzeige: "2{,}3",
@@ -143,7 +143,7 @@ const STUFEN = [
       strahl: { min: 0, max: 2, tick: 0.2, beschriftet: [0, 1, 2] },
       fallen: [
         { pos: 1.02, muster: "stellenwert",
-          text: "1,2 ist 1 und 2 Zehntel. Zwei Zehntel sind ein ordentliches Stueck hinter der 1." }
+          text: "1,2 ist 1 und 2 Zehntel. Zwei Zehntel sind ein ordentliches St\u00fcck hinter der 1." }
       ],
       hilfe: { typ: "dezimal", unterteile: 0.1 } }
   ] },
@@ -154,7 +154,7 @@ const STUFEN = [
       strahl: { min: 0, max: 1, tick: 0.1, beschriftet: [0, 0.5, 1] },
       fallen: [
         { pos: 0.07, muster: "stellenwert",
-          text: "7 Zehntel sind nicht 7 Hundertstel. Ein Zehntel ist ein grosses Stueck!" },
+          text: "7 Zehntel sind nicht 7 Hundertstel. Ein Zehntel ist ein gro\u00dfes St\u00fcck!" },
         { pos: 0.17, muster: "komma-trennt",
           text: "Das Komma trennt keine zwei Zahlen. 0,7 ist EINE Zahl: 7 Zehntel." }
       ],
@@ -177,7 +177,7 @@ const STUFEN = [
       strahl: { min: 0, max: 1, tick: 0.05, beschriftet: [0, 0.5, 1] },
       fallen: [
         { pos: 0.52, muster: "komma-trennt",
-          text: "0,25 ist EINE Zahl, kleiner als die Haelfte. Lies sie als 25 Hundertstel." }
+          text: "0,25 ist EINE Zahl, kleiner als die H\u00e4lfte. Lies sie als 25 Hundertstel." }
       ],
       hilfe: { typ: "dezimal", unterteile: 0.05 } },
     { id: "s3-05", stufe: 3, zahl: 2.15, anzeige: "2{,}15",
@@ -191,14 +191,14 @@ const STUFEN = [
       strahl: { min: 0, max: 1, tick: 0.125, beschriftet: [0, 0.5, 1] },
       fallen: [
         { pos: 0.04, muster: "stellenwert",
-          text: "0,375 ist mehr als ein Viertel und fast die Haelfte - nicht winzig klein an der 0." }
+          text: "0,375 ist mehr als ein Viertel und fast die H\u00e4lfte - nicht winzig klein an der 0." }
       ],
       hilfe: { typ: "dezimal", unterteile: 0.125 } },
     { id: "s3-07", stufe: 3, zahl: 1.05, anzeige: "1{,}05",
       strahl: { min: 0, max: 2, tick: 0.1, beschriftet: [0, 1, 2] },
       fallen: [
         { pos: 1.5, muster: "komma-trennt",
-          text: "1,05 ist nicht 1,5! Die Null haelt die Zehntel-Stelle frei: nur 5 Hundertstel hinter der 1." }
+          text: "1,05 ist nicht 1,5! Die Null h\u00e4lt die Zehntel-Stelle frei: nur 5 Hundertstel hinter der 1." }
       ],
       hilfe: { typ: "dezimal", unterteile: 0.1 } },
     { id: "s3-08", stufe: 3, zahl: 0.09, anzeige: "0{,}09",
@@ -241,21 +241,21 @@ const STUFEN = [
       strahl: { min: 0, max: 1, tick: 0.2, beschriftet: [0, 1] },
       fallen: [
         { pos: 0.5, muster: "bruch-als-paar",
-          text: "Die 5 unten sagt: 5 gleiche Teile. Ein Fuenftel ist KLEINER als ein Halbes." }
+          text: "Die 5 unten sagt: 5 gleiche Teile. Ein F\u00fcnftel ist KLEINER als ein Halbes." }
       ],
       hilfe: { typ: "bruch", unterteile: 0.2 } },
     { id: "s4-05", stufe: 4, zahl: 0.1, zaehler: 1, nenner: 10, anzeige: "\\tfrac{1}{10}",
       strahl: { min: 0, max: 1, tick: 0.1, beschriftet: [0, 0.5, 1] },
       fallen: [
         { pos: 0.9, muster: "bruch-als-paar",
-          text: "Die 10 sieht gross aus, aber ein Zehntel ist klein: 1 von 10 Teilen, nah an der 0." }
+          text: "Die 10 sieht gro\u00df aus, aber ein Zehntel ist klein: 1 von 10 Teilen, nah an der 0." }
       ],
       hilfe: { typ: "bruch", unterteile: 0.1 } },
     { id: "s4-06", stufe: 4, zahl: 1.5, ganze: 1, zaehler: 1, nenner: 2, anzeige: "1\\tfrac{1}{2}",
       strahl: { min: 0, max: 2, tick: 0.25, beschriftet: [0, 1, 2] },
       fallen: [
         { pos: 0.5, muster: "bruch-als-paar",
-          text: "1 1/2 heisst: ein Ganzes UND ein Halbes. Starte bei der 1, nicht bei der 0." }
+          text: "1 1/2 hei\u00dft: ein Ganzes UND ein Halbes. Starte bei der 1, nicht bei der 0." }
       ],
       hilfe: { typ: "bruch", unterteile: 0.5 } },
     { id: "s4-07", stufe: 4, zahl: 2.25, ganze: 2, zaehler: 1, nenner: 4, anzeige: "2\\tfrac{1}{4}",
@@ -269,7 +269,7 @@ const STUFEN = [
       strahl: { min: 0, max: 1, tick: 0.1, beschriftet: [0, 0.5, 1] },
       fallen: [
         { pos: 0.07, muster: "stellenwert",
-          text: "7 Zehntel sind 7 von 10 Teilen - mehr als die Haelfte, nicht winzig klein." }
+          text: "7 Zehntel sind 7 von 10 Teilen - mehr als die H\u00e4lfte, nicht winzig klein." }
       ],
       hilfe: { typ: "bruch", unterteile: 0.1 } }
   ] },
@@ -310,28 +310,28 @@ const STUFEN = [
       strahl: { min: 0, max: 1, tick: 0.05, beschriftet: [0, 0.5, 1] },
       fallen: [
         { pos: 0.06, muster: "stellenwert",
-          text: "0,60 sind 60 Hundertstel = 6 Zehntel. Die End-Null aendert nichts." }
+          text: "0,60 sind 60 Hundertstel = 6 Zehntel. Die End-Null \u00e4ndert nichts." }
       ],
       hilfe: { typ: "dezimal", unterteile: 0.1 } },
     { id: "s5-06", stufe: 5, zahl: 2.5, zaehler: 5, nenner: 2, anzeige: "\\tfrac{5}{2}",
       strahl: { min: 0, max: 3, tick: 0.5, beschriftet: [0, 1, 2, 3] },
       fallen: [
         { pos: 0.4, muster: "bruch-als-paar",
-          text: "Brueche sind nicht immer klein! 5 Halbe sind 2 Ganze und ein Halbes: 2,5." }
+          text: "Br\u00fcche sind nicht immer klein! 5 Halbe sind 2 Ganze und ein Halbes: 2,5." }
       ],
       hilfe: { typ: "bruch", unterteile: 0.5 } },
     { id: "s5-07", stufe: 5, zahl: 0.2, anzeige: "0{,}20",
       strahl: { min: 0, max: 1, tick: 0.1, beschriftet: [0, 0.5, 1] },
       fallen: [
         { pos: 0.02, muster: "stellenwert",
-          text: "0,20 sind 20 Hundertstel = 2 Zehntel = ein Fuenftel. Nicht 2 Hundertstel!" }
+          text: "0,20 sind 20 Hundertstel = 2 Zehntel = ein F\u00fcnftel. Nicht 2 Hundertstel!" }
       ],
       hilfe: { typ: "dezimal", unterteile: 0.1 } },
     { id: "s5-08", stufe: 5, zahl: 3.05, anzeige: "3{,}05",
       strahl: { min: 0, max: 4, tick: 0.25, beschriftet: [0, 1, 2, 3, 4] },
       fallen: [
         { pos: 3.5, muster: "komma-trennt",
-          text: "3,05 ist nicht 3,5! Die Null haelt die Zehntel-Stelle frei: nur 5 Hundertstel hinter der 3." }
+          text: "3,05 ist nicht 3,5! Die Null h\u00e4lt die Zehntel-Stelle frei: nur 5 Hundertstel hinter der 3." }
       ],
       hilfe: { typ: "dezimal", unterteile: 0.25 } }
   ] }

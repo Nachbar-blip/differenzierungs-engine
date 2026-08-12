@@ -38,8 +38,11 @@
   var versuche = 0;        // Fehlversuche der aktuellen Aufgabe
   var markerWert = 0;      // aktueller Marker-Wert
   var gesperrt = false;    // Eingabe gesperrt (Feedback/Loesung laeuft)
-  var musterStufe = {};    // Muster-Zaehler der aktuellen Stufe
+  var musterStufe = {};    // Muster-Zaehler der aktuellen Stufe (pro Aufgabe max. 1x je Muster)
   var musterGesamt = {};   // Muster-Zaehler ueber alle gespielten Stufen
+  var musterDieseAufgabe = {};    // Muster, die in der aktuellen Aufgabe schon gezaehlt wurden
+  var loesungGezeigt = false;     // Loesung der aktuellen Aufgabe wurde gezeigt
+  var selbstGeloestStufe = 0;     // Aufgaben dieser Stufe ohne gezeigte Loesung
   var hilfeGenutztStufe = 0;      // Aufgaben dieser Stufe, bei denen Hilfe offen war
   var hilfeDieseAufgabe = false;  // lokales mitHilfe-Flag (STUFEN bleibt unveraendert)
   var tafelGebaut = false;        // Tafel-Hilfe der aktuellen Aufgabe schon gebaut?
@@ -323,6 +326,7 @@
     aufgabeIdx = 0;
     musterStufe = {};
     hilfeGenutztStufe = 0;
+    selbstGeloestStufe = 0;
     zeigeAufgabe();
     zeigeScreen('spiel');
   }
@@ -333,6 +337,8 @@
     gesperrt = false;
     hilfeDieseAufgabe = false;
     tafelGebaut = false;
+    musterDieseAufgabe = {};
+    loesungGezeigt = false;
     el.stufeInfo.textContent = 'Stufe ' + (stufeIdx + 1);
     el.aufgabeInfo.textContent = 'Aufgabe ' + (aufgabeIdx + 1) + ' von ' + STUFEN[stufeIdx].aufgaben.length;
     el.feedbackBereich.innerHTML = '';
@@ -364,7 +370,10 @@
 
     versuche++;
     if (resultat.ergebnis === 'falle') {
-      musterStufe[resultat.muster] = (musterStufe[resultat.muster] || 0) + 1;
+      if (!musterDieseAufgabe[resultat.muster]) { // pro Aufgabe max. 1x zaehlen
+        musterDieseAufgabe[resultat.muster] = true;
+        musterStufe[resultat.muster] = (musterStufe[resultat.muster] || 0) + 1;
+      }
       zeigeUnterteilung(); // ikonische Hilfe: Strahl unterteilt sich
       if (versuche >= 2) {
         zeigeLoesung(resultat.text);
@@ -398,8 +407,15 @@
   function zeigeLoesung(erklaerung) {
     var aufgabe = aktuelleAufgabe();
     gesperrt = true;
+    loesungGezeigt = true;
     el.btnPruefen.disabled = true;
     zeigeUnterteilung();
+
+    // Erklaerung sofort anzeigen (nicht erst nach der Animation),
+    // der Weiter-Button kommt erst am Ende der Marker-Fahrt dazu.
+    var text = erklaerung + '<br>Die richtige Stelle ist ' + formatDe(aufgabe.zahl) +
+      ' &ndash; der Marker zeigt sie dir jetzt.';
+    zeigeFeedback('falsch', 'Hier wohnt die Zahl:', text, false);
 
     var start = markerWert, ziel = aufgabe.zahl, t0 = null, dauer = 700;
     function schritt(ts) {
@@ -411,8 +427,7 @@
         animId = requestAnimationFrame(schritt);
       } else {
         marker.classList.add('geloest');
-        zeigeFeedback('falsch', 'Hier wohnt die Zahl:',
-          erklaerung + '<br>Die richtige Stelle ist ' + formatDe(aufgabe.zahl) + ' &ndash; der Marker zeigt sie dir jetzt.', true);
+        zeigeFeedback('falsch', 'Hier wohnt die Zahl:', text, true);
       }
     }
     animId = requestAnimationFrame(schritt);
@@ -420,6 +435,7 @@
 
   function naechsteAufgabe() {
     if (animId) { cancelAnimationFrame(animId); animId = null; }
+    if (!loesungGezeigt) selbstGeloestStufe++; // mit Hilfe zaehlt als selbst
     aufgabeIdx++;
     if (aufgabeIdx >= STUFEN[stufeIdx].aufgaben.length) {
       gespielteStufen++;
@@ -443,8 +459,10 @@
     return gefunden ? html : '';
   }
 
-  function empfehlungenHtml(zaehler) {
+  // ausschluss: hrefs, die schon woanders angezeigt werden (Dedup Stufen-/Gesamt-Block)
+  function empfehlungenHtml(zaehler, ausschluss) {
     var links = [], gesehen = {};
+    for (var h in (ausschluss || {})) gesehen[h] = true;
     for (var m in zaehler) {
       if (!zaehler[m] || !EMPFEHLUNGEN[m]) continue;
       EMPFEHLUNGEN[m].forEach(function (href) {
@@ -457,6 +475,16 @@
     return '<div class="empfehlung-block"><h3>Diese Trainer helfen dir weiter:</h3>' + links.join('') + '</div>';
   }
 
+  // Alle Empfehlungs-hrefs, die ein Muster-Zaehler ausloest (fuer Dedup)
+  function empfehlungsHrefs(zaehler) {
+    var hrefs = {};
+    for (var m in zaehler) {
+      if (!zaehler[m] || !EMPFEHLUNGEN[m]) continue;
+      EMPFEHLUNGEN[m].forEach(function (href) { hrefs[href] = true; });
+    }
+    return hrefs;
+  }
+
   function zeigeAuswertung() {
     var stufe = STUFEN[stufeIdx];
     var letzteStufe = stufeIdx >= STUFEN.length - 1;
@@ -467,33 +495,44 @@
     el.auswertungTitel.textContent = 'Stufe ' + (stufeIdx + 1) + ' geschafft!';
 
     var liste = musterListeHtml(musterStufe);
+    var anzahlAufgaben = stufe.aufgaben.length;
+    var erfolgSatz = selbstGeloestStufe >= anzahlAufgaben
+      ? '<p class="hilfe-erklaerung">Alle ' + anzahlAufgaben + ' Aufgaben hast du selbst gel&ouml;st &ndash; super!</p>'
+      : '<p class="hilfe-erklaerung">' + selbstGeloestStufe + ' von ' + anzahlAufgaben +
+        ' Aufgaben hast du selbst gel&ouml;st.</p>';
     var hilfeSatz = hilfeGenutztStufe > 0
-      ? '<p class="hilfe-erklaerung">' + hilfeGenutztStufe + ' von ' + stufe.aufgaben.length +
+      ? '<p class="hilfe-erklaerung">' + hilfeGenutztStufe + ' von ' + anzahlAufgaben +
         ' Aufgaben hast du mit Hilfe gel&ouml;st &ndash; Hilfe holen ist schlau!</p>'
       : '';
     var html;
     if (liste === '') {
       html = '<div class="auswertung-positiv">Klasse! Du bist in keine einzige Falle getappt.' +
-        (letzteStufe ? ' Du hast alle Stufen gemeistert!' : ' Trau dich an die n&auml;chste Stufe!') + '</div>' + hilfeSatz;
+        (letzteStufe ? ' Du hast alle Stufen gemeistert!' : ' Trau dich an die n&auml;chste Stufe!') + '</div>' +
+        erfolgSatz + hilfeSatz;
     } else {
       html = '<p class="hilfe-erklaerung">Hier hat dich der Zahlenstrahl ausgetrickst:</p>' + liste +
-        hilfeSatz + empfehlungenHtml(musterStufe);
+        erfolgSatz + hilfeSatz + empfehlungenHtml(musterStufe);
     }
     el.auswertungInhalt.innerHTML = html;
 
-    // Gesamt-Block, sobald mehr als eine Stufe gespielt wurde
+    // Gesamt-Block, sobald mehr als eine Stufe gespielt wurde.
+    // Empfehlungen dort nur, wenn sie NICHT schon im Stufen-Block stehen (Dedup).
     if (gespielteStufen > 1) {
       var gesamtListe = musterListeHtml(musterGesamt);
+      var schonGezeigt = liste === '' ? {} : empfehlungsHrefs(musterStufe);
       el.auswertungGesamt.innerHTML = '<h3>Alle Stufen zusammen:</h3>' +
         (gesamtListe === ''
           ? '<div class="auswertung-positiv">Bisher keine einzige Falle &ndash; du liest den Zahlenstrahl wie ein Profi!</div>'
-          : gesamtListe + empfehlungenHtml(musterGesamt));
+          : gesamtListe + empfehlungenHtml(musterGesamt, schonGezeigt));
     } else {
       el.auswertungGesamt.innerHTML = '';
     }
 
+    // hidden reicht nicht: .btn-weiter aus spirale.css setzt display:inline-block
+    // und wuerde [hidden] ueberstimmen -> Sichtbarkeit zusaetzlich per style.display
     el.btnNaechsteStufe.hidden = letzteStufe;
-    el.btnNaechsteStufe.textContent = 'Weiter zu Stufe ' + (stufeIdx + 2);
+    el.btnNaechsteStufe.style.display = letzteStufe ? 'none' : '';
+    el.btnNaechsteStufe.textContent = letzteStufe ? '' : 'Weiter zu Stufe ' + (stufeIdx + 2);
     zeigeScreen('auswertung');
   }
 

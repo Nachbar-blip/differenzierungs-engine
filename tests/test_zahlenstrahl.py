@@ -286,6 +286,73 @@ def test_localstorage_bleibt_leer(page):
     assert not kritische_fehler(errors), f"Konsolenfehler: {kritische_fehler(errors)}"
 
 
+def test_letzte_stufe_kein_weiter_button(page):
+    """Regression: Nach Stufe 5 (Index 4) darf kein 'Weiter zu Stufe 6'-Button
+    sichtbar sein (spirale.css .btn-weiter ueberstimmt sonst [hidden]) und die
+    End-Auswertung darf keinen Konsolenfehler werfen."""
+    errors = setup_console_error_capture(page)
+    _lade(page)
+    _spiele_stufe_korrekt(page, 4)
+
+    assert not page.locator("#btnNaechsteStufe").is_visible(), \
+        "Weiter-Button nach der letzten Stufe sichtbar"
+    text = page.locator("#auswertungInhalt").text_content()
+    assert "Alle 8 Aufgaben hast du selbst" in text, \
+        f"Erfolgsstand fehlt in der Auswertung: {text!r}"
+    assert not kritische_fehler(errors), f"Konsolenfehler: {kritische_fehler(errors)}"
+
+
+def test_falle_doppelt_zaehlt_einmal_und_sofort_feedback(page):
+    """Regression: Dieselbe Falle 2x in einer Aufgabe -> Muster zaehlt 1x in der
+    Auswertung; die Loesungs-Erklaerung steht sofort da (nicht erst nach der
+    Animation); Erfolgsstand zeigt '7 von 8'."""
+    errors = setup_console_error_capture(page)
+    _lade(page)
+    _starte_stufe(page, 2)
+    aufgabe = _aufgabe(page, 2, 0)
+    falle = aufgabe["fallen"][0]
+
+    # Aufgabe 1: zweimal dieselbe Falle treffen -> Loesung wird gezeigt
+    for _ in range(2):
+        _setze_marker_maus(page, aufgabe["strahl"], falle["pos"])
+        _pruefen(page)
+        page.wait_for_selector("#feedbackBereich .feedback-falsch", timeout=5000)
+
+    # Sofort-Feedback: Erklaerung schon waehrend der Animation sichtbar
+    assert "Hier wohnt die Zahl" in page.locator("#feedbackBereich").text_content(), \
+        "Loesungs-Erklaerung erscheint nicht sofort beim Animationsstart"
+    page.wait_for_selector("#btnWeiter", timeout=5000)
+    page.click("#btnWeiter")
+
+    # Restliche 7 Aufgaben korrekt loesen
+    anzahl = page.evaluate("STUFEN[2].aufgaben.length")
+    for i in range(1, anzahl):
+        a = _aufgabe(page, 2, i)
+        _setze_marker_maus(page, a["strahl"], a["zahl"])
+        _pruefen(page)
+        page.wait_for_selector("#feedbackBereich .feedback-richtig", timeout=5000)
+        page.click("#btnWeiter")
+    page.wait_for_selector("#auswertungScreen:not([hidden])", timeout=5000)
+
+    text = page.locator("#auswertungInhalt").text_content()
+    assert "1x " in text and "2x " not in text, \
+        f"Falle muss pro Aufgabe genau 1x zaehlen: {text!r}"
+    assert "7 von 8" in text, f"Erfolgsstand '7 von 8' fehlt: {text!r}"
+    assert not kritische_fehler(errors), f"Konsolenfehler: {kritische_fehler(errors)}"
+
+
+def test_fallen_texte_mit_echten_umlauten(page):
+    """Regression: Fallen-Texte zeigen echte Umlaute (\\u-Escapes in der
+    ASCII-Quelldatei), keine Ersatzschreibungen wie 'groesser'."""
+    _lade(page)
+    texte = page.evaluate(
+        "STUFEN.flatMap(s => s.aufgaben).flatMap(a => a.fallen || []).map(f => f.text).join(' ')")
+    for ersatz in ["groesser", "Stueck", "Haelfte", "Fuer ", "Zaehle", "heisst"]:
+        assert ersatz not in texte, f"Ersatzschreibung {ersatz!r} in Fallen-Texten"
+    assert "größer" in texte, "echtes 'groesser' mit Umlauten fehlt"
+    assert "Stück" in texte, "echtes 'Stueck' mit Umlauten fehlt"
+
+
 def test_node_logiktests_gruen():
     """Regression: node spiele/_test_logik.js weiterhin gruen."""
     node = shutil.which("node")
