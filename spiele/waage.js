@@ -43,6 +43,7 @@
   var geloestFlag = false;
   var fehlVersuche = 0;        // Fehl-Ops in der aktuellen Aufgabe
   var musterDieseAufgabe = {}; // Muster max. 1x je Aufgabe zaehlen
+  var fehlKatAufgabe = {};     // Fehl-Kategorie -> Anzahl in DIESER Aufgabe (Eskalation)
   var musterStufe = {};
   var musterProStufe = {};    // stufeIdx -> Muster-Zaehler; Replay UEBERSCHREIBT (keine Doppelzaehlung)
   var loesungGezeigt = false;  // "Zeig mir den naechsten Schritt" genutzt
@@ -359,6 +360,17 @@
     (aufgabe.fallen_ops || []).forEach(function (f) {
       if (!vorhanden[opKey(f.op)]) { vorhanden[opKey(f.op)] = true; ops.push(f.op); }
     });
+    // Einseitig-Diagnose ueberall: gibt es noch keinen einseitigen Button,
+    // die erste Standard-Op als "nur links"-Variante anbieten (Dedup via opKey).
+    // klassifiziere_fehlop liefert dafuer das Fallback-Muster "einseitig".
+    var hatEinseitig = ops.some(function (o) { return o.seite !== 'beide'; });
+    if (!hatEinseitig) {
+      var std = standardOps(zustand, aufgabe.stufe);
+      if (std.length > 0) {
+        var eins = { art: std[0].art, wert: std[0].wert, seite: 'links' };
+        if (!vorhanden[opKey(eins)]) { vorhanden[opKey(eins)] = true; ops.push(eins); }
+      }
+    }
     // Deterministisch gemischt: Seed aus Aufgaben-id + Op-Schluessel
     ops.sort(function (a, b) {
       return hashStr(aufgabe.id + '#' + opKey(a)) - hashStr(aufgabe.id + '#' + opKey(b));
@@ -436,6 +448,7 @@
     geloestFlag = false;
     fehlVersuche = 0;
     musterDieseAufgabe = {};
+    fehlKatAufgabe = {};
     loesungGezeigt = false;
     el.stufeInfo.textContent = 'Stufe ' + (stufeIdx + 1) + ': ' + STUFEN[stufeIdx].name;
     el.aufgabeInfo.textContent = 'Aufgabe ' + (aufgabeIdx + 1) + ' von ' + STUFEN[stufeIdx].aufgaben.length;
@@ -485,6 +498,13 @@
     }
     if (fehlVersuche >= 3) el.btnNaechsterSchritt.hidden = false;
     var text = fallenText(op) || FEHLER_TEXTE[res.fehler] || FEHLER_TEXTE['unbekannte-art'];
+    // Eskalation: dieselbe Fehl-Kategorie zum 2. Mal in DIESER Aufgabe
+    var kat = muster || res.fehler;
+    fehlKatAufgabe[kat] = (fehlKatAufgabe[kat] || 0) + 1;
+    if (fehlKatAufgabe[kat] >= 2) {
+      text = '<strong>Das war schon mal die gleiche Falle.</strong> Tipp: Schau, was auf ' +
+        'BEIDEN Seiten passiert &ndash; oder wirf einen Blick in den Gleichung-Tab.<br>' + text;
+    }
 
     if (res.fehler === 'einseitig' && aufgabe.waage) {
       // kippt = Seite, die leichter wuerde -> geht nach OBEN
@@ -536,6 +556,10 @@
       (mitWeiter ? '<button class="btn-weiter" id="btnWeiter" type="button">Weiter</button>' : '') +
       '</div>';
     el.feedbackBereich.innerHTML = html;
+    var box = el.feedbackBereich.firstElementChild;
+    if (box && box.scrollIntoView) {
+      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
     var b = document.getElementById('btnWeiter');
     if (b) b.addEventListener('click', naechsteAufgabe);
   }
@@ -580,6 +604,17 @@
     return gefunden ? html : '';
   }
 
+  // Empfehlungs-Schwelle: Links nur fuer Muster mit >= 2 Vorkommen ODER wenn
+  // die Stufe nicht komplett selbst geloest wurde. Die Muster-LISTE (musterListeHtml)
+  // bleibt davon unberuehrt und zeigt weiterhin alles.
+  function filterEmpfehlung(zaehler, alleSelbst) {
+    var res = {};
+    for (var m in zaehler) {
+      if (zaehler[m] >= 2 || !alleSelbst) res[m] = zaehler[m];
+    }
+    return res;
+  }
+
   // ausschluss: hrefs, die schon woanders angezeigt werden (Dedup Stufen-/Gesamt-Block)
   function empfehlungenHtml(zaehler, ausschluss) {
     var links = [], gesehen = {};
@@ -622,7 +657,8 @@
 
     var liste = musterListeHtml(musterStufe);
     var anzahl = stufe.aufgaben.length;
-    var erfolgSatz = selbstGeloestStufe >= anzahl
+    var alleSelbst = selbstGeloestStufe >= anzahl;
+    var erfolgSatz = alleSelbst
       ? '<p class="wg-loesungstext">Alle ' + anzahl + ' Aufgaben hast du selbst gel&ouml;st &ndash; super!</p>'
       : '<p class="wg-loesungstext">' + selbstGeloestStufe + ' von ' + anzahl +
         ' Aufgaben hast du selbst gel&ouml;st.</p>';
@@ -636,19 +672,21 @@
         (letzteStufe ? ' Du hast alle Stufen gemeistert!' : ' Trau dich an die n&auml;chste Stufe!') + '</div>' +
         erfolgSatz + hilfeSatz;
     } else {
-      html = '<p class="wg-loesungstext">Hier hat dich die Waage ausgetrickst:</p>' + liste +
-        erfolgSatz + hilfeSatz + empfehlungenHtml(musterStufe);
+      // Stufe 5 laeuft ohne Waage -> gleichungsbezogene Formulierung
+      var trickser = stufe.nr === 5 ? 'die Gleichung' : 'die Waage';
+      html = '<p class="wg-loesungstext">Hier hat dich ' + trickser + ' ausgetrickst:</p>' + liste +
+        erfolgSatz + hilfeSatz + empfehlungenHtml(filterEmpfehlung(musterStufe, alleSelbst));
     }
     el.auswertungInhalt.innerHTML = html;
 
     // Gesamt-Block ab der zweiten gespielten Stufe (Empfehlungs-Dedup!)
     if (gespielteStufen > 1) {
       var gesamtListe = musterListeHtml(musterGesamt);
-      var schonGezeigt = liste === '' ? {} : empfehlungsHrefs(musterStufe);
+      var schonGezeigt = liste === '' ? {} : empfehlungsHrefs(filterEmpfehlung(musterStufe, alleSelbst));
       el.auswertungGesamt.innerHTML = '<h3>Alle Stufen zusammen:</h3>' +
         (gesamtListe === ''
           ? '<div class="auswertung-positiv">Bisher keine einzige Fehl-Umformung &ndash; du formst um wie ein Profi!</div>'
-          : gesamtListe + empfehlungenHtml(musterGesamt, schonGezeigt));
+          : gesamtListe + empfehlungenHtml(filterEmpfehlung(musterGesamt, alleSelbst), schonGezeigt));
     } else {
       el.auswertungGesamt.innerHTML = '';
     }

@@ -108,16 +108,16 @@ def _weiter(page):
     page.click("#feedbackBereich #btnWeiter")
 
 
-def _spiele_stufe(page, stufe_idx, erste_mit_falle=False, falle_doppelt=False):
+def _spiele_stufe(page, stufe_idx, falle_bei=(), falle_doppelt=False):
     """Spielt alle 6 Aufgaben einer Stufe per Musterweg durch.
 
-    Optional wird bei der ersten Aufgabe vorher die erste Falle geklickt
-    (falle_doppelt: zweimal dieselbe -> Muster darf nur 1x zaehlen)."""
+    falle_bei: Aufgaben-Indizes, bei denen vorher die erste Falle geklickt wird
+    (falle_doppelt: zweimal dieselbe -> Muster darf nur 1x je Aufgabe zaehlen)."""
     _starte_stufe(page, stufe_idx)
     anzahl = page.evaluate(f"STUFEN[{stufe_idx}].aufgaben.length")
     for i in range(anzahl):
         aufgabe = _aufgabe(page, stufe_idx, i)
-        if i == 0 and erste_mit_falle and aufgabe.get("fallen_ops"):
+        if i in falle_bei and aufgabe.get("fallen_ops"):
             falle = aufgabe["fallen_ops"][0]
             for _ in range(2 if falle_doppelt else 1):
                 _klick_op(page, falle["op"])
@@ -344,25 +344,26 @@ def test_hilfe_nach_drei_fehlops(page):
 
 
 def test_stufen_ende_auswertung(page):
-    """Stufe mit 2x derselben Falle in Aufgabe 1 durchspielen -> Muster zaehlt
-    1x, keine %/Punkte, Empfehlungs-Links existieren im Dateisystem."""
+    """Dieselbe Falle in ZWEI Aufgaben provozieren -> Muster zaehlt 2x,
+    keine %/Punkte, Empfehlungs-Links (Schwelle >= 2) existieren im Dateisystem."""
     errors = setup_console_error_capture(page)
     _lade(page)
-    _spiele_stufe(page, 2, erste_mit_falle=True, falle_doppelt=True)
+    # Stufe 3 (Index 2): fallen_ops[0] ist in Aufgabe 1 UND 2 'zu-frueh-teilen'
+    _spiele_stufe(page, 2, falle_bei=(0, 1))
 
     text = page.locator("#auswertungScreen").inner_text()
     assert "%" not in text, "Auswertung enthaelt Prozentangabe"
     assert "Punkt" not in text, "Auswertung enthaelt Punktangabe"
 
     inhalt = page.locator("#auswertungInhalt").inner_text()
-    assert "1x " in inhalt and "2x " not in inhalt, \
-        f"Falle muss pro Aufgabe genau 1x zaehlen: {inhalt!r}"
+    assert "2x " in inhalt, \
+        f"Falle in zwei Aufgaben muss 2x zaehlen: {inhalt!r}"
     anzahl = page.evaluate("STUFEN[2].aufgaben.length")
     assert f"Alle {anzahl} Aufgaben hast du selbst" in inhalt, \
         f"Erfolgsstand 'Alle {anzahl}' fehlt (Fallen zaehlen nicht als Hilfe): {inhalt!r}"
 
     links = page.locator("#auswertungInhalt .empfehlung-block a")
-    assert links.count() >= 1, "kein Empfehlungs-Link trotz provozierter Falle"
+    assert links.count() >= 1, "kein Empfehlungs-Link trotz 2x provozierter Falle"
     hrefs = set()
     for i in range(links.count()):
         href = links.nth(i).get_attribute("href")
@@ -370,6 +371,74 @@ def test_stufen_ende_auswertung(page):
         hrefs.add(href)
         ziel = (SPIEL.parent / href).resolve()
         assert ziel.is_file(), f"Empfehlungs-Ziel fehlt im Dateisystem: {href}"
+    assert not kritische_fehler(errors), f"Konsolenfehler: {kritische_fehler(errors)}"
+
+
+def test_einzelfalle_ohne_empfehlungslink(page):
+    """1 Fallen-Vorkommen (auch 2x geklickt = 1x je Aufgabe) bei komplett selbst
+    geloester Stufe -> Muster gelistet, aber KEIN Empfehlungs-Link (Schwelle).
+    Prueft zugleich die Eskalations-Zusatzzeile beim 2. Klick derselben Falle."""
+    errors = setup_console_error_capture(page)
+    _lade(page)
+    _starte_stufe(page, 2)
+    aufgabe = _aufgabe(page, 2, 0)
+    falle = aufgabe["fallen_ops"][0]
+    _klick_op(page, falle["op"])
+    page.wait_for_selector("#feedbackBereich .feedback-falsch", timeout=5000)
+    assert "gleiche Falle" not in page.locator("#feedbackBereich").inner_text(), \
+        "Eskalations-Zeile schon beim 1. Fehler"
+    _klick_op(page, falle["op"])
+    page.wait_for_selector("#feedbackBereich .feedback-falsch", timeout=5000)
+    assert "gleiche Falle" in page.locator("#feedbackBereich").inner_text(), \
+        "Eskalations-Zeile fehlt beim 2. gleichen Fehler"
+
+    anzahl = page.evaluate("STUFEN[2].aufgaben.length")
+    for i in range(anzahl):
+        _loese_aufgabe(page, _aufgabe(page, 2, i))
+        _weiter(page)
+    page.wait_for_selector("#auswertungScreen:not([hidden])", timeout=5000)
+
+    inhalt = page.locator("#auswertungInhalt").inner_text()
+    assert "1x " in inhalt and "2x " not in inhalt, \
+        f"Falle muss pro Aufgabe genau 1x zaehlen: {inhalt!r}"
+    assert f"Alle {anzahl} Aufgaben hast du selbst" in inhalt, \
+        f"Erfolgsstand 'Alle {anzahl}' fehlt: {inhalt!r}"
+    assert page.locator("#auswertungInhalt .auswertung-liste li").count() >= 1, \
+        "Muster-Liste fehlt trotz Falle"
+    assert page.locator("#auswertungInhalt .empfehlung-block a").count() == 0, \
+        "Empfehlungs-Link trotz nur 1 Vorkommen bei komplett selbst geloester Stufe"
+    assert not kritische_fehler(errors), f"Konsolenfehler: {kritische_fehler(errors)}"
+
+
+def test_einseitiger_button_ueberall(page):
+    """Jede Aufgabe der Stufe 1 bietet mindestens einen einseitigen Button an;
+    der abgeleitete Button (Aufgabe ohne einseitige Daten-Falle) liefert
+    Kipp-Feedback mit einseitig-Diagnose."""
+    errors = setup_console_error_capture(page)
+    _lade(page)
+    _starte_stufe(page, 0)
+    anzahl = page.evaluate("STUFEN[0].aufgaben.length")
+    for i in range(anzahl):
+        hat_einseitig = page.evaluate(
+            "Array.from(document.querySelectorAll('#opLeiste button'))"
+            ".some(b => b.textContent.includes('nur links')"
+            " || b.textContent.includes('nur rechts'))")
+        assert hat_einseitig, f"Aufgabe {i + 1} ohne einseitigen Button"
+        if i == 1:
+            # w1-02 hat KEINE einseitige Daten-Falle -> abgeleiteter Button
+            # (erste Standard-Op 'nur links') muss Kipp + einseitig liefern
+            aufgabe = _aufgabe(page, 0, i)
+            assert all(f["op"]["seite"] == "beide" for f in aufgabe["fallen_ops"]), \
+                "w1-02 sollte keine einseitige Daten-Falle haben (Katalog geaendert?)"
+            _klick_op(page, {"art": "sub_c", "wert": 3, "seite": "links"})
+            page.wait_for_selector("#feedbackBereich .feedback-falsch", timeout=5000)
+            feedback = page.locator("#feedbackBereich").inner_text()
+            assert "kippt" in feedback, f"kein Kipp-Feedback: {feedback!r}"
+            assert "nur eine Seite" in feedback, \
+                f"generischer einseitig-Text fehlt: {feedback!r}"
+        _loese_aufgabe(page, _aufgabe(page, 0, i))
+        _weiter(page)
+    page.wait_for_selector("#auswertungScreen:not([hidden])", timeout=5000)
     assert not kritische_fehler(errors), f"Konsolenfehler: {kritische_fehler(errors)}"
 
 
@@ -395,7 +464,7 @@ def test_localstorage_bleibt_leer(page):
     _lade(page)
     assert page.evaluate("Object.keys(localStorage).length") == 0, \
         "localStorage schon beim Laden befuellt"
-    _spiele_stufe(page, 0, erste_mit_falle=True)
+    _spiele_stufe(page, 0, falle_bei=(0,))
     assert page.evaluate("Object.keys(localStorage).length") == 0, \
         "Spiel schreibt in localStorage"
     assert not kritische_fehler(errors), f"Konsolenfehler: {kritische_fehler(errors)}"

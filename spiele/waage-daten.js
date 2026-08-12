@@ -86,7 +86,7 @@ const STUFEN = [
     { id: "w2-04", stufe: 2, start: { xL: 5, cL: 0, xR: 0, cR: 15 }, anzeige: "5x = 15", waage: true,
       fallen_ops: [
         { op: { art: "div", wert: 5, seite: "rechts" }, muster: "einseitig",
-          text: "Nur rechts geteilt - rechts wird leichter und die Waage kippt nach rechts unten... nein: rechts hoch! Beide Seiten teilen." }
+          text: "Nur rechts geteilt - rechts wird leichter und geht nach oben, die Waage kippt. Teile BEIDE Seiten durch 5." }
       ],
       musterweg: [{ art: "div", wert: 5, seite: "beide" }] },
     { id: "w2-05", stufe: 2, start: { xL: 6, cL: 0, xR: 0, cR: 12 }, anzeige: "6x = 12", waage: true,
