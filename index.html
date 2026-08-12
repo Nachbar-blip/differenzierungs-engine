@@ -187,11 +187,26 @@
   /* ── Filter hide ────────────────────────────────── */
   body.filter-gk .lk-only { display: none; }
   /* GK/LK-Leiste ausblenden wenn höchste Klasse ≤ 10 */
+  body.filter-klasse-5  [data-filter-group="gklk"],
+  body.filter-klasse-6  [data-filter-group="gklk"],
   body.filter-klasse-7  [data-filter-group="gklk"],
   body.filter-klasse-8  [data-filter-group="gklk"],
   body.filter-klasse-9  [data-filter-group="gklk"],
   body.filter-klasse-10 [data-filter-group="gklk"] { display: none; }
   /* "Klasse X" = zeige alles ≤ X, blende alles > X aus */
+  body.filter-klasse-5  .col-6,
+  body.filter-klasse-5  .col-7,
+  body.filter-klasse-5  .col-8,
+  body.filter-klasse-5  .col-9,
+  body.filter-klasse-5  .col-10,
+  body.filter-klasse-5  .col-11,
+  body.filter-klasse-5  .col-12 { display: none; }
+  body.filter-klasse-6  .col-7,
+  body.filter-klasse-6  .col-8,
+  body.filter-klasse-6  .col-9,
+  body.filter-klasse-6  .col-10,
+  body.filter-klasse-6  .col-11,
+  body.filter-klasse-6  .col-12 { display: none; }
   body.filter-klasse-7  .col-8,
   body.filter-klasse-7  .col-9,
   body.filter-klasse-7  .col-10,
@@ -211,6 +226,19 @@
   /* ── Max-Klasse (persistiertes Schülerprofil) ───── */
   /* Blendet Klassen OBERHALB der eigenen Stufe aus.
      Wirkt nur wenn KEIN manueller Klassen-Filter aktiv ist. */
+  body.max-klasse-5:not([class*="filter-klasse-"]) .col-6,
+  body.max-klasse-5:not([class*="filter-klasse-"]) .col-7,
+  body.max-klasse-5:not([class*="filter-klasse-"]) .col-8,
+  body.max-klasse-5:not([class*="filter-klasse-"]) .col-9,
+  body.max-klasse-5:not([class*="filter-klasse-"]) .col-10,
+  body.max-klasse-5:not([class*="filter-klasse-"]) .col-11,
+  body.max-klasse-5:not([class*="filter-klasse-"]) .col-12 { display: none; }
+  body.max-klasse-6:not([class*="filter-klasse-"]) .col-7,
+  body.max-klasse-6:not([class*="filter-klasse-"]) .col-8,
+  body.max-klasse-6:not([class*="filter-klasse-"]) .col-9,
+  body.max-klasse-6:not([class*="filter-klasse-"]) .col-10,
+  body.max-klasse-6:not([class*="filter-klasse-"]) .col-11,
+  body.max-klasse-6:not([class*="filter-klasse-"]) .col-12 { display: none; }
   body.max-klasse-7:not([class*="filter-klasse-"]) .col-8,
   body.max-klasse-7:not([class*="filter-klasse-"]) .col-9,
   body.max-klasse-7:not([class*="filter-klasse-"]) .col-10,
@@ -330,6 +358,8 @@
 
   <div class="filter-bar" data-filter-group="klasse">
     <button class="filter-btn active" data-filter="alle">Alle</button>
+    <button class="filter-btn" data-filter="5">Klasse 5</button>
+    <button class="filter-btn" data-filter="6">Klasse 6</button>
     <button class="filter-btn" data-filter="7">Klasse 7</button>
     <button class="filter-btn" data-filter="8">Klasse 8</button>
     <button class="filter-btn" data-filter="9">Klasse 9</button>
@@ -345,6 +375,170 @@
   </div>
 
   <div class="grid">
+
+    <!-- ═══════════ Klasse 5 ═══════════ -->
+    <div class="col col-5">
+      <div class="column-header">Klasse 5</div>
+
+      <!-- A — Zahlen & Rechnen -->
+      <div class="section-card">
+        <div class="section-title analysis">A &middot; Zahlen &amp; Rechnen</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/5-zahlen-stellenwert.html" data-key="spirale-5-zahlen-stellenwert">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Nat&uuml;rliche Zahlen &amp; Stellenwert</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/5-zahlen-rechnen.html" data-key="spirale-5-zahlen-rechnen">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Rechnen mit nat&uuml;rlichen Zahlen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/5-teilbarkeit.html" data-key="spirale-5-teilbarkeit">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Teilbarkeit &amp; Primzahlen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/5-groessen-einheiten.html" data-key="spirale-5-groessen-einheiten">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Gr&ouml;&szlig;en &amp; Einheiten</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- B — Brüche & Dezimalbrüche -->
+      <div class="section-card">
+        <div class="section-title analysis">B &middot; Br&uuml;che &amp; Dezimalbr&uuml;che</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/5-brueche-anteile.html" data-key="spirale-5-brueche-anteile">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Br&uuml;che &amp; Anteile</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/5-dezimalbrueche.html" data-key="spirale-5-dezimalbrueche">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Dezimalbr&uuml;che</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- C — Geometrie -->
+      <div class="section-card">
+        <div class="section-title geometrie">C &middot; Geometrie</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/5-geo-grundbegriffe.html" data-key="spirale-5-geo-grundbegriffe">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Grundbegriffe, Winkel &amp; Symmetrie</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/5-flaeche-koerper.html" data-key="spirale-5-flaeche-koerper">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Umfang, Fl&auml;che &amp; K&ouml;rper</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- D — Daten -->
+      <div class="section-card">
+        <div class="section-title stochastik">D &middot; Daten</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/5-daten-diagramme.html" data-key="spirale-5-daten-diagramme">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Daten &amp; Diagramme</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /col 5 -->
+
+    <!-- ═══════════ Klasse 6 ═══════════ -->
+    <div class="col col-6">
+      <div class="column-header">Klasse 6</div>
+
+      <!-- A — Bruch- & Dezimalrechnung -->
+      <div class="section-card">
+        <div class="section-title analysis">A &middot; Bruch- &amp; Dezimalrechnung</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/6-brueche-rechnen.html" data-key="spirale-6-brueche-rechnen">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Bruchrechnung</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/6-dezimalbrueche-rechnen.html" data-key="spirale-6-dezimalbrueche-rechnen">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Dezimalbr&uuml;che &amp; negative Zahlen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- B — Gleichungen -->
+      <div class="section-card">
+        <div class="section-title analysis">B &middot; Gleichungen</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/6-gleichungen-ungleichungen.html" data-key="spirale-6-gleichungen-ungleichungen">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Gleichungen &amp; Ungleichungen</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- C — Geometrie -->
+      <div class="section-card">
+        <div class="section-title geometrie">C &middot; Geometrie</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/6-dreiecke-winkel.html" data-key="spirale-6-dreiecke-winkel">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Dreiecke &amp; Winkel</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/6-vierecke.html" data-key="spirale-6-vierecke">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Vierecke</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- D — Zuordnungen & Daten -->
+      <div class="section-card">
+        <div class="section-title stochastik">D &middot; Zuordnungen &amp; Daten</div>
+        <div class="theme-list">
+          <a class="theme-row" href="trainer/6-proportionalitaet-dreisatz.html" data-key="spirale-6-proportionalitaet-dreisatz">
+            <span class="connector">&#x251C;</span>
+            <span class="theme-name">Proportionalit&auml;t &amp; Dreisatz</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+          <a class="theme-row" href="trainer/6-daten-kenngroessen.html" data-key="spirale-6-daten-kenngroessen">
+            <span class="connector">&#x2514;</span>
+            <span class="theme-name">Kenngr&ouml;&szlig;en von Daten</span>
+            <span class="level-badge neu">Neu</span>
+            <span class="progress-wrap"><span class="progress-fill"></span></span>
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /col 6 -->
 
     <!-- ═══════════ Klasse 7 ═══════════ -->
     <div class="col col-7">
@@ -1125,7 +1319,7 @@
 
   // Alle Klassen, die im Modal angeboten werden (Sek I + Sek II).
   // Content-Verfügbarkeit wird dynamisch aus .col-N Elementen ermittelt.
-  const ALLE_KLASSEN = [7, 8, 9, 10, 11, 12];
+  const ALLE_KLASSEN = [5, 6, 7, 8, 9, 10, 11, 12];
 
   // ── Progress laden ──────────────────────────────────────────
 
@@ -1169,8 +1363,10 @@
   // ── Filter generisch ────────────────────────────────────────
 
   function applyKlasseFilter(mode) {
-    document.body.classList.remove('filter-klasse-7', 'filter-klasse-8', 'filter-klasse-9', 'filter-klasse-10', 'filter-klasse-11', 'filter-klasse-12');
-    if (mode === '7') document.body.classList.add('filter-klasse-7');
+    document.body.classList.remove('filter-klasse-5', 'filter-klasse-6', 'filter-klasse-7', 'filter-klasse-8', 'filter-klasse-9', 'filter-klasse-10', 'filter-klasse-11', 'filter-klasse-12');
+    if (mode === '5') document.body.classList.add('filter-klasse-5');
+    else if (mode === '6') document.body.classList.add('filter-klasse-6');
+    else if (mode === '7') document.body.classList.add('filter-klasse-7');
     else if (mode === '8') document.body.classList.add('filter-klasse-8');
     else if (mode === '9') document.body.classList.add('filter-klasse-9');
     else if (mode === '10') document.body.classList.add('filter-klasse-10');
