@@ -60,7 +60,12 @@ def beantworte_aufgabe(page: Page, aufgabe: dict) -> bool:
     Returns True wenn die Antwort akzeptiert wurde (Feedback sichtbar).
     """
     if aufgabe["typ"] == "mc":
-        korrekt_idx = aufgabe["korrekt"]
+        # Seit dem Options-Shuffle der Engine (2026-08-19) ist der Pool-Index nicht die
+        # Bildschirmposition -> gemischte Aufgabe ueber den Lese-Hook abfragen.
+        korrekt_idx = page.evaluate(
+            "typeof spiraleAktuelleAufgabe === 'function' ? spiraleAktuelleAufgabe().korrekt : null")
+        if korrekt_idx is None:
+            korrekt_idx = aufgabe["korrekt"]
         buttons = page.query_selector_all(".mc-option")
         if korrekt_idx < len(buttons):
             buttons[korrekt_idx].click()

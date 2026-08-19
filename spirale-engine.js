@@ -274,7 +274,28 @@
     container.querySelector('.stat-fortschritt').textContent = `Aufgabe ${state.totalAttempts + 1}`;
   }
 
+  // ── MC-Optionen mischen (Fisher-Yates) ──────────────────────
+  // Ohne Mischen stand die richtige Option in den Pools messbar schief
+  // (Pos. 4 fast nie, viele Trainer >60 % auf einer Position) und war am
+  // Muster ablesbar. `korrekt` wird mitgeführt; Aufgaben mit
+  // `festeReihenfolge: true` (Erklaerung nennt Buchstaben) bleiben stabil.
+  function mischeOptionen(aufgabe) {
+    if (!aufgabe || aufgabe.typ !== 'mc' || !Array.isArray(aufgabe.optionen) || aufgabe.festeReihenfolge) {
+      return aufgabe;
+    }
+    const idx = aufgabe.optionen.map((_, i) => i);
+    for (let i = idx.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const t = idx[i]; idx[i] = idx[j]; idx[j] = t;
+    }
+    return Object.assign({}, aufgabe, {
+      optionen: idx.map(i => aufgabe.optionen[i]),
+      korrekt: idx.indexOf(aufgabe.korrekt)
+    });
+  }
+
   function renderAufgabe(aufgabe) {
+    aufgabe = mischeOptionen(aufgabe);
     currentAufgabe = aufgabe;
     feedbackShown = false;
 
@@ -672,6 +693,8 @@
   window.naechsteAufgabe = naechsteAufgabe;
   window.zeigeTipp = zeigeTipp;
   window.resetFortschritt = resetFortschritt;
+  // Lese-Hook fuer die E2E-Suite (gemischte Optionsreihenfolge sichtbar machen)
+  window.spiraleAktuelleAufgabe = function () { return currentAufgabe; };
 
   // ── Start ───────────────────────────────────────────────────
 
