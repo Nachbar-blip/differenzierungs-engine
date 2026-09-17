@@ -16,36 +16,51 @@
     const THEMA_KEY = '10-stoch-verteilungen';
     const THEMA_CONFIG = { name: 'Wahrscheinlichkeitsverteilungen', bereich: 'stochastik', p3Enabled: true };
     const AUFGABEN = [
-
-      // ═══════════════════════════════════════════════════════════
-      // Level 1 — Verteilung lesen, fehlender Wert (ΣP = 1)
-      // ═══════════════════════════════════════════════════════════
-
+      // ========== LEVEL 1 — babyleicht (6 Aufgaben) ==========
       {
-        id: 1, level: 1, typ: "mc",
+        id: 1,
+        level: 1,
+        typ: "mc",
         frage: "Gegeben ist die Verteilung: \\(P(X=1)=0{,}2\\), \\(P(X=2)=0{,}3\\), \\(P(X=3)=?\\), \\(P(X=4)=0{,}1\\). Welchen Wert muss \\(P(X=3)\\) haben?",
-        optionen: ["\\(0{,}4\\)", "\\(0{,}3\\)", "\\(0{,}5\\)", "\\(0{,}2\\)"],
+        optionen: [
+          "\\(0{,}4\\)",
+          "\\(0{,}3\\)",
+          "\\(0{,}5\\)",
+          "\\(0{,}2\\)"
+        ],
         korrekt: 0,
         tipp: "Die Summe aller Wahrscheinlichkeiten einer Verteilung ist immer 1.",
         loesungsweg: "\\(P(X=3) = 1 - 0{,}2 - 0{,}3 - 0{,}1 = 0{,}4\\)."
       },
       {
-        id: 2, level: 1, typ: "mc",
+        id: 2,
+        level: 1,
+        typ: "mc",
         frage: "Eine Zufallsgröße hat die Werte 0, 1, 2 mit \\(P(X=0)=\\frac{1}{4}\\), \\(P(X=1)=\\frac{1}{2}\\), \\(P(X=2)=?\\). Wie groß ist \\(P(X=2)\\)?",
-        optionen: ["\\(\\frac{1}{4}\\)", "\\(\\frac{1}{2}\\)", "\\(\\frac{3}{4}\\)", "\\(\\frac{1}{3}\\)"],
+        optionen: [
+          "\\(\\frac{1}{4}\\)",
+          "\\(\\frac{1}{2}\\)",
+          "\\(\\frac{3}{4}\\)",
+          "\\(\\frac{1}{3}\\)"
+        ],
         korrekt: 0,
         tipp: "\\(\\frac{1}{4} + \\frac{1}{2} + P(X=2) = 1\\).",
         loesungsweg: "\\(P(X=2) = 1 - \\frac{1}{4} - \\frac{2}{4} = \\frac{1}{4}\\)."
       },
       {
-        id: 3, level: 1, typ: "numerisch",
+        id: 3,
+        level: 1,
+        typ: "numerisch",
         frage: "Verteilung: \\(P(X=1)=0{,}15\\), \\(P(X=2)=0{,}25\\), \\(P(X=3)=0{,}35\\), \\(P(X=4)=?\\). Gib \\(P(X=4)\\) als Dezimalzahl an.",
-        loesung: 0.25, toleranz: 0.001,
+        loesung: 0.25,
+        toleranz: 0.001,
         tipp: "Alle Wahrscheinlichkeiten müssen zusammen 1 ergeben.",
         loesungsweg: "\\(P(X=4) = 1 - 0{,}15 - 0{,}25 - 0{,}35 = 0{,}25\\)."
       },
       {
-        id: 4, level: 1, typ: "mc",
+        id: 4,
+        level: 1,
+        typ: "mc",
         frage: "Welche der folgenden Tabellen ist KEINE gültige Wahrscheinlichkeitsverteilung?",
         optionen: [
           "\\(P(X=1)=0{,}3\\), \\(P(X=2)=0{,}4\\), \\(P(X=3)=0{,}4\\)",
@@ -58,277 +73,375 @@
         loesungsweg: "\\(0{,}3 + 0{,}4 + 0{,}4 = 1{,}1 \\neq 1\\). Die erste Tabelle ist keine gültige Verteilung."
       },
       {
-        id: 5, level: 1, typ: "numerisch",
+        id: 5,
+        level: 1,
+        typ: "numerisch",
         frage: "Gegeben: \\(P(X=0)=\\frac{1}{8}\\), \\(P(X=1)=\\frac{3}{8}\\), \\(P(X=2)=\\frac{3}{8}\\), \\(P(X=3)=?\\). Gib \\(P(X=3)\\) als Dezimalzahl an.",
-        loesung: 0.125, toleranz: 0.001,
+        loesung: 0.125,
+        toleranz: 0.001,
         tipp: "\\(\\frac{1}{8} + \\frac{3}{8} + \\frac{3}{8} + P(X=3) = 1\\).",
         loesungsweg: "\\(P(X=3) = 1 - \\frac{7}{8} = \\frac{1}{8} = 0{,}125\\)."
       },
       {
-        id: 6, level: 1, typ: "mc",
+        id: 6,
+        level: 1,
+        typ: "mc",
         frage: "Verteilung: \\(P(X=1)=0{,}1\\), \\(P(X=2)=a\\), \\(P(X=3)=0{,}2\\), \\(P(X=4)=a\\), \\(P(X=5)=0{,}1\\). Wie groß ist \\(a\\)?",
-        optionen: ["\\(0{,}3\\)", "\\(0{,}2\\)", "\\(0{,}4\\)", "\\(0{,}1\\)"],
+        optionen: [
+          "\\(0{,}3\\)",
+          "\\(0{,}2\\)",
+          "\\(0{,}4\\)",
+          "\\(0{,}1\\)"
+        ],
         korrekt: 0,
         tipp: "Alle addieren: \\(0{,}1 + a + 0{,}2 + a + 0{,}1 = 1\\).",
         loesungsweg: "\\(0{,}4 + 2a = 1 \\Rightarrow 2a = 0{,}6 \\Rightarrow a = 0{,}3\\)."
       },
-
-      // ═══════════════════════════════════════════════════════════
-      // Level 2 — P(X=k) ablesen, einfache Summen
-      // ═══════════════════════════════════════════════════════════
-
+      // ========== LEVEL 2 — leicht (6 Aufgaben) ==========
       {
-        id: 7, level: 2, typ: "mc",
+        id: 7,
+        level: 2,
+        typ: "mc",
         frage: "Verteilung: \\(P(X=1)=0{,}1\\), \\(P(X=2)=0{,}2\\), \\(P(X=3)=0{,}3\\), \\(P(X=4)=0{,}4\\). Berechne \\(P(X=2) + P(X=4)\\).",
-        optionen: ["\\(0{,}6\\)", "\\(0{,}5\\)", "\\(0{,}7\\)", "\\(0{,}4\\)"],
+        optionen: [
+          "\\(0{,}6\\)",
+          "\\(0{,}5\\)",
+          "\\(0{,}7\\)",
+          "\\(0{,}4\\)"
+        ],
         korrekt: 0,
         tipp: "Einfach die beiden Werte addieren.",
         loesungsweg: "\\(P(X=2) + P(X=4) = 0{,}2 + 0{,}4 = 0{,}6\\)."
       },
       {
-        id: 8, level: 2, typ: "numerisch",
+        id: 8,
+        level: 2,
+        typ: "numerisch",
         frage: "Verteilung: \\(P(X=0)=0{,}15\\), \\(P(X=1)=0{,}25\\), \\(P(X=2)=0{,}35\\), \\(P(X=3)=0{,}25\\). Berechne \\(P(X=1) + P(X=2)\\).",
-        loesung: 0.6, toleranz: 0.001,
+        loesung: 0.6,
+        toleranz: 0.001,
         tipp: "Beide Wahrscheinlichkeiten addieren.",
         loesungsweg: "\\(P(X=1) + P(X=2) = 0{,}25 + 0{,}35 = 0{,}6\\)."
       },
       {
-        id: 9, level: 2, typ: "mc",
-        frage: "Verteilung für \\(X\\) = Anzahl Köpfe bei 3 Münzen: \\(P(0)=\\frac{1}{8}\\), \\(P(1)=\\frac{3}{8}\\), \\(P(2)=\\frac{3}{8}\\), \\(P(3)=\\frac{1}{8}\\). Wie groß ist \\(P(X=1)\\)?",
-        optionen: ["\\(\\frac{3}{8}\\)", "\\(\\frac{1}{8}\\)", "\\(\\frac{1}{4}\\)", "\\(\\frac{1}{2}\\)"],
-        korrekt: 0,
-        tipp: "Lies den Wert direkt aus der Tabelle ab.",
-        loesungsweg: "\\(P(X=1) = \\frac{3}{8}\\)."
+        id: 9,
+        level: 2,
+        typ: "numerisch",
+        frage: "Verteilung: \\(P(X=0)=\\frac{1}{8}\\), \\(P(X=1)=\\frac{3}{8}\\), \\(P(X=2)=\\frac{3}{8}\\), \\(P(X=3)=\\frac{1}{8}\\). Berechne \\(P(X=1) + P(X=3)\\) als Dezimalzahl.",
+        loesung: 0.5,
+        toleranz: 0.001,
+        tipp: "Brüche mit gleichem Nenner addieren, dann in eine Dezimalzahl umwandeln.",
+        loesungsweg: "\\(\\frac{3}{8} + \\frac{1}{8} = \\frac{4}{8} = 0{,}5\\)."
       },
       {
-        id: 10, level: 2, typ: "numerisch",
+        id: 10,
+        level: 2,
+        typ: "numerisch",
         frage: "Verteilung: \\(P(X=1)=\\frac{1}{6}\\), \\(P(X=2)=\\frac{1}{6}\\), \\(P(X=3)=\\frac{1}{6}\\), \\(P(X=4)=\\frac{1}{6}\\), \\(P(X=5)=\\frac{1}{6}\\), \\(P(X=6)=\\frac{1}{6}\\). Berechne \\(P(X=2)+P(X=4)+P(X=6)\\) als Dezimalzahl.",
-        loesung: 0.5, toleranz: 0.01,
+        loesung: 0.5,
+        toleranz: 0.01,
         tipp: "Drei mal \\(\\frac{1}{6}\\) addieren.",
         loesungsweg: "\\(3 \\cdot \\frac{1}{6} = \\frac{3}{6} = 0{,}5\\)."
       },
       {
-        id: 11, level: 2, typ: "mc",
+        id: 11,
+        level: 2,
+        typ: "mc",
         frage: "Gegeben: \\(P(X=0)=0{,}05\\), \\(P(X=1)=0{,}2\\), \\(P(X=2)=0{,}5\\), \\(P(X=3)=0{,}2\\), \\(P(X=4)=0{,}05\\). Wie groß ist \\(P(X=0) + P(X=4)\\)?",
-        optionen: ["\\(0{,}1\\)", "\\(0{,}05\\)", "\\(0{,}25\\)", "\\(0{,}5\\)"],
+        optionen: [
+          "\\(0{,}1\\)",
+          "\\(0{,}05\\)",
+          "\\(0{,}25\\)",
+          "\\(0{,}5\\)"
+        ],
         korrekt: 0,
         tipp: "Addiere die beiden Randwerte.",
         loesungsweg: "\\(0{,}05 + 0{,}05 = 0{,}1\\)."
       },
       {
-        id: 12, level: 2, typ: "numerisch",
+        id: 12,
+        level: 2,
+        typ: "numerisch",
         frage: "Verteilung: \\(P(X=1)=0{,}1\\), \\(P(X=2)=0{,}3\\), \\(P(X=3)=0{,}4\\), \\(P(X=4)=0{,}2\\). Berechne \\(P(X=2) + P(X=3)\\).",
-        loesung: 0.7, toleranz: 0.001,
+        loesung: 0.7,
+        toleranz: 0.001,
         tipp: "\\(0{,}3 + 0{,}4\\).",
         loesungsweg: "\\(P(X=2) + P(X=3) = 0{,}3 + 0{,}4 = 0{,}7\\)."
       },
-
-      // ═══════════════════════════════════════════════════════════
-      // Level 3 — Kumulative Wahrscheinlichkeiten P(X≤k), P(X≥k)
-      // ═══════════════════════════════════════════════════════════
-
+      // ========== LEVEL 3 — nervenschonend (6 Aufgaben) ==========
       {
-        id: 13, level: 3, typ: "mc",
+        id: 13,
+        level: 3,
+        typ: "mc",
         frage: "Verteilung: \\(P(X=1)=0{,}1\\), \\(P(X=2)=0{,}2\\), \\(P(X=3)=0{,}3\\), \\(P(X=4)=0{,}4\\). Berechne \\(P(X \\leq 2)\\).",
-        optionen: ["\\(0{,}3\\)", "\\(0{,}2\\)", "\\(0{,}6\\)", "\\(0{,}1\\)"],
+        optionen: [
+          "\\(0{,}3\\)",
+          "\\(0{,}2\\)",
+          "\\(0{,}6\\)",
+          "\\(0{,}1\\)"
+        ],
         korrekt: 0,
         tipp: "\\(P(X \\leq 2) = P(X=1) + P(X=2)\\).",
         loesungsweg: "\\(P(X \\leq 2) = 0{,}1 + 0{,}2 = 0{,}3\\)."
       },
       {
-        id: 14, level: 3, typ: "numerisch",
-        frage: "Verteilung: \\(P(X=0)=0{,}2\\), \\(P(X=1)=0{,}3\\), \\(P(X=2)=0{,}3\\), \\(P(X=3)=0{,}2\\). Berechne \\(P(X \\geq 2)\\).",
-        loesung: 0.5, toleranz: 0.001,
-        tipp: "\\(P(X \\geq 2) = P(X=2) + P(X=3)\\).",
-        loesungsweg: "\\(P(X \\geq 2) = 0{,}3 + 0{,}2 = 0{,}5\\)."
+        id: 14,
+        level: 3,
+        typ: "numerisch",
+        frage: "Verteilung: \\(P(X=1)=0{,}2\\), \\(P(X=2)=0{,}3\\), \\(P(X=3)=?\\), \\(P(X=4)=0{,}1\\). Berechne \\(P(X \\geq 3)\\).",
+        loesung: 0.5,
+        toleranz: 0.001,
+        tipp: "Erst die Lücke schließen, dann addieren.",
+        loesungsweg: "\\(P(X=3) = 1 - 0{,}2 - 0{,}3 - 0{,}1 = 0{,}4\\). \\(P(X \\geq 3) = 0{,}4 + 0{,}1 = 0{,}5\\)."
       },
       {
-        id: 15, level: 3, typ: "mc",
-        frage: "Verteilung: \\(P(X=1)=0{,}15\\), \\(P(X=2)=0{,}25\\), \\(P(X=3)=0{,}35\\), \\(P(X=4)=0{,}25\\). Berechne \\(P(X < 3)\\).",
-        optionen: ["\\(0{,}4\\)", "\\(0{,}75\\)", "\\(0{,}6\\)", "\\(0{,}35\\)"],
-        korrekt: 0,
-        tipp: "\\(P(X < 3) = P(X=1) + P(X=2)\\) — der Wert 3 gehört NICHT dazu.",
-        loesungsweg: "\\(P(X < 3) = 0{,}15 + 0{,}25 = 0{,}4\\)."
-      },
-      {
-        id: 16, level: 3, typ: "numerisch",
+        id: 15,
+        level: 3,
+        typ: "numerisch",
         frage: "Verteilung für 3 Münzen (Anzahl Köpfe): \\(P(0)=\\frac{1}{8}\\), \\(P(1)=\\frac{3}{8}\\), \\(P(2)=\\frac{3}{8}\\), \\(P(3)=\\frac{1}{8}\\). Berechne \\(P(X \\leq 1)\\) als Dezimalzahl.",
-        loesung: 0.5, toleranz: 0.01,
+        loesung: 0.5,
+        toleranz: 0.01,
         tipp: "\\(P(X \\leq 1) = P(X=0) + P(X=1)\\).",
         loesungsweg: "\\(P(X \\leq 1) = \\frac{1}{8} + \\frac{3}{8} = \\frac{4}{8} = 0{,}5\\)."
       },
       {
-        id: 17, level: 3, typ: "mc",
+        id: 16,
+        level: 3,
+        typ: "numerisch",
+        frage: "Verteilung: \\(P(X=0)=0{,}05\\), \\(P(X=1)=a\\), \\(P(X=2)=0{,}5\\), \\(P(X=3)=0{,}2\\), \\(P(X=4)=0{,}05\\). Berechne \\(P(X \\leq 1)\\).",
+        loesung: 0.25,
+        toleranz: 0.001,
+        tipp: "Zuerst \\(a\\) bestimmen.",
+        loesungsweg: "\\(a = 1 - 0{,}05 - 0{,}5 - 0{,}2 - 0{,}05 = 0{,}2\\). \\(P(X \\leq 1) = 0{,}05 + 0{,}2 = 0{,}25\\)."
+      },
+      {
+        id: 17,
+        level: 3,
+        typ: "mc",
         frage: "Verteilung: \\(P(X=0)=0{,}1\\), \\(P(X=1)=0{,}2\\), \\(P(X=2)=0{,}3\\), \\(P(X=3)=0{,}25\\), \\(P(X=4)=0{,}15\\). Berechne \\(P(X \\geq 3)\\).",
-        optionen: ["\\(0{,}4\\)", "\\(0{,}25\\)", "\\(0{,}6\\)", "\\(0{,}15\\)"],
+        optionen: [
+          "\\(0{,}4\\)",
+          "\\(0{,}25\\)",
+          "\\(0{,}6\\)",
+          "\\(0{,}15\\)"
+        ],
         korrekt: 0,
         tipp: "\\(P(X \\geq 3) = P(X=3) + P(X=4)\\).",
         loesungsweg: "\\(P(X \\geq 3) = 0{,}25 + 0{,}15 = 0{,}4\\)."
       },
       {
-        id: 18, level: 3, typ: "numerisch",
-        frage: "Verteilung: \\(P(X=1)=0{,}2\\), \\(P(X=2)=0{,}2\\), \\(P(X=3)=0{,}2\\), \\(P(X=4)=0{,}2\\), \\(P(X=5)=0{,}2\\). Berechne \\(P(X \\leq 3)\\).",
-        loesung: 0.6, toleranz: 0.001,
-        tipp: "Drei Werte addieren.",
-        loesungsweg: "\\(P(X \\leq 3) = 0{,}2 + 0{,}2 + 0{,}2 = 0{,}6\\)."
+        id: 18,
+        level: 3,
+        typ: "numerisch",
+        frage: "Verteilung: \\(P(X=1)=a\\), \\(P(X=2)=2a\\), \\(P(X=3)=2a\\). Berechne \\(P(X \\geq 2)\\).",
+        loesung: 0.8,
+        toleranz: 0.001,
+        tipp: "Die drei Wahrscheinlichkeiten ergeben zusammen 1.",
+        loesungsweg: "\\(a + 2a + 2a = 5a = 1 \\Rightarrow a = 0{,}2\\). \\(P(X \\geq 2) = 2a + 2a = 0{,}8\\)."
       },
-
-      // ═══════════════════════════════════════════════════════════
-      // Level 4 — Verteilung selbst aufstellen aus Experiment
-      // ═══════════════════════════════════════════════════════════
-
+      // ========== LEVEL 4 — mittel (6 Aufgaben) ==========
       {
-        id: 19, level: 4, typ: "mc",
-        frage: "Eine faire Münze wird 2-mal geworfen. \\(X\\) = Anzahl Köpfe. Wie groß ist \\(P(X=1)\\)?",
-        optionen: ["\\(\\frac{1}{2}\\)", "\\(\\frac{1}{4}\\)", "\\(\\frac{3}{4}\\)", "\\(\\frac{1}{3}\\)"],
-        korrekt: 0,
-        tipp: "Möglichkeiten: KZ und ZK (Kopf genau einmal).",
-        loesungsweg: "Ergebnisse: KK, KZ, ZK, ZZ. Genau 1 Kopf in KZ und ZK. \\(P(X=1) = \\frac{2}{4} = \\frac{1}{2}\\)."
-      },
-      {
-        id: 20, level: 4, typ: "numerisch",
+        id: 19,
+        level: 4,
+        typ: "numerisch",
         frage: "Drei Münzen werden geworfen. \\(X\\) = Anzahl Köpfe. Wie groß ist \\(P(X=2)\\) als Dezimalzahl?",
-        loesung: 0.375, toleranz: 0.01,
+        loesung: 0.375,
+        toleranz: 0.01,
         tipp: "Es gibt 8 mögliche Ergebnisse. Wie viele haben genau 2 Köpfe?",
         loesungsweg: "Möglichkeiten für genau 2 Köpfe: KKZ, KZK, ZKK. Also \\(P(X=2) = \\frac{3}{8} = 0{,}375\\)."
       },
       {
-        id: 21, level: 4, typ: "mc",
-        frage: "Ein Würfel wird einmal geworfen. \\(X\\) ordnet jeder Augenzahl ihren Wert zu. Wie groß ist \\(P(X=4)\\)?",
-        optionen: ["\\(\\frac{1}{6}\\)", "\\(\\frac{1}{4}\\)", "\\(\\frac{4}{6}\\)", "\\(\\frac{1}{3}\\)"],
-        korrekt: 0,
-        tipp: "Der Würfel hat 6 gleich wahrscheinliche Seiten.",
-        loesungsweg: "Jede Augenzahl tritt mit Wahrscheinlichkeit \\(\\frac{1}{6}\\) auf."
-      },
-      {
-        id: 22, level: 4, typ: "mc",
+        id: 20,
+        level: 4,
+        typ: "mc",
         frage: "In einer Urne sind 2 rote und 3 blaue Kugeln. Es werden 2 Kugeln mit Zurücklegen gezogen. \\(X\\) = Anzahl roter Kugeln. Wie groß ist \\(P(X=0)\\)?",
-        optionen: ["\\(\\frac{9}{25}\\)", "\\(\\frac{4}{25}\\)", "\\(\\frac{12}{25}\\)", "\\(\\frac{3}{5}\\)"],
+        optionen: [
+          "\\(\\frac{9}{25}\\)",
+          "\\(\\frac{4}{25}\\)",
+          "\\(\\frac{12}{25}\\)",
+          "\\(\\frac{3}{5}\\)"
+        ],
         korrekt: 0,
         tipp: "Keine rote = beide blau. \\(P(\\text{blau}) = \\frac{3}{5}\\).",
         loesungsweg: "\\(P(X=0) = \\left(\\frac{3}{5}\\right)^2 = \\frac{9}{25}\\)."
       },
       {
-        id: 23, level: 4, typ: "numerisch",
-        frage: "Drei Münzen werden geworfen. \\(X\\) = Anzahl Köpfe. Berechne \\(P(X=0) + P(X=3)\\) als Dezimalzahl.",
-        loesung: 0.25, toleranz: 0.01,
-        tipp: "\\(P(X=0) = \\frac{1}{8}\\) und \\(P(X=3) = \\frac{1}{8}\\).",
-        loesungsweg: "\\(P(X=0) + P(X=3) = \\frac{1}{8} + \\frac{1}{8} = \\frac{2}{8} = 0{,}25\\)."
+        id: 21,
+        level: 4,
+        typ: "numerisch",
+        frage: "Ein Würfel wird einmal geworfen. Bei einer 6 erhält man \\(5\\,€\\), bei einer 4 oder 5 erhält man \\(2\\,€\\), sonst nichts. \\(X\\) ist die Auszahlung in Euro. Bestimme \\(P(X \\leq 2)\\). Runde auf drei Dezimalstellen.",
+        loesung: 0.833,
+        toleranz: 0.0005,
+        tipp: "Stelle die Verteilung von \\(X\\) mit ihren drei Werten auf.",
+        loesungsweg: "\\(P(X=0) = \\frac{3}{6}\\), \\(P(X=2) = \\frac{2}{6}\\), \\(P(X=5) = \\frac{1}{6}\\). \\(P(X \\leq 2) = \\frac{5}{6} \\approx 0{,}833\\)."
       },
       {
-        id: 24, level: 4, typ: "mc",
-        frage: "Ein Glücksrad mit 4 gleich großen Sektoren (Zahlen 1, 2, 3, 4) wird einmal gedreht. \\(X\\) = gedrehte Zahl. Welche Verteilung ist korrekt?",
+        id: 22,
+        level: 4,
+        typ: "numerisch",
+        frage: "Eine Urne enthält 1 rote und 3 weiße Kugeln. Es wird zweimal mit Zurücklegen gezogen. \\(X\\) ist die Anzahl der roten Kugeln. Bestimme \\(P(X \\leq 1)\\).",
+        loesung: 0.9375,
+        toleranz: 0.001,
+        tipp: "Das Gegenereignis hat nur ein Ergebnis.",
+        loesungsweg: "\\(P(X=2) = \\frac{1}{4} \\cdot \\frac{1}{4} = \\frac{1}{16}\\). \\(P(X \\leq 1) = 1 - \\frac{1}{16} = \\frac{15}{16} = 0{,}9375\\)."
+      },
+      {
+        id: 23,
+        level: 4,
+        typ: "numerisch",
+        frage: "Ein Würfel wird zweimal geworfen. \\(X\\) ist die Anzahl der geworfenen Sechsen. Bestimme \\(P(X = 1)\\). Runde auf drei Dezimalstellen.",
+        loesung: 0.278,
+        toleranz: 0.0005,
+        tipp: "Es gibt zwei Pfade mit genau einer Sechs.",
+        loesungsweg: "\\(P(X=1) = \\frac{1}{6} \\cdot \\frac{5}{6} + \\frac{5}{6} \\cdot \\frac{1}{6} = \\frac{10}{36} \\approx 0{,}278\\)."
+      },
+      {
+        id: 24,
+        level: 4,
+        typ: "numerisch",
+        frage: "Ein Glücksrad hat 10 gleich große Sektoren: fünf mit der Zahl 0, drei mit der Zahl 1 und zwei mit der Zahl 5. Der Einsatz beträgt \\(1\\,€\\), ausgezahlt wird die gedrehte Zahl in Euro. \\(X\\) ist der Gewinn (Auszahlung minus Einsatz). Bestimme \\(P(X \\geq 0)\\).",
+        loesung: 0.5,
+        toleranz: 0.001,
+        tipp: "Welche Werte nimmt der Gewinn an, und wie wahrscheinlich sind sie?",
+        loesungsweg: "\\(X\\) nimmt die Werte \\(-1\\), \\(0\\), \\(4\\) mit \\(0{,}5\\); \\(0{,}3\\); \\(0{,}2\\) an. \\(P(X \\geq 0) = 0{,}3 + 0{,}2 = 0{,}5\\)."
+      },
+      // ========== LEVEL 5 — anspruchsvoll (6 Aufgaben) ==========
+      {
+        id: 25,
+        level: 5,
+        typ: "numerisch",
+        frage: "Die Zufallsgröße \\(X\\) nimmt die Werte 1, 2 und 3 an. Bekannt sind \\(P(X \\leq 2) = 0{,}6\\) und \\(P(X \\geq 2) = 0{,}7\\). Bestimme \\(P(X = 2)\\).",
+        loesung: 0.3,
+        toleranz: 0.001,
+        tipp: "Welcher Wert kommt in beiden Ereignissen vor?",
+        loesungsweg: "\\(P(X \\leq 2) + P(X \\geq 2) = 1 + P(X = 2)\\), da der Wert 2 doppelt gezählt wird. Also \\(P(X = 2) = 0{,}6 + 0{,}7 - 1 = 0{,}3\\)."
+      },
+      {
+        id: 26,
+        level: 5,
+        typ: "numerisch",
+        frage: "Die Zufallsgröße \\(X\\) nimmt die Werte 0, 1, 2 und 3 an. Es gilt \\(P(X \\geq 1) = 0{,}9\\), \\(P(X \\leq 2) = 0{,}8\\) und \\(P(X = 1) = P(X = 2)\\). Bestimme \\(P(X = 1)\\).",
+        loesung: 0.35,
+        toleranz: 0.001,
+        tipp: "Aus den ersten beiden Angaben folgen die Randwerte der Verteilung.",
+        loesungsweg: "\\(P(X=0) = 0{,}1\\), \\(P(X=3) = 0{,}2\\). Rest \\(0{,}7\\) verteilt sich gleich auf 1 und 2: \\(P(X=1) = 0{,}35\\)."
+      },
+      {
+        id: 27,
+        level: 5,
+        typ: "mc",
+        frage: "Zwei Münzen werden geworfen, \\(X\\) ist die Anzahl Kopf. Ein Schüler stellt die Verteilung auf:<br>Schritt 1: \\(X\\) nimmt die Werte 0, 1, 2 an.<br>Schritt 2: Es gibt drei mögliche Werte, also ist jeder gleich wahrscheinlich: \\(\\frac{1}{3}\\).<br>Schritt 3: \\(P(X=1) = \\frac{1}{3}\\).<br>Welcher Schritt ist der erste fehlerhafte?",
         optionen: [
-          "Alle vier Werte mit \\(P = \\frac{1}{4}\\)",
-          "\\(P(X=1)=\\frac{1}{2}\\), alle anderen \\(\\frac{1}{6}\\)",
-          "\\(P(X=k) = \\frac{k}{10}\\)",
-          "\\(P(X=1)=0{,}1\\), \\(P(X=2)=0{,}2\\), \\(P(X=3)=0{,}3\\), \\(P(X=4)=0{,}4\\)"
+          "Schritt 1",
+          "Schritt 2",
+          "Schritt 3",
+          "Kein Schritt ist fehlerhaft"
+        ],
+        korrekt: 1,
+        tipp: "Sind die Werte einer Zufallsgröße automatisch gleich wahrscheinlich?",
+        loesungsweg: "Schritt 1 stimmt. Schritt 2 ist falsch: Gleichwahrscheinlich sind die vier Ergebnisse KK, KZ, ZK, ZZ, nicht die Werte. Richtig: \\(P(X=1) = \\frac{2}{4} = 0{,}5\\)."
+      },
+      {
+        id: 28,
+        level: 5,
+        typ: "numerisch",
+        frage: "Eine Urne enthält 4 rote und 2 blaue Kugeln. Es werden zwei Kugeln ohne Zurücklegen gezogen. \\(X\\) ist die Anzahl der roten Kugeln. Bestimme \\(P(X = 1)\\). Runde auf drei Dezimalstellen.",
+        loesung: 0.533,
+        toleranz: 0.0005,
+        tipp: "Nach dem ersten Zug ändern sich die Wahrscheinlichkeiten.",
+        loesungsweg: "\\(P(X=1) = \\frac{4}{6} \\cdot \\frac{2}{5} + \\frac{2}{6} \\cdot \\frac{4}{5} = \\frac{16}{30} \\approx 0{,}533\\)."
+      },
+      {
+        id: 29,
+        level: 5,
+        typ: "numerisch",
+        frage: "Zwei Würfel werden geworfen, \\(X\\) ist die Augensumme. Bestimme die Wahrscheinlichkeit, dass \\(X\\) eine Primzahl ist. Runde auf drei Dezimalstellen.",
+        loesung: 0.417,
+        toleranz: 0.0005,
+        tipp: "Welche Augensummen sind Primzahlen? Zähle die Paare in der 6x6-Tabelle.",
+        loesungsweg: "Primzahlen: 2, 3, 5, 7, 11 mit 1, 2, 4, 6, 2 günstigen Paaren. \\(P = \\frac{15}{36} \\approx 0{,}417\\)."
+      },
+      {
+        id: 30,
+        level: 5,
+        typ: "numerisch",
+        frage: "Ein Würfel wird zweimal geworfen. Bei einem Pasch erhält man \\(4\\,€\\); ist kein Pasch gefallen und die Augensumme mindestens 9, erhält man \\(1\\,€\\); sonst nichts. \\(X\\) ist die Auszahlung. Bestimme \\(P(X = 1)\\). Runde auf drei Dezimalstellen.",
+        loesung: 0.222,
+        toleranz: 0.0005,
+        tipp: "Zähle die Paare mit Augensumme 9, 10, 11, 12 und streiche die Päsche.",
+        loesungsweg: "Summe 9: 4 Paare, 10: 3 Paare (davon ein Pasch), 11: 2 Paare, 12: 1 Paar (Pasch). Ohne Päsche: \\(4 + 2 + 2 + 0 = 8\\). \\(P(X=1) = \\frac{8}{36} \\approx 0{,}222\\)."
+      },
+      // ========== LEVEL 6 — wagnerisch (6 Aufgaben) ==========
+      {
+        id: 31,
+        level: 6,
+        typ: "mc",
+        frage: "\\(X\\) ist eine Zufallsgröße mit den Werten \\(1, 2, \\ldots, n\\). Welche Aussage gilt für <b>jede</b> solche Verteilung?",
+        optionen: [
+          "\\(P(X \\leq k) + P(X > k) = 1\\) für jedes \\(k\\).",
+          "\\(P(X \\leq k) = P(X < k)\\) für jedes \\(k\\).",
+          "\\(P(X = k) \\leq \\frac{1}{n}\\) für jedes \\(k\\).",
+          "\\(P(X \\geq k)\\) wird mit wachsendem \\(k\\) größer."
         ],
         korrekt: 0,
-        tipp: "Gleich große Sektoren bedeuten gleiche Wahrscheinlichkeiten.",
-        loesungsweg: "Da alle Sektoren gleich groß sind, gilt \\(P(X=k) = \\frac{1}{4}\\) für \\(k=1,2,3,4\\). Summe: \\(4 \\cdot \\frac{1}{4} = 1\\) ✓."
+        tipp: "Prüfe jede Aussage an der Augenzahl eines Würfels und an einer ungleichmäßigen Verteilung.",
+        loesungsweg: "\\(X \\leq k\\) und \\(X > k\\) sind Gegenereignisse, ihre Wahrscheinlichkeiten ergänzen sich zu 1. Aussage 2 vergisst \\(P(X = k)\\), Aussage 3 gilt nur bei Gleichverteilung, Aussage 4 ist falsch, weil \\(P(X \\geq k)\\) mit \\(k\\) abnimmt."
       },
-
-      // ═══════════════════════════════════════════════════════════
-      // Level 5 — Ereignisse, mehrere X-Werte, Komplement
-      // ═══════════════════════════════════════════════════════════
-
       {
-        id: 25, level: 5, typ: "mc",
-        frage: "Verteilung: \\(P(X=1)=0{,}1\\), \\(P(X=2)=0{,}2\\), \\(P(X=3)=0{,}3\\), \\(P(X=4)=0{,}2\\), \\(P(X=5)=0{,}2\\). Berechne \\(P(X \\in \\{2, 3, 5\\})\\).",
-        optionen: ["\\(0{,}7\\)", "\\(0{,}6\\)", "\\(0{,}5\\)", "\\(0{,}8\\)"],
+        id: 32,
+        level: 6,
+        typ: "numerisch",
+        frage: "Für die Zufallsgröße \\(X\\) mit den Werten 1, 2, 3, 4 gilt \\(P(X = k) = c \\cdot (5 - k)\\) mit einer Konstanten \\(c\\). Bestimme \\(P(X \\leq 2)\\).",
+        loesung: 0.7,
+        toleranz: 0.001,
+        tipp: "Schreibe die vier Wahrscheinlichkeiten als Vielfache von \\(c\\).",
+        loesungsweg: "\\(4c + 3c + 2c + c = 10c = 1 \\Rightarrow c = 0{,}1\\). \\(P(X \\leq 2) = 0{,}4 + 0{,}3 = 0{,}7\\)."
+      },
+      {
+        id: 33,
+        level: 6,
+        typ: "numerisch",
+        frage: "Eine Urne enthält 2 rote und 3 blaue Kugeln. Es werden drei Kugeln ohne Zurücklegen gezogen. \\(X\\) ist die Anzahl der roten Kugeln. Bestimme \\(P(X = 2)\\).",
+        loesung: 0.3,
+        toleranz: 0.001,
+        tipp: "Es gibt drei Reihenfolgen mit zwei roten und einer blauen Kugel.",
+        loesungsweg: "Jede Reihenfolge hat die Wahrscheinlichkeit \\(\\frac{2 \\cdot 1 \\cdot 3}{5 \\cdot 4 \\cdot 3} = 0{,}1\\). Drei Reihenfolgen: \\(P(X=2) = 0{,}3\\)."
+      },
+      {
+        id: 34,
+        level: 6,
+        typ: "numerisch",
+        frage: "Bei einer Tombola gibt es 20 Lose: 2 Hauptgewinne, 6 kleine Gewinne und 12 Nieten. Jemand kauft zwei Lose. \\(X\\) ist die Anzahl der Gewinnlose (Haupt- oder kleiner Gewinn). Bestimme \\(P(X = 0)\\). Runde auf drei Dezimalstellen.",
+        loesung: 0.347,
+        toleranz: 0.0005,
+        tipp: "Zwei Lose kaufen heißt zweimal ohne Zurücklegen ziehen.",
+        loesungsweg: "\\(P(X=0) = \\frac{12}{20} \\cdot \\frac{11}{19} = \\frac{132}{380} \\approx 0{,}347\\)."
+      },
+      {
+        id: 35,
+        level: 6,
+        typ: "numerisch",
+        frage: "Zwei Würfel werden geworfen. \\(X\\) ist der Betrag der Differenz der beiden Augenzahlen. Bestimme \\(P(X \\leq 1)\\). Runde auf drei Dezimalstellen.",
+        loesung: 0.444,
+        toleranz: 0.0005,
+        tipp: "Welche Paare haben Differenz 0, welche Differenz 1?",
+        loesungsweg: "Differenz 0: 6 Päsche. Differenz 1: 10 Paare (1-2, 2-1, 2-3, ..., 5-6, 6-5). \\(P(X \\leq 1) = \\frac{16}{36} \\approx 0{,}444\\)."
+      },
+      {
+        id: 36,
+        level: 6,
+        typ: "mc",
+        frage: "Für eine Zufallsgröße \\(X\\) mit den Werten 0, 1, 2 wird angegeben: \\(P(X \\leq 1) = 0{,}4\\) und \\(P(X \\geq 1) = 0{,}5\\). Welche Aussage ist richtig?",
+        optionen: [
+          "Die Angaben sind widersprüchlich, weil \\(P(X \\leq 1) + P(X \\geq 1)\\) mindestens 1 sein muss.",
+          "Die Angaben sind widersprüchlich, weil \\(P(X \\leq 1)\\) größer als \\(P(X \\geq 1)\\) sein müsste.",
+          "Die Angaben sind möglich; dann gilt \\(P(X = 1) = 0{,}1\\).",
+          "Die Angaben sind möglich; \\(P(X = 1)\\) lässt sich daraus aber nicht bestimmen."
+        ],
         korrekt: 0,
-        tipp: "Addiere die Wahrscheinlichkeiten für \\(X=2\\), \\(X=3\\) und \\(X=5\\).",
-        loesungsweg: "\\(P(X \\in \\{2,3,5\\}) = 0{,}2 + 0{,}3 + 0{,}2 = 0{,}7\\)."
-      },
-      {
-        id: 26, level: 5, typ: "numerisch",
-        frage: "Verteilung: \\(P(X=0)=0{,}1\\), \\(P(X=1)=0{,}2\\), \\(P(X=2)=0{,}3\\), \\(P(X=3)=0{,}25\\), \\(P(X=4)=0{,}15\\). Berechne \\(P(X \\neq 2)\\) (komplementäres Ereignis).",
-        loesung: 0.7, toleranz: 0.001,
-        tipp: "\\(P(X \\neq 2) = 1 - P(X=2)\\).",
-        loesungsweg: "\\(P(X \\neq 2) = 1 - 0{,}3 = 0{,}7\\)."
-      },
-      {
-        id: 27, level: 5, typ: "mc",
-        frage: "Verteilung für 3 Münzen: \\(P(0)=\\frac{1}{8}\\), \\(P(1)=\\frac{3}{8}\\), \\(P(2)=\\frac{3}{8}\\), \\(P(3)=\\frac{1}{8}\\). Berechne \\(P(X \\geq 1)\\) über das Gegenereignis.",
-        optionen: ["\\(\\frac{7}{8}\\)", "\\(\\frac{6}{8}\\)", "\\(\\frac{5}{8}\\)", "\\(\\frac{4}{8}\\)"],
-        korrekt: 0,
-        tipp: "\\(P(X \\geq 1) = 1 - P(X=0)\\).",
-        loesungsweg: "\\(P(X \\geq 1) = 1 - P(X=0) = 1 - \\frac{1}{8} = \\frac{7}{8}\\)."
-      },
-      {
-        id: 28, level: 5, typ: "numerisch",
-        frage: "Würfel: \\(X\\) = Augenzahl. Berechne \\(P(X \\in \\{1, 3, 5\\})\\) (ungerade Augenzahlen) als Dezimalzahl.",
-        loesung: 0.5, toleranz: 0.01,
-        tipp: "Drei von sechs Augenzahlen sind ungerade.",
-        loesungsweg: "\\(P(X \\in \\{1,3,5\\}) = \\frac{3}{6} = 0{,}5\\)."
-      },
-      {
-        id: 29, level: 5, typ: "mc",
-        frage: "Verteilung: \\(P(X=1)=0{,}15\\), \\(P(X=2)=0{,}2\\), \\(P(X=3)=0{,}25\\), \\(P(X=4)=0{,}2\\), \\(P(X=5)=0{,}2\\). Berechne \\(P(X \\in \\{1, 4\\})\\).",
-        optionen: ["\\(0{,}35\\)", "\\(0{,}4\\)", "\\(0{,}3\\)", "\\(0{,}55\\)"],
-        korrekt: 0,
-        tipp: "\\(P(X=1) + P(X=4) = 0{,}15 + 0{,}2\\).",
-        loesungsweg: "\\(P(X \\in \\{1,4\\}) = 0{,}15 + 0{,}2 = 0{,}35\\)."
-      },
-      {
-        id: 30, level: 5, typ: "numerisch",
-        frage: "Verteilung: \\(P(X=1)=0{,}1\\), \\(P(X=2)=0{,}2\\), \\(P(X=3)=0{,}3\\), \\(P(X=4)=0{,}4\\). Berechne \\(P(X \\geq 2)\\) über das Gegenereignis.",
-        loesung: 0.9, toleranz: 0.001,
-        tipp: "\\(P(X \\geq 2) = 1 - P(X=1)\\).",
-        loesungsweg: "\\(P(X \\geq 2) = 1 - P(X=1) = 1 - 0{,}1 = 0{,}9\\)."
-      },
-
-      // ═══════════════════════════════════════════════════════════
-      // Level 6 — Augensumme zweier Würfel (vollständige Verteilung)
-      // ═══════════════════════════════════════════════════════════
-
-      {
-        id: 31, level: 6, typ: "mc",
-        frage: "Zwei Würfel werden geworfen. \\(X\\) = Augensumme. Wie groß ist \\(P(X=7)\\)?",
-        optionen: ["\\(\\frac{6}{36}\\)", "\\(\\frac{5}{36}\\)", "\\(\\frac{7}{36}\\)", "\\(\\frac{8}{36}\\)"],
-        korrekt: 0,
-        tipp: "Mögliche Kombinationen: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1).",
-        loesungsweg: "6 von 36 möglichen Kombinationen ergeben Summe 7. \\(P(X=7) = \\frac{6}{36} = \\frac{1}{6}\\)."
-      },
-      {
-        id: 32, level: 6, typ: "numerisch",
-        frage: "Zwei Würfel, \\(X\\) = Augensumme. Wie groß ist \\(P(X=2)\\)? Gib das Ergebnis als Bruch \\(\\frac{1}{n}\\) an — tippe den Nenner \\(n\\) ein.",
-        loesung: 36, toleranz: 0,
-        tipp: "Nur die Kombination (1,1) ergibt Summe 2. Es gibt 36 mögliche Ergebnisse.",
-        loesungsweg: "\\(P(X=2) = \\frac{1}{36}\\), also \\(n = 36\\)."
-      },
-      {
-        id: 33, level: 6, typ: "mc",
-        frage: "Zwei Würfel, \\(X\\) = Augensumme. Wie groß ist \\(P(X=5)\\)?",
-        optionen: ["\\(\\frac{4}{36}\\)", "\\(\\frac{3}{36}\\)", "\\(\\frac{5}{36}\\)", "\\(\\frac{2}{36}\\)"],
-        korrekt: 0,
-        tipp: "Kombinationen: (1,4), (2,3), (3,2), (4,1).",
-        loesungsweg: "4 von 36 Kombinationen ergeben Summe 5. \\(P(X=5) = \\frac{4}{36} = \\frac{1}{9}\\)."
-      },
-      {
-        id: 34, level: 6, typ: "numerisch",
-        frage: "Zwei Würfel, \\(X\\) = Augensumme. Berechne \\(P(X=12)\\) als Bruch \\(\\frac{1}{n}\\) — tippe \\(n\\) ein.",
-        loesung: 36, toleranz: 0,
-        tipp: "Nur (6,6) ergibt die Summe 12.",
-        loesungsweg: "\\(P(X=12) = \\frac{1}{36}\\), also \\(n = 36\\)."
-      },
-      {
-        id: 35, level: 6, typ: "mc",
-        frage: "Zwei Würfel, \\(X\\) = Augensumme. Berechne \\(P(X \\leq 4)\\).",
-        optionen: ["\\(\\frac{6}{36}\\)", "\\(\\frac{5}{36}\\)", "\\(\\frac{4}{36}\\)", "\\(\\frac{3}{36}\\)"],
-        korrekt: 0,
-        tipp: "\\(P(X=2) = \\frac{1}{36}\\), \\(P(X=3) = \\frac{2}{36}\\), \\(P(X=4) = \\frac{3}{36}\\).",
-        loesungsweg: "\\(P(X \\leq 4) = \\frac{1}{36} + \\frac{2}{36} + \\frac{3}{36} = \\frac{6}{36} = \\frac{1}{6}\\)."
-      },
-      {
-        id: 36, level: 6, typ: "numerisch",
-        frage: "Zwei Würfel, \\(X\\) = Augensumme. Berechne \\(P(X \\geq 10)\\) als Bruch \\(\\frac{k}{36}\\) — tippe den Zähler \\(k\\) ein.",
-        loesung: 6, toleranz: 0,
-        tipp: "\\(P(X=10) = \\frac{3}{36}\\), \\(P(X=11) = \\frac{2}{36}\\), \\(P(X=12) = \\frac{1}{36}\\).",
-        loesungsweg: "\\(P(X \\geq 10) = \\frac{3}{36} + \\frac{2}{36} + \\frac{1}{36} = \\frac{6}{36} = \\frac{1}{6}\\). Also \\(k = 6\\)."
+        tipp: "Welches Ereignis wird von beiden Angaben gemeinsam abgedeckt?",
+        loesungsweg: "\\(X \\leq 1\\) und \\(X \\geq 1\\) überdecken zusammen alle Werte, also ist \\(P(X \\leq 1) + P(X \\geq 1) = 1 + P(X = 1) \\geq 1\\). Hier ergibt die Summe nur \\(0{,}9\\) – unmöglich."
       }
-
     ];
     </script>
     <script src="../p3-reflexion.js"></script>

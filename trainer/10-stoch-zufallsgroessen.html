@@ -16,155 +16,11 @@
     const THEMA_KEY = '10-stoch-zufallsgroessen';
     const THEMA_CONFIG = { name: 'Zufallsexperimente & Zufallsgrößen', bereich: 'stochastik', p3Enabled: true };
     const AUFGABEN = [
-
-      // ═══════════════════════════════════════════════════════════
-      // Level 1 — Zufallsexperiment, Ergebnismenge, Ereignis
-      // ═══════════════════════════════════════════════════════════
-
+      // ========== LEVEL 1 — babyleicht (6 Aufgaben) ==========
       {
-        id: 1, level: 1, typ: "mc",
-        frage: "Welche der folgenden Vorgänge ist ein Zufallsexperiment?",
-        optionen: [
-          "Einen Würfel werfen und die Augenzahl notieren",
-          "Die Summe 2 + 3 berechnen",
-          "Das Datum von heute ablesen",
-          "Die Höhe eines Tisches messen"
-        ],
-        korrekt: 0,
-        tipp: "Ein Zufallsexperiment hat mehrere mögliche Ergebnisse, und das Ergebnis steht vorher nicht fest.",
-        loesungsweg: "Beim Würfelwurf ist das Ergebnis nicht vorhersagbar und es gibt mehrere mögliche Ausgänge (1–6). Die anderen Vorgänge haben ein eindeutiges, festes Ergebnis."
-      },
-      {
-        id: 2, level: 1, typ: "mc",
-        frage: "Wie lautet die Ergebnismenge \\(\\Omega\\) beim einmaligen Werfen eines fairen Würfels?",
-        optionen: [
-          "\\(\\Omega = \\{1, 2, 3, 4, 5, 6\\}\\)",
-          "\\(\\Omega = \\{1, 2, 3, 4, 5\\}\\)",
-          "\\(\\Omega = \\{0, 1, 2, 3, 4, 5, 6\\}\\)",
-          "\\(\\Omega = \\{1, 6\\}\\)"
-        ],
-        korrekt: 0,
-        tipp: "Die Ergebnismenge enthält alle möglichen Ausgänge eines Zufallsexperiments.",
-        loesungsweg: "Ein Würfel zeigt die Zahlen 1 bis 6, also \\(\\Omega = \\{1, 2, 3, 4, 5, 6\\}\\)."
-      },
-      {
-        id: 3, level: 1, typ: "mc",
-        frage: "Eine Münze wird geworfen. Wie lautet die Ergebnismenge \\(\\Omega\\)?",
-        optionen: [
-          "\\(\\Omega = \\{\\text{Kopf}, \\text{Zahl}\\}\\)",
-          "\\(\\Omega = \\{\\text{Kopf}\\}\\)",
-          "\\(\\Omega = \\{0, 1, 2\\}\\)",
-          "\\(\\Omega = \\{\\text{Kopf}, \\text{Zahl}, \\text{Rand}\\}\\)"
-        ],
-        korrekt: 0,
-        tipp: "Eine Münze hat zwei Seiten.",
-        loesungsweg: "Beim Münzwurf gibt es genau zwei Ergebnisse: Kopf oder Zahl. Also \\(\\Omega = \\{\\text{Kopf}, \\text{Zahl}\\}\\)."
-      },
-      {
-        id: 4, level: 1, typ: "mc",
-        frage: "Ein Würfel wird geworfen. Das Ereignis \\(E\\): \"Es fällt eine gerade Zahl\". Wie lautet \\(E\\) als Menge?",
-        optionen: [
-          "\\(E = \\{2, 4, 6\\}\\)",
-          "\\(E = \\{1, 3, 5\\}\\)",
-          "\\(E = \\{2, 4\\}\\)",
-          "\\(E = \\{1, 2, 3, 4, 5, 6\\}\\)"
-        ],
-        korrekt: 0,
-        tipp: "Welche Zahlen zwischen 1 und 6 sind gerade?",
-        loesungsweg: "Gerade Zahlen zwischen 1 und 6 sind 2, 4 und 6. Also \\(E = \\{2, 4, 6\\}\\)."
-      },
-      {
-        id: 5, level: 1, typ: "mc",
-        frage: "Wie viele Elemente hat die Ergebnismenge beim zweimaligen Werfen einer Münze?",
-        optionen: [
-          "4",
-          "2",
-          "3",
-          "8"
-        ],
-        korrekt: 0,
-        tipp: "Zähle alle Kombinationen: KK, KZ, ZK, ZZ.",
-        loesungsweg: "\\(\\Omega = \\{KK, KZ, ZK, ZZ\\}\\) — also 4 Elemente. Allgemein: \\(2 \\cdot 2 = 4\\)."
-      },
-      {
-        id: 6, level: 1, typ: "mc",
-        frage: "In einer Urne liegen 3 rote und 2 blaue Kugeln. Eine Kugel wird gezogen. Welches Ereignis beschreibt \"Die Kugel ist nicht rot\"?",
-        optionen: [
-          "\\(E = \\{\\text{blau}\\}\\)",
-          "\\(E = \\{\\text{rot}\\}\\)",
-          "\\(E = \\{\\text{rot}, \\text{blau}\\}\\)",
-          "\\(E = \\{\\}\\)"
-        ],
-        korrekt: 0,
-        tipp: "Welche Farben sind übrig, wenn \"rot\" ausgeschlossen wird?",
-        loesungsweg: "Die Urne enthält nur rote und blaue Kugeln. \"Nicht rot\" bedeutet also \"blau\", also \\(E = \\{\\text{blau}\\}\\)."
-      },
-
-      // ═══════════════════════════════════════════════════════════
-      // Level 2 — Wahrscheinlichkeit einfacher Ereignisse (Laplace)
-      // ═══════════════════════════════════════════════════════════
-
-      {
-        id: 7, level: 2, typ: "numerisch",
-        frage: "Ein fairer Würfel wird geworfen. Wie groß ist die Wahrscheinlichkeit, eine 6 zu würfeln? Gib das Ergebnis als Dezimalzahl an (2 Nachkommastellen).",
-        loesung: 0.17, toleranz: 0.01,
-        tipp: "Laplace-Formel: \\(P(E) = \\frac{\\text{günstige Fälle}}{\\text{mögliche Fälle}}\\)",
-        loesungsweg: "\\(P(6) = \\frac{1}{6} \\approx 0{,}17\\). Es gibt 1 günstigen Fall (die 6) von 6 möglichen Ausgängen."
-      },
-      {
-        id: 8, level: 2, typ: "numerisch",
-        frage: "Eine faire Münze wird geworfen. Wie groß ist die Wahrscheinlichkeit für \"Kopf\"?",
-        loesung: 0.5, toleranz: 0.01,
-        tipp: "Es gibt 2 gleich wahrscheinliche Ergebnisse.",
-        loesungsweg: "\\(P(\\text{Kopf}) = \\frac{1}{2} = 0{,}5\\)"
-      },
-      {
-        id: 9, level: 2, typ: "numerisch",
-        frage: "In einer Urne liegen 4 rote, 3 blaue und 3 grüne Kugeln. Eine Kugel wird zufällig gezogen. Wie groß ist \\(P(\\text{rot})\\)?",
-        loesung: 0.4, toleranz: 0.01,
-        tipp: "Wie viele Kugeln sind insgesamt in der Urne?",
-        loesungsweg: "Insgesamt: \\(4 + 3 + 3 = 10\\) Kugeln. \\(P(\\text{rot}) = \\frac{4}{10} = 0{,}4\\)."
-      },
-      {
-        id: 10, level: 2, typ: "mc",
-        frage: "Ein fairer Würfel wird geworfen. Wie groß ist die Wahrscheinlichkeit, eine gerade Zahl zu würfeln?",
-        optionen: [
-          "\\(\\frac{1}{2}\\)",
-          "\\(\\frac{1}{3}\\)",
-          "\\(\\frac{2}{3}\\)",
-          "\\(\\frac{1}{6}\\)"
-        ],
-        korrekt: 0,
-        tipp: "Wie viele gerade Zahlen gibt es zwischen 1 und 6?",
-        loesungsweg: "Gerade Zahlen sind \\(\\{2, 4, 6\\}\\), also 3 günstige von 6 möglichen: \\(P = \\frac{3}{6} = \\frac{1}{2}\\)."
-      },
-      {
-        id: 11, level: 2, typ: "numerisch",
-        frage: "Ein Glücksrad hat 8 gleich große Sektoren, nummeriert 1 bis 8. Wie groß ist die Wahrscheinlichkeit, eine Zahl größer als 5 zu drehen?",
-        loesung: 0.375, toleranz: 0.01,
-        tipp: "Welche Zahlen sind größer als 5? Also 6, 7 und 8.",
-        loesungsweg: "Günstige Fälle: \\(\\{6, 7, 8\\}\\) — 3 Stück. \\(P(X > 5) = \\frac{3}{8} = 0{,}375\\)."
-      },
-      {
-        id: 12, level: 2, typ: "mc",
-        frage: "In einer Urne liegen 5 weiße und 15 schwarze Kugeln. Eine Kugel wird gezogen. Wie groß ist \\(P(\\text{schwarz})\\)?",
-        optionen: [
-          "\\(\\frac{3}{4}\\)",
-          "\\(\\frac{1}{4}\\)",
-          "\\(\\frac{1}{3}\\)",
-          "\\(\\frac{15}{5}\\)"
-        ],
-        korrekt: 0,
-        tipp: "Insgesamt sind 20 Kugeln in der Urne.",
-        loesungsweg: "\\(P(\\text{schwarz}) = \\frac{15}{20} = \\frac{3}{4}\\)."
-      },
-
-      // ═══════════════════════════════════════════════════════════
-      // Level 3 — Zufallsgröße X definieren und Werte auflisten
-      // ═══════════════════════════════════════════════════════════
-
-      {
-        id: 13, level: 3, typ: "mc",
+        id: 1,
+        level: 1,
+        typ: "mc",
         frage: "Zwei Würfel werden geworfen. Die Zufallsgröße \\(X\\) ist die Augensumme. Welche Werte kann \\(X\\) annehmen?",
         optionen: [
           "\\(X \\in \\{2, 3, 4, \\ldots, 12\\}\\)",
@@ -177,7 +33,9 @@
         loesungsweg: "Minimum: \\(1 + 1 = 2\\). Maximum: \\(6 + 6 = 12\\). Also \\(X \\in \\{2, 3, 4, \\ldots, 12\\}\\)."
       },
       {
-        id: 14, level: 3, typ: "mc",
+        id: 2,
+        level: 1,
+        typ: "mc",
         frage: "Eine Münze wird dreimal geworfen. Die Zufallsgröße \\(X\\) zählt die Anzahl der \"Kopf\". Welche Werte kann \\(X\\) annehmen?",
         optionen: [
           "\\(X \\in \\{0, 1, 2, 3\\}\\)",
@@ -190,7 +48,9 @@
         loesungsweg: "Bei 3 Würfen kann \"Kopf\" 0-, 1-, 2- oder 3-mal fallen. Also \\(X \\in \\{0, 1, 2, 3\\}\\)."
       },
       {
-        id: 15, level: 3, typ: "mc",
+        id: 3,
+        level: 1,
+        typ: "mc",
         frage: "Ein Würfel wird geworfen. Die Zufallsgröße \\(X\\) ordnet jedem Ergebnis die doppelte Augenzahl zu. Welche Werte kann \\(X\\) annehmen?",
         optionen: [
           "\\(X \\in \\{2, 4, 6, 8, 10, 12\\}\\)",
@@ -203,7 +63,9 @@
         loesungsweg: "\\(2 \\cdot 1 = 2,\\ 2 \\cdot 2 = 4,\\ 2 \\cdot 3 = 6,\\ 2 \\cdot 4 = 8,\\ 2 \\cdot 5 = 10,\\ 2 \\cdot 6 = 12\\). Also \\(X \\in \\{2, 4, 6, 8, 10, 12\\}\\)."
       },
       {
-        id: 16, level: 3, typ: "mc",
+        id: 4,
+        level: 1,
+        typ: "mc",
         frage: "Aus einer Urne mit 2 roten und 3 blauen Kugeln wird eine Kugel gezogen. \\(X = 1\\) für rot, \\(X = 0\\) für blau. Welche Werte nimmt \\(X\\) an?",
         optionen: [
           "\\(X \\in \\{0, 1\\}\\)",
@@ -216,7 +78,9 @@
         loesungsweg: "\\(X\\) nimmt nur die Werte 0 (blau) und 1 (rot) an. Also \\(X \\in \\{0, 1\\}\\)."
       },
       {
-        id: 17, level: 3, typ: "mc",
+        id: 5,
+        level: 1,
+        typ: "mc",
         frage: "Bei einem Glücksspiel gewinnt man bei einer 6 auf dem Würfel 5 Euro, sonst nichts. Die Zufallsgröße \\(X\\) ist der Gewinn. Welche Werte nimmt \\(X\\) an?",
         optionen: [
           "\\(X \\in \\{0, 5\\}\\)",
@@ -229,60 +93,111 @@
         loesungsweg: "Bei einer 6: Gewinn = 5 €. Bei 1, 2, 3, 4, 5: Gewinn = 0 €. Also \\(X \\in \\{0, 5\\}\\)."
       },
       {
-        id: 18, level: 3, typ: "mc",
-        frage: "Zwei Münzen werden geworfen. Die Zufallsgröße \\(X\\) zählt die Anzahl der \"Zahl\". Welche Werte kann \\(X\\) annehmen?",
+        id: 6,
+        level: 1,
+        typ: "numerisch",
+        frage: "Zwei Würfel werden geworfen. Die Zufallsgröße \\(X\\) ist die Augensumme. Wie viele verschiedene Werte kann \\(X\\) annehmen?",
+        loesung: 11,
+        toleranz: 0,
+        tipp: "Kleinster und größter möglicher Wert?",
+        loesungsweg: "Die Augensumme reicht von 2 bis 12, das sind 11 verschiedene Werte."
+      },
+      // ========== LEVEL 2 — leicht (6 Aufgaben) ==========
+      {
+        id: 7,
+        level: 2,
+        typ: "numerisch",
+        frage: "Ein fairer Würfel wird geworfen, \\(X\\) ist die Augenzahl. Bestimme \\(P(X = 6)\\). Runde auf drei Dezimalstellen.",
+        loesung: 0.167,
+        toleranz: 0.0005,
+        tipp: "Laplace-Formel: \\(P(E) = \\frac{\\text{günstige Fälle}}{\\text{mögliche Fälle}}\\)",
+        loesungsweg: "\\(P(6) = \\frac{1}{6} \\approx 0{,}17\\). Es gibt 1 günstigen Fall (die 6) von 6 möglichen Ausgängen."
+      },
+      {
+        id: 8,
+        level: 2,
+        typ: "numerisch",
+        frage: "Ein fairer Würfel wird geworfen, \\(X\\) ist die Augenzahl. Bestimme \\(P(X \\leq 2)\\). Runde auf drei Dezimalstellen.",
+        loesung: 0.333,
+        toleranz: 0.0005,
+        tipp: "Welche Augenzahlen sind höchstens 2?",
+        loesungsweg: "\\(P(X \\leq 2) = P(X=1) + P(X=2) = \\frac{2}{6} \\approx 0{,}333\\)."
+      },
+      {
+        id: 9,
+        level: 2,
+        typ: "numerisch",
+        frage: "In einer Urne liegen 4 rote, 3 blaue und 3 grüne Kugeln. Eine Kugel wird zufällig gezogen. Wie groß ist \\(P(\\text{rot})\\)?",
+        loesung: 0.4,
+        toleranz: 0.01,
+        tipp: "Wie viele Kugeln sind insgesamt in der Urne?",
+        loesungsweg: "Insgesamt: \\(4 + 3 + 3 = 10\\) Kugeln. \\(P(\\text{rot}) = \\frac{4}{10} = 0{,}4\\)."
+      },
+      {
+        id: 10,
+        level: 2,
+        typ: "mc",
+        frage: "Ein fairer Würfel wird geworfen. Wie groß ist die Wahrscheinlichkeit, eine gerade Zahl zu würfeln?",
         optionen: [
-          "\\(X \\in \\{0, 1, 2\\}\\)",
-          "\\(X \\in \\{1, 2\\}\\)",
-          "\\(X \\in \\{0, 1\\}\\)",
-          "\\(X \\in \\{1, 2, 3\\}\\)"
+          "\\(\\frac{1}{2}\\)",
+          "\\(\\frac{1}{3}\\)",
+          "\\(\\frac{2}{3}\\)",
+          "\\(\\frac{1}{6}\\)"
         ],
         korrekt: 0,
-        tipp: "Bei 2 Münzen kann \"Zahl\" minimal 0-mal und maximal 2-mal fallen.",
-        loesungsweg: "Die möglichen Ergebnisse sind \\(\\{KK, KZ, ZK, ZZ\\}\\). Anzahl \"Zahl\": 0, 1, 1, 2. Also \\(X \\in \\{0, 1, 2\\}\\)."
-      },
-
-      // ═══════════════════════════════════════════════════════════
-      // Level 4 — P(X=k) für einfache Zufallsgrößen
-      // ═══════════════════════════════════════════════════════════
-
-      {
-        id: 19, level: 4, typ: "numerisch",
-        frage: "Zwei Münzen werden geworfen. \\(X\\) zählt die Anzahl \"Kopf\". Bestimme \\(P(X = 2)\\).",
-        loesung: 0.25, toleranz: 0.01,
-        tipp: "\\(X = 2\\) bedeutet, beide Münzen zeigen Kopf. Ergebnismenge: \\(\\{KK, KZ, ZK, ZZ\\}\\).",
-        loesungsweg: "Nur das Ergebnis \\(KK\\) liefert \\(X = 2\\). Also \\(P(X = 2) = \\frac{1}{4} = 0{,}25\\)."
+        tipp: "Wie viele gerade Zahlen gibt es zwischen 1 und 6?",
+        loesungsweg: "Gerade Zahlen sind \\(\\{2, 4, 6\\}\\), also 3 günstige von 6 möglichen: \\(P = \\frac{3}{6} = \\frac{1}{2}\\)."
       },
       {
-        id: 20, level: 4, typ: "numerisch",
+        id: 11,
+        level: 2,
+        typ: "numerisch",
+        frage: "Ein Glücksrad hat 8 gleich große Sektoren, nummeriert 1 bis 8. Wie groß ist die Wahrscheinlichkeit, eine Zahl größer als 5 zu drehen?",
+        loesung: 0.375,
+        toleranz: 0.01,
+        tipp: "Welche Zahlen sind größer als 5? Also 6, 7 und 8.",
+        loesungsweg: "Günstige Fälle: \\(\\{6, 7, 8\\}\\) — 3 Stück. \\(P(X > 5) = \\frac{3}{8} = 0{,}375\\)."
+      },
+      {
+        id: 12,
+        level: 2,
+        typ: "mc",
+        frage: "In einer Urne liegen 5 weiße und 15 schwarze Kugeln. Eine Kugel wird gezogen. Wie groß ist \\(P(\\text{schwarz})\\)?",
+        optionen: [
+          "\\(\\frac{3}{4}\\)",
+          "\\(\\frac{1}{4}\\)",
+          "\\(\\frac{1}{3}\\)",
+          "\\(\\frac{15}{5}\\)"
+        ],
+        korrekt: 0,
+        tipp: "Insgesamt sind 20 Kugeln in der Urne.",
+        loesungsweg: "\\(P(\\text{schwarz}) = \\frac{15}{20} = \\frac{3}{4}\\)."
+      },
+      // ========== LEVEL 3 — nervenschonend (6 Aufgaben) ==========
+      {
+        id: 13,
+        level: 3,
+        typ: "numerisch",
         frage: "Zwei Münzen werden geworfen. \\(X\\) zählt die Anzahl \"Kopf\". Bestimme \\(P(X = 1)\\).",
-        loesung: 0.5, toleranz: 0.01,
+        loesung: 0.5,
+        toleranz: 0.01,
         tipp: "Wie viele der 4 Ergebnisse \\(\\{KK, KZ, ZK, ZZ\\}\\) haben genau 1 Kopf?",
         loesungsweg: "Die Ergebnisse \\(KZ\\) und \\(ZK\\) liefern \\(X = 1\\). Also \\(P(X = 1) = \\frac{2}{4} = \\frac{1}{2} = 0{,}5\\)."
       },
       {
-        id: 21, level: 4, typ: "numerisch",
-        frage: "Ein Würfel wird einmal geworfen. \\(X\\) ist die Augenzahl. Bestimme \\(P(X = 3)\\).",
-        loesung: 0.17, toleranz: 0.01,
-        tipp: "Laplace: 1 günstiger Fall von 6.",
-        loesungsweg: "\\(P(X = 3) = \\frac{1}{6} \\approx 0{,}17\\)."
-      },
-      {
-        id: 22, level: 4, typ: "numerisch",
-        frage: "Zwei Würfel werden geworfen. \\(X\\) ist die Augensumme. Bestimme \\(P(X = 2)\\).",
-        loesung: 0.028, toleranz: 0.005,
-        tipp: "Welche Kombinationen ergeben die Summe 2? Nur \\((1, 1)\\).",
-        loesungsweg: "Nur die Kombination \\((1, 1)\\) ergibt Summe 2. Von 36 möglichen Wurfergebnissen: \\(P(X = 2) = \\frac{1}{36} \\approx 0{,}028\\)."
-      },
-      {
-        id: 23, level: 4, typ: "numerisch",
-        frage: "Zwei Würfel werden geworfen. \\(X\\) ist die Augensumme. Bestimme \\(P(X = 7)\\).",
-        loesung: 0.17, toleranz: 0.01,
+        id: 14,
+        level: 3,
+        typ: "numerisch",
+        frage: "Zwei Würfel werden geworfen. \\(X\\) ist die Augensumme. Bestimme \\(P(X = 7)\\). Runde auf drei Dezimalstellen.",
+        loesung: 0.167,
+        toleranz: 0.0005,
         tipp: "Zähle Kombinationen: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1).",
         loesungsweg: "6 Kombinationen ergeben Summe 7. \\(P(X = 7) = \\frac{6}{36} = \\frac{1}{6} \\approx 0{,}17\\)."
       },
       {
-        id: 24, level: 4, typ: "mc",
+        id: 15,
+        level: 3,
+        typ: "mc",
         frage: "Ein Würfel wird einmal geworfen. \\(X\\) ist die Augenzahl. Was ist \\(P(X \\geq 5)\\)?",
         optionen: [
           "\\(\\frac{1}{3}\\)",
@@ -294,101 +209,234 @@
         tipp: "\\(X \\geq 5\\) bedeutet \\(X = 5\\) oder \\(X = 6\\).",
         loesungsweg: "\\(P(X \\geq 5) = P(X=5) + P(X=6) = \\frac{1}{6} + \\frac{1}{6} = \\frac{2}{6} = \\frac{1}{3}\\)."
       },
-
-      // ═══════════════════════════════════════════════════════════
-      // Level 5 — Mehrstufige Zufallsexperimente, Baumdiagramm
-      // ═══════════════════════════════════════════════════════════
-
       {
-        id: 25, level: 5, typ: "numerisch",
+        id: 16,
+        level: 3,
+        typ: "numerisch",
+        frage: "Zwei Münzen werden geworfen. \\(X\\) zählt die Anzahl \\\"Kopf\\\". Bestimme \\(P(X \\leq 1)\\).",
+        loesung: 0.75,
+        toleranz: 0.001,
+        tipp: "Welches Ergebnis gehört nicht zu \\(X \\leq 1\\)?",
+        loesungsweg: "Von den vier Ergebnissen KK, KZ, ZK, ZZ gehört nur KK nicht dazu: \\(P(X \\leq 1) = \\frac{3}{4} = 0{,}75\\)."
+      },
+      {
+        id: 17,
+        level: 3,
+        typ: "numerisch",
+        frage: "Zwei Würfel werden geworfen. \\(X\\) ist die Augensumme. Bestimme \\(P(X \\leq 3)\\). Runde auf drei Dezimalstellen.",
+        loesung: 0.083,
+        toleranz: 0.0005,
+        tipp: "Welche Paare ergeben Augensumme 2 oder 3?",
+        loesungsweg: "Summe 2: (1,1). Summe 3: (1,2), (2,1). \\(P(X \\leq 3) = \\frac{3}{36} \\approx 0{,}083\\)."
+      },
+      {
+        id: 18,
+        level: 3,
+        typ: "numerisch",
+        frage: "Ein Würfel wird einmal geworfen. \\(X\\) ist die Augenzahl. Bestimme \\(P(2 \\leq X \\leq 4)\\).",
+        loesung: 0.5,
+        toleranz: 0.001,
+        tipp: "Zähle die Augenzahlen, die im Bereich liegen.",
+        loesungsweg: "Augenzahlen 2, 3, 4: \\(P = \\frac{3}{6} = 0{,}5\\)."
+      },
+      // ========== LEVEL 4 — mittel (6 Aufgaben) ==========
+      {
+        id: 19,
+        level: 4,
+        typ: "numerisch",
         frage: "Eine Münze wird dreimal geworfen. \\(X\\) zählt die Anzahl \"Kopf\". Bestimme \\(P(X = 3)\\).",
-        loesung: 0.125, toleranz: 0.01,
+        loesung: 0.125,
+        toleranz: 0.01,
         tipp: "Nur ein einziges Ergebnis (KKK) liefert \\(X = 3\\). Wahrscheinlichkeit pro Wurf: \\(\\frac{1}{2}\\).",
         loesungsweg: "\\(P(X = 3) = \\frac{1}{2} \\cdot \\frac{1}{2} \\cdot \\frac{1}{2} = \\frac{1}{8} = 0{,}125\\)."
       },
       {
-        id: 26, level: 5, typ: "numerisch",
-        frage: "Eine Münze wird dreimal geworfen. \\(X\\) zählt die Anzahl \"Kopf\". Bestimme \\(P(X = 0)\\).",
-        loesung: 0.125, toleranz: 0.01,
-        tipp: "\\(X = 0\\) bedeutet dreimal Zahl: nur ZZZ.",
-        loesungsweg: "\\(P(X = 0) = \\frac{1}{2} \\cdot \\frac{1}{2} \\cdot \\frac{1}{2} = \\frac{1}{8} = 0{,}125\\)."
+        id: 20,
+        level: 4,
+        typ: "numerisch",
+        frage: "Eine Münze wird dreimal geworfen. \\(X\\) zählt die Anzahl \\\"Kopf\\\". Bestimme \\(P(X = 1)\\).",
+        loesung: 0.375,
+        toleranz: 0.01,
+        tipp: "Wie viele der acht Ergebnisse enthalten genau einmal Kopf?",
+        loesungsweg: "Günstig: KZZ, ZKZ, ZZK. Also \\(P(X = 1) = 3 \\cdot \\frac{1}{8} = \\frac{3}{8} = 0{,}375\\)."
       },
       {
-        id: 27, level: 5, typ: "numerisch",
+        id: 21,
+        level: 4,
+        typ: "numerisch",
         frage: "In einer Urne liegen 2 rote und 3 blaue Kugeln. Es wird zweimal mit Zurücklegen gezogen. \\(X\\) zählt die Anzahl roter Kugeln. Bestimme \\(P(X = 2)\\).",
-        loesung: 0.16, toleranz: 0.01,
+        loesung: 0.16,
+        toleranz: 0.01,
         tipp: "\\(P(\\text{rot}) = \\frac{2}{5}\\) pro Zug. Multipliziere beide Züge.",
         loesungsweg: "\\(P(X = 2) = \\frac{2}{5} \\cdot \\frac{2}{5} = \\frac{4}{25} = 0{,}16\\)."
       },
       {
-        id: 28, level: 5, typ: "numerisch",
-        frage: "Eine Münze wird zweimal geworfen. \\(X\\) zählt die Anzahl \"Kopf\". Bestimme \\(P(X = 0)\\).",
-        loesung: 0.25, toleranz: 0.01,
-        tipp: "\\(X = 0\\) bedeutet zweimal Zahl (ZZ).",
-        loesungsweg: "\\(P(X = 0) = \\frac{1}{2} \\cdot \\frac{1}{2} = \\frac{1}{4} = 0{,}25\\)."
-      },
-      {
-        id: 29, level: 5, typ: "numerisch",
-        frage: "Eine Münze wird dreimal geworfen. \\(X\\) zählt die Anzahl \"Kopf\". Bestimme \\(P(X = 1)\\). Tipp: Es gibt 3 passende Ergebnisse (KZZ, ZKZ, ZZK).",
-        loesung: 0.375, toleranz: 0.01,
-        tipp: "Jedes einzelne Ergebnis hat Wahrscheinlichkeit \\(\\frac{1}{8}\\). Wie viele günstige Ergebnisse gibt es?",
-        loesungsweg: "Günstig: KZZ, ZKZ, ZZK. Also \\(P(X = 1) = 3 \\cdot \\frac{1}{8} = \\frac{3}{8} = 0{,}375\\)."
-      },
-      {
-        id: 30, level: 5, typ: "numerisch",
-        frage: "In einer Urne liegen 2 rote und 3 blaue Kugeln. Es wird zweimal mit Zurücklegen gezogen. \\(X\\) zählt rote Kugeln. Bestimme \\(P(X = 0)\\).",
-        loesung: 0.36, toleranz: 0.01,
-        tipp: "\\(X = 0\\) heißt: zweimal blau. \\(P(\\text{blau}) = \\frac{3}{5}\\).",
-        loesungsweg: "\\(P(X = 0) = \\frac{3}{5} \\cdot \\frac{3}{5} = \\frac{9}{25} = 0{,}36\\)."
-      },
-
-      // ═══════════════════════════════════════════════════════════
-      // Level 6 — Vollständige Verteilung aus Textaufgabe bestimmen
-      // ═══════════════════════════════════════════════════════════
-
-      {
-        id: 31, level: 6, typ: "numerisch",
-        frage: "Zwei faire Würfel werden geworfen. \\(X\\) ist die Augensumme. Bestimme \\(P(X = 12)\\).",
-        loesung: 0.028, toleranz: 0.005,
-        tipp: "Welche Kombination ergibt die Summe 12? Nur \\((6, 6)\\).",
-        loesungsweg: "Nur \\((6, 6)\\) ergibt Summe 12. \\(P(X = 12) = \\frac{1}{36} \\approx 0{,}028\\)."
-      },
-      {
-        id: 32, level: 6, typ: "numerisch",
-        frage: "Zwei Würfel. \\(X\\) ist die Augensumme. Bestimme \\(P(X = 5)\\).",
-        loesung: 0.111, toleranz: 0.01,
-        tipp: "Kombinationen für Summe 5: (1,4), (2,3), (3,2), (4,1).",
-        loesungsweg: "4 Kombinationen von 36. \\(P(X = 5) = \\frac{4}{36} = \\frac{1}{9} \\approx 0{,}111\\)."
-      },
-      {
-        id: 33, level: 6, typ: "numerisch",
-        frage: "Beim Glücksspiel zahlt man 1 € Einsatz. Bei einer 6 auf dem Würfel erhält man 4 € ausgezahlt, sonst nichts. Die Zufallsgröße \\(X\\) ist der Reingewinn (Auszahlung − Einsatz). Bestimme \\(P(X = 3)\\).",
-        loesung: 0.17, toleranz: 0.01,
-        tipp: "\\(X = 3\\) tritt ein, wenn eine 6 geworfen wird (Auszahlung 4 − Einsatz 1 = 3).",
-        loesungsweg: "Nur bei einer 6 ist \\(X = 3\\). \\(P(X = 3) = \\frac{1}{6} \\approx 0{,}17\\)."
-      },
-      {
-        id: 34, level: 6, typ: "numerisch",
+        id: 22,
+        level: 4,
+        typ: "numerisch",
         frage: "Eine Urne enthält 1 rote und 4 weiße Kugeln. Es wird zweimal mit Zurücklegen gezogen. \\(X\\) zählt die Anzahl roter Kugeln. Bestimme \\(P(X = 1)\\).",
-        loesung: 0.32, toleranz: 0.01,
+        loesung: 0.32,
+        toleranz: 0.01,
         tipp: "Zwei Fälle: (rot, weiß) oder (weiß, rot). \\(P(\\text{rot}) = \\frac{1}{5}\\), \\(P(\\text{weiß}) = \\frac{4}{5}\\).",
         loesungsweg: "\\(P(X=1) = \\frac{1}{5} \\cdot \\frac{4}{5} + \\frac{4}{5} \\cdot \\frac{1}{5} = \\frac{4}{25} + \\frac{4}{25} = \\frac{8}{25} = 0{,}32\\)."
       },
       {
-        id: 35, level: 6, typ: "numerisch",
-        frage: "Zwei Würfel werden geworfen. \\(X\\) ist die kleinere der beiden Augenzahlen (bei Gleichstand dieser Wert). Bestimme \\(P(X = 6)\\).",
-        loesung: 0.028, toleranz: 0.005,
-        tipp: "\\(X = 6\\) ist nur möglich, wenn beide Würfel eine 6 zeigen.",
-        loesungsweg: "Nur \\((6, 6)\\) liefert das Minimum 6. \\(P(X = 6) = \\frac{1}{36} \\approx 0{,}028\\)."
+        id: 23,
+        level: 4,
+        typ: "numerisch",
+        frage: "Beim Glücksspiel zahlt man \\(1\\,€\\) Einsatz. Bei einer 6 auf dem Würfel erhält man \\(4\\,€\\) ausgezahlt, sonst nichts. Die Zufallsgröße \\(X\\) ist der Reingewinn (Auszahlung minus Einsatz). Bestimme \\(P(X = 3)\\). Runde auf drei Dezimalstellen.",
+        loesung: 0.167,
+        toleranz: 0.0005,
+        tipp: "\\(X = 3\\) tritt ein, wenn eine 6 geworfen wird (Auszahlung 4 − Einsatz 1 = 3).",
+        loesungsweg: "Nur bei einer 6 ist \\(X = 3\\). \\(P(X = 3) = \\frac{1}{6} \\approx 0{,}17\\)."
       },
       {
-        id: 36, level: 6, typ: "numerisch",
-        frage: "Eine Urne enthält 3 rote und 2 blaue Kugeln. Es wird zweimal ohne Zurücklegen gezogen. \\(X\\) zählt die Anzahl roter Kugeln. Bestimme \\(P(X = 2)\\).",
-        loesung: 0.3, toleranz: 0.01,
-        tipp: "Erster Zug rot: \\(\\frac{3}{5}\\). Zweiter Zug rot (ohne Zurücklegen): \\(\\frac{2}{4}\\).",
-        loesungsweg: "\\(P(X = 2) = \\frac{3}{5} \\cdot \\frac{2}{4} = \\frac{6}{20} = \\frac{3}{10} = 0{,}3\\)."
+        id: 24,
+        level: 4,
+        typ: "numerisch",
+        frage: "Eine Münze wird dreimal geworfen. \\(X\\) zählt die Anzahl \\\"Kopf\\\". Bestimme \\(P(X \\geq 2)\\).",
+        loesung: 0.5,
+        toleranz: 0.001,
+        tipp: "Zähle die Ergebnisse mit zwei oder drei Köpfen.",
+        loesungsweg: "KKZ, KZK, ZKK, KKK: 4 von 8 Ergebnissen. \\(P(X \\geq 2) = 0{,}5\\)."
+      },
+      // ========== LEVEL 5 — anspruchsvoll (6 Aufgaben) ==========
+      {
+        id: 25,
+        level: 5,
+        typ: "numerisch",
+        frage: "Eine Urne enthält 1 rote und 2 blaue Kugeln. Es wird dreimal mit Zurücklegen gezogen. \\(X\\) ist die Anzahl der roten Kugeln. Bestimme \\(P(X = 2)\\). Runde auf drei Dezimalstellen.",
+        loesung: 0.222,
+        toleranz: 0.0005,
+        tipp: "Zeichne ein Baumdiagramm mit drei Stufen; wie viele Pfade haben genau zwei rote Kugeln?",
+        loesungsweg: "Drei Pfade (rrb, rbr, brr), jeder mit \\(\\frac{1}{3} \\cdot \\frac{1}{3} \\cdot \\frac{2}{3} = \\frac{2}{27}\\). \\(P(X=2) = \\frac{6}{27} \\approx 0{,}222\\)."
+      },
+      {
+        id: 26,
+        level: 5,
+        typ: "numerisch",
+        frage: "Eine Urne enthält 3 rote und 2 blaue Kugeln. Es werden drei Kugeln ohne Zurücklegen gezogen. \\(X\\) ist die Anzahl der roten Kugeln. Bestimme \\(P(X = 3)\\).",
+        loesung: 0.1,
+        toleranz: 0.001,
+        tipp: "Nach jedem Zug bleibt eine rote Kugel weniger in der Urne.",
+        loesungsweg: "\\(P(X=3) = \\frac{3}{5} \\cdot \\frac{2}{4} \\cdot \\frac{1}{3} = \\frac{6}{60} = 0{,}1\\)."
+      },
+      {
+        id: 27,
+        level: 5,
+        typ: "numerisch",
+        frage: "Ein Würfel wird zweimal geworfen. \\(X\\) ist die Anzahl der Würfe mit einer Augenzahl von mindestens 5. Bestimme \\(P(X \\geq 1)\\). Runde auf drei Dezimalstellen.",
+        loesung: 0.556,
+        toleranz: 0.0005,
+        tipp: "Das Gegenereignis ist einfacher.",
+        loesungsweg: "\\(P(\\text{Augenzahl} \\geq 5) = \\frac{1}{3}\\) pro Wurf. \\(P(X = 0) = \\left(\\frac{2}{3}\\right)^2 = \\frac{4}{9}\\). \\(P(X \\geq 1) = \\frac{5}{9} \\approx 0{,}556\\)."
+      },
+      {
+        id: 28,
+        level: 5,
+        typ: "mc",
+        frage: "Eine Münze wird dreimal geworfen, \\(X\\) ist die Anzahl \\\"Kopf\\\". Ein Schüler berechnet \\(P(X = 2)\\):<br>Schritt 1: \\(X\\) nimmt die Werte 0, 1, 2, 3 an.<br>Schritt 2: Es gibt \\(2^3 = 8\\) gleich wahrscheinliche Ergebnisse.<br>Schritt 3: Günstig sind KKZ und KZK, also 2 Ergebnisse.<br>Schritt 4: \\(P(X = 2) = \\frac{2}{8} = 0{,}25\\).<br>Welcher Schritt ist der erste fehlerhafte?",
+        optionen: [
+          "Schritt 1",
+          "Schritt 2",
+          "Schritt 3",
+          "Schritt 4"
+        ],
+        korrekt: 2,
+        tipp: "Liste alle Ergebnisse mit genau zwei Köpfen systematisch auf.",
+        loesungsweg: "Schritte 1 und 2 sind richtig. In Schritt 3 fehlt ZKK; es gibt 3 günstige Ergebnisse. Richtig: \\(P(X=2) = \\frac{3}{8}\\)."
+      },
+      {
+        id: 29,
+        level: 5,
+        typ: "numerisch",
+        frage: "Zwei Würfel werden geworfen. \\(X\\) ist die kleinere der beiden Augenzahlen (bei Gleichstand dieser Wert). Bestimme \\(P(X = 3)\\). Runde auf drei Dezimalstellen.",
+        loesung: 0.194,
+        toleranz: 0.0005,
+        tipp: "Welche Paare haben Minimum 3? Denke an beide Reihenfolgen und den Pasch.",
+        loesungsweg: "Paare mit Minimum 3: (3,3), (3,4), (3,5), (3,6), (4,3), (5,3), (6,3), also 7 Paare. \\(P(X=3) = \\frac{7}{36} \\approx 0{,}194\\)."
+      },
+      {
+        id: 30,
+        level: 5,
+        typ: "numerisch",
+        frage: "Ein Glücksrad mit vier gleich großen Sektoren (Zahlen 1, 2, 3, 4) wird zweimal gedreht. \\(X\\) ist das Produkt der beiden Zahlen. Bestimme \\(P(X \\leq 4)\\).",
+        loesung: 0.5,
+        toleranz: 0.001,
+        tipp: "Es gibt 16 gleich wahrscheinliche Paare.",
+        loesungsweg: "Produkt höchstens 4: (1,1), (1,2), (1,3), (1,4), (2,1), (2,2), (3,1), (4,1) – 8 von 16 Paaren. \\(P(X \\leq 4) = 0{,}5\\)."
+      },
+      // ========== LEVEL 6 — wagnerisch (6 Aufgaben) ==========
+      {
+        id: 31,
+        level: 6,
+        typ: "mc",
+        frage: "\\(X\\) ist die Anzahl \\\"Kopf\\\" beim zweimaligen Werfen einer Münze. Welche der folgenden Zufallsgrößen hat dieselbe Verteilung wie \\(X\\)?",
+        optionen: [
+          "\\(Y\\) = Anzahl roter Kugeln beim zweimaligen Ziehen <b>mit</b> Zurücklegen aus einer Urne mit 2 roten und 2 blauen Kugeln.",
+          "\\(Y\\) = Anzahl roter Kugeln beim zweimaligen Ziehen <b>ohne</b> Zurücklegen aus einer Urne mit 2 roten und 2 blauen Kugeln.",
+          "\\(Y\\) = Anzahl der geraden Augenzahlen beim einmaligen Werfen eines Würfels.",
+          "\\(Y\\) = Anzahl \\\"Kopf\\\" beim dreimaligen Werfen einer Münze."
+        ],
+        korrekt: 0,
+        tipp: "Vergleiche Werte und Wahrscheinlichkeiten, nicht das Experiment.",
+        loesungsweg: "\\(X\\) hat die Werte 0, 1, 2 mit \\(\\frac{1}{4}, \\frac{1}{2}, \\frac{1}{4}\\). Mit Zurücklegen bei \\(p = \\frac{1}{2}\\) ergibt sich dieselbe Verteilung. Ohne Zurücklegen gilt \\(P(Y=0) = \\frac{2}{4} \\cdot \\frac{1}{3} = \\frac{1}{6}\\); der Würfel liefert nur die Werte 0 und 1; drei Münzen haben vier Werte."
+      },
+      {
+        id: 32,
+        level: 6,
+        typ: "numerisch",
+        frage: "Eine Urne enthält 2 rote und \\(n\\) blaue Kugeln. Es wird zweimal mit Zurücklegen gezogen, \\(X\\) ist die Anzahl der roten Kugeln. Es gilt \\(P(X = 0) = 0{,}64\\). Bestimme \\(n\\).",
+        loesung: 8,
+        toleranz: 0,
+        tipp: "Beide Züge müssen blau sein.",
+        loesungsweg: "\\(\\left(\\frac{n}{n+2}\\right)^2 = 0{,}64 \\Rightarrow \\frac{n}{n+2} = 0{,}8 \\Rightarrow n = 0{,}8n + 1{,}6 \\Rightarrow n = 8\\)."
+      },
+      {
+        id: 33,
+        level: 6,
+        typ: "numerisch",
+        frage: "Bei einem Test gibt es 3 Fragen mit je 4 Antwortmöglichkeiten, von denen genau eine richtig ist. Jemand rät bei jeder Frage. \\(X\\) ist die Anzahl der richtigen Antworten. Bestimme \\(P(X \\geq 2)\\). Runde auf drei Dezimalstellen.",
+        loesung: 0.156,
+        toleranz: 0.0005,
+        tipp: "Zwei Fälle: genau zwei richtig oder alle drei richtig.",
+        loesungsweg: "\\(P(X=2) = 3 \\cdot \\left(\\frac{1}{4}\\right)^2 \\cdot \\frac{3}{4} = \\frac{9}{64}\\), \\(P(X=3) = \\frac{1}{64}\\). \\(P(X \\geq 2) = \\frac{10}{64} \\approx 0{,}156\\)."
+      },
+      {
+        id: 34,
+        level: 6,
+        typ: "mc",
+        frage: "Zwei Würfel werden geworfen, \\(X\\) ist die Augensumme. Welche Aussage über die Verteilung von \\(X\\) ist richtig?",
+        optionen: [
+          "\\(P(X = k) = P(X = 14 - k)\\) für alle Werte \\(k\\), weil die Verteilung symmetrisch zur 7 ist.",
+          "\\(P(X = k)\\) wird mit wachsendem \\(k\\) immer größer, weil größere Summen mehr Möglichkeiten haben.",
+          "Alle elf Werte sind gleich wahrscheinlich, weil beide Würfel fair sind.",
+          "\\(P(X = 6) = P(X = 8) > P(X = 7)\\), weil 7 nur mit ungleichen Augenzahlen erreichbar ist."
+        ],
+        korrekt: 0,
+        tipp: "Zähle die Paare für die Summen 2, 6, 7, 8, 12.",
+        loesungsweg: "Die Anzahl der Paare steigt von 1 (Summe 2) bis 6 (Summe 7) und fällt dann wieder auf 1 (Summe 12); zu jedem Paar \\((a, b)\\) mit Summe \\(k\\) gehört \\((7-a, 7-b)\\) mit Summe \\(14-k\\). Die Verteilung ist daher symmetrisch zur 7 und dort maximal."
+      },
+      {
+        id: 35,
+        level: 6,
+        typ: "numerisch",
+        frage: "Drei Würfel werden gleichzeitig geworfen. \\(X\\) ist die Anzahl der Sechsen. Bestimme \\(P(X \\geq 1)\\). Runde auf drei Dezimalstellen.",
+        loesung: 0.421,
+        toleranz: 0.0005,
+        tipp: "Über das Gegenereignis geht es schneller.",
+        loesungsweg: "\\(P(X = 0) = \\left(\\frac{5}{6}\\right)^3 = \\frac{125}{216}\\). \\(P(X \\geq 1) = \\frac{91}{216} \\approx 0{,}421\\)."
+      },
+      {
+        id: 36,
+        level: 6,
+        typ: "numerisch",
+        frage: "Aus einer Gruppe von 4 Jungen und 3 Mädchen werden zwei Personen zufällig ausgewählt. \\(X\\) ist die Anzahl der ausgewählten Mädchen. Bestimme \\(P(X = 1)\\). Runde auf drei Dezimalstellen.",
+        loesung: 0.571,
+        toleranz: 0.0005,
+        tipp: "Auswählen ist Ziehen ohne Zurücklegen; zwei Reihenfolgen führen zum Ziel.",
+        loesungsweg: "\\(P(X=1) = \\frac{3}{7} \\cdot \\frac{4}{6} + \\frac{4}{7} \\cdot \\frac{3}{6} = \\frac{24}{42} \\approx 0{,}571\\)."
       }
-
     ];
     </script>
     <script src="../p3-reflexion.js"></script>
