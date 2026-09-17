@@ -17,7 +17,6 @@
     const THEMA_CONFIG = { name: 'LGS 3 Variablen (Gauß)', bereich: 'analysis', p3Enabled: true };
     const AUFGABEN = [
       // ========== LEVEL 1 — babyleicht (6 Aufgaben) ==========
-      // LGS bereits in Dreiecksform — nur rückwärts einsetzen
       {
         id: 1,
         level: 1,
@@ -83,9 +82,7 @@
         tipp: "Teile die dritte Zeile durch 3.",
         loesungsweg: "Zeile 3: \\(3z = 6 \\Rightarrow z = 2\\).  \nZeile 2: \\(2y + 2 = 5 \\Rightarrow 2y = 3 \\Rightarrow y = 1{,}5\\).  \nZeile 1: \\(x + 1{,}5 + 4 = 7 \\Rightarrow x = 1{,}5\\)."
       },
-
       // ========== LEVEL 2 — leicht (6 Aufgaben) ==========
-      // Einfaches 3×3 LGS mit einer offensichtlichen Elimination
       {
         id: 7,
         level: 2,
@@ -151,9 +148,7 @@
         tipp: "Aus Zeile 2 ist \\(x\\) bekannt. Dann hast du ein 2×2 LGS für \\(y\\) und \\(z\\).",
         loesungsweg: "\\(x = 3\\). Einsetzen in Zeile 1: \\(y + z = 12\\).  \nZusammen mit \\(y - z = -2\\): Addition ergibt \\(2y = 10 \\Rightarrow y = 5\\).  \nDaraus: \\(z = 12 - 5 = 7\\)."
       },
-
-      // ========== LEVEL 3 — mittel (6 Aufgaben) ==========
-      // Standardmäßiger Gauß-Algorithmus mit ganzzahligen Lösungen
+      // ========== LEVEL 3 — nervenschonend (6 Aufgaben) ==========
       {
         id: 13,
         level: 3,
@@ -214,129 +209,80 @@
         tipp: "Zeile 1 minus Zeile 2 liefert direkt \\(y\\).",
         loesungsweg: "\\(Z_1 - Z_2\\): \\(2y = 6 \\Rightarrow y = 3\\).  \n\\(Z_1 - Z_3\\): \\(2z = 8 \\Rightarrow z = 4\\).  \nEinsetzen in \\(Z_1\\): \\(x + 3 + 4 = 10 \\Rightarrow x = 3\\)."
       },
-
-      // ========== LEVEL 4 — schwer (6 Aufgaben) ==========
-      // Gauß mit Brüchen oder negativen Koeffizienten
+      // ========== LEVEL 4 — mittel (6 Aufgaben) ==========
       {
         id: 19,
         level: 4,
         typ: "numerisch",
-        frage: "Löse: \\(\\begin{cases} -x + 2y + z = 4 \\\\ x + y + z = 6 \\\\ 2x - y + z = 1 \\end{cases}\\) Gib \\(x\\) an.",
-        loesung: 3,
-        toleranz: 0,
-        tipp: "\\(Z_2 + Z_1\\) und \\(Z_3 + 2 Z_1\\) eliminieren \\(x\\).",
-        loesungsweg: "\\(Z_2 + Z_1\\): \\(3y + 2z = 10\\).  \n\\(Z_3 + 2 Z_1\\): \\(3y + 3z = 9 \\Rightarrow y + z = 3\\).  \nAus beiden: Subtrahiere \\(3\\cdot(y+z=3)\\) von \\(3y+2z=10\\): \\(-z = 1 \\Rightarrow z = -1\\).  \nDann \\(y = 4\\) und \\(x = 6 - 4 - (-1) = 3\\)."
-      },
-      {
-        id: 20,
-        level: 4,
-        typ: "numerisch",
-        frage: "Löse: \\(\\begin{cases} x + y + z = 2 \\\\ 3x - y + 2z = 4 \\\\ 2x + 2y - z = 1 \\end{cases}\\) Gib \\(y\\) als Dezimalzahl an.",
+        frage: "Löse: \\(\\begin{cases} x + y + z = 2 \\\\ 3x - y + 2z = 4 \\\\ 2x + 2y - z = 1 \\end{cases}\\) Gib \\(y\\) als Dezimalzahl an (falls nötig auf zwei Dezimalstellen gerundet).",
         loesung: 0.25,
         toleranz: 0.01,
         tipp: "Eliminiere \\(x\\) mit \\(Z_2 - 3 Z_1\\) und \\(Z_3 - 2 Z_1\\). Es kann ein Bruch herauskommen!",
         loesungsweg: "\\(Z_2 - 3 Z_1\\): \\(-4y - z = -2 \\Rightarrow 4y + z = 2\\).  \n\\(Z_3 - 2 Z_1\\): \\(-3z = -3 \\Rightarrow z = 1\\).  \nEinsetzen: \\(4y + 1 = 2 \\Rightarrow y = \\tfrac{1}{4} = 0{,}25\\).  \nDann \\(x = 2 - 0{,}25 - 1 = 0{,}75\\)."
       },
       {
+        id: 20,
+        level: 4,
+        typ: "numerisch",
+        frage: "Von der Lösung des LGS \\(\\begin{cases} x + y + z = 6 \\\\ 2x - y + cz = 9 \\\\ x + 2y - z = 2 \\end{cases}\\) ist bekannt: \\(x = 1\\) und \\(z = 3\\). Bestimme \\(c\\).",
+        loesung: 3,
+        toleranz: 0,
+        tipp: "Aus einer Gleichung ohne \\(c\\) bekommst du zuerst \\(y\\).",
+        loesungsweg: "\\(I\\): \\(1 + y + 3 = 6 \\Rightarrow y = 2\\). \\(II\\): \\(2 - 2 + 3c = 9 \\Rightarrow c = 3\\)."
+      },
+      {
         id: 21,
         level: 4,
         typ: "numerisch",
-        frage: "Löse: \\(\\begin{cases} -x + y + z = 1 \\\\ x - y + z = 3 \\\\ x + y - z = 1 \\end{cases}\\) Gib \\(y\\) an.",
-        loesung: 1,
+        frage: "Die Summe dreier Zahlen \\(x, y, z\\) ist 12. Die zweite Zahl ist doppelt so groß wie die erste. Die dritte ist gleich der Summe der ersten beiden. Bestimme die kleinste Zahl \\(x\\).",
+        loesung: 2,
         toleranz: 0,
-        tipp: "Addiere jeweils zwei Zeilen, um einzelne Variablen direkt zu bekommen.",
-        loesungsweg: "\\(Z_1 + Z_2\\): \\(2z = 4 \\Rightarrow z = 2\\).  \n\\(Z_2 + Z_3\\): \\(2x = 4 \\Rightarrow x = 2\\).  \n\\(Z_1 + Z_3\\): \\(2y = 2 \\Rightarrow y = 1\\)."
+        tipp: "Stelle aus den Bedingungen ein 3×3 LGS in \\(x, y, z\\) auf.",
+        loesungsweg: "LGS: \\(\\begin{cases} x + y + z = 12 \\\\ y = 2x \\\\ z = x + y \\end{cases}\\)  \nWegen \\(y = 2x\\) ist \\(z = x + 2x = 3x\\). Einsetzen in die erste Gleichung:  \n\\(x + 2x + 3x = 12 \\Rightarrow 6x = 12 \\Rightarrow x = 2\\).  \nAlso \\(x = 2,\\; y = 4,\\; z = 6\\)."
       },
       {
         id: 22,
         level: 4,
         typ: "numerisch",
-        frage: "Löse: \\(\\begin{cases} x + y + z = 1 \\\\ x - 2y + z = 4 \\\\ 2x + y - z = 0 \\end{cases}\\) Gib \\(y\\) an.",
-        loesung: -1,
+        frage: "Drei Geschwister sind zusammen 45 Jahre alt. Der älteste ist doppelt so alt wie der jüngste. Der mittlere ist 5 Jahre älter als der jüngste. Wie alt ist der jüngste?",
+        loesung: 10,
         toleranz: 0,
-        tipp: "\\(Z_2 - Z_1\\) liefert sofort \\(y\\).",
-        loesungsweg: "\\(Z_2 - Z_1\\): \\(-3y = 3 \\Rightarrow y = -1\\).  \n\\(Z_3 - 2 Z_1\\): \\(-y - 3z = -2 \\Rightarrow 1 - 3z = -2 \\Rightarrow z = 1\\).  \nDann \\(x = 1 - (-1) - 1 = 1\\)."
+        tipp: "Sei \\(j, m, a\\) das Alter der drei Geschwister (jüngst, mittel, ältest). Stelle drei Gleichungen auf.",
+        loesungsweg: "LGS:  \n\\(\\begin{cases} j + m + a = 45 \\\\ a = 2j \\\\ m = j + 5 \\end{cases}\\)  \nEinsetzen: \\(j + (j + 5) + 2j = 45 \\Rightarrow 4j + 5 = 45 \\Rightarrow j = 10\\).  \nAlso \\(j = 10,\\; m = 15,\\; a = 20\\)."
       },
       {
         id: 23,
         level: 4,
         typ: "numerisch",
-        frage: "Löse: \\(\\begin{cases} x - y + z = 2 \\\\ -x + y + z = 4 \\\\ x + y - z = 0 \\end{cases}\\) Gib \\(x\\) an.",
-        loesung: 1,
+        frage: "Ein Kino verkauft 100 Karten und nimmt 780 € ein. Kinderkarten kosten 5 €, Erwachsenenkarten 10 € und Seniorenkarten 7 €. Es wurden doppelt so viele Erwachsenenkarten wie Kinderkarten verkauft. Wie viele Seniorenkarten wurden verkauft?",
+        loesung: 40,
         toleranz: 0,
-        tipp: "Addition je zweier Zeilen eliminiert jeweils zwei Variablen gleichzeitig.",
-        loesungsweg: "\\(Z_1 + Z_2\\): \\(2z = 6 \\Rightarrow z = 3\\).  \n\\(Z_2 + Z_3\\): \\(2y = 4 \\Rightarrow y = 2\\).  \nEinsetzen in \\(Z_1\\): \\(x - 2 + 3 = 2 \\Rightarrow x = 1\\)."
+        tipp: "Sei \\(k, e, s\\) die Anzahl der Kinder-, Erwachsenen- und Seniorenkarten.",
+        loesungsweg: "LGS:  \n\\(\\begin{cases} k + e + s = 100 \\\\ 5k + 10e + 7s = 780 \\\\ e = 2k \\end{cases}\\)  \nEinsetzen \\(e = 2k\\): \\(3k + s = 100\\) und \\(25k + 7s = 780\\).  \nAus der ersten: \\(s = 100 - 3k\\). Einsetzen: \\(25k + 7(100 - 3k) = 780 \\Rightarrow 25k + 700 - 21k = 780 \\Rightarrow 4k = 80 \\Rightarrow k = 20\\).  \nAlso \\(k = 20,\\; e = 40,\\; s = 100 - 60 = 40\\).  \nProbe: \\(5 \\cdot 20 + 10 \\cdot 40 + 7 \\cdot 40 = 100 + 400 + 280 = 780\\) ✓"
       },
       {
         id: 24,
         level: 4,
         typ: "numerisch",
-        frage: "Löse: \\(\\begin{cases} x + 2y - z = 3 \\\\ 2x - y + z = 4 \\\\ -x + y + z = 0 \\end{cases}\\) Gib \\(x\\) an.",
-        loesung: 2,
+        frage: "Drei Maschinen \\(A, B, C\\) produzieren zusammen 960 Teile pro Tag. Maschine \\(A\\) produziert doppelt so viele Teile wie \\(B\\). Maschine \\(C\\) produziert 60 Teile mehr als \\(B\\). Wie viele Teile produziert Maschine \\(A\\)?",
+        loesung: 450,
         toleranz: 0,
-        tipp: "\\(Z_1 + Z_3\\) eliminiert \\(x\\) und \\(z\\) gleichzeitig!",
-        loesungsweg: "\\(Z_1 + Z_3\\): \\(3y = 3 \\Rightarrow y = 1\\).  \n\\(Z_1 + Z_2\\): \\(3x + y = 7 \\Rightarrow 3x = 6 \\Rightarrow x = 2\\).  \nDann aus \\(Z_3\\): \\(-2 + 1 + z = 0 \\Rightarrow z = 1\\)."
+        tipp: "Sei \\(a, b, c\\) die Tagesproduktion der Maschinen. Setze die beiden Relationen in die Summengleichung ein.",
+        loesungsweg: "LGS:  \n\\(\\begin{cases} a + b + c = 960 \\\\ a = 2b \\\\ c = b + 60 \\end{cases}\\)  \nEinsetzen in die erste Gleichung: \\(2b + b + (b + 60) = 960 \\Rightarrow 4b + 60 = 960 \\Rightarrow 4b = 900 \\Rightarrow b = 225\\).  \nAlso \\(a = 450,\\; b = 225,\\; c = 285\\).  \nProbe: \\(450 + 225 + 285 = 960\\) ✓"
       },
-
-      // ========== LEVEL 5 — sehr schwer (6 Aufgaben) ==========
-      // Lösungsfälle: eindeutige Lösung / keine Lösung / Parameter-Lösungsmenge
+      // ========== LEVEL 5 — anspruchsvoll (6 Aufgaben) ==========
       {
         id: 25,
         level: 5,
-        typ: "mc",
-        frage: "Welchen Lösungsfall hat das LGS \\(\\begin{cases} x + y + z = 6 \\\\ x - y + z = 2 \\\\ 2x + 2z = 8 \\end{cases}\\)?",
-        optionen: [
-          "Unendlich viele Lösungen (Parameter-Lösungsmenge)",
-          "Genau eine Lösung",
-          "Keine Lösung",
-          "Das LGS ist widersprüchlich in allen drei Zeilen"
-        ],
-        korrekt: 0,
-        tipp: "Prüfe, ob eine der Zeilen eine Linearkombination der anderen ist.",
-        loesungsweg: "Addiere \\(Z_1 + Z_2\\): \\((x+y+z) + (x-y+z) = 6 + 2 \\Rightarrow 2x + 2z = 8\\).  \nDas ist genau Zeile 3! Zeile 3 ist also **abhängig** von den ersten beiden.  \nEs bleiben nur zwei unabhängige Gleichungen für drei Unbekannte \\(\\Rightarrow\\) **unendlich viele Lösungen** mit einem freien Parameter."
+        typ: "numerisch",
+        frage: "Für welchen Wert von \\(a\\) hat das LGS \\(\\begin{cases} x + y + z = 3 \\\\ x + 2y + 3z = 6 \\\\ 2x + 3y + az = 9 \\end{cases}\\) unendlich viele Lösungen?",
+        loesung: 4,
+        toleranz: 0,
+        tipp: "Wann lässt sich die dritte Gleichung aus den ersten beiden zusammensetzen?",
+        loesungsweg: "\\(I + II\\) ergibt \\(2x + 3y + 4z = 9\\). Für \\(a = 4\\) ist III also die Summe von I und II und liefert keine neue Information: unendlich viele Lösungen. Für \\(a \\neq 4\\) bleibt nach dem Gauß-Verfahren \\((a - 4)z = 0\\) und die Lösung ist eindeutig."
       },
       {
         id: 26,
-        level: 5,
-        typ: "mc",
-        frage: "Welchen Lösungsfall hat das LGS \\(\\begin{cases} x + y + z = 4 \\\\ 2x + 2y + 2z = 9 \\\\ x - y + z = 2 \\end{cases}\\)?",
-        optionen: [
-          "Genau eine Lösung",
-          "Unendlich viele Lösungen",
-          "Keine Lösung",
-          "Unlösbar nur, wenn \\(x = 0\\)"
-        ],
-        korrekt: 2,
-        tipp: "Vergleiche Zeile 1 und Zeile 2.",
-        loesungsweg: "Zeile 1 mit 2 multipliziert ergibt \\(2x + 2y + 2z = 8\\).  \nZeile 2 sagt aber \\(2x + 2y + 2z = 9\\).  \nWiderspruch: \\(8 \\neq 9\\). Das LGS hat **keine Lösung**."
-      },
-      {
-        id: 27,
-        level: 5,
-        typ: "numerisch",
-        frage: "Für welchen Wert des Parameters \\(a\\) hat das LGS \\(\\begin{cases} x + y + z = 3 \\\\ 2x + 2y + 2z = a \\\\ x + 2y - z = 1 \\end{cases}\\) unendlich viele Lösungen?",
-        loesung: 6,
-        toleranz: 0,
-        tipp: "Zeile 2 muss ein Vielfaches von Zeile 1 sein, damit sie keine neue Information liefert.",
-        loesungsweg: "Zeile 2 ist \\(2 \\cdot\\) Zeile 1, sofern \\(a = 2 \\cdot 3 = 6\\).  \nFür \\(a = 6\\) entfällt Zeile 2 als eigenständige Bedingung — es bleiben zwei unabhängige Gleichungen für drei Unbekannte und somit **unendlich viele Lösungen**.  \nFür \\(a \\neq 6\\) liegt ein Widerspruch vor (keine Lösung)."
-      },
-      {
-        id: 28,
-        level: 5,
-        typ: "mc",
-        frage: "Welchen Lösungsfall hat das LGS \\(\\begin{cases} x - y + z = 1 \\\\ 2x + y - z = 2 \\\\ 3x + 0 \\cdot y + 0 \\cdot z = 3 \\end{cases}\\)?",
-        optionen: [
-          "Genau eine Lösung mit \\(x = 1,\\, y = 0,\\, z = 0\\)",
-          "Keine Lösung",
-          "Unendlich viele Lösungen",
-          "Nur die triviale Lösung \\(x = y = z = 0\\)"
-        ],
-        korrekt: 2,
-        tipp: "Prüfe, ob die dritte Gleichung aus den ersten beiden folgt.",
-        loesungsweg: "\\(Z_1 + Z_2\\): \\(3x + 0 \\cdot y + 0 \\cdot z = 3\\) — das ist exakt Zeile 3.  \nZeile 3 ist also eine Linearkombination der ersten beiden und liefert keine neue Information.  \nZwei unabhängige Gleichungen, drei Unbekannte \\(\\Rightarrow\\) **unendlich viele Lösungen**."
-      },
-      {
-        id: 29,
         level: 5,
         typ: "numerisch",
         frage: "Für welchen Wert von \\(a\\) ist das LGS \\(\\begin{cases} x + y + z = 2 \\\\ 2x + y + z = 3 \\\\ 3x + 2y + 2z = a \\end{cases}\\) lösbar?",
@@ -346,46 +292,43 @@
         loesungsweg: "\\(Z_1 + Z_2 = 3x + 2y + 2z = 2 + 3 = 5\\).  \nDas muss mit Zeile 3 übereinstimmen: \\(3x + 2y + 2z = a\\).  \nAlso ist das LGS genau dann lösbar, wenn \\(a = 5\\). In diesem Fall gibt es sogar unendlich viele Lösungen."
       },
       {
-        id: 30,
+        id: 27,
         level: 5,
         typ: "mc",
-        frage: "Welchen Lösungsfall hat das LGS \\(\\begin{cases} x + y + z = 3 \\\\ 2x + 2y + 2z = 7 \\\\ x - y + z = 1 \\end{cases}\\)?",
+        frage: "Ein Schüler löst \\(\\begin{cases} x + y + z = 6 \\\\ 2x - y + z = 3 \\\\ x + 2y - z = 2 \\end{cases}\\) mit dem Gauß-Verfahren:<br>Schritt 1: \\(II - 2 \\cdot I\\): \\(-3y - z = -9\\)<br>Schritt 2: \\(III - I\\): \\(y - 2z = -4\\)<br>Schritt 3: (Schritt 1) \\(+ 3 \\cdot\\) (Schritt 2): \\(-7z = -13\\)<br>Schritt 4: \\(z = \\frac{13}{7}\\)<br>Welcher Schritt ist der erste fehlerhafte?",
         optionen: [
-          "Genau eine Lösung",
-          "Keine Lösung",
-          "Unendlich viele Lösungen",
-          "Nur die triviale Lösung \\(x = y = z = 0\\)"
+          "Schritt 1",
+          "Schritt 2",
+          "Schritt 3",
+          "Schritt 4"
         ],
-        korrekt: 1,
-        tipp: "Vergleiche Zeile 2 mit dem Doppelten von Zeile 1.",
-        loesungsweg: "Multipliziere Zeile 1 mit 2: \\(2x + 2y + 2z = 6\\).  \nZeile 2 sagt aber \\(2x + 2y + 2z = 7\\).  \nWiderspruch: \\(6 \\neq 7\\). Das LGS hat **keine Lösung**, unabhängig von Zeile 3."
+        korrekt: 2,
+        tipp: "Prüfe bei jedem Schritt auch die rechte Seite.",
+        loesungsweg: "Schritt 1 und 2 sind richtig. In Schritt 3 wird links korrekt \\(-7z\\) gebildet, rechts aber \\(-9 - 4\\) statt \\(-9 + 3 \\cdot (-4) = -21\\) gerechnet. Richtig: \\(-7z = -21 \\Rightarrow z = 3\\), dann \\(y = 2\\), \\(x = 1\\)."
       },
-
-      // ========== LEVEL 6 — Experte (6 Aufgaben) ==========
-      // Textaufgaben führen auf 3×3 LGS
       {
-        id: 31,
-        level: 6,
+        id: 28,
+        level: 5,
         typ: "numerisch",
-        frage: "Die Summe dreier Zahlen \\(x, y, z\\) ist 12. Die zweite Zahl ist doppelt so groß wie die erste. Die dritte ist gleich der Summe der ersten beiden. Bestimme die kleinste Zahl \\(x\\).",
+        frage: "Eine Parabel \\(y = ax^2 + bx + c\\) verläuft durch die Punkte \\(A(-1 \\mid 0)\\), \\(B(1 \\mid 4)\\) und \\(C(2 \\mid 3)\\). Bestimme \\(a\\).",
+        loesung: -1,
+        toleranz: 0,
+        tipp: "Jeder Punkt liefert eine Gleichung; zwei davon unterscheiden sich nur im Vorzeichen von \\(b\\).",
+        loesungsweg: "\\(a - b + c = 0\\), \\(a + b + c = 4\\), \\(4a + 2b + c = 3\\). \\(II - I\\): \\(2b = 4 \\Rightarrow b = 2\\). Dann \\(a + c = 2\\) und \\(4a + c = -1\\), also \\(3a = -3 \\Rightarrow a = -1\\), \\(c = 3\\)."
+      },
+      {
+        id: 29,
+        level: 5,
+        typ: "numerisch",
+        frage: "Das LGS \\(\\begin{cases} x + y + z = 6 \\\\ x - y + 2z = 3 \\\\ 2x + 3z = 9 \\end{cases}\\) hat unendlich viele Lösungen. Gib den Wert von \\(y\\) für die Lösung mit \\(z = 1\\) an.",
         loesung: 2,
         toleranz: 0,
-        tipp: "Stelle aus den Bedingungen ein 3×3 LGS in \\(x, y, z\\) auf.",
-        loesungsweg: "LGS: \\(\\begin{cases} x + y + z = 12 \\\\ y = 2x \\\\ z = x + y \\end{cases}\\)  \nWegen \\(y = 2x\\) ist \\(z = x + 2x = 3x\\). Einsetzen in die erste Gleichung:  \n\\(x + 2x + 3x = 12 \\Rightarrow 6x = 12 \\Rightarrow x = 2\\).  \nAlso \\(x = 2,\\; y = 4,\\; z = 6\\)."
+        tipp: "Eine der drei Gleichungen ist überflüssig. Setze \\(z = 1\\) in die anderen ein.",
+        loesungsweg: "\\(III = I + II\\), also bleiben I und II. Mit \\(z = 1\\): \\(x + y = 5\\) und \\(x - y = 1\\), daraus \\(x = 3\\), \\(y = 2\\). Allgemein: \\(x = 4{,}5 - 1{,}5z\\), \\(y = 1{,}5 + 0{,}5z\\)."
       },
       {
-        id: 32,
-        level: 6,
-        typ: "numerisch",
-        frage: "Ein Händler mischt drei Kaffeesorten A (6 €/kg), B (8 €/kg) und C (12 €/kg) zu einer 10-kg-Mischung zum Preis von 8 €/kg. Dabei verwendet er genauso viel von Sorte A wie von Sorte B. Wie viele kg von Sorte C sind in der Mischung?",
-        loesung: 2,
-        toleranz: 0,
-        tipp: "Sei \\(a, b, c\\) die Menge (in kg) der drei Sorten. Die drei Gleichungen: Gesamtmenge, Gesamtpreis und \\(a = b\\).",
-        loesungsweg: "LGS:  \n\\(\\begin{cases} a + b + c = 10 \\\\ 6a + 8b + 12c = 80 \\\\ a = b \\end{cases}\\)  \nSetze \\(a = b\\) ein: \\(2a + c = 10\\) und \\(14a + 12c = 80\\).  \nAus der ersten: \\(c = 10 - 2a\\). Einsetzen: \\(14a + 12(10 - 2a) = 80 \\Rightarrow 14a + 120 - 24a = 80 \\Rightarrow -10a = -40 \\Rightarrow a = 4\\).  \nAlso \\(a = b = 4\\) kg und \\(c = 10 - 8 = 2\\) kg."
-      },
-      {
-        id: 33,
-        level: 6,
+        id: 30,
+        level: 5,
         typ: "numerisch",
         frage: "Drei Äpfel, zwei Birnen und ein Pfirsich kosten zusammen 7 €. Zwei Äpfel, drei Birnen und ein Pfirsich kosten ebenfalls 7 €. Ein Apfel, eine Birne und zwei Pfirsiche kosten 6 €. Wie teuer ist ein Pfirsich (in €)?",
         loesung: 2,
@@ -393,35 +336,76 @@
         tipp: "Sei \\(a\\) der Preis eines Apfels, \\(b\\) einer Birne, \\(p\\) eines Pfirsichs. Stelle das LGS auf und löse es.",
         loesungsweg: "LGS:  \n\\(\\begin{cases} 3a + 2b + p = 7 \\\\ 2a + 3b + p = 7 \\\\ a + b + 2p = 6 \\end{cases}\\)  \n\\(Z_1 - Z_2\\): \\(a - b = 0 \\Rightarrow a = b\\).  \nEinsetzen in \\(Z_1\\): \\(5a + p = 7 \\Rightarrow p = 7 - 5a\\).  \nEinsetzen in \\(Z_3\\): \\(2a + 2(7 - 5a) = 6 \\Rightarrow 2a + 14 - 10a = 6 \\Rightarrow -8a = -8 \\Rightarrow a = 1\\).  \nAlso \\(a = b = 1\\) € und \\(p = 7 - 5 = 2\\) €."
       },
+      // ========== LEVEL 6 — wagnerisch (6 Aufgaben) ==========
+      {
+        id: 31,
+        level: 6,
+        typ: "mc",
+        frage: "Gegeben ist das LGS \\(\\begin{cases} x + y + z = 2 \\\\ 2x + 2y + 2z = a \\\\ x - y + z = 0 \\end{cases}\\) mit einem Parameter \\(a\\). Welche Aussage ist richtig?",
+        optionen: [
+          "Für \\(a = 4\\) gibt es unendlich viele Lösungen, für alle anderen \\(a\\) keine.",
+          "Für \\(a = 4\\) gibt es genau eine Lösung, für alle anderen \\(a\\) keine.",
+          "Für \\(a = 4\\) gibt es keine Lösung, für alle anderen \\(a\\) genau eine.",
+          "Für jeden Wert von \\(a\\) gibt es genau eine Lösung."
+        ],
+        korrekt: 0,
+        tipp: "Vergleiche die ersten beiden Gleichungen. Wie viele unabhängige Gleichungen bleiben höchstens?",
+        loesungsweg: "Die linke Seite von II ist das Doppelte von I. Für \\(a = 4\\) ist II überflüssig, es bleiben zwei unabhängige Gleichungen für drei Unbekannte: unendlich viele Lösungen. Für \\(a \\neq 4\\) widersprechen sich I und II: keine Lösung. Genau eine Lösung ist für kein \\(a\\) möglich."
+      },
+      {
+        id: 32,
+        level: 6,
+        typ: "mc",
+        frage: "Welche Aussage über lineare Gleichungssysteme ist richtig?",
+        optionen: [
+          "Ein LGS aus drei Gleichungen mit drei Unbekannten hat keine, genau eine oder unendlich viele Lösungen.",
+          "Ein LGS aus vier Gleichungen mit drei Unbekannten hat nie eine Lösung.",
+          "Ein LGS aus zwei Gleichungen mit drei Unbekannten hat immer unendlich viele Lösungen.",
+          "Entsteht beim Gauß-Verfahren eine Nullzeile \\(0 = 0\\), so hat das LGS keine Lösung."
+        ],
+        korrekt: 0,
+        tipp: "Suche zu jeder Aussage ein Gegenbeispiel oder eine Begründung.",
+        loesungsweg: "Aussage 1 ist der Satz über die drei Lösungsfälle. Gegenbeispiel zu 2: vier Gleichungen, von denen eine doppelt vorkommt, können eine Lösung haben. Gegenbeispiel zu 3: \\(x + y + z = 1\\) und \\(x + y + z = 2\\) haben keine Lösung. Eine Nullzeile \\(0 = 0\\) bedeutet unendlich viele Lösungen, ein Widerspruch wie \\(0 = 5\\) bedeutet keine (4 falsch)."
+      },
+      {
+        id: 33,
+        level: 6,
+        typ: "numerisch",
+        frage: "Ein Ball wird geworfen, seine Flugbahn ist eine Parabel. Der Abwurfpunkt liegt \\(2\\,\\text{m}\\) über dem Boden. In \\(1\\,\\text{m}\\) horizontaler Entfernung ist der Ball \\(3{,}5\\,\\text{m}\\) hoch, in \\(4\\,\\text{m}\\) Entfernung wieder \\(2\\,\\text{m}\\) hoch. In welcher horizontalen Entfernung vom Abwurfpunkt landet der Ball auf dem Boden? Runde auf zwei Dezimalstellen.",
+        loesung: 4.83,
+        toleranz: 0.01,
+        tipp: "Drei Punkte legen die Parabel fest. Danach ist eine quadratische Gleichung zu lösen.",
+        loesungsweg: "Ansatz \\(h(x) = ax^2 + bx + c\\) mit \\(h(0) = 2\\), \\(h(1) = 3{,}5\\), \\(h(4) = 2\\): \\(c = 2\\), \\(a + b = 1{,}5\\), \\(16a + 4b = 0\\). Daraus \\(a = -0{,}5\\), \\(b = 2\\). \\(-0{,}5x^2 + 2x + 2 = 0 \\Leftrightarrow x^2 - 4x - 4 = 0 \\Rightarrow x = 2 + \\sqrt{8} \\approx 4{,}83\\,\\text{m}\\)."
+      },
       {
         id: 34,
         level: 6,
         typ: "numerisch",
-        frage: "Drei Geschwister sind zusammen 45 Jahre alt. Der älteste ist doppelt so alt wie der jüngste. Der mittlere ist 5 Jahre älter als der jüngste. Wie alt ist der jüngste?",
-        loesung: 10,
+        frage: "Für welchen Wert von \\(a\\) hat das LGS \\(\\begin{cases} x + y + z = 1 \\\\ x + 2y + 4z = 2 \\\\ x + 3y + az = 4 \\end{cases}\\) keine Lösung?",
+        loesung: 7,
         toleranz: 0,
-        tipp: "Sei \\(j, m, a\\) das Alter der drei Geschwister (jüngst, mittel, ältest). Stelle drei Gleichungen auf.",
-        loesungsweg: "LGS:  \n\\(\\begin{cases} j + m + a = 45 \\\\ a = 2j \\\\ m = j + 5 \\end{cases}\\)  \nEinsetzen: \\(j + (j + 5) + 2j = 45 \\Rightarrow 4j + 5 = 45 \\Rightarrow j = 10\\).  \nAlso \\(j = 10,\\; m = 15,\\; a = 20\\)."
+        tipp: "Keine Lösung gibt es nur, wenn die linke Seite von III aus I und II kombinierbar ist, die rechte aber nicht passt.",
+        loesungsweg: "\\(2 \\cdot II - I\\) ergibt \\(x + 3y + 7z = 3\\). Für \\(a = 7\\) hat III dieselbe linke Seite, aber rechts \\(4 \\neq 3\\): Widerspruch, keine Lösung. Für \\(a \\neq 7\\) ist die Lösung eindeutig."
       },
       {
         id: 35,
         level: 6,
         typ: "numerisch",
-        frage: "Ein Kino verkauft 100 Karten und nimmt 780 € ein. Kinderkarten kosten 5 €, Erwachsenenkarten 10 € und Seniorenkarten 7 €. Es wurden doppelt so viele Erwachsenenkarten wie Kinderkarten verkauft. Wie viele Seniorenkarten wurden verkauft?",
-        loesung: 40,
+        frage: "Ein Automat enthält 12 Münzen zu \\(50\\) Cent, \\(1\\,€\\) und \\(2\\,€\\) im Gesamtwert von \\(15\\,€\\). Wie viele \\(2\\)-€-Münzen sind es, wenn genau 4 der Münzen 50-Cent-Stücke sind?",
+        loesung: 5,
         toleranz: 0,
-        tipp: "Sei \\(k, e, s\\) die Anzahl der Kinder-, Erwachsenen- und Seniorenkarten.",
-        loesungsweg: "LGS:  \n\\(\\begin{cases} k + e + s = 100 \\\\ 5k + 10e + 7s = 780 \\\\ e = 2k \\end{cases}\\)  \nEinsetzen \\(e = 2k\\): \\(3k + s = 100\\) und \\(25k + 7s = 780\\).  \nAus der ersten: \\(s = 100 - 3k\\). Einsetzen: \\(25k + 7(100 - 3k) = 780 \\Rightarrow 25k + 700 - 21k = 780 \\Rightarrow 4k = 80 \\Rightarrow k = 20\\).  \nAlso \\(k = 20,\\; e = 40,\\; s = 100 - 60 = 40\\).  \nProbe: \\(5 \\cdot 20 + 10 \\cdot 40 + 7 \\cdot 40 = 100 + 400 + 280 = 780\\) ✓"
+        tipp: "Anzahl und Wert liefern je eine Gleichung; die dritte Angabe legt eine Unbekannte fest.",
+        loesungsweg: "Mit \\(h\\) (50 Cent), \\(e\\) (1 €), \\(z\\) (2 €): \\(h + e + z = 12\\), \\(0{,}5h + e + 2z = 15\\), \\(h = 4\\). Dann \\(e + z = 8\\) und \\(e + 2z = 13\\), also \\(z = 5\\), \\(e = 3\\)."
       },
       {
         id: 36,
         level: 6,
         typ: "numerisch",
-        frage: "Drei Maschinen \\(A, B, C\\) produzieren zusammen 960 Teile pro Tag. Maschine \\(A\\) produziert doppelt so viele Teile wie \\(B\\). Maschine \\(C\\) produziert 60 Teile mehr als \\(B\\). Wie viele Teile produziert Maschine \\(A\\)?",
-        loesung: 450,
+        frage: "Für welche Werte von \\(a\\) und \\(b\\) hat das LGS \\(\\begin{cases} x + y + z = 3 \\\\ 2x + y - z = 2 \\\\ 3x + 2y + az = b \\end{cases}\\) unendlich viele Lösungen? Gib \\(a + b\\) an.",
+        loesung: 5,
         toleranz: 0,
-        tipp: "Sei \\(a, b, c\\) die Tagesproduktion der Maschinen. Setze die beiden Relationen in die Summengleichung ein.",
-        loesungsweg: "LGS:  \n\\(\\begin{cases} a + b + c = 960 \\\\ a = 2b \\\\ c = b + 60 \\end{cases}\\)  \nEinsetzen in die erste Gleichung: \\(2b + b + (b + 60) = 960 \\Rightarrow 4b + 60 = 960 \\Rightarrow 4b = 900 \\Rightarrow b = 225\\).  \nAlso \\(a = 450,\\; b = 225,\\; c = 285\\).  \nProbe: \\(450 + 225 + 285 = 960\\) ✓"
+        tipp: "Die dritte Gleichung darf nichts Neues sagen: Sie muss aus I und II zusammensetzbar sein.",
+        loesungsweg: "\\(I + II\\) ergibt \\(3x + 2y + 0z = 5\\). Also \\(a = 0\\) und \\(b = 5\\), damit III genau die Summe von I und II ist. \\(a + b = 5\\). I und II sind unabhängig, daher unendlich viele Lösungen."
       }
     ];
     </script>

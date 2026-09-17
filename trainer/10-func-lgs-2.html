@@ -92,7 +92,6 @@
         tipp: "Addiere beide Gleichungen, um \\(y\\) zu eliminieren, dann setze \\(x\\) ein.",
         loesungsweg: "Addition: \\(2x = 14 \\Rightarrow x = 7\\). Einsetzen: \\(7 + y = 10 \\Rightarrow y = 3\\)."
       },
-
       // ========== LEVEL 2 — leicht (6 Aufgaben) ==========
       {
         id: 7,
@@ -153,14 +152,13 @@
         id: 12,
         level: 2,
         typ: "numerisch",
-        frage: "Löse \\(\\begin{cases} x + 2y = 5 \\\\ 3x - 2y = 7 \\end{cases}\\). Berechne \\(y\\).",
-        loesung: 1,
+        frage: "Löse \\(\\begin{cases} y = 3x - 4 \\\\ y = x + 2 \\end{cases}\\) durch Gleichsetzen. Berechne \\(y\\).",
+        loesung: 5,
         toleranz: 0,
-        tipp: "Addiere beide Gleichungen, um \\(y\\) zu eliminieren. Dann \\(x\\) einsetzen.",
-        loesungsweg: "Addition: \\(4x = 12 \\Rightarrow x = 3\\). Einsetzen in die erste: \\(3 + 2y = 5 \\Rightarrow 2y = 2 \\Rightarrow y = 1\\)."
+        tipp: "Beide rechten Seiten sind gleich \\(y\\), also auch untereinander gleich.",
+        loesungsweg: "\\(3x - 4 = x + 2 \\Rightarrow 2x = 6 \\Rightarrow x = 3\\). Einsetzen: \\(y = 3 + 2 = 5\\)."
       },
-
-      // ========== LEVEL 3 — mittel (6 Aufgaben) ==========
+      // ========== LEVEL 3 — nervenschonend (6 Aufgaben) ==========
       {
         id: 13,
         level: 3,
@@ -194,17 +192,12 @@
       {
         id: 16,
         level: 3,
-        typ: "mc",
-        frage: "Welche Lösung hat \\(\\begin{cases} 4x + 3y = 18 \\\\ 2x - y = 4 \\end{cases}\\)?",
-        optionen: [
-          "\\((3, 2)\\)",
-          "\\((2, 0)\\)",
-          "\\((4, \\tfrac{2}{3})\\)",
-          "\\((1, \\tfrac{14}{3})\\)"
-        ],
-        korrekt: 0,
-        tipp: "Multipliziere die zweite Gleichung mit 3 und addiere zur ersten.",
-        loesungsweg: "\\(3 \\cdot\\) Gl.2: \\(6x - 3y = 12\\). Addition mit Gl.1: \\(10x = 30 \\Rightarrow x = 3\\). Einsetzen: \\(2 \\cdot 3 - y = 4 \\Rightarrow y = 2\\). Lösung: \\((3, 2)\\)."
+        typ: "numerisch",
+        frage: "Löse \\(\\begin{cases} 3x + 2y = 8 \\\\ 2x + 3y = 7 \\end{cases}\\). Berechne \\(x\\).",
+        loesung: 2,
+        toleranz: 0,
+        tipp: "Hier müssen beide Gleichungen multipliziert werden, damit ein Koeffizient wegfällt.",
+        loesungsweg: "\\(I \\cdot 3 - II \\cdot 2\\): \\(9x + 6y - 4x - 6y = 24 - 14 \\Rightarrow 5x = 10 \\Rightarrow x = 2\\). Dann \\(y = 1\\)."
       },
       {
         id: 17,
@@ -226,8 +219,7 @@
         tipp: "Multipliziere Gl.1 mit 3 und Gl.2 mit \\(-2\\), dann addieren.",
         loesungsweg: "\\(3 \\cdot\\) Gl.1: \\(6x + 15y = 57\\). \\(-2 \\cdot\\) Gl.2: \\(-6x + 4y = 0\\). Addition: \\(19y = 57 \\Rightarrow y = 3\\). (Kontrolle: \\(x = 2\\).)"
       },
-
-      // ========== LEVEL 4 — mittelschwer (6 Aufgaben) ==========
+      // ========== LEVEL 4 — mittel (6 Aufgaben) ==========
       {
         id: 19,
         level: 4,
@@ -246,145 +238,26 @@
       {
         id: 20,
         level: 4,
-        typ: "mc",
-        frage: "Wie viele Lösungen hat \\(\\begin{cases} x + 2y = 4 \\\\ 2x + 4y = 10 \\end{cases}\\)?",
-        optionen: [
-          "Genau eine Lösung",
-          "Keine Lösung",
-          "Unendlich viele Lösungen",
-          "Genau drei Lösungen"
-        ],
-        korrekt: 1,
-        tipp: "Multipliziere die erste Gleichung mit 2 und vergleiche.",
-        loesungsweg: "\\(2 \\cdot\\) Gl.1 ergibt \\(2x + 4y = 8\\), aber Gl.2 sagt \\(2x + 4y = 10\\). Widerspruch \\(\\Rightarrow\\) **keine Lösung** (parallele Geraden)."
+        typ: "numerisch",
+        frage: "Für welchen Wert von \\(k\\) hat das LGS \\(\\begin{cases} 2x + 3y = 6 \\\\ 4x + 6y = k \\end{cases}\\) unendlich viele Lösungen?",
+        loesung: 12,
+        toleranz: 0,
+        tipp: "Wann ist die zweite Gleichung nur ein Vielfaches der ersten?",
+        loesungsweg: "Die linke Seite von II ist das Doppelte der linken Seite von I. Unendlich viele Lösungen gibt es nur, wenn auch die rechte Seite das Doppelte ist: \\(k = 2 \\cdot 6 = 12\\)."
       },
       {
         id: 21,
         level: 4,
-        typ: "mc",
-        frage: "Wie viele Lösungen hat \\(\\begin{cases} 3x - y = 5 \\\\ x + 2y = 4 \\end{cases}\\)?",
-        optionen: [
-          "Genau eine Lösung",
-          "Keine Lösung",
-          "Unendlich viele Lösungen",
-          "Gar keine Gleichung"
-        ],
-        korrekt: 0,
-        tipp: "Prüfe die Steigungen der Geraden.",
-        loesungsweg: "Gl.1: \\(y = 3x - 5\\), Steigung 3. Gl.2: \\(y = -\\tfrac{1}{2}x + 2\\), Steigung \\(-\\tfrac{1}{2}\\). Verschiedene Steigungen \\(\\Rightarrow\\) **genau eine Lösung**."
+        typ: "numerisch",
+        frage: "Das LGS \\(\\begin{cases} 2x + y = 7 \\\\ x - y = c \\end{cases}\\) hat die Lösung \\(x = 3\\). Bestimme \\(c\\).",
+        loesung: 2,
+        toleranz: 0,
+        tipp: "Aus der ersten Gleichung bekommst du zunächst \\(y\\).",
+        loesungsweg: "\\(2 \\cdot 3 + y = 7 \\Rightarrow y = 1\\). Zweite Gleichung: \\(c = 3 - 1 = 2\\)."
       },
       {
         id: 22,
         level: 4,
-        typ: "mc",
-        frage: "Welche Aussage beschreibt ein LGS mit **keiner** Lösung geometrisch?",
-        optionen: [
-          "Die Geraden schneiden sich in einem Punkt",
-          "Die Geraden sind identisch",
-          "Die Geraden sind parallel und verschieden",
-          "Die Geraden sind senkrecht zueinander"
-        ],
-        korrekt: 2,
-        tipp: "Denke an den Graph eines LGS mit 2 Gleichungen und 2 Unbekannten.",
-        loesungsweg: "Zwei parallele, aber verschiedene Geraden haben keinen gemeinsamen Punkt \\(\\Rightarrow\\) das LGS ist nicht lösbar."
-      },
-      {
-        id: 23,
-        level: 4,
-        typ: "mc",
-        frage: "Wie viele Lösungen hat \\(\\begin{cases} -x + 2y = 3 \\\\ 3x - 6y = -9 \\end{cases}\\)?",
-        optionen: [
-          "Genau eine Lösung",
-          "Keine Lösung",
-          "Unendlich viele Lösungen",
-          "Nicht bestimmbar"
-        ],
-        korrekt: 2,
-        tipp: "Multipliziere die erste Gleichung mit \\(-3\\).",
-        loesungsweg: "\\(-3 \\cdot\\) Gl.1: \\(3x - 6y = -9\\). Das ist identisch mit Gl.2 \\(\\Rightarrow\\) **unendlich viele Lösungen**."
-      },
-      {
-        id: 24,
-        level: 4,
-        typ: "mc",
-        frage: "Für welchen Wert von \\(k\\) hat \\(\\begin{cases} 2x + 3y = 6 \\\\ 4x + 6y = k \\end{cases}\\) unendlich viele Lösungen?",
-        optionen: [
-          "\\(k = 6\\)",
-          "\\(k = 12\\)",
-          "\\(k = 3\\)",
-          "\\(k = 0\\)"
-        ],
-        korrekt: 1,
-        tipp: "Gl.2 muss das 2-fache von Gl.1 sein.",
-        loesungsweg: "Damit beide Gleichungen dieselbe Gerade beschreiben, muss \\(k = 2 \\cdot 6 = 12\\) sein. Dann ist Gl.2 \\(= 2 \\cdot\\) Gl.1."
-      },
-
-      // ========== LEVEL 5 — schwer (6 Aufgaben) ==========
-      {
-        id: 25,
-        level: 5,
-        typ: "numerisch",
-        frage: "Löse \\(\\begin{cases} 0{,}5x + y = 4 \\\\ 2x - y = 1 \\end{cases}\\). Berechne \\(x\\).",
-        loesung: 2,
-        toleranz: 0.01,
-        tipp: "Addiere beide Gleichungen, um \\(y\\) zu eliminieren.",
-        loesungsweg: "Addition: \\(2{,}5x = 5 \\Rightarrow x = 2\\). (Kontrolle: \\(y = 2 \\cdot 2 - 1 = 3\\).)"
-      },
-      {
-        id: 26,
-        level: 5,
-        typ: "numerisch",
-        frage: "Löse \\(\\begin{cases} \\tfrac{1}{2}x + \\tfrac{1}{3}y = 3 \\\\ x - y = 1 \\end{cases}\\). Berechne \\(x\\).",
-        loesung: 4,
-        toleranz: 0.01,
-        tipp: "Multipliziere Gl.1 zuerst mit 6, um Brüche zu beseitigen.",
-        loesungsweg: "\\(6 \\cdot\\) Gl.1: \\(3x + 2y = 18\\). Mit \\(y = x - 1\\) aus Gl.2: \\(3x + 2(x - 1) = 18 \\Rightarrow 5x - 2 = 18 \\Rightarrow 5x = 20 \\Rightarrow x = 4\\)."
-      },
-      {
-        id: 27,
-        level: 5,
-        typ: "numerisch",
-        frage: "Löse \\(\\begin{cases} 0{,}2x + 0{,}3y = 1{,}3 \\\\ 0{,}4x - 0{,}1y = 0{,}5 \\end{cases}\\). Berechne \\(y\\).",
-        loesung: 3,
-        toleranz: 0.01,
-        tipp: "Multipliziere beide Gleichungen mit 10, um ganze Zahlen zu erhalten.",
-        loesungsweg: "Nach \\(\\cdot 10\\): \\(\\begin{cases} 2x + 3y = 13 \\\\ 4x - y = 5 \\end{cases}\\). \\(-2 \\cdot\\) Gl.1 \\(+\\) Gl.2: \\(-7y = -21 \\Rightarrow y = 3\\). (\\(x = 2\\).)"
-      },
-      {
-        id: 28,
-        level: 5,
-        typ: "numerisch",
-        frage: "Löse \\(\\begin{cases} \\tfrac{x}{2} + \\tfrac{y}{4} = 3 \\\\ x + y = 8 \\end{cases}\\). Berechne \\(y\\).",
-        loesung: 4,
-        toleranz: 0.01,
-        tipp: "Multipliziere Gl.1 mit 4.",
-        loesungsweg: "\\(4 \\cdot\\) Gl.1: \\(2x + y = 12\\). Subtrahiere Gl.2: \\((2x + y) - (x + y) = 12 - 8 \\Rightarrow x = 4\\). Also \\(y = 8 - 4 = 4\\)."
-      },
-      {
-        id: 29,
-        level: 5,
-        typ: "numerisch",
-        frage: "Löse \\(\\begin{cases} 1{,}5x + 2y = 10 \\\\ 3x - y = 5 \\end{cases}\\). Berechne \\(x\\).",
-        loesung: 2.666667,
-        toleranz: 0.01,
-        tipp: "Aus Gl.2 folgt \\(y = 3x - 5\\). Einsetzen in Gl.1.",
-        loesungsweg: "Aus Gl.2: \\(y = 3x - 5\\). Einsetzen: \\(1{,}5x + 2(3x - 5) = 10 \\Rightarrow 1{,}5x + 6x - 10 = 10 \\Rightarrow 7{,}5x = 20 \\Rightarrow x = \\tfrac{8}{3} \\approx 2{,}67\\)."
-      },
-      {
-        id: 30,
-        level: 5,
-        typ: "numerisch",
-        frage: "Löse \\(\\begin{cases} \\tfrac{1}{2}x + \\tfrac{1}{4}y = 2 \\\\ x - y = 2 \\end{cases}\\). Berechne \\(x\\).",
-        loesung: 3.333333,
-        toleranz: 0.01,
-        tipp: "Multipliziere Gl.1 mit 4, dann mit dem Additionsverfahren \\(y\\) eliminieren.",
-        loesungsweg: "\\(4 \\cdot\\) Gl.1: \\(2x + y = 8\\). Addition mit Gl.2 (\\(x - y = 2\\)): \\(3x = 10 \\Rightarrow x = \\tfrac{10}{3} \\approx 3{,}33\\). (Kontrolle: \\(y = x - 2 = \\tfrac{4}{3}\\).)"
-      },
-
-      // ========== LEVEL 6 — sehr schwer (6 Aufgaben) ==========
-      {
-        id: 31,
-        level: 6,
         typ: "numerisch",
         frage: "Zwei Zahlen haben die Summe 30 und die Differenz 8. Wie lautet die größere Zahl?",
         loesung: 19,
@@ -393,54 +266,161 @@
         loesungsweg: "Addition: \\(2x = 38 \\Rightarrow x = 19\\). Dann \\(y = 30 - 19 = 11\\). Die größere Zahl ist 19."
       },
       {
+        id: 23,
+        level: 4,
+        typ: "numerisch",
+        frage: "3 Äpfel und 2 Birnen kosten zusammen \\(3{,}60\\,€\\), 2 Äpfel und 4 Birnen kosten \\(4{,}00\\,€\\). Wie viel kostet ein Apfel? Gib den Preis in Cent an.",
+        loesung: 80,
+        toleranz: 0,
+        tipp: "Stelle ein LGS mit \\(x\\) (Apfel) und \\(y\\) (Birne) auf.",
+        loesungsweg: "Mit \\(a\\) (Apfel) und \\(b\\) (Birne) in €: \\(3a + 2b = 3{,}6\\) und \\(2a + 4b = 4\\). \\(I \\cdot 2 - II\\): \\(4a = 3{,}2 \\Rightarrow a = 0{,}8\\,€ = 80\\) Cent."
+      },
+      {
+        id: 24,
+        level: 4,
+        typ: "numerisch",
+        frage: "In einem Kino kosten 3 Erwachsenen- und 5 Kinderkarten zusammen 49 €. 2 Erwachsenen- und 3 Kinderkarten kosten 31 €. Wie teuer ist eine Erwachsenenkarte (in €)?",
+        loesung: 8,
+        toleranz: 0,
+        tipp: "LGS: \\(3x + 5y = 49\\) und \\(2x + 3y = 31\\).",
+        loesungsweg: "\\(3 \\cdot\\) Gl.2: \\(6x + 9y = 93\\). \\(2 \\cdot\\) Gl.1: \\(6x + 10y = 98\\). Subtraktion: \\(y = 5\\). Einsetzen in Gl.2: \\(2x + 15 = 31 \\Rightarrow x = 8\\) €."
+      },
+      // ========== LEVEL 5 — anspruchsvoll (6 Aufgaben) ==========
+      {
+        id: 25,
+        level: 5,
+        typ: "numerisch",
+        frage: "Für welchen Wert von \\(a\\) hat das LGS \\(\\begin{cases} 3x - 2y = 6 \\\\ ax + 4y = 5 \\end{cases}\\) keine Lösung?",
+        loesung: -6,
+        toleranz: 0,
+        tipp: "Keine Lösung bedeutet: parallele, aber verschiedene Geraden. Vergleiche die Koeffizienten.",
+        loesungsweg: "Die linken Seiten müssen Vielfache voneinander sein: \\(4 = (-2) \\cdot (-2)\\), also \\(a = 3 \\cdot (-2) = -6\\). Dann lautet II \\(-6x + 4y = 5\\), aber \\(I \\cdot (-2)\\) ergibt \\(-6x + 4y = -12 \\neq 5\\): Widerspruch, keine Lösung."
+      },
+      {
+        id: 26,
+        level: 5,
+        typ: "numerisch",
+        frage: "Für welche Werte von \\(a\\) und \\(b\\) hat das LGS \\(\\begin{cases} 2x + 3y = 12 \\\\ ax + 6y = b \\end{cases}\\) unendlich viele Lösungen? Gib \\(a + b\\) an.",
+        loesung: 28,
+        toleranz: 0,
+        tipp: "Die zweite Gleichung muss ein Vielfaches der ersten sein, links und rechts.",
+        loesungsweg: "\\(6 = 2 \\cdot 3\\), also muss II das Doppelte von I sein: \\(a = 4\\), \\(b = 24\\). Damit \\(a + b = 28\\)."
+      },
+      {
+        id: 27,
+        level: 5,
+        typ: "mc",
+        frage: "Ein Schüler löst \\(\\begin{cases} 2x + 3y = 12 \\\\ 4x - y = 10 \\end{cases}\\) mit dem Additionsverfahren:<br>Schritt 1: \\(I \\cdot 2\\): \\(4x + 6y = 24\\)<br>Schritt 2: \\((I \\cdot 2) - II\\): \\(5y = 14\\)<br>Schritt 3: \\(y = 2{,}8\\)<br>Schritt 4: Einsetzen in II: \\(4x = 12{,}8 \\Rightarrow x = 3{,}2\\)<br>Welcher Schritt ist der erste fehlerhafte?",
+        optionen: [
+          "Schritt 1",
+          "Schritt 2",
+          "Schritt 3",
+          "Schritt 4"
+        ],
+        korrekt: 1,
+        tipp: "Was ergibt \\(6y - (-y)\\)?",
+        loesungsweg: "Schritt 1 ist richtig. In Schritt 2 wird \\(6y - (-y)\\) falsch zu \\(5y\\) statt \\(7y\\) zusammengefasst. Richtig: \\(7y = 14 \\Rightarrow y = 2\\), \\(x = 3\\). Die Schritte 3 und 4 rechnen mit dem Fehler weiter, sind aber in sich stimmig."
+      },
+      {
+        id: 28,
+        level: 5,
+        typ: "numerisch",
+        frage: "Ein Mischkaffee zu 8 €/kg soll aus Sorte A (6 €/kg) und Sorte B (12 €/kg) gemischt werden. Wie viel kg Sorte A braucht man für 9 kg Mischkaffee?",
+        loesung: 6,
+        toleranz: 0,
+        tipp: "LGS: \\(a + b = 9\\) und \\(6a + 12b = 8 \\cdot 9 = 72\\).",
+        loesungsweg: "Aus Gl.1: \\(b = 9 - a\\). Einsetzen: \\(6a + 12(9 - a) = 72 \\Rightarrow 6a + 108 - 12a = 72 \\Rightarrow -6a = -36 \\Rightarrow a = 6\\) kg."
+      },
+      {
+        id: 29,
+        level: 5,
+        typ: "numerisch",
+        frage: "Handytarif A kostet monatlich \\(12\\,€\\) Grundgebühr plus \\(0{,}08\\,€\\) pro Gesprächsminute, Tarif B kostet \\(4\\,€\\) plus \\(0{,}12\\,€\\) pro Minute. Bei welcher Anzahl von Gesprächsminuten sind beide Tarife gleich teuer?",
+        loesung: 200,
+        toleranz: 0,
+        tipp: "Stelle für jeden Tarif eine Gleichung für die Kosten auf und vergleiche.",
+        loesungsweg: "\\(K_A = 12 + 0{,}08m\\), \\(K_B = 4 + 0{,}12m\\). Gleichsetzen: \\(12 + 0{,}08m = 4 + 0{,}12m \\Rightarrow 8 = 0{,}04m \\Rightarrow m = 200\\)."
+      },
+      {
+        id: 30,
+        level: 5,
+        typ: "numerisch",
+        frage: "Ein Boot fährt 24 km flussabwärts in 2 h und dieselbe Strecke flussaufwärts in 3 h. Wie groß ist die Eigengeschwindigkeit des Bootes (in km/h)?",
+        loesung: 10,
+        toleranz: 0,
+        tipp: "Sei \\(v\\) die Bootsgeschwindigkeit und \\(s\\) die Strömung: \\(v + s = 12\\) und \\(v - s = 8\\).",
+        loesungsweg: "Abwärts: \\(v + s = 24/2 = 12\\). Aufwärts: \\(v - s = 24/3 = 8\\). Addition: \\(2v = 20 \\Rightarrow v = 10\\) km/h."
+      },
+      // ========== LEVEL 6 — wagnerisch (6 Aufgaben) ==========
+      {
+        id: 31,
+        level: 6,
+        typ: "mc",
+        frage: "Gegeben ist das LGS \\(\\begin{cases} x + ay = 2 \\\\ ax + 4y = 4 \\end{cases}\\) mit einem Parameter \\(a\\). Welche Aussage ist richtig?",
+        optionen: [
+          "Für \\(a = 2\\) gibt es unendlich viele Lösungen, für \\(a = -2\\) keine Lösung, sonst genau eine.",
+          "Für \\(a = 2\\) und \\(a = -2\\) gibt es keine Lösung, sonst genau eine.",
+          "Für \\(a = 2\\) gibt es keine Lösung, für \\(a = -2\\) unendlich viele, sonst genau eine.",
+          "Für jeden Wert von \\(a\\) gibt es genau eine Lösung."
+        ],
+        korrekt: 0,
+        tipp: "Für welche \\(a\\) sind die linken Seiten Vielfache voneinander? Prüfe dann die rechten Seiten.",
+        loesungsweg: "II ist genau dann ein Vielfaches von I auf der linken Seite, wenn \\(a \\cdot a = 4\\), also \\(a = \\pm 2\\). Für \\(a = 2\\) ist II gleich \\(2 \\cdot I\\) (auch rechts: \\(4 = 2 \\cdot 2\\)): unendlich viele Lösungen. Für \\(a = -2\\) ist II links gleich \\(-2 \\cdot I\\), rechts aber \\(4 \\neq -4\\): keine Lösung. Für alle anderen \\(a\\) genau eine Lösung."
+      },
+      {
         id: 32,
         level: 6,
-        typ: "numerisch",
-        frage: "3 Äpfel und 2 Birnen kosten 3{,}60 €. 2 Äpfel und 4 Birnen kosten 4{,}00 €. Wie viel kostet ein Apfel (in €)?",
-        loesung: 0.80,
-        toleranz: 0.01,
-        tipp: "Stelle ein LGS mit \\(x\\) (Apfel) und \\(y\\) (Birne) auf.",
-        loesungsweg: "\\(3x + 2y = 3{,}60\\) und \\(2x + 4y = 4{,}00\\). \\(2 \\cdot\\) Gl.1: \\(6x + 4y = 7{,}20\\). Subtrahiere Gl.2: \\(4x = 3{,}20 \\Rightarrow x = 0{,}80\\) €."
+        typ: "mc",
+        frage: "Welche Aussage über lineare Gleichungssysteme mit zwei Unbekannten ist richtig?",
+        optionen: [
+          "Ein LGS aus drei Gleichungen kann genau eine Lösung haben.",
+          "Ein LGS aus zwei Gleichungen hat immer mindestens eine Lösung.",
+          "Ein LGS aus zwei Gleichungen kann genau zwei Lösungen haben.",
+          "Ein LGS aus mehr Gleichungen als Unbekannten hat nie eine Lösung."
+        ],
+        korrekt: 0,
+        tipp: "Deute jede Gleichung als Gerade. Was bedeutet eine Lösung geometrisch?",
+        loesungsweg: "Drei Geraden können durch einen gemeinsamen Punkt gehen, dann hat das LGS genau eine Lösung (Aussage 1 richtig). Zwei parallele verschiedene Geraden liefern keine Lösung (2 falsch). Zwei Geraden haben keinen, einen oder unendlich viele gemeinsame Punkte, nie genau zwei (3 falsch). Mehr Gleichungen als Unbekannte schließt eine Lösung nicht aus (4 falsch)."
       },
       {
         id: 33,
         level: 6,
         typ: "numerisch",
-        frage: "Ein Vater ist heute 30 Jahre älter als sein Sohn. In 10 Jahren wird der Vater doppelt so alt sein wie der Sohn. Wie alt ist der Vater heute?",
-        loesung: 50,
+        frage: "Der Graph der Funktion \\(f(x) = ax^2 + bx\\) verläuft durch \\(P(1 \\mid 1)\\) und \\(Q(2 \\mid 6)\\). Berechne \\(f(3)\\).",
+        loesung: 15,
         toleranz: 0,
-        tipp: "Variablen: \\(v\\) = Alter Vater, \\(s\\) = Alter Sohn. \\(v = s + 30\\) und \\(v + 10 = 2(s + 10)\\).",
-        loesungsweg: "Aus Gl.1: \\(v = s + 30\\). Einsetzen in Gl.2: \\(s + 30 + 10 = 2s + 20 \\Rightarrow s + 40 = 2s + 20 \\Rightarrow s = 20\\). Also \\(v = 50\\)."
+        tipp: "Jeder Punkt liefert eine Gleichung für \\(a\\) und \\(b\\).",
+        loesungsweg: "\\(a + b = 1\\) und \\(4a + 2b = 6\\). \\(II - 2 \\cdot I\\): \\(2a = 4 \\Rightarrow a = 2\\), \\(b = -1\\). \\(f(3) = 2 \\cdot 9 - 3 = 15\\)."
       },
       {
         id: 34,
         level: 6,
         typ: "numerisch",
-        frage: "Ein Mischkaffee zu 8 €/kg soll aus Sorte A (6 €/kg) und Sorte B (12 €/kg) gemischt werden. Wie viel kg Sorte A braucht man für 9 kg Mischkaffee?",
-        loesung: 6,
-        toleranz: 0.01,
-        tipp: "LGS: \\(a + b = 9\\) und \\(6a + 12b = 8 \\cdot 9 = 72\\).",
-        loesungsweg: "Aus Gl.1: \\(b = 9 - a\\). Einsetzen: \\(6a + 12(9 - a) = 72 \\Rightarrow 6a + 108 - 12a = 72 \\Rightarrow -6a = -36 \\Rightarrow a = 6\\) kg."
+        frage: "Das LGS \\(\\begin{cases} 2x - 4y = 6 \\\\ -3x + 6y = -9 \\end{cases}\\) hat unendlich viele Lösungen. Gib den Wert von \\(x\\) für die Lösung mit \\(y = 5\\) an.",
+        loesung: 13,
+        toleranz: 0,
+        tipp: "Beide Gleichungen beschreiben dieselbe Gerade. Löse eine davon nach \\(x\\) auf.",
+        loesungsweg: "\\(II = -1{,}5 \\cdot I\\), also gilt nur \\(2x - 4y = 6\\), d. h. \\(x = 3 + 2y\\). Für \\(y = 5\\): \\(x = 13\\). Lösungsmenge: \\(\\{(3 + 2t \\mid t)\\}\\)."
       },
       {
         id: 35,
         level: 6,
         typ: "numerisch",
-        frage: "Ein Boot fährt 24 km flussabwärts in 2 h und dieselbe Strecke flussaufwärts in 3 h. Wie groß ist die Eigengeschwindigkeit des Bootes (in km/h)?",
-        loesung: 10,
-        toleranz: 0.01,
-        tipp: "Sei \\(v\\) die Bootsgeschwindigkeit und \\(s\\) die Strömung: \\(v + s = 12\\) und \\(v - s = 8\\).",
-        loesungsweg: "Abwärts: \\(v + s = 24/2 = 12\\). Aufwärts: \\(v - s = 24/3 = 8\\). Addition: \\(2v = 20 \\Rightarrow v = 10\\) km/h."
+        frage: "Aus einer Legierung A mit \\(45\\,\\%\\) Kupferanteil und einer Legierung B mit \\(70\\,\\%\\) Kupferanteil sollen \\(300\\,\\text{g}\\) einer Legierung mit \\(60\\,\\%\\) Kupferanteil hergestellt werden. Wie viel Gramm der Legierung B werden benötigt?",
+        loesung: 180,
+        toleranz: 0,
+        tipp: "Eine Gleichung für die Gesamtmasse, eine für die Kupfermasse.",
+        loesungsweg: "\\(a + b = 300\\) und \\(0{,}45a + 0{,}7b = 180\\). Mit \\(a = 300 - b\\): \\(135 + 0{,}25b = 180 \\Rightarrow b = 180\\,\\text{g}\\), \\(a = 120\\,\\text{g}\\)."
       },
       {
         id: 36,
         level: 6,
         typ: "numerisch",
-        frage: "In einem Kino kosten 3 Erwachsenen- und 5 Kinderkarten zusammen 49 €. 2 Erwachsenen- und 3 Kinderkarten kosten 31 €. Wie teuer ist eine Erwachsenenkarte (in €)?",
-        loesung: 8,
-        toleranz: 0.01,
-        tipp: "LGS: \\(3x + 5y = 49\\) und \\(2x + 3y = 31\\).",
-        loesungsweg: "\\(3 \\cdot\\) Gl.2: \\(6x + 9y = 93\\). \\(2 \\cdot\\) Gl.1: \\(6x + 10y = 98\\). Subtraktion: \\(y = 5\\). Einsetzen in Gl.2: \\(2x + 15 = 31 \\Rightarrow x = 8\\) €."
+        frage: "Für welchen Wert von \\(a\\) hat das LGS \\(\\begin{cases} ax + 2y = 3 \\\\ 8x + ay = 6 \\end{cases}\\) unendlich viele Lösungen?",
+        loesung: 4,
+        toleranz: 0,
+        tipp: "Es gibt zwei Kandidaten für \\(a\\); nur einer passt auch zu den rechten Seiten.",
+        loesungsweg: "Linke Seiten proportional: \\(a \\cdot a = 2 \\cdot 8 = 16 \\Rightarrow a = \\pm 4\\). Die rechten Seiten verlangen Faktor \\(2\\) (\\(6 = 2 \\cdot 3\\)). Für \\(a = 4\\) ist II gleich \\(2 \\cdot I\\): unendlich viele Lösungen. Für \\(a = -4\\) wäre der Faktor \\(-2\\), aber \\(6 \\neq -6\\): keine Lösung."
       }
     ];
     </script>
