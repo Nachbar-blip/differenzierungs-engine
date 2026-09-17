@@ -16,7 +16,7 @@
     const THEMA_KEY = '10-trig-sinusfunktion';
     const THEMA_CONFIG = { name: 'Sinusfunktion', bereich: 'analysis', p3Enabled: true };
     const AUFGABEN = [
-      // ========== LEVEL 1 — Grundeigenschaften (6 Aufgaben) ==========
+      // ========== LEVEL 1 — babyleicht (6 Aufgaben) ==========
       {
         id: 1,
         level: 1,
@@ -107,8 +107,7 @@
         tipp: "Der Sinus ist \\(0\\) bei \\(0,\\ \\pi,\\ 2\\pi,\\ -\\pi, \\ldots\\).",
         loesungsweg: "Die Nullstellen sind alle ganzzahligen Vielfachen von \\(\\pi\\): \\(x = k \\cdot \\pi\\) mit \\(k \\in \\mathbb{Z}\\)."
       },
-
-      // ========== LEVEL 2 — Spezielle Werte (6 Aufgaben) ==========
+      // ========== LEVEL 2 — leicht (6 Aufgaben) ==========
       {
         id: 7,
         level: 2,
@@ -179,8 +178,7 @@
         tipp: "\\(\\frac{\\pi}{6}\\) entspricht 30°.",
         loesungsweg: "Aus der Wertetabelle: \\(\\sin\\!\\left(\\frac{\\pi}{6}\\right) = \\sin(30^\\circ) = \\frac{1}{2}\\)."
       },
-
-      // ========== LEVEL 3 — Verlauf, Hoch-/Tiefpunkte, Monotonie (6 Aufgaben) ==========
+      // ========== LEVEL 3 — nervenschonend (6 Aufgaben) ==========
       {
         id: 13,
         level: 3,
@@ -200,49 +198,49 @@
         id: 14,
         level: 3,
         typ: "mc",
-        frage: "An welcher Stelle im Intervall \\([0;\\, 2\\pi]\\) hat \\(f(x) = \\sin(x)\\) ihren Tiefpunkt?",
+        frage: "Wie lautet der Hochpunkt von \\(f(x) = \\sin(x)\\) im Intervall \\([2\\pi;\\, 4\\pi]\\)?",
         optionen: [
-          "\\(x = \\pi\\)",
-          "\\(x = \\frac{3\\pi}{2}\\)",
-          "\\(x = 2\\pi\\)",
-          "\\(x = \\frac{\\pi}{2}\\)"
+          "\\(H(2\\pi\\,|\\,1)\\)",
+          "\\(H\\!\\left(\\frac{5\\pi}{2}\\,\\middle|\\,1\\right)\\)",
+          "\\(H(3\\pi\\,|\\,1)\\)",
+          "\\(H\\!\\left(\\frac{7\\pi}{2}\\,\\middle|\\,1\\right)\\)"
         ],
         korrekt: 1,
-        tipp: "Das Minimum \\(-1\\) wird bei \\(\\frac{3\\pi}{2}\\) erreicht.",
-        loesungsweg: "Der Tiefpunkt liegt bei \\(T\\!\\left(\\frac{3\\pi}{2}\\,\\middle|\\,-1\\right)\\)."
+        tipp: "Wegen der Periode \\(2\\pi\\) ist der Hochpunkt um \\(2\\pi\\) verschoben: \\(\\frac{\\pi}{2} + 2\\pi\\).",
+        loesungsweg: "Der Hochpunkt bei \\(\\frac{\\pi}{2}\\) wiederholt sich um eine Periode versetzt bei \\(\\frac{\\pi}{2} + 2\\pi = \\frac{5\\pi}{2}\\). Also \\(H\\!\\left(\\frac{5\\pi}{2}\\,\\middle|\\,1\\right)\\)."
       },
       {
         id: 15,
         level: 3,
-        typ: "mc",
-        frage: "In welchem Intervall ist \\(f(x) = \\sin(x)\\) monoton steigend?",
-        optionen: [
-          "\\(\\left[0;\\, \\frac{\\pi}{2}\\right]\\)",
-          "\\(\\left[\\frac{\\pi}{2};\\, \\pi\\right]\\)",
-          "\\(\\left[\\pi;\\, \\frac{3\\pi}{2}\\right]\\)",
-          "\\(\\left[\\frac{\\pi}{2};\\, \\frac{3\\pi}{2}\\right]\\)"
-        ],
-        korrekt: 0,
-        tipp: "Wo steigt die Kurve vom Wert 0 zum Wert 1?",
-        loesungsweg: "Von \\(0\\) bis \\(\\frac{\\pi}{2}\\) steigt der Sinus von \\(0\\) auf \\(1\\), ist also monoton steigend."
+        typ: "numerisch",
+        frage: "Berechne \\(\\sin\\left(\\frac{7\\pi}{6}\\right)\\) als Dezimalzahl. Runde auf zwei Dezimalstellen.",
+        loesung: -0.5,
+        toleranz: 0.01,
+        tipp: "\\(\\frac{7\\pi}{6} = \\pi + \\frac{\\pi}{6}\\).",
+        loesungsweg: "\\(\\frac{7\\pi}{6}\\) liegt im III. Quadranten, Bezugswinkel \\(\\frac{\\pi}{6}\\). Dort ist der Sinus negativ: \\(\\sin\\left(\\frac{7\\pi}{6}\\right) = -\\sin\\left(\\frac{\\pi}{6}\\right) = -0{,}5\\)."
       },
       {
         id: 16,
         level: 3,
-        typ: "mc",
-        frage: "In welchem Intervall ist \\(f(x) = \\sin(x)\\) monoton fallend?",
-        optionen: [
-          "\\(\\left[0;\\, \\frac{\\pi}{2}\\right]\\)",
-          "\\(\\left[\\frac{\\pi}{2};\\, \\frac{3\\pi}{2}\\right]\\)",
-          "\\(\\left[\\pi;\\, 2\\pi\\right]\\)",
-          "\\(\\left[\\frac{3\\pi}{2};\\, 2\\pi\\right]\\)"
-        ],
-        korrekt: 1,
-        tipp: "Vom Hochpunkt \\(\\frac{\\pi}{2}\\) bis zum Tiefpunkt \\(\\frac{3\\pi}{2}\\) fällt der Sinus.",
-        loesungsweg: "Zwischen \\(\\frac{\\pi}{2}\\) und \\(\\frac{3\\pi}{2}\\) fällt der Sinus von \\(1\\) auf \\(-1\\)."
+        typ: "numerisch",
+        frage: "Berechne \\(\\sin\\left(\\frac{13\\pi}{6}\\right)\\) als Dezimalzahl. Runde auf zwei Dezimalstellen.",
+        loesung: 0.5,
+        toleranz: 0.01,
+        tipp: "Ziehe eine volle Periode ab.",
+        loesungsweg: "\\(\\frac{13\\pi}{6} = 2\\pi + \\frac{\\pi}{6}\\). Wegen der Periode \\(2\\pi\\): \\(\\sin\\left(\\frac{13\\pi}{6}\\right) = \\sin\\left(\\frac{\\pi}{6}\\right) = 0{,}5\\)."
       },
       {
         id: 17,
+        level: 3,
+        typ: "numerisch",
+        frage: "Wie viele Nullstellen hat \\(f(x) = \\sin(x)\\) im Intervall \\([0;\\,10]\\)?",
+        loesung: 4,
+        toleranz: 0,
+        tipp: "Die Nullstellen sind Vielfache von \\(\\pi \\approx 3{,}14\\).",
+        loesungsweg: "Nullstellen: \\(0,\\ \\pi \\approx 3{,}14,\\ 2\\pi \\approx 6{,}28,\\ 3\\pi \\approx 9{,}42\\). \\(4\\pi \\approx 12{,}57 > 10\\). Also \\(4\\) Nullstellen."
+      },
+      {
+        id: 18,
         level: 3,
         typ: "mc",
         frage: "Welche Aussage über \\(f(x) = \\sin(x)\\) im Intervall \\(\\left[\\frac{3\\pi}{2};\\, 2\\pi\\right]\\) ist korrekt?",
@@ -256,40 +254,39 @@
         tipp: "Vom Tiefpunkt \\(-1\\) geht es zurück zur Nullstelle.",
         loesungsweg: "Von \\(\\frac{3\\pi}{2}\\) (Wert \\(-1\\)) bis \\(2\\pi\\) (Wert \\(0\\)) steigt der Sinus. Also monoton steigend."
       },
-      {
-        id: 18,
-        level: 3,
-        typ: "mc",
-        frage: "Wie lautet der Hochpunkt von \\(f(x) = \\sin(x)\\) im Intervall \\([2\\pi;\\, 4\\pi]\\)?",
-        optionen: [
-          "\\(H(2\\pi\\,|\\,1)\\)",
-          "\\(H\\!\\left(\\frac{5\\pi}{2}\\,\\middle|\\,1\\right)\\)",
-          "\\(H(3\\pi\\,|\\,1)\\)",
-          "\\(H\\!\\left(\\frac{7\\pi}{2}\\,\\middle|\\,1\\right)\\)"
-        ],
-        korrekt: 1,
-        tipp: "Wegen der Periode \\(2\\pi\\) ist der Hochpunkt um \\(2\\pi\\) verschoben: \\(\\frac{\\pi}{2} + 2\\pi\\).",
-        loesungsweg: "Der Hochpunkt bei \\(\\frac{\\pi}{2}\\) wiederholt sich um eine Periode versetzt bei \\(\\frac{\\pi}{2} + 2\\pi = \\frac{5\\pi}{2}\\). Also \\(H\\!\\left(\\frac{5\\pi}{2}\\,\\middle|\\,1\\right)\\)."
-      },
-
-      // ========== LEVEL 4 — Nullstellen in [0, 4π] (6 Aufgaben) ==========
+      // ========== LEVEL 4 — mittel (6 Aufgaben) ==========
       {
         id: 19,
         level: 4,
-        typ: "mc",
-        frage: "Wie viele Nullstellen hat \\(f(x) = \\sin(x)\\) im Intervall \\([0;\\, 4\\pi]\\)?",
-        optionen: [
-          "\\(3\\)",
-          "\\(4\\)",
-          "\\(5\\)",
-          "\\(6\\)"
-        ],
-        korrekt: 2,
-        tipp: "Zähle: \\(0,\\ \\pi,\\ 2\\pi,\\ 3\\pi,\\ 4\\pi\\).",
-        loesungsweg: "Die Nullstellen in \\([0;\\, 4\\pi]\\) sind \\(0,\\ \\pi,\\ 2\\pi,\\ 3\\pi,\\ 4\\pi\\). Das sind \\(5\\) Nullstellen."
+        typ: "numerisch",
+        frage: "Löse \\(\\sin x = 0{,}5\\) im Intervall \\([0;\\,2\\pi]\\). Gib die größere Lösung als Dezimalzahl an. Runde auf zwei Dezimalstellen.",
+        loesung: 2.62,
+        toleranz: 0.01,
+        tipp: "Der Taschenrechner liefert nur die erste Lösung.",
+        loesungsweg: "\\(x_1 = \\arcsin(0{,}5) = \\frac{\\pi}{6}\\). Zweite Lösung: \\(x_2 = \\pi - \\frac{\\pi}{6} = \\frac{5\\pi}{6} \\approx 2{,}62\\)."
       },
       {
         id: 20,
+        level: 4,
+        typ: "numerisch",
+        frage: "Löse \\(\\sin x = -0{,}4\\) im Intervall \\([0;\\,2\\pi]\\). Gib die kleinere Lösung als Dezimalzahl an. Runde auf zwei Dezimalstellen.",
+        loesung: 3.55,
+        toleranz: 0.01,
+        tipp: "Der Taschenrechner liefert einen negativen Winkel - der liegt nicht im Intervall.",
+        loesungsweg: "\\(\\arcsin(-0{,}4) \\approx -0{,}4115\\). Lösungen im Intervall: \\(x_1 = \\pi + 0{,}4115 \\approx 3{,}55\\) und \\(x_2 = 2\\pi - 0{,}4115 \\approx 5{,}87\\). Kleinere Lösung: \\(3{,}55\\)."
+      },
+      {
+        id: 21,
+        level: 4,
+        typ: "numerisch",
+        frage: "Wie viele Lösungen hat die Gleichung \\(\\sin x = 0{,}7\\) im Intervall \\([0;\\,4\\pi]\\)?",
+        loesung: 4,
+        toleranz: 0,
+        tipp: "Wie viele Lösungen gibt es pro Periode?",
+        loesungsweg: "Pro Periode \\(2\\pi\\) gibt es zwei Lösungen (\\(x_1\\) und \\(\\pi - x_1\\)). Das Intervall \\([0;\\,4\\pi]\\) umfasst zwei Perioden: \\(4\\) Lösungen."
+      },
+      {
+        id: 22,
         level: 4,
         typ: "mc",
         frage: "Welche Menge gibt alle Nullstellen von \\(f(x) = \\sin(x)\\) im Intervall \\([0;\\, 4\\pi]\\) an?",
@@ -302,31 +299,6 @@
         korrekt: 1,
         tipp: "Alle ganzzahligen Vielfachen von \\(\\pi\\) zwischen \\(0\\) und \\(4\\pi\\).",
         loesungsweg: "Aus \\(\\sin(x) = 0\\) folgt \\(x = k \\cdot \\pi\\). Für \\(k = 0, 1, 2, 3, 4\\) liegt \\(x\\) in \\([0;\\, 4\\pi]\\)."
-      },
-      {
-        id: 21,
-        level: 4,
-        typ: "numerisch",
-        frage: "Die kleinste positive Nullstelle von \\(f(x) = \\sin(x)\\) ist \\(x = k\\pi\\). Gib \\(k\\) an.",
-        loesung: 1,
-        toleranz: 0,
-        tipp: "Die kleinste positive Nullstelle ist \\(\\pi\\).",
-        loesungsweg: "Die kleinste positive Nullstelle ist \\(x = \\pi = 1 \\cdot \\pi\\), also \\(k = 1\\)."
-      },
-      {
-        id: 22,
-        level: 4,
-        typ: "mc",
-        frage: "Wie viele Hochpunkte hat \\(f(x) = \\sin(x)\\) im Intervall \\([0;\\, 4\\pi]\\)?",
-        optionen: [
-          "\\(1\\)",
-          "\\(2\\)",
-          "\\(3\\)",
-          "\\(4\\)"
-        ],
-        korrekt: 1,
-        tipp: "Pro Periode gibt es einen Hochpunkt. \\([0;\\, 4\\pi]\\) enthält zwei Perioden.",
-        loesungsweg: "Hochpunkte bei \\(\\frac{\\pi}{2}\\) und \\(\\frac{5\\pi}{2}\\). Das sind \\(2\\) Hochpunkte."
       },
       {
         id: 23,
@@ -347,190 +319,153 @@
         id: 24,
         level: 4,
         typ: "numerisch",
-        frage: "Wie viele Tiefpunkte hat \\(f(x) = \\sin(x)\\) im Intervall \\([0;\\, 4\\pi]\\)?",
-        loesung: 2,
-        toleranz: 0,
-        tipp: "In jeder Periode \\(2\\pi\\) gibt es genau einen Tiefpunkt.",
-        loesungsweg: "Tiefpunkte bei \\(\\frac{3\\pi}{2}\\) und \\(\\frac{7\\pi}{2}\\). Das sind \\(2\\) Tiefpunkte."
+        frage: "Für welches \\(x\\) im Intervall \\(\\left[\\frac{\\pi}{2};\\,\\frac{3\\pi}{2}\\right]\\) gilt \\(\\sin x = 0{,}6\\)? Runde auf zwei Dezimalstellen.",
+        loesung: 2.5,
+        toleranz: 0.01,
+        tipp: "Der Taschenrechnerwert liegt nicht im geforderten Intervall.",
+        loesungsweg: "\\(\\arcsin(0{,}6) \\approx 0{,}6435\\) liegt nicht im Intervall. Die zweite Lösung \\(\\pi - 0{,}6435 \\approx 2{,}50\\) liegt darin."
       },
-
-      // ========== LEVEL 5 — Gleichung sin(x) = c in [0, 2π] (6 Aufgaben) ==========
+      // ========== LEVEL 5 — anspruchsvoll (6 Aufgaben) ==========
       {
         id: 25,
         level: 5,
-        typ: "mc",
-        frage: "Löse \\(\\sin(x) = 0{,}5\\) im Intervall \\([0;\\, 2\\pi]\\).",
-        optionen: [
-          "\\(x = \\frac{\\pi}{6}\\)",
-          "\\(x = \\frac{\\pi}{6}\\) und \\(x = \\frac{5\\pi}{6}\\)",
-          "\\(x = \\frac{\\pi}{4}\\) und \\(x = \\frac{3\\pi}{4}\\)",
-          "\\(x = \\frac{\\pi}{3}\\) und \\(x = \\frac{2\\pi}{3}\\)"
-        ],
-        korrekt: 1,
-        tipp: "Eine Lösung ist \\(\\frac{\\pi}{6}\\). Wegen Symmetrie: zweite Lösung \\(\\pi - \\frac{\\pi}{6}\\).",
-        loesungsweg: "\\(\\sin\\!\\left(\\frac{\\pi}{6}\\right) = 0{,}5\\). Zweite Lösung: \\(\\pi - \\frac{\\pi}{6} = \\frac{5\\pi}{6}\\). Also \\(x_1 = \\frac{\\pi}{6},\\ x_2 = \\frac{5\\pi}{6}\\)."
+        typ: "numerisch",
+        frage: "Berechne die Summe aller Lösungen von \\(\\sin x = -0{,}6\\) im Intervall \\([0;\\,2\\pi]\\). Runde auf zwei Dezimalstellen.",
+        loesung: 9.42,
+        toleranz: 0.01,
+        tipp: "Beide Lösungen liegen unterhalb der \\(x\\)-Achse, symmetrisch zu \\(x = \\frac{3\\pi}{2}\\).",
+        loesungsweg: "\\(\\arcsin(0{,}6) \\approx 0{,}6435\\). Lösungen: \\(x_1 = \\pi + 0{,}6435 \\approx 3{,}785\\), \\(x_2 = 2\\pi - 0{,}6435 \\approx 5{,}640\\). Summe \\(= 3\\pi \\approx 9{,}42\\)."
       },
       {
         id: 26,
         level: 5,
-        typ: "mc",
-        frage: "Löse \\(\\sin(x) = 1\\) im Intervall \\([0;\\, 2\\pi]\\).",
-        optionen: [
-          "\\(x = 0\\)",
-          "\\(x = \\frac{\\pi}{2}\\)",
-          "\\(x = \\pi\\)",
-          "\\(x = \\frac{\\pi}{2}\\) und \\(x = \\frac{3\\pi}{2}\\)"
-        ],
-        korrekt: 1,
-        tipp: "Das Maximum \\(1\\) wird genau einmal im Intervall erreicht.",
-        loesungsweg: "Das Maximum \\(\\sin(x) = 1\\) wird im Intervall \\([0;\\, 2\\pi]\\) nur bei \\(x = \\frac{\\pi}{2}\\) angenommen."
+        typ: "numerisch",
+        frage: "Bestimme die Stelle \\(x\\) im Intervall \\([2\\pi;\\,4\\pi]\\), an der \\(\\sin x = -0{,}5\\) gilt und der Graph fallend ist. Runde auf zwei Dezimalstellen.",
+        loesung: 9.95,
+        toleranz: 0.01,
+        tipp: "Löse zuerst in \\([0;\\,2\\pi]\\), verschiebe dann um eine Periode.",
+        loesungsweg: "In \\([0;\\,2\\pi]\\): \\(x = \\frac{7\\pi}{6}\\) (fallend) und \\(x = \\frac{11\\pi}{6}\\) (steigend). Um \\(2\\pi\\) verschoben: \\(\\frac{19\\pi}{6} \\approx 9{,}95\\)."
       },
       {
         id: 27,
         level: 5,
         typ: "mc",
-        frage: "Löse \\(\\sin(x) = -1\\) im Intervall \\([0;\\, 2\\pi]\\).",
+        frage: "Ein Schüler löst \\(\\sin x = 0{,}6\\) im Intervall \\([0;\\,2\\pi]\\):<br>Schritt 1: \\(x_1 = \\arcsin(0{,}6) \\approx 0{,}64\\)<br>Schritt 2: \\(x_2 = 2\\pi - 0{,}64 \\approx 5{,}64\\)<br>Schritt 3: \\(L = \\{0{,}64;\\ 5{,}64\\}\\)<br>Welcher Schritt ist der erste fehlerhafte?",
         optionen: [
-          "\\(x = \\pi\\)",
-          "\\(x = \\frac{3\\pi}{2}\\)",
-          "\\(x = 2\\pi\\)",
-          "keine Lösung"
+          "Schritt 1",
+          "Schritt 2",
+          "Schritt 3",
+          "Kein Schritt ist fehlerhaft"
         ],
         korrekt: 1,
-        tipp: "Das Minimum \\(-1\\) wird am Tiefpunkt erreicht.",
-        loesungsweg: "Das Minimum \\(\\sin(x) = -1\\) wird bei \\(x = \\frac{3\\pi}{2}\\) angenommen."
+        tipp: "Bei welchem Vorzeichen des rechten Werts liegt die zweite Lösung bei \\(2\\pi - x_1\\)?",
+        loesungsweg: "Für positive Werte liegt die zweite Lösung bei \\(\\pi - x_1 \\approx 2{,}50\\), nicht bei \\(2\\pi - x_1\\) (dort ist der Sinus negativ). Schritt 2 ist falsch."
       },
       {
         id: 28,
         level: 5,
-        typ: "mc",
-        frage: "Löse \\(\\sin(x) = 0\\) im Intervall \\([0;\\, 2\\pi]\\).",
-        optionen: [
-          "\\(x = 0\\)",
-          "\\(x = 0\\) und \\(x = \\pi\\)",
-          "\\(x = 0,\\ x = \\pi,\\ x = 2\\pi\\)",
-          "\\(x = \\pi\\)"
-        ],
-        korrekt: 2,
-        tipp: "Alle Nullstellen in \\([0;\\, 2\\pi]\\).",
-        loesungsweg: "Nullstellen sind \\(x = k\\pi\\). Im Intervall \\([0;\\, 2\\pi]\\) liegen \\(x = 0,\\ x = \\pi,\\ x = 2\\pi\\)."
+        typ: "numerisch",
+        frage: "Berechne die Summe aller Stellen im Intervall \\([0;\\,2\\pi]\\), an denen \\(\\sin x = \\cos x\\) gilt. Runde auf zwei Dezimalstellen.",
+        loesung: 4.71,
+        toleranz: 0.01,
+        tipp: "Wo sind beide Koordinaten eines Punktes auf dem Einheitskreis gleich?",
+        loesungsweg: "\\(\\sin x = \\cos x\\) gilt für \\(x = \\frac{\\pi}{4}\\) und \\(x = \\frac{5\\pi}{4}\\). Summe: \\(\\frac{6\\pi}{4} = \\frac{3\\pi}{2} \\approx 4{,}71\\)."
       },
       {
         id: 29,
         level: 5,
-        typ: "mc",
-        frage: "Löse \\(\\sin(x) = \\frac{\\sqrt{2}}{2}\\) im Intervall \\([0;\\, 2\\pi]\\).",
-        optionen: [
-          "\\(x = \\frac{\\pi}{6},\\ \\frac{5\\pi}{6}\\)",
-          "\\(x = \\frac{\\pi}{4},\\ \\frac{3\\pi}{4}\\)",
-          "\\(x = \\frac{\\pi}{3},\\ \\frac{2\\pi}{3}\\)",
-          "\\(x = \\frac{\\pi}{4}\\)"
-        ],
-        korrekt: 1,
-        tipp: "\\(\\sin\\!\\left(\\frac{\\pi}{4}\\right) = \\frac{\\sqrt{2}}{2} \\approx 0{,}7071\\).",
-        loesungsweg: "Erste Lösung: \\(x_1 = \\frac{\\pi}{4}\\). Zweite Lösung: \\(x_2 = \\pi - \\frac{\\pi}{4} = \\frac{3\\pi}{4}\\)."
+        typ: "numerisch",
+        frage: "Der Graph von \\(f(x) = \\sin(x)\\) schneidet die Gerade \\(y = 0{,}8\\) im Intervall \\([0;\\,2\\pi]\\) an zwei Stellen. Berechne den Abstand dieser beiden Stellen. Runde auf zwei Dezimalstellen.",
+        loesung: 1.29,
+        toleranz: 0.01,
+        tipp: "Die Stellen liegen symmetrisch zu \\(x = \\frac{\\pi}{2}\\).",
+        loesungsweg: "\\(x_1 = \\arcsin(0{,}8) \\approx 0{,}927\\), \\(x_2 = \\pi - x_1 \\approx 2{,}214\\). Abstand: \\(x_2 - x_1 = \\pi - 2 \\cdot 0{,}927 \\approx 1{,}29\\)."
       },
       {
         id: 30,
         level: 5,
         typ: "mc",
-        frage: "Löse \\(\\sin(x) = -0{,}5\\) im Intervall \\([0;\\, 2\\pi]\\).",
+        frage: "Die Gleichung \\(\\sin x = k\\) mit \\(0 < k < 1\\) hat im Intervall \\([0;\\,2\\pi]\\) zwei Lösungen \\(x_1 < x_2\\). Welche Aussage stimmt für <b>jedes</b> solche \\(k\\)?",
         optionen: [
-          "\\(x = \\frac{\\pi}{6},\\ \\frac{5\\pi}{6}\\)",
-          "\\(x = \\frac{7\\pi}{6},\\ \\frac{11\\pi}{6}\\)",
-          "\\(x = \\frac{7\\pi}{6},\\ \\frac{5\\pi}{6}\\)",
-          "keine Lösung"
+          "\\(x_1\\) und \\(x_2\\) liegen symmetrisch zu \\(x = \\frac{\\pi}{2}\\).",
+          "\\(x_1\\) und \\(x_2\\) liegen symmetrisch zu \\(x = \\pi\\).",
+          "Es gilt \\(x_2 = x_1 + \\pi\\).",
+          "Es gilt \\(x_2 = 2\\pi - x_1\\)."
         ],
-        korrekt: 1,
-        tipp: "Negative Werte liegen im Bereich \\([\\pi;\\, 2\\pi]\\). Nutze \\(x = \\pi + \\frac{\\pi}{6}\\) und \\(x = 2\\pi - \\frac{\\pi}{6}\\).",
-        loesungsweg: "Da \\(\\sin\\!\\left(\\frac{\\pi}{6}\\right) = 0{,}5\\), sind die Lösungen von \\(\\sin(x) = -0{,}5\\) im Intervall \\([0;\\, 2\\pi]\\): \\(x_1 = \\pi + \\frac{\\pi}{6} = \\frac{7\\pi}{6}\\) und \\(x_2 = 2\\pi - \\frac{\\pi}{6} = \\frac{11\\pi}{6}\\)."
+        korrekt: 0,
+        tipp: "Der Graph hat bei \\(x = \\frac{\\pi}{2}\\) einen Hochpunkt - was bedeutet das für die Symmetrie?",
+        loesungsweg: "\\(x_2 = \\pi - x_1\\), also \\(\\frac{x_1 + x_2}{2} = \\frac{\\pi}{2}\\): Die Lösungen liegen symmetrisch zum Hochpunkt bei \\(\\frac{\\pi}{2}\\). Die anderen Aussagen gelten für keinen Wert \\(0 < k < 1\\)."
       },
-
-      // ========== LEVEL 6 — Anwendungen (6 Aufgaben) ==========
+      // ========== LEVEL 6 — wagnerisch (6 Aufgaben) ==========
       {
         id: 31,
         level: 6,
         typ: "mc",
-        frage: "Die Tageslänge an einem bestimmten Ort lässt sich näherungsweise durch eine Sinusfunktion beschreiben. Welche Eigenschaft der Sinusfunktion bildet den jährlichen Wechsel von Sommer und Winter ab?",
+        frage: "Für welche Werte von \\(k\\) hat die Gleichung \\(\\sin x = k\\) im Intervall \\([0;\\,2\\pi)\\) <b>genau zwei</b> Lösungen?",
         optionen: [
-          "der Definitionsbereich",
-          "die Periodizität",
-          "die Nullstellen",
-          "der Wertebereich"
+          "\\(-1 < k < 1\\)",
+          "\\(0 < k < 1\\)",
+          "\\(k = 1\\) oder \\(k = -1\\)",
+          "\\(-1 \\le k \\le 1\\)"
         ],
-        korrekt: 1,
-        tipp: "Was wiederholt sich jedes Jahr?",
-        loesungsweg: "Die Periodizität sorgt dafür, dass sich das Muster (Sommer/Winter) regelmäßig wiederholt. Ein Jahr entspricht einer Periode."
+        korrekt: 0,
+        tipp: "Wie viele Lösungen hat \\(\\sin x = 0\\) in \\([0;\\,2\\pi)\\)? Wie viele hat \\(\\sin x = 1\\)?",
+        loesungsweg: "Für \\(-1 < k < 1\\) schneidet die Gerade \\(y = k\\) den Graphen in jeder Periode zweimal (auch für \\(k = 0\\): \\(x = 0\\) und \\(x = \\pi\\)). Für \\(k = \\pm 1\\) gibt es nur einen Berührpunkt, für \\(|k| > 1\\) keinen."
       },
       {
         id: 32,
         level: 6,
-        typ: "mc",
-        frage: "Ein Riesenrad-Sitz bewegt sich auf einer Kreisbahn. Die Höhe über der Mitte wird näherungsweise durch \\(h(t) = \\sin(t)\\) beschrieben. Welche Bedeutung hat der Wert \\(1\\) des Wertebereichs?",
-        optionen: [
-          "die Umlaufzeit",
-          "die höchste Position über der Mitte",
-          "die Startposition",
-          "die Geschwindigkeit"
-        ],
-        korrekt: 1,
-        tipp: "Der maximale Wert von \\(\\sin(t)\\) ist \\(1\\).",
-        loesungsweg: "Der Maximalwert \\(1\\) entspricht dem höchsten Punkt des Sitzes über der Mitte der Kreisbahn."
+        typ: "numerisch",
+        frage: "Die Tageslänge an einem Ort schwankt im Jahresverlauf sinusförmig zwischen \\(8\\) und \\(16\\) Stunden mit einer Periode von \\(365\\) Tagen. Am Tag \\(t = 0\\) (Frühlingsanfang) beträgt sie \\(12\\) Stunden und nimmt zu. Berechne die Tageslänge am Tag \\(t = 60\\). Runde auf eine Dezimalstelle.",
+        loesung: 15.4,
+        toleranz: 0.05,
+        tipp: "Mittelwert, Amplitude und Periode aus dem Text ablesen; der Verlauf startet wie die Sinusfunktion im Mittelwert.",
+        loesungsweg: "Mittelwert \\(12\\), Amplitude \\(4\\): \\(L(t) = 12 + 4 \\cdot \\sin\\left(\\frac{2\\pi}{365} t\\right)\\). \\(L(60) = 12 + 4 \\cdot \\sin(1{,}033) \\approx 12 + 3{,}43 \\approx 15{,}4\\) Stunden."
       },
       {
         id: 33,
         level: 6,
-        typ: "mc",
-        frage: "Die Temperaturschwankung an einem Tag wird vereinfacht durch \\(T(t) = \\sin(t)\\) modelliert. Nach welcher Zeit ist der Temperaturverlauf wieder am Ausgangswert (eine volle Periode)?",
-        optionen: [
-          "\\(\\pi\\)",
-          "\\(\\frac{\\pi}{2}\\)",
-          "\\(2\\pi\\)",
-          "\\(4\\pi\\)"
-        ],
-        korrekt: 2,
-        tipp: "Die Periode der Sinusfunktion ist \\(2\\pi\\).",
-        loesungsweg: "Die Grundperiode von \\(\\sin(t)\\) beträgt \\(2\\pi\\). Nach \\(2\\pi\\) beginnt der Verlauf von vorn."
+        typ: "numerisch",
+        frage: "Für welche \\(x\\) im Intervall \\([0;\\,2\\pi]\\) gilt \\(\\sin x > 0{,}5\\)? Gib die Länge des Lösungsintervalls an. Runde auf zwei Dezimalstellen.",
+        loesung: 2.09,
+        toleranz: 0.01,
+        tipp: "Bestimme zuerst die Stellen mit \\(\\sin x = 0{,}5\\) und prüfe dazwischen.",
+        loesungsweg: "\\(\\sin x = 0{,}5\\) bei \\(x = \\frac{\\pi}{6}\\) und \\(x = \\frac{5\\pi}{6}\\); dazwischen liegt der Hochpunkt, dort ist \\(\\sin x > 0{,}5\\). Länge: \\(\\frac{5\\pi}{6} - \\frac{\\pi}{6} = \\frac{2\\pi}{3} \\approx 2{,}09\\)."
       },
       {
         id: 34,
         level: 6,
-        typ: "mc",
-        frage: "Eine Welle wird durch \\(y(x) = \\sin(x)\\) beschrieben. Zwischen welchen Werten schwankt die Auslenkung?",
-        optionen: [
-          "zwischen \\(0\\) und \\(1\\)",
-          "zwischen \\(-1\\) und \\(1\\)",
-          "zwischen \\(-\\pi\\) und \\(\\pi\\)",
-          "zwischen \\(-2\\) und \\(2\\)"
-        ],
-        korrekt: 1,
-        tipp: "Der Wertebereich der Sinusfunktion.",
-        loesungsweg: "Der Wertebereich ist \\(W = [-1;\\, 1]\\). Die Auslenkung schwankt also zwischen \\(-1\\) und \\(1\\)."
+        typ: "numerisch",
+        frage: "Wie viele Lösungen hat die Gleichung \\(\\sin x = 0{,}35\\) im Intervall \\([-\\pi;\\,5\\pi]\\)?",
+        loesung: 6,
+        toleranz: 0,
+        tipp: "Wie lang ist das Intervall im Vergleich zur Periode?",
+        loesungsweg: "Das Intervall hat die Länge \\(6\\pi\\), also drei volle Perioden. Pro Periode gibt es zwei Lösungen (keine liegt auf einer Intervallgrenze, da \\(\\sin(-\\pi) = \\sin(5\\pi) = 0 \\ne 0{,}35\\)): \\(3 \\cdot 2 = 6\\)."
       },
       {
         id: 35,
         level: 6,
-        typ: "numerisch",
-        frage: "Die Höhe eines schaukelnden Pendels (in Metern) wird durch \\(h(t) = \\sin(t)\\) beschrieben. Welche Höhe hat das Pendel zum Zeitpunkt \\(t = \\frac{\\pi}{2}\\)?",
-        loesung: 1,
-        toleranz: 0.001,
-        tipp: "Setze \\(t = \\frac{\\pi}{2}\\) in \\(h(t)\\) ein.",
-        loesungsweg: "\\(h\\!\\left(\\frac{\\pi}{2}\\right) = \\sin\\!\\left(\\frac{\\pi}{2}\\right) = 1\\). Das Pendel ist auf Höhe \\(1\\,\\text{m}\\)."
+        typ: "mc",
+        frage: "Welche Aussage über den Graphen von \\(f(x) = \\sin(x)\\) ist richtig?",
+        optionen: [
+          "Der Graph ist achsensymmetrisch zur Geraden \\(x = \\frac{\\pi}{2}\\).",
+          "Der Graph ist achsensymmetrisch zur \\(y\\)-Achse.",
+          "Der Graph ist punktsymmetrisch zum Punkt \\(\\left(\\frac{\\pi}{2} \\mid 0\\right)\\).",
+          "Der Graph ist achsensymmetrisch zur Geraden \\(x = \\pi\\)."
+        ],
+        korrekt: 0,
+        tipp: "Vergleiche \\(f\\left(\\frac{\\pi}{2} + t\\right)\\) und \\(f\\left(\\frac{\\pi}{2} - t\\right)\\), z. B. für \\(t = \\frac{\\pi}{3}\\).",
+        loesungsweg: "\\(\\sin\\left(\\frac{\\pi}{2} + t\\right) = \\cos t = \\sin\\left(\\frac{\\pi}{2} - t\\right)\\): Der Graph ist symmetrisch zu jeder Geraden durch einen Hoch- oder Tiefpunkt. Zur \\(y\\)-Achse ist er punktsymmetrisch (nicht achsensymmetrisch); \\(\\left(\\frac{\\pi}{2} \\mid 0\\right)\\) und \\(x = \\pi\\) sind keine Symmetrieelemente (bei \\(x = \\pi\\) liegt eine Punktsymmetrie vor)."
       },
       {
         id: 36,
         level: 6,
-        typ: "mc",
-        frage: "Der Wasserstand in einem Hafen wird vereinfacht durch \\(w(t) = \\sin(t)\\) beschrieben (in Metern, \\(t\\) in Stunden). Zu welchem Zeitpunkt im Intervall \\([0;\\, 2\\pi]\\) ist der Wasserstand am niedrigsten?",
-        optionen: [
-          "\\(t = 0\\)",
-          "\\(t = \\frac{\\pi}{2}\\)",
-          "\\(t = \\pi\\)",
-          "\\(t = \\frac{3\\pi}{2}\\)"
-        ],
-        korrekt: 3,
-        tipp: "Der Tiefpunkt der Sinusfunktion liegt bei \\(\\frac{3\\pi}{2}\\).",
-        loesungsweg: "Der niedrigste Wert von \\(\\sin(t)\\) im Intervall \\([0;\\, 2\\pi]\\) wird bei \\(t = \\frac{3\\pi}{2}\\) mit \\(w = -1\\) angenommen."
+        typ: "numerisch",
+        frage: "Die Gleichung \\(\\sin x = k\\) hat im Intervall \\([0;\\,2\\pi]\\) die Lösung \\(x = 2{,}2\\). Bestimme die andere Lösung. Runde auf zwei Dezimalstellen.",
+        loesung: 0.94,
+        toleranz: 0.01,
+        tipp: "Der Wert \\(k\\) ist nicht nötig - in welchem Bereich liegt \\(2{,}2\\)?",
+        loesungsweg: "\\(2{,}2\\) liegt zwischen \\(\\frac{\\pi}{2}\\) und \\(\\pi\\), also ist \\(k = \\sin(2{,}2) > 0\\). Die beiden Lösungen liegen symmetrisch zu \\(\\frac{\\pi}{2}\\): \\(x_2 = \\pi - 2{,}2 \\approx 0{,}94\\)."
       }
     ];
     </script>

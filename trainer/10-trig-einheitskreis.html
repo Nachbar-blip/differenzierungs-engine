@@ -16,7 +16,7 @@
     const THEMA_KEY = '10-trig-einheitskreis';
     const THEMA_CONFIG = { name: 'Einheitskreis & Bogenmaß', bereich: 'analysis', p3Enabled: true };
     const AUFGABEN = [
-      // ========== LEVEL 1 — Einheitskreis-Grundlagen (6 Aufgaben) ==========
+      // ========== LEVEL 1 — babyleicht (6 Aufgaben) ==========
       {
         id: 1,
         level: 1,
@@ -92,8 +92,7 @@
         tipp: "Bei \\(\\alpha = 180°\\) liegt der Punkt auf der \\(x\\)-Achse bei \\((-1\\mid 0)\\).",
         loesungsweg: "Bei \\(\\alpha = 180°\\) ist der Punkt am Einheitskreis \\(P(-1\\mid 0)\\). Der Sinus ist die \\(y\\)-Koordinate, also \\(\\sin(180°) = 0\\)."
       },
-
-      // ========== LEVEL 2 — Grad & Bogenmaß (6 Aufgaben) ==========
+      // ========== LEVEL 2 — leicht (6 Aufgaben) ==========
       {
         id: 7,
         level: 2,
@@ -174,152 +173,105 @@
         tipp: "\\(45° = \\frac{\\pi}{4} \\approx 0{,}7854\\).",
         loesungsweg: "$$45° = 45 \\cdot \\frac{\\pi}{180} = \\frac{\\pi}{4} \\approx 0{,}7854$$"
       },
-
-      // ========== LEVEL 3 — Exakte Werte Standardwinkel (6 Aufgaben) ==========
+      // ========== LEVEL 3 — nervenschonend (6 Aufgaben) ==========
       {
         id: 13,
         level: 3,
-        typ: "mc",
-        frage: "Welchen exakten Wert hat \\(\\sin\\left(\\frac{\\pi}{6}\\right)\\)?",
-        optionen: [
-          "\\(\\frac{1}{2}\\)",
-          "\\(\\frac{\\sqrt{2}}{2}\\)",
-          "\\(\\frac{\\sqrt{3}}{2}\\)",
-          "\\(1\\)"
-        ],
-        korrekt: 0,
-        tipp: "\\(\\frac{\\pi}{6}\\) entspricht \\(30°\\).",
-        loesungsweg: "\\(\\frac{\\pi}{6} = 30°\\). Aus der Werte-Tabelle: $$\\sin(30°) = \\frac{1}{2}$$"
+        typ: "numerisch",
+        frage: "Berechne \\(\\sin\\left(\\frac{5\\pi}{6}\\right)\\) als Dezimalzahl. Runde auf zwei Dezimalstellen.",
+        loesung: 0.5,
+        toleranz: 0.01,
+        tipp: "In welchem Quadranten liegt der Winkel, und welcher Bezugswinkel gehört dazu?",
+        loesungsweg: "\\(\\frac{5\\pi}{6} = 150^\\circ\\) liegt im II. Quadranten, Bezugswinkel \\(30^\\circ\\). Dort ist der Sinus positiv: \\(\\sin(150^\\circ) = \\sin(30^\\circ) = 0{,}5\\)."
       },
       {
         id: 14,
         level: 3,
-        typ: "mc",
-        frage: "Welchen exakten Wert hat \\(\\cos\\left(\\frac{\\pi}{4}\\right)\\)?",
-        optionen: [
-          "\\(\\frac{1}{2}\\)",
-          "\\(\\frac{\\sqrt{2}}{2}\\)",
-          "\\(\\frac{\\sqrt{3}}{2}\\)",
-          "\\(1\\)"
-        ],
-        korrekt: 1,
-        tipp: "\\(\\frac{\\pi}{4}\\) entspricht \\(45°\\). Bei \\(45°\\) gilt \\(\\sin = \\cos\\).",
-        loesungsweg: "\\(\\frac{\\pi}{4} = 45°\\). Es gilt: $$\\cos(45°) = \\frac{\\sqrt{2}}{2} = \\frac{1}{\\sqrt{2}}$$"
+        typ: "numerisch",
+        frage: "Berechne \\(\\cos\\left(\\frac{3\\pi}{4}\\right)\\) als Dezimalzahl. Runde auf zwei Dezimalstellen.",
+        loesung: -0.71,
+        toleranz: 0.01,
+        tipp: "\\(\\frac{3\\pi}{4}\\) liegt im II. Quadranten. Welches Vorzeichen hat dort der Kosinus?",
+        loesungsweg: "\\(\\frac{3\\pi}{4} = 135^\\circ\\), Bezugswinkel \\(45^\\circ\\). Im II. Quadranten ist der Kosinus negativ: \\(\\cos(135^\\circ) = -\\cos(45^\\circ) = -\\frac{\\sqrt{2}}{2} \\approx -0{,}71\\)."
       },
       {
         id: 15,
         level: 3,
         typ: "mc",
-        frage: "Welchen exakten Wert hat \\(\\sin\\left(\\frac{\\pi}{3}\\right)\\)?",
+        frage: "Welchen exakten Wert hat \\(\\sin\\left(\\frac{4\\pi}{3}\\right)\\)?",
         optionen: [
-          "\\(\\frac{1}{2}\\)",
-          "\\(\\frac{\\sqrt{2}}{2}\\)",
+          "\\(-\\frac{\\sqrt{3}}{2}\\)",
           "\\(\\frac{\\sqrt{3}}{2}\\)",
-          "\\(1\\)"
+          "\\(-\\frac{1}{2}\\)",
+          "\\(\\frac{1}{2}\\)"
         ],
-        korrekt: 2,
-        tipp: "\\(\\frac{\\pi}{3}\\) entspricht \\(60°\\).",
-        loesungsweg: "\\(\\frac{\\pi}{3} = 60°\\). Aus der Werte-Tabelle: $$\\sin(60°) = \\frac{\\sqrt{3}}{2}$$"
+        korrekt: 0,
+        tipp: "Bestimme zuerst den Quadranten von \\(\\frac{4\\pi}{3}\\).",
+        loesungsweg: "\\(\\frac{4\\pi}{3} = 240^\\circ\\) liegt im III. Quadranten (Sinus negativ), Bezugswinkel \\(60^\\circ\\). Also \\(\\sin(240^\\circ) = -\\sin(60^\\circ) = -\\frac{\\sqrt{3}}{2}\\)."
       },
       {
         id: 16,
         level: 3,
         typ: "numerisch",
-        frage: "Berechne \\(\\cos\\left(\\frac{\\pi}{2}\\right)\\).",
-        loesung: 0,
-        toleranz: 0,
-        tipp: "\\(\\frac{\\pi}{2}\\) entspricht \\(90°\\). Der Punkt am Einheitskreis ist \\((0 \\mid 1)\\).",
-        loesungsweg: "\\(\\frac{\\pi}{2} = 90°\\). Am Einheitskreis: \\(P(0\\mid 1)\\). Kosinus = \\(x\\)-Koordinate: $$\\cos\\left(\\frac{\\pi}{2}\\right) = 0$$"
+        frage: "Rechne \\(225^\\circ\\) ins Bogenmaß um. Runde auf zwei Dezimalstellen.",
+        loesung: 3.93,
+        toleranz: 0.01,
+        tipp: "\\(180^\\circ\\) entspricht \\(\\pi\\).",
+        loesungsweg: "\\(x = \\frac{225}{180} \\cdot \\pi = \\frac{5\\pi}{4} \\approx 3{,}93\\)."
       },
       {
         id: 17,
         level: 3,
-        typ: "mc",
-        frage: "Welchen exakten Wert hat \\(\\tan\\left(\\frac{\\pi}{4}\\right)\\)?",
-        optionen: [
-          "\\(0\\)",
-          "\\(\\frac{1}{2}\\)",
-          "\\(1\\)",
-          "\\(\\sqrt{3}\\)"
-        ],
-        korrekt: 2,
-        tipp: "\\(\\tan\\alpha = \\frac{\\sin\\alpha}{\\cos\\alpha}\\). Bei \\(45°\\) gilt \\(\\sin = \\cos\\).",
-        loesungsweg: "$$\\tan\\left(\\frac{\\pi}{4}\\right) = \\frac{\\sin(\\pi/4)}{\\cos(\\pi/4)} = \\frac{\\sqrt{2}/2}{\\sqrt{2}/2} = 1$$"
+        typ: "numerisch",
+        frage: "Rechne den Winkel \\(x = 2{,}5\\) (Bogenmaß) in Grad um. Runde auf eine Dezimalstelle.",
+        loesung: 143.2,
+        toleranz: 0.05,
+        tipp: "\\(\\pi\\) entspricht \\(180^\\circ\\).",
+        loesungsweg: "\\(\\alpha = \\frac{2{,}5}{\\pi} \\cdot 180^\\circ \\approx 143{,}2^\\circ\\)."
       },
       {
         id: 18,
         level: 3,
         typ: "numerisch",
-        frage: "Berechne \\(\\sin(\\pi)\\).",
-        loesung: 0,
-        toleranz: 0,
-        tipp: "\\(\\pi\\) entspricht \\(180°\\). Der Punkt am Einheitskreis ist \\((-1 \\mid 0)\\).",
-        loesungsweg: "\\(\\pi = 180°\\). Am Einheitskreis: \\(P(-1\\mid 0)\\). Sinus = \\(y\\)-Koordinate: $$\\sin(\\pi) = 0$$"
+        frage: "Der Punkt \\(P\\) liegt auf dem Einheitskreis und gehört zum Winkel \\(150^\\circ\\). Berechne die \\(x\\)-Koordinate von \\(P\\). Runde auf zwei Dezimalstellen.",
+        loesung: -0.87,
+        toleranz: 0.01,
+        tipp: "Die \\(x\\)-Koordinate ist der Kosinus des Winkels.",
+        loesungsweg: "\\(x_P = \\cos(150^\\circ) = -\\cos(30^\\circ) = -\\frac{\\sqrt{3}}{2} \\approx -0{,}87\\)."
       },
-
-      // ========== LEVEL 4 — Vorzeichen & Symmetrien (6 Aufgaben) ==========
+      // ========== LEVEL 4 — mittel (6 Aufgaben) ==========
       {
         id: 19,
         level: 4,
-        typ: "mc",
-        frage: "Welches Vorzeichen hat \\(\\sin(\\alpha)\\) im III. Quadranten (\\(180° < \\alpha < 270°\\))?",
-        optionen: [
-          "positiv",
-          "negativ",
-          "immer 0",
-          "hängt von \\(\\alpha\\) ab"
-        ],
-        korrekt: 1,
-        tipp: "Im III. Quadranten ist die \\(y\\)-Koordinate negativ.",
-        loesungsweg: "Im III. Quadranten liegt der Punkt unterhalb der \\(x\\)-Achse, die \\(y\\)-Koordinate ist negativ. Da \\(\\sin\\alpha\\) die \\(y\\)-Koordinate am Einheitskreis ist, ist \\(\\sin\\alpha < 0\\)."
+        typ: "numerisch",
+        frage: "Der Punkt \\(P(-0{,}6 \\mid 0{,}8)\\) liegt auf dem Einheitskreis. Bestimme den zugehörigen Winkel \\(\\alpha\\) mit \\(0^\\circ \\le \\alpha < 360^\\circ\\). Runde auf eine Dezimalstelle.",
+        loesung: 126.9,
+        toleranz: 0.05,
+        tipp: "Welche Koordinate ist der Kosinus? In welchem Quadranten liegt \\(P\\)?",
+        loesungsweg: "\\(\\cos\\alpha = -0{,}6\\), \\(\\sin\\alpha = 0{,}8 > 0\\): \\(P\\) liegt im II. Quadranten. \\(\\alpha = \\arccos(-0{,}6) \\approx 126{,}9^\\circ\\) (liegt bereits im II. Quadranten)."
       },
       {
         id: 20,
         level: 4,
-        typ: "mc",
-        frage: "Welches Vorzeichen hat \\(\\cos(\\alpha)\\) im II. Quadranten (\\(90° < \\alpha < 180°\\))?",
-        optionen: [
-          "positiv",
-          "negativ",
-          "immer 0",
-          "immer 1"
-        ],
-        korrekt: 1,
-        tipp: "Im II. Quadranten ist die \\(x\\)-Koordinate negativ.",
-        loesungsweg: "Im II. Quadranten liegt der Punkt links der \\(y\\)-Achse, die \\(x\\)-Koordinate ist negativ. Da \\(\\cos\\alpha\\) die \\(x\\)-Koordinate ist, gilt \\(\\cos\\alpha < 0\\)."
+        typ: "numerisch",
+        frage: "Der Punkt \\(P(0{,}28 \\mid -0{,}96)\\) liegt auf dem Einheitskreis. Bestimme den zugehörigen Winkel \\(\\alpha\\) mit \\(0^\\circ \\le \\alpha < 360^\\circ\\). Runde auf eine Dezimalstelle.",
+        loesung: 286.3,
+        toleranz: 0.05,
+        tipp: "Der Taschenrechner liefert nur einen Winkel zwischen \\(-90^\\circ\\) und \\(90^\\circ\\).",
+        loesungsweg: "\\(\\sin\\alpha = -0{,}96\\), \\(\\cos\\alpha > 0\\): IV. Quadrant. \\(\\arcsin(-0{,}96) \\approx -73{,}7^\\circ\\), also \\(\\alpha = 360^\\circ - 73{,}7^\\circ = 286{,}3^\\circ\\)."
       },
       {
         id: 21,
         level: 4,
-        typ: "mc",
-        frage: "Welche Beziehung gilt allgemein für den Sinus?",
-        optionen: [
-          "\\(\\sin(-x) = \\sin(x)\\)",
-          "\\(\\sin(-x) = -\\sin(x)\\)",
-          "\\(\\sin(-x) = \\cos(x)\\)",
-          "\\(\\sin(-x) = 1 - \\sin(x)\\)"
-        ],
-        korrekt: 1,
-        tipp: "Der Sinus ist eine ungerade Funktion (punktsymmetrisch zum Ursprung).",
-        loesungsweg: "Der Sinus ist **punktsymmetrisch** zum Ursprung (ungerade Funktion). Daher: $$\\sin(-x) = -\\sin(x)$$"
+        typ: "numerisch",
+        frage: "Der Punkt \\(P\\) liegt auf dem Einheitskreis und gehört zum Winkel \\(x = 2{,}5\\) (Bogenmaß). Berechne die \\(x\\)-Koordinate von \\(P\\). Runde auf zwei Dezimalstellen.",
+        loesung: -0.8,
+        toleranz: 0.01,
+        tipp: "Taschenrechner auf Bogenmaß (RAD) stellen.",
+        loesungsweg: "\\(x_P = \\cos(2{,}5) \\approx -0{,}80\\). Der Winkel liegt zwischen \\(\\frac{\\pi}{2} \\approx 1{,}57\\) und \\(\\pi \\approx 3{,}14\\), also im II. Quadranten - der Kosinus ist negativ."
       },
       {
         id: 22,
-        level: 4,
-        typ: "mc",
-        frage: "Welche Beziehung gilt allgemein für den Kosinus?",
-        optionen: [
-          "\\(\\cos(-x) = -\\cos(x)\\)",
-          "\\(\\cos(-x) = \\cos(x)\\)",
-          "\\(\\cos(-x) = \\sin(x)\\)",
-          "\\(\\cos(-x) = 1 - \\cos(x)\\)"
-        ],
-        korrekt: 1,
-        tipp: "Der Kosinus ist eine gerade Funktion (achsensymmetrisch zur \\(y\\)-Achse).",
-        loesungsweg: "Der Kosinus ist **achsensymmetrisch** zur \\(y\\)-Achse (gerade Funktion). Daher: $$\\cos(-x) = \\cos(x)$$"
-      },
-      {
-        id: 23,
         level: 4,
         typ: "mc",
         frage: "Welcher Wert ist gleich \\(\\cos(\\pi - x)\\)?",
@@ -334,34 +286,33 @@
         loesungsweg: "Der Winkel \\(\\pi - x\\) entsteht durch Spiegelung von \\(x\\) an der \\(y\\)-Achse. Dabei bleibt die \\(y\\)-Koordinate gleich, die \\(x\\)-Koordinate wechselt das Vorzeichen. Also: $$\\cos(\\pi - x) = -\\cos(x)$$"
       },
       {
-        id: 24,
+        id: 23,
         level: 4,
         typ: "numerisch",
-        frage: "Berechne \\(\\sin(210°)\\) als Dezimalzahl.",
-        loesung: -0.5,
-        toleranz: 0.01,
-        tipp: "\\(210° = 180° + 30°\\), also III. Quadrant. Sinus ist dort negativ.",
-        loesungsweg: "\\(210°\\) liegt im III. Quadranten. Referenzwinkel zur \\(x\\)-Achse: \\(210° - 180° = 30°\\). Da der Sinus im III. Quadranten negativ ist: $$\\sin(210°) = -\\sin(30°) = -\\frac{1}{2} = -0{,}5$$"
+        frage: "Für welchen Winkel \\(\\alpha\\) im III. Quadranten gilt \\(\\sin\\alpha = -0{,}5\\)? Gib \\(\\alpha\\) in Grad an.",
+        loesung: 210,
+        toleranz: 0,
+        tipp: "Welcher Bezugswinkel hat den Sinus \\(0{,}5\\)?",
+        loesungsweg: "\\(\\sin(30^\\circ) = 0{,}5\\). Im III. Quadranten: \\(\\alpha = 180^\\circ + 30^\\circ = 210^\\circ\\)."
       },
-
-      // ========== LEVEL 5 — Grundbeziehung sin²+cos²=1 (6 Aufgaben) ==========
+      {
+        id: 24,
+        level: 4,
+        typ: "mc",
+        frage: "Auf dem Einheitskreis wird vom Punkt \\((1 \\mid 0)\\) aus gegen den Uhrzeigersinn ein Bogen der Länge \\(4\\) abgetragen. In welchem Quadranten liegt der Endpunkt?",
+        optionen: [
+          "III. Quadrant",
+          "II. Quadrant",
+          "IV. Quadrant",
+          "I. Quadrant"
+        ],
+        korrekt: 0,
+        tipp: "Bogenlänge auf dem Einheitskreis = Winkel im Bogenmaß.",
+        loesungsweg: "Der Winkel beträgt \\(4\\) (Bogenmaß). Wegen \\(\\pi \\approx 3{,}14 < 4 < 4{,}71 \\approx \\frac{3\\pi}{2}\\) liegt der Endpunkt im III. Quadranten."
+      },
+      // ========== LEVEL 5 — anspruchsvoll (6 Aufgaben) ==========
       {
         id: 25,
-        level: 5,
-        typ: "mc",
-        frage: "Welche Gleichung ist die trigonometrische Grundbeziehung?",
-        optionen: [
-          "\\(\\sin x + \\cos x = 1\\)",
-          "\\(\\sin^2 x + \\cos^2 x = 1\\)",
-          "\\(\\sin^2 x - \\cos^2 x = 1\\)",
-          "\\(\\sin x \\cdot \\cos x = 1\\)"
-        ],
-        korrekt: 1,
-        tipp: "Pythagoras am Einheitskreis: \\(x^2 + y^2 = 1\\).",
-        loesungsweg: "Am Einheitskreis liegen alle Punkte \\((x\\mid y)\\) auf dem Kreis mit \\(x^2 + y^2 = 1\\). Mit \\(x = \\cos\\alpha\\) und \\(y = \\sin\\alpha\\): $$\\sin^2\\alpha + \\cos^2\\alpha = 1$$"
-      },
-      {
-        id: 26,
         level: 5,
         typ: "numerisch",
         frage: "Gegeben: \\(\\sin\\alpha = 0{,}6\\) und \\(\\alpha\\) liegt im I. Quadranten. Bestimme \\(\\cos\\alpha\\).",
@@ -371,7 +322,7 @@
         loesungsweg: "Aus der Grundbeziehung: $$\\cos^2\\alpha = 1 - \\sin^2\\alpha = 1 - 0{,}36 = 0{,}64$$ Da \\(\\alpha\\) im I. Quadranten liegt, ist \\(\\cos\\alpha > 0\\): $$\\cos\\alpha = \\sqrt{0{,}64} = 0{,}8$$"
       },
       {
-        id: 27,
+        id: 26,
         level: 5,
         typ: "numerisch",
         frage: "Gegeben: \\(\\cos\\alpha = 0{,}8\\) und \\(\\alpha\\) liegt im IV. Quadranten. Bestimme \\(\\sin\\alpha\\).",
@@ -381,22 +332,7 @@
         loesungsweg: "Aus der Grundbeziehung: $$\\sin^2\\alpha = 1 - \\cos^2\\alpha = 1 - 0{,}64 = 0{,}36$$ Im IV. Quadranten ist \\(\\sin\\alpha < 0\\): $$\\sin\\alpha = -\\sqrt{0{,}36} = -0{,}6$$"
       },
       {
-        id: 28,
-        level: 5,
-        typ: "mc",
-        frage: "Ein Punkt \\(P\\) liegt auf dem Einheitskreis mit \\(x\\)-Koordinate \\(\\frac{1}{2}\\) im I. Quadranten. Welche \\(y\\)-Koordinate hat \\(P\\)?",
-        optionen: [
-          "\\(\\frac{1}{2}\\)",
-          "\\(\\frac{\\sqrt{3}}{2}\\)",
-          "\\(\\frac{\\sqrt{2}}{2}\\)",
-          "\\(1\\)"
-        ],
-        korrekt: 1,
-        tipp: "Aus \\(x^2 + y^2 = 1\\) folgt \\(y^2 = 1 - x^2\\).",
-        loesungsweg: "Mit \\(x = \\frac{1}{2}\\): $$y^2 = 1 - \\left(\\frac{1}{2}\\right)^2 = 1 - \\frac{1}{4} = \\frac{3}{4}$$ Im I. Quadranten ist \\(y > 0\\): $$y = \\sqrt{\\frac{3}{4}} = \\frac{\\sqrt{3}}{2}$$"
-      },
-      {
-        id: 29,
+        id: 27,
         level: 5,
         typ: "numerisch",
         frage: "Gegeben: \\(\\sin\\alpha = \\frac{3}{5}\\) und \\(\\alpha\\) im II. Quadranten. Bestimme \\(\\cos\\alpha\\) als Dezimalzahl.",
@@ -406,96 +342,115 @@
         loesungsweg: "$$\\cos^2\\alpha = 1 - \\sin^2\\alpha = 1 - \\frac{9}{25} = \\frac{16}{25}$$ Im II. Quadranten ist \\(\\cos\\alpha < 0\\): $$\\cos\\alpha = -\\sqrt{\\frac{16}{25}} = -\\frac{4}{5} = -0{,}8$$"
       },
       {
-        id: 30,
+        id: 28,
         level: 5,
         typ: "numerisch",
-        frage: "Berechne den Wert von \\(\\sin^2(37°) + \\cos^2(37°)\\).",
-        loesung: 1,
-        toleranz: 0,
-        tipp: "Denke an die trigonometrische Grundbeziehung — für jeden Winkel.",
-        loesungsweg: "Die trigonometrische Grundbeziehung gilt für **jeden** Winkel: $$\\sin^2\\alpha + \\cos^2\\alpha = 1$$ Also auch für \\(\\alpha = 37°\\): $$\\sin^2(37°) + \\cos^2(37°) = 1$$"
+        frage: "Für den Winkel \\(\\alpha\\) im I. Quadranten gilt \\(\\sin\\alpha = 2 \\cdot \\cos\\alpha\\). Bestimme \\(\\sin\\alpha\\). Runde auf zwei Dezimalstellen.",
+        loesung: 0.89,
+        toleranz: 0.01,
+        tipp: "Ersetze \\(\\sin\\alpha\\) in \\(\\sin^2\\alpha + \\cos^2\\alpha = 1\\).",
+        loesungsweg: "\\((2\\cos\\alpha)^2 + \\cos^2\\alpha = 1 \\Rightarrow 5\\cos^2\\alpha = 1 \\Rightarrow \\cos\\alpha = \\frac{1}{\\sqrt{5}}\\) (I. Quadrant). \\(\\sin\\alpha = \\frac{2}{\\sqrt{5}} \\approx 0{,}89\\)."
       },
-
-      // ========== LEVEL 6 — Winkel aus Wert bestimmen (6 Aufgaben) ==========
+      {
+        id: 29,
+        level: 5,
+        typ: "mc",
+        frage: "Gegeben: \\(\\sin\\alpha = 0{,}8\\), \\(\\alpha\\) im II. Quadranten. Ein Schüler berechnet \\(\\cos\\alpha\\):<br>Schritt 1: \\(\\sin^2\\alpha + \\cos^2\\alpha = 1\\)<br>Schritt 2: \\(\\cos^2\\alpha = 1 - 0{,}8 = 0{,}2\\)<br>Schritt 3: \\(\\cos\\alpha = \\pm\\sqrt{0{,}2} \\approx \\pm 0{,}45\\)<br>Schritt 4: II. Quadrant, also \\(\\cos\\alpha \\approx -0{,}45\\)<br>Welcher Schritt ist der erste fehlerhafte?",
+        optionen: [
+          "Schritt 1",
+          "Schritt 2",
+          "Schritt 3",
+          "Schritt 4"
+        ],
+        korrekt: 1,
+        tipp: "Was muss von \\(1\\) abgezogen werden?",
+        loesungsweg: "In Schritt 2 wurde \\(\\sin\\alpha\\) statt \\(\\sin^2\\alpha = 0{,}64\\) abgezogen. Richtig: \\(\\cos^2\\alpha = 0{,}36\\), \\(\\cos\\alpha = -0{,}6\\)."
+      },
+      {
+        id: 30,
+        level: 5,
+        typ: "mc",
+        frage: "Warum gilt \\(\\cos(\\pi - x) = -\\cos(x)\\) für alle \\(x\\)? Welche Begründung am Einheitskreis ist richtig?",
+        optionen: [
+          "Die Punkte zu \\(x\\) und \\(\\pi - x\\) liegen spiegelbildlich zur \\(y\\)-Achse; ihre \\(x\\)-Koordinaten unterscheiden sich nur im Vorzeichen.",
+          "Die Punkte zu \\(x\\) und \\(\\pi - x\\) liegen spiegelbildlich zur \\(x\\)-Achse; ihre \\(x\\)-Koordinaten unterscheiden sich nur im Vorzeichen.",
+          "Die Punkte zu \\(x\\) und \\(\\pi - x\\) liegen punktsymmetrisch zum Ursprung, daher wechseln beide Koordinaten das Vorzeichen.",
+          "Der Kosinus ist eine gerade Funktion, daher gilt \\(\\cos(\\pi - x) = \\cos(x)\\), und das Minuszeichen kommt vom Winkel \\(\\pi\\)."
+        ],
+        korrekt: 0,
+        tipp: "Zeichne die Punkte zu \\(x = 30^\\circ\\) und \\(180^\\circ - 30^\\circ = 150^\\circ\\).",
+        loesungsweg: "Spiegelt man den Punkt zum Winkel \\(x\\) an der \\(y\\)-Achse, erhält man den Punkt zum Winkel \\(\\pi - x\\). Die \\(y\\)-Koordinate (Sinus) bleibt, die \\(x\\)-Koordinate (Kosinus) wechselt das Vorzeichen."
+      },
+      // ========== LEVEL 6 — wagnerisch (6 Aufgaben) ==========
       {
         id: 31,
         level: 6,
         typ: "mc",
-        frage: "Für welche Winkel \\(x \\in [0, 2\\pi]\\) gilt \\(\\sin x = \\frac{1}{2}\\)?",
+        frage: "Für welche Werte von \\(k\\) hat die Gleichung \\(\\sin\\alpha = k\\) mit \\(0^\\circ \\le \\alpha < 360^\\circ\\) <b>genau eine</b> Lösung?",
         optionen: [
-          "nur \\(\\frac{\\pi}{6}\\)",
-          "\\(\\frac{\\pi}{6}\\) und \\(\\frac{5\\pi}{6}\\)",
-          "\\(\\frac{\\pi}{6}\\) und \\(\\frac{7\\pi}{6}\\)",
-          "\\(\\frac{\\pi}{3}\\) und \\(\\frac{2\\pi}{3}\\)"
+          "nur für \\(k = 1\\) und \\(k = -1\\)",
+          "nur für \\(k = 1\\)",
+          "für alle \\(k\\) mit \\(-1 < k < 1\\)",
+          "nur für \\(k = 0\\)"
         ],
-        korrekt: 1,
-        tipp: "Sinus ist positiv in den ersten beiden Quadranten. Zweite Lösung: \\(\\pi - x_1\\).",
-        loesungsweg: "Der Sinus ist positiv im I. und II. Quadranten. Erste Lösung: \\(x_1 = \\frac{\\pi}{6}\\) (entspricht \\(30°\\)). Zweite Lösung: $$x_2 = \\pi - \\frac{\\pi}{6} = \\frac{6\\pi - \\pi}{6} = \\frac{5\\pi}{6}$$ (entspricht \\(150°\\))."
+        korrekt: 0,
+        tipp: "Wie oft nimmt der Sinus auf einem vollen Umlauf einen Wert echt zwischen \\(-1\\) und \\(1\\) an?",
+        loesungsweg: "Für \\(-1 < k < 1\\) gibt es zwei Winkel (zwei Punkte des Einheitskreises mit dieser \\(y\\)-Koordinate). Nur bei \\(k = 1\\) (\\(\\alpha = 90^\\circ\\)) und \\(k = -1\\) (\\(\\alpha = 270^\\circ\\)) berührt die Gerade \\(y = k\\) den Kreis in genau einem Punkt."
       },
       {
         id: 32,
         level: 6,
-        typ: "mc",
-        frage: "Für welche Winkel \\(x \\in [0, 2\\pi]\\) gilt \\(\\cos x = \\frac{1}{2}\\)?",
-        optionen: [
-          "\\(\\frac{\\pi}{3}\\) und \\(\\frac{2\\pi}{3}\\)",
-          "\\(\\frac{\\pi}{3}\\) und \\(\\frac{5\\pi}{3}\\)",
-          "\\(\\frac{\\pi}{6}\\) und \\(\\frac{11\\pi}{6}\\)",
-          "\\(\\frac{\\pi}{4}\\) und \\(\\frac{7\\pi}{4}\\)"
-        ],
-        korrekt: 1,
-        tipp: "Kosinus ist positiv in den Quadranten I und IV. Zweite Lösung: \\(2\\pi - x_1\\).",
-        loesungsweg: "Der Kosinus ist positiv im I. und IV. Quadranten. Erste Lösung: \\(x_1 = \\frac{\\pi}{3}\\) (\\(60°\\)). Zweite Lösung: $$x_2 = 2\\pi - \\frac{\\pi}{3} = \\frac{6\\pi - \\pi}{3} = \\frac{5\\pi}{3}$$ (\\(300°\\))."
+        typ: "numerisch",
+        frage: "Die Gleichung \\(\\sin x = 0{,}3\\) hat im Intervall \\([0;\\,2\\pi]\\) zwei Lösungen. Berechne die Summe dieser beiden Lösungen. Runde auf zwei Dezimalstellen.",
+        loesung: 3.14,
+        toleranz: 0.01,
+        tipp: "Wie hängen die beiden Lösungen am Einheitskreis zusammen?",
+        loesungsweg: "\\(x_1 = \\arcsin(0{,}3) \\approx 0{,}305\\), \\(x_2 = \\pi - x_1 \\approx 2{,}837\\). Summe: \\(x_1 + (\\pi - x_1) = \\pi \\approx 3{,}14\\) - unabhängig vom Wert \\(0{,}3\\)."
       },
       {
         id: 33,
         level: 6,
-        typ: "mc",
-        frage: "Für welche Winkel \\(x \\in [0, 2\\pi]\\) gilt \\(\\sin x = -\\frac{\\sqrt{2}}{2}\\)?",
-        optionen: [
-          "\\(\\frac{\\pi}{4}\\) und \\(\\frac{3\\pi}{4}\\)",
-          "\\(\\frac{5\\pi}{4}\\) und \\(\\frac{7\\pi}{4}\\)",
-          "\\(\\frac{\\pi}{4}\\) und \\(\\frac{7\\pi}{4}\\)",
-          "nur \\(\\frac{3\\pi}{2}\\)"
-        ],
-        korrekt: 1,
-        tipp: "Sinus ist negativ im III. und IV. Quadranten. Referenzwinkel: \\(\\frac{\\pi}{4}\\).",
-        loesungsweg: "Der Sinus ist negativ im III. und IV. Quadranten. Referenzwinkel: \\(\\frac{\\pi}{4}\\) (da \\(\\sin(\\pi/4) = \\frac{\\sqrt{2}}{2}\\)). III. Quadrant: $$x_1 = \\pi + \\frac{\\pi}{4} = \\frac{5\\pi}{4}$$ IV. Quadrant: $$x_2 = 2\\pi - \\frac{\\pi}{4} = \\frac{7\\pi}{4}$$"
+        typ: "numerisch",
+        frage: "Ein Punkt bewegt sich mit konstanter Geschwindigkeit gegen den Uhrzeigersinn auf dem Einheitskreis. Er startet in \\((1 \\mid 0)\\) und braucht für eine volle Umdrehung \\(12\\) Sekunden. Berechne seine \\(x\\)-Koordinate nach \\(5\\) Sekunden. Runde auf zwei Dezimalstellen.",
+        loesung: -0.87,
+        toleranz: 0.01,
+        tipp: "Welchen Winkel hat der Punkt nach \\(5\\) Sekunden überstrichen?",
+        loesungsweg: "In \\(5\\) s werden \\(\\frac{5}{12}\\) einer Umdrehung zurückgelegt: Winkel \\(\\frac{5}{12} \\cdot 360^\\circ = 150^\\circ\\). \\(x = \\cos(150^\\circ) \\approx -0{,}87\\)."
       },
       {
         id: 34,
         level: 6,
         typ: "numerisch",
-        frage: "Bestimme den kleinsten positiven Winkel \\(x\\) (im Bogenmaß) mit \\(\\cos x = 0\\). Gib das Ergebnis als Dezimalzahl an.",
-        loesung: 1.5708,
+        frage: "Der Punkt \\(P(-0{,}8 \\mid -0{,}6)\\) liegt auf dem Einheitskreis. Bestimme den zugehörigen Winkel im Bogenmaß im Intervall \\([0;\\,2\\pi)\\). Runde auf zwei Dezimalstellen.",
+        loesung: 3.79,
         toleranz: 0.01,
-        tipp: "\\(\\cos x = 0\\) an der Stelle \\(x = \\frac{\\pi}{2}\\).",
-        loesungsweg: "Der Kosinus wird 0, wenn der Punkt am Einheitskreis auf der \\(y\\)-Achse liegt. Kleinster positiver Wert: $$x = \\frac{\\pi}{2} \\approx 1{,}5708$$"
+        tipp: "Beide Koordinaten sind negativ - in welchem Quadranten liegt \\(P\\)?",
+        loesungsweg: "III. Quadrant. Bezugswinkel: \\(\\arccos(0{,}8) \\approx 0{,}6435\\). Winkel: \\(\\pi + 0{,}6435 \\approx 3{,}79\\)."
       },
       {
         id: 35,
         level: 6,
         typ: "mc",
-        frage: "Für welche Winkel \\(x \\in [0, 2\\pi]\\) gilt \\(\\cos x = -1\\)?",
+        frage: "Welche Aussage gilt für <b>alle</b> Winkel \\(x\\)?",
         optionen: [
-          "nur \\(x = 0\\)",
-          "nur \\(x = \\pi\\)",
-          "nur \\(x = \\frac{\\pi}{2}\\)",
-          "\\(x = \\pi\\) und \\(x = 2\\pi\\)"
+          "\\(\\sin(x + \\pi) = -\\sin(x)\\)",
+          "\\(\\sin(\\pi - x) = -\\sin(x)\\)",
+          "\\(\\cos(x + \\pi) = \\cos(x)\\)",
+          "\\(\\sin\\left(x + \\frac{\\pi}{2}\\right) = -\\cos(x)\\)"
         ],
-        korrekt: 1,
-        tipp: "Der Kosinus erreicht den Wert \\(-1\\) am Punkt \\((-1\\mid 0)\\) des Einheitskreises.",
-        loesungsweg: "Der Kosinus ist die \\(x\\)-Koordinate am Einheitskreis. Der Wert \\(-1\\) wird nur am Punkt \\((-1\\mid 0)\\) erreicht, also bei \\(x = \\pi\\). Im Intervall \\([0, 2\\pi]\\) gibt es nur diese eine Lösung."
+        korrekt: 0,
+        tipp: "Prüfe jede Aussage mit \\(x = \\frac{\\pi}{6}\\) am Einheitskreis.",
+        loesungsweg: "Eine Drehung um \\(\\pi\\) führt zum gegenüberliegenden Punkt: beide Koordinaten wechseln das Vorzeichen, also \\(\\sin(x+\\pi) = -\\sin x\\) (und \\(\\cos(x+\\pi) = -\\cos x\\), Aussage 3 falsch). \\(\\sin(\\pi - x) = \\sin x\\) (2 falsch), \\(\\sin(x + \\frac{\\pi}{2}) = \\cos x\\) (4 falsch)."
       },
       {
         id: 36,
         level: 6,
         typ: "numerisch",
-        frage: "Bestimme die Anzahl der Lösungen der Gleichung \\(\\sin x = 0\\) im Intervall \\([0, 2\\pi]\\).",
-        loesung: 3,
-        toleranz: 0,
-        tipp: "Der Sinus ist 0 an allen Nulldurchgängen auf der \\(x\\)-Achse. Denke an \\(x = 0\\), \\(\\pi\\) und \\(2\\pi\\).",
-        loesungsweg: "Der Sinus ist die \\(y\\)-Koordinate am Einheitskreis und wird 0, wenn der Punkt auf der \\(x\\)-Achse liegt. Im Intervall \\([0, 2\\pi]\\) gilt das für: $$x_1 = 0,\\quad x_2 = \\pi,\\quad x_3 = 2\\pi$$ Das sind **3 Lösungen**."
+        frage: "Ein Kreissektor des Einheitskreises hat den Flächeninhalt \\(0{,}8\\). Bestimme seinen Mittelpunktswinkel in Grad. Runde auf eine Dezimalstelle.",
+        loesung: 91.7,
+        toleranz: 0.05,
+        tipp: "Welchen Flächeninhalt hat der ganze Einheitskreis?",
+        loesungsweg: "Ganzer Kreis: \\(A = \\pi \\cdot 1^2 = \\pi\\). Der Sektor ist der Anteil \\(\\frac{0{,}8}{\\pi}\\) davon: \\(\\alpha = \\frac{0{,}8}{\\pi} \\cdot 360^\\circ \\approx 91{,}7^\\circ\\)."
       }
     ];
     </script>
