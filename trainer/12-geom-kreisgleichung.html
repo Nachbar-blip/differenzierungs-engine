@@ -170,61 +170,55 @@
     },
 
     // ══════════════════════════════════════════════════════════════
-    // LEVEL 4 — Punkt auf Kreis prüfen, Kreisgleichung aus 3 Punkten
+    // LEVEL 4 — Kreis aus Bedingungen, Berührung, Begründung
     // ══════════════════════════════════════════════════════════════
     {
-        id: 19, level: 4, typ: "mc",
-        frage: "Liegt der Punkt \\(P(3 \\mid 4)\\) auf dem Kreis \\(x^2 + y^2 = 25\\)?",
-        optionen: [
-            "Ja, denn \\(3^2 + 4^2 = 25\\)",
-            "Nein, denn \\(3^2 + 4^2 = 24\\)",
-            "Ja, denn \\(3 + 4 < 25\\)",
-            "Nein, denn \\(3^2 + 4^2 = 49\\)"
-        ],
-        korrekt: 0,
-        tipp: "Setze die Koordinaten von \\(P\\) in die Kreisgleichung ein und prüfe, ob Gleichheit gilt.",
-        loesungsweg: "\\(3^2 + 4^2 = 9 + 16 = 25 \\checkmark\\). Der Punkt liegt auf dem Kreis."
+        id: 19, level: 4, typ: "numerisch",
+        frage: "Ein Kreis hat den Mittelpunkt \\(M(4 \\mid 6)\\) und verläuft durch \\(A(1 \\mid 2)\\). Berechne seinen Radius.",
+        loesung: 5, toleranz: 0.01,
+        tipp: "Der Radius ist der Abstand des Mittelpunkts von einem Punkt der Kreislinie.",
+        loesungsweg: "$$r = |\\overrightarrow{MA}| = \\sqrt{(1-4)^2 + (2-6)^2} = \\sqrt{9 + 16} = 5$$"
     },
     {
-        id: 20, level: 4, typ: "mc",
-        frage: "Liegt \\(P(2 \\mid 3)\\) auf dem Kreis \\((x-1)^2 + (y-1)^2 = 4\\)?",
-        optionen: [
-            "Nein, denn \\((2-1)^2 + (3-1)^2 = 5 \\neq 4\\)",
-            "Ja, denn \\((2-1)^2 + (3-1)^2 = 4\\)",
-            "Ja, denn \\(2^2 + 3^2 = 13 > 4\\)",
-            "Nein, denn \\(2 + 3 = 5\\)"
-        ],
-        korrekt: 0,
-        tipp: "Einsetzen: \\((2-1)^2 + (3-1)^2 = 1 + 4 = 5\\). Vergleiche mit \\(r^2 = 4\\).",
-        loesungsweg: "\\((2-1)^2 + (3-1)^2 = 1 + 4 = 5 \\neq 4\\). \\(P\\) liegt nicht auf dem Kreis (sondern außerhalb)."
+        id: 20, level: 4, typ: "numerisch",
+        frage: "Die Punkte \\(A(1 \\mid 2)\\) und \\(B(7 \\mid 10)\\) sind Endpunkte eines Durchmessers. Bestimme die \\(x\\)-Koordinate des Mittelpunkts.",
+        loesung: 4, toleranz: 0.01,
+        tipp: "Der Mittelpunkt des Kreises ist der Mittelpunkt der Durchmesserstrecke.",
+        loesungsweg: "$$M = \\frac{1}{2}\\big(A + B\\big) = \\left(\\frac{1+7}{2} \\;\\middle|\\; \\frac{2+10}{2}\\right) = (4 \\mid 6)$$ Die gesuchte Koordinate ist \\(4\\); der Radius wäre \\(\\frac{|AB|}{2} = 5\\)."
     },
     {
-        id: 21, level: 4, typ: "numerisch",
-        frage: "Ein Kreis geht durch \\(A(1 \\mid 0)\\), \\(B(0 \\mid 1)\\), \\(C(-1 \\mid 0)\\). Sein Mittelpunkt liegt bei \\(M(0 \\mid b)\\). Bestimme \\(b\\).",
-        loesung: 0, toleranz: 0,
-        tipp: "Aus Symmetrie (\\(A\\) und \\(C\\) liegen symmetrisch zur \\(y\\)-Achse) folgt \\(a = 0\\). Setze \\(A\\) und \\(B\\) ein und löse das Gleichungssystem.",
-        loesungsweg: "\\(M(0 \\mid b)\\), \\(r^2 = 1 + b^2\\) (aus \\(A\\)). Aus \\(B\\): \\(0 + (1-b)^2 = 1 + b^2\\), also \\(1 - 2b + b^2 = 1 + b^2\\), \\(-2b = 0\\), \\(b = 0\\)."
+        id: 21, level: 4, typ: "mc",
+        frage: "Warum beschreibt die Gleichung \\(x^2 + y^2 + 2x + 5 = 0\\) <b>keinen</b> Kreis?",
+        optionen: [
+            "Nach quadratischer Ergänzung stünde rechts eine negative Zahl",
+            "Weil das gemischte Glied \\(xy\\) fehlt",
+            "Weil die Koeffizienten von \\(x^2\\) und \\(y^2\\) gleich sind",
+            "Weil kein Term mit \\(y\\) vorkommt"
+        ],
+        korrekt: 0,
+        tipp: "Führe die quadratische Ergänzung durch und sieh dir an, was rechts stehen bliebe.",
+        loesungsweg: "Quadratische Ergänzung: $$x^2 + 2x + y^2 + 5 = 0 \\Rightarrow (x+1)^2 - 1 + y^2 + 5 = 0 \\Rightarrow (x+1)^2 + y^2 = -4$$ Rechts müsste \\(r^2 \\geq 0\\) stehen – eine Summe von Quadraten kann nicht negativ sein. Die Lösungsmenge ist leer. Gleiche Koeffizienten bei \\(x^2\\) und \\(y^2\\) und ein fehlendes \\(xy\\)-Glied sind dagegen gerade die Kennzeichen einer Kreisgleichung."
     },
     {
         id: 22, level: 4, typ: "numerisch",
-        frage: "Ein Kreis geht durch \\(A(0 \\mid 0)\\), \\(B(4 \\mid 0)\\), \\(C(0 \\mid 4)\\). Berechne \\(r^2\\).",
-        loesung: 8, toleranz: 0,
-        tipp: "Ansatz: \\((x-a)^2 + (y-b)^2 = r^2\\). Setze alle drei Punkte ein und löse das Gleichungssystem. Aus Symmetrie folgt \\(a = b = 2\\).",
-        loesungsweg: "Aus \\(A(0,0)\\): \\(a^2 + b^2 = r^2\\). Aus \\(B(4,0)\\): \\((4-a)^2 + b^2 = r^2\\). Differenz: \\(16 - 8a = 0\\), \\(a = 2\\). Analog \\(b = 2\\). \\(r^2 = 4 + 4 = 8\\)."
+        frage: "Ein Kreis hat den Mittelpunkt \\(M(3 \\mid 4)\\) und berührt die \\(x\\)-Achse. Bestimme seinen Radius.",
+        loesung: 4, toleranz: 0.01,
+        tipp: "Welcher Abstand des Mittelpunkts entscheidet über die Berührung der \\(x\\)-Achse?",
+        loesungsweg: "Der Abstand von \\(M\\) zur \\(x\\)-Achse ist der Betrag der \\(y\\)-Koordinate, also \\(4\\). Bei Berührung ist dieser Abstand gleich dem Radius: \\(r = 4\\). (Die \\(y\\)-Achse hätte dieser Kreis in zwei Punkten geschnitten, denn dorthin ist der Abstand nur \\(3 < 4\\).)"
     },
     {
         id: 23, level: 4, typ: "numerisch",
-        frage: "Prüfe: Wie groß ist \\((x-2)^2 + (y+1)^2\\) für den Punkt \\(P(5 \\mid 3)\\)? <br>Der Kreis hat \\(r^2 = 25\\).",
-        loesung: 25, toleranz: 0,
-        tipp: "Setze \\(x = 5\\) und \\(y = 3\\) in \\((x-2)^2 + (y+1)^2\\) ein.",
-        loesungsweg: "\\((5-2)^2 + (3+1)^2 = 9 + 16 = 25 = r^2\\). Der Punkt liegt auf dem Kreis."
+        frage: "Für welchen Wert \\(y > 0\\) liegt der Punkt \\(P(6 \\mid y)\\) auf dem Kreis \\((x-2)^2 + (y+1)^2 = 25\\)?",
+        loesung: 2, toleranz: 0.01,
+        tipp: "Setze die bekannte Koordinate ein und löse die entstehende Gleichung.",
+        loesungsweg: "Einsetzen von \\(x = 6\\): $$(6-2)^2 + (y+1)^2 = 25 \\Rightarrow 16 + (y+1)^2 = 25 \\Rightarrow (y+1)^2 = 9$$ Also \\(y + 1 = \\pm 3\\), d. h. \\(y = 2\\) oder \\(y = -4\\). Gesucht ist der positive Wert: \\(y = 2\\)."
     },
     {
         id: 24, level: 4, typ: "numerisch",
-        frage: "Ein Kreis geht durch \\(A(2 \\mid 0)\\), \\(B(0 \\mid 2)\\) und \\(C(-2 \\mid 0)\\). Berechne den Radius.",
-        loesung: 2, toleranz: 0,
-        tipp: "Aus Symmetrie: \\(M(0 \\mid b)\\). Setze \\(A(2,0)\\) ein: \\(4 + b^2 = r^2\\). Setze \\(B(0,2)\\) ein: \\((2-b)^2 = r^2\\).",
-        loesungsweg: "\\(4 + b^2 = 4 - 4b + b^2\\), also \\(4b = 0\\), \\(b = 0\\). \\(r^2 = 4\\), \\(r = 2\\). Der Kreis ist \\(x^2 + y^2 = 4\\)."
+        frage: "Ein Kreis hat den Mittelpunkt \\(M(-1 \\mid 3)\\) und verläuft durch \\(P(2 \\mid 7)\\). Berechne \\(r^2\\).",
+        loesung: 25, toleranz: 0.01,
+        tipp: "In der Kreisgleichung steht ohnehin \\(r^2\\) – die Wurzel muss gar nicht gezogen werden.",
+        loesungsweg: "$$r^2 = (2 - (-1))^2 + (7 - 3)^2 = 9 + 16 = 25$$ Die Kreisgleichung lautet damit \\((x+1)^2 + (y-3)^2 = 25\\)."
     },
 
     // ══════════════════════════════════════════════════════════════
@@ -260,10 +254,10 @@
     },
     {
         id: 29, level: 5, typ: "numerisch",
-        frage: "Ein Kreis mit Mittelpunkt auf der Geraden \\(y = -x + 5\\) geht durch \\(P(1 \\mid 1)\\) und hat den Radius \\(r = \\sqrt{5}\\). Berechne \\(r^2\\).",
-        loesung: 5, toleranz: 0,
-        tipp: "Die Frage verlangt nur \\(r^2\\). Setze direkt ein.",
-        loesungsweg: "\\(r^2 = (\\sqrt{5})^2 = 5\\)."
+        frage: "Ein Kreis verläuft durch \\(A(0 \\mid 0)\\), \\(B(4 \\mid 0)\\) und \\(C(0 \\mid 6)\\). Bestimme die \\(x\\)-Koordinate seines Mittelpunkts.",
+        loesung: 2, toleranz: 0.01,
+        tipp: "Der Mittelpunkt hat von allen drei Punkten denselben Abstand – er liegt auf den Mittelsenkrechten der Verbindungsstrecken.",
+        loesungsweg: "Die Strecke \\(AB\\) verläuft waagerecht; ihre Mittelsenkrechte ist \\(x = 2\\). Die Strecke \\(AC\\) verläuft senkrecht; ihre Mittelsenkrechte ist \\(y = 3\\). Der Mittelpunkt ist also \\(M(2 \\mid 3)\\). Probe: $$|MA| = \\sqrt{4 + 9} = \\sqrt{13}, \\quad |MB| = \\sqrt{4 + 9} = \\sqrt{13}, \\quad |MC| = \\sqrt{4 + 9} = \\sqrt{13}$$ Die gesuchte Koordinate ist \\(2\\)."
     },
     {
         id: 30, level: 5, typ: "numerisch",
@@ -286,7 +280,7 @@
     {
         id: 32, level: 6, typ: "numerisch",
         frage: "Ein Kreis berührt die \\(y\\)-Achse und hat den Mittelpunkt \\(M(r \\mid 2)\\) (mit \\(r > 0\\)). Er geht durch \\(P(5 \\mid 6)\\). Berechne \\(r\\).",
-        loesung: 4.1, toleranz: 0,
+        loesung: 4.1, toleranz: 0.01,
         tipp: "Berührt die \\(y\\)-Achse \\(\\Rightarrow a = r\\). Einsetzen: \\((5-r)^2 + (6-2)^2 = r^2\\).",
         loesungsweg: "\\((5-r)^2 + 16 = r^2\\). \\(25 - 10r + r^2 + 16 = r^2\\). \\(41 - 10r = 0\\). \\(r = 4{,}1\\)."
     },
@@ -319,10 +313,10 @@
     },
     {
         id: 36, level: 6, typ: "numerisch",
-        frage: "Ein Kreis berührt die \\(x\\)-Achse in \\(T(4 \\mid 0)\\) und geht durch \\(P(1 \\mid 3)\\). Berechne den Radius.",
-        loesung: 3, toleranz: 0,
-        tipp: "Berührt in \\(T(4,0)\\) \\(\\Rightarrow\\) \\(M(4 \\mid r)\\) (Mittelpunkt senkrecht über \\(T\\)). Setze \\(P\\) ein.",
-        loesungsweg: "\\(M(4 \\mid r)\\), Kreisgleichung \\((x-4)^2 + (y-r)^2 = r^2\\). Einsetzen von \\(P(1,3)\\): \\(9 + (3-r)^2 = r^2\\). \\(9 + 9 - 6r + r^2 = r^2\\). \\(18 - 6r = 0\\). \\(r = 3\\)."
+        frage: "Für welchen Wert \\(a > 0\\) berührt der Kreis \\((x - a)^2 + y^2 = 9\\) die \\(y\\)-Achse?",
+        loesung: 3, toleranz: 0.01,
+        tipp: "Wie groß ist der Abstand des Mittelpunkts von der \\(y\\)-Achse – und wie groß muss er bei Berührung sein?",
+        loesungsweg: "Der Mittelpunkt ist \\(M(a \\mid 0)\\), der Radius \\(3\\). Der Abstand des Mittelpunkts von der \\(y\\)-Achse beträgt \\(|a|\\). Berührung verlangt $$|a| = r = 3$$ Für \\(a > 0\\) also \\(a = 3\\); der Berührpunkt ist der Ursprung. Für \\(a > 3\\) hätte der Kreis keinen Punkt auf der \\(y\\)-Achse, für \\(0 < a < 3\\) zwei."
     }
 
     ];

@@ -220,111 +220,105 @@
         loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 0 + 0 + 1 = 1\\). \\(|\\vec{a}| = \\sqrt{1+0+1} = \\sqrt{2}\\), \\(|\\vec{b}| = \\sqrt{0+1+1} = \\sqrt{2}\\). \\(\\cos(\\varphi) = \\frac{1}{\\sqrt{2} \\cdot \\sqrt{2}} = \\frac{1}{2}\\). \\(\\varphi = 60°\\)."
     },
 
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 5 — Kollinearität und Komplanarität prüfen
-    // ══════════════════════════════════════════════════════════════
-    {
-        id: 25, level: 5, typ: "mc",
-        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ -4 \\\\ 6 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} -1 \\\\ 2 \\\\ -3 \\end{pmatrix}\\) kollinear?",
-        optionen: ["Ja, denn \\(\\vec{a} = -2 \\cdot \\vec{b}\\)", "Nein, sie sind nicht kollinear", "Ja, denn \\(\\vec{a} = 2 \\cdot \\vec{b}\\)", "Kann man nicht entscheiden"],
-        korrekt: 0,
-        tipp: "Zwei Vektoren sind kollinear, wenn einer ein Vielfaches des anderen ist. Prüfe: \\(\\frac{2}{-1} = \\frac{-4}{2} = \\frac{6}{-3}\\)?",
-        loesungsweg: "\\(\\frac{2}{-1} = -2\\), \\(\\frac{-4}{2} = -2\\), \\(\\frac{6}{-3} = -2\\). Alle Quotienten gleich \\(\\Rightarrow \\vec{a} = -2 \\vec{b}\\), also kollinear."
-    },
-    {
-        id: 26, level: 5, typ: "mc",
-        frage: "Sind \\(\\vec{a} = \\begin{pmatrix} 3 \\\\ 1 \\\\ -2 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 6 \\\\ 2 \\\\ 1 \\end{pmatrix}\\) kollinear?",
-        optionen: ["Ja, es gilt \\(\\vec{b} = 2\\vec{a}\\)", "Nein, die Quotienten sind nicht alle gleich", "Ja, das Skalarprodukt ist 0", "Nein, weil beide den gleichen Betrag haben"],
-        korrekt: 1,
-        tipp: "Prüfe: \\(\\frac{6}{3} = 2\\), \\(\\frac{2}{1} = 2\\), \\(\\frac{1}{-2} = ?\\).",
-        loesungsweg: "\\(\\frac{6}{3} = 2\\), \\(\\frac{2}{1} = 2\\), aber \\(\\frac{1}{-2} = -0{,}5 \\neq 2\\). Die Quotienten sind nicht alle gleich \\(\\Rightarrow\\) nicht kollinear."
-    },
-    {
+      // ═══════════════════════════════════════════════════════════
+      // Level 5 — Bedingungen an Parameter, Teilverhältnis, Nachweise
+      // ═══════════════════════════════════════════════════════════
+      {
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Für welchen Wert von \\(t\\) stehen die Vektoren \\(\\begin{pmatrix}1\\\\2\\\\t\\end{pmatrix}\\) und \\(\\begin{pmatrix}3\\\\-1\\\\2\\end{pmatrix}\\) senkrecht aufeinander?",
+        loesung: -0.5, toleranz: 0.01,
+        tipp: "Senkrecht bedeutet: Das Skalarprodukt ist null.",
+        loesungsweg: "$$\\vec{a}\\cdot\\vec{b} = 3 - 2 + 2t = 1 + 2t = 0 \\Rightarrow t = -0{,}5$$"
+      },
+      {
+        id: 26, level: 5, typ: "numerisch",
+        frage: "Gegeben ist \\(\\vec{a} = \\begin{pmatrix}4\\\\0\\\\3\\end{pmatrix}\\). Bestimme die erste Komponente desjenigen Vektors, der dieselbe Richtung wie \\(\\vec{a}\\) hat, aber die Länge \\(10\\).",
+        loesung: 8, toleranz: 0.01,
+        tipp: "Normiere den Vektor zuerst auf die Länge \\(1\\) und strecke ihn dann.",
+        loesungsweg: "\\(|\\vec{a}| = \\sqrt{16 + 9} = 5\\), also $$10 \\cdot \\frac{\\vec{a}}{|\\vec{a}|} = 2\\vec{a} = \\begin{pmatrix}8\\\\0\\\\6\\end{pmatrix}$$ Die erste Komponente ist \\(8\\)."
+      },
+      {
         id: 27, level: 5, typ: "numerisch",
-        frage: "Für welchen Wert von \\(t\\) sind \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ -3 \\\\ 1 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 4 \\\\ -6 \\\\ t \\end{pmatrix}\\) kollinear?",
-        loesung: 2, toleranz: 0,
-        tipp: "Kollinear heißt \\(\\vec{b} = r \\cdot \\vec{a}\\). Aus den ersten Komponenten: \\(r = \\frac{4}{2} = 2\\). Also muss \\(t = 2 \\cdot 1\\) gelten.",
-        loesungsweg: "Aus \\(\\frac{4}{2} = 2\\) und \\(\\frac{-6}{-3} = 2\\) folgt \\(r = 2\\). Damit: \\(t = 2 \\cdot 1 = 2\\)."
-    },
-    {
-        id: 28, level: 5, typ: "mc",
-        frage: "Drei Vektoren \\(\\vec{a}, \\vec{b}, \\vec{c}\\) sind komplanar, wenn:",
-        optionen: [
-            "\\(\\vec{c}\\) als Linearkombination von \\(\\vec{a}\\) und \\(\\vec{b}\\) darstellbar ist",
-            "alle drei paarweise senkrecht stehen",
-            "alle drei den gleichen Betrag haben",
-            "das Skalarprodukt aller Paare gleich 0 ist"
-        ],
-        korrekt: 0,
-        tipp: "Komplanar = in einer Ebene liegend. Das Spatprodukt ist dann 0.",
-        loesungsweg: "Drei Vektoren sind komplanar, wenn sie linear abhängig sind, d.h. \\(\\vec{c} = s \\cdot \\vec{a} + t \\cdot \\vec{b}\\). Äquivalent: Spatprodukt \\(= 0\\)."
-    },
-    {
+        frage: "Die Punkte \\(A(1\\mid0\\mid0)\\), \\(B(4\\mid1\\mid2)\\), \\(C(5\\mid3\\mid3)\\) und \\(D(2\\mid2\\mid1)\\) bilden ein Parallelogramm \\(ABCD\\). Berechne die Länge der Seite \\(\\overline{AB}\\) und runde auf zwei Dezimalstellen.",
+        loesung: 3.74, toleranz: 0.01,
+        tipp: "Prüfe zur Kontrolle, ob \\(\\overrightarrow{AB} = \\overrightarrow{DC}\\) gilt – dann liegt wirklich ein Parallelogramm vor.",
+        loesungsweg: "\\(\\overrightarrow{AB} = (3\\mid1\\mid2)\\) und \\(\\overrightarrow{DC} = (3\\mid1\\mid2)\\) – die Gegenseiten sind parallel und gleich lang ✓. $$|\\overrightarrow{AB}| = \\sqrt{9 + 1 + 4} = \\sqrt{14} \\approx 3{,}74$$"
+      },
+      {
+        id: 28, level: 5, typ: "numerisch",
+        frage: "Der Punkt \\(P\\) teilt die Strecke von \\(A(0\\mid0\\mid0)\\) nach \\(B(8\\mid4\\mid0)\\) im Verhältnis \\(1:3\\) (von \\(A\\) aus gemessen). Bestimme die \\(x_1\\)-Koordinate von \\(P\\).",
+        loesung: 2, toleranz: 0.01,
+        tipp: "Bei \\(1:3\\) liegt \\(P\\) nach einem von insgesamt vier gleichen Teilen.",
+        loesungsweg: "Das Verhältnis \\(1:3\\) bedeutet \\(\\overrightarrow{AP} = \\frac{1}{4}\\overrightarrow{AB}\\): $$\\vec{p} = \\vec{a} + \\frac{1}{4}\\begin{pmatrix}8\\\\4\\\\0\\end{pmatrix} = \\begin{pmatrix}2\\\\1\\\\0\\end{pmatrix}$$ Die gesuchte Koordinate ist \\(2\\)."
+      },
+      {
         id: 29, level: 5, typ: "numerisch",
-        frage: "Berechne das Spatprodukt \\((\\vec{a}, \\vec{b}, \\vec{c})\\) mit \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}\\).",
-        loesung: 1, toleranz: 0,
-        tipp: "Das Spatprodukt ist die Determinante der 3×3-Matrix aus den drei Spaltenvektoren.",
-        loesungsweg: "\\(\\det\\begin{pmatrix} 1 & 0 & 0 \\\\ 0 & 1 & 0 \\\\ 0 & 0 & 1 \\end{pmatrix} = 1\\). Die Standardbasisvektoren sind nicht komplanar (Spatprodukt \\(\\neq 0\\))."
-    },
-    {
-        id: 30, level: 5, typ: "numerisch",
-        frage: "Berechne das Spatprodukt von \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 4 \\\\ 5 \\\\ 6 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 7 \\\\ 8 \\\\ 9 \\end{pmatrix}\\). Sind sie komplanar?",
-        loesung: 0, toleranz: 0,
-        tipp: "Berechne die Determinante: \\(1(45-48) - 2(36-42) + 3(32-35)\\).",
-        loesungsweg: "\\(\\det = 1(5 \\cdot 9 - 6 \\cdot 8) - 2(4 \\cdot 9 - 6 \\cdot 7) + 3(4 \\cdot 8 - 5 \\cdot 7) = 1(-3) - 2(-6) + 3(-3) = -3 + 12 - 9 = 0\\). Spatprodukt \\(= 0 \\Rightarrow\\) komplanar."
-    },
+        frage: "Für welchen Wert \\(t > 0\\) schließen die Vektoren \\(\\begin{pmatrix}1\\\\0\\\\0\\end{pmatrix}\\) und \\(\\begin{pmatrix}1\\\\t\\\\0\\end{pmatrix}\\) einen Winkel von \\(60°\\) ein? Runde auf zwei Dezimalstellen.",
+        loesung: 1.73, toleranz: 0.01,
+        tipp: "Setze die Winkelformel an und nutze \\(\\cos 60° = \\frac{1}{2}\\).",
+        loesungsweg: "$$\\cos 60° = \\frac{\\vec{a}\\cdot\\vec{b}}{|\\vec{a}||\\vec{b}|} = \\frac{1}{\\sqrt{1+t^2}} = \\frac{1}{2}$$ $$\\sqrt{1+t^2} = 2 \\Rightarrow t^2 = 3 \\Rightarrow t = \\sqrt{3} \\approx 1{,}73$$"
+      },
+      {
+        id: 30, level: 5, typ: "mc",
+        frage: "Ein Schüler untersucht zwei Vektoren:<br>Schritt 1: \\(\\vec{a}\\cdot\\vec{b} = 0\\)<br>Schritt 2: Also sind \\(\\vec{a}\\) und \\(\\vec{b}\\) parallel.<br>Welcher Schritt ist der erste fehlerhafte?",
+        optionen: ["Schritt 1", "Schritt 2", "Beide Schritte sind falsch", "Kein Schritt ist fehlerhaft"],
+        korrekt: 1,
+        tipp: "Welche geometrische Bedeutung hat ein verschwindendes Skalarprodukt?",
+        loesungsweg: "Schritt 1 ist eine reine Angabe. Falsch ist die Deutung: Ein Skalarprodukt von null bedeutet, dass die Vektoren <b>senkrecht</b> aufeinander stehen (sofern keiner der Nullvektor ist). Parallelität erkennt man daran, dass ein Vektor ein Vielfaches des anderen ist – im Raum gleichbedeutend damit, dass das Kreuzprodukt der Nullvektor ist."
+      },
 
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 6 — Linearkombinationen, Beweisaufgaben
-    // ══════════════════════════════════════════════════════════════
-    {
+      // ═══════════════════════════════════════════════════════════
+      // Level 6 — Figuren im Raum, Flächen, Winkel, Modellierung
+      // ═══════════════════════════════════════════════════════════
+      {
         id: 31, level: 6, typ: "numerisch",
-        frage: "Stelle \\(\\vec{c} = \\begin{pmatrix} 5 \\\\ 1 \\\\ 3 \\end{pmatrix}\\) als Linearkombination \\(\\vec{c} = s \\cdot \\vec{a} + t \\cdot \\vec{b}\\) dar mit \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 1 \\\\ 1 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 1 \\\\ -1 \\\\ 0 \\end{pmatrix}\\). Berechne \\(s\\).",
-        loesung: 3, toleranz: 0,
-        tipp: "LGS aufstellen: \\(s + t = 5\\), \\(s - t = 1\\), \\(s = 3\\). Addiere Zeile 1 und 2.",
-        loesungsweg: "LGS: (1) \\(s + t = 5\\), (2) \\(s - t = 1\\), (3) \\(s = 3\\). Aus (1)+(2): \\(2s = 6 \\Rightarrow s = 3\\). Aus (1): \\(t = 2\\). Probe in (3): \\(s = 3\\) \\(\\checkmark\\). Also \\(s = 3\\)."
-    },
-    {
-        id: 32, level: 6, typ: "numerisch",
-        frage: "Gegeben ist das Dreieck \\(ABC\\) mit \\(A(1, 2, 3)\\), \\(B(4, 6, 3)\\), \\(C(1, 2, 7)\\). Berechne den Flächeninhalt des Dreiecks.",
-        loesung: 10, toleranz: 0.1,
-        tipp: "\\(A = \\frac{1}{2} |\\overrightarrow{AB} \\times \\overrightarrow{AC}|\\). Berechne zuerst die Vektoren, dann das Kreuzprodukt.",
-        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 3 \\\\ 4 \\\\ 0 \\end{pmatrix}\\), \\(\\overrightarrow{AC} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 4 \\end{pmatrix}\\). Kreuzprodukt: \\(\\overrightarrow{AB} \\times \\overrightarrow{AC} = \\begin{pmatrix} 4 \\cdot 4 - 0 \\cdot 0 \\\\ 0 \\cdot 0 - 3 \\cdot 4 \\\\ 3 \\cdot 0 - 4 \\cdot 0 \\end{pmatrix} = \\begin{pmatrix} 16 \\\\ -12 \\\\ 0 \\end{pmatrix}\\). \\(|\\vec{n}| = \\sqrt{256 + 144} = \\sqrt{400} = 20\\). \\(A = \\frac{20}{2} = 10\\)."
-    },
-    {
-        id: 33, level: 6, typ: "mc",
-        frage: "Gegeben sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ -1 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 3 \\\\ -1 \\\\ 2 \\end{pmatrix}\\). Welches ist das Kreuzprodukt \\(\\vec{a} \\times \\vec{b}\\)?",
+        frage: "Von einem Parallelogramm \\(ABCD\\) sind \\(A(1\\mid1\\mid1)\\), \\(B(4\\mid2\\mid1)\\) und \\(C(5\\mid4\\mid3)\\) bekannt. Bestimme die \\(x_3\\)-Koordinate des Punktes \\(D\\).",
+        loesung: 3, toleranz: 0.01,
+        tipp: "In einem Parallelogramm \\(ABCD\\) gilt \\(\\overrightarrow{AD} = \\overrightarrow{BC}\\).",
+        loesungsweg: "$$\\overrightarrow{BC} = \\vec{c} - \\vec{b} = (1\\mid2\\mid2)$$ $$\\vec{d} = \\vec{a} + \\overrightarrow{BC} = (1\\mid1\\mid1) + (1\\mid2\\mid2) = (2\\mid3\\mid3)$$ Die gesuchte Koordinate ist \\(3\\)."
+      },
+      {
+        id: 32, level: 6, typ: "mc",
+        frage: "Welchen Wert hat die Summe \\(\\overrightarrow{AB} + \\overrightarrow{BC} + \\overrightarrow{CA}\\) in einem beliebigen Dreieck \\(ABC\\)?",
         optionen: [
-            "\\(\\begin{pmatrix} 3 \\\\ -5 \\\\ -7 \\end{pmatrix}\\)",
-            "\\(\\begin{pmatrix} -3 \\\\ 5 \\\\ 7 \\end{pmatrix}\\)",
-            "\\(\\begin{pmatrix} 3 \\\\ 5 \\\\ -7 \\end{pmatrix}\\)",
-            "\\(\\begin{pmatrix} -3 \\\\ -5 \\\\ 7 \\end{pmatrix}\\)"
+            "der Nullvektor",
+            "\\(2 \\cdot \\overrightarrow{AB}\\)",
+            "der Vektor zum Schwerpunkt",
+            "das hängt von der Form des Dreiecks ab"
         ],
         korrekt: 0,
-        tipp: "Kreuzprodukt: \\(\\vec{a} \\times \\vec{b} = \\begin{pmatrix} a_2 b_3 - a_3 b_2 \\\\ a_3 b_1 - a_1 b_3 \\\\ a_1 b_2 - a_2 b_1 \\end{pmatrix}\\).",
-        loesungsweg: "\\(\\vec{a} \\times \\vec{b} = \\begin{pmatrix} 2 \\cdot 2 - (-1) \\cdot (-1) \\\\ (-1) \\cdot 3 - 1 \\cdot 2 \\\\ 1 \\cdot (-1) - 2 \\cdot 3 \\end{pmatrix} = \\begin{pmatrix} 4 - 1 \\\\ -3 - 2 \\\\ -1 - 6 \\end{pmatrix} = \\begin{pmatrix} 3 \\\\ -5 \\\\ -7 \\end{pmatrix}\\)."
-    },
-    {
+        tipp: "Setze die Vektoren als Differenzen der Ortsvektoren an und addiere.",
+        loesungsweg: "$$\\overrightarrow{AB} + \\overrightarrow{BC} + \\overrightarrow{CA} = (\\vec{b} - \\vec{a}) + (\\vec{c} - \\vec{b}) + (\\vec{a} - \\vec{c}) = \\vec{0}$$ Anschaulich: Der Weg führt einmal um das Dreieck herum und endet dort, wo er begonnen hat – eine geschlossene Vektorkette. Das gilt für jedes Vieleck."
+      },
+      {
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Berechne im Dreieck mit \\(A(0\\mid0\\mid0)\\), \\(B(4\\mid0\\mid0)\\) und \\(C(0\\mid3\\mid0)\\) den Innenwinkel bei \\(B\\) in Grad. Runde auf eine Dezimalstelle.",
+        loesung: 36.9, toleranz: 0.2,
+        tipp: "Der Winkel bei \\(B\\) wird von den Vektoren \\(\\overrightarrow{BA}\\) und \\(\\overrightarrow{BC}\\) eingeschlossen – achte auf die Richtung.",
+        loesungsweg: "\\(\\overrightarrow{BA} = (-4\\mid0\\mid0)\\), \\(\\overrightarrow{BC} = (-4\\mid3\\mid0)\\). $$\\cos\\beta = \\frac{16}{4 \\cdot 5} = 0{,}8 \\Rightarrow \\beta \\approx 36{,}9°$$"
+      },
+      {
         id: 34, level: 6, typ: "numerisch",
-        frage: "Zeige, dass \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 1 \\end{pmatrix}\\), \\(\\vec{c} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 1 \\end{pmatrix}\\) nicht komplanar sind. Berechne das Spatprodukt.",
-        loesung: 2, toleranz: 0,
-        tipp: "Spatprodukt \\(= \\det\\begin{pmatrix} 1 & 0 & 1 \\\\ 1 & 1 & 0 \\\\ 0 & 1 & 1 \\end{pmatrix}\\). Entwickle nach der ersten Zeile.",
-        loesungsweg: "\\(\\det\\begin{pmatrix} 1 & 0 & 1 \\\\ 1 & 1 & 0 \\\\ 0 & 1 & 1 \\end{pmatrix} = 1(1-0) - 0(1-0) + 1(1-0) = 1 + 0 + 1 = 2\\). Da \\(2 \\neq 0\\), sind die Vektoren nicht komplanar."
-    },
-    {
+        frage: "Für welchen Wert von \\(t\\) stehen die Vektoren \\(\\begin{pmatrix}t\\\\1\\\\2\\end{pmatrix}\\) und \\(\\begin{pmatrix}2\\\\t\\\\-1\\end{pmatrix}\\) senkrecht aufeinander? Runde auf zwei Dezimalstellen.",
+        loesung: 0.67, toleranz: 0.01,
+        tipp: "Das Skalarprodukt enthält \\(t\\) gleich zweimal – fasse zusammen.",
+        loesungsweg: "$$\\vec{a}\\cdot\\vec{b} = 2t + t - 2 = 3t - 2 = 0 \\Rightarrow t = \\frac{2}{3} \\approx 0{,}67$$"
+      },
+      {
         id: 35, level: 6, typ: "numerisch",
-        frage: "Berechne den Winkel (in Grad) zwischen \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 2 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 2 \\\\ -1 \\\\ 2 \\end{pmatrix}\\). Runde auf ganze Grad.",
-        loesung: 64, toleranz: 1,
-        tipp: "\\(\\vec{a} \\cdot \\vec{b} = 2 - 2 + 4 = 4\\). \\(|\\vec{a}| = 3\\), \\(|\\vec{b}| = 3\\). \\(\\cos(\\varphi) = \\frac{4}{9}\\).",
-        loesungsweg: "\\(\\vec{a} \\cdot \\vec{b} = 2 - 2 + 4 = 4\\). \\(|\\vec{a}| = \\sqrt{1+4+4} = 3\\), \\(|\\vec{b}| = \\sqrt{4+1+4} = 3\\). \\(\\cos(\\varphi) = \\frac{4}{9} \\approx 0{,}444\\). \\(\\varphi = \\arccos(0{,}444) \\approx 63{,}6° \\approx 64°\\)."
-    },
-    {
+        frage: "Berechne den Flächeninhalt des Dreiecks mit den Eckpunkten \\(A(0\\mid0\\mid0)\\), \\(B(3\\mid0\\mid0)\\) und \\(C(0\\mid4\\mid2)\\). Runde auf zwei Dezimalstellen.",
+        loesung: 6.71, toleranz: 0.01,
+        tipp: "Der Betrag des Kreuzprodukts zweier Seitenvektoren ist der Flächeninhalt des aufgespannten Parallelogramms.",
+        loesungsweg: "$$\\overrightarrow{AB} \\times \\overrightarrow{AC} = \\begin{pmatrix}3\\\\0\\\\0\\end{pmatrix} \\times \\begin{pmatrix}0\\\\4\\\\2\\end{pmatrix} = \\begin{pmatrix}0\\\\-6\\\\12\\end{pmatrix}$$ $$A = \\frac{1}{2}\\sqrt{0 + 36 + 144} = \\frac{\\sqrt{180}}{2} \\approx 6{,}71$$"
+      },
+      {
         id: 36, level: 6, typ: "numerisch",
-        frage: "Gegeben sind \\(A(1, 0, 0)\\), \\(B(0, 2, 0)\\), \\(C(0, 0, 3)\\). Berechne die Fläche des Dreiecks \\(ABC\\).",
-        loesung: 3.5, toleranz: 0.05,
-        tipp: "\\(\\overrightarrow{AB} = \\begin{pmatrix} -1 \\\\ 2 \\\\ 0 \\end{pmatrix}\\), \\(\\overrightarrow{AC} = \\begin{pmatrix} -1 \\\\ 0 \\\\ 3 \\end{pmatrix}\\). Kreuzprodukt berechnen, Betrag halbieren.",
-        loesungsweg: "\\(\\overrightarrow{AB} \\times \\overrightarrow{AC} = \\begin{pmatrix} 2 \\cdot 3 - 0 \\cdot 0 \\\\ 0 \\cdot (-1) - (-1) \\cdot 3 \\\\ (-1) \\cdot 0 - 2 \\cdot (-1) \\end{pmatrix} = \\begin{pmatrix} 6 \\\\ 3 \\\\ 2 \\end{pmatrix}\\). \\(|\\vec{n}| = \\sqrt{36 + 9 + 4} = 7\\). \\(A = \\frac{7}{2} = 3{,}5\\)."
-    }
+        frage: "Ein Quader hat die Ecken \\(O(0\\mid0\\mid0)\\), \\(A(6\\mid0\\mid0)\\) und \\(C(0\\mid4\\mid0)\\) und die Höhe \\(3\\). Welchen Winkel in Grad schließt die Raumdiagonale von \\(O\\) aus mit der Grundfläche ein? Runde auf eine Dezimalstelle.",
+        loesung: 22.6, toleranz: 0.2,
+        tipp: "Vergleiche die Höhe mit der Länge der Diagonale in der Grundfläche.",
+        loesungsweg: "Die Raumdiagonale zeigt in Richtung \\((6\\mid4\\mid3)\\), ihr Schatten in der Grundfläche in Richtung \\((6\\mid4\\mid0)\\) mit der Länge $$\\sqrt{36 + 16} = \\sqrt{52} \\approx 7{,}21$$ Damit $$\\tan\\alpha = \\frac{3}{7{,}21} \\approx 0{,}416 \\Rightarrow \\alpha \\approx 22{,}6°$$"
+      }
+
 
     ];
     </script>

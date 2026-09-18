@@ -185,160 +185,162 @@
         loesungsweg: "Zwei Geraden sind parallel, wenn \\(\\vec{u}_1 = r \\cdot \\vec{u}_2\\) für ein \\(r \\in \\mathbb{R}\\). Ob sie zusätzlich identisch oder echt parallel sind, prüft man mit einem Punkt."
     },
 
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 4 — Schnittpunkt berechnen, Schnittwinkel
-    // ══════════════════════════════════════════════════════════════
-    {
+      // ═══════════════════════════════════════════════════════════
+      // Level 4 — Punktprobe, Orthogonalität, Spurpunkt, Schnittpunkt
+      // ═══════════════════════════════════════════════════════════
+      {
         id: 19, level: 4, typ: "numerisch",
-        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 2 \\end{pmatrix} + t \\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 3 \\\\ 4 \\\\ 2 \\end{pmatrix} + s \\begin{pmatrix} 1 \\\\ -1 \\\\ 0 \\end{pmatrix}\\). Berechne die \\(x_1\\)-Koordinate des Schnittpunkts.",
-        loesung: 4, toleranz: 0,
-        tipp: "Gleichsetzen: \\(1+t = 3+s\\), \\(t = 4-s\\), \\(2 = 2\\). Aus Zeile 2: \\(t = 4-s\\). In Zeile 1 einsetzen.",
-        loesungsweg: "Zeile 3: \\(2 = 2\\) \\(\\checkmark\\) (immer erfüllt). Zeile 2: \\(t = 4-s\\). In Zeile 1: \\(1 + 4-s = 3+s \\Rightarrow 5-s = 3+s \\Rightarrow 2 = 2s \\Rightarrow s = 1\\), \\(t = 3\\). Schnittpunkt: \\(\\begin{pmatrix} 1+3 \\\\ 3 \\\\ 2 \\end{pmatrix} = \\begin{pmatrix} 4 \\\\ 3 \\\\ 2 \\end{pmatrix}\\). \\(x_1 = 4\\)."
-    },
-    {
+        frage: "Die Gerade \\(g\\) verläuft durch \\(A(1\\mid2\\mid3)\\) und \\(B(3\\mid6\\mid7)\\). Der Punkt \\(C(5\\mid10\\mid11)\\) liegt auf \\(g\\). Zu welchem Parameter \\(t\\) gehört er, wenn \\(A\\) der Aufpunkt und \\(\\overrightarrow{AB}\\) der Richtungsvektor ist?",
+        loesung: 2, toleranz: 0.01,
+        tipp: "Stelle die Geradengleichung auf und vergleiche die Koordinaten von \\(C\\) einzeln.",
+        loesungsweg: "\\(\\overrightarrow{AB} = (2\\mid4\\mid4)\\), also \\(g: \\vec{x} = (1\\mid2\\mid3) + t\\,(2\\mid4\\mid4)\\). Koordinatenweise: $$1 + 2t = 5 \\Rightarrow t = 2, \\quad 2 + 4t = 10 \\;\\checkmark, \\quad 3 + 4t = 11 \\;\\checkmark$$ Alle drei Gleichungen liefern denselben Wert – \\(C\\) liegt auf \\(g\\) mit \\(t = 2\\)."
+      },
+      {
         id: 20, level: 4, typ: "numerisch",
-        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 3 \\end{pmatrix} + t \\begin{pmatrix} 1 \\\\ 2 \\\\ -1 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 1 \\\\ 6 \\\\ -1 \\end{pmatrix} + s \\begin{pmatrix} 1 \\\\ -1 \\\\ 2 \\end{pmatrix}\\). Berechne die \\(x_2\\)-Koordinate des Schnittpunkts.",
-        loesung: 5, toleranz: 0,
-        tipp: "LGS: (1) \\(t = 1+s\\), (2) \\(1+2t = 6-s\\), (3) \\(3-t = -1+2s\\). Setze (1) in (2) ein.",
-        loesungsweg: "Aus (1): \\(t = 1+s\\). In (2): \\(1+2(1+s) = 6-s \\Rightarrow 3+2s = 6-s \\Rightarrow 3s = 3 \\Rightarrow s = 1\\), \\(t = 2\\). Probe in (3): \\(3-2 = 1\\) und \\(-1+2 = 1\\) \\(\\checkmark\\). Schnittpunkt: \\((2, 5, 1)\\). \\(x_2 = 5\\)."
-    },
-    {
-        id: 21, level: 4, typ: "numerisch",
-        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 3 \\\\ 0 \\end{pmatrix} + t \\begin{pmatrix} 2 \\\\ -1 \\\\ 1 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 7 \\\\ -1 \\\\ 4 \\end{pmatrix} + s \\begin{pmatrix} -1 \\\\ 1 \\\\ -1 \\end{pmatrix}\\). Berechne die \\(x_1\\)-Koordinate des Schnittpunkts.",
-        loesung: 5, toleranz: 0,
-        tipp: "LGS: (1) \\(1+2t = 7-s\\), (2) \\(3-t = -1+s\\), (3) \\(t = 4-s\\). Aus (3) folgt \\(s = 4-t\\). Setze in (1) ein.",
-        loesungsweg: "Aus (3): \\(s = 4-t\\). In (1): \\(1+2t = 7-(4-t) = 3+t \\Rightarrow t = 2\\), \\(s = 2\\). Probe in (2): \\(3-2 = 1\\) und \\(-1+2 = 1\\) \\(\\checkmark\\). Schnittpunkt: \\((5, 1, 2)\\). \\(x_1 = 5\\)."
-    },
-    {
+        frage: "Die Gerade \\(g\\) hat den Richtungsvektor \\(\\begin{pmatrix}1\\\\2\\\\2\\end{pmatrix}\\). Für welchen Wert von \\(a\\) steht eine Gerade mit dem Richtungsvektor \\(\\begin{pmatrix}2\\\\a\\\\-1\\end{pmatrix}\\) senkrecht auf \\(g\\)?",
+        loesung: 0, toleranz: 0.01,
+        tipp: "Senkrecht bedeutet: Das Skalarprodukt der Richtungsvektoren ist null.",
+        loesungsweg: "$$\\vec{u}\\cdot\\vec{v} = 1 \\cdot 2 + 2a + 2 \\cdot (-1) = 2 + 2a - 2 = 2a = 0 \\Rightarrow a = 0$$"
+      },
+      {
+        id: 21, level: 4, typ: "mc",
+        frage: "Welche Lage haben \\(g: \\vec{x} = \\begin{pmatrix}1\\\\0\\\\0\\end{pmatrix} + t\\begin{pmatrix}1\\\\1\\\\0\\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix}0\\\\1\\\\0\\end{pmatrix} + s\\begin{pmatrix}1\\\\1\\\\0\\end{pmatrix}\\) zueinander?",
+        optionen: [
+            "echt parallel",
+            "identisch",
+            "sie schneiden sich in genau einem Punkt",
+            "windschief"
+        ],
+        korrekt: 0,
+        tipp: "Vergleiche zuerst die Richtungsvektoren und prüfe dann, ob der Aufpunkt der einen Geraden auf der anderen liegt.",
+        loesungsweg: "Die Richtungsvektoren sind gleich – die Geraden sind also parallel oder identisch. Punktprobe mit \\(A(1\\mid0\\mid0)\\) in \\(h\\): $$0 + s = 1 \\Rightarrow s = 1, \\quad \\text{aber dann } 1 + s = 2 \\neq 0$$ Der Aufpunkt liegt nicht auf \\(h\\), also sind die Geraden echt parallel. (Windschief scheidet bei gleicher Richtung grundsätzlich aus.)"
+      },
+      {
         id: 22, level: 4, typ: "numerisch",
-        frage: "Berechne den Schnittwinkel (in Grad) der Geraden mit Richtungsvektoren \\(\\vec{u} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\) und \\(\\vec{v} = \\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix}\\).",
-        loesung: 45, toleranz: 1,
-        tipp: "Schnittwinkel: \\(\\cos(\\alpha) = \\frac{|\\vec{u} \\cdot \\vec{v}|}{|\\vec{u}| \\cdot |\\vec{v}|}\\). Beachte den Betrag im Zähler!",
-        loesungsweg: "\\(\\vec{u} \\cdot \\vec{v} = 1\\). \\(|\\vec{u}| = 1\\), \\(|\\vec{v}| = \\sqrt{2}\\). \\(\\cos(\\alpha) = \\frac{1}{\\sqrt{2}}\\). \\(\\alpha = 45°\\)."
-    },
-    {
+        frage: "Die Gerade \\(g: \\vec{x} = \\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix} + t\\begin{pmatrix}2\\\\-1\\\\-3\\end{pmatrix}\\) durchstößt die \\(x_1x_2\\)-Ebene. Bestimme die \\(x_1\\)-Koordinate dieses Spurpunktes.",
+        loesung: 3, toleranz: 0.01,
+        tipp: "In der \\(x_1x_2\\)-Ebene ist die dritte Koordinate null.",
+        loesungsweg: "Bedingung \\(x_3 = 0\\): $$3 - 3t = 0 \\Rightarrow t = 1$$ Einsetzen: \\(x_1 = 1 + 2 \\cdot 1 = 3\\) (der Spurpunkt ist \\(S(3\\mid1\\mid0)\\))."
+      },
+      {
         id: 23, level: 4, typ: "numerisch",
-        frage: "Berechne den Schnittwinkel (in Grad) zweier Geraden mit Richtungsvektoren \\(\\vec{u} = \\begin{pmatrix} 1 \\\\ 1 \\\\ 1 \\end{pmatrix}\\) und \\(\\vec{v} = \\begin{pmatrix} 1 \\\\ -1 \\\\ 0 \\end{pmatrix}\\). Runde auf ganze Grad.",
-        loesung: 90, toleranz: 1,
-        tipp: "\\(\\vec{u} \\cdot \\vec{v} = 1 - 1 + 0 = 0\\). Was bedeutet Skalarprodukt gleich 0?",
-        loesungsweg: "\\(\\vec{u} \\cdot \\vec{v} = 1 - 1 + 0 = 0\\). \\(\\cos(\\alpha) = 0\\). \\(\\alpha = 90°\\). Die Geraden stehen senkrecht aufeinander."
-    },
-    {
+        frage: "Ein Boot fährt auf der Geraden \\(\\vec{x} = t\\begin{pmatrix}3\\\\4\\end{pmatrix}\\); dabei ist \\(t\\) die Zeit in Stunden und die Koordinaten sind in Kilometern angegeben. Welche Geschwindigkeit in km/h hat das Boot?",
+        loesung: 5, toleranz: 0.01,
+        tipp: "Die Länge des Richtungsvektors gibt an, welche Strecke pro Zeiteinheit zurückgelegt wird.",
+        loesungsweg: "In einer Stunde ändert sich der Ort um den Richtungsvektor. Dessen Länge: $$\\left|\\begin{pmatrix}3\\\\4\\end{pmatrix}\\right| = \\sqrt{9 + 16} = 5$$ Das Boot fährt also mit \\(5\\,\\text{km/h}\\)."
+      },
+      {
         id: 24, level: 4, typ: "numerisch",
-        frage: "Berechne den Schnittwinkel (in Grad) der Geraden mit \\(\\vec{u} = \\begin{pmatrix} 2 \\\\ 1 \\\\ 0 \\end{pmatrix}\\) und \\(\\vec{v} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 2 \\end{pmatrix}\\). Runde auf ganze Grad.",
-        loesung: 78, toleranz: 1,
-        tipp: "Schnittwinkel: \\(\\cos(\\alpha) = \\frac{|\\vec{u} \\cdot \\vec{v}|}{|\\vec{u}| \\cdot |\\vec{v}|}\\). Berechne Skalarprodukt und Beträge.",
-        loesungsweg: "\\(\\vec{u} \\cdot \\vec{v} = 0 + 1 + 0 = 1\\). \\(|\\vec{u}| = \\sqrt{5}\\), \\(|\\vec{v}| = \\sqrt{5}\\). \\(\\cos(\\alpha) = \\frac{1}{5} = 0{,}2\\). \\(\\alpha = \\arccos(0{,}2) \\approx 78{,}5°\\)."
-    },
+        frage: "Die Geraden \\(g: \\vec{x} = \\begin{pmatrix}1\\\\0\\\\1\\end{pmatrix} + t\\begin{pmatrix}1\\\\1\\\\0\\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix}0\\\\1\\\\1\\end{pmatrix} + s\\begin{pmatrix}2\\\\0\\\\0\\end{pmatrix}\\) schneiden sich. Bestimme den Parameter \\(t\\) des Schnittpunktes.",
+        loesung: 1, toleranz: 0.01,
+        tipp: "Setze die beiden Geradengleichungen koordinatenweise gleich; eine der Gleichungen liefert sofort einen Parameter.",
+        loesungsweg: "Gleichsetzen: $$1 + t = 2s, \\qquad t = 1, \\qquad 1 = 1$$ Die zweite Gleichung liefert unmittelbar \\(t = 1\\); die erste dann \\(s = 1\\), und die dritte ist erfüllt. Schnittpunkt: \\(S(2\\mid1\\mid1)\\)."
+      },
 
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 5 — Windschief erkennen und begründen
-    // ══════════════════════════════════════════════════════════════
-    {
-        id: 25, level: 5, typ: "mc",
-        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} + t \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix} + s \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\). Welche Lagebeziehung?",
-        optionen: ["Windschief", "Schneidend", "Parallel", "Identisch"],
-        korrekt: 0,
-        tipp: "Richtungsvektoren nicht kollinear (\\(\\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\) und \\(\\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\)). Löse das LGS: \\(1 = s\\), \\(t = 0\\), \\(0 = 1\\).",
-        loesungsweg: "LGS: (1) \\(1 = s\\), (2) \\(t = 0\\), (3) \\(0 = 1\\). Zeile 3 ist ein Widerspruch! Da die Richtungsvektoren nicht kollinear sind, sind die Geraden windschief."
-    },
-    {
+      // ═══════════════════════════════════════════════════════════
+      // Level 5 — Parameterbedingungen, Winkel, Bewegungsaufgaben
+      // ═══════════════════════════════════════════════════════════
+      {
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Für welchen Wert von \\(a\\) schneiden sich die Geraden \\(g: \\vec{x} = t\\begin{pmatrix}1\\\\1\\\\1\\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix}1\\\\2\\\\a\\end{pmatrix} + s\\begin{pmatrix}1\\\\0\\\\0\\end{pmatrix}\\)?",
+        loesung: 2, toleranz: 0.01,
+        tipp: "Setze gleich: Zwei der drei Gleichungen legen die Parameter fest, die dritte wird zur Bedingung an \\(a\\).",
+        loesungsweg: "Gleichsetzen: \\(t = 1 + s\\), \\(t = 2\\), \\(t = a\\). Aus der zweiten Gleichung folgt \\(t = 2\\) (und damit \\(s = 1\\)); die dritte verlangt dann $$a = t = 2$$ Für jedes andere \\(a\\) sind die Geraden windschief."
+      },
+      {
         id: 26, level: 5, typ: "mc",
-        frage: "Wann sind zwei Geraden windschief?",
+        frage: "Von zwei Geraden ist bekannt: Ihre Richtungsvektoren sind <b>nicht</b> Vielfache voneinander, und sie haben keinen gemeinsamen Punkt. Welche Lage liegt vor?",
         optionen: [
-            "Nicht parallel und kein Schnittpunkt (nur im R³ möglich)",
-            "Parallel aber nicht identisch",
-            "Wenn das Skalarprodukt der Richtungsvektoren 0 ist",
-            "Wenn beide durch den Ursprung gehen"
+            "windschief",
+            "echt parallel",
+            "identisch",
+            "sie schneiden sich in genau einem Punkt"
         ],
         korrekt: 0,
-        tipp: "Windschiefe Geraden gibt es nur im R³ (nicht in der Ebene!). Sie sind weder parallel noch schneiden sie sich.",
-        loesungsweg: "Zwei Geraden sind windschief, wenn sie sich weder schneiden noch parallel zueinander sind. Dies ist nur im R³ (und höher) möglich, nicht im R²."
-    },
-    {
-        id: 27, level: 5, typ: "mc",
-        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 0 \\end{pmatrix} + t \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} + s \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\). Welche Lagebeziehung?",
-        optionen: ["Schneidend im Punkt \\((1, 2, 3)\\)", "Windschief", "Parallel", "Identisch"],
-        korrekt: 1,
-        tipp: "LGS: \\(t = 1\\), \\(2t = s\\), \\(3t = 0\\). Aus Zeile 3: \\(t = 0\\). Widerspruch zu Zeile 1!",
-        loesungsweg: "Richtungsvektoren nicht kollinear. LGS: (1) \\(t = 1\\), (3) \\(3t = 0 \\Rightarrow t = 0\\). Widerspruch \\(\\Rightarrow\\) kein Schnittpunkt. Da nicht parallel: windschief."
-    },
-    {
+        tipp: "Gehe die vier möglichen Lagen durch und prüfe, welche mit beiden Angaben verträglich ist.",
+        loesungsweg: "Nicht-parallele Richtungen schließen „parallel\" und „identisch\" aus. Ein Schnittpunkt ist ebenfalls ausgeschlossen, weil kein gemeinsamer Punkt existiert. Es bleibt: windschief – die Geraden verlaufen in verschiedenen, nicht parallelen Richtungen aneinander vorbei. Das ist im Raum der Normalfall; in der Ebene könnte dieser Fall gar nicht auftreten."
+      },
+      {
+        id: 27, level: 5, typ: "numerisch",
+        frage: "Berechne den Abstand der parallelen Geraden \\(g: \\vec{x} = t\\begin{pmatrix}1\\\\0\\\\0\\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix}0\\\\3\\\\4\\end{pmatrix} + s\\begin{pmatrix}1\\\\0\\\\0\\end{pmatrix}\\).",
+        loesung: 5, toleranz: 0.01,
+        tipp: "Beide Geraden verlaufen entlang der \\(x_1\\)-Achse – der Abstand hängt nur von den übrigen Koordinaten ab.",
+        loesungsweg: "Die Gerade \\(g\\) ist die \\(x_1\\)-Achse. Der Aufpunkt von \\(h\\) hat von ihr den Abstand $$\\sqrt{3^2 + 4^2} = 5$$ Da beide Geraden dieselbe Richtung haben, ist dieser Abstand überall gleich."
+      },
+      {
         id: 28, level: 5, typ: "numerisch",
-        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix} + t \\begin{pmatrix} 1 \\\\ 1 \\\\ -1 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 4 \\\\ 1 \\\\ 4 \\end{pmatrix} + s \\begin{pmatrix} -1 \\\\ 1 \\\\ -1 \\end{pmatrix}\\). Berechne \\(t\\) für den Schnittpunkt (falls existent). Falls windschief, gib \\(-999\\) ein.",
-        loesung: 1, toleranz: 0,
-        tipp: "LGS: (1) \\(1+t = 4-s\\), (2) \\(2+t = 1+s\\), (3) \\(3-t = 4-s\\). Aus (3): \\(s = t+1\\). Setze in (1) ein.",
-        loesungsweg: "Aus (3): \\(s = t+1\\). In (1): \\(1+t = 4-(t+1) = 3-t \\Rightarrow 2t = 2 \\Rightarrow t = 1\\), \\(s = 2\\). Probe in (2): \\(2+1 = 3\\) und \\(1+2 = 3\\) \\(\\checkmark\\). Schnittpunkt: \\((2, 3, 2)\\). \\(t = 1\\)."
-    },
-    {
-        id: 29, level: 5, typ: "mc",
-        frage: "Die \\(x_1\\)-Achse und die Gerade \\(h: \\vec{x} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix} + s \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}\\) sind:",
-        optionen: ["Windschief", "Parallel", "Schneidend", "Identisch"],
-        korrekt: 0,
-        tipp: "Die \\(x_1\\)-Achse: \\(g: \\vec{x} = t \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\). Richtungsvektoren \\(\\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\) und \\(\\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}\\): kollinear?",
-        loesungsweg: "Richtungsvektoren nicht kollinear. LGS: (1) \\(t = 0\\), (2) \\(0 = 1\\). Widerspruch in Zeile 2 \\(\\Rightarrow\\) windschief. Die \\(x_1\\)-Achse und \\(h\\) liegen in verschiedenen parallelen Ebenen."
-    },
-    {
+        frage: "Berechne den Schnittwinkel (in Grad) zweier Geraden mit den Richtungsvektoren \\(\\begin{pmatrix}1\\\\1\\\\0\\end{pmatrix}\\) und \\(\\begin{pmatrix}1\\\\0\\\\1\\end{pmatrix}\\).",
+        loesung: 60, toleranz: 0.2,
+        tipp: "Verwende das Skalarprodukt und die Beträge der beiden Richtungsvektoren.",
+        loesungsweg: "$$\\cos\\alpha = \\frac{|\\vec{u}\\cdot\\vec{v}|}{|\\vec{u}|\\,|\\vec{v}|} = \\frac{1}{\\sqrt{2}\\cdot\\sqrt{2}} = \\frac{1}{2}$$ $$\\alpha = \\arccos(0{,}5) = 60°$$"
+      },
+      {
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Zwei Flugzeuge bewegen sich gemäß \\(\\vec{x}_A = \\begin{pmatrix}0\\\\0\\\\2\\end{pmatrix} + t\\begin{pmatrix}2\\\\2\\\\0\\end{pmatrix}\\) und \\(\\vec{x}_B = \\begin{pmatrix}8\\\\0\\\\2\\end{pmatrix} + t\\begin{pmatrix}0\\\\2\\\\0\\end{pmatrix}\\), wobei \\(t\\) für beide dieselbe Zeit in Minuten ist. Zu welchem Zeitpunkt \\(t\\) befinden sie sich am selben Ort?",
+        loesung: 4, toleranz: 0.01,
+        tipp: "Hier genügt es nicht, dass sich die Bahnen kreuzen – beide müssen zur <b>gleichen</b> Zeit dort sein.",
+        loesungsweg: "Orte zur Zeit \\(t\\): \\(A(2t \\mid 2t \\mid 2)\\) und \\(B(8 \\mid 2t \\mid 2)\\). Gleichsetzen der ersten Koordinate: $$2t = 8 \\Rightarrow t = 4$$ Die übrigen Koordinaten stimmen dann ebenfalls überein: beide Flugzeuge sind bei \\((8\\mid8\\mid2)\\). Weil derselbe Parameter \\(t\\) verwendet wird, ist das ein echter Zusammenstoß und nicht nur ein Bahnkreuzungspunkt."
+      },
+      {
         id: 30, level: 5, typ: "numerisch",
-        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} + t \\begin{pmatrix} 1 \\\\ 1 \\\\ 1 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 0 \\\\ 2 \\\\ 0 \\end{pmatrix} + s \\begin{pmatrix} 2 \\\\ -1 \\\\ 1 \\end{pmatrix}\\). Berechne \\(t\\) für den Schnittpunkt.",
-        loesung: 1, toleranz: 0,
-        tipp: "LGS: (1) \\(1+t = 2s\\), (2) \\(t = 2-s\\), (3) \\(t = s\\). Aus (3) und (2): \\(s = 2-s \\Rightarrow s = 1\\).",
-        loesungsweg: "Aus (3): \\(t = s\\). In (2): \\(s = 2-s \\Rightarrow 2s = 2 \\Rightarrow s = 1\\), \\(t = 1\\). Probe in (1): \\(1+1 = 2 = 2 \\cdot 1\\) \\(\\checkmark\\). Schnittpunkt für \\(t = 1\\): \\(\\begin{pmatrix} 2 \\\\ 1 \\\\ 1 \\end{pmatrix}\\)."
-    },
+        frage: "Auf der Geraden \\(g: \\vec{x} = \\begin{pmatrix}1\\\\1\\\\1\\end{pmatrix} + t\\begin{pmatrix}2\\\\1\\\\-2\\end{pmatrix}\\) liegt ein Punkt, der vom Aufpunkt \\((1\\mid1\\mid1)\\) den Abstand \\(6\\) hat. Bestimme \\(t > 0\\).",
+        loesung: 2, toleranz: 0.01,
+        tipp: "Welche Länge hat der Richtungsvektor – und wie hängt der Abstand mit dem Parameter zusammen?",
+        loesungsweg: "Der Richtungsvektor hat die Länge \\(\\sqrt{4+1+4} = 3\\). Ein Parameterschritt \\(t\\) führt also \\(3|t|\\) Längeneinheiten weit: $$3t = 6 \\Rightarrow t = 2$$ Der Punkt ist \\((5\\mid3\\mid-3)\\)."
+      },
 
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 6 — Komplexe Schnittpunkt- und Lageaufgaben (GK)
-    // ══════════════════════════════════════════════════════════════
-    {
-        id: 31, level: 6, typ: "mc",
-        frage: "Drei Geraden sind gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 2 \\end{pmatrix} + t \\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix}\\), \\(h: \\vec{x} = \\begin{pmatrix} 3 \\\\ 4 \\\\ 2 \\end{pmatrix} + s \\begin{pmatrix} 1 \\\\ -1 \\\\ 0 \\end{pmatrix}\\), \\(k: \\vec{x} = \\begin{pmatrix} 0 \\\\ 2 \\\\ 5 \\end{pmatrix} + r \\begin{pmatrix} 2 \\\\ 0 \\\\ 1 \\end{pmatrix}\\). Welches Paar schneidet sich?",
+      // ═══════════════════════════════════════════════════════════
+      // Level 6 — minimaler Abstand, Lotfußpunkt, Modellierung
+      // ═══════════════════════════════════════════════════════════
+      {
+        id: 31, level: 6, typ: "numerisch",
+        frage: "Zwei Flugzeuge bewegen sich gemäß \\(\\vec{x}_A = \\begin{pmatrix}0\\\\0\\\\2\\end{pmatrix} + t\\begin{pmatrix}1\\\\1\\\\0\\end{pmatrix}\\) und \\(\\vec{x}_B = \\begin{pmatrix}6\\\\0\\\\3\\end{pmatrix} + t\\begin{pmatrix}0\\\\1\\\\0\\end{pmatrix}\\) mit gemeinsamer Zeit \\(t\\). Zu welchem Zeitpunkt ist ihr Abstand am kleinsten?",
+        loesung: 6, toleranz: 0.01,
+        tipp: "Stelle den Verbindungsvektor zur Zeit \\(t\\) auf und minimiere das Quadrat seiner Länge.",
+        loesungsweg: "Verbindungsvektor: $$\\vec{x}_A - \\vec{x}_B = \\begin{pmatrix}t - 6\\\\0\\\\-1\\end{pmatrix}$$ Abstandsquadrat: \\(d^2(t) = (t-6)^2 + 1\\). Das ist minimal, wenn \\((t-6)^2 = 0\\), also bei \\(t = 6\\); der kleinste Abstand beträgt dann \\(1\\) (Höhenunterschied) – ein Zusammenstoß findet nicht statt."
+      },
+      {
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Der Punkt \\(P(3 \\mid a \\mid 5)\\) liegt auf der Geraden durch \\(A(1\\mid1\\mid1)\\) und \\(B(2\\mid3\\mid3)\\). Bestimme \\(a\\).",
+        loesung: 5, toleranz: 0.01,
+        tipp: "Stelle die Gerade auf und bestimme den Parameter aus einer Koordinate, die keine Unbekannte enthält.",
+        loesungsweg: "\\(\\overrightarrow{AB} = (1\\mid2\\mid2)\\), also \\(\\vec{x} = (1\\mid1\\mid1) + t(1\\mid2\\mid2)\\). Aus der ersten Koordinate: \\(1 + t = 3 \\Rightarrow t = 2\\). Kontrolle mit der dritten: \\(1 + 2 \\cdot 2 = 5\\) ✓. Damit $$a = 1 + 2 \\cdot 2 = 5$$"
+      },
+      {
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Zwei geradlinige Straßen kreuzen sich; ihre Richtungsvektoren sind \\(\\begin{pmatrix}4\\\\3\\\\0\\end{pmatrix}\\) und \\(\\begin{pmatrix}1\\\\0\\\\0\\end{pmatrix}\\). Unter welchem Winkel in Grad kreuzen sie sich? Runde auf eine Dezimalstelle.",
+        loesung: 36.9, toleranz: 0.2,
+        tipp: "Der Schnittwinkel ergibt sich aus dem Skalarprodukt; der Betrag sorgt dafür, dass der spitze Winkel herauskommt.",
+        loesungsweg: "$$\\cos\\alpha = \\frac{|4 \\cdot 1 + 3 \\cdot 0 + 0|}{5 \\cdot 1} = \\frac{4}{5} = 0{,}8$$ $$\\alpha = \\arccos(0{,}8) \\approx 36{,}9°$$"
+      },
+      {
+        id: 34, level: 6, typ: "mc",
+        frage: "Die Richtungsvektoren zweier Geraden sind linear abhängig. Welche Lagen sind damit noch möglich?",
         optionen: [
-            "\\(g\\) und \\(h\\)",
-            "\\(g\\) und \\(k\\)",
-            "\\(h\\) und \\(k\\)",
-            "Kein Paar schneidet sich"
+            "echt parallel oder identisch",
+            "nur identisch",
+            "schneidend oder windschief",
+            "alle vier Lagen bleiben möglich"
         ],
         korrekt: 0,
-        tipp: "Stelle für jedes Paar das LGS auf. Für \\(g\\) und \\(h\\): \\(1+t = 3+s\\), \\(t = 4-s\\), \\(2 = 2\\). Aus Zeile 3 sofort: dritte Koordinate stimmt überein.",
-        loesungsweg: "\\(g\\) und \\(h\\): Zeile 3 \\(2=2\\) \\(\\checkmark\\). Aus Zeile 2: \\(t = 4-s\\). In Zeile 1: \\(1+(4-s)=3+s \\Rightarrow 5-s=3+s \\Rightarrow s=1, t=3\\). Probe Zeile 2: \\(3=3\\) \\(\\checkmark\\). Schnittpunkt \\((4,3,2)\\). \\(g\\) und \\(k\\): Zeile 3 \\(2=5+r \\Rightarrow r=-3\\), \\(1+t=0+2(-3)=-6\\) ergibt Widerspruch in Zeile 2. Also schneiden sich \\(g\\) und \\(h\\)."
-    },
-    {
-        id: 32, level: 6, typ: "mc",
-        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 2 \\\\ -1 \\\\ 4 \\end{pmatrix} + t \\begin{pmatrix} 3 \\\\ 1 \\\\ -2 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 5 \\\\ 0 \\\\ 2 \\end{pmatrix} + s \\begin{pmatrix} 6 \\\\ 2 \\\\ -4 \\end{pmatrix}\\). Welche Lagebeziehung liegt vor?",
-        optionen: ["Identisch", "Echt parallel", "Schneidend", "Windschief"],
-        korrekt: 0,
-        tipp: "Prüfe zuerst Kollinearität der Richtungsvektoren: \\(\\begin{pmatrix} 6 \\\\ 2 \\\\ -4 \\end{pmatrix} = 2 \\cdot \\begin{pmatrix} 3 \\\\ 1 \\\\ -2 \\end{pmatrix}\\). Dann: Liegt \\((5, 0, 2)\\) auf \\(g\\)?",
-        loesungsweg: "Richtungsvektoren kollinear (Faktor 2) \\(\\checkmark\\). Liegt \\((5,0,2)\\) auf \\(g\\)? \\(5=2+3t \\Rightarrow t=1\\). Prüfe: \\(-1+1=0\\) \\(\\checkmark\\), \\(4-2=2\\) \\(\\checkmark\\). Der Punkt liegt auf \\(g\\), also sind \\(g\\) und \\(h\\) identisch."
-    },
-    {
-        id: 33, level: 6, typ: "numerisch",
-        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 1 \\\\ 2 \\\\ -1 \\end{pmatrix} + t \\begin{pmatrix} 2 \\\\ 1 \\\\ 3 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 5 \\\\ 4 \\\\ 5 \\end{pmatrix} + s \\begin{pmatrix} -1 \\\\ 1 \\\\ 1 \\end{pmatrix}\\). Bestimme den Parameter \\(t\\) des Schnittpunkts.",
-        loesung: 2, toleranz: 0,
-        tipp: "LGS: (1) \\(1+2t=5-s\\), (2) \\(2+t=4+s\\), (3) \\(-1+3t=5+s\\). Addiere (2) und (1): eliminiere \\(s\\).",
-        loesungsweg: "Aus (2): \\(s=t-2\\). In (1): \\(1+2t=5-(t-2)=7-t \\Rightarrow 3t=6 \\Rightarrow t=2\\), \\(s=0\\). Probe in (3): \\(-1+6=5\\) und \\(5+0=5\\) \\(\\checkmark\\). Schnittpunkt: \\((5,4,5)\\). \\(t=2\\)."
-    },
-    {
-        id: 34, level: 6, typ: "mc",
-        frage: "Gegeben: \\(g: \\vec{x} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 2 \\end{pmatrix} + t \\begin{pmatrix} 1 \\\\ 2 \\\\ -1 \\end{pmatrix}\\) und \\(h: \\vec{x} = \\begin{pmatrix} 3 \\\\ 2 \\\\ 0 \\end{pmatrix} + s \\begin{pmatrix} 2 \\\\ 1 \\\\ 1 \\end{pmatrix}\\). Löse das LGS und bestimme die Lagebeziehung.",
-        optionen: ["Windschief", "Schneidend", "Parallel", "Identisch"],
-        korrekt: 0,
-        tipp: "Richtungsvektoren nicht kollinear. LGS aufstellen: Zeile 1: \\(t=3+2s\\), Zeile 2: \\(1+2t=2+s\\), Zeile 3: \\(2-t=s\\). Aus Zeile 3: \\(s=2-t\\). In Zeile 2 einsetzen.",
-        loesungsweg: "Aus Zeile 3: \\(s=2-t\\). In Zeile 2: \\(1+2t=2+(2-t)=4-t \\Rightarrow 3t=3 \\Rightarrow t=1\\), \\(s=1\\). Probe in Zeile 1: \\(0+1=1\\), aber \\(3+2\\cdot1=5 \\neq 1\\). Widerspruch \\(\\Rightarrow\\) kein Schnittpunkt. Da Richtungsvektoren nicht kollinear: windschief."
-    },
-    {
+        tipp: "Was bedeutet lineare Abhängigkeit der Richtungsvektoren geometrisch?",
+        loesungsweg: "Linear abhängige Richtungsvektoren sind Vielfache voneinander – die Geraden verlaufen also in dieselbe Richtung. Damit sind Schneiden (außer bei Identität) und Windschiefheit ausgeschlossen. Ob echt parallel oder identisch, entscheidet erst die Punktprobe mit einem Aufpunkt."
+      },
+      {
         id: 35, level: 6, typ: "numerisch",
-        frage: "Die Gerade \\(g: \\vec{x} = \\begin{pmatrix} -1 \\\\ 3 \\\\ 2 \\end{pmatrix} + t \\begin{pmatrix} 4 \\\\ -2 \\\\ 6 \\end{pmatrix}\\) soll durch zwei Punkte \\(A(-1,3,2)\\) und \\(B(7,-1,14)\\) verlaufen. Berechne den Parameter \\(t\\), für den \\(B\\) auf \\(g\\) liegt.",
-        loesung: 2, toleranz: 0,
-        tipp: "Setze \\(B\\) in die Geradengleichung ein: \\(7=-1+4t\\).",
-        loesungsweg: "\\(7=-1+4t \\Rightarrow 4t=8 \\Rightarrow t=2\\). Probe: \\(x_2=3+2\\cdot(-2)=3-4=-1\\) \\(\\checkmark\\). \\(x_3=2+2\\cdot6=14\\) \\(\\checkmark\\). Also \\(t=2\\)."
-    },
-    {
+        frage: "Welcher Punkt der Geraden \\(g: \\vec{x} = \\begin{pmatrix}1\\\\0\\\\0\\end{pmatrix} + t\\begin{pmatrix}0\\\\1\\\\1\\end{pmatrix}\\) liegt dem Punkt \\(P(1\\mid4\\mid2)\\) am nächsten? Gib den zugehörigen Parameter \\(t\\) an.",
+        loesung: 3, toleranz: 0.01,
+        tipp: "Im Lotfußpunkt steht der Verbindungsvektor zu \\(P\\) senkrecht auf dem Richtungsvektor.",
+        loesungsweg: "Mit \\(\\overrightarrow{AP} = (0\\mid4\\mid2)\\) und \\(\\vec{u} = (0\\mid1\\mid1)\\): $$t = \\frac{\\overrightarrow{AP}\\cdot\\vec{u}}{\\vec{u}\\cdot\\vec{u}} = \\frac{0 + 4 + 2}{2} = 3$$ Der nächstgelegene Punkt ist \\(F(1\\mid3\\mid3)\\); die Probe \\(\\overrightarrow{FP}\\cdot\\vec{u} = (0\\mid1\\mid-1)\\cdot(0\\mid1\\mid1) = 0\\) bestätigt das."
+      },
+      {
         id: 36, level: 6, typ: "numerisch",
-        frage: "Bestimme den Spurpunkt von \\(g: \\vec{x} = \\begin{pmatrix} 3 \\\\ -2 \\\\ 5 \\end{pmatrix} + t \\begin{pmatrix} 1 \\\\ 4 \\\\ -5 \\end{pmatrix}\\) in der \\(x_1 x_2\\)-Ebene (\\(x_3 = 0\\)). Gib die \\(x_1\\)-Koordinate des Spurpunkts an.",
-        loesung: 4, toleranz: 0,
-        tipp: "Setze die dritte Komponente gleich 0: \\(5 - 5t = 0 \\Rightarrow t = 1\\). Dann berechne \\(x_1 = 3 + 1 \\cdot 1\\).",
-        loesungsweg: "\\(x_3 = 5 - 5t = 0 \\Rightarrow t = 1\\). \\(x_1 = 3 + 1 = 4\\). \\(x_2 = -2 + 4 = 2\\). Spurpunkt: \\(S(4, 2, 0)\\). \\(x_1 = 4\\)."
-    }
+        frage: "Eine Seilbahn verläuft geradlinig von der Talstation \\(A(0\\mid0\\mid200)\\) zur Bergstation \\(B(600\\mid800\\mid1000)\\) (Angaben in Metern). Welchen Steigungswinkel in Grad hat das Seil gegenüber der Horizontalen? Runde auf eine Dezimalstelle.",
+        loesung: 38.7, toleranz: 0.2,
+        tipp: "Trenne den Richtungsvektor in seinen waagerechten Anteil und den Höhenunterschied.",
+        loesungsweg: "\\(\\overrightarrow{AB} = (600\\mid800\\mid800)\\). Waagerechte Entfernung: $$\\sqrt{600^2 + 800^2} = 1000\\,\\text{m}$$ Höhenunterschied: \\(800\\,\\text{m}\\). Damit $$\\tan\\alpha = \\frac{800}{1000} = 0{,}8 \\Rightarrow \\alpha \\approx 38{,}7°$$"
+      }
+
 
     ];
     </script>

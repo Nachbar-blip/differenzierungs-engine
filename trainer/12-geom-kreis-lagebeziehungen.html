@@ -166,179 +166,163 @@
         loesungsweg: "\\(x^2 + 2x - 11 = 0\\). \\(x = -1 \\pm \\sqrt{12}\\). Schnittpunkte: \\(S_1(-1 - 2\\sqrt{3},\\, 1 - 2\\sqrt{3})\\), \\(S_2(-1 + 2\\sqrt{3},\\, 1 + 2\\sqrt{3})\\). Sehnenlänge: \\(|S_1 S_2| = \\sqrt{(4\\sqrt{3})^2 + (4\\sqrt{3})^2} = \\sqrt{96} = 4\\sqrt{6} \\approx 9{,}8\\)."
     },
 
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 4 — Kreisgleichung aufstellen aus Bedingungen
-    // ══════════════════════════════════════════════════════════════
-    {
+      // ═══════════════════════════════════════════════════════════
+      // Level 4 — Lage über den Abstand, Sehnen, Kreis–Kreis, Modell
+      // ═══════════════════════════════════════════════════════════
+      {
         id: 19, level: 4, typ: "numerisch",
-        frage: "Ein Kreis hat Mittelpunkt \\(M(2 \\mid -1)\\) und verläuft durch \\(P(5 \\mid 3)\\). Berechne den Radius \\(r\\).",
-        loesung: 5, toleranz: 0,
-        tipp: "\\(r = |MP| = \\sqrt{(5-2)^2 + (3-(-1))^2}\\).",
-        loesungsweg: "\\(r = \\sqrt{3^2 + 4^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5\\). Kreisgleichung: \\((x-2)^2 + (y+1)^2 = 25\\)."
-    },
-    {
-        id: 20, level: 4, typ: "mc",
-        frage: "Ein Kreis verläuft durch \\(A(0 \\mid 0)\\), \\(B(4 \\mid 0)\\) und \\(C(0 \\mid 6)\\). Welche Kreisgleichung passt?",
-        optionen: [
-            "\\((x-2)^2 + (y-3)^2 = 13\\)",
-            "\\((x-2)^2 + (y-3)^2 = 25\\)",
-            "\\(x^2 + y^2 = 52\\)",
-            "\\((x-4)^2 + (y-6)^2 = 52\\)"
-        ],
-        korrekt: 0,
-        tipp: "Der Mittelpunkt \\(M(a,b)\\) hat gleichen Abstand zu allen drei Punkten. Aus \\(|MA|^2 = |MB|^2\\) folgt \\(a = 2\\), aus \\(|MA|^2 = |MC|^2\\) folgt \\(b = 3\\).",
-        loesungsweg: "\\(a^2 + b^2 = (a-4)^2 + b^2 \\Rightarrow a = 2\\). \\(a^2 + b^2 = a^2 + (b-6)^2 \\Rightarrow b = 3\\). \\(r^2 = 4 + 9 = 13\\). Kreisgleichung: \\((x-2)^2 + (y-3)^2 = 13\\)."
-    },
-    {
+        frage: "Wie viele gemeinsame Punkte haben der Kreis \\(x^2 + y^2 = 25\\) und die Gerade \\(y = x + 2\\)?",
+        loesung: 2, toleranz: 0,
+        tipp: "Vergleiche den Abstand des Mittelpunkts von der Geraden mit dem Radius.",
+        loesungsweg: "Gerade in Normalform: \\(x - y + 2 = 0\\). Abstand des Ursprungs: $$d = \\frac{|0 - 0 + 2|}{\\sqrt{1 + 1}} = \\frac{2}{\\sqrt{2}} \\approx 1{,}41$$ Wegen \\(d < r = 5\\) ist die Gerade eine Sekante – es gibt <b>2</b> gemeinsame Punkte."
+      },
+      {
+        id: 20, level: 4, typ: "numerisch",
+        frage: "Für welchen Wert \\(c > 0\\) ist die Gerade \\(y = x + c\\) eine Tangente an den Kreis \\(x^2 + y^2 = 8\\)?",
+        loesung: 4, toleranz: 0.01,
+        tipp: "Bei einer Tangente ist der Abstand des Mittelpunkts von der Geraden genau so groß wie der Radius.",
+        loesungsweg: "Radius: \\(r = \\sqrt{8} = 2\\sqrt{2}\\). Abstand des Ursprungs von \\(x - y + c = 0\\): $$\\frac{|c|}{\\sqrt{2}} = 2\\sqrt{2} \\Rightarrow |c| = 4$$ Für \\(c > 0\\) also \\(c = 4\\) (die zweite Tangente gehört zu \\(c = -4\\))."
+      },
+      {
         id: 21, level: 4, typ: "numerisch",
-        frage: "Ein Kreis hat Mittelpunkt \\(M(3 \\mid 4)\\) und berührt die \\(x\\)-Achse. Berechne \\(r\\).",
-        loesung: 4, toleranz: 0,
-        tipp: "Der Abstand von \\(M\\) zur \\(x\\)-Achse (\\(y = 0\\)) ist der \\(y\\)-Wert des Mittelpunkts.",
-        loesungsweg: "Der Abstand von \\(M(3, 4)\\) zur \\(x\\)-Achse beträgt \\(4\\). Also \\(r = 4\\). Kreisgleichung: \\((x-3)^2 + (y-4)^2 = 16\\)."
-    },
-    {
-        id: 22, level: 4, typ: "numerisch",
-        frage: "Ein Kreis hat Mittelpunkt \\(M(-1 \\mid 2)\\) und berührt die \\(y\\)-Achse. Berechne \\(r^2\\).",
-        loesung: 1, toleranz: 0,
-        tipp: "Der Abstand von \\(M\\) zur \\(y\\)-Achse (\\(x = 0\\)) ist der Betrag des \\(x\\)-Werts des Mittelpunkts.",
-        loesungsweg: "Abstand zur \\(y\\)-Achse: \\(|-1| = 1\\). Also \\(r = 1\\), \\(r^2 = 1\\). Kreisgleichung: \\((x+1)^2 + (y-2)^2 = 1\\)."
-    },
-    {
+        frage: "Der Kreis \\(x^2 + y^2 = 25\\) wird von der Geraden \\(y = 3\\) geschnitten. Wie lang ist die entstehende Sehne?",
+        loesung: 8, toleranz: 0.01,
+        tipp: "Setze den \\(y\\)-Wert in die Kreisgleichung ein und bestimme die beiden Schnittstellen.",
+        loesungsweg: "Einsetzen: $$x^2 + 9 = 25 \\Rightarrow x^2 = 16 \\Rightarrow x = \\pm 4$$ Die Schnittpunkte sind \\((-4\\mid3)\\) und \\((4\\mid3)\\); die Sehne hat die Länge \\(4 - (-4) = 8\\)."
+      },
+      {
+        id: 22, level: 4, typ: "mc",
+        frage: "Ein Sender steht im Punkt \\(M(3\\mid4)\\) und hat eine Reichweite von \\(5\\,\\text{km}\\) (Angaben in km). Wie liegt der Ort \\(O(0\\mid0)\\) zum Versorgungsgebiet?",
+        optionen: [
+            "genau am Rand des Versorgungsgebiets",
+            "sicher innerhalb",
+            "außerhalb",
+            "das lässt sich ohne die Höhe des Mastes nicht entscheiden"
+        ],
+        korrekt: 0,
+        tipp: "Das Versorgungsgebiet ist eine Kreisfläche – entscheidend ist der Abstand zum Sender.",
+        loesungsweg: "Abstand: $$|\\overrightarrow{MO}| = \\sqrt{3^2 + 4^2} = 5$$ Das ist genau der Radius – der Ort liegt auf dem Rand des Versorgungskreises. Bei \\(d < 5\\) läge er innerhalb, bei \\(d > 5\\) außerhalb."
+      },
+      {
         id: 23, level: 4, typ: "numerisch",
-        frage: "Drei Punkte: \\(P_1(1 \\mid 5)\\), \\(P_2(5 \\mid 1)\\), \\(P_3(5 \\mid 5)\\). Berechne den Radius des durch sie bestimmten Kreises (auf zwei Dezimalstellen).",
-        loesung: 2.83, toleranz: 0.02,
-        tipp: "Stelle drei Gleichungen \\((a - x_i)^2 + (b - y_i)^2 = r^2\\) auf. Aus (2)–(1) und (3)–(1) erhältst du ein LGS für \\(a\\) und \\(b\\).",
-        loesungsweg: "Aus \\((a-1)^2 + (b-5)^2 = (a-5)^2 + (b-1)^2\\): \\(-2a + 1 - 10b + 25 = -10a + 25 - 2b + 1\\), \\(8a - 8b = 0\\), \\(a = b\\). Aus \\((a-5)^2 + (b-1)^2 = (a-5)^2 + (b-5)^2\\): \\(b = 3\\). Also \\(a = b = 3\\), \\(r^2 = (3-1)^2 + (3-5)^2 = 4 + 4 = 8\\), \\(r = 2\\sqrt{2} \\approx 2{,}83\\)."
-    },
-    {
-        id: 24, level: 4, typ: "mc",
-        frage: "Ein Kreis hat den Durchmesser \\(AB\\) mit \\(A(1 \\mid 1)\\) und \\(B(7 \\mid 5)\\). Was ist die Kreisgleichung?",
-        optionen: [
-            "\\((x-4)^2 + (y-3)^2 = 13\\)",
-            "\\((x-4)^2 + (y-3)^2 = 26\\)",
-            "\\((x-3)^2 + (y-4)^2 = 13\\)",
-            "\\(x^2 + y^2 = 13\\)"
-        ],
-        korrekt: 0,
-        tipp: "Mittelpunkt = Mittelpunkt von \\(AB\\). Radius = halbe Länge von \\(AB\\).",
-        loesungsweg: "\\(M = \\left(\\frac{1+7}{2}, \\frac{1+5}{2}\\right) = (4, 3)\\). \\(r = \\frac{|AB|}{2} = \\frac{\\sqrt{36+16}}{2} = \\frac{\\sqrt{52}}{2}\\). \\(r^2 = \\frac{52}{4} = 13\\). Kreisgleichung: \\((x-4)^2 + (y-3)^2 = 13\\)."
-    },
+        frage: "Gegeben ist der Kreis \\((x-2)^2 + (y+1)^2 = 16\\) und der Punkt \\(P(6\\mid2)\\). Wie weit liegt \\(P\\) von der Kreislinie entfernt?",
+        loesung: 1, toleranz: 0.01,
+        tipp: "Vergleiche den Abstand des Punktes vom Mittelpunkt mit dem Radius.",
+        loesungsweg: "Mittelpunkt \\(M(2\\mid-1)\\), Radius \\(4\\). $$|\\overrightarrow{MP}| = \\sqrt{4^2 + 3^2} = 5$$ Da \\(5 > 4\\), liegt \\(P\\) außerhalb; der Abstand zur Kreislinie beträgt \\(5 - 4 = 1\\)."
+      },
+      {
+        id: 24, level: 4, typ: "numerisch",
+        frage: "Wie viele gemeinsame Punkte haben die Kreise um \\(M_1(0\\mid0)\\) mit \\(r_1 = 3\\) und um \\(M_2(7\\mid0)\\) mit \\(r_2 = 2\\)?",
+        loesung: 0, toleranz: 0,
+        tipp: "Vergleiche den Mittelpunktsabstand mit der Summe der Radien.",
+        loesungsweg: "Mittelpunktsabstand: \\(d = 7\\). Summe der Radien: \\(3 + 2 = 5\\). Wegen \\(d > r_1 + r_2\\) liegen die Kreise vollständig außerhalb voneinander – es gibt <b>0</b> gemeinsame Punkte."
+      },
 
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 5 — Kreisgleichung aus komplexeren Bedingungen / Sehnenlänge
-    // ══════════════════════════════════════════════════════════════
-    {
+      // ═══════════════════════════════════════════════════════════
+      // Level 5 — Sehnen mit Vorgabe, Tangente im Punkt, Berührfälle
+      // ═══════════════════════════════════════════════════════════
+      {
         id: 25, level: 5, typ: "numerisch",
-        frage: "Ein Kreis verläuft durch \\(P(0 \\mid 0)\\), \\(Q(6 \\mid 0)\\) und \\(R(6 \\mid 4)\\). Berechne \\(r^2\\).",
-        loesung: 13, toleranz: 0,
-        tipp: "Aus \\(|MA|^2 = |MB|^2\\) und \\(|MB|^2 = |MC|^2\\) erhältst du \\(a = 3\\) und \\(b = 2\\).",
-        loesungsweg: "\\(a^2 + b^2 = (a-6)^2 + b^2 \\Rightarrow a = 3\\). \\((a-6)^2 + b^2 = (a-6)^2 + (b-4)^2 \\Rightarrow b = 2\\). \\(r^2 = 9 + 4 = 13\\). Kreisgleichung: \\((x-3)^2 + (y-2)^2 = 13\\)."
-    },
-    {
-        id: 26, level: 5, typ: "mc",
-        frage: "Ein Kreis hat Mittelpunkt auf der \\(x\\)-Achse, verläuft durch \\(A(1 \\mid 3)\\) und \\(B(5 \\mid 3)\\). Welche Kreisgleichung ist korrekt?",
-        optionen: [
-            "\\((x-3)^2 + y^2 = 13\\)",
-            "\\((x-3)^2 + y^2 = 9\\)",
-            "\\((x-3)^2 + (y-3)^2 = 4\\)",
-            "\\((x-1)^2 + y^2 = 9\\)"
-        ],
-        korrekt: 0,
-        tipp: "Mittelpunkt \\(M(a, 0)\\). Aus \\(|MA| = |MB|\\) folgt \\(a = 3\\). Dann \\(r^2 = (3-1)^2 + 9 = 13\\).",
-        loesungsweg: "\\(M(a, 0)\\): \\((a-1)^2 + 9 = (a-5)^2 + 9 \\Rightarrow a = 3\\). \\(r^2 = (3-1)^2 + 3^2 = 4 + 9 = 13\\). Kreisgleichung: \\((x-3)^2 + y^2 = 13\\)."
-    },
-    {
-        id: 27, level: 5, typ: "numerisch",
-        frage: "Kreis: \\(x^2 + y^2 = 25\\), Gerade: \\(y = 4\\). Berechne die Sehnenlänge zwischen den Schnittpunkten.",
-        loesung: 6, toleranz: 0,
-        tipp: "Einsetzen: \\(x^2 + 16 = 25\\), \\(x = \\pm 3\\). Abstand der Schnittpunkte?",
-        loesungsweg: "\\(x^2 = 9\\), \\(x = \\pm 3\\). Schnittpunkte: \\(S_1(-3, 4)\\) und \\(S_2(3, 4)\\). Sehnenlänge: \\(|S_1 S_2| = 6\\)."
-    },
-    {
+        frage: "Für welchen Wert \\(d > 0\\) schneidet die Gerade \\(y = d\\) aus dem Kreis \\(x^2 + y^2 = 25\\) eine Sehne der Länge \\(6\\) heraus?",
+        loesung: 4, toleranz: 0.01,
+        tipp: "Drücke die halbe Sehnenlänge durch \\(d\\) aus – Radius, halbe Sehne und \\(d\\) bilden ein rechtwinkliges Dreieck.",
+        loesungsweg: "Einsetzen liefert \\(x^2 = 25 - d^2\\); die Sehne hat die Länge \\(2\\sqrt{25 - d^2}\\). Bedingung: $$2\\sqrt{25 - d^2} = 6 \\Rightarrow 25 - d^2 = 9 \\Rightarrow d^2 = 16 \\Rightarrow d = 4$$"
+      },
+      {
+        id: 26, level: 5, typ: "numerisch",
+        frage: "Der Punkt \\(P(3\\mid4)\\) liegt auf dem Kreis \\(x^2 + y^2 = 25\\). Welche Steigung hat die Tangente im Punkt \\(P\\)?",
+        loesung: -0.75, toleranz: 0.01,
+        tipp: "Die Tangente steht senkrecht auf dem Berührradius.",
+        loesungsweg: "Der Radius zeigt in Richtung \\(\\overrightarrow{OP} = (3\\mid4)\\) und hat die Steigung \\(\\frac{4}{3}\\). Die Tangente steht senkrecht darauf: $$m_t = -\\frac{1}{4/3} = -\\frac{3}{4} = -0{,}75$$"
+      },
+      {
+        id: 27, level: 5, typ: "mc",
+        frage: "Ein Schüler untersucht die Lage einer Geraden zu einem Kreis:<br>Schritt 1: Abstand des Mittelpunkts von der Geraden: \\(d = 7\\)<br>Schritt 2: Radius: \\(r = 5\\)<br>Schritt 3: Wegen \\(d > r\\) ist die Gerade eine Sekante.<br>Welcher Schritt ist der erste fehlerhafte?",
+        optionen: ["Schritt 1", "Schritt 2", "Schritt 3", "Kein Schritt ist fehlerhaft"],
+        korrekt: 2,
+        tipp: "Überlege am Bild: Was bedeutet es, wenn die Gerade weiter entfernt liegt als der Radius reicht?",
+        loesungsweg: "Die ersten beiden Schritte sind reine Angaben. Falsch ist der Schluss: Bei \\(d > r\\) verläuft die Gerade vollständig außerhalb des Kreises – sie ist eine <b>Passante</b> ohne gemeinsamen Punkt. Sekante heißt \\(d < r\\), Tangente \\(d = r\\)."
+      },
+      {
         id: 28, level: 5, typ: "numerisch",
-        frage: "Kreis: \\((x-2)^2 + (y-1)^2 = 20\\), Gerade: \\(y = -x + 5\\). Berechne die \\(x\\)-Koordinate des kleineren Schnittpunkts.",
-        loesung: 0, toleranz: 0,
-        tipp: "Einsetzen: \\((x-2)^2 + (-x+4)^2 = 20\\). Ausmultiplizieren und vereinfachen.",
-        loesungsweg: "\\((x-2)^2 + (4-x)^2 = 20\\). \\(x^2 - 4x + 4 + x^2 - 8x + 16 = 20\\). \\(2x^2 - 12x = 0\\). \\(2x(x-6) = 0\\). \\(x = 0\\) oder \\(x = 6\\). Kleiner Wert: \\(x = 0\\)."
-    },
-    {
-        id: 29, level: 5, typ: "mc",
-        frage: "Ein Kreis hat Mittelpunkt \\(M(2 \\mid 3)\\) und Radius \\(r = 5\\). Die Gerade \\(g: 4x + 3y = 0\\) ist ...",
+        frage: "Der Kreis um \\(M_1(0\\mid0)\\) mit \\(r_1 = 2\\) und der Kreis um \\(M_2(5\\mid0)\\) mit dem Radius \\(R\\) berühren einander von außen. Bestimme \\(R\\).",
+        loesung: 3, toleranz: 0.01,
+        tipp: "Bei äußerer Berührung liegt der Berührpunkt auf der Verbindungsstrecke der Mittelpunkte.",
+        loesungsweg: "Äußere Berührung bedeutet \\(d = r_1 + R\\): $$5 = 2 + R \\Rightarrow R = 3$$ (Bei innerer Berührung wäre \\(d = |R - r_1|\\), also \\(R = 7\\).)"
+      },
+      {
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Ein kreisförmiger See hat den Mittelpunkt \\(M(0\\mid0)\\) und den Radius \\(10\\) (Angaben in km). Eine geradlinige Straße verläuft entlang \\(y = 6\\). Wie lang ist der Abschnitt der Straße, der über dem See liegt?",
+        loesung: 16, toleranz: 0.01,
+        tipp: "Die Endpunkte des Abschnitts sind die Schnittpunkte von Gerade und Kreis.",
+        loesungsweg: "Einsetzen: $$x^2 + 36 = 100 \\Rightarrow x^2 = 64 \\Rightarrow x = \\pm 8$$ Die Schnittpunkte sind \\((-8\\mid6)\\) und \\((8\\mid6)\\); der Abschnitt ist \\(16\\,\\text{km}\\) lang."
+      },
+      {
+        id: 30, level: 5, typ: "mc",
+        frage: "Für welche Werte von \\(c\\) hat die Gerade \\(y = x + c\\) mit dem Kreis \\(x^2 + y^2 = 8\\) genau zwei gemeinsame Punkte?",
         optionen: [
-            "Sekante (schneidet den Kreis in zwei Punkten)",
-            "Tangente (berührt den Kreis)",
-            "Passante (kein Schnittpunkt)",
-            "Durch den Mittelpunkt"
+            "\\(-4 < c < 4\\)",
+            "\\(c > 4\\) oder \\(c < -4\\)",
+            "\\(c = \\pm 4\\)",
+            "für jedes \\(c\\)"
         ],
         korrekt: 0,
-        tipp: "Berechne den Abstand von \\(M(2,3)\\) zur Geraden \\(4x + 3y = 0\\) mit der HNF: \\(d = \\frac{|4 \\cdot 2 + 3 \\cdot 3|}{\\sqrt{16+9}}\\).",
-        loesungsweg: "\\(d = \\frac{|8 + 9|}{\\sqrt{25}} = \\frac{17}{5} = 3{,}4 < 5 = r\\). Da \\(d < r\\): Sekante."
-    },
-    {
-        id: 30, level: 5, typ: "numerisch",
-        frage: "Kreis: \\(x^2 + y^2 = 25\\), Gerade: \\(g: 3x + 4y = 0\\). Berechne den Abstand des Mittelpunkts \\(O(0 \\mid 0)\\) von der Geraden.",
-        loesung: 0, toleranz: 0,
-        tipp: "HNF: \\(d = \\frac{|3 \\cdot 0 + 4 \\cdot 0|}{\\sqrt{9 + 16}}\\).",
-        loesungsweg: "\\(d = \\frac{|0|}{5} = 0\\). Der Mittelpunkt liegt auf der Geraden: Die Gerade ist ein Durchmesser — Sekante durch den Mittelpunkt."
-    },
+        tipp: "Zwei Schnittpunkte heißt: Der Abstand des Mittelpunkts von der Geraden ist kleiner als der Radius.",
+        loesungsweg: "Abstand des Ursprungs von \\(x - y + c = 0\\): \\(\\frac{|c|}{\\sqrt{2}}\\). Bedingung für zwei Schnittpunkte: $$\\frac{|c|}{\\sqrt{2}} < 2\\sqrt{2} \\Rightarrow |c| < 4$$ Für \\(|c| = 4\\) liegt Tangentialität vor (genau ein Punkt), für \\(|c| > 4\\) gibt es keinen gemeinsamen Punkt."
+      },
 
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 6 — Anwendungen & Verknüpfungen
-    // ══════════════════════════════════════════════════════════════
-    {
+      // ═══════════════════════════════════════════════════════════
+      // Level 6 — Parameterfälle, Schnittpunkte zweier Kreise, Modell
+      // ═══════════════════════════════════════════════════════════
+      {
         id: 31, level: 6, typ: "numerisch",
-        frage: "Ein Objekt bewegt sich auf der Kreisbahn \\((x-3)^2 + (y-2)^2 = 25\\). Ein Sensor liegt bei \\(S(8 \\mid 6)\\). Liegt der Sensor innerhalb oder außerhalb der Bahn? Berechne \\(d^2\\) von \\(S\\) zum Mittelpunkt.",
-        loesung: 41, toleranz: 0,
-        tipp: "\\(d^2 = (8-3)^2 + (6-2)^2\\).",
-        loesungsweg: "\\(d^2 = 25 + 16 = 41 > 25 = r^2\\). Der Sensor liegt außerhalb der Kreisbahn."
-    },
-    {
-        id: 32, level: 6, typ: "numerisch",
-        frage: "Kreisgleichung aus drei Punkten: \\(A(0 \\mid 4)\\), \\(B(4 \\mid 4)\\), \\(C(4 \\mid 0)\\). Berechne \\(r^2\\).",
-        loesung: 8, toleranz: 0,
-        tipp: "Aus \\(|MA|^2 = |MB|^2\\): \\(a = 2\\). Aus \\(|MB|^2 = |MC|^2\\): \\(b = 2\\). Dann \\(r^2 = ?\\)",
-        loesungsweg: "\\(a^2 + (b-4)^2 = (a-4)^2 + (b-4)^2 \\Rightarrow a = 2\\). \\((a-4)^2 + (b-4)^2 = (a-4)^2 + b^2 \\Rightarrow b = 2\\). \\(r^2 = (2-0)^2 + (2-4)^2 = 4 + 4 = 8\\)."
-    },
-    {
-        id: 33, level: 6, typ: "mc",
-        frage: "Kreis \\(k: (x-1)^2 + (y-2)^2 = 9\\) und Gerade \\(g: x + y = 8\\). Wie ist die Lagebeziehung? (Abstand \\(M\\) zu \\(g\\) berechnen!)",
+        frage: "Für welchen Radius \\(r\\) berührt der Kreis um \\(M(3\\mid4)\\) die Gerade \\(3x + 4y = 0\\)?",
+        loesung: 5, toleranz: 0.01,
+        tipp: "Berührung heißt: Der Abstand des Mittelpunkts von der Geraden ist der Radius.",
+        loesungsweg: "$$r = d(M, g) = \\frac{|3 \\cdot 3 + 4 \\cdot 4|}{\\sqrt{9 + 16}} = \\frac{25}{5} = 5$$"
+      },
+      {
+        id: 32, level: 6, typ: "mc",
+        frage: "Eine Gerade schneidet einen Kreis mit dem Radius \\(r\\) in genau zwei Punkten. Welche Aussage über den Abstand \\(d\\) des Mittelpunkts von der Geraden trifft zu?",
         optionen: [
-            "Passante (kein Schnittpunkt)",
-            "Tangente (ein Berührpunkt)",
-            "Sekante (zwei Schnittpunkte)",
-            "Die Gerade geht durch den Mittelpunkt"
+            "\\(d < r\\)",
+            "\\(d = r\\)",
+            "\\(d > r\\)",
+            "\\(d = 0\\)"
         ],
         korrekt: 0,
-        tipp: "Abstand von \\(M(1,2)\\) zur Geraden \\(x + y - 8 = 0\\): \\(d = \\frac{|1 + 2 - 8|}{\\sqrt{1^2+1^2}}\\). Vergleiche mit \\(r = 3\\).",
-        loesungsweg: "\\(d = \\frac{|-5|}{\\sqrt{2}} = \\frac{5}{\\sqrt{2}} = \\frac{5\\sqrt{2}}{2} \\approx 3{,}54 > 3 = r\\). Da \\(d > r\\): Passante (kein Schnittpunkt)."
-    },
-    {
+        tipp: "Zeichne die drei möglichen Lagen und vergleiche jeweils \\(d\\) mit \\(r\\).",
+        loesungsweg: "Bei einer Sekante liegt die Gerade näher am Mittelpunkt als der Radius reicht: \\(d < r\\). Bei \\(d = r\\) berührt sie den Kreis (Tangente, ein Punkt), bei \\(d > r\\) verfehlt sie ihn (Passante). \\(d = 0\\) ist der Sonderfall der Sekante durch den Mittelpunkt – dort entsteht die längste Sehne, der Durchmesser."
+      },
+      {
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Die Kreise um \\(M_1(0\\mid0)\\) und \\(M_2(8\\mid0)\\) mit jeweils dem Radius \\(5\\) schneiden sich in zwei Punkten. Bestimme den positiven \\(y\\)-Wert dieser Schnittpunkte.",
+        loesung: 3, toleranz: 0.01,
+        tipp: "Subtrahiere die beiden Kreisgleichungen voneinander – die quadratischen Glieder fallen weg.",
+        loesungsweg: "Aus \\(x^2 + y^2 = 25\\) und \\((x-8)^2 + y^2 = 25\\) folgt durch Subtraktion: $$x^2 - (x-8)^2 = 0 \\Rightarrow 16x - 64 = 0 \\Rightarrow x = 4$$ Einsetzen: \\(16 + y^2 = 25 \\Rightarrow y = \\pm 3\\). Der positive Wert ist \\(3\\); die Schnittpunkte sind \\((4\\mid3)\\) und \\((4\\mid-3)\\)."
+      },
+      {
         id: 34, level: 6, typ: "numerisch",
-        frage: "Kreis: \\(x^2 + y^2 = 45\\), Gerade: \\(y = -2x + 15\\). Berechne die \\(x\\)-Koordinate des Schnittpunkts.",
-        loesung: 6, toleranz: 0,
-        tipp: "Einsetzen: \\(x^2 + (-2x+15)^2 = 45\\), ausmultiplizieren und vereinfachen.",
-        loesungsweg: "\\(x^2 + 4x^2 - 60x + 225 = 45\\). \\(5x^2 - 60x + 180 = 0\\). \\(x^2 - 12x + 36 = 0\\). \\((x-6)^2 = 0\\). \\(x = 6\\), \\(y = 3\\). Einziger Schnittpunkt (Tangente!): \\(x = 6\\)."
-    },
-    {
+        frage: "Zwei Sender stehen bei \\(A(0\\mid0)\\) und \\(B(6\\mid0)\\) und haben je \\(5\\,\\text{km}\\) Reichweite (Angaben in km). Wie lang ist der Abschnitt der \\(x\\)-Achse, der von <b>beiden</b> Sendern versorgt wird?",
+        loesung: 4, toleranz: 0.01,
+        tipp: "Bestimme für jeden Sender getrennt das versorgte Intervall auf der \\(x\\)-Achse und suche die Überschneidung.",
+        loesungsweg: "Sender \\(A\\) versorgt auf der \\(x\\)-Achse das Intervall \\([-5;\\,5]\\), Sender \\(B\\) das Intervall \\([1;\\,11]\\). Beide zusammen decken $$[-5;5] \\cap [1;11] = [1;\\,5]$$ ab – ein Abschnitt der Länge \\(4\\,\\text{km}\\)."
+      },
+      {
         id: 35, level: 6, typ: "numerisch",
-        frage: "Kreis: \\(x^2 + y^2 = 10\\), Gerade: \\(y = x + 2\\). Berechne die Summe der \\(x\\)-Koordinaten der Schnittpunkte.",
-        loesung: -2, toleranz: 0,
-        tipp: "Einsetzen: \\(x^2 + (x+2)^2 = 10\\). Vereinfachen, dann Vieta anwenden.",
-        loesungsweg: "\\(x^2 + (x+2)^2 = 10\\). \\(2x^2 + 4x - 6 = 0\\). \\(x^2 + 2x - 3 = 0\\). \\((x+3)(x-1) = 0\\). \\(x_1 = -3,\\; x_2 = 1\\). Summe \\(= -3 + 1 = -2\\)."
-    },
-    {
-        id: 36, level: 6, typ: "mc",
-        frage: "Ein Kreis verläuft durch \\(P(2 \\mid 0)\\) und \\(Q(-2 \\mid 0)\\), sein Mittelpunkt ist \\(M(0 \\mid 3)\\). Welche Gleichung beschreibt den Kreis?",
-        optionen: [
-            "\\(x^2 + (y - 3)^2 = 13\\)",
-            "\\(x^2 + (y - 3)^2 = 9\\)",
-            "\\((x - 3)^2 + y^2 = 13\\)",
-            "\\(x^2 + y^2 = 4\\)"
-        ],
-        korrekt: 0,
-        tipp: "\\(r^2 = |MP|^2 = (2-0)^2 + (0-3)^2 = 4 + 9 = 13\\).",
-        loesungsweg: "\\(r^2 = |MP|^2 = 2^2 + (-3)^2 = 13\\). Kreisgleichung: \\(x^2 + (y-3)^2 = 13\\). Kontrolle mit \\(Q\\): \\((-2)^2 + (0-3)^2 = 4 + 9 = 13\\) ✓ — \\(M\\) liegt auf der \\(y\\)-Achse und damit auf der Mittelsenkrechten von \\(\\overline{PQ}\\)."
-    }
+        frage: "Der Kreis \\(x^2 + y^2 = 100\\) wird von der Geraden \\(y = 8\\) geschnitten. Berechne den Flächeninhalt des Dreiecks aus dem Mittelpunkt und den beiden Schnittpunkten.",
+        loesung: 48, toleranz: 0.01,
+        tipp: "Die Sehne bildet die Grundseite; der Abstand der Geraden vom Mittelpunkt ist die zugehörige Höhe.",
+        loesungsweg: "Schnittpunkte: \\(x^2 = 100 - 64 = 36 \\Rightarrow x = \\pm 6\\), also \\((-6\\mid8)\\) und \\((6\\mid8)\\). Die Sehne hat die Länge \\(12\\), die Höhe über dem Mittelpunkt beträgt \\(8\\): $$A = \\frac{1}{2} \\cdot 12 \\cdot 8 = 48$$"
+      },
+      {
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Für welchen Radius \\(a > 0\\) hat der Kreis \\(x^2 + y^2 = a^2\\) mit der Geraden \\(y = x + 4\\) genau einen gemeinsamen Punkt? Runde auf zwei Dezimalstellen.",
+        loesung: 2.83, toleranz: 0.01,
+        tipp: "Genau ein gemeinsamer Punkt bedeutet Tangentialität.",
+        loesungsweg: "Abstand des Ursprungs von \\(x - y + 4 = 0\\): $$d = \\frac{4}{\\sqrt{2}} = 2\\sqrt{2} \\approx 2{,}83$$ Tangentialität verlangt \\(a = d\\), also \\(a = 2\\sqrt{2}\\). Für größere \\(a\\) gäbe es zwei Schnittpunkte, für kleinere keinen."
+      }
+
 
     ];
     </script>
