@@ -173,171 +173,176 @@
         tipp: "In \\(E_1\\): \\(2 + y - 1 = 3\\).",
         loesungsweg: "In \\(E_1\\): \\(2 + y - 1 = 3 \\Rightarrow y = 2\\). Probe in \\(E_2\\): \\(1 - 2 + 1 = 0\\) \\(\\checkmark\\). Zweiter Punkt: \\((1, 2, 1)\\)."
     },
-    {
-        id: 19, level: 6, typ: "mc",
-        frage: "Wie berechnet man den Richtungsvektor einer Schnittgeraden zweier Ebenen am schnellsten?",
+
+      // ═══════════════════════════════════════════════════════════
+      // Level 4 — Lage und Winkel zweier Ebenen, Schnittgerade anlegen
+      // ═══════════════════════════════════════════════════════════
+      {
+        id: 19, level: 4, typ: "numerisch",
+        frage: "Berechne den Schnittwinkel der Ebenen \\(E_1: x + y + z = 1\\) und \\(E_2: x = 0\\) in Grad. Runde auf eine Dezimalstelle.",
+        loesung: 54.7, toleranz: 0.2,
+        tipp: "Der Schnittwinkel zweier Ebenen ist der Winkel zwischen ihren Normalenvektoren.",
+        loesungsweg: "\\(\\vec{n_1} = (1\\mid1\\mid1)\\), \\(\\vec{n_2} = (1\\mid0\\mid0)\\). $$\\cos\\alpha = \\frac{|1|}{\\sqrt{3} \\cdot 1} \\approx 0{,}5774 \\Rightarrow \\alpha \\approx 54{,}7°$$"
+      },
+      {
+        id: 20, level: 4, typ: "mc",
+        frage: "Welche Lage haben \\(E_1: 2x + 4y - 2z = 6\\) und \\(E_2: x + 2y - z = 3\\) zueinander?",
         optionen: [
-            "Kreuzprodukt der Normalenvektoren: \\(\\vec{v} = \\vec{n}_1 \\times \\vec{n}_2\\)",
-            "Addition der Normalenvektoren: \\(\\vec{v} = \\vec{n}_1 + \\vec{n}_2\\)",
-            "Skalarprodukt der Normalenvektoren",
-            "Subtraktion der Stützvektoren"
+            "Sie sind identisch",
+            "Sie sind echt parallel",
+            "Sie schneiden sich in einer Geraden",
+            "Sie stehen senkrecht aufeinander"
         ],
         korrekt: 0,
-        tipp: "Der Richtungsvektor der Schnittgeraden steht senkrecht auf beiden Normalenvektoren.",
-        loesungsweg: "Der Richtungsvektor \\(\\vec{v}\\) der Schnittgeraden steht senkrecht auf beiden Normalenvektoren. Das Kreuzprodukt \\(\\vec{n}_1 \\times \\vec{n}_2\\) liefert genau einen solchen Vektor."
-    },
-
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 4 — Schnittwinkel zweier Ebenen (cos-Formel)
-    // ══════════════════════════════════════════════════════════════
-    {
-        id: 20, level: 4, typ: "numerisch",
-        frage: "Berechne den Schnittwinkel (in Grad) der Ebenen \\(E_1: x + y = 3\\) und \\(E_2: y + z = 2\\). Runde auf eine Dezimalstelle.",
-        loesung: 60, toleranz: 0.1,
-        tipp: "\\(\\cos \\alpha = \\frac{|\\vec{n}_1 \\cdot \\vec{n}_2|}{|\\vec{n}_1| \\cdot |\\vec{n}_2|}\\). \\(\\vec{n}_1 = (1,1,0)\\), \\(\\vec{n}_2 = (0,1,1)\\).",
-        loesungsweg: "\\(\\vec{n}_1 \\cdot \\vec{n}_2 = 0 + 1 + 0 = 1\\). \\(|\\vec{n}_1| = \\sqrt{2}\\), \\(|\\vec{n}_2| = \\sqrt{2}\\). \\(\\cos \\alpha = \\frac{1}{2}\\). \\(\\alpha = 60°\\)."
-    },
-    {
+        tipp: "Prüfe, ob die eine Gleichung ein Vielfaches der anderen ist – und zwar vollständig, einschließlich der rechten Seite.",
+        loesungsweg: "Multipliziert man \\(E_2\\) mit \\(2\\), erhält man \\(2x + 4y - 2z = 6\\) – genau \\(E_1\\). Die Normalenvektoren sind also parallel <b>und</b> die rechten Seiten passen zueinander: Die Ebenen sind identisch. Wäre nur der Normalenvektor proportional, die rechte Seite aber nicht, lägen sie echt parallel."
+      },
+      {
         id: 21, level: 4, typ: "numerisch",
-        frage: "Berechne den Schnittwinkel (in Grad) der Ebenen \\(E_1: x + y + z = 5\\) und \\(E_2: x + y - z = 2\\). Runde auf zwei Dezimalstellen.",
-        loesung: 70.53, toleranz: 0.1,
-        tipp: "\\(\\vec{n}_1 = (1,1,1)\\), \\(\\vec{n}_2 = (1,1,-1)\\). Skalarprodukt: \\(1 + 1 - 1 = 1\\).",
-        loesungsweg: "\\(\\vec{n}_1 \\cdot \\vec{n}_2 = 1 + 1 - 1 = 1\\). \\(|\\vec{n}_1| = \\sqrt{3}\\), \\(|\\vec{n}_2| = \\sqrt{3}\\). \\(\\cos \\alpha = \\frac{1}{3}\\). \\(\\alpha = \\arccos\\!\\left(\\frac{1}{3}\\right) \\approx 70{,}53°\\)."
-    },
-    {
+        frage: "Berechne den Abstand der Ebenen \\(E_1: x + 2y + 2z = 6\\) und \\(E_2: x + 2y + 2z = 18\\).",
+        loesung: 4, toleranz: 0.01,
+        tipp: "Bei gleichem Normalenvektor entscheidet die Differenz der rechten Seiten, geteilt durch dessen Länge.",
+        loesungsweg: "\\(|\\vec{n}| = \\sqrt{1+4+4} = 3\\). $$d = \\frac{|18 - 6|}{3} = 4$$"
+      },
+      {
         id: 22, level: 4, typ: "numerisch",
-        frage: "Berechne den Schnittwinkel (in Grad) der Ebenen \\(E_1: x + 2y + 2z = 5\\) und \\(E_2: 2x - y + 2z = 3\\). Runde auf zwei Dezimalstellen.",
-        loesung: 63.61, toleranz: 0.1,
-        tipp: "\\(\\vec{n}_1 = (1,2,2)\\), \\(\\vec{n}_2 = (2,-1,2)\\). Skalarprodukt: \\(2 - 2 + 4 = 4\\).",
-        loesungsweg: "\\(\\vec{n}_1 \\cdot \\vec{n}_2 = 2 - 2 + 4 = 4\\). \\(|\\vec{n}_1| = 3\\), \\(|\\vec{n}_2| = 3\\). \\(\\cos \\alpha = \\frac{4}{9}\\). \\(\\alpha = \\arccos\\!\\left(\\frac{4}{9}\\right) \\approx 63{,}61°\\)."
-    },
-    {
+        frage: "Die Ebenen \\(E_1: x + y = 2\\) und \\(E_2: y + z = 3\\) schneiden sich. Berechne die dritte Komponente von \\(\\vec{n_1} \\times \\vec{n_2}\\) – sie gehört zum Richtungsvektor der Schnittgeraden.",
+        loesung: 1, toleranz: 0.01,
+        tipp: "Der Richtungsvektor der Schnittgeraden steht auf beiden Normalenvektoren senkrecht.",
+        loesungsweg: "$$\\begin{pmatrix}1\\\\1\\\\0\\end{pmatrix} \\times \\begin{pmatrix}0\\\\1\\\\1\\end{pmatrix} = \\begin{pmatrix}1 \\cdot 1 - 0 \\cdot 1\\\\0 \\cdot 0 - 1 \\cdot 1\\\\1 \\cdot 1 - 1 \\cdot 0\\end{pmatrix} = \\begin{pmatrix}1\\\\-1\\\\1\\end{pmatrix}$$ Die dritte Komponente ist \\(1\\)."
+      },
+      {
         id: 23, level: 4, typ: "numerisch",
-        frage: "Berechne den Schnittwinkel (in Grad) der Ebenen \\(E_1: 3x + 4y = 10\\) und \\(E_2: 4x - 3y + 5z = 7\\).",
-        loesung: 90, toleranz: 0.1,
-        tipp: "\\(\\vec{n}_1 = (3,4,0)\\), \\(\\vec{n}_2 = (4,-3,5)\\). Berechne das Skalarprodukt.",
-        loesungsweg: "\\(\\vec{n}_1 \\cdot \\vec{n}_2 = 12 - 12 + 0 = 0\\). \\(\\cos \\alpha = 0 \\Rightarrow \\alpha = 90°\\). Die Ebenen stehen senkrecht aufeinander."
-    },
-    {
+        frage: "Auf der Schnittgeraden von \\(E_1: x + y = 2\\) und \\(E_2: y + z = 3\\) liegt genau ein Punkt mit \\(y = 0\\). Bestimme dessen \\(x\\)-Koordinate.",
+        loesung: 2, toleranz: 0.01,
+        tipp: "Setze \\(y = 0\\) in beide Ebenengleichungen ein.",
+        loesungsweg: "Aus \\(E_1\\): \\(x + 0 = 2 \\Rightarrow x = 2\\). Aus \\(E_2\\): \\(0 + z = 3 \\Rightarrow z = 3\\). Der Punkt ist \\((2\\mid0\\mid3)\\); er liegt auf beiden Ebenen und damit auf der Schnittgeraden."
+      },
+      {
         id: 24, level: 4, typ: "mc",
-        frage: "Wie berechnet man den Schnittwinkel \\(\\alpha\\) zweier Ebenen mit Normalenvektoren \\(\\vec{n}_1\\) und \\(\\vec{n}_2\\)?",
+        frage: "Woran erkennt man, dass zwei Ebenen senkrecht aufeinander stehen?",
         optionen: [
-            "\\(\\cos \\alpha = \\dfrac{|\\vec{n}_1 \\cdot \\vec{n}_2|}{|\\vec{n}_1| \\cdot |\\vec{n}_2|}\\)",
-            "\\(\\sin \\alpha = \\dfrac{|\\vec{n}_1 \\cdot \\vec{n}_2|}{|\\vec{n}_1| \\cdot |\\vec{n}_2|}\\)",
-            "\\(\\cos \\alpha = \\dfrac{\\vec{n}_1 \\cdot \\vec{n}_2}{|\\vec{n}_1| + |\\vec{n}_2|}\\)",
-            "\\(\\tan \\alpha = \\dfrac{|\\vec{n}_1 \\times \\vec{n}_2|}{\\vec{n}_1 \\cdot \\vec{n}_2}\\)"
+            "Das Skalarprodukt ihrer Normalenvektoren ist null",
+            "Ihre Normalenvektoren sind Vielfache voneinander",
+            "Ihre rechten Seiten sind gleich",
+            "Das Kreuzprodukt ihrer Normalenvektoren ist der Nullvektor"
         ],
         korrekt: 0,
-        tipp: "Der Schnittwinkel zweier Ebenen ist der Winkel zwischen ihren Normalenvektoren (bzw. der Komplementwinkel). Die Betragstriche stellen sicher, dass \\(\\alpha \\leq 90°\\).",
-        loesungsweg: "Der Schnittwinkel zweier Ebenen wird über die Normalenvektoren berechnet: \\(\\cos \\alpha = \\frac{|\\vec{n}_1 \\cdot \\vec{n}_2|}{|\\vec{n}_1| \\cdot |\\vec{n}_2|}\\). Der Betrag im Zähler garantiert \\(0° \\leq \\alpha \\leq 90°\\)."
-    },
-    {
-        id: 25, level: 4, typ: "numerisch",
-        frage: "Berechne den Schnittwinkel (in Grad) der Ebenen \\(E_1: x + y = 2\\) und \\(E_2: x + z = 3\\). Runde auf eine Dezimalstelle.",
-        loesung: 60, toleranz: 0.1,
-        tipp: "\\(\\vec{n}_1 = (1,1,0)\\), \\(\\vec{n}_2 = (1,0,1)\\). Skalarprodukt: \\(1\\). Beträge: jeweils \\(\\sqrt{2}\\).",
-        loesungsweg: "\\(\\vec{n}_1 \\cdot \\vec{n}_2 = 1\\). \\(|\\vec{n}_1| = |\\vec{n}_2| = \\sqrt{2}\\). \\(\\cos \\alpha = \\frac{1}{2} \\Rightarrow \\alpha = 60°\\)."
-    },
+        tipp: "Der Winkel zwischen zwei Ebenen ist der Winkel zwischen ihren Normalenvektoren.",
+        loesungsweg: "Senkrechte Ebenen haben senkrechte Normalenvektoren, also \\(\\vec{n_1}\\cdot\\vec{n_2} = 0\\). Vielfache voneinander (bzw. Kreuzprodukt gleich null) bedeuten dagegen parallele oder identische Ebenen; die rechten Seiten sagen über den Winkel gar nichts aus."
+      },
 
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 5 — Schnittgerade als Parameterform angeben
-    // ══════════════════════════════════════════════════════════════
-    {
+      // ═══════════════════════════════════════════════════════════
+      // Level 5 — Schnittgerade als Ganzes, Ebenenscharen, Sonderfälle
+      // ═══════════════════════════════════════════════════════════
+      {
+        id: 25, level: 5, typ: "mc",
+        frage: "Welche Parameterform beschreibt die Schnittgerade von \\(E_1: x + y + z = 3\\) und \\(E_2: x - y = 1\\)?",
+        optionen: [
+            "\\(\\vec{x} = \\begin{pmatrix}0\\\\-1\\\\4\\end{pmatrix} + t\\begin{pmatrix}1\\\\1\\\\-2\\end{pmatrix}\\)",
+            "\\(\\vec{x} = \\begin{pmatrix}1\\\\0\\\\2\\end{pmatrix} + t\\begin{pmatrix}1\\\\-1\\\\0\\end{pmatrix}\\)",
+            "\\(\\vec{x} = \\begin{pmatrix}0\\\\-1\\\\4\\end{pmatrix} + t\\begin{pmatrix}1\\\\1\\\\1\\end{pmatrix}\\)",
+            "\\(\\vec{x} = \\begin{pmatrix}3\\\\1\\\\0\\end{pmatrix} + t\\begin{pmatrix}1\\\\1\\\\-2\\end{pmatrix}\\)"
+        ],
+        korrekt: 0,
+        tipp: "Setze \\(x = t\\) und drücke damit \\(y\\) und \\(z\\) aus – oder prüfe die Angebote durch Einsetzen in beide Ebenengleichungen.",
+        loesungsweg: "Mit \\(x = t\\) folgt aus \\(E_2\\): \\(y = t - 1\\). Einsetzen in \\(E_1\\): $$t + (t-1) + z = 3 \\Rightarrow z = 4 - 2t$$ Also $$\\vec{x} = \\begin{pmatrix}0\\\\-1\\\\4\\end{pmatrix} + t\\begin{pmatrix}1\\\\1\\\\-2\\end{pmatrix}$$ Die Probe bestätigt: Der Aufpunkt \\((0\\mid-1\\mid4)\\) erfüllt beide Gleichungen, und der Richtungsvektor steht auf beiden Normalenvektoren senkrecht."
+      },
+      {
         id: 26, level: 5, typ: "numerisch",
-        frage: "Die Ebenen \\(E_1: x + y - z = 2\\) und \\(E_2: x - y + z = 4\\) schneiden sich. Addiere die Gleichungen. Welchen Wert hat \\(x\\)?",
-        loesung: 3, toleranz: 0,
-        tipp: "\\(E_1 + E_2\\): Die \\(y\\)- und \\(z\\)-Terme heben sich auf.",
-        loesungsweg: "\\(E_1 + E_2\\): \\(2x = 6 \\Rightarrow x = 3\\). Der \\(x\\)-Wert ist konstant auf der gesamten Schnittgeraden."
-    },
-    {
+        frage: "Für welchen Wert von \\(a\\) ist die Ebene \\(E_a: ax + 2y + z = 5\\) parallel zu \\(E: 2x + 4y + 2z = 1\\)?",
+        loesung: 1, toleranz: 0.01,
+        tipp: "Parallelität verlangt proportionale Normalenvektoren – vergleiche die Komponenten paarweise.",
+        loesungsweg: "\\(\\vec{n} = (2\\mid4\\mid2)\\) lässt sich zu \\((1\\mid2\\mid1)\\) kürzen. Damit \\((a\\mid2\\mid1)\\) dazu proportional ist, muss \\(a = 1\\) sein. Die rechten Seiten (\\(5\\) gegen \\(0{,}5\\) nach Kürzen) stimmen nicht überein – die Ebenen sind also echt parallel und nicht identisch."
+      },
+      {
         id: 27, level: 5, typ: "numerisch",
-        frage: "Schnittgerade von \\(E_1: x + y - z = 2\\) und \\(E_2: x - y + z = 4\\): Mit \\(x = 3\\), setze \\(z = 0\\) in \\(E_1\\). Berechne \\(y\\).",
-        loesung: -1, toleranz: 0,
-        tipp: "In \\(E_1\\): \\(3 + y - 0 = 2\\).",
-        loesungsweg: "In \\(E_1\\): \\(3 + y = 2 \\Rightarrow y = -1\\). Aufpunkt: \\((3, -1, 0)\\). Probe in \\(E_2\\): \\(3 - (-1) + 0 = 4\\) \\(\\checkmark\\)."
-    },
-    {
+        frage: "Die Ebenen \\(E_1: x = 1\\), \\(E_2: y = 2\\) und \\(E_3: x + y + z = 6\\) haben genau einen gemeinsamen Punkt. Bestimme dessen \\(z\\)-Koordinate.",
+        loesung: 3, toleranz: 0.01,
+        tipp: "Zwei der Gleichungen legen bereits zwei Koordinaten fest.",
+        loesungsweg: "Aus \\(E_1\\) und \\(E_2\\): \\(x = 1\\), \\(y = 2\\). Einsetzen in \\(E_3\\): $$1 + 2 + z = 6 \\Rightarrow z = 3$$ Der gemeinsame Punkt ist \\((1\\mid2\\mid3)\\)."
+      },
+      {
         id: 28, level: 5, typ: "mc",
-        frage: "Für \\(E_1: x + y - z = 2\\) und \\(E_2: x - y + z = 4\\): Aufpunkt \\((3, -1, 0)\\). Welcher Richtungsvektor ist korrekt?",
+        frage: "Welche Ebene halbiert den Winkel zwischen \\(E_1: x = 0\\) und \\(E_2: y = 0\\) und enthält Punkte mit \\(x = y > 0\\)?",
         optionen: [
-            "\\(\\vec{v} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 1 \\end{pmatrix}\\)",
-            "\\(\\vec{v} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 1 \\end{pmatrix}\\)",
-            "\\(\\vec{v} = \\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix}\\)",
-            "\\(\\vec{v} = \\begin{pmatrix} 0 \\\\ -1 \\\\ 1 \\end{pmatrix}\\)"
+            "\\(x - y = 0\\)",
+            "\\(x + y = 0\\)",
+            "\\(z = 0\\)",
+            "\\(x + y + z = 0\\)"
         ],
         korrekt: 0,
-        tipp: "Berechne \\(\\vec{n}_1 \\times \\vec{n}_2\\) mit \\(\\vec{n}_1 = (1,1,-1)\\) und \\(\\vec{n}_2 = (1,-1,1)\\).",
-        loesungsweg: "\\(\\vec{n}_1 \\times \\vec{n}_2 = \\begin{pmatrix} 1{\\cdot}1 - (-1){\\cdot}(-1) \\\\ (-1){\\cdot}1 - 1{\\cdot}1 \\\\ 1{\\cdot}(-1) - 1{\\cdot}1 \\end{pmatrix} = \\begin{pmatrix} 0 \\\\ -2 \\\\ -2 \\end{pmatrix}\\). Gekürzt (mal \\(-\\frac{1}{2}\\)): \\(\\begin{pmatrix} 0 \\\\ 1 \\\\ 1 \\end{pmatrix}\\). Probe: \\(\\vec{n}_1 \\cdot \\vec{v} = 0 + 1 - 1 = 0\\) \\(\\checkmark\\), \\(\\vec{n}_2 \\cdot \\vec{v} = 0 - 1 + 1 = 0\\) \\(\\checkmark\\)."
-    },
-    {
-        id: 29, level: 5, typ: "numerisch",
-        frage: "Bestimme die Schnittgerade von \\(E_1: 2x + y + z = 7\\) und \\(E_2: x + y - z = 2\\). Subtrahiere: \\(E_1 - E_2\\). Wie lautet der Koeffizient von \\(z\\)?",
-        loesung: 2, toleranz: 0,
-        tipp: "\\(E_1 - E_2\\): \\((2-1)x + (1-1)y + (1-(-1))z = 7-2\\).",
-        loesungsweg: "\\(E_1 - E_2\\): \\(x + 2z = 5\\). Der Koeffizient von \\(z\\) ist \\(2\\)."
-    },
-    {
+        tipp: "Punkte einer Winkelhalbierenden haben von beiden Ebenen denselben Abstand – schreibe diese Bedingung auf.",
+        loesungsweg: "Gleicher Abstand bedeutet \\(|x| = |y|\\), also \\(x = y\\) oder \\(x = -y\\). Das sind die beiden winkelhalbierenden Ebenen \\(x - y = 0\\) und \\(x + y = 0\\). Punkte mit \\(x = y > 0\\) liegen auf der ersten. Die Ebene \\(z = 0\\) steht dagegen auf beiden senkrecht."
+      },
+      {
+        id: 29, level: 5, typ: "mc",
+        frage: "Ein Schüler untersucht zwei Ebenen:<br>Schritt 1: \\(\\vec{n_1}\\cdot\\vec{n_2} = 0\\)<br>Schritt 2: Also sind die Ebenen parallel.<br>Welcher Schritt ist der erste fehlerhafte?",
+        optionen: ["Schritt 1", "Schritt 2", "Beide Schritte sind falsch", "Kein Schritt ist fehlerhaft"],
+        korrekt: 1,
+        tipp: "Was bedeutet es, wenn die beiden Normalenvektoren senkrecht zueinander stehen?",
+        loesungsweg: "Schritt 1 ist eine Angabe. Der Schluss in Schritt 2 verdreht die Bedingung: Stehen die Normalenvektoren senkrecht aufeinander, so stehen auch die Ebenen senkrecht aufeinander – sie schneiden sich dann in einer Geraden. Parallelität läge vor, wenn die Normalenvektoren Vielfache voneinander wären."
+      },
+      {
         id: 30, level: 5, typ: "numerisch",
-        frage: "Aus \\(E_1 - E_2\\) ergibt sich \\(x + 2z = 5\\), also \\(x = 5 - 2t\\) mit \\(z = t\\). Setze in \\(E_2: x + y - z = 2\\) ein. Welchen Wert hat \\(y\\) bei \\(t = 1\\)?",
-        loesung: 0, toleranz: 0,
-        tipp: "\\(E_2\\): \\((5 - 2t) + y - t = 2 \\Rightarrow y = 3t - 3\\).",
-        loesungsweg: "In \\(E_2\\): \\((5-2t) + y - t = 2 \\Rightarrow y = 3t - 3\\). Bei \\(t = 1\\): \\(y = 0\\). Schnittgerade: \\(\\vec{x} = \\begin{pmatrix} 5 \\\\ -3 \\\\ 0 \\end{pmatrix} + t \\begin{pmatrix} -2 \\\\ 3 \\\\ 1 \\end{pmatrix}\\)."
-    },
-    {
-        id: 31, level: 5, typ: "mc",
-        frage: "Die Ebene \\(E_1: x - 2y + z = 0\\) und die Ebene \\(E_2: 2x + y - z = 0\\) enthalten beide den Ursprung. Welche Aussage ist korrekt?",
+        frage: "Für welchen Wert von \\(a\\) sind die Ebenen \\(E_1: x + y + z = 1\\) und \\(E_2: 2x + 2y + az = 3\\) zueinander parallel?",
+        loesung: 2, toleranz: 0.01,
+        tipp: "Die Normalenvektoren müssen Vielfache voneinander sein – der Faktor lässt sich aus den ersten Komponenten ablesen.",
+        loesungsweg: "Aus den ersten beiden Komponenten ergibt sich der Faktor \\(2\\); damit muss auch \\(a = 2 \\cdot 1 = 2\\) gelten. Die rechten Seiten (\\(2\\) gegen \\(3\\)) passen dann nicht zueinander, die Ebenen sind also echt parallel. Für jedes \\(a \\neq 2\\) schneiden sie sich in einer Geraden."
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // Level 6 — drei Ebenen mit Parameter, Lösungstypen, Modellierung
+      // ═══════════════════════════════════════════════════════════
+      {
+        id: 31, level: 6, typ: "numerisch",
+        frage: "Für welchen Wert von \\(a\\) hat das System der drei Ebenen \\(E_1: x + y = 1\\), \\(E_2: y + z = 2\\) und \\(E_3: 2x + ay + z = 3\\) <b>keine eindeutige</b> Lösung?",
+        loesung: 3, toleranz: 0.01,
+        tipp: "Genau ein Schnittpunkt existiert, solange die drei Normalenvektoren nicht in einer Ebene liegen – prüfe ihre lineare Abhängigkeit.",
+        loesungsweg: "Eindeutig lösbar ist das System, solange die Determinante der Koeffizienten nicht verschwindet: $$\\det\\begin{pmatrix}1 & 1 & 0\\\\0 & 1 & 1\\\\2 & a & 1\\end{pmatrix} = 1(1 - a) - 1(0 - 2) = 3 - a$$ Für \\(a = 3\\) wird sie null – dann schneiden sich die drei Ebenen nicht in genau einem Punkt (sondern in einer Geraden oder gar nicht)."
+      },
+      {
+        id: 32, level: 6, typ: "mc",
+        frage: "Drei Ebenen haben <b>keinen</b> gemeinsamen Punkt. Welche Aussage trifft zu?",
         optionen: [
-            "Die Schnittgerade verläuft durch den Ursprung",
-            "Die Ebenen sind identisch",
-            "Die Ebenen sind parallel",
-            "Der Abstand der Ebenen ist 0, also identisch"
+            "Das ist mit und ohne parallele Ebenen möglich – drei paarweise schneidende Ebenen können ein „Prisma\" bilden",
+            "Dann müssen mindestens zwei der Ebenen parallel sein",
+            "Dann müssen alle drei Ebenen parallel sein",
+            "Das kann nicht vorkommen: Drei Ebenen haben stets mindestens einen gemeinsamen Punkt"
         ],
         korrekt: 0,
-        tipp: "Beide Ebenen enthalten \\((0,0,0)\\). Die Normalenvektoren sind nicht kollinear. Also schneiden sie sich in einer Geraden.",
-        loesungsweg: "\\((0,0,0)\\) erfüllt beide Gleichungen. \\(\\vec{n}_1 = (1,-2,1)\\) und \\(\\vec{n}_2 = (2,1,-1)\\) sind nicht kollinear (\\(\\frac{1}{2} \\neq \\frac{-2}{1}\\)). Also schneiden sich die Ebenen in einer Geraden durch den Ursprung."
-    },
-
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 6 — 3 Ebenen — Schnittmenge bestimmen
-    // ══════════════════════════════════════════════════════════════
-    {
-        id: 32, level: 6, typ: "mc",
-        frage: "Drei Ebenen: \\(E_1: x + y + z = 3\\), \\(E_2: x - y + z = 1\\), \\(E_3: x + y - z = 1\\). Welche Schnittmenge ergibt sich?",
-        optionen: ["Ein Punkt", "Eine Gerade", "Die leere Menge", "Eine Ebene"],
-        korrekt: 0,
-        tipp: "Löse das LGS: \\(E_1 - E_2\\) ergibt \\(y\\), \\(E_1 - E_3\\) ergibt \\(z\\). Dann \\(x\\) bestimmen.",
-        loesungsweg: "\\(E_1 - E_2\\): \\(2y = 2 \\Rightarrow y = 1\\). \\(E_1 - E_3\\): \\(2z = 2 \\Rightarrow z = 1\\). In \\(E_1\\): \\(x = 3 - 1 - 1 = 1\\). Schnittpunkt: \\((1, 1, 1)\\)."
-    },
-    {
+        tipp: "Denke an drei Wände, die ein Dreiecksprisma begrenzen – haben sie einen gemeinsamen Punkt?",
+        loesungsweg: "Auch ohne Parallelität kann der gemeinsame Punkt fehlen: Schneiden sich die Ebenen paarweise in drei verschiedenen, zueinander parallelen Geraden, so entsteht die „Prismen\"-Lage ohne gemeinsamen Punkt. Beispiel: \\(x = 0\\), \\(y = 0\\), \\(x + y = 1\\). Parallelität zweier Ebenen ist also ein möglicher, aber nicht der einzige Grund."
+      },
+      {
         id: 33, level: 6, typ: "numerisch",
-        frage: "Drei Ebenen: \\(E_1: x + y + z = 9\\), \\(E_2: x - y + z = 5\\), \\(E_3: 2x + y - z = 4\\). Berechne die \\(y\\)-Koordinate des Schnittpunkts.",
-        loesung: 2, toleranz: 0,
-        tipp: "\\(E_1 - E_2\\) eliminiert \\(x\\) und \\(z\\). Dann mit \\(E_1 + E_3\\) weiterarbeiten.",
-        loesungsweg: "\\(E_1 - E_2\\): \\(2y = 4 \\Rightarrow y = 2\\). \\(E_1 + E_3\\): \\(3x + 2y = 13 \\Rightarrow 3x = 9 \\Rightarrow x = 3\\). In \\(E_1\\): \\(3 + 2 + z = 9 \\Rightarrow z = 4\\). Schnittpunkt: \\((3, 2, 4)\\)."
-    },
-    {
-        id: 34, level: 6, typ: "mc",
-        frage: "Drei Ebenen: \\(E_1: x + y + z = 1\\), \\(E_2: x + y + z = 3\\), \\(E_3: 2x - y + z = 0\\). Welche Schnittmenge haben alle drei gemeinsam?",
-        optionen: ["Die leere Menge", "Ein Punkt", "Eine Gerade", "Eine Ebene"],
-        korrekt: 0,
-        tipp: "Vergleiche \\(E_1\\) und \\(E_2\\): Gleicher Normalenvektor, verschiedene rechte Seiten. Was bedeutet das?",
-        loesungsweg: "\\(E_1\\) und \\(E_2\\) sind echt parallel (gleicher Normalenvektor, \\(1 \\neq 3\\)). Parallele Ebenen haben keine gemeinsamen Punkte. Daher ist die Schnittmenge aller drei Ebenen die leere Menge."
-    },
-    {
-        id: 35, level: 6, typ: "mc",
-        frage: "Drei Ebenen: \\(E_1: x + y + z = 4\\), \\(E_2: 2x + 2y + 2z = 8\\), \\(E_3: x - y + 2z = 1\\). Welche Schnittmenge haben alle drei?",
-        optionen: ["Eine Gerade (\\(E_1 = E_2\\), Schnitt mit \\(E_3\\))", "Ein Punkt", "Die leere Menge", "Eine Ebene"],
-        korrekt: 0,
-        tipp: "Prüfe: \\(E_2 = 2 \\cdot E_1\\)? Wenn ja, sind nur zwei verschiedene Ebenen übrig.",
-        loesungsweg: "\\(E_2\\) ist identisch mit \\(E_1\\) (Faktor 2). Es bleiben \\(E_1\\) und \\(E_3\\). Deren Normalenvektoren \\((1,1,1)\\) und \\((1,-1,2)\\) sind nicht kollinear \\(\\Rightarrow\\) Schnittgerade."
-    },
-    {
+        frage: "Welchen Abstand hat der Ursprung von der Schnittgeraden der Ebenen \\(E_1: x + y = 2\\) und \\(E_2: y + z = 3\\)? Runde auf zwei Dezimalstellen.",
+        loesung: 2.16, toleranz: 0.01,
+        tipp: "Stelle die Schnittgerade zuerst in Parameterform dar und minimiere dann das Abstandsquadrat.",
+        loesungsweg: "Mit \\(y = t\\) folgt \\(x = 2 - t\\) und \\(z = 3 - t\\), also \\(X(t) = (2-t \\mid t \\mid 3-t)\\). $$d^2(t) = (2-t)^2 + t^2 + (3-t)^2 = 3t^2 - 10t + 13$$ Minimum bei \\(6t - 10 = 0\\), also \\(t = \\frac{5}{3}\\): $$d^2 = \\frac{14}{3} \\Rightarrow d \\approx 2{,}16$$"
+      },
+      {
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Berechne den Schnittwinkel der Ebenen \\(E_1: x + y + z = 1\\) und \\(E_2: x - y = 0\\) in Grad.",
+        loesung: 90, toleranz: 0.2,
+        tipp: "Berechne zuerst das Skalarprodukt der Normalenvektoren – das Ergebnis erspart die weitere Rechnung.",
+        loesungsweg: "$$\\vec{n_1}\\cdot\\vec{n_2} = 1 \\cdot 1 + 1 \\cdot (-1) + 1 \\cdot 0 = 0$$ Die Normalenvektoren stehen senkrecht aufeinander, also auch die Ebenen: \\(\\alpha = 90°\\)."
+      },
+      {
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Für welchen Wert von \\(a\\) steht die Ebene \\(E_a: ax + y + z = 1\\) senkrecht auf \\(E: x + 2y - 2z = 0\\)?",
+        loesung: 0, toleranz: 0.01,
+        tipp: "Setze das Skalarprodukt der Normalenvektoren null.",
+        loesungsweg: "$$(a\\mid1\\mid1)\\cdot(1\\mid2\\mid-2) = a + 2 - 2 = a = 0$$ Für \\(a = 0\\), also \\(E_0: y + z = 1\\), stehen die Ebenen senkrecht aufeinander."
+      },
+      {
         id: 36, level: 6, typ: "numerisch",
-        frage: "Drei Ebenen: \\(E_1: x + y + z = 6\\), \\(E_2: x - y + z = 2\\), \\(E_3: x + y - z = 0\\). Berechne die \\(z\\)-Koordinate des gemeinsamen Schnittpunkts.",
-        loesung: 3, toleranz: 0,
-        tipp: "\\(E_1 - E_3\\): \\(2z = 6\\).",
-        loesungsweg: "\\(E_1 - E_2\\): \\(2y = 4 \\Rightarrow y = 2\\). \\(E_1 - E_3\\): \\(2z = 6 \\Rightarrow z = 3\\). In \\(E_1\\): \\(x + 2 + 3 = 6 \\Rightarrow x = 1\\). Schnittpunkt: \\((1, 2, 3)\\)."
-    }
+        frage: "Zwei Dachflächen werden durch \\(E_1: x + z = 5\\) und \\(E_2: y + z = 5\\) beschrieben. Welchen Winkel in Grad schließen sie entlang des Dachfirstes ein?",
+        loesung: 60, toleranz: 0.2,
+        tipp: "Der Winkel zwischen den Flächen ergibt sich aus ihren Normalenvektoren.",
+        loesungsweg: "\\(\\vec{n_1} = (1\\mid0\\mid1)\\), \\(\\vec{n_2} = (0\\mid1\\mid1)\\). $$\\cos\\alpha = \\frac{1}{\\sqrt{2}\\cdot\\sqrt{2}} = \\frac{1}{2} \\Rightarrow \\alpha = 60°$$"
+      }
+
 
     ];
     </script>
