@@ -195,7 +195,7 @@ const AUFGABEN = [
     id: 18,
     level: 3,
     typ: "mc",
-    frage: "Welche Zahl ist am größten?",
+    frage: "Welche der vier Zahlen ist die größte?",
     optionen: ["\\(987\\,654\\)", "\\(998\\,999\\)", "\\(1\\,023\\,456\\)", "\\(1\\,019\\,999\\)"],
     korrekt: 2,
     tipp: "Zähle zuerst die Stellen: Eine Zahl mit mehr Stellen ist immer größer.",
@@ -262,128 +262,148 @@ const AUFGABEN = [
     tipp: "Trage die Ziffern der Reihe nach in eine Stellentafel ein — vergiss die \\(0\\) bei den Tausendern nicht!",
     loesungsweg: "$$4 \\cdot 10\\,000 + 0 \\cdot 1\\,000 + 6 \\cdot 100 + 2 \\cdot 10 + 5 \\cdot 1$$ $$= 40\\,000 + 600 + 20 + 5 = 40\\,625$$ Wer die \\(0\\) weglässt, erhält fälschlich \\(4\\,625\\)."
   },
-  // ========== LEVEL 5 — anspruchsvoll: Römische Zahlen lesen & schreiben ==========
+  // ═══════════════════════════════════════════════════════════
+  // LEVEL 5 — Runden rückwärts, Zahlenrätsel, Fehlersuche
+  // ═══════════════════════════════════════════════════════════
   {
     id: 25,
     level: 5,
     typ: "numerisch",
-    frage: "Welche Zahl bedeutet die römische Zahl XIV?",
-    loesung: 14,
+    frage: "Welche ist die kleinste ganze Zahl, die beim Runden auf Tausender \\(5\\,000\\) ergibt?",
+    loesung: 4500,
     toleranz: 0,
-    tipp: "Steht ein kleineres Zeichen vor einem größeren, wird es abgezogen: IV bedeutet \\(5 - 1\\).",
-    loesungsweg: "X = \\(10\\), IV = \\(5 - 1 = 4\\) (I steht vor V, also abziehen). $$10 + 4 = 14$$"
+    tipp: "Ab welcher Zahl wird nach oben gerundet?",
+    loesungsweg: "Aufgerundet wird ab der Hälfte: \\(4\\,500\\) liegt genau in der Mitte zwischen \\(4\\,000\\) und \\(5\\,000\\) und wird bereits auf \\(5\\,000\\) gerundet. \\(4\\,499\\) ergäbe dagegen \\(4\\,000\\)."
   },
   {
     id: 26,
     level: 5,
-    typ: "mc",
-    frage: "Wie schreibt man die Zahl \\(40\\) als römische Zahl?",
-    optionen: ["XXXX", "LX", "XL", "VL"],
-    korrekt: 2,
-    tipp: "Vier gleiche Zeichen hintereinander sind verboten. Nutze die Abzieh-Regel mit L = \\(50\\).",
-    loesungsweg: "X vor L bedeutet: \\(50 - 10 = 40\\), also XL. XXXX ist verboten (höchstens drei gleiche Zeichen), LX wäre \\(60\\), und V darf nie abgezogen werden."
+    typ: "numerisch",
+    frage: "Welche ist die größte ganze Zahl, die beim Runden auf Tausender \\(5\\,000\\) ergibt?",
+    loesung: 5499,
+    toleranz: 0,
+    tipp: "Ab welcher Zahl würde auf \\(6\\,000\\) aufgerundet?",
+    loesungsweg: "\\(5\\,500\\) wird schon auf \\(6\\,000\\) aufgerundet. Die größte Zahl, die noch \\(5\\,000\\) ergibt, ist also \\(5\\,499\\). Zusammen mit der kleinsten Zahl \\(4\\,500\\) ergibt sich der ganze Bereich \\(4\\,500\\) bis \\(5\\,499\\)."
   },
   {
     id: 27,
     level: 5,
-    typ: "numerisch",
-    frage: "Welche Zahl bedeutet die römische Zahl CXLV?",
-    loesung: 145,
-    toleranz: 0,
-    tipp: "Zerlege in Gruppen: C, dann XL, dann V. Bei XL steht das kleinere Zeichen vor dem größeren.",
-    loesungsweg: "C = \\(100\\), XL = \\(50 - 10 = 40\\), V = \\(5\\). $$100 + 40 + 5 = 145$$"
+    typ: "mc",
+    frage: "Ein Schüler rundet \\(4\\,799\\) auf Hunderter und erhält \\(4\\,700\\) — „denn \\(99\\) ist kleiner als \\(100\\)\". Was ist dazu zu sagen?",
+    optionen: [
+      "Falsch — entscheidend ist die Zehnerziffer \\(9\\), also wird auf \\(4\\,800\\) aufgerundet",
+      "Richtig, \\(99\\) reicht nicht für einen vollen Hunderter",
+      "Falsch, richtig wäre \\(5\\,000\\)",
+      "Richtig, beim Runden wird immer abgeschnitten"
+    ],
+    korrekt: 0,
+    tipp: "Welche Ziffer entscheidet beim Runden auf Hunderter?",
+    loesungsweg: "Beim Runden auf Hunderter entscheidet die Ziffer <b>rechts davon</b>, also die Zehnerziffer. Hier ist das die \\(9\\), und ab \\(5\\) wird aufgerundet: $$4\\,799 \\approx 4\\,800$$ Der Schüler hat die Stellen einfach weggelassen statt gerundet."
   },
   {
     id: 28,
     level: 5,
-    typ: "mc",
-    frage: "Wie schreibt man das Jahr \\(2026\\) als römische Zahl?",
-    optionen: ["MMXXIV", "MMXXVI", "MXXVI", "MMVI"],
-    korrekt: 1,
-    tipp: "Zerlege: \\(2026 = 2000 + 20 + 6\\). Setze jeden Teil einzeln um.",
-    loesungsweg: "\\(2000\\) = MM, \\(20\\) = XX, \\(6\\) = VI. Zusammen: MMXXVI. MMXXIV wäre \\(2024\\), MXXVI wäre \\(1026\\), MMVI wäre \\(2006\\)."
+    typ: "numerisch",
+    frage: "Eine vierstellige Zahl hat die Tausenderziffer \\(3\\). Die Hunderterziffer ist doppelt so groß wie die Tausenderziffer, die Zehnerziffer ist \\(0\\) und die Einerziffer ist \\(5\\). Wie heißt die Zahl?",
+    loesung: 3605,
+    toleranz: 0,
+    tipp: "Schreibe die vier Stellen der Reihe nach auf: Tausender, Hunderter, Zehner, Einer.",
+    loesungsweg: "Tausender \\(3\\), Hunderter \\(2 \\cdot 3 = 6\\), Zehner \\(0\\), Einer \\(5\\). Die Zahl heißt \\(3\\,605\\)."
   },
   {
     id: 29,
     level: 5,
     typ: "numerisch",
-    frage: "Welche Zahl bedeutet die römische Zahl MDCCLX?",
-    loesung: 1760,
+    frage: "Wie viele ganze Zahlen liegen zwischen \\(2\\,997\\) und \\(3\\,004\\)? (Die beiden genannten Zahlen zählen nicht mit.)",
+    loesung: 6,
     toleranz: 0,
-    tipp: "Hier steht kein kleineres Zeichen vor einem größeren — du kannst einfach alle Werte addieren.",
-    loesungsweg: "M = \\(1000\\), D = \\(500\\), CC = \\(200\\), L = \\(50\\), X = \\(10\\). $$1000 + 500 + 200 + 50 + 10 = 1760$$"
+    tipp: "Zähle auf — der Sprung über die \\(3\\,000\\) ist dabei nichts Besonderes.",
+    loesungsweg: "Dazwischen liegen \\(2\\,998\\), \\(2\\,999\\), \\(3\\,000\\), \\(3\\,001\\), \\(3\\,002\\) und \\(3\\,003\\) — also <b>6</b> Zahlen. (Rechenweg: \\(3\\,004 - 2\\,997 - 1 = 6\\).)"
   },
   {
     id: 30,
     level: 5,
     typ: "mc",
-    frage: "Welche Schreibweise für die Zahl \\(99\\) ist richtig?",
-    optionen: ["XCIX", "IC", "XCVIIII", "LXXXXIX"],
+    frage: "Bei welcher dieser Zahlen ändert sich beim Runden auf Zehner nichts?",
+    optionen: ["\\(340\\)", "\\(345\\)", "\\(349\\)", "\\(341\\)"],
     korrekt: 0,
-    tipp: "Zerlege \\(99 = 90 + 9\\). Abgezogen werden darf immer nur ein Zeichen, und nur I, X oder C.",
-    loesungsweg: "\\(90\\) = XC (\\(100 - 10\\)), \\(9\\) = IX (\\(10 - 1\\)). Zusammen: XCIX. IC ist verboten (I darf nur vor V und X stehen), XCVIIII und LXXXXIX verstoßen gegen die Regel „höchstens drei gleiche Zeichen“."
+    tipp: "Welche Zahl ist bereits ein glatter Zehner?",
+    loesungsweg: "\\(340\\) ist schon ein Zehner und bleibt daher unverändert. Die anderen ändern sich: \\(345 \\approx 350\\), \\(349 \\approx 350\\), \\(341 \\approx 340\\)."
   },
-  // ========== LEVEL 6 — wagnerisch: Sachkontexte & Zahlenrätsel ==========
+  // ═══════════════════════════════════════════════════════════
+  // LEVEL 6 — Ziffern anordnen, Stellenwert begründen, Rundungsbereiche
+  // ═══════════════════════════════════════════════════════════
   {
     id: 31,
     level: 6,
     typ: "numerisch",
-    frage: "Die Stadt Halle hat \\(226\\,586\\) Einwohner. 🏙️ Für ein Plakat soll die Zahl auf den nächsten Zehntausender gerundet werden. Welche Zahl steht auf dem Plakat?",
-    loesung: 230000,
+    frage: "Bilde aus den Ziffern \\(4\\), \\(0\\), \\(7\\) und \\(2\\) die größtmögliche vierstellige Zahl. Jede Ziffer wird genau einmal verwendet.",
+    loesung: 7420,
     toleranz: 0,
-    tipp: "Beim Runden auf Zehntausender entscheidet die Tausenderziffer — welche ist das hier?",
-    loesungsweg: "Die Tausenderziffer von \\(226\\,586\\) ist \\(6\\). $$6 \\geq 5 \\Rightarrow \\text{aufrunden}$$ Aus \\(22\\ldots\\) wird \\(23\\ldots\\): $$226\\,586 \\approx 230\\,000$$"
+    tipp: "Wo bringt eine große Ziffer am meisten — vorne oder hinten?",
+    loesungsweg: "Die größte Ziffer gehört an die Stelle mit dem höchsten Stellenwert, dann absteigend weiter: \\(7\\,420\\). Die \\(7\\) ist dort \\(7\\,000\\) wert, ganz hinten nur \\(7\\)."
   },
   {
     id: 32,
     level: 6,
-    typ: "mc",
-    frage: "Der Mond ist im Durchschnitt \\(384\\,400\\) km von der Erde entfernt. 🌕 Wie liest man diese Zahl?",
-    optionen: ["drei Millionen vierundachtzigtausendvierhundert", "dreihundertachtundvierzigtausendvierhundert", "dreihundertvierundachtzigtausendvierhundertvierzig", "dreihundertvierundachtzigtausendvierhundert"],
-    korrekt: 3,
-    tipp: "Teile die Zahl in Dreierblöcke: \\(384\\) | \\(400\\). Der linke Block sind die Tausender.",
-    loesungsweg: "Dreierblöcke: \\(384\\,|\\,400\\), also \\(384\\) Tausender und \\(400\\) Einer: dreihundertvierundachtzigtausendvierhundert. Achtung Zahlendreher: „achtundvierzig“ wäre \\(348\\,400\\)."
+    typ: "numerisch",
+    frage: "Bilde aus den Ziffern \\(4\\), \\(0\\), \\(7\\) und \\(2\\) die kleinstmögliche vierstellige Zahl. Eine \\(0\\) darf nicht an erster Stelle stehen.",
+    loesung: 2047,
+    toleranz: 0,
+    tipp: "Die \\(0\\) ist zwar die kleinste Ziffer, darf aber nicht vorne stehen — wohin dann?",
+    loesungsweg: "Vorne muss die kleinste <b>erlaubte</b> Ziffer stehen, also die \\(2\\); danach kommen die restlichen aufsteigend: \\(2\\,047\\). Mit führender Null wäre \\(0\\,247\\) nur eine dreistellige Zahl."
   },
   {
     id: 33,
     level: 6,
     typ: "numerisch",
-    frage: "Zahlenrätsel: Ich bin eine dreistellige Zahl. Meine Hunderterziffer ist \\(4\\), meine Zehnerziffer ist doppelt so groß wie meine Hunderterziffer, meine Einerziffer ist \\(0\\). Wer bin ich?",
-    loesung: 480,
+    frage: "Eine Zahl wurde auf Hunderter gerundet und ergab \\(3\\,500\\). Wie viele verschiedene ganze Zahlen kommen dafür in Frage?",
+    loesung: 100,
     toleranz: 0,
-    tipp: "Bestimme die Ziffern einzeln und setze sie dann in die Stellentafel: Hunderter, Zehner, Einer.",
-    loesungsweg: "Hunderter: \\(4\\). Zehner: \\(2 \\cdot 4 = 8\\). Einer: \\(0\\). $$4 \\cdot 100 + 8 \\cdot 10 + 0 = 480$$"
+    tipp: "Bestimme zuerst die kleinste und die größte mögliche Zahl.",
+    loesungsweg: "Gerundet werden alle Zahlen von \\(3\\,450\\) bis \\(3\\,549\\) auf \\(3\\,500\\). $$3\\,549 - 3\\,450 + 1 = 100$$ Jeder Rundungsbereich auf Hunderter umfasst genau \\(100\\) Zahlen."
   },
   {
     id: 34,
     level: 6,
     typ: "mc",
-    frage: "In einem Stadion wurden \\(38\\,716\\) Eintrittskarten verkauft. ⚽ Die Zeitung rundet auf den nächsten Tausender. Welche Zahl steht in der Zeitung?",
-    optionen: ["\\(38\\,000\\)", "\\(38\\,700\\)", "\\(39\\,000\\)", "\\(40\\,000\\)"],
-    korrekt: 2,
-    tipp: "Beim Runden auf Tausender entscheidet die Hunderterziffer.",
-    loesungsweg: "Die Hunderterziffer von \\(38\\,716\\) ist \\(7\\). $$7 \\geq 5 \\Rightarrow \\text{aufrunden}$$ $$38\\,716 \\approx 39\\,000$$ \\(38\\,700\\) wäre auf Hunderter gerundet, \\(40\\,000\\) auf Zehntausender."
+    frage: "Was passiert mit dem Wert einer Zahl, wenn man rechts eine \\(0\\) anhängt (aus \\(36\\) wird \\(360\\))?",
+    optionen: [
+      "Sie wird zehnmal so groß — jede Ziffer rückt eine Stelle nach links",
+      "Sie bleibt gleich, denn \\(0\\) ändert nichts",
+      "Sie wird um \\(10\\) größer",
+      "Sie verdoppelt sich"
+    ],
+    korrekt: 0,
+    tipp: "Welchen Stellenwert hat die \\(3\\) in \\(36\\), welchen in \\(360\\)?",
+    loesungsweg: "In \\(36\\) ist die \\(3\\) drei Zehner wert, in \\(360\\) drei Hunderter. Jede Ziffer rückt eine Stelle nach links, ihr Wert wird verzehnfacht: $$36 \\cdot 10 = 360$$ Hinter dem Komma wäre es anders: \\(0{,}60 = 0{,}6\\)."
   },
   {
     id: 35,
     level: 6,
     typ: "numerisch",
-    frage: "Zahlenrätsel: Bilde aus den Ziffern \\(3\\), \\(7\\), \\(0\\) und \\(5\\) die größte vierstellige Zahl. Jede Ziffer darf genau einmal vorkommen.",
-    loesung: 7530,
+    frage: "In der Zahl \\(4\\,747\\,474\\) kommt die Ziffer \\(7\\) dreimal vor. Wie viel mal so viel ist die vorderste \\(7\\) wert wie die hinterste \\(7\\)?",
+    loesung: 10000,
     toleranz: 0,
-    tipp: "Die größte Ziffer muss an die Stelle mit dem größten Wert — ganz nach vorn.",
-    loesungsweg: "Ordne die Ziffern absteigend: \\(7 > 5 > 3 > 0\\). Die größte Ziffer an die Tausenderstelle, die kleinste an die Einerstelle: $$7530$$"
+    tipp: "Bestimme für beide Ziffern den Stellenwert und vergleiche.",
+    loesungsweg: "Die vorderste \\(7\\) steht an der Hunderttausenderstelle und ist \\(700\\,000\\) wert. Die hinterste \\(7\\) steht an der Zehnerstelle und ist \\(70\\) wert. $$700\\,000 : 70 = 10\\,000$$"
   },
   {
     id: 36,
     level: 6,
     typ: "mc",
-    frage: "Vier Freunde vergleichen ihre Schrittzahlen von gestern: 👟 Ayla \\(12\\,408\\), Ben \\(12\\,480\\), Chidi \\(12\\,084\\), Dana \\(12\\,840\\). Welche Schrittzahl ist die zweitgrößte?",
-    optionen: ["\\(12\\,408\\)", "\\(12\\,480\\)", "\\(12\\,840\\)", "\\(12\\,084\\)"],
-    korrekt: 1,
-    tipp: "Ordne alle vier Zahlen erst der Größe nach. Vergleiche Stelle für Stelle von links.",
-    loesungsweg: "Alle beginnen mit \\(12\\), also entscheidet die Hunderterstelle: $$12\\,840 > 12\\,480 > 12\\,408 > 12\\,084$$ Die zweitgrößte Schrittzahl ist \\(12\\,480\\) (Ben)."
+    frage: "Zwei verschiedene Zahlen ergeben beim Runden auf Hunderter beide \\(2\\,400\\). Kann ihr Unterschied größer als \\(50\\) sein?",
+    optionen: [
+      "Ja — der Bereich reicht von \\(2\\,350\\) bis \\(2\\,449\\), der größte Unterschied ist \\(99\\)",
+      "Nein, sonst würden sie unterschiedlich gerundet",
+      "Nein, der Unterschied kann höchstens \\(50\\) betragen",
+      "Ja, der Unterschied kann beliebig groß sein"
+    ],
+    korrekt: 0,
+    tipp: "Welche kleinste und welche größte Zahl werden auf \\(2\\,400\\) gerundet?",
+    loesungsweg: "Auf \\(2\\,400\\) gerundet werden alle Zahlen von \\(2\\,350\\) bis \\(2\\,449\\). $$2\\,449 - 2\\,350 = 99$$ Zwei Zahlen können sich also um bis zu \\(99\\) unterscheiden und trotzdem dasselbe Rundungsergebnis haben — gerundete Angaben sagen nur ungefähr etwas aus."
   }
+
 ];
     </script>
     <script src="../p3-reflexion.js"></script>

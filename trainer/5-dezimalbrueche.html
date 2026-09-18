@@ -25,7 +25,7 @@ const AUFGABEN = [
     typ: "numerisch",
     frage: "In der Stellentafel stehen: 3 Einer, 4 Zehntel und 5 Hundertstel. Schreibe die Dezimalzahl.",
     loesung: 3.45,
-    toleranz: 0,
+    toleranz: 0.01,
     tipp: "Nach dem Komma kommt zuerst die Zehntel-Stelle, dann die Hundertstel-Stelle.",
     loesungsweg: "Vor dem Komma stehen die Einer: \\(3\\). Nach dem Komma zuerst die Zehntel (\\(4\\)), dann die Hundertstel (\\(5\\)). $$3{,}45$$"
   },
@@ -65,7 +65,7 @@ const AUFGABEN = [
     typ: "numerisch",
     frage: "In der Stellentafel stehen: 0 Einer, 0 Zehntel und 6 Hundertstel. Schreibe die Dezimalzahl.",
     loesung: 0.06,
-    toleranz: 0,
+    toleranz: 0.01,
     tipp: "Jede leere Stelle bekommt eine \\(0\\) als Platzhalter.",
     loesungsweg: "Einer: \\(0\\), Zehntel: \\(0\\), Hundertstel: \\(6\\). $$0{,}06$$ Die \\(0\\) an der Zehntel-Stelle darfst du nicht weglassen — sonst wird aus \\(6\\) Hundertsteln plötzlich \\(6\\) Zehntel."
   },
@@ -86,7 +86,7 @@ const AUFGABEN = [
     typ: "numerisch",
     frage: "Schreibe den Bruch \\(\\dfrac{7}{10}\\) als Dezimalzahl.",
     loesung: 0.7,
-    toleranz: 0,
+    toleranz: 0.01,
     tipp: "Zehntel stehen an der ersten Stelle nach dem Komma.",
     loesungsweg: "\\(7\\) Zehntel bedeutet: eine \\(7\\) an der Zehntel-Stelle. $$\\frac{7}{10} = 0{,}7$$"
   },
@@ -106,7 +106,7 @@ const AUFGABEN = [
     typ: "numerisch",
     frage: "Schreibe den Bruch \\(\\dfrac{23}{100}\\) als Dezimalzahl.",
     loesung: 0.23,
-    toleranz: 0,
+    toleranz: 0.01,
     tipp: "\\(23\\) Hundertstel sind \\(2\\) Zehntel und \\(3\\) Hundertstel.",
     loesungsweg: "$$\\frac{23}{100} = \\frac{20}{100} + \\frac{3}{100} = 2 \\text{ Zehntel} + 3 \\text{ Hundertstel} = 0{,}23$$"
   },
@@ -126,7 +126,7 @@ const AUFGABEN = [
     typ: "numerisch",
     frage: "Schreibe den Bruch \\(\\dfrac{45}{10}\\) als Dezimalzahl.",
     loesung: 4.5,
-    toleranz: 0,
+    toleranz: 0.01,
     tipp: "\\(45\\) Zehntel — wie viele ganze Einer stecken darin?",
     loesungsweg: "\\(10\\) Zehntel sind ein ganzer Einer. $$\\frac{45}{10} = \\frac{40}{10} + \\frac{5}{10} = 4 + 0{,}5 = 4{,}5$$"
   },
@@ -157,7 +157,7 @@ const AUFGABEN = [
     typ: "numerisch",
     frage: "Welche Zahl liegt auf dem Zahlenstrahl genau in der Mitte zwischen \\(0{,}2\\) und \\(0{,}4\\)?",
     loesung: 0.3,
-    toleranz: 0,
+    toleranz: 0.01,
     tipp: "Denke in Zehntel-Schritten: \\(2\\) Zehntel, ... , \\(4\\) Zehntel.",
     loesungsweg: "Von \\(0{,}2\\) bis \\(0{,}4\\) sind es \\(2\\) Zehntel. Die Mitte liegt \\(1\\) Zehntel von beiden entfernt: $$0{,}2 \\to 0{,}3 \\to 0{,}4$$ Die gesuchte Zahl ist \\(0{,}3\\)."
   },
@@ -177,7 +177,7 @@ const AUFGABEN = [
     typ: "numerisch",
     frage: "Welche der drei Zahlen \\(2{,}3\\), \\(2{,}03\\) und \\(2{,}33\\) ist am kleinsten? Gib sie als Antwort ein.",
     loesung: 2.03,
-    toleranz: 0,
+    toleranz: 0.01,
     tipp: "Alle haben \\(2\\) Einer. Vergleiche die Zehntel-Stelle.",
     loesungsweg: "Zehntel vergleichen: $$2{,}3 \\to 3 \\text{ Zehntel}, \\quad 2{,}03 \\to 0 \\text{ Zehntel}, \\quad 2{,}33 \\to 3 \\text{ Zehntel}$$ \\(2{,}03\\) hat null Zehntel und ist am kleinsten."
   },
@@ -208,7 +208,7 @@ const AUFGABEN = [
     typ: "numerisch",
     frage: "Rechne: \\(2{,}4 + 1{,}3\\)",
     loesung: 3.7,
-    toleranz: 0,
+    toleranz: 0.01,
     tipp: "Rechne Einer plus Einer und Zehntel plus Zehntel.",
     loesungsweg: "Stellenweise addieren: $$2 + 1 = 3 \\text{ Einer}, \\quad 4 + 3 = 7 \\text{ Zehntel}$$ $$2{,}4 + 1{,}3 = 3{,}7$$"
   },
@@ -218,7 +218,7 @@ const AUFGABEN = [
     typ: "numerisch",
     frage: "Rechne: \\(6{,}2 - 2{,}8\\)",
     loesung: 3.4,
-    toleranz: 0,
+    toleranz: 0.01,
     tipp: "\\(8\\) Zehntel kannst du nicht direkt von \\(2\\) Zehnteln abziehen — tausche einen Einer in \\(10\\) Zehntel um.",
     loesungsweg: "Schrittweise rechnen: $$6{,}2 - 2 = 4{,}2$$ $$4{,}2 - 0{,}8 = 3{,}4$$ Also: \\(6{,}2 - 2{,}8 = 3{,}4\\)."
   },
@@ -238,7 +238,7 @@ const AUFGABEN = [
     typ: "numerisch",
     frage: "Rechne: \\(4 - 1{,}5\\)",
     loesung: 2.5,
-    toleranz: 0,
+    toleranz: 0.01,
     tipp: "Denke dir \\(4\\) als \\(4{,}0\\). Ziehe erst \\(1\\) ab, dann noch \\(0{,}5\\).",
     loesungsweg: "$$4 - 1 = 3$$ $$3 - 0{,}5 = 2{,}5$$ Also: \\(4 - 1{,}5 = 2{,}5\\)."
   },
@@ -262,128 +262,158 @@ const AUFGABEN = [
     tipp: "Schreibe \\(0{,}2\\) als \\(0{,}20\\) und rechne dann in Hundertsteln.",
     loesungsweg: "In Hundertsteln: $$1{,}05 = 105 \\text{ Hundertstel}, \\quad 0{,}20 = 20 \\text{ Hundertstel}$$ $$105 - 20 = 85 \\text{ Hundertstel} = 0{,}85$$"
   },
-  // ========== LEVEL 5 — anspruchsvoll: multiplizieren & runden ==========
+  // ═══════════════════════════════════════════════════════════
+  // LEVEL 5 — mehrschrittige Einkäufe, Fehlersuche, Zahlen dazwischen
+  // ═══════════════════════════════════════════════════════════
   {
     id: 25,
     level: 5,
-    typ: "numerisch",
-    frage: "Rechne: \\(3{,}45 \\cdot 10\\)",
-    loesung: 34.5,
-    toleranz: 0,
-    tipp: "Beim Multiplizieren mit \\(10\\) rückt das Komma um eine Stelle nach rechts.",
-    loesungsweg: "Das Komma wandert eine Stelle nach rechts: $$3{,}45 \\cdot 10 = 34{,}5$$ Jede Ziffer wird zehnmal so viel wert."
+    typ: "mc",
+    frage: "Ein Schüler rechnet \\(0{,}5 + 0{,}25 = 0{,}30\\). Was ist dazu zu sagen?",
+    optionen: [
+      "Falsch — \\(0{,}5\\) sind \\(5\\) Zehntel, richtig ist \\(0{,}75\\)",
+      "Richtig, \\(5 + 25 = 30\\)",
+      "Falsch, richtig wäre \\(0{,}255\\)",
+      "Richtig, aber man schreibt besser \\(0{,}3\\)"
+    ],
+    korrekt: 0,
+    tipp: "Schreibe \\(0{,}5\\) zuerst als \\(0{,}50\\) — dann stehen gleiche Stellen untereinander.",
+    loesungsweg: "Beim Addieren müssen Zehntel zu Zehnteln und Hundertstel zu Hundertsteln passen: $$0{,}50 + 0{,}25 = 0{,}75$$ Der Schüler hat \\(5\\) und \\(25\\) addiert, als stünden sie an derselben Stelle."
   },
   {
     id: 26,
     level: 5,
-    typ: "mc",
-    frage: "Was ergibt \\(0{,}7 \\cdot 100\\)?",
-    optionen: ["\\(7\\)", "\\(0{,}700\\)", "\\(700\\)", "\\(70\\)"],
-    korrekt: 3,
-    tipp: "Mal \\(100\\) heißt: Das Komma rückt um ZWEI Stellen nach rechts.",
-    loesungsweg: "Komma zwei Stellen nach rechts — fehlende Stellen mit \\(0\\) auffüllen: $$0{,}7 = 0{,}70 \\quad \\to \\quad 0{,}7 \\cdot 100 = 70$$ Bei \\(0{,}700\\) hat sich nur die Schreibweise geändert, nicht der Wert!"
+    typ: "numerisch",
+    frage: "Ein Stift kostet \\(1{,}20\\,€\\), ein Heft \\(0{,}85\\,€\\). Lena kauft \\(3\\) Stifte und \\(2\\) Hefte. Wie viel Euro bezahlt sie?",
+    loesung: 5.3,
+    toleranz: 0.01,
+    tipp: "Rechne beide Posten getrennt aus und addiere erst danach.",
+    loesungsweg: "Stifte: \\(3 \\cdot 1{,}20 = 3{,}60\\,€\\). Hefte: \\(2 \\cdot 0{,}85 = 1{,}70\\,€\\). $$3{,}60 + 1{,}70 = 5{,}30\\,€$$"
   },
   {
     id: 27,
     level: 5,
-    typ: "numerisch",
-    frage: "Rechne: \\(2{,}5 \\cdot 4\\)",
-    loesung: 10,
-    toleranz: 0,
-    tipp: "Rechne erst \\(25 \\cdot 4\\) ohne Komma und setze das Komma am Ende richtig.",
-    loesungsweg: "$$25 \\cdot 4 = 100$$ Der Faktor \\(2{,}5\\) hat eine Nachkommastelle, also bekommt auch das Ergebnis eine: $$2{,}5 \\cdot 4 = 10{,}0 = 10$$"
+    typ: "mc",
+    frage: "Ein Schüler behauptet: „Zwischen \\(0{,}3\\) und \\(0{,}4\\) gibt es keine Zahl mehr.\" Stimmt das?",
+    optionen: [
+      "Nein — zum Beispiel liegt \\(0{,}35\\) dazwischen",
+      "Ja, denn auf \\(3\\) folgt direkt die \\(4\\)",
+      "Ja, es sei denn man rundet",
+      "Nein, aber es gibt genau eine Zahl dazwischen"
+    ],
+    korrekt: 0,
+    tipp: "Schreibe beide Zahlen mit zwei Nachkommastellen auf.",
+    loesungsweg: "\\(0{,}3 = 0{,}30\\) und \\(0{,}4 = 0{,}40\\). Dazwischen liegen \\(0{,}31\\) bis \\(0{,}39\\) — und mit mehr Nachkommastellen sogar unendlich viele wie \\(0{,}341\\). Zwischen zwei Dezimalzahlen liegen <b>immer</b> weitere Zahlen."
   },
   {
     id: 28,
     level: 5,
     typ: "numerisch",
-    frage: "Runde \\(3{,}47\\) auf Zehntel.",
-    loesung: 3.5,
-    toleranz: 0,
-    tipp: "Schau auf die Hundertstel-Stelle: Ist sie \\(5\\) oder größer, wird aufgerundet.",
-    loesungsweg: "Die Hundertstel-Stelle ist \\(7\\) — also aufrunden: $$3{,}47 \\approx 3{,}5$$"
+    frage: "Von einem \\(12{,}5\\,\\text{m}\\) langen Band werden \\(4\\) Stücke zu je \\(2{,}3\\,\\text{m}\\) abgeschnitten. Wie viele Meter bleiben übrig?",
+    loesung: 3.3,
+    toleranz: 0.01,
+    tipp: "Rechne zuerst aus, wie viel Band insgesamt abgeschnitten wird.",
+    loesungsweg: "Abgeschnitten: \\(4 \\cdot 2{,}3 = 9{,}2\\,\\text{m}\\). $$12{,}5 - 9{,}2 = 3{,}3\\,\\text{m}$$"
   },
   {
     id: 29,
     level: 5,
-    typ: "mc",
-    frage: "Runde \\(6{,}249\\) auf Hundertstel.",
-    optionen: ["\\(6{,}25\\)", "\\(6{,}24\\)", "\\(6{,}3\\)", "\\(6{,}2\\)"],
-    korrekt: 0,
-    tipp: "Entscheidend ist die Tausendstel-Stelle — die Ziffer direkt hinter den Hundertsteln.",
-    loesungsweg: "Auf Hundertstel runden heißt: zwei Nachkommastellen behalten. Die Tausendstel-Stelle ist \\(9 \\geq 5\\), also aufrunden: $$6{,}249 \\approx 6{,}25$$ \\(6{,}2\\) wäre das Ergebnis beim Runden auf Zehntel — hier ist aber nach Hundertsteln gefragt."
+    typ: "numerisch",
+    frage: "Tim bezahlt mit \\(20\\,€\\) und bekommt \\(7{,}10\\,€\\) zurück. Er hat zwei gleich teure Artikel gekauft. Wie viel Euro kostet ein Artikel?",
+    loesung: 6.45,
+    toleranz: 0.01,
+    tipp: "Berechne zuerst, wie viel der ganze Einkauf gekostet hat.",
+    loesungsweg: "Einkauf: \\(20{,}00 - 7{,}10 = 12{,}90\\,€\\). Ein Artikel: $$12{,}90 : 2 = 6{,}45\\,€$$"
   },
   {
     id: 30,
     level: 5,
-    typ: "mc",
-    frage: "Was ergibt \\(0{,}6 \\cdot 3\\)?",
-    optionen: ["\\(0{,}18\\)", "\\(1{,}8\\)", "\\(18\\)", "\\(0{,}9\\)"],
-    korrekt: 1,
-    tipp: "Rechne in Zehnteln: \\(6\\) Zehntel mal \\(3\\).",
-    loesungsweg: "$$6 \\text{ Zehntel} \\cdot 3 = 18 \\text{ Zehntel} = 1{,}8$$ Kontrolle mit Überschlag: \\(0{,}6\\) ist etwas mehr als ein halbes Ganzes, mal \\(3\\) muss also fast \\(2\\) ergeben — \\(0{,}18\\) kann nicht stimmen."
+    typ: "numerisch",
+    frage: "Welche dieser drei Zahlen ist die größte: \\(0{,}7\\), \\(0{,}68\\) oder \\(0{,}705\\)? Gib die Zahl an.",
+    loesung: 0.705,
+    toleranz: 0.001,
+    tipp: "Ergänze alle Zahlen auf drei Nachkommastellen, dann kannst du sie direkt vergleichen.",
+    loesungsweg: "$$0{,}700 \\qquad 0{,}680 \\qquad 0{,}705$$ Bei gleich vielen Nachkommastellen ist der Vergleich eindeutig: \\(0{,}705\\) ist die größte. Mehr Nachkommastellen bedeuten also nicht automatisch eine größere Zahl."
   },
-  // ========== LEVEL 6 — Boss-Level: Sachaufgaben mit Geld & Messwerten ==========
+  // ═══════════════════════════════════════════════════════════
+  // LEVEL 6 — Umkehrung, Begründung, Spezialfall
+  // ═══════════════════════════════════════════════════════════
   {
     id: 31,
     level: 6,
-    typ: "numerisch",
-    frage: "Lena kauft ein Heft für \\(1{,}20\\) € und einen Stift für \\(0{,}85\\) €. Wie viel bezahlt sie zusammen? Gib das Ergebnis in Euro an.",
-    loesung: 2.05,
-    toleranz: 0,
-    tipp: "Rechne in Cent: \\(120\\) Cent plus \\(85\\) Cent.",
-    loesungsweg: "In Cent umrechnen: $$120 \\text{ Cent} + 85 \\text{ Cent} = 205 \\text{ Cent}$$ Zurück in Euro: $$205 \\text{ Cent} = 2{,}05 \\text{ €}$$"
+    typ: "mc",
+    frage: "Warum bezeichnen \\(0{,}60\\) und \\(0{,}6\\) dieselbe Zahl?",
+    optionen: [
+      "Weil die angehängte Null \\(0\\) Hundertstel bedeutet und nichts hinzufügt",
+      "Weil Nullen am Ende immer weggelassen werden dürfen, auch vor dem Komma",
+      "Weil \\(60\\) und \\(6\\) dieselbe Quersumme haben",
+      "Sie bezeichnen nicht dieselbe Zahl — \\(0{,}60\\) ist größer"
+    ],
+    korrekt: 0,
+    tipp: "Was steht bei \\(0{,}60\\) an der Hundertstelstelle?",
+    loesungsweg: "\\(0{,}60\\) heißt: \\(6\\) Zehntel und \\(0\\) Hundertstel — die Null fügt nichts hinzu. <b>Hinter</b> dem Komma darf man solche Nullen weglassen. Vor dem Komma ginge das nicht: \\(60\\) und \\(6\\) sind verschieden."
   },
   {
     id: 32,
     level: 6,
-    typ: "mc",
-    frage: "🏃 Beim Sportfest läuft Aylin die \\(50\\) m in \\(14{,}8\\) Sekunden, Malik braucht \\(15{,}2\\) Sekunden. Wie viel schneller ist Aylin?",
-    optionen: ["\\(0{,}6\\) s", "\\(1{,}4\\) s", "\\(0{,}4\\) s", "\\(0{,}04\\) s"],
-    korrekt: 2,
-    tipp: "Rechne den Unterschied: von \\(14{,}8\\) bis \\(15\\) und dann noch bis \\(15{,}2\\).",
-    loesungsweg: "Ergänzen bis zur ganzen Zahl: $$14{,}8 + 0{,}2 = 15 \\quad \\text{und} \\quad 15 + 0{,}2 = 15{,}2$$ $$0{,}2 + 0{,}2 = 0{,}4$$ Aylin ist \\(0{,}4\\) Sekunden schneller."
+    typ: "numerisch",
+    frage: "Eine Zahl wird mit \\(10\\) multipliziert; das Ergebnis ist \\(4{,}5\\). Wie heißt die Zahl?",
+    loesung: 0.45,
+    toleranz: 0.001,
+    tipp: "Mache die Multiplikation rückgängig.",
+    loesungsweg: "$$4{,}5 : 10 = 0{,}45$$ Beim Teilen durch \\(10\\) wandert das Komma eine Stelle nach links. Probe: \\(0{,}45 \\cdot 10 = 4{,}5\\) ✓"
   },
   {
     id: 33,
     level: 6,
-    typ: "numerisch",
-    frage: "🍦 Tim hat \\(5\\) € Taschengeld dabei. Er kauft sich ein Eis für \\(1{,}30\\) €. Wie viel Geld bleibt ihm? Gib das Ergebnis in Euro an.",
-    loesung: 3.7,
-    toleranz: 0,
-    tipp: "Denke dir \\(5\\) € als \\(5{,}00\\) € und ziehe erst \\(1\\) €, dann \\(30\\) Cent ab.",
-    loesungsweg: "$$5{,}00 - 1{,}00 = 4{,}00$$ $$4{,}00 - 0{,}30 = 3{,}70$$ Tim bleiben \\(3{,}70\\) €."
+    typ: "mc",
+    frage: "Ein Schüler sagt: „\\(0{,}25\\) ist größer als \\(0{,}3\\), weil \\(25 > 3\\).\" Was ist dazu zu sagen?",
+    optionen: [
+      "Falsch — \\(0{,}25\\) sind \\(2\\) Zehntel, \\(0{,}3\\) sind \\(3\\) Zehntel; also ist \\(0{,}3\\) größer",
+      "Richtig, längere Zahlen sind größer",
+      "Falsch, beide sind gleich groß",
+      "Richtig, aber nur bei Geldbeträgen"
+    ],
+    korrekt: 0,
+    tipp: "Vergleiche zuerst die Zehntel, nicht die Ziffernanzahl.",
+    loesungsweg: "Dezimalzahlen vergleicht man Stelle für Stelle: $$0{,}25 < 0{,}30$$ An der Zehntelstelle steht \\(2\\) gegen \\(3\\) — damit ist bereits entschieden. Anschaulich: \\(25\\) Cent sind weniger als \\(30\\) Cent."
   },
   {
     id: 34,
     level: 6,
     typ: "numerisch",
-    frage: "🧃 Mia füllt für die Klassenfeier \\(4\\) Becher mit je \\(0{,}25\\) Litern Saft. Wie viel Saft braucht sie insgesamt? Gib das Ergebnis in Litern an.",
-    loesung: 1,
+    frage: "Wie viele Zahlen mit genau einer Nachkommastelle liegen zwischen \\(2\\) und \\(3\\) (die \\(2\\) und die \\(3\\) selbst zählen nicht mit)?",
+    loesung: 9,
     toleranz: 0,
-    tipp: "\\(0{,}25\\) Liter ist ein Viertelliter. Wie viele Viertel ergeben ein Ganzes?",
-    loesungsweg: "$$0{,}25 \\cdot 4 = 1{,}00$$ Vier Viertelliter ergeben genau \\(1\\) Liter. Mia braucht \\(1\\) Liter Saft."
+    tipp: "Zähle auf: \\(2{,}1\\), \\(2{,}2\\), \\(\\ldots\\)",
+    loesungsweg: "Es sind \\(2{,}1\\); \\(2{,}2\\); \\(2{,}3\\); \\(2{,}4\\); \\(2{,}5\\); \\(2{,}6\\); \\(2{,}7\\); \\(2{,}8\\); \\(2{,}9\\) — also <b>9</b> Zahlen. Mit zwei Nachkommastellen wären es schon \\(99\\)."
   },
   {
     id: 35,
     level: 6,
-    typ: "mc",
-    frage: "🐹 Emres Meerschweinchen wiegt \\(0{,}95\\) kg, das seiner Schwester wiegt \\(1{,}05\\) kg. Wie viel wiegen beide zusammen?",
-    optionen: ["\\(1{,}90\\) kg", "\\(2{,}00\\) kg", "\\(2{,}10\\) kg", "\\(1{,}10\\) kg"],
-    korrekt: 1,
-    tipp: "Wandle beide Gewichte in Gramm um (\\(1\\) kg \\(= 1000\\) g) und addiere dann.",
-    loesungsweg: "In Gramm: $$950 \\text{ g} + 1050 \\text{ g} = 2000 \\text{ g} = 2{,}00 \\text{ kg}$$ Beide zusammen wiegen genau \\(2\\) kg."
+    typ: "numerisch",
+    frage: "Ein Paket wiegt \\(2{,}4\\,\\text{kg}\\). Ein zweites Paket ist \\(0{,}75\\,\\text{kg}\\) leichter. Wie schwer sind beide Pakete zusammen (in kg)?",
+    loesung: 4.05,
+    toleranz: 0.01,
+    tipp: "Bestimme zuerst das Gewicht des zweiten Pakets.",
+    loesungsweg: "Zweites Paket: \\(2{,}40 - 0{,}75 = 1{,}65\\,\\text{kg}\\). Zusammen: $$2{,}40 + 1{,}65 = 4{,}05\\,\\text{kg}$$"
   },
   {
     id: 36,
     level: 6,
     typ: "mc",
-    frage: "Eine Kinokarte kostet \\(4{,}50\\) €. Sofia kauft \\(3\\) Karten für sich und ihre Freundinnen. Wie viel kosten die Karten zusammen?",
-    optionen: ["\\(12{,}50\\) €", "\\(13{,}50\\) €", "\\(1{,}35\\) €", "\\(12{,}15\\) €"],
-    korrekt: 1,
-    tipp: "Rechne \\(3 \\cdot 4\\) € und \\(3 \\cdot 50\\) Cent getrennt.",
-    loesungsweg: "Getrennt rechnen: $$3 \\cdot 4 \\text{ €} = 12 \\text{ €} \\quad \\text{und} \\quad 3 \\cdot 0{,}50 \\text{ €} = 1{,}50 \\text{ €}$$ $$12 + 1{,}50 = 13{,}50 \\text{ €}$$ Überschlag: \\(3 \\cdot 4{,}50\\) muss mehr als \\(3 \\cdot 4 = 12\\) sein."
+    frage: "Ein Schüler behauptet: „Beim Multiplizieren wird das Ergebnis immer größer.\" Stimmt das bei Dezimalzahlen?",
+    optionen: [
+      "Nein — bei einem Faktor kleiner als \\(1\\) wird es kleiner, z. B. \\(8 \\cdot 0{,}5 = 4\\)",
+      "Ja, Multiplizieren macht immer größer",
+      "Nein, aber nur bei Zahlen mit Komma auf beiden Seiten",
+      "Ja, außer man multipliziert mit \\(0\\)"
+    ],
+    korrekt: 0,
+    tipp: "Was passiert, wenn du eine Zahl mit \\(0{,}5\\) multiplizierst?",
+    loesungsweg: "$$8 \\cdot 0{,}5 = 4$$ Mit \\(0{,}5\\) zu multiplizieren heißt zu halbieren. Bei jedem Faktor <b>kleiner als 1</b> wird das Ergebnis kleiner als der erste Faktor — die von den natürlichen Zahlen gewohnte Regel gilt hier nicht."
   }
+
 ];
     </script>
     <script src="../p3-reflexion.js"></script>

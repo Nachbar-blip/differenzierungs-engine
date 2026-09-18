@@ -262,128 +262,158 @@ const AUFGABEN = [
     tipp: "Rechne zuerst die \\(4\\) Ganzen in Fünftel um.",
     loesungsweg: "\\(4\\) Ganze sind \\(4 \\cdot 5 = 20\\) Fünftel. $$4\\frac{2}{5} = \\frac{20}{5} + \\frac{2}{5} = \\frac{22}{5}$$ Der Zähler ist \\(22\\)."
   },
-  // ========== LEVEL 5 — knifflig: Anteile von Zahlen und Größen berechnen ==========
+  // ═══════════════════════════════════════════════════════════
+  // LEVEL 5 — mehrschrittig: Anteil vom Rest, Vergleich, Fehlersuche
+  // ═══════════════════════════════════════════════════════════
   {
     id: 25,
     level: 5,
     typ: "numerisch",
-    frage: "Samira bekommt \\(\\frac{3}{4}\\) von \\(20\\) € Taschengeld ausgezahlt. Wie viel ist das? Gib das Ergebnis in € an.",
-    loesung: 15,
+    frage: "In einer Dose sind \\(36\\) Bonbons. Mia isst \\(\\frac{1}{4}\\) davon. Danach gibt sie \\(\\frac{1}{3}\\) vom Rest ihrem Bruder. Wie viele Bonbons sind noch in der Dose?",
+    loesung: 18,
     toleranz: 0,
-    tipp: "Teile erst durch den Nenner, nimm dann mit dem Zähler mal.",
-    loesungsweg: "Erst durch den Nenner teilen: $$20 : 4 = 5$$ Dann mit dem Zähler malnehmen: $$5 \\cdot 3 = 15$$ Samira bekommt \\(15\\) €."
+    tipp: "Der zweite Anteil bezieht sich auf den Rest, nicht auf die volle Dose.",
+    loesungsweg: "Mia isst \\(\\frac14\\) von \\(36\\), also \\(9\\); es bleiben \\(27\\). Ihr Bruder bekommt \\(\\frac13\\) von \\(27\\), also \\(9\\). $$27 - 9 = 18$$"
   },
   {
     id: 26,
     level: 5,
-    typ: "numerisch",
-    frage: "In der Klasse 5a sind \\(27\\) Kinder. \\(\\frac{2}{3}\\) davon spielen ein Instrument. Wie viele Kinder sind das?",
-    loesung: 18,
-    toleranz: 0,
-    tipp: "Wie groß ist ein Drittel von \\(27\\)? Dann brauchst du zwei davon.",
-    loesungsweg: "Ein Drittel: $$27 : 3 = 9$$ Zwei Drittel: $$9 \\cdot 2 = 18$$ Es sind \\(18\\) Kinder."
+    typ: "mc",
+    frage: "Ein Schüler rechnet \\(\\frac{2}{8} + \\frac{3}{8} = \\frac{5}{16}\\). Was ist dazu zu sagen?",
+    optionen: [
+      "Falsch — bei gleichem Nenner wird nur der Zähler addiert: \\(\\frac{5}{8}\\)",
+      "Richtig, Zähler und Nenner werden addiert",
+      "Falsch, richtig wäre \\(\\frac{6}{8}\\)",
+      "Richtig, das Ergebnis lässt sich noch kürzen"
+    ],
+    korrekt: 0,
+    tipp: "Die Achtel bleiben Achtel — es kommen nur mehr Stücke dazu.",
+    loesungsweg: "Der Nenner sagt, in wie viele Teile das Ganze zerlegt ist, und der ändert sich beim Addieren nicht: $$\\frac28 + \\frac38 = \\frac58$$ Mit \\(\\frac{5}{16}\\) wäre die Summe sogar kleiner als \\(\\frac38\\) — unmöglich."
   },
   {
     id: 27,
     level: 5,
     typ: "numerisch",
-    frage: "Wie viel ist \\(\\frac{1}{5}\\) von \\(1\\) kg? Gib das Ergebnis in g an.",
-    loesung: 200,
+    frage: "In einer Klasse sind \\(28\\) Kinder, davon sind \\(\\frac{3}{7}\\) Mädchen. Wie viele Jungen sind in der Klasse?",
+    loesung: 16,
     toleranz: 0,
-    tipp: "Rechne das Kilogramm zuerst in Gramm um: \\(1\\) kg \\(= 1000\\) g.",
-    loesungsweg: "Umrechnen: \\(1\\) kg \\(= 1000\\) g. Dann durch den Nenner teilen: $$1000 : 5 = 200$$ \\(\\frac{1}{5}\\) von \\(1\\) kg sind \\(200\\) g."
+    tipp: "Gefragt sind die Jungen — der Bruch nennt aber den Anteil der Mädchen.",
+    loesungsweg: "Mädchen: \\(\\frac37\\) von \\(28\\) sind \\(3 \\cdot 4 = 12\\). $$28 - 12 = 16 \\text{ Jungen}$$ (Oder direkt: die Jungen sind \\(\\frac47\\) von \\(28 = 16\\).)"
   },
   {
     id: 28,
     level: 5,
-    typ: "mc",
-    frage: "Wie berechnest du \\(\\frac{3}{8}\\) von \\(40\\) am geschicktesten?",
-    optionen: ["Erst \\(40 : 8\\), dann das Ergebnis mal \\(3\\)", "Erst \\(40 \\cdot 8\\), dann das Ergebnis durch \\(3\\)", "Erst \\(40 : 3\\), dann das Ergebnis mal \\(8\\)", "Erst \\(40 - 8\\), dann das Ergebnis mal \\(3\\)"],
-    korrekt: 0,
-    tipp: "Der Nenner sagt dir, in wie viele gleiche Teile du die \\(40\\) zerlegst.",
-    loesungsweg: "Merkregel: durch den Nenner teilen, mit dem Zähler malnehmen. $$40 : 8 = 5$$ $$5 \\cdot 3 = 15$$ Also ist \\(\\frac{3}{8}\\) von \\(40\\) gleich \\(15\\)."
+    typ: "numerisch",
+    frage: "Ein Buch hat \\(120\\) Seiten. Tom liest am ersten Tag \\(\\frac{1}{4}\\) des Buches, am zweiten Tag \\(\\frac{1}{3}\\) des Restes. Wie viele Seiten fehlen ihm danach noch?",
+    loesung: 60,
+    toleranz: 0,
+    tipp: "Rechne Tag für Tag und achte darauf, worauf sich der zweite Bruch bezieht.",
+    loesungsweg: "Tag 1: \\(\\frac14\\) von \\(120 = 30\\) Seiten, Rest \\(90\\). Tag 2: \\(\\frac13\\) von \\(90 = 30\\) Seiten. $$90 - 30 = 60 \\text{ Seiten}$$"
   },
   {
     id: 29,
     level: 5,
-    typ: "numerisch",
-    frage: "Ein Fußballtraining ⚽ dauert \\(\\frac{5}{6}\\) einer Stunde. Wie viele Minuten sind das? Gib das Ergebnis in min an.",
-    loesung: 50,
-    toleranz: 0,
-    tipp: "Eine Stunde hat \\(60\\) Minuten. Wie lang ist ein Sechstel davon?",
-    loesungsweg: "Ein Sechstel einer Stunde: $$60 : 6 = 10 \\text{ min}$$ Fünf Sechstel: $$10 \\cdot 5 = 50 \\text{ min}$$ Das Training dauert \\(50\\) Minuten."
+    typ: "mc",
+    frage: "Was ist mehr: \\(\\frac{2}{3}\\) von \\(30\\) oder \\(\\frac{3}{4}\\) von \\(24\\)?",
+    optionen: [
+      "\\(\\frac{2}{3}\\) von \\(30\\), denn \\(20 > 18\\)",
+      "\\(\\frac{3}{4}\\) von \\(24\\), denn \\(\\frac34\\) ist größer als \\(\\frac23\\)",
+      "Beide sind gleich groß",
+      "Das kann man ohne Taschenrechner nicht entscheiden"
+    ],
+    korrekt: 0,
+    tipp: "Rechne beide Anteile aus — der größere Bruch entscheidet nicht allein.",
+    loesungsweg: "\\(\\frac23\\) von \\(30\\): \\(30 : 3 \\cdot 2 = 20\\). \\(\\frac34\\) von \\(24\\): \\(24 : 4 \\cdot 3 = 18\\). Also ist der erste Anteil größer — obwohl \\(\\frac34 > \\frac23\\) gilt. Es kommt eben auch darauf an, wovon der Anteil genommen wird."
   },
   {
     id: 30,
     level: 5,
-    typ: "mc",
-    frage: "Luca spart \\(\\frac{3}{10}\\) von \\(50\\) €. Wie viel Geld spart er?",
-    optionen: ["30 €", "5 €", "15 €", "20 €"],
-    korrekt: 2,
-    tipp: "Berechne zuerst ein Zehntel von \\(50\\) €.",
-    loesungsweg: "Ein Zehntel: $$50 : 10 = 5 \\text{ €}$$ Drei Zehntel: $$5 \\cdot 3 = 15 \\text{ €}$$ Luca spart \\(15\\) €. Wer nur \\(50 : 10\\) rechnet, vergisst den Zähler und landet bei \\(5\\) €."
+    typ: "numerisch",
+    frage: "Nora hat \\(45\\,€\\) gespart und gibt \\(\\frac{2}{5}\\) davon aus. Wie viel Euro bleiben ihr?",
+    loesung: 27,
+    toleranz: 0,
+    tipp: "Berechne zuerst, wie viel ein Fünftel ist.",
+    loesungsweg: "Ein Fünftel: \\(45 : 5 = 9\\,€\\). Ausgegeben: \\(2 \\cdot 9 = 18\\,€\\). $$45 - 18 = 27\\,€$$"
   },
-  // ========== LEVEL 6 — Boss-Level: Sachaufgaben ==========
+  // ═══════════════════════════════════════════════════════════
+  // LEVEL 6 — Umkehrung, Begründung, Spezialfall
+  // ═══════════════════════════════════════════════════════════
   {
     id: 31,
     level: 6,
     typ: "numerisch",
-    frage: "In der Klasse 5b sind \\(24\\) Kinder. \\(\\frac{3}{8}\\) von ihnen fahren mit dem Bus zur Schule. Wie viele Kinder fahren mit dem Bus?",
-    loesung: 9,
+    frage: "Von einer Zahl sind \\(\\frac{2}{5}\\) genau \\(14\\). Wie heißt die Zahl?",
+    loesung: 35,
     toleranz: 0,
-    tipp: "Teile die \\(24\\) Kinder zuerst in \\(8\\) gleich große Gruppen.",
-    loesungsweg: "Ein Achtel der Klasse: $$24 : 8 = 3 \\text{ Kinder}$$ Drei Achtel: $$3 \\cdot 3 = 9 \\text{ Kinder}$$ \\(9\\) Kinder fahren mit dem Bus."
+    tipp: "Wie groß ist ein Fünftel der gesuchten Zahl?",
+    loesungsweg: "Ein Fünftel: \\(14 : 2 = 7\\). Die ganze Zahl: $$5 \\cdot 7 = 35$$ Probe: \\(\\frac25\\) von \\(35\\) sind \\(14\\) ✓"
   },
   {
     id: 32,
     level: 6,
     typ: "mc",
-    frage: "Eine Pizza 🍕 ist in 8 Stücke geteilt. Aylin isst \\(\\frac{2}{8}\\), ihr Bruder isst \\(\\frac{3}{8}\\). Welcher Anteil der Pizza bleibt übrig?",
-    optionen: ["\\(\\frac{5}{8}\\)", "\\(\\frac{3}{8}\\)", "\\(\\frac{1}{8}\\)", "\\(\\frac{3}{16}\\)"],
-    korrekt: 1,
-    tipp: "Rechne zuerst aus, wie viel die beiden zusammen essen. Die ganze Pizza ist \\(\\frac{8}{8}\\).",
-    loesungsweg: "Zusammen gegessen: $$\\frac{2}{8} + \\frac{3}{8} = \\frac{5}{8}$$ Übrig bleibt: $$\\frac{8}{8} - \\frac{5}{8} = \\frac{3}{8}$$"
+    frage: "Der Zähler bleibt gleich, der Nenner wird größer. Was passiert mit dem Bruch?",
+    optionen: [
+      "Er wird kleiner — das Ganze wird in mehr, also kleinere Teile zerlegt",
+      "Er wird größer, denn die Zahl unten wächst",
+      "Er bleibt gleich groß",
+      "Das hängt vom Zähler ab"
+    ],
+    korrekt: 0,
+    tipp: "Vergleiche \\(\\frac{1}{2}\\), \\(\\frac{1}{4}\\) und \\(\\frac{1}{8}\\) einer Pizza.",
+    loesungsweg: "Der Nenner gibt an, in wie viele Teile das Ganze zerlegt wird. Bei mehr Teilen ist jedes Teil kleiner: $$\\frac12 > \\frac14 > \\frac18$$ Ein größerer Nenner macht den Bruch also <b>kleiner</b> — anders als bei gewöhnlichen Zahlen."
   },
   {
     id: 33,
     level: 6,
     typ: "numerisch",
-    frage: "Der Schulweg von Jonas ist \\(2\\) km lang. Er hat schon \\(\\frac{3}{4}\\) des Weges geschafft. Wie viele Meter fehlen ihm noch? Gib das Ergebnis in m an.",
-    loesung: 500,
+    frage: "Welche Zahl muss im Zähler stehen, damit \\(\\frac{\\square}{12} = \\frac{3}{4}\\) gilt?",
+    loesung: 9,
     toleranz: 0,
-    tipp: "Rechne die \\(2\\) km in Meter um. Wenn \\(\\frac{3}{4}\\) geschafft sind — welcher Anteil fehlt dann noch?",
-    loesungsweg: "Umrechnen: \\(2\\) km \\(= 2000\\) m. Es fehlt noch \\(\\frac{1}{4}\\) des Weges: $$\\frac{4}{4} - \\frac{3}{4} = \\frac{1}{4}$$ $$2000 : 4 = 500 \\text{ m}$$ Jonas fehlen noch \\(500\\) m."
+    tipp: "Mit welcher Zahl wurde der Nenner \\(4\\) multipliziert, um \\(12\\) zu erhalten?",
+    loesungsweg: "Der Nenner wurde mit \\(3\\) multipliziert (\\(4 \\cdot 3 = 12\\)). Beim Erweitern muss der Zähler mit derselben Zahl multipliziert werden: $$3 \\cdot 3 = 9$$ Also \\(\\frac{9}{12} = \\frac34\\)."
   },
   {
     id: 34,
     level: 6,
     typ: "mc",
-    frage: "In Bens Heimatort hat es in \\(3\\) von \\(12\\) Monaten des Jahres geschneit ❄️. Welcher Anteil des Jahres ist das, vollständig gekürzt?",
-    optionen: ["\\(\\frac{1}{4}\\)", "\\(\\frac{1}{3}\\)", "\\(\\frac{3}{4}\\)", "\\(\\frac{1}{6}\\)"],
+    frage: "Lisa sagt: „\\(\\frac{1}{3}\\) einer Pizza ist immer mehr als \\(\\frac{1}{4}\\) einer Pizza.\" Stimmt das?",
+    optionen: [
+      "Nur wenn beide Pizzen gleich groß sind — bei einer viel größeren Pizza kann \\(\\frac14\\) mehr sein",
+      "Ja, \\(\\frac13\\) ist immer größer als \\(\\frac14\\)",
+      "Nein, \\(\\frac14\\) ist immer mehr, weil \\(4 > 3\\)",
+      "Ja, weil Drittel und Viertel dieselbe Größe haben"
+    ],
     korrekt: 0,
-    tipp: "Schreibe zuerst den Anteil als Bruch mit Nenner \\(12\\) und kürze dann.",
-    loesungsweg: "Anteil: $$\\frac{3}{12}$$ Kürzen mit \\(3\\): $$\\frac{3}{12} = \\frac{3 : 3}{12 : 3} = \\frac{1}{4}$$ Es hat in einem Viertel des Jahres geschneit."
+    tipp: "Denke an eine Familienpizza und eine Kinderpizza.",
+    loesungsweg: "Als Brüche gilt \\(\\frac13 > \\frac14\\). Ein Anteil ist aber immer ein Anteil <b>von etwas</b>: \\(\\frac14\\) einer \\(40\\)-cm-Pizza ist mehr als \\(\\frac13\\) einer \\(20\\)-cm-Pizza. Der Vergleich gilt nur beim selben Ganzen."
   },
   {
     id: 35,
     level: 6,
     typ: "numerisch",
-    frage: "Familie Nowak fährt \\(300\\) km in den Urlaub. Sie haben schon \\(\\frac{2}{3}\\) der Strecke geschafft. Wie viele Kilometer müssen sie noch fahren? Gib das Ergebnis in km an.",
-    loesung: 100,
+    frage: "Welcher Bruch mit dem Nenner \\(8\\) liegt genau in der Mitte zwischen \\(\\frac{1}{2}\\) und \\(\\frac{3}{4}\\)? Gib nur den Zähler an.",
+    loesung: 5,
     toleranz: 0,
-    tipp: "Wenn \\(\\frac{2}{3}\\) geschafft sind, fehlt noch \\(\\frac{1}{3}\\). Wie viel ist ein Drittel von \\(300\\) km?",
-    loesungsweg: "Es fehlt noch: $$\\frac{3}{3} - \\frac{2}{3} = \\frac{1}{3}$$ Ein Drittel der Strecke: $$300 : 3 = 100 \\text{ km}$$ Die Familie muss noch \\(100\\) km fahren."
+    tipp: "Schreibe beide Brüche zuerst mit dem Nenner \\(8\\).",
+    loesungsweg: "$$\\frac12 = \\frac48, \\qquad \\frac34 = \\frac68$$ Genau dazwischen liegt \\(\\frac58\\) — der gesuchte Zähler ist \\(5\\)."
   },
   {
     id: 36,
     level: 6,
     typ: "mc",
-    frage: "Ein Geburtstagskuchen 🎂 wird in \\(12\\) gleich große Stücke geteilt. Die Gäste essen \\(7\\) Stücke. Welcher Anteil des Kuchens ist noch übrig?",
-    optionen: ["\\(\\frac{7}{12}\\)", "\\(\\frac{5}{7}\\)", "\\(\\frac{1}{2}\\)", "\\(\\frac{5}{12}\\)"],
-    korrekt: 3,
-    tipp: "Wie viele der \\(12\\) Stücke bleiben übrig? Das ist der Zähler.",
-    loesungsweg: "Übrige Stücke: $$12 - 7 = 5$$ Anteil am ganzen Kuchen: $$\\frac{5}{12}$$ \\(\\frac{7}{12}\\) wäre der GEGESSENE Anteil — genau lesen!"
+    frage: "Ein Kuchen wird gerecht unter \\(6\\) Kindern aufgeteilt. Danach gibt jedes Kind die Hälfte seines Stücks zurück. Welchen Anteil des ganzen Kuchens gibt ein Kind zurück?",
+    optionen: [
+      "\\(\\frac{1}{12}\\)",
+      "\\(\\frac{1}{3}\\)",
+      "\\(\\frac{1}{6}\\)",
+      "\\(\\frac{2}{6}\\)"
+    ],
+    korrekt: 0,
+    tipp: "Wie groß ist erst ein Stück, und was ist dann die Hälfte davon?",
+    loesungsweg: "Jedes Kind erhält \\(\\frac16\\) des Kuchens. Die Hälfte davon ist $$\\frac16 : 2 = \\frac{1}{12}$$ Ein Halbes von einem Sechstel ist ein Zwölftel — das Halbieren <b>verdoppelt</b> den Nenner."
   }
+
 ];
     </script>
     <script src="../p3-reflexion.js"></script>
