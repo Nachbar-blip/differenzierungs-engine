@@ -177,168 +177,184 @@
     },
 
     // ═══════════════════════════════════════════════════════════════
-    // Level 4: Unbestimmte Ausdrücke 0/0 — Faktorisieren und Kürzen
+    // Level 4: Unbestimmte Ausdrücke, einseitige Grenzwerte, Folgen
     // ═══════════════════════════════════════════════════════════════
 
     {
         id: 19, level: 4, typ: "numerisch",
-        frage: "Berechne \\(\\lim_{x \\to 3} \\frac{x^2 - 9}{x - 3}\\).",
-        loesung: 6,
-        toleranz: 0,
-        tipp: "Einsetzen ergibt \\(\\frac{0}{0}\\). Faktorisiere den Zähler mit der 3. binomischen Formel.",
-        loesungsweg: "\\(\\frac{x^2-9}{x-3} = \\frac{(x-3)(x+3)}{x-3} = x+3\\). Also: \\(\\lim_{x \\to 3}(x+3) = 6\\)."
+        frage: "Berechne \\(\\lim_{x \\to 2} \\dfrac{x^2 - x - 2}{x^2 - 4}\\).",
+        loesung: 0.75,
+        toleranz: 0.01,
+        tipp: "Zähler und Nenner haben bei \\(x = 2\\) je eine Nullstelle – zerlege beide.",
+        loesungsweg: "$$\\frac{x^2-x-2}{x^2-4} = \\frac{(x-2)(x+1)}{(x-2)(x+2)} = \\frac{x+1}{x+2} \\quad (x \\neq 2)$$ Grenzwert: \\(\\frac{3}{4} = 0{,}75\\)."
     },
     {
-        id: 20, level: 4, typ: "numerisch",
-        frage: "Berechne \\(\\lim_{x \\to -2} \\frac{x^2 + 5x + 6}{x + 2}\\).",
-        loesung: 1,
-        toleranz: 0,
-        tipp: "Einsetzen liefert \\(\\frac{0}{0}\\). Faktorisiere: \\(x^2+5x+6 = (x+2)(x+3)\\).",
-        loesungsweg: "\\(\\frac{(x+2)(x+3)}{x+2} = x+3\\). Also: \\(\\lim_{x \\to -2}(x+3) = 1\\)."
+        id: 20, level: 4, typ: "mc",
+        frage: "Existiert \\(\\lim_{x \\to 0} \\dfrac{|x|}{x}\\)?",
+        optionen: [
+            "Nein, die einseitigen Grenzwerte sind \\(1\\) und \\(-1\\)",
+            "Ja, der Grenzwert ist \\(1\\)",
+            "Ja, der Grenzwert ist \\(0\\)",
+            "Nein, der Term strebt gegen \\(+\\infty\\)"
+        ],
+        korrekt: 0,
+        tipp: "Betrachte \\(x > 0\\) und \\(x < 0\\) getrennt und schreibe den Betrag jeweils ohne Betragsstriche.",
+        loesungsweg: "Für \\(x > 0\\) ist \\(|x| = x\\), der Quotient also konstant \\(1\\); für \\(x < 0\\) ist \\(|x| = -x\\), der Quotient konstant \\(-1\\). Die einseitigen Grenzwerte sind verschieden, also existiert der Grenzwert nicht. Beschränkt bleibt der Term dabei durchaus – gegen unendlich strebt er nicht."
     },
     {
-        id: 21, level: 4, typ: "numerisch",
-        frage: "Berechne \\(\\lim_{x \\to 1} \\frac{x^3 - 1}{x - 1}\\).",
-        loesung: 3,
-        toleranz: 0,
-        tipp: "Nutze \\(a^3 - b^3 = (a-b)(a^2+ab+b^2)\\) mit \\(a = x, b = 1\\).",
-        loesungsweg: "\\(\\frac{x^3-1}{x-1} = \\frac{(x-1)(x^2+x+1)}{x-1} = x^2+x+1\\). Einsetzen: \\(1 + 1 + 1 = 3\\)."
+        id: 21, level: 4, typ: "mc",
+        frage: "Für zwei Funktionen gilt \\(\\lim_{x \\to 1} f(x) = 3\\) und \\(\\lim_{x \\to 1} g(x) = 0\\), wobei \\(g(x) \\neq 0\\) in einer Umgebung von \\(1\\) ist. Was lässt sich über \\(\\lim_{x \\to 1} \\dfrac{f(x)}{g(x)}\\) sagen?",
+        optionen: [
+            "Der Quotientensatz ist nicht anwendbar; ein endlicher Grenzwert existiert nicht",
+            "Der Grenzwert ist \\(0\\)",
+            "Der Grenzwert ist \\(3\\)",
+            "Der Grenzwert ist stets \\(+\\infty\\)"
+        ],
+        korrekt: 0,
+        tipp: "Welche Voraussetzung des Quotientensatzes ist hier verletzt?",
+        loesungsweg: "Der Quotientensatz verlangt \\(\\lim g \\neq 0\\) – diese Voraussetzung fehlt. Der Zähler strebt gegen \\(3 \\neq 0\\), der Nenner gegen \\(0\\): Der Betrag des Quotienten wächst über alle Grenzen, ein endlicher Grenzwert existiert nicht. Ob \\(+\\infty\\) oder \\(-\\infty\\) herauskommt (oder beides je nach Seite), hängt vom Vorzeichen von \\(g\\) ab."
     },
     {
         id: 22, level: 4, typ: "numerisch",
-        frage: "Berechne \\(\\lim_{x \\to 4} \\frac{x^2 - 3x - 4}{x^2 - 16}\\).",
-        loesung: 0.625,
-        toleranz: 0.01,
-        tipp: "Faktorisiere beide: Zähler \\(= (x-4)(x+1)\\), Nenner \\(= (x-4)(x+4)\\).",
-        loesungsweg: "\\(\\frac{(x-4)(x+1)}{(x-4)(x+4)} = \\frac{x+1}{x+4}\\). Einsetzen: \\(\\frac{5}{8} = 0{,}625\\)."
+        frage: "Bestimme den Grenzwert der Folge \\(a_n = \\dfrac{3n^2 + 2n}{n^2 - 1}\\).",
+        loesung: 3,
+        toleranz: 0,
+        tipp: "Klammere in Zähler und Nenner die höchste Potenz aus.",
+        loesungsweg: "$$a_n = \\frac{n^2\\left(3 + \\frac{2}{n}\\right)}{n^2\\left(1 - \\frac{1}{n^2}\\right)} = \\frac{3 + \\frac{2}{n}}{1 - \\frac{1}{n^2}}$$ Die Brüche \\(\\frac{2}{n}\\) und \\(\\frac{1}{n^2}\\) streben gegen \\(0\\); nach den Grenzwertsätzen folgt \\(\\lim a_n = \\frac{3}{1} = 3\\)."
     },
     {
         id: 23, level: 4, typ: "numerisch",
-        frage: "Berechne \\(\\lim_{x \\to 2} \\frac{x^2 - 4}{x^2 - 5x + 6}\\).",
-        loesung: -4,
-        toleranz: 0,
-        tipp: "Zähler: \\((x-2)(x+2)\\). Nenner: \\((x-2)(x-3)\\). Kürze \\((x-2)\\).",
-        loesungsweg: "\\(\\frac{(x-2)(x+2)}{(x-2)(x-3)} = \\frac{x+2}{x-3}\\). Einsetzen: \\(\\frac{4}{-1} = -4\\)."
+        frage: "Berechne \\(\\lim_{x \\to 1} \\dfrac{x^3 - 1}{x^2 - 1}\\).",
+        loesung: 1.5,
+        toleranz: 0.01,
+        tipp: "Beide Terme haben den Faktor \\((x-1)\\); für den Zähler hilft die Zerlegung der Differenz zweier Kuben.",
+        loesungsweg: "$$\\frac{x^3-1}{x^2-1} = \\frac{(x-1)(x^2+x+1)}{(x-1)(x+1)} = \\frac{x^2+x+1}{x+1} \\quad (x \\neq 1)$$ Grenzwert: \\(\\frac{3}{2} = 1{,}5\\)."
     },
     {
-        id: 24, level: 4, typ: "mc",
-        frage: "Welche Methode ist geeignet, um \\(\\lim_{x \\to a} \\frac{p(x)}{q(x)}\\) bei der Form \\(\\frac{0}{0}\\) zu berechnen?",
-        optionen: ["Direkt einsetzen", "Faktorisieren und gemeinsamen Faktor kürzen", "Zähler und Nenner vertauschen", "Den Grenzwert als \\(\\pm\\infty\\) angeben"],
-        korrekt: 1,
-        tipp: "Wenn Zähler und Nenner beide Null werden, steckt in beiden der Faktor \\((x-a)\\).",
-        loesungsweg: "Bei der unbestimmten Form \\(\\frac{0}{0}\\) faktorisiert man Zähler und Nenner, kürzt den gemeinsamen Faktor \\((x-a)\\) und setzt dann ein."
+        id: 24, level: 4, typ: "numerisch",
+        frage: "Die Funktion \\(f(x) = \\dfrac{x^2 - 9}{x - 3}\\) ist für \\(x \\neq 3\\) definiert. Welchen Wert muss man \\(f(3)\\) zuweisen, damit \\(f\\) auf ganz \\(\\mathbb{R}\\) stetig ist?",
+        loesung: 6,
+        toleranz: 0,
+        tipp: "Der zugewiesene Wert muss mit dem Grenzwert an dieser Stelle übereinstimmen.",
+        loesungsweg: "Für \\(x \\neq 3\\) gilt \\(f(x) = \\frac{(x-3)(x+3)}{x-3} = x + 3\\), also $$\\lim_{x \\to 3} f(x) = 6$$ Mit \\(f(3) := 6\\) ist die Lücke stetig geschlossen (stetige Fortsetzung)."
     },
 
     // ═══════════════════════════════════════════════════════════════
-    // Level 5: Grenzwerte mit Wurzeln — Rationalisieren, Einschließungssatz
+    // Level 5: Wurzelterme, Einschließung, Differenzenquotient
     // ═══════════════════════════════════════════════════════════════
 
     {
         id: 25, level: 5, typ: "numerisch",
-        frage: "Berechne \\(\\lim_{x \\to 0} \\frac{\\sqrt{x+4} - 2}{x}\\).",
-        loesung: 0.25,
+        frage: "Berechne \\(\\lim_{x \\to \\infty} \\left(\\sqrt{x^2 + 6x} - x\\right)\\).",
+        loesung: 3,
         toleranz: 0.01,
-        tipp: "Erweitere mit \\(\\sqrt{x+4}+2\\), um die Wurzel im Zähler zu beseitigen.",
-        loesungsweg: "\\(\\frac{\\sqrt{x+4}-2}{x} \\cdot \\frac{\\sqrt{x+4}+2}{\\sqrt{x+4}+2} = \\frac{(x+4)-4}{x(\\sqrt{x+4}+2)} = \\frac{1}{\\sqrt{x+4}+2}\\). Einsetzen: \\(\\frac{1}{2+2} = \\frac{1}{4} = 0{,}25\\)."
+        tipp: "Erweitere mit dem passenden Term, sodass im Zähler die dritte binomische Formel greift.",
+        loesungsweg: "Erweitern mit \\(\\sqrt{x^2+6x} + x\\): $$\\sqrt{x^2+6x} - x = \\frac{(x^2 + 6x) - x^2}{\\sqrt{x^2+6x} + x} = \\frac{6x}{\\sqrt{x^2+6x} + x}$$ Kürzen mit \\(x\\) (für \\(x > 0\\)): $$= \\frac{6}{\\sqrt{1 + \\frac{6}{x}} + 1} \\longrightarrow \\frac{6}{1 + 1} = 3$$"
     },
     {
         id: 26, level: 5, typ: "numerisch",
-        frage: "Berechne \\(\\lim_{x \\to 1} \\frac{\\sqrt{x} - 1}{x - 1}\\).",
+        frage: "Berechne \\(\\lim_{x \\to 0} \\dfrac{\\sqrt{1 + x} - 1}{x}\\).",
         loesung: 0.5,
         toleranz: 0.01,
-        tipp: "Schreibe \\(x - 1 = (\\sqrt{x}-1)(\\sqrt{x}+1)\\) oder erweitere den Bruch mit \\(\\sqrt{x}+1\\).",
-        loesungsweg: "\\(\\frac{\\sqrt{x}-1}{x-1} = \\frac{\\sqrt{x}-1}{(\\sqrt{x}-1)(\\sqrt{x}+1)} = \\frac{1}{\\sqrt{x}+1}\\). Einsetzen: \\(\\frac{1}{1+1} = \\frac{1}{2} = 0{,}5\\)."
+        tipp: "Erweitere den Bruch so, dass die Wurzel im Zähler verschwindet.",
+        loesungsweg: "Erweitern mit \\(\\sqrt{1+x} + 1\\): $$\\frac{(1 + x) - 1}{x\\left(\\sqrt{1+x} + 1\\right)} = \\frac{x}{x\\left(\\sqrt{1+x}+1\\right)} = \\frac{1}{\\sqrt{1+x}+1}$$ Für \\(x \\to 0\\) ergibt sich \\(\\frac{1}{2} = 0{,}5\\). (Das ist zugleich die Ableitung von \\(\\sqrt{x}\\) an der Stelle \\(1\\).)"
     },
     {
         id: 27, level: 5, typ: "numerisch",
-        frage: "Berechne \\(\\lim_{x \\to 5} \\frac{\\sqrt{x+4} - 3}{x - 5}\\).",
-        loesung: 0.167,
-        toleranz: 0.01,
-        tipp: "Erweitere mit \\(\\sqrt{x+4}+3\\). Dann wird der Zähler zu \\((x+4)-9 = x-5\\).",
-        loesungsweg: "\\(\\frac{\\sqrt{x+4}-3}{x-5} \\cdot \\frac{\\sqrt{x+4}+3}{\\sqrt{x+4}+3} = \\frac{x-5}{(x-5)(\\sqrt{x+4}+3)} = \\frac{1}{\\sqrt{x+4}+3}\\). Einsetzen: \\(\\frac{1}{3+3} = \\frac{1}{6} \\approx 0{,}167\\)."
+        frage: "Berechne \\(\\lim_{h \\to 0} \\dfrac{(2+h)^3 - 8}{h}\\).",
+        loesung: 12,
+        toleranz: 0,
+        tipp: "Der Term hat die Gestalt eines Differenzenquotienten – zu welcher Funktion und welcher Stelle gehört er?",
+        loesungsweg: "Ausmultiplizieren: \\((2+h)^3 = 8 + 12h + 6h^2 + h^3\\), also $$\\frac{12h + 6h^2 + h^3}{h} = 12 + 6h + h^2 \\longrightarrow 12$$ Der Grenzwert ist der Differenzenquotient von \\(f(x) = x^3\\) an der Stelle \\(2\\), also \\(f'(2) = 3 \\cdot 4 = 12\\) – beide Wege führen zum selben Ergebnis."
     },
     {
-        id: 28, level: 5, typ: "mc",
-        frage: "Der Einschließungssatz (Sandwich-Theorem) besagt: Falls \\(g(x) \\leq f(x) \\leq h(x)\\) und \\(\\lim g(x) = \\lim h(x) = L\\), dann gilt …",
-        optionen: ["\\(\\lim f(x)\\) existiert nicht", "\\(\\lim f(x) = 0\\)", "\\(\\lim f(x) = L\\)", "\\(\\lim f(x) = \\frac{L}{2}\\)"],
-        korrekt: 2,
-        tipp: "Die Funktion \\(f\\) wird von oben und unten \"eingequetscht\" und muss gegen denselben Wert konvergieren.",
-        loesungsweg: "Einschließungssatz: Wenn \\(g(x) \\leq f(x) \\leq h(x)\\) und \\(\\lim g = \\lim h = L\\), dann wird \\(f\\) eingequetscht und es gilt \\(\\lim f = L\\)."
+        id: 28, level: 5, typ: "numerisch",
+        frage: "Berechne \\(\\lim_{x \\to 0} \\left(x \\cdot \\sin\\!\\left(\\frac{1}{x}\\right)\\right)\\).",
+        loesung: 0,
+        toleranz: 0,
+        tipp: "Der Sinus bleibt beschränkt, auch wenn sein Argument über alle Grenzen schwankt – schätze den Betrag des Produkts ab.",
+        loesungsweg: "Für alle \\(x \\neq 0\\) gilt \\(\\left|\\sin\\frac{1}{x}\\right| \\leq 1\\) und damit $$-|x| \\leq x \\sin\\!\\frac{1}{x} \\leq |x|$$ Beide einschließenden Funktionen streben für \\(x \\to 0\\) gegen \\(0\\); nach dem Einschließungssatz (Sandwich-Satz) folgt $$\\lim_{x \\to 0} x \\sin\\!\\frac{1}{x} = 0$$ Der Produktsatz ist hier nicht anwendbar, da \\(\\sin\\frac{1}{x}\\) keinen Grenzwert besitzt."
     },
     {
-        id: 29, level: 5, typ: "numerisch",
-        frage: "Berechne \\(\\lim_{x \\to 0} \\frac{\\sqrt{1+x} - \\sqrt{1-x}}{x}\\).",
-        loesung: 1,
-        toleranz: 0.01,
-        tipp: "Erweitere mit \\(\\sqrt{1+x} + \\sqrt{1-x}\\). Der Zähler wird dann zu \\((1+x)-(1-x) = 2x\\).",
-        loesungsweg: "\\(\\frac{(\\sqrt{1+x}-\\sqrt{1-x})(\\sqrt{1+x}+\\sqrt{1-x})}{x(\\sqrt{1+x}+\\sqrt{1-x})} = \\frac{2x}{x(\\sqrt{1+x}+\\sqrt{1-x})} = \\frac{2}{\\sqrt{1+x}+\\sqrt{1-x}}\\). Einsetzen: \\(\\frac{2}{1+1} = 1\\)."
+        id: 29, level: 5, typ: "mc",
+        frage: "Ein Schüler berechnet \\(\\lim_{x \\to 0} \\left(x \\cdot \\frac{1}{x}\\right)\\):<br>Schritt 1: \\(\\lim_{x \\to 0} x = 0\\)<br>Schritt 2: nach dem Produktsatz ist der Grenzwert \\(0 \\cdot \\lim_{x \\to 0} \\frac{1}{x}\\)<br>Schritt 3: also ist der Grenzwert \\(0\\).<br>Welcher Schritt ist der erste fehlerhafte?",
+        optionen: ["Schritt 1", "Schritt 2", "Schritt 3", "Kein Schritt ist fehlerhaft"],
+        korrekt: 1,
+        tipp: "Welche Voraussetzung muss für den Produktsatz bei <b>beiden</b> Faktoren erfüllt sein?",
+        loesungsweg: "Schritt 1 ist richtig. In Schritt 2 wird der Produktsatz angewendet, obwohl \\(\\lim_{x \\to 0} \\frac{1}{x}\\) gar nicht existiert – die Voraussetzung ist verletzt, der Satz nicht anwendbar. Tatsächlich ist \\(x \\cdot \\frac{1}{x} = 1\\) für alle \\(x \\neq 0\\), der Grenzwert also \\(1\\) und nicht \\(0\\)."
     },
     {
         id: 30, level: 5, typ: "numerisch",
-        frage: "Berechne \\(\\lim_{x \\to \\infty} \\left(\\sqrt{x^2 + 4x} - x\\right)\\).",
-        loesung: 2,
-        toleranz: 0.01,
-        tipp: "Erweitere mit \\(\\sqrt{x^2+4x}+x\\). Im Zähler entsteht \\(x^2+4x - x^2 = 4x\\).",
-        loesungsweg: "\\(\\frac{(\\sqrt{x^2+4x}-x)(\\sqrt{x^2+4x}+x)}{\\sqrt{x^2+4x}+x} = \\frac{4x}{\\sqrt{x^2+4x}+x}\\). Für \\(x \\to \\infty\\): \\(\\sqrt{x^2+4x} \\approx x\\), also \\(\\frac{4x}{x+x} = \\frac{4x}{2x} = 2\\)."
+        frage: "Für welchen Wert von \\(a\\) gilt \\(\\lim_{x \\to \\infty} \\left(\\sqrt{x^2 + ax} - x\\right) = 4\\)?",
+        loesung: 8,
+        toleranz: 0,
+        tipp: "Berechne den Grenzwert zuerst allgemein in Abhängigkeit von \\(a\\).",
+        loesungsweg: "Erweitern liefert $$\\sqrt{x^2+ax} - x = \\frac{ax}{\\sqrt{x^2+ax} + x} = \\frac{a}{\\sqrt{1 + \\frac{a}{x}} + 1} \\longrightarrow \\frac{a}{2}$$ Bedingung: \\(\\frac{a}{2} = 4 \\Rightarrow a = 8\\)."
     },
 
     // ═══════════════════════════════════════════════════════════════
-    // Level 6: Argumentation à la L'Hôpital, Folgenkonvergenz, Begründungen
+    // Level 6: Parameterfälle, Grenzen der Sätze, Stetigkeit vs. Differenzierbarkeit
     // ═══════════════════════════════════════════════════════════════
 
     {
         id: 31, level: 6, typ: "numerisch",
-        frage: "Berechne \\(\\lim_{x \\to 0} \\frac{(1+x)^3 - 1}{x}\\). Tipp: Expandiere den Zähler.",
-        loesung: 3,
+        frage: "Für welchen Wert von \\(a\\) existiert \\(\\lim_{x \\to 2} \\dfrac{x^2 + ax - 6}{x - 2}\\) als endliche Zahl?",
+        loesung: 1,
         toleranz: 0,
-        tipp: "\\((1+x)^3 = 1 + 3x + 3x^2 + x^3\\). Subtrahiere 1 und dividiere durch \\(x\\).",
-        loesungsweg: "\\(\\frac{(1+x)^3 - 1}{x} = \\frac{3x + 3x^2 + x^3}{x} = 3 + 3x + x^2\\). Für \\(x \\to 0\\): \\(3 + 0 + 0 = 3\\). (Das entspricht der Ableitung von \\(x^3\\) bei \\(x = 1\\).)"
+        tipp: "Was muss für den Zähler an der Stelle \\(2\\) gelten, damit kein Pol entsteht?",
+        loesungsweg: "Da der Nenner bei \\(x = 2\\) verschwindet, kann ein endlicher Grenzwert nur existieren, wenn auch der Zähler dort null wird: $$4 + 2a - 6 = 0 \\Rightarrow a = 1$$ Dann ist \\(x^2 + x - 6 = (x-2)(x+3)\\), und der Grenzwert beträgt \\(\\lim_{x \\to 2}(x+3) = 5\\). Für jedes andere \\(a\\) liegt eine Polstelle vor."
     },
     {
-        id: 32, level: 6, typ: "numerisch",
-        frage: "Berechne \\(\\lim_{x \\to 0} \\frac{(2+x)^2 - 4}{x}\\).",
-        loesung: 4,
-        toleranz: 0,
-        tipp: "Expandiere: \\((2+x)^2 = 4 + 4x + x^2\\). Dann vereinfache den Bruch.",
-        loesungsweg: "\\(\\frac{4+4x+x^2-4}{x} = \\frac{4x+x^2}{x} = 4 + x \\xrightarrow{x \\to 0} 4\\). Dies ist der Differenzenquotient von \\(f(x)=x^2\\) bei \\(x=2\\), also \\(f'(2)=4\\)."
+        id: 32, level: 6, typ: "mc",
+        frage: "Von zwei Funktionen \\(f\\) und \\(g\\) ist bekannt, dass \\(\\lim_{x \\to 0} \\big(f(x) + g(x)\\big)\\) existiert. Welche Aussage folgt daraus zwingend?",
+        optionen: [
+            "Keine der anderen Aussagen – aus der Existenz der Summe folgt nichts über die einzelnen Grenzwerte",
+            "\\(\\lim_{x \\to 0} f(x)\\) und \\(\\lim_{x \\to 0} g(x)\\) existieren beide",
+            "Wenn \\(\\lim_{x \\to 0} f(x)\\) existiert, dann existiert auch \\(\\lim_{x \\to 0} g(x)\\) nicht",
+            "\\(\\lim_{x \\to 0} \\big(f(x) \\cdot g(x)\\big)\\) existiert ebenfalls"
+        ],
+        korrekt: 0,
+        tipp: "Suche zwei Funktionen ohne Grenzwert, deren Summe trotzdem einen besitzt.",
+        loesungsweg: "Der Summensatz gilt nur in einer Richtung. Gegenbeispiel: \\(f(x) = \\frac{1}{x}\\) und \\(g(x) = -\\frac{1}{x}\\) haben bei \\(0\\) keinen Grenzwert, ihre Summe ist aber konstant \\(0\\). Die dritte Aussage ist falsch – existiert \\(\\lim f\\), so ist \\(g = (f+g) - f\\) eine Differenz zweier konvergenter Terme und besitzt sehr wohl einen Grenzwert. Für das Produkt (Antwort vier) liefert dasselbe Gegenbeispiel \\(f \\cdot g = -\\frac{1}{x^2}\\) – kein Grenzwert."
     },
     {
-        id: 33, level: 6, typ: "mc",
-        frage: "Die Folge \\(a_n = \\frac{n^2 + (-1)^n}{n^2}\\) ist …",
-        optionen: ["divergent", "konvergent gegen 0", "konvergent gegen 1", "konvergent gegen 2"],
-        korrekt: 2,
-        tipp: "Schreibe um: \\(a_n = 1 + \\frac{(-1)^n}{n^2}\\). Für große \\(n\\) wird der zweite Term beliebig klein.",
-        loesungsweg: "\\(a_n = 1 + \\frac{(-1)^n}{n^2}\\). Es gilt \\(\\left|\\frac{(-1)^n}{n^2}\\right| = \\frac{1}{n^2} \\to 0\\). Also \\(\\lim_{n \\to \\infty} a_n = 1\\)."
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Berechne \\(\\lim_{n \\to \\infty} \\left(1 + \\dfrac{3}{n}\\right)^n\\) und runde auf zwei Dezimalstellen.",
+        loesung: 20.09,
+        toleranz: 0.02,
+        tipp: "Führe den Term durch die Substitution \\(m = \\frac{n}{3}\\) auf die bekannte Darstellung der Eulerschen Zahl zurück.",
+        loesungsweg: "Mit \\(m = \\frac{n}{3}\\), also \\(n = 3m\\): $$\\left(1 + \\frac{1}{m}\\right)^{3m} = \\left[\\left(1 + \\frac{1}{m}\\right)^{m}\\right]^{3} \\longrightarrow e^3$$ Denn der innere Ausdruck strebt gegen \\(e\\), und Potenzieren mit dem festen Exponenten \\(3\\) ist stetig. Also $$\\lim_{n \\to \\infty}\\left(1+\\frac{3}{n}\\right)^n = e^3 \\approx 20{,}09$$"
     },
     {
         id: 34, level: 6, typ: "numerisch",
-        frage: "Bestimme \\(\\lim_{n \\to \\infty} \\frac{3n^2 + 2n}{n^2 - 1} \\cdot \\frac{n+1}{6n+5}\\).",
-        loesung: 0.5,
+        frage: "Berechne \\(\\lim_{x \\to 0} \\dfrac{\\sin(5x)}{3x}\\) und runde auf zwei Dezimalstellen.",
+        loesung: 1.67,
         toleranz: 0.01,
-        tipp: "Berechne zunächst den Grenzwert jedes Faktors einzeln (Produktregel für Folgen).",
-        loesungsweg: "Erster Faktor: \\(\\frac{3n^2+2n}{n^2-1} \\to \\frac{3}{1} = 3\\). Zweiter Faktor: \\(\\frac{n+1}{6n+5} \\to \\frac{1}{6}\\). Produktregel: \\(3 \\cdot \\frac{1}{6} = \\frac{1}{2} = 0{,}5\\)."
+        tipp: "Erweitere so, dass der bekannte Grenzwert \\(\\lim_{z \\to 0} \\frac{\\sin z}{z} = 1\\) entsteht.",
+        loesungsweg: "Mit \\(z = 5x\\) (für \\(x \\to 0\\) auch \\(z \\to 0\\)): $$\\frac{\\sin(5x)}{3x} = \\frac{5}{3} \\cdot \\frac{\\sin(5x)}{5x} = \\frac{5}{3} \\cdot \\frac{\\sin z}{z} \\longrightarrow \\frac{5}{3} \\approx 1{,}67$$ Der Faktorsatz ist anwendbar, weil \\(\\frac{5}{3}\\) konstant ist und der zweite Faktor konvergiert."
     },
     {
         id: 35, level: 6, typ: "numerisch",
-        frage: "Berechne \\(\\lim_{x \\to 0} \\frac{\\sqrt{1+x} - 1 - \\frac{x}{2}}{x^2}\\). Tipp: Nutze \\(\\sqrt{1+x} \\approx 1 + \\frac{x}{2} - \\frac{x^2}{8}\\) für kleine \\(x\\).",
-        loesung: -0.125,
+        frage: "Berechne \\(\\lim_{x \\to 1} \\left(\\dfrac{1}{x - 1} - \\dfrac{2}{x^2 - 1}\\right)\\).",
+        loesung: 0.5,
         toleranz: 0.01,
-        tipp: "Setze die Näherung ein: \\(\\sqrt{1+x} \\approx 1 + \\frac{x}{2} - \\frac{x^2}{8} + \\ldots\\)",
-        loesungsweg: "Mit der Taylorentwicklung: \\(\\sqrt{1+x} = 1 + \\frac{x}{2} - \\frac{x^2}{8} + \\ldots\\) Einsetzen: \\(\\frac{-\\frac{x^2}{8} + \\ldots}{x^2} \\to -\\frac{1}{8} = -0{,}125\\)."
+        tipp: "Einzeln betrachtet strebt jeder Summand ins Unendliche – bringe die beiden Brüche zuerst auf einen Nenner.",
+        loesungsweg: "Gemeinsamer Nenner \\(x^2 - 1 = (x-1)(x+1)\\): $$\\frac{1}{x-1} - \\frac{2}{(x-1)(x+1)} = \\frac{(x+1) - 2}{(x-1)(x+1)} = \\frac{x-1}{(x-1)(x+1)} = \\frac{1}{x+1}$$ Grenzwert: \\(\\frac{1}{2} = 0{,}5\\). Der Differenzsatz war hier nicht anwendbar – erst das Zusammenfassen macht die Lücke hebbar."
     },
     {
         id: 36, level: 6, typ: "mc",
-        frage: "Welche Aussage über die Grenzwertsätze ist korrekt?",
+        frage: "Gegeben ist \\(f(x) = x \\cdot \\sin\\!\\left(\\frac{1}{x}\\right)\\) für \\(x \\neq 0\\) und \\(f(0) = 0\\). Welche Aussage über die Stelle \\(0\\) trifft zu?",
         optionen: [
-            "Die Produktregel gilt auch, wenn einer der Grenzwerte nicht existiert",
-            "Die Summenregel setzt voraus, dass beide Einzelgrenzwerte existieren",
-            "Die Quotientenregel hat keine Voraussetzungen",
-            "Die Grenzwertsätze gelten nur für Polynome"
+            "\\(f\\) ist dort stetig, aber nicht differenzierbar",
+            "\\(f\\) ist dort stetig und differenzierbar",
+            "\\(f\\) ist dort unstetig",
+            "\\(f\\) ist dort differenzierbar, aber nicht stetig"
         ],
-        korrekt: 1,
-        tipp: "Überlege: Was brauchen die Grenzwertsätze als Grundvoraussetzung?",
-        loesungsweg: "Alle Grenzwertsätze (Summe, Differenz, Produkt, Quotient) setzen voraus, dass die Einzelgrenzwerte existieren (und endlich sind). Beim Quotienten muss zusätzlich der Nenner-Grenzwert \\(\\neq 0\\) sein."
+        korrekt: 0,
+        tipp: "Stetigkeit folgt aus dem Einschließungssatz. Untersuche für die Differenzierbarkeit den Differenzenquotienten.",
+        loesungsweg: "Stetigkeit: Mit \\(-|x| \\leq f(x) \\leq |x|\\) folgt \\(\\lim_{x \\to 0} f(x) = 0 = f(0)\\). Differenzierbarkeit: $$\\frac{f(x) - f(0)}{x - 0} = \\frac{x\\sin\\frac{1}{x}}{x} = \\sin\\!\\frac{1}{x}$$ Dieser Ausdruck pendelt für \\(x \\to 0\\) unaufhörlich zwischen \\(-1\\) und \\(1\\) und besitzt keinen Grenzwert – \\(f\\) ist dort also nicht differenzierbar. (Differenzierbarkeit ohne Stetigkeit ist ohnehin unmöglich.)"
     }
+
 
     ];
     </script>

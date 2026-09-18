@@ -179,178 +179,168 @@
     },
 
     // ══════════════════════════════════════════════════════════════
-    // LEVEL 4 — ln-Kettenregel (+ trigonometrische Kettenregel)
+    // LEVEL 4 — Regel anwenden an Stellen ungleich 0, Umkehrfragen, Kontext
     // ══════════════════════════════════════════════════════════════
     {
-        id: 19, level: 4, typ: "mc",
-        frage: "Wie lautet die allgemeine Formel für die Ableitung von \\(f(x) = \\ln(u(x))\\)?",
-        optionen: [
-            "\\(f'(x) = \\dfrac{u'(x)}{u(x)}\\)",
-            "\\(f'(x) = \\dfrac{1}{u'(x)}\\)",
-            "\\(f'(x) = u'(x) \\cdot \\ln(u(x))\\)",
-            "\\(f'(x) = \\dfrac{u(x)}{u'(x)}\\)"
-        ],
-        korrekt: 0,
-        tipp: "Äußere Ableitung von \\(\\ln(u)\\) ist \\(\\frac{1}{u}\\). Kettenregel: mal \\(u'(x)\\).",
-        loesungsweg: "Mit Kettenregel: äußere Funktion \\(\\ln(u)\\) hat Ableitung \\(\\frac{1}{u}\\), ausgewertet an \\(u(x)\\), mal innere Ableitung \\(u'(x)\\). Ergebnis: \\(f'(x) = \\frac{u'(x)}{u(x)}\\)."
+        id: 19, level: 4, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = \\ln(x^2 - 4x)\\). Berechne \\(f'(5)\\).",
+        loesung: 1.2, toleranz: 0.01,
+        tipp: "Die äußere Ableitung von \\(\\ln(u)\\) ist \\(\\frac{1}{u}\\); die innere Ableitung kommt als Faktor hinzu.",
+        loesungsweg: "$$f'(x) = \\frac{2x - 4}{x^2 - 4x}$$ Einsetzen: $$f'(5) = \\frac{10 - 4}{25 - 20} = \\frac{6}{5} = 1{,}2$$"
     },
     {
-        id: 20, level: 4, typ: "mc",
-        frage: "Wie lautet die Ableitung von \\(f(x) = \\ln(3x - 5)\\)?",
-        optionen: [
-            "\\(f'(x) = \\dfrac{3}{3x-5}\\)",
-            "\\(f'(x) = \\dfrac{1}{3x-5}\\)",
-            "\\(f'(x) = \\dfrac{3}{x-5}\\)",
-            "\\(f'(x) = 3\\ln(3x-5)\\)"
-        ],
-        korrekt: 0,
-        tipp: "Innere Funktion: \\(u(x) = 3x-5\\), also \\(u'(x) = 3\\). Formel: \\(\\frac{u'}{u}\\).",
-        loesungsweg: "\\(u(x) = 3x-5\\), \\(u'(x) = 3\\). Damit: \\(f'(x) = \\frac{3}{3x-5}\\)."
+        id: 20, level: 4, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = (3x + 1)^4\\). Berechne \\(f'(1)\\).",
+        loesung: 768, toleranz: 0,
+        tipp: "Erst die Potenz nach außen ableiten, dann mit der Ableitung der inneren Klammer multiplizieren.",
+        loesungsweg: "$$f'(x) = 4(3x+1)^3 \\cdot 3 = 12(3x+1)^3$$ Einsetzen: \\(f'(1) = 12 \\cdot 4^3 = 12 \\cdot 64 = 768\\)."
     },
     {
-        id: 21, level: 4, typ: "mc",
-        frage: "Wie lautet die Ableitung von \\(f(x) = \\ln(x^2 + 1)\\)?",
-        optionen: [
-            "\\(f'(x) = \\dfrac{2x}{x^2+1}\\)",
-            "\\(f'(x) = \\dfrac{1}{x^2+1}\\)",
-            "\\(f'(x) = \\dfrac{2x}{x^2}\\)",
-            "\\(f'(x) = \\dfrac{x}{x^2+1}\\)"
-        ],
-        korrekt: 0,
-        tipp: "Innere Funktion: \\(u(x) = x^2+1\\), also \\(u'(x) = 2x\\). Dann \\(\\frac{u'}{u}\\).",
-        loesungsweg: "\\(u(x) = x^2+1\\), \\(u'(x) = 2x\\). Damit: \\(f'(x) = \\frac{2x}{x^2+1}\\)."
+        id: 21, level: 4, typ: "numerisch",
+        frage: "An welcher Stelle hat der Graph von \\(f(x) = e^{2x}\\) die Steigung \\(2e^2\\)?",
+        loesung: 1, toleranz: 0,
+        tipp: "Stelle die Ableitung auf und vergleiche sie mit dem geforderten Wert.",
+        loesungsweg: "$$f'(x) = 2e^{2x}$$ Bedingung: \\(2e^{2x} = 2e^2 \\Rightarrow e^{2x} = e^2 \\Rightarrow 2x = 2 \\Rightarrow x = 1\\)."
     },
     {
         id: 22, level: 4, typ: "mc",
-        frage: "Gegeben ist \\(f(x) = \\ln(x^2 - 4x)\\). Welche Ableitung ist korrekt?",
+        frage: "Bei einer der vier Ableitungen wurde die Kettenregel <b>falsch</b> angewendet. Bei welcher?",
         optionen: [
-            "\\(f'(x) = \\dfrac{2x-4}{x^2-4x}\\)",
-            "\\(f'(x) = \\dfrac{1}{x^2-4x}\\)",
-            "\\(f'(x) = \\dfrac{2x}{x^2-4x}\\)",
-            "\\(f'(x) = \\dfrac{2x-4}{x^2}\\)"
+            "\\(\\left(e^{2x}\\right)' = e^{2x}\\)",
+            "\\(\\left(\\sin(3x)\\right)' = 3\\cos(3x)\\)",
+            "\\(\\left(\\ln(5x)\\right)' = \\dfrac{1}{x}\\)",
+            "\\(\\left((x^2+1)^3\\right)' = 6x(x^2+1)^2\\)"
         ],
         korrekt: 0,
-        tipp: "Innere Funktion: \\(u(x) = x^2 - 4x\\), also \\(u'(x) = 2x-4\\). Dann \\(f'(x) = \\frac{u'}{u}\\).",
-        loesungsweg: "\\(u(x) = x^2-4x\\), \\(u'(x) = 2x-4\\). Damit: \\(f'(x) = \\frac{2x-4}{x^2-4x}\\). Optional: \\(= \\frac{2(x-2)}{x(x-4)}\\)."
+        tipp: "Prüfe bei jeder Zeile, ob die Ableitung der inneren Funktion als Faktor aufgetaucht ist.",
+        loesungsweg: "In der ersten Zeile fehlt die innere Ableitung: richtig ist \\(\\left(e^{2x}\\right)' = 2e^{2x}\\). Die übrigen stimmen – auch die dritte, denn $$\\left(\\ln(5x)\\right)' = \\frac{5}{5x} = \\frac{1}{x}$$ Dort kürzt sich der innere Faktor zufällig weg."
     },
     {
         id: 23, level: 4, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = \\sin(2x+1)\\). Berechne \\(f'(0)\\). <br>Runde auf zwei Dezimalstellen.",
-        loesung: 1.08, toleranz: 0.01,
-        tipp: "Kettenregel: \\(f'(x) = \\cos(2x+1) \\cdot 2\\). Einsetzen mit \\(x=0\\): \\(2\\cos(1)\\). Taschenrechner im Bogenmaß!",
-        loesungsweg: "\\(f'(x) = 2\\cos(2x+1)\\). Einsetzen: \\(f'(0) = 2\\cos(1) \\approx 2 \\cdot 0{,}5403 = 1{,}08\\)."
+        frage: "Die Wirkstoffmenge im Blut beträgt \\(c(t) = 20 \\cdot e^{-0{,}25t}\\) (in mg, \\(t\\) in Stunden). Wie schnell nimmt sie nach \\(4\\) Stunden ab? Gib die Änderungsrate in mg/h auf zwei Dezimalstellen an.",
+        loesung: -1.84, toleranz: 0.01,
+        tipp: "Die Änderungsrate ist die Ableitung; der Faktor im Exponenten wirkt sich darauf aus.",
+        loesungsweg: "$$c'(t) = 20 \\cdot (-0{,}25) \\cdot e^{-0{,}25t} = -5e^{-0{,}25t}$$ Einsetzen: $$c'(4) = -5e^{-1} \\approx -1{,}84$$ Die Menge nimmt zu diesem Zeitpunkt also um etwa \\(1{,}84\\,\\text{mg}\\) pro Stunde ab."
     },
     {
         id: 24, level: 4, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = 2\\sin(4x)\\). Berechne \\(f'(0)\\).",
-        loesung: 8, toleranz: 0,
-        tipp: "Faktorregel + Kettenregel: \\(f'(x) = 2 \\cdot \\cos(4x) \\cdot 4 = 8\\cos(4x)\\).",
-        loesungsweg: "\\(f'(x) = 2 \\cdot 4\\cos(4x) = 8\\cos(4x)\\). Einsetzen: \\(f'(0) = 8 \\cdot \\cos(0) = 8 \\cdot 1 = 8\\)."
+        frage: "Gegeben ist \\(f(x) = \\sin^2(3x)\\). Berechne \\(f'\\!\\left(\\frac{\\pi}{12}\\right)\\).",
+        loesung: 3, toleranz: 0.01,
+        tipp: "Hier stecken zwei Verkettungen ineinander: die Quadratfunktion außen, der Sinus mit innerem Faktor darin.",
+        loesungsweg: "$$f'(x) = 2\\sin(3x) \\cdot \\cos(3x) \\cdot 3 = 3\\sin(6x)$$ (im letzten Schritt mit \\(2\\sin\\alpha\\cos\\alpha = \\sin(2\\alpha)\\)). Einsetzen: $$f'\\!\\left(\\frac{\\pi}{12}\\right) = 3\\sin\\!\\left(\\frac{\\pi}{2}\\right) = 3$$"
     },
 
     // ══════════════════════════════════════════════════════════════
-    // LEVEL 5 — Doppelte Kettenregel / verschachtelte Verkettungen
+    // LEVEL 5 — Kette mit Produktregel, Parameterbedingungen, Fehlersuche
     // ══════════════════════════════════════════════════════════════
     {
-        id: 25, level: 5, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = e^{\\sin(x)}\\). Berechne \\(f'(0)\\).",
-        loesung: 1, toleranz: 0,
-        tipp: "Doppelte Kettenregel: \\(f'(x) = e^{\\sin(x)} \\cdot \\cos(x)\\). Setze \\(x = 0\\) ein.",
-        loesungsweg: "\\(f'(x) = e^{\\sin(x)} \\cdot \\cos(x)\\). Einsetzen: \\(f'(0) = e^{\\sin(0)} \\cdot \\cos(0) = e^0 \\cdot 1 = 1\\)."
+        id: 25, level: 5, typ: "mc",
+        frage: "Ein Schüler leitet \\(f(x) = \\ln(x^2 + 1)\\) ab:<br>Schritt 1: äußere Funktion \\(\\ln(u)\\), innere Funktion \\(u = x^2+1\\)<br>Schritt 2: äußere Ableitung \\(\\frac{1}{u} = \\frac{1}{x^2+1}\\)<br>Schritt 3: also \\(f'(x) = \\frac{1}{x^2+1}\\)<br>Welcher Schritt ist der erste fehlerhafte?",
+        optionen: ["Schritt 1", "Schritt 2", "Schritt 3", "Kein Schritt ist fehlerhaft"],
+        korrekt: 2,
+        tipp: "Vergleiche das Ergebnis mit der Kettenregel: Welcher Faktor fehlt?",
+        loesungsweg: "Die Schritte 1 und 2 sind richtig. In Schritt 3 wird die innere Ableitung unterschlagen; die Kettenregel verlangt $$f'(x) = \\frac{1}{x^2+1} \\cdot 2x = \\frac{2x}{x^2+1}$$ Eine schnelle Kontrolle: Die vom Schüler angegebene Funktion ist stets positiv, \\(f\\) fällt aber für \\(x < 0\\)."
     },
     {
         id: 26, level: 5, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = (2x^2+1)^{-3}\\). Berechne \\(f'(1)\\). <br>Runde auf vier Dezimalstellen.",
-        loesung: -0.1481, toleranz: 0.0005,
-        tipp: "Kettenregel: \\(f'(x) = -3(2x^2+1)^{-4} \\cdot 4x = -12x(2x^2+1)^{-4}\\).",
-        loesungsweg: "\\(f'(x) = -12x(2x^2+1)^{-4}\\). Einsetzen: \\(f'(1) = -12 \\cdot 1 \\cdot 3^{-4} = -\\frac{12}{81} = -\\frac{4}{27} \\approx -0{,}1481\\)."
+        frage: "Für welchen Wert \\(k > 0\\) hat der Graph von \\(f(x) = x \\cdot e^{kx}\\) an der Stelle \\(-2\\) eine waagerechte Tangente?",
+        loesung: 0.5, toleranz: 0.01,
+        tipp: "Leite mit Produkt- und Kettenregel ab und klammere den stets positiven Faktor aus.",
+        loesungsweg: "$$f'(x) = e^{kx} + x \\cdot k e^{kx} = e^{kx}(1 + kx)$$ Da \\(e^{kx} > 0\\) ist, gilt \\(f'(-2) = 0\\) genau dann, wenn $$1 - 2k = 0 \\Rightarrow k = 0{,}5$$"
     },
     {
         id: 27, level: 5, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = \\sin(e^x)\\). Berechne \\(f'(0)\\). <br>Runde auf zwei Dezimalstellen.",
-        loesung: 0.54, toleranz: 0.01,
-        tipp: "Doppelte Verkettung: \\(f'(x) = \\cos(e^x) \\cdot e^x\\).",
-        loesungsweg: "\\(f'(x) = \\cos(e^x) \\cdot e^x\\). Einsetzen: \\(f'(0) = \\cos(e^0) \\cdot e^0 = \\cos(1) \\cdot 1 \\approx 0{,}54\\)."
+        frage: "An welcher Stelle \\(x > 0\\) hat \\(f(x) = x^2 \\cdot e^{-x}\\) einen Hochpunkt?",
+        loesung: 2, toleranz: 0,
+        tipp: "Produkt- und Kettenregel verbinden, dann den positiven Faktor ausklammern.",
+        loesungsweg: "$$f'(x) = 2x e^{-x} + x^2 \\cdot (-e^{-x}) = x e^{-x}(2 - x)$$ Nullstellen: \\(x = 0\\) und \\(x = 2\\). Für \\(0 < x < 2\\) ist \\(f' > 0\\), für \\(x > 2\\) ist \\(f' < 0\\) – bei \\(x = 2\\) liegt also der Hochpunkt (mit \\(f(2) = 4e^{-2} \\approx 0{,}54\\))."
     },
     {
         id: 28, level: 5, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = e^{-x^2+2x}\\). Berechne \\(f'(1)\\).",
-        loesung: 0, toleranz: 0,
-        tipp: "Innere Funktion: \\(u = -x^2+2x\\), also \\(u' = -2x+2\\). Bei \\(x=1\\): \\(u' = 0\\).",
-        loesungsweg: "\\(f'(x) = e^{-x^2+2x} \\cdot (-2x+2)\\). Einsetzen: \\(f'(1) = e^{-1+2} \\cdot (-2+2) = e^1 \\cdot 0 = 0\\). (Extremstelle!)"
+        frage: "Gegeben ist \\(f(x) = \\sqrt{x^2 + 9}\\). Berechne \\(f'(4)\\).",
+        loesung: 0.8, toleranz: 0.01,
+        tipp: "Schreibe die Wurzel als Potenz mit dem Exponenten \\(\\frac{1}{2}\\) und wende die Kettenregel an.",
+        loesungsweg: "$$f'(x) = \\frac{1}{2}(x^2+9)^{-1/2} \\cdot 2x = \\frac{x}{\\sqrt{x^2+9}}$$ Einsetzen: $$f'(4) = \\frac{4}{\\sqrt{25}} = \\frac{4}{5} = 0{,}8$$"
     },
     {
-        id: 29, level: 5, typ: "mc",
-        frage: "Wie lautet die Ableitung von \\(f(x) = \\cos(3x^2)\\)?",
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = \\ln(\\cos(2x))\\). Berechne \\(f'\\!\\left(\\frac{\\pi}{6}\\right)\\) und runde auf zwei Dezimalstellen.",
+        loesung: -3.46, toleranz: 0.01,
+        tipp: "Drei Bausteine liegen ineinander: Logarithmus, Kosinus und der Faktor im Argument.",
+        loesungsweg: "$$f'(x) = \\frac{1}{\\cos(2x)} \\cdot (-\\sin(2x)) \\cdot 2 = -2\\tan(2x)$$ Einsetzen: $$f'\\!\\left(\\frac{\\pi}{6}\\right) = -2\\tan\\!\\left(\\frac{\\pi}{3}\\right) = -2\\sqrt{3} \\approx -3{,}46$$"
+    },
+    {
+        id: 30, level: 5, typ: "mc",
+        frage: "Welche Funktion \\(F\\) hat die Ableitung \\(F'(x) = 2x \\cdot e^{x^2}\\)?",
         optionen: [
-            "\\(f'(x) = -6x\\sin(3x^2)\\)",
-            "\\(f'(x) = -\\sin(3x^2)\\)",
-            "\\(f'(x) = -3\\sin(3x^2)\\)",
-            "\\(f'(x) = 6x\\cos(3x^2)\\)"
+            "\\(F(x) = e^{x^2}\\)",
+            "\\(F(x) = x^2 e^{x^2}\\)",
+            "\\(F(x) = 2e^{x^2}\\)",
+            "\\(F(x) = e^{2x}\\)"
         ],
         korrekt: 0,
-        tipp: "Äußere Ableitung: \\(-\\sin(3x^2)\\). Innere Ableitung von \\(3x^2\\): \\(6x\\). Multiplizieren!",
-        loesungsweg: "\\(f'(x) = -\\sin(3x^2) \\cdot 6x = -6x\\sin(3x^2)\\)."
-    },
-    {
-        id: 30, level: 5, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = x \\cdot \\ln(x^2+1)\\). Berechne \\(f'(1)\\). <br>Runde auf zwei Dezimalstellen.",
-        loesung: 1.69, toleranz: 0.01,
-        tipp: "Produktregel + ln-Kettenregel: \\(u = x\\), \\(v = \\ln(x^2+1)\\). Die Ableitung von \\(v\\) lautet \\(v' = \\frac{2x}{x^2+1}\\).",
-        loesungsweg: "Produktregel: \\(f'(x) = 1 \\cdot \\ln(x^2+1) + x \\cdot \\frac{2x}{x^2+1}\\). Einsetzen \\(x=1\\): \\(f'(1) = \\ln(2) + \\frac{2}{2} = \\ln(2) + 1 \\approx 0{,}693 + 1 = 1{,}693 \\approx 1{,}69\\)."
+        tipp: "Leite die angebotenen Funktionen ab – der Faktor \\(2x\\) verrät die innere Funktion.",
+        loesungsweg: "Nach der Kettenregel ist $$\\left(e^{x^2}\\right)' = e^{x^2} \\cdot 2x$$ – genau der gesuchte Term. Zur Kontrolle: \\(\\left(x^2 e^{x^2}\\right)' = e^{x^2}(2x + 2x^3)\\), \\(\\left(2e^{x^2}\\right)' = 4x e^{x^2}\\), \\(\\left(e^{2x}\\right)' = 2e^{2x}\\)."
     },
 
     // ══════════════════════════════════════════════════════════════
-    // LEVEL 6 — Kettenregel + Produktregel kombiniert
+    // LEVEL 6 — Scharen, Begründungen, Umkehrfragen auf eA-Niveau
     // ══════════════════════════════════════════════════════════════
     {
         id: 31, level: 6, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = x^2 \\cdot e^{-x}\\). Berechne \\(f'(0)\\).",
-        loesung: 0, toleranz: 0,
-        tipp: "Produktregel + Kettenregel: \\(f'(x) = 2x \\cdot e^{-x} + x^2 \\cdot (-e^{-x})\\).",
-        loesungsweg: "\\(f'(x) = 2x \\cdot e^{-x} + x^2 \\cdot (-e^{-x}) = e^{-x}(2x - x^2)\\). Einsetzen: \\(f'(0) = e^0 \\cdot (0 - 0) = 0\\)."
+        frage: "Die Funktionenschar \\(f_a(x) = e^{-ax^2}\\) mit \\(a > 0\\) hat zwei Wendepunkte. Bestimme für \\(a = 8\\) die positive Wendestelle.",
+        loesung: 0.25, toleranz: 0.01,
+        tipp: "Leite zweimal ab und klammere den stets positiven Exponentialfaktor aus.",
+        loesungsweg: "$$f_a'(x) = -2ax\\,e^{-ax^2}$$ $$f_a''(x) = -2a\\,e^{-ax^2} + (-2ax)(-2ax)e^{-ax^2} = 2a\\,e^{-ax^2}\\left(2ax^2 - 1\\right)$$ Nullstellen: \\(2ax^2 = 1\\), also \\(x = \\pm\\frac{1}{\\sqrt{2a}}\\). Für \\(a = 8\\): $$x = \\frac{1}{\\sqrt{16}} = \\frac{1}{4} = 0{,}25$$"
     },
     {
-        id: 32, level: 6, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = \\ln(x^2 - 4x)\\). Berechne \\(f'(5)\\). <br>Runde auf zwei Dezimalstellen.",
-        loesung: 1.2, toleranz: 0.01,
-        tipp: "ln-Kettenregel: \\(f'(x) = \\frac{2x-4}{x^2-4x}\\). Einsetzen mit \\(x = 5\\).",
-        loesungsweg: "\\(f'(x) = \\frac{2x-4}{x^2-4x}\\). Einsetzen: \\(f'(5) = \\frac{10-4}{25-20} = \\frac{6}{5} = 1{,}2\\)."
+        id: 32, level: 6, typ: "mc",
+        frage: "Warum ist \\(\\left(e^{2x}\\right)' \\neq e^{2x}\\), obwohl die e-Funktion doch ihre eigene Ableitung ist?",
+        optionen: [
+            "Weil \\(e^{2x} = \\left(e^2\\right)^x\\) eine Exponentialfunktion zur größeren Basis \\(e^2\\) ist und entsprechend schneller wächst; die innere Ableitung \\(2\\) tritt als Faktor hinzu",
+            "Weil die Ableitungsregel für \\(e^x\\) nur an der Stelle \\(0\\) gilt",
+            "Weil \\(e^{2x}\\) ein Produkt aus \\(e^x\\) und \\(e^x\\) ist und deshalb die Produktregel den Faktor \\(2\\) liefert",
+            "Weil der Exponent \\(2x\\) beim Ableiten zu \\(2\\) wird und als Summand hinzukommt"
+        ],
+        korrekt: 0,
+        tipp: "Schreibe \\(e^{2x}\\) als Potenz mit anderer Basis – wie schnell wächst diese Funktion im Vergleich zu \\(e^x\\)?",
+        loesungsweg: "Nur \\(f(x) = e^x\\) selbst ist ihre eigene Ableitung. Bei \\(e^{2x}\\) ist der Funktionswert an der Stelle \\(x\\) gleich dem von \\(e^x\\) an der Stelle \\(2x\\) – die Kurve ist gestaucht, und ihre Steigung ist überall doppelt so groß: \\(\\left(e^{2x}\\right)' = 2e^{2x}\\). Die dritte Antwort führt zwar zufällig zum richtigen Faktor, begründet ihn aber falsch (Produktregel: \\(e^x \\cdot e^x\\) liefert \\(2e^x \\cdot e^x = 2e^{2x}\\) – das ist derselbe Rechenweg, nicht die Erklärung der Regelverletzung), und der Summand in Antwort vier ist schlicht falsch."
     },
     {
-        id: 33, level: 6, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = x \\cdot e^{2x}\\). Berechne \\(f'(0)\\).",
-        loesung: 1, toleranz: 0,
-        tipp: "Produktregel: \\(u = x\\), \\(v = e^{2x}\\). \\(v' = 2e^{2x}\\) (Kettenregel!).",
-        loesungsweg: "\\(f'(x) = 1 \\cdot e^{2x} + x \\cdot 2e^{2x} = e^{2x}(1 + 2x)\\). Einsetzen: \\(f'(0) = e^0 \\cdot 1 = 1\\)."
+        id: 33, level: 6, typ: "mc",
+        frage: "Betrachtet wird \\(f(x) = \\sin(kx)\\) mit \\(k > 0\\). Welche Aussage über die Steigung des Graphen trifft zu?",
+        optionen: [
+            "Die größte vorkommende Steigung beträgt \\(k\\)",
+            "Die größte vorkommende Steigung beträgt \\(1\\), unabhängig von \\(k\\)",
+            "Die Steigung ist überall positiv, wenn \\(k > 0\\) ist",
+            "Die größte Steigung wächst mit \\(k^2\\)"
+        ],
+        korrekt: 0,
+        tipp: "Stelle \\(f'\\) auf und überlege, welche Werte dieser Term annehmen kann.",
+        loesungsweg: "$$f'(x) = k\\cos(kx)$$ Da \\(\\cos\\) Werte zwischen \\(-1\\) und \\(1\\) annimmt, liegt die Steigung zwischen \\(-k\\) und \\(k\\); der Größtwert \\(k\\) wird z. B. an der Stelle \\(0\\) erreicht. Ein größeres \\(k\\) staucht die Kurve waagerecht und macht sie dadurch steiler – linear in \\(k\\), nicht quadratisch. Negative Steigungen kommen weiterhin vor."
     },
     {
         id: 34, level: 6, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = \\sin(x) \\cdot \\cos(2x)\\). Berechne \\(f'(0)\\).",
-        loesung: 1, toleranz: 0,
-        tipp: "Produktregel: \\(f'(x) = \\cos(x) \\cdot \\cos(2x) + \\sin(x) \\cdot (-2\\sin(2x))\\).",
-        loesungsweg: "\\(f'(x) = \\cos(x)\\cos(2x) - 2\\sin(x)\\sin(2x)\\). Einsetzen: \\(f'(0) = 1 \\cdot 1 - 2 \\cdot 0 \\cdot 0 = 1\\)."
+        frage: "Die Wirkung eines Medikaments wird durch \\(w(t) = t^2 \\cdot e^{-t/2}\\) beschrieben (\\(t\\) in Stunden, \\(t > 0\\)). Nach wie vielen Stunden ist die Wirkung am größten?",
+        loesung: 4, toleranz: 0,
+        tipp: "Produkt- und Kettenregel verbinden; der Exponentialfaktor ist stets positiv und kann ausgeklammert werden.",
+        loesungsweg: "$$w'(t) = 2t\\,e^{-t/2} + t^2 \\cdot \\left(-\\tfrac{1}{2}\\right)e^{-t/2} = t\\,e^{-t/2}\\left(2 - \\tfrac{t}{2}\\right)$$ Für \\(t > 0\\) wird der Term null, wenn \\(2 - \\frac{t}{2} = 0\\), also \\(t = 4\\). Davor ist \\(w' > 0\\), danach \\(w' < 0\\) – bei \\(t = 4\\) liegt das Maximum (mit \\(w(4) = 16e^{-2} \\approx 2{,}17\\))."
     },
     {
-        id: 35, level: 6, typ: "mc",
-        frage: "Gegeben ist \\(f(x) = x \\cdot \\sin(3x)\\). Welche Ableitung ist korrekt?",
-        optionen: [
-            "\\(f'(x) = \\sin(3x) + 3x\\cos(3x)\\)",
-            "\\(f'(x) = 3\\cos(3x)\\)",
-            "\\(f'(x) = \\sin(3x) + x\\cos(3x)\\)",
-            "\\(f'(x) = x\\cos(3x) + 3\\sin(3x)\\)"
-        ],
-        korrekt: 0,
-        tipp: "Produktregel: \\(u' \\cdot v + u \\cdot v'\\). Dabei \\(v' = 3\\cos(3x)\\) (Kettenregel!).",
-        loesungsweg: "\\(f'(x) = 1 \\cdot \\sin(3x) + x \\cdot 3\\cos(3x) = \\sin(3x) + 3x\\cos(3x)\\)."
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = \\ln\\!\\left(1 + e^{2x}\\right)\\). Berechne \\(f'\\!\\left(\\frac{\\ln 3}{2}\\right)\\).",
+        loesung: 1.5, toleranz: 0.01,
+        tipp: "Bestimme zuerst \\(f'\\) allgemein und überlege dann, welchen Wert \\(e^{2x}\\) an der angegebenen Stelle hat.",
+        loesungsweg: "$$f'(x) = \\frac{1}{1 + e^{2x}} \\cdot 2e^{2x} = \\frac{2e^{2x}}{1 + e^{2x}}$$ An der Stelle \\(x = \\frac{\\ln 3}{2}\\) ist \\(e^{2x} = e^{\\ln 3} = 3\\), also $$f' = \\frac{2 \\cdot 3}{1 + 3} = \\frac{6}{4} = 1{,}5$$"
     },
     {
         id: 36, level: 6, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = e^{-x} \\cdot \\sin(x)\\). Berechne \\(f'(0)\\).",
-        loesung: 1, toleranz: 0,
-        tipp: "Produktregel + Kettenregel: \\(f'(x) = -e^{-x}\\sin(x) + e^{-x}\\cos(x)\\).",
-        loesungsweg: "\\(f'(x) = -e^{-x}\\sin(x) + e^{-x}\\cos(x) = e^{-x}(\\cos(x) - \\sin(x))\\). Einsetzen: \\(f'(0) = 1 \\cdot (1 - 0) = 1\\)."
+        frage: "Für welchen Wert \\(a > 0\\) hat die Funktion \\(f_a(x) = e^{-ax^2}\\) ihre Wendepunkte an den Stellen \\(x = \\pm 1\\)?",
+        loesung: 0.5, toleranz: 0.01,
+        tipp: "Die Wendestellen der Schar lassen sich allgemein in Abhängigkeit von \\(a\\) angeben.",
+        loesungsweg: "Aus \\(f_a''(x) = 2a\\,e^{-ax^2}(2ax^2 - 1)\\) folgen die Wendestellen \\(x = \\pm\\frac{1}{\\sqrt{2a}}\\). Bedingung: $$\\frac{1}{\\sqrt{2a}} = 1 \\Rightarrow 2a = 1 \\Rightarrow a = 0{,}5$$ Die Funktion \\(f(x) = e^{-x^2/2}\\) ist gerade die Glockenkurve mit den Wendestellen \\(\\pm 1\\)."
     }
+
 
     ];
     </script>

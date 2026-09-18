@@ -317,84 +317,73 @@
       },
 
       // ═══════════════════════════════════════════════════════════
-      // LEVEL 5 — schwer (IDs 25–30)
-      // Ortskurve der Extrema (Parameter eliminieren)
+      // LEVEL 5 — Extrema und Ortskurven selbst herleiten, Scharverhalten
       // ═══════════════════════════════════════════════════════════
 
       {
         id: 25,
         level: 5,
-        typ: "mc",
-        frage: "Gegeben ist \\(f_a(x) = x^2 - 2ax + a^2 + a\\). Der Extrempunkt ist \\(E(a \\mid a)\\). Welche Ortskurve beschreiben die Extrema?",
-        optionen: [
-          "\\(y = x^2\\)",
-          "\\(y = x\\)",
-          "\\(y = 2x\\)",
-          "\\(y = x + 1\\)"
-        ],
-        korrekt: 1,
-        tipp: "Extremum bei \\(x_E = a\\), \\(y_E = a\\). Eliminiere \\(a\\): \\(a = x_E\\), also \\(y = x\\).",
-        loesungsweg: "\\(x_E = a\\) und \\(y_E = a\\). Aus der ersten Gleichung: \\(a = x\\). Einsetzen: \\(y = x\\). Die Ortskurve ist die Winkelhalbierende."
+        typ: "numerisch",
+        frage: "Gegeben ist \\(f_a(x) = x^3 - 3a^2x\\) mit \\(a > 0\\). Bestimme für \\(a = 3\\) die \\(x\\)-Koordinate des Hochpunkts.",
+        loesung: -3,
+        toleranz: 0,
+        tipp: "Bestimme die Extremstellen allgemein in Abhängigkeit von \\(a\\) und entscheide dann, welche der beiden der Hochpunkt ist.",
+        loesungsweg: "$$f_a'(x) = 3x^2 - 3a^2 = 0 \\Rightarrow x = \\pm a$$ Mit \\(f_a''(x) = 6x\\) ist \\(f_a''(-a) = -6a < 0\\) – der Hochpunkt liegt also bei \\(x = -a\\), für \\(a = 3\\) somit bei \\(x = -3\\)."
       },
       {
         id: 26,
         level: 5,
-        typ: "mc",
-        frage: "Gegeben ist \\(f_a(x) = x^2 - 2ax + 3a^2\\). Extremum bei \\(E(a \\mid 2a^2)\\). Welche Ortskurve beschreiben die Extrema?",
-        optionen: [
-          "\\(y = 2x^2\\)",
-          "\\(y = x^2\\)",
-          "\\(y = 2x\\)",
-          "\\(y = \\frac{1}{2}x^2\\)"
-        ],
-        korrekt: 0,
-        tipp: "\\(x_E = a \\Rightarrow a = x\\). Einsetzen in \\(y_E = 2a^2\\).",
-        loesungsweg: "\\(x_E = a\\), \\(y_E = 2a^2\\). Eliminiere \\(a\\): \\(a = x \\Rightarrow y = 2x^2\\)."
+        typ: "numerisch",
+        frage: "Die Hochpunkte der Schar \\(f_a(x) = -x^2 + 2ax\\) mit \\(a > 0\\) liegen alle auf einer gemeinsamen Kurve. Welchen \\(y\\)-Wert hat diese Kurve an der Stelle \\(x = 3\\)?",
+        loesung: 9,
+        toleranz: 0,
+        tipp: "Bestimme den Hochpunkt in Abhängigkeit von \\(a\\) und eliminiere anschließend den Parameter.",
+        loesungsweg: "$$f_a'(x) = -2x + 2a = 0 \\Rightarrow x = a, \\qquad f_a(a) = -a^2 + 2a^2 = a^2$$ Der Hochpunkt ist also \\(H(a \\mid a^2)\\). Aus \\(x = a\\) folgt durch Einsetzen \\(y = x^2\\) – die Ortskurve ist die Normalparabel. An der Stelle \\(3\\): \\(y = 9\\)."
       },
       {
         id: 27,
         level: 5,
         typ: "numerisch",
-        frage: "Gegeben ist \\(f_a(x) = x^3 - 3ax\\). Die Tiefpunkte liegen bei \\(T(\\sqrt{a} \\mid -2a\\sqrt{a})\\) für \\(a > 0\\). Bestimme den y-Wert der Ortskurve für \\(x = 2\\).",
-        loesung: -16,
-        toleranz: 0.01,
-        tipp: "\\(x_T = \\sqrt{a} \\Rightarrow a = x^2\\). Die Ortskurve: \\(y = -2x^2 \\cdot x = -2x^3\\). Berechne \\(y(2)\\).",
-        loesungsweg: "\\(x_T = \\sqrt{a} \\Rightarrow a = x^2\\). \\(y_T = -2a\\sqrt{a} = -2x^2 \\cdot x = -2x^3\\). \\(y(2) = -2 \\cdot 8 = -16\\)."
+        frage: "Alle Graphen der Schar \\(f_a(x) = x^3 + a(x^2 - 1)\\) verlaufen durch zwei gemeinsame Punkte. Bestimme die größere der beiden \\(x\\)-Koordinaten.",
+        loesung: 1,
+        toleranz: 0,
+        tipp: "Gemeinsame Punkte haben eine Eigenschaft, die sie vom Parameter unabhängig macht.",
+        loesungsweg: "Ein Punkt gehört zu <b>allen</b> Scharkurven, wenn der Funktionswert nicht von \\(a\\) abhängt. Das ist genau dann der Fall, wenn der Faktor bei \\(a\\) verschwindet: $$x^2 - 1 = 0 \\Rightarrow x = \\pm 1$$ Die gemeinsamen Punkte sind \\((1 \\mid 1)\\) und \\((-1 \\mid -1)\\); die größere \\(x\\)-Koordinate ist \\(1\\)."
       },
       {
         id: 28,
         level: 5,
-        typ: "numerisch",
-        frage: "Gegeben ist \\(f_a(x) = -x^2 + 4ax - 4a^2 + 2\\). Der Hochpunkt liegt bei \\(H(2a \\mid 2)\\). Wie lautet der y-Wert der Ortskurve (unabhängig von \\(x\\))?",
-        loesung: 2,
-        toleranz: 0,
-        tipp: "Wenn \\(y_H = 2\\) für alle \\(a\\), ist die Ortskurve eine horizontale Gerade.",
-        loesungsweg: "\\(f_a'(x) = -2x + 4a = 0 \\Rightarrow x_H = 2a\\). \\(f_a(2a) = -4a^2 + 8a^2 - 4a^2 + 2 = 2\\). Die Ortskurve ist \\(y = 2\\), eine waagerechte Gerade."
+        typ: "mc",
+        frage: "Für welche Werte von \\(a\\) besitzt \\(f_a(x) = x^3 - 3ax\\) überhaupt Extrempunkte?",
+        optionen: [
+          "genau für \\(a > 0\\)",
+          "genau für \\(a < 0\\)",
+          "genau für \\(a \\geq 0\\)",
+          "für jedes \\(a\\)"
+        ],
+        korrekt: 0,
+        tipp: "Untersuche, wann die Gleichung \\(f_a'(x) = 0\\) überhaupt Lösungen mit Vorzeichenwechsel hat.",
+        loesungsweg: "$$f_a'(x) = 3x^2 - 3a = 0 \\Rightarrow x^2 = a$$ Für \\(a < 0\\) gibt es keine Lösung – der Graph ist streng monoton steigend. Für \\(a = 0\\) ist \\(f_0(x) = x^3\\) mit einem Sattelpunkt, also ebenfalls ohne Extrempunkt. Nur für \\(a > 0\\) existieren zwei Stellen \\(x = \\pm\\sqrt{a}\\) mit Vorzeichenwechsel."
       },
       {
         id: 29,
         level: 5,
-        typ: "mc",
-        frage: "Gegeben ist \\(f_a(x) = x^3 - 3a^2 x + 2a^3\\). Die Hochpunkte liegen bei \\(HP(-a \\mid 4a^3)\\). Welche Ortskurve beschreiben die Hochpunkte?",
-        optionen: [
-          "\\(y = -4x^3\\)",
-          "\\(y = 4x^3\\)",
-          "\\(y = -4x^2\\)",
-          "\\(y = 4x^2\\)"
-        ],
-        korrekt: 0,
-        tipp: "\\(x_H = -a \\Rightarrow a = -x\\). Einsetzen: \\(y = 4(-x)^3 = -4x^3\\).",
-        loesungsweg: "\\(a = -x_H\\). \\(y = 4a^3 = 4(-x)^3 = -4x^3\\). Die Ortskurve ist \\(y = -4x^3\\)."
+        typ: "numerisch",
+        frage: "Für welchen Wert \\(a > 0\\) hat der Tiefpunkt von \\(f_a(x) = x^3 - 3a^2x\\) den \\(y\\)-Wert \\(-16\\)?",
+        loesung: 2,
+        toleranz: 0,
+        tipp: "Bestimme den Tiefpunkt zuerst allgemein in Abhängigkeit von \\(a\\).",
+        loesungsweg: "Extremstellen: \\(x = \\pm a\\); wegen \\(f_a''(a) = 6a > 0\\) liegt der Tiefpunkt bei \\(x = a\\): $$f_a(a) = a^3 - 3a^3 = -2a^3$$ Bedingung: $$-2a^3 = -16 \\Rightarrow a^3 = 8 \\Rightarrow a = 2$$"
       },
       {
         id: 30,
         level: 5,
-        typ: "numerisch",
-        frage: "Gegeben ist \\(f_a(x) = x^2 - 2ax + a\\). Extremum bei \\(E(a \\mid a - a^2)\\). Die Ortskurve ist \\(y = x - x^2\\). Bestimme den maximalen y-Wert der Ortskurve.",
-        loesung: 0.25,
-        toleranz: 0.01,
-        tipp: "Die Ortskurve \\(y = x - x^2\\) ist selbst eine Parabel. Bestimme deren Scheitel.",
-        loesungsweg: "\\(y = x - x^2 = -(x^2 - x) = -(x - \\frac{1}{2})^2 + \\frac{1}{4}\\). Maximum bei \\(x = \\frac{1}{2}\\) mit \\(y_{\\max} = \\frac{1}{4} = 0{,}25\\)."
+        typ: "mc",
+        frage: "Ein Schüler bestimmt den Tiefpunkt von \\(f_a(x) = x^2 - 2ax\\):<br>Schritt 1: \\(f_a'(x) = 2x - 2a\\)<br>Schritt 2: \\(f_a'(x) = 0 \\Rightarrow x = a\\)<br>Schritt 3: Der Tiefpunkt ist \\(T(a \\mid a^2)\\).<br>Welcher Schritt ist der erste fehlerhafte?",
+        optionen: ["Schritt 1", "Schritt 2", "Schritt 3", "Kein Schritt ist fehlerhaft"],
+        korrekt: 2,
+        tipp: "Der \\(y\\)-Wert entsteht durch Einsetzen in \\(f_a\\) – nicht in die innere Klammer oder in \\(x^2\\).",
+        loesungsweg: "Die Schritte 1 und 2 sind richtig. In Schritt 3 wird der Funktionswert falsch bestimmt: $$f_a(a) = a^2 - 2a \\cdot a = a^2 - 2a^2 = -a^2$$ Der Tiefpunkt ist also \\(T(a \\mid -a^2)\\); seine Ortskurve ist die nach unten geöffnete Parabel \\(y = -x^2\\), nicht \\(y = x^2\\)."
       },
 
       // ═══════════════════════════════════════════════════════════
@@ -406,11 +395,11 @@
         id: 31,
         level: 6,
         typ: "numerisch",
-        frage: "Gegeben ist \\(f_a(x) = x^3 - 3a^2 x\\) mit \\(a > 0\\). Bestimme den y-Wert des Wendepunkts.",
-        loesung: 0,
-        toleranz: 0,
-        tipp: "\\(f_a''(x) = 6x = 0 \\Rightarrow x_W = 0\\). Berechne \\(f_a(0)\\).",
-        loesungsweg: "\\(f_a''(x) = 6x = 0 \\Rightarrow x_W = 0\\). \\(f_a(0) = 0\\). Der Wendepunkt liegt unabhängig von \\(a\\) bei \\(W(0 \\mid 0)\\)."
+        frage: "Gegeben ist \\(f_a(x) = ax^3 - 3x\\) mit \\(a > 0\\). Bestimme für \\(a = \\frac{1}{3}\\) die \\(x\\)-Koordinate des Hochpunkts und runde auf zwei Dezimalstellen.",
+        loesung: -1.73,
+        toleranz: 0.01,
+        tipp: "Bestimme die Extremstellen allgemein in Abhängigkeit von \\(a\\); das Vorzeichen der zweiten Ableitung entscheidet dann über Hoch- und Tiefpunkt.",
+        loesungsweg: "$$f_a'(x) = 3ax^2 - 3 = 0 \\Rightarrow x^2 = \\frac{1}{a} \\Rightarrow x = \\pm\\frac{1}{\\sqrt{a}}$$ Mit \\(f_a''(x) = 6ax\\) und \\(a > 0\\) ist \\(f_a''\\) für negative \\(x\\) negativ – der Hochpunkt liegt bei \\(x = -\\frac{1}{\\sqrt{a}}\\). Für \\(a = \\frac{1}{3}\\): $$x = -\\sqrt{3} \\approx -1{,}73$$"
       },
       {
         id: 32,
@@ -431,11 +420,11 @@
         id: 33,
         level: 6,
         typ: "numerisch",
-        frage: "Gegeben ist \\(f_a(x) = \\frac{1}{3}x^3 - a x^2 + a^2 x - \\frac{a^3}{3}\\). Zeige, dass \\(x = a\\) eine dreifache Nullstelle ist. Berechne \\(f_2(1)\\).",
-        loesung: -0.333,
-        toleranz: 0.01,
-        tipp: "\\(f_a(x) = \\frac{1}{3}(x - a)^3\\). Setze \\(a = 2,\\; x = 1\\) ein.",
-        loesungsweg: "\\(f_a(x) = \\frac{1}{3}(x^3 - 3ax^2 + 3a^2 x - a^3) = \\frac{1}{3}(x-a)^3\\). \\(f_2(1) = \\frac{1}{3}(1 - 2)^3 = \\frac{1}{3} \\cdot (-1) = -\\frac{1}{3} \\approx -0{,}333\\)."
+        frage: "Für welchen Wert \\(a > 0\\) liegt der Scheitelpunkt des Graphen von \\(f_a(x) = x(a - x)\\) auf der Geraden \\(y = 9\\)?",
+        loesung: 6,
+        toleranz: 0,
+        tipp: "Bestimme den Scheitelpunkt allgemein in Abhängigkeit von \\(a\\); seine \\(y\\)-Koordinate liefert dann die Bedingung.",
+        loesungsweg: "$$f_a(x) = ax - x^2 \\Rightarrow f_a'(x) = a - 2x = 0 \\Rightarrow x = \\frac{a}{2}$$ Scheitelwert: $$f_a\\!\\left(\\frac{a}{2}\\right) = \\frac{a^2}{2} - \\frac{a^2}{4} = \\frac{a^2}{4}$$ Bedingung: $$\\frac{a^2}{4} = 9 \\Rightarrow a^2 = 36 \\Rightarrow a = 6 \\;(a > 0)$$ Die Scheitelpunkte der Schar liegen übrigens alle auf der Parabel \\(y = x^2\\)."
       },
       {
         id: 34,

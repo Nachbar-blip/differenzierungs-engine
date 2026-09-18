@@ -322,74 +322,73 @@
       },
 
       // ═══════════════════════════════════════════════════════════
-      // LEVEL 5 — schwer (IDs 25–30)
-      // Newton für transzendente Gleichungen
+      // LEVEL 5 — Gleichung selbst umformen, mehrere Schritte, Newton auf f'
       // ═══════════════════════════════════════════════════════════
 
       {
         id: 25,
         level: 5,
         typ: "numerisch",
-        frage: "Löse \\(e^x = 3x\\) näherungsweise. Definiere \\(f(x) = e^x - 3x\\). Startwert \\(x_0 = 2\\). Berechne \\(x_1\\).",
-        loesung: 1.6835,
-        toleranz: 0.01,
-        tipp: "\\(f(2) = e^2 - 6 \\approx 7{,}389 - 6 = 1{,}389\\). \\(f'(x) = e^x - 3\\). \\(f'(2) = e^2 - 3 \\approx 4{,}389\\).",
-        loesungsweg: "\\(f(2) = e^2 - 6 \\approx 1{,}3891\\). \\(f'(2) = e^2 - 3 \\approx 4{,}3891\\). \\(x_1 = 2 - \\frac{1{,}3891}{4{,}3891} \\approx 2 - 0{,}3165 = 1{,}6835\\)."
+        frage: "Die Gleichung \\(e^x = 3x\\) soll näherungsweise gelöst werden. Führe vom Startwert \\(x_0 = 2\\) aus zwei Newton-Schritte durch und gib \\(x_2\\) auf vier Dezimalstellen an.",
+        loesung: 1.5435,
+        toleranz: 0.001,
+        tipp: "Bringe zuerst alles auf eine Seite, damit eine Nullstellenaufgabe entsteht.",
+        loesungsweg: "Umformen: \\(f(x) = e^x - 3x\\) mit \\(f'(x) = e^x - 3\\).<br>Erster Schritt: \\(f(2) \\approx 1{,}3891\\), \\(f'(2) \\approx 4{,}3891\\), also $$x_1 = 2 - \\frac{1{,}3891}{4{,}3891} \\approx 1{,}6835$$ Zweiter Schritt: \\(f(1{,}6835) \\approx 0{,}3340\\), \\(f'(1{,}6835) \\approx 2{,}3845\\), also $$x_2 \\approx 1{,}6835 - \\frac{0{,}3340}{2{,}3845} \\approx 1{,}5435$$ (Die exakte Lösung liegt bei \\(1{,}5121\\).)"
       },
       {
         id: 26,
         level: 5,
         typ: "numerisch",
-        frage: "Löse \\(\\ln(x) = 2 - x\\) näherungsweise. Definiere \\(f(x) = \\ln(x) - 2 + x\\). Startwert \\(x_0 = 1\\). Berechne \\(x_1\\).",
-        loesung: 1.5,
-        toleranz: 0.01,
-        tipp: "\\(f(1) = 0 - 2 + 1 = -1\\). \\(f'(x) = \\frac{1}{x} + 1\\). \\(f'(1) = 2\\).",
-        loesungsweg: "\\(f(1) = \\ln(1) - 2 + 1 = -1\\). \\(f'(1) = 1 + 1 = 2\\). \\(x_1 = 1 - \\frac{-1}{2} = 1 + 0{,}5 = 1{,}5\\)."
+        frage: "Von \\(f(x) = x^4 - x\\) soll die Extremstelle näherungsweise bestimmt werden. Wende das Newton-Verfahren mit dem Startwert \\(1\\) auf die passende Funktion an und gib das Ergebnis des ersten Schritts an.",
+        loesung: 0.75,
+        toleranz: 0.001,
+        tipp: "An einer Extremstelle ist die Ableitung null – gesucht ist also die Nullstelle von \\(f'\\), nicht von \\(f\\).",
+        loesungsweg: "Gesucht ist die Nullstelle von \\(f'(x) = 4x^3 - 1\\); das Newton-Verfahren braucht dafür \\(f''(x) = 12x^2\\): $$x_1 = 1 - \\frac{f'(1)}{f''(1)} = 1 - \\frac{3}{12} = 0{,}75$$ (Die exakte Extremstelle ist \\(\\sqrt[3]{1/4} \\approx 0{,}6300\\); ein weiterer Schritt verbessert die Näherung deutlich.)"
       },
       {
         id: 27,
         level: 5,
         typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = e^x - 3x\\). Startwert \\(x_0 = 0\\). Berechne \\(x_1\\) (Näherung für die kleinere Lösung von \\(e^x = 3x\\)).",
-        loesung: 0.5,
-        toleranz: 0.01,
-        tipp: "\\(f(0) = 1\\). \\(f'(0) = e^0 - 3 = -2\\).",
-        loesungsweg: "\\(f(0) = 1 - 0 = 1\\). \\(f'(0) = 1 - 3 = -2\\). \\(x_1 = 0 - \\frac{1}{-2} = 0 + 0{,}5 = 0{,}5\\)"
+        frage: "Berechne \\(\\sqrt{5}\\) näherungsweise mit dem Newton-Verfahren: Startwert \\(x_0 = 2\\), zwei Schritte. Gib \\(x_2\\) auf vier Dezimalstellen an.",
+        loesung: 2.2361,
+        toleranz: 0.001,
+        tipp: "Welche Gleichung erfüllt \\(\\sqrt{5}\\)? Forme sie so um, dass eine Nullstellenaufgabe entsteht.",
+        loesungsweg: "\\(\\sqrt{5}\\) ist die positive Nullstelle von \\(f(x) = x^2 - 5\\) mit \\(f'(x) = 2x\\).<br>Erster Schritt: \\(x_1 = 2 - \\frac{-1}{4} = 2{,}25\\).<br>Zweiter Schritt: \\(f(2{,}25) = 0{,}0625\\), \\(f'(2{,}25) = 4{,}5\\), also $$x_2 = 2{,}25 - \\frac{0{,}0625}{4{,}5} \\approx 2{,}2361$$ Das stimmt bereits auf vier Nachkommastellen mit \\(\\sqrt{5} = 2{,}23607\\ldots\\) überein – typisch für die quadratische Konvergenz."
       },
       {
         id: 28,
         level: 5,
         typ: "numerisch",
-        frage: "Löse \\(x \\cdot e^x = 1\\) näherungsweise. \\(f(x) = xe^x - 1\\). Startwert \\(x_0 = 1\\). Berechne \\(x_1\\).",
-        loesung: 0.6839,
-        toleranz: 0.01,
-        tipp: "\\(f(1) = e - 1 \\approx 1{,}718\\). \\(f'(x) = e^x + xe^x = e^x(1+x)\\). \\(f'(1) = 2e \\approx 5{,}436\\).",
-        loesungsweg: "\\(f(1) = e - 1 \\approx 1{,}7183\\). \\(f'(1) = 2e \\approx 5{,}4366\\). \\(x_1 = 1 - \\frac{1{,}7183}{5{,}4366} \\approx 1 - 0{,}3161 = 0{,}6839\\)"
+        frage: "Die Graphen von \\(y = \\cos(x)\\) und \\(y = x\\) schneiden sich genau einmal. Bestimme mit einem Newton-Schritt vom Startwert \\(x_0 = 1\\) aus eine Näherung für die Schnittstelle (vier Dezimalstellen, Bogenmaß).",
+        loesung: 0.7504,
+        toleranz: 0.001,
+        tipp: "Eine Schnittstelle zweier Graphen ist die Nullstelle ihrer Differenz.",
+        loesungsweg: "Ansatz: \\(f(x) = \\cos(x) - x\\) mit \\(f'(x) = -\\sin(x) - 1\\). $$f(1) \\approx 0{,}5403 - 1 = -0{,}4597, \\qquad f'(1) \\approx -0{,}8415 - 1 = -1{,}8415$$ $$x_1 = 1 - \\frac{-0{,}4597}{-1{,}8415} \\approx 1 - 0{,}2496 = 0{,}7504$$ (Der exakte Wert beträgt \\(0{,}7391\\ldots\\))"
       },
       {
         id: 29,
         level: 5,
         typ: "mc",
-        frage: "Man löst \\(\\sin(x) = \\frac{x}{2}\\) mit Newton. Die Funktion ist \\(f(x) = \\sin(x) - \\frac{x}{2}\\). Welche Ableitung benötigt man?",
+        frage: "Ein Newton-Verfahren liefert die Werte \\(x_0 = 1\\), \\(x_1 = 3\\), \\(x_2 = 7\\), \\(x_3 = 15\\), \\(x_4 = 31\\). Wie ist das zu beurteilen?",
         optionen: [
-          "\\(f'(x) = \\cos(x) - \\frac{1}{2}\\)",
-          "\\(f'(x) = -\\cos(x) - \\frac{1}{2}\\)",
-          "\\(f'(x) = \\cos(x) + \\frac{1}{2}\\)",
-          "\\(f'(x) = \\sin(x) - \\frac{1}{2}\\)"
+          "Das Verfahren divergiert – die Abstände wachsen, statt kleiner zu werden",
+          "Das Verfahren konvergiert langsam, weil eine doppelte Nullstelle vorliegt",
+          "Das Verfahren konvergiert quadratisch gegen eine große Nullstelle",
+          "Das Verfahren springt in einem Zyklus zwischen zwei Werten"
         ],
         korrekt: 0,
-        tipp: "Leite \\(\\sin(x)\\) und \\(\\frac{x}{2}\\) einzeln ab.",
-        loesungsweg: "\\(f'(x) = \\cos(x) - \\frac{1}{2}\\). Die Ableitung von \\(\\sin(x)\\) ist \\(\\cos(x)\\) und die von \\(-\\frac{x}{2}\\) ist \\(-\\frac{1}{2}\\)."
+        tipp: "Sieh dir die Differenzen aufeinanderfolgender Werte an: Werden sie kleiner oder größer?",
+        loesungsweg: "Die Schrittweiten betragen \\(2, 4, 8, 16\\) – sie verdoppeln sich, statt gegen null zu gehen. Das ist Divergenz; eine Ursache kann ein ungeeigneter Startwert oder eine sehr flache Stelle (\\(f'\\) nahe null) sein. Bei Konvergenz müssten die Differenzen rasch schrumpfen, bei einem Zyklus würden sich Werte wiederholen."
       },
       {
         id: 30,
         level: 5,
         typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = \\sin(x) - \\frac{x}{2}\\). Startwert \\(x_0 = 2\\). Berechne \\(x_1\\). (Taschenrechner im Bogenmaß!)",
-        loesung: 1.9010,
-        toleranz: 0.01,
-        tipp: "\\(\\sin(2) \\approx 0{,}9093\\). \\(f(2) \\approx 0{,}9093 - 1 = -0{,}0907\\). \\(f'(2) = \\cos(2) - 0{,}5 \\approx -0{,}4161 - 0{,}5 = -0{,}9161\\).",
-        loesungsweg: "\\(f(2) = \\sin(2) - 1 \\approx -0{,}0907\\). \\(f'(2) = \\cos(2) - 0{,}5 \\approx -0{,}9161\\). \\(x_1 = 2 - \\frac{-0{,}0907}{-0{,}9161} \\approx 2 - 0{,}0990 = 1{,}9010\\)"
+        frage: "Die Gleichung \\(x^3 = 2x + 5\\) hat eine Lösung zwischen \\(2\\) und \\(3\\). Führe vom Startwert \\(x_0 = 2\\) aus einen Newton-Schritt durch.",
+        loesung: 2.1,
+        toleranz: 0.001,
+        tipp: "Bringe zuerst alles auf eine Seite; die Ableitung ergibt sich dann unmittelbar.",
+        loesungsweg: "Ansatz: \\(f(x) = x^3 - 2x - 5\\) mit \\(f'(x) = 3x^2 - 2\\). $$f(2) = 8 - 4 - 5 = -1, \\qquad f'(2) = 12 - 2 = 10$$ $$x_1 = 2 - \\frac{-1}{10} = 2{,}1$$ (Die Lösung liegt bei \\(2{,}0946\\ldots\\) – schon ein Schritt trifft sie auf zwei Nachkommastellen.)"
       },
 
       // ═══════════════════════════════════════════════════════════
@@ -400,17 +399,12 @@
       {
         id: 31,
         level: 6,
-        typ: "mc",
-        frage: "Gegeben ist \\(f(x) = x^3 - 3x + 1\\). Man startet bei \\(x_0 = 0\\). Was passiert?",
-        optionen: [
-          "Konvergenz gegen die Nullstelle bei \\(x \\approx 0{,}347\\)",
-          "Konvergenz gegen die Nullstelle bei \\(x \\approx -1{,}879\\)",
-          "Das Verfahren springt zwischen verschiedenen Werten (Zyklus)",
-          "Division durch Null im ersten Schritt"
-        ],
-        korrekt: 0,
-        tipp: "\\(f(0) = 1\\), \\(f'(0) = -3\\). \\(x_1 = 0 - \\frac{1}{-3} = \\frac{1}{3} \\approx 0{,}333\\). Nahe an welcher Nullstelle?",
-        loesungsweg: "\\(x_1 = \\frac{1}{3}\\). \\(f(\\frac{1}{3}) \\approx 0{,}037 - 1 + 1 = 0{,}037\\). Das ist nahe an der Nullstelle \\(x \\approx 0{,}347\\). Newton konvergiert dorthin."
+        typ: "numerisch",
+        frage: "Von einer stetigen Funktion \\(f\\) sind die Werte \\(f(1) = -3\\), \\(f(2) = -1\\), \\(f(3) = 2\\) und \\(f(4) = 6\\) bekannt. In welchem Intervall \\([n;\\, n+1]\\) liegt sicher eine Nullstelle? Gib \\(n\\) an.",
+        loesung: 2,
+        toleranz: 0,
+        tipp: "Entscheidend ist, zwischen welchen Stellen die Funktionswerte ihr Vorzeichen wechseln.",
+        loesungsweg: "Zwischen \\(x = 2\\) und \\(x = 3\\) wechselt der Funktionswert von \\(-1\\) nach \\(2\\), also das Vorzeichen. Nach dem Zwischenwertsatz besitzt eine stetige Funktion dort mindestens eine Nullstelle – ein brauchbarer Startwert für das Newton-Verfahren ist damit \\(x_0 = 2\\) oder \\(x_0 = 3\\). In den übrigen Intervallen ist kein Vorzeichenwechsel erkennbar; eine Nullstelle ist dort zwar nicht ausgeschlossen, aus den Werten aber nicht zu folgern."
       },
       {
         id: 32,
