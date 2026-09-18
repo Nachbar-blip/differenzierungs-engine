@@ -112,11 +112,11 @@
         id: 7,
         level: 2,
         typ: "numerisch",
-        frage: "Bestimme die größere Nullstelle von \\(f(x) = x^2 - 5x + 6\\).",
-        loesung: 3,
+        frage: "Bestimme die größere Nullstelle von \\(f(x) = x^2 - 7x + 12\\).",
+        loesung: 4,
         toleranz: 0,
-        tipp: "Faktorisiere: \\(x^2 - 5x + 6 = (x - ?)(x - ?)\\).",
-        loesungsweg: "\\(x^2 - 5x + 6 = (x-2)(x-3) = 0 \\Rightarrow x_1 = 2,\\; x_2 = 3\\). Die größere positive Nullstelle ist \\(x = 3\\)."
+        tipp: "Faktorisiere: \\(x^2 - 7x + 12 = (x - ?)(x - ?)\\).",
+        loesungsweg: "\\(x^2 - 7x + 12 = (x-3)(x-4) = 0 \\Rightarrow x_1 = 3,\\; x_2 = 4\\). Die größere Nullstelle ist \\(x = 4\\)."
       },
       {
         id: 8,
@@ -251,111 +251,94 @@
       },
 
       // ═══════════════════════════════════════════════════════════
-      // LEVEL 4 — anspruchsvoll (IDs 19–24)
-      // Vollständige Analyse von Polynomen 3. und 4. Grades
+      // LEVEL 4 — Rückschluss aus f', Term aus Eigenschaften, Parameter
       // ═══════════════════════════════════════════════════════════
 
       {
         id: 19,
         level: 4,
         typ: "numerisch",
-        frage: "Führe eine Kurvendiskussion von \\(f(x) = x^4 - 8x^2\\) durch. Wie viele Extremstellen hat \\(f\\)?",
-        loesung: 3,
+        frage: "Der Graph der Ableitungsfunktion \\(f'\\) ist eine nach oben geöffnete Parabel mit den Nullstellen \\(-1\\) und \\(4\\). An welcher Stelle hat \\(f\\) einen Hochpunkt?",
+        loesung: -1,
         toleranz: 0,
-        tipp: "\\(f'(x) = 4x^3 - 16x = 4x(x^2 - 4)\\). Wie viele Lösungen hat \\(f'(x) = 0\\)?",
-        loesungsweg: "\\(f'(x) = 4x^3 - 16x = 4x(x-2)(x+2) = 0 \\Rightarrow x_1 = -2,\\; x_2 = 0,\\; x_3 = 2\\). Also 3 Extremstellen."
+        tipp: "Ein Hochpunkt liegt dort, wo die Ableitung von positiven zu negativen Werten wechselt.",
+        loesungsweg: "Eine nach oben geöffnete Parabel ist außerhalb ihrer Nullstellen positiv und dazwischen negativ. Also ist \\(f' > 0\\) für \\(x < -1\\), \\(f' < 0\\) für \\(-1 < x < 4\\) und \\(f' > 0\\) für \\(x > 4\\). Bei \\(x = -1\\) wechselt \\(f'\\) von \\(+\\) nach \\(-\\): dort liegt der Hochpunkt (bei \\(x = 4\\) der Tiefpunkt)."
       },
       {
         id: 20,
         level: 4,
-        typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = x^4 - 8x^2\\). Berechne den \\(y\\)-Wert des Hochpunkts.",
-        loesung: 0,
-        toleranz: 0,
-        tipp: "Prüfe mit \\(f''(x)\\), welche der drei Extremstellen ein Hochpunkt ist.",
-        loesungsweg: "\\(f''(x) = 12x^2 - 16\\). \\(f''(0) = -16 < 0 \\Rightarrow\\) Hochpunkt bei \\(x = 0\\). \\(f(0) = 0\\)."
+        typ: "mc",
+        frage: "Welche Funktion hat an der Stelle \\(0\\) einen Hochpunkt und einen zur \\(y\\)-Achse symmetrischen Graphen?",
+        optionen: [
+          "\\(f(x) = -x^2 + 3\\)",
+          "\\(f(x) = x^2 - 3\\)",
+          "\\(f(x) = x^3 - 3x\\)",
+          "\\(f(x) = -x^3 + 3x\\)"
+        ],
+        korrekt: 0,
+        tipp: "Prüfe beide Forderungen getrennt: Symmetrie am Exponentenmuster, Hoch- oder Tiefpunkt am Vorzeichen des Leitkoeffizienten.",
+        loesungsweg: "Achsensymmetrie zur \\(y\\)-Achse verlangt ausschließlich gerade Exponenten – das schließt beide kubischen Terme aus (sie sind punktsymmetrisch). Von den beiden Parabeln ist \\(-x^2+3\\) nach unten geöffnet und hat bei \\(0\\) den Hochpunkt \\((0 \\mid 3)\\); \\(x^2 - 3\\) hat dort einen Tiefpunkt."
       },
       {
         id: 21,
         level: 4,
         typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = x^4 - 8x^2\\). Bestimme den \\(y\\)-Wert der Tiefpunkte.",
-        loesung: -16,
+        frage: "Wie viele <b>verschiedene</b> Nullstellen hat \\(f(x) = x^3 - 3x^2 + 4\\)?",
+        loesung: 2,
         toleranz: 0,
-        tipp: "\\(f''(\\pm 2) = 12 \\cdot 4 - 16 = 32 > 0\\). Setze \\(x = 2\\) in \\(f(x)\\) ein.",
-        loesungsweg: "\\(f''(2) = 48 - 16 = 32 > 0 \\Rightarrow\\) Tiefpunkt. \\(f(2) = 16 - 32 = -16\\). Wegen Symmetrie: \\(f(-2) = -16\\) ebenfalls."
+        tipp: "Suche zuerst eine ganzzahlige Nullstelle unter den Teilern des Absolutglieds.",
+        loesungsweg: "Probieren liefert \\(f(-1) = -1 - 3 + 4 = 0\\). Polynomdivision: $$x^3 - 3x^2 + 4 = (x+1)(x^2 - 4x + 4) = (x+1)(x-2)^2$$ Nullstellen sind \\(-1\\) und \\(2\\) (doppelt) – also <b>2</b> verschiedene."
       },
       {
         id: 22,
         level: 4,
         typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = x^3 - 6x^2 + 9x\\). Berechne die \\(x\\)-Koordinate des Hochpunkts.",
-        loesung: 1,
+        frage: "Der Graph von \\(f(x) = x^3 - 12x + c\\) berührt mit seinem Tiefpunkt die \\(x\\)-Achse. Bestimme \\(c\\).",
+        loesung: 16,
         toleranz: 0,
-        tipp: "\\(f'(x) = 3x^2 - 12x + 9 = 3(x^2 - 4x + 3) = 3(x-1)(x-3)\\).",
-        loesungsweg: "\\(f'(x) = 3(x-1)(x-3) = 0 \\Rightarrow x_1 = 1,\\; x_2 = 3\\). \\(f''(x) = 6x - 12\\). \\(f''(1) = -6 < 0 \\Rightarrow\\) Hochpunkt bei \\(x = 1\\)."
+        tipp: "Bestimme zuerst die Stelle des Tiefpunkts – sie hängt nicht von \\(c\\) ab.",
+        loesungsweg: "$$f'(x) = 3x^2 - 12 = 0 \\Rightarrow x = \\pm 2$$ Mit \\(f''(x) = 6x\\) und \\(f''(2) = 12 > 0\\) liegt der Tiefpunkt bei \\(x = 2\\). Berührung der \\(x\\)-Achse heißt \\(f(2) = 0\\): $$8 - 24 + c = 0 \\Rightarrow c = 16$$"
       },
       {
         id: 23,
         level: 4,
-        typ: "mc",
-        frage: "Gegeben ist \\(f(x) = x^4 - 8x^2\\). Wie viele Wendepunkte hat \\(f\\)?",
-        optionen: [
-          "0",
-          "1",
-          "2",
-          "3"
-        ],
-        korrekt: 2,
-        tipp: "\\(f''(x) = 12x^2 - 16 = 0\\). Wie viele Lösungen gibt es?",
-        loesungsweg: "\\(f''(x) = 12x^2 - 16 = 0 \\Rightarrow x^2 = \\frac{4}{3} \\Rightarrow x = \\pm\\frac{2}{\\sqrt{3}}\\). \\(f'''(x) = 24x \\neq 0\\) an beiden Stellen. Also 2 Wendepunkte."
+        typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = x^4 - 8x^2\\). Bestimme den \\(y\\)-Wert der Tiefpunkte.",
+        loesung: -16,
+        toleranz: 0,
+        tipp: "Bestimme zuerst alle Extremstellen und entscheide dann, welche davon Tiefpunkte sind.",
+        loesungsweg: "$$f'(x) = 4x^3 - 16x = 4x(x-2)(x+2) = 0 \\Rightarrow x = -2,\\, 0,\\, 2$$ Mit \\(f''(x) = 12x^2 - 16\\) ist \\(f''(\\pm 2) = 32 > 0\\) – Tiefpunkte. Einsetzen: \\(f(2) = 16 - 32 = -16\\), wegen der Symmetrie ebenso \\(f(-2) = -16\\)."
       },
       {
         id: 24,
         level: 4,
         typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = x^3 - 6x^2 + 9x\\). Bestimme den \\(y\\)-Wert des Tiefpunkts.",
-        loesung: 0,
+        frage: "Gegeben ist \\(f(x) = 2x^3 - 9x^2 + 12x - 4\\). Bestimme die Differenz der \\(y\\)-Werte von Hoch- und Tiefpunkt.",
+        loesung: 1,
         toleranz: 0,
-        tipp: "Der Tiefpunkt liegt bei \\(x = 3\\). Setze ein.",
-        loesungsweg: "\\(f''(3) = 18 - 12 = 6 > 0 \\Rightarrow\\) Tiefpunkt bei \\(x = 3\\). \\(f(3) = 27 - 54 + 27 = 0\\)."
+        tipp: "Beide Extremstellen bestimmen, jeweils einordnen und die Funktionswerte vergleichen.",
+        loesungsweg: "$$f'(x) = 6x^2 - 18x + 12 = 6(x-1)(x-2) = 0 \\Rightarrow x_1 = 1,\\; x_2 = 2$$ Mit \\(f''(x) = 12x - 18\\): \\(f''(1) = -6 < 0\\) (Hochpunkt), \\(f''(2) = 6 > 0\\) (Tiefpunkt). Werte: \\(f(1) = 2 - 9 + 12 - 4 = 1\\), \\(f(2) = 16 - 36 + 24 - 4 = 0\\). Differenz: \\(1 - 0 = 1\\)."
       },
 
       // ═══════════════════════════════════════════════════════════
-      // LEVEL 5 — schwer (IDs 25–30)
-      // Zusammenhang Graph↔Ableitung, mehrere Eigenschaften
+      // LEVEL 5 — Graph von f' deuten, Sonderfälle, Randwerte
       // ═══════════════════════════════════════════════════════════
 
       {
         id: 25,
         level: 5,
         typ: "mc",
-        frage: "Gegeben ist \\(f(x) = x^4 - 4x^3 + 4x^2\\). Welche Aussage beschreibt die Extrempunkte von \\(f\\) vollständig?",
-        optionen: [
-          "\\(f\\) hat bei \\(x = 0\\) einen Tiefpunkt und bei \\(x = 2\\) einen Tiefpunkt",
-          "\\(f\\) hat bei \\(x = 0\\) einen Hochpunkt und bei \\(x = 2\\) einen Tiefpunkt",
-          "\\(f\\) hat bei \\(x = 0\\) einen Tiefpunkt und bei \\(x = 2\\) eine doppelte Nullstelle mit Tiefpunkt",
-          "\\(f\\) hat bei \\(x = 0\\) einen Tiefpunkt, bei \\(x = 1\\) einen Hochpunkt und bei \\(x = 2\\) einen Tiefpunkt"
-        ],
-        korrekt: 3,
-        tipp: "\\(f(x) = x^2(x-2)^2\\). Berechne \\(f'(x)\\) und alle kritischen Stellen.",
-        loesungsweg: "\\(f'(x) = 4x^3 - 12x^2 + 8x = 4x(x^2-3x+2) = 4x(x-1)(x-2)\\). Nullstellen bei \\(x=0,1,2\\). \\(f''(x)=12x^2-24x+8\\). \\(f''(0)=8>0\\) (TP), \\(f''(1)=-4<0\\) (HP), \\(f''(2)=8>0\\) (TP)."
+        frage: "Ein Schüler untersucht \\(f(x) = x^4\\) auf Extrempunkte:<br>Schritt 1: \\(f'(x) = 4x^3\\), also \\(f'(0) = 0\\)<br>Schritt 2: \\(f''(x) = 12x^2\\), also \\(f''(0) = 0\\)<br>Schritt 3: Wegen \\(f''(0) = 0\\) liegt bei \\(0\\) kein Extrempunkt vor.<br>Welcher Schritt ist der erste fehlerhafte?",
+        optionen: ["Schritt 1", "Schritt 2", "Schritt 3", "Kein Schritt ist fehlerhaft"],
+        korrekt: 2,
+        tipp: "Skizziere den Graphen von \\(x^4\\) – oder vergleiche die Funktionswerte bei \\(x = 0\\) und in der Umgebung.",
+        loesungsweg: "Die Schritte 1 und 2 sind korrekt gerechnet. Falsch ist der Schluss in Schritt 3: \\(f''(x_0) = 0\\) ist kein Beweis gegen ein Extremum, sondern nur ein Fall, in dem das Kriterium keine Auskunft gibt. Hier entscheidet der Vorzeichenwechsel von \\(f'\\): \\(f'(-1) = -4 < 0\\), \\(f'(1) = 4 > 0\\) – also liegt bei \\(0\\) ein Tiefpunkt, der tiefste Punkt des Graphen."
       },
       {
         id: 26,
         level: 5,
-        typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = \\frac{1}{4}x^4 - 2x^2\\). Bestimme die Summe aller \\(x\\)-Koordinaten der Extremstellen.",
-        loesung: 0,
-        toleranz: 0,
-        tipp: "\\(f'(x) = x^3 - 4x = x(x^2-4) = 0\\). Nutze die Symmetrie.",
-        loesungsweg: "\\(f'(x) = x^3 - 4x = x(x-2)(x+2) = 0\\). Extremstellen bei \\(x = -2, 0, 2\\). Summe: \\(-2 + 0 + 2 = 0\\)."
-      },
-      {
-        id: 27,
-        level: 5,
         typ: "mc",
-        frage: "Der Graph von \\(f'(x)\\) schneidet die \\(x\\)-Achse an den Stellen \\(x = -1\\) und \\(x = 3\\) und hat bei \\(x = 1\\) ein Minimum. Was gilt für \\(f\\)?",
+        frage: "Der Graph von \\(f'\\) schneidet die \\(x\\)-Achse an den Stellen \\(-1\\) und \\(3\\) und hat bei \\(x = 1\\) ein Minimum. Was gilt für \\(f\\)?",
         optionen: [
           "\\(f\\) hat bei \\(x = 1\\) einen Wendepunkt",
           "\\(f\\) hat bei \\(x = -1\\) und \\(x = 3\\) Wendepunkte",
@@ -363,120 +346,130 @@
           "\\(f\\) hat bei \\(x = 1\\) ein Extremum"
         ],
         korrekt: 0,
-        tipp: "Ein Minimum von \\(f'\\) bedeutet \\(f''(1) = 0\\) und \\(f' \\) wechselt von fallend zu steigend. Was bedeutet das für \\(f\\)?",
-        loesungsweg: "Das Minimum von \\(f'\\) bei \\(x=1\\) bedeutet \\(f''(1)=0\\) mit Vorzeichenwechsel von \\(f''\\) (\\(-\\) zu \\(+\\)). Also hat \\(f\\) bei \\(x=1\\) einen Wendepunkt (Rechts-Links-Wendepunkt)."
+        tipp: "Ein Minimum von \\(f'\\) bedeutet, dass die Steigung dort am kleinsten ist. Was heißt das für die Krümmung von \\(f\\)?",
+        loesungsweg: "Im Minimum von \\(f'\\) gilt \\(f''(1) = 0\\), und \\(f''\\) wechselt dort von negativ zu positiv – das ist genau die Bedingung für einen Wendepunkt von \\(f\\) (Rechts-Links-Wendepunkt). Die Nullstellen von \\(f'\\) bei \\(-1\\) und \\(3\\) liefern dagegen Extrempunkte von \\(f\\), keine Wendepunkte; an der Stelle \\(1\\) ist \\(f'(1) \\neq 0\\), also kein Extremum."
+      },
+      {
+        id: 27,
+        level: 5,
+        typ: "mc",
+        frage: "Gegeben ist \\(f(x) = x^3 - 3x^2 + 3x - 1\\). Welche besondere Eigenschaft hat der Graph an der Stelle \\(1\\)?",
+        optionen: [
+          "Hochpunkt",
+          "Tiefpunkt",
+          "Sattelpunkt (Terrassenpunkt)",
+          "Wendepunkt mit von null verschiedener Steigung"
+        ],
+        korrekt: 2,
+        tipp: "Berechne \\(f'(1)\\) und \\(f''(1)\\) und prüfe anschließend, ob \\(f'\\) das Vorzeichen wechselt.",
+        loesungsweg: "Es ist \\(f(x) = (x-1)^3\\), also \\(f'(x) = 3(x-1)^2\\) und \\(f''(x) = 6(x-1)\\); beide verschwinden bei \\(x = 1\\). Da \\(f'(x) = 3(x-1)^2 \\geq 0\\) ist, wechselt \\(f'\\) das Vorzeichen <b>nicht</b> – es gibt kein Extremum. \\(f''\\) wechselt aber das Vorzeichen: Wendepunkt mit waagerechter Tangente, also ein Sattelpunkt."
       },
       {
         id: 28,
         level: 5,
         typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = 2x^3 - 9x^2 + 12x - 4\\). Bestimme die Differenz der \\(y\\)-Werte von Hoch- und Tiefpunkt.",
-        loesung: 1,
+        frage: "Der Wasserstand eines Beckens wird für \\(0 \\leq t \\leq 6\\) (in Stunden) durch \\(h(t) = t^3 - 9t^2 + 24t\\) beschrieben (\\(h\\) in cm). Zu welchem Zeitpunkt \\(t\\) ist der Wasserstand am höchsten?",
+        loesung: 6,
         toleranz: 0,
-        tipp: "\\(f'(x) = 6x^2 - 18x + 12 = 6(x-1)(x-2)\\). Berechne \\(f(1)\\) und \\(f(2)\\).",
-        loesungsweg: "\\(f'(x) = 6(x-1)(x-2) = 0 \\Rightarrow x_1=1, x_2=2\\). \\(f''(x)=12x-18\\). \\(f''(1)=-6<0\\) (HP), \\(f''(2)=6>0\\) (TP). \\(f(1) = 2-9+12-4 = 1\\), \\(f(2) = 16-36+24-4 = 0\\). Differenz: \\(1-0=1\\)."
+        tipp: "Im abgeschlossenen Intervall können auch die Ränder das Maximum liefern – vergleiche alle in Frage kommenden Werte.",
+        loesungsweg: "$$h'(t) = 3t^2 - 18t + 24 = 3(t-2)(t-4)$$ Innere Kandidaten: \\(t = 2\\) (Hochpunkt, \\(h(2) = 8 - 36 + 48 = 20\\)) und \\(t = 4\\) (Tiefpunkt, \\(h(4) = 64 - 144 + 96 = 16\\)). Ränder: \\(h(0) = 0\\) und \\(h(6) = 216 - 324 + 144 = 36\\). Der größte dieser Werte ist \\(36\\) – das Maximum liegt am <b>rechten Rand</b> bei \\(t = 6\\), nicht im lokalen Hochpunkt."
       },
       {
         id: 29,
-        level: 5,
-        typ: "mc",
-        frage: "Gegeben ist \\(f(x) = x^3 - 3x^2 + 3x - 1\\). Welche besondere Eigenschaft hat \\(f\\) bei \\(x = 1\\)?",
-        optionen: [
-          "Hochpunkt",
-          "Tiefpunkt",
-          "Sattelpunkt (Terrassenpunkt)",
-          "Wendepunkt ohne Satteleigenschaft"
-        ],
-        korrekt: 2,
-        tipp: "Berechne \\(f'(1)\\), \\(f''(1)\\) und \\(f'''(1)\\). Was fällt auf?",
-        loesungsweg: "\\(f(x) = (x-1)^3\\). \\(f'(x) = 3(x-1)^2\\), \\(f'(1) = 0\\). \\(f''(x) = 6(x-1)\\), \\(f''(1) = 0\\). Kein VZW von \\(f'\\) bei \\(x=1\\) \\(\\Rightarrow\\) kein Extremum. Es ist ein Sattelpunkt (Terrassenpunkt)."
-      },
-      {
-        id: 30,
         level: 5,
         typ: "numerisch",
         frage: "Gegeben ist \\(f(x) = x^4 - 4x^3 + 6x^2 - 4x\\). Bestimme die Anzahl der lokalen Extremstellen.",
         loesung: 1,
         toleranz: 0,
-        tipp: "\\(f'(x) = 4x^3 - 12x^2 + 12x - 4 = 4(x-1)^3\\). Wie viele Nullstellen mit VZW hat \\(f'\\)?",
-        loesungsweg: "\\(f'(x) = 4(x-1)^3 = 0 \\Rightarrow x = 1\\) (dreifach). Da \\(f'\\) eine ungerade Potenz hat, wechselt \\(f'\\) das Vorzeichen bei \\(x=1\\). \\(f'(0) = -4 < 0\\), \\(f'(2) = 4 > 0\\) \\(\\Rightarrow\\) Tiefpunkt bei \\(x = 1\\). Also 1 Extremstelle."
+        tipp: "Die Ableitung lässt sich als vollständige Potenz schreiben. Entscheidend ist dann der Vorzeichenwechsel.",
+        loesungsweg: "$$f'(x) = 4x^3 - 12x^2 + 12x - 4 = 4(x-1)^3$$ Einzige Nullstelle: \\(x = 1\\) (dreifach). Weil der Exponent ungerade ist, wechselt \\(f'\\) dort das Vorzeichen: \\(f'(0) = -4 < 0\\), \\(f'(2) = 4 > 0\\) – also ein Tiefpunkt. Antwort: <b>1</b> Extremstelle (das Kriterium mit \\(f''\\) versagt hier, denn \\(f''(1) = 0\\))."
+      },
+      {
+        id: 30,
+        level: 5,
+        typ: "numerisch",
+        frage: "Für welchen Wert \\(a > 0\\) besitzt \\(f(x) = x^3 + ax^2 + 3x\\) genau eine Stelle mit waagerechter Tangente, aber keinen Extrempunkt?",
+        loesung: 3,
+        toleranz: 0,
+        tipp: "Untersuche, wann die quadratische Gleichung \\(f'(x) = 0\\) genau eine (doppelte) Lösung hat.",
+        loesungsweg: "$$f'(x) = 3x^2 + 2ax + 3$$ Genau eine Lösung hat \\(f'(x) = 0\\), wenn der Ausdruck unter der Wurzel verschwindet: $$(2a)^2 - 4 \\cdot 3 \\cdot 3 = 4a^2 - 36 = 0 \\Rightarrow a^2 = 9 \\Rightarrow a = 3 \\;(a > 0)$$ Bei einer doppelten Nullstelle von \\(f'\\) findet kein Vorzeichenwechsel statt – es entsteht ein Sattelpunkt, kein Extrempunkt."
       },
 
       // ═══════════════════════════════════════════════════════════
-      // LEVEL 6 — Experte (IDs 31–36)
-      // Vollständige Kurvendiskussion ganzrationaler Funktionen Grad 4, Anwendung
+      // LEVEL 6 — Parameterfälle, Term aus Eigenschaften, Beurteilung
       // ═══════════════════════════════════════════════════════════
 
       {
         id: 31,
         level: 6,
-        typ: "numerisch",
-        frage: "Vollständige Kurvendiskussion von \\(f(x) = x^4 - 4x^2 + 3\\). Bestimme die Anzahl der Nullstellen von \\(f\\).",
-        loesung: 4,
-        toleranz: 0,
-        tipp: "Substituiere \\(u = x^2\\): \\(u^2 - 4u + 3 = 0\\). Welche \\(u\\)-Werte ergeben sich?",
-        loesungsweg: "Substitution \\(u = x^2\\): \\(u^2 - 4u + 3 = (u-1)(u-3) = 0 \\Rightarrow u_1 = 1,\\; u_2 = 3\\). Rücksubstitution: \\(x^2 = 1 \\Rightarrow x = \\pm 1\\) und \\(x^2 = 3 \\Rightarrow x = \\pm\\sqrt{3}\\). Also 4 Nullstellen: \\(x_{1,2} = \\pm 1,\\; x_{3,4} = \\pm\\sqrt{3}\\)."
+        typ: "mc",
+        frage: "Für welche Werte von \\(c\\) hat \\(f(x) = x^3 - 3x + c\\) genau <b>drei</b> verschiedene Nullstellen?",
+        optionen: [
+          "\\(-2 < c < 2\\)",
+          "\\(c > 2\\)",
+          "\\(c < -2\\)",
+          "für jedes \\(c\\)"
+        ],
+        korrekt: 0,
+        tipp: "Bestimme Hoch- und Tiefpunkt in Abhängigkeit von \\(c\\) und überlege, wie ihre \\(y\\)-Werte zur Anzahl der Nullstellen passen.",
+        loesungsweg: "$$f'(x) = 3x^2 - 3 = 0 \\Rightarrow x = \\pm 1$$ Hochpunkt bei \\(x = -1\\) mit \\(f(-1) = 2 + c\\), Tiefpunkt bei \\(x = 1\\) mit \\(f(1) = -2 + c\\). Drei verschiedene Nullstellen gibt es genau dann, wenn der Graph die \\(x\\)-Achse zwischen den Extrempunkten dreimal kreuzt, also wenn $$2 + c > 0 \\;\\text{und}\\; -2 + c < 0 \\Rightarrow -2 < c < 2$$ Für \\(c = \\pm 2\\) berührt der Graph die Achse (zwei verschiedene Nullstellen), außerhalb bleibt nur eine."
       },
       {
         id: 32,
         level: 6,
-        typ: "mc",
-        frage: "Vollständige Kurvendiskussion von \\(f(x) = x^4 - 4x^2 + 3\\). Welche Symmetrieeigenschaft hat \\(f\\) und wie verhält sich \\(f\\) für \\(x \\to \\pm\\infty\\)?",
-        optionen: [
-          "Punktsymmetrisch zum Ursprung; \\(f(x) \\to -\\infty\\)",
-          "Achsensymmetrisch zur \\(y\\)-Achse; \\(f(x) \\to +\\infty\\)",
-          "Achsensymmetrisch zur \\(y\\)-Achse; \\(f(x) \\to -\\infty\\)",
-          "Keine Symmetrie; \\(f(x) \\to +\\infty\\)"
-        ],
-        korrekt: 1,
-        tipp: "Alle Exponenten in \\(f(x) = x^4 - 4x^2 + 3\\) sind gerade. Grad 4, Leitkoeffizient \\(+1\\).",
-        loesungsweg: "\\(f(-x) = (-x)^4 - 4(-x)^2 + 3 = x^4 - 4x^2 + 3 = f(x)\\) — achsensymmetrisch zur \\(y\\)-Achse. Grad 4 (gerade) mit Leitkoeffizient \\(+1 > 0\\): \\(f(x) \\to +\\infty\\) für \\(x \\to \\pm\\infty\\)."
+        typ: "numerisch",
+        frage: "Der Graph von \\(f(x) = x^3 + ax^2 + bx + c\\) hat bei \\(x = 3\\) einen Wendepunkt und an der Stelle \\(0\\) eine waagerechte Tangente. Bestimme \\(a\\).",
+        loesung: -9,
+        toleranz: 0,
+        tipp: "Übersetze beide Angaben in Bedingungen an \\(f'\\) bzw. \\(f''\\).",
+        loesungsweg: "Mit \\(f'(x) = 3x^2 + 2ax + b\\) und \\(f''(x) = 6x + 2a\\): Aus der waagerechten Tangente bei \\(0\\) folgt \\(f'(0) = b = 0\\). Aus dem Wendepunkt bei \\(3\\) folgt $$f''(3) = 18 + 2a = 0 \\Rightarrow a = -9$$ (Der Wert von \\(c\\) bleibt frei – er verschiebt den Graphen nur senkrecht.)"
       },
       {
         id: 33,
         level: 6,
-        typ: "numerisch",
-        frage: "Vollständige Kurvendiskussion von \\(f(x) = x^4 - 4x^2 + 3\\). Bestimme die Anzahl der lokalen Extremstellen.",
-        loesung: 3,
-        toleranz: 0,
-        tipp: "\\(f'(x) = 4x^3 - 8x = 4x(x^2 - 2)\\). Wie viele reelle Nullstellen hat \\(f'\\)?",
-        loesungsweg: "\\(f'(x) = 4x^3 - 8x = 4x(x^2 - 2) = 0 \\Rightarrow x_1 = 0,\\; x_{2,3} = \\pm\\sqrt{2}\\). \\(f''(x) = 12x^2 - 8\\). \\(f''(0) = -8 < 0\\) (Hochpunkt), \\(f''(\\pm\\sqrt{2}) = 24-8 = 16 > 0\\) (Tiefpunkte). Also 3 Extremstellen."
+        typ: "mc",
+        frage: "Welche Aussage trifft auf <b>jede</b> ganzrationale Funktion dritten Grades zu?",
+        optionen: [
+          "Sie hat mindestens eine Nullstelle",
+          "Sie hat genau drei Nullstellen",
+          "Sie hat zwei Extrempunkte",
+          "Ihr Graph ist punktsymmetrisch zum Koordinatenursprung"
+        ],
+        korrekt: 0,
+        tipp: "Denke an das Verhalten für \\(x \\to +\\infty\\) und \\(x \\to -\\infty\\) – und prüfe die übrigen Aussagen an \\(f(x) = x^3\\) und \\(f(x) = x^3 + x + 1\\).",
+        loesungsweg: "Für ungeraden Grad streben die Funktionswerte an den Enden in entgegengesetzte Richtungen; da der Graph zusammenhängend ist, muss er die \\(x\\)-Achse mindestens einmal kreuzen. Gegenbeispiele zu den übrigen Aussagen: \\(x^3\\) hat nur eine Nullstelle und keinen Extrempunkt; \\(x^3 + x + 1\\) ist nicht punktsymmetrisch zum Ursprung. (Punktsymmetrisch ist jeder solche Graph nur bezüglich seines eigenen Wendepunkts.)"
       },
       {
         id: 34,
         level: 6,
         typ: "numerisch",
-        frage: "Vollständige Kurvendiskussion von \\(f(x) = x^4 - 4x^2 + 3\\). Berechne den \\(y\\)-Wert des Hochpunkts.",
-        loesung: 3,
+        frage: "Bestimme die Steigung der Wendetangente von \\(f(x) = x^3 - 6x^2 + 9x\\).",
+        loesung: -3,
         toleranz: 0,
-        tipp: "Der Hochpunkt liegt bei \\(x = 0\\). Setze in \\(f(x)\\) ein.",
-        loesungsweg: "Hochpunkt bei \\(x = 0\\): \\(f(0) = 0 - 0 + 3 = 3\\). Der Hochpunkt ist \\((0 \\mid 3)\\). Die Tiefpunkte liegen bei \\(f(\\pm\\sqrt{2}) = 4 - 8 + 3 = -1\\), also \\((\\pm\\sqrt{2} \\mid -1)\\)."
+        tipp: "Die Wendetangente ist die Tangente im Wendepunkt – ihre Steigung ist der Wert von \\(f'\\) an der Wendestelle.",
+        loesungsweg: "$$f''(x) = 6x - 12 = 0 \\Rightarrow x = 2$$ Wegen \\(f'''(x) = 6 \\neq 0\\) liegt dort tatsächlich ein Wendepunkt. Steigung: $$f'(2) = 3 \\cdot 4 - 12 \\cdot 2 + 9 = 12 - 24 + 9 = -3$$"
       },
       {
         id: 35,
         level: 6,
         typ: "numerisch",
-        frage: "Eine Produktionsfunktion beschreibt den Gewinn (in Tsd. €): \\(G(x) = -x^4 + 8x^2 - 7\\) für \\(x \\in [0, 3]\\) (\\(x\\) in Tsd. Stück). Bestimme die Produktionsmenge \\(x\\) (in Tsd. Stück), bei der der Gewinn maximal ist.",
+        frage: "Der Gewinn eines Betriebes beträgt \\(G(x) = -x^4 + 8x^2 - 7\\) (in Tsd. €) bei einer Produktionsmenge \\(x \\in [0; 3]\\) (in Tsd. Stück). Bei welcher Produktionsmenge ist der Gewinn am größten?",
         loesung: 2,
         toleranz: 0,
-        tipp: "\\(G'(x) = -4x^3 + 16x = -4x(x^2 - 4)\\). Setze \\(G'(x) = 0\\) und prüfe welche Lösung im Intervall \\([0,3]\\) ein Maximum liefert.",
-        loesungsweg: "\\(G'(x) = -4x^3 + 16x = -4x(x^2 - 4) = 0 \\Rightarrow x = 0\\) oder \\(x = \\pm 2\\). Im Intervall \\([0,3]\\) kommt \\(x = 2\\) in Frage. \\(G''(x) = -12x^2 + 16\\). \\(G''(2) = -48 + 16 = -32 < 0 \\Rightarrow\\) Maximum. \\(G(2) = -16 + 32 - 7 = 9\\) Tsd. €. Maximaler Gewinn bei \\(x = 2\\) Tsd. Stück."
+        tipp: "Neben den inneren Kandidaten müssen auch die beiden Intervallränder geprüft werden.",
+        loesungsweg: "$$G'(x) = -4x^3 + 16x = -4x(x-2)(x+2)$$ Im Intervall liegen \\(x = 0\\) und \\(x = 2\\). Mit \\(G''(x) = -12x^2 + 16\\) ist \\(G''(2) = -32 < 0\\): Hochpunkt. Vergleich aller Kandidaten: \\(G(0) = -7\\), \\(G(2) = -16 + 32 - 7 = 9\\), Rand \\(G(3) = -81 + 72 - 7 = -16\\). Der größte Gewinn von \\(9\\) Tsd. € wird bei \\(x = 2\\) Tsd. Stück erzielt."
       },
       {
         id: 36,
         level: 6,
-        typ: "mc",
-        frage: "Vollständige Kurvendiskussion von \\(f(x) = x^4 - 4x^2 + 3\\). Welche Aussage über die Wendepunkte ist korrekt?",
-        optionen: [
-          "\\(f\\) hat keine Wendepunkte",
-          "\\(f\\) hat genau einen Wendepunkt bei \\(x = 0\\)",
-          "\\(f\\) hat zwei Wendepunkte; ihre \\(x\\)-Koordinaten erfüllen \\(x^2 = \\frac{2}{3}\\)",
-          "\\(f\\) hat drei Wendepunkte bei \\(x = 0,\\; \\pm 1\\)"
-        ],
-        korrekt: 2,
-        tipp: "\\(f''(x) = 12x^2 - 8 = 0\\). Wie viele reelle Lösungen hat diese Gleichung?",
-        loesungsweg: "\\(f''(x) = 12x^2 - 8 = 0 \\Rightarrow x^2 = \\frac{2}{3} \\Rightarrow x = \\pm\\sqrt{\\frac{2}{3}} \\approx \\pm 0{,}82\\). \\(f'''(x) = 24x \\neq 0\\) an beiden Stellen \\(\\Rightarrow\\) Vorzeichenwechsel von \\(f''\\) liegt vor. Also genau 2 Wendepunkte. Der \\(y\\)-Wert ist \\(f\\!\\left(\\sqrt{\\frac{2}{3}}\\right) = \\frac{4}{9} - \\frac{8}{3} + 3 = \\frac{7}{9}\\)."
+        typ: "numerisch",
+        frage: "Wie viele gemeinsame Punkte haben der Graph von \\(f(x) = x^4 - 4x^2 + 3\\) und die Gerade \\(y = 3\\)?",
+        loesung: 3,
+        toleranz: 0,
+        tipp: "Gleichsetzen und die entstehende Gleichung vollständig faktorisieren.",
+        loesungsweg: "Gleichsetzen: $$x^4 - 4x^2 + 3 = 3 \\Rightarrow x^4 - 4x^2 = 0 \\Rightarrow x^2(x^2 - 4) = 0$$ Lösungen: \\(x = 0\\) (doppelt) sowie \\(x = 2\\) und \\(x = -2\\). Das sind <b>3</b> verschiedene Stellen und damit drei gemeinsame Punkte: \\((0 \\mid 3)\\), \\((2 \\mid 3)\\), \\((-2 \\mid 3)\\). Bei \\(x = 0\\) berührt der Graph die Gerade nur (Hochpunkt von \\(f\\))."
       }
+
 
     ];
     </script>

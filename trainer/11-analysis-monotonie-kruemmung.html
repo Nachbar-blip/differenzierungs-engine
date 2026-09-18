@@ -247,63 +247,63 @@
       },
 
       // ═══════════════════════════════════════════════════════════
-      // LEVEL 4 — mittel: Monotonietabelle, Links-/Rechtskrümmung aus f''
+      // LEVEL 4 — Ableitung selbst bilden, Rückschluss aus f', Sachkontext
       // ═══════════════════════════════════════════════════════════
 
       {
         id: 19, level: 4, typ: "mc",
-        frage: "Gegeben: \\(f(x) = x^4 - 4x^3\\). Die Ableitung ist \\(f'(x) = 4x^3 - 12x^2 = 4x^2(x-3)\\). Welches Monotonieverhalten hat \\(f\\)?",
+        frage: "Auf welchem Intervall ist \\(f(x) = x^3 - 3x^2\\) streng monoton fallend?",
         optionen: [
-          "Fallend auf \\((-\\infty, 3)\\), steigend auf \\((3, \\infty)\\)",
-          "Steigend auf \\((-\\infty, 0)\\), fallend auf \\((0, 3)\\), steigend auf \\((3, \\infty)\\)",
-          "Fallend auf \\((-\\infty, 0)\\), steigend auf \\((0, \\infty)\\)",
-          "Steigend auf \\((-\\infty, 0) \\cup (3, \\infty)\\), fallend auf \\((0, 3)\\)"
+          "\\((0;\\, 2)\\)",
+          "\\((-\\infty;\\, 0)\\)",
+          "\\((2;\\, \\infty)\\)",
+          "\\((-\\infty;\\, 0)\\) und \\((2;\\, \\infty)\\)"
         ],
         korrekt: 0,
-        tipp: "Beachte: \\(4x^2 \\geq 0\\) für alle \\(x\\). Das Vorzeichen hängt nur von \\((x-3)\\) ab.",
-        loesungsweg: "\\(f'(x) = 4x^2(x-3)\\). Da \\(4x^2 \\geq 0\\), bestimmt \\((x-3)\\) das Vorzeichen. Für \\(x < 3\\): \\(f'(x) \\leq 0\\) (fallend). Für \\(x > 3\\): \\(f'(x) > 0\\) (steigend). Bei \\(x = 0\\) ist \\(f'=0\\), aber kein Vorzeichenwechsel — kein Extrempunkt!"
+        tipp: "Bestimme die Ableitung, faktorisiere sie und untersuche ihr Vorzeichen.",
+        loesungsweg: "$$f'(x) = 3x^2 - 6x = 3x(x-2)$$ Das Produkt ist negativ, wenn genau ein Faktor negativ ist – also für \\(0 < x < 2\\). Außerhalb ist \\(f'(x) > 0\\), dort steigt \\(f\\) streng monoton."
       },
       {
         id: 20, level: 4, typ: "mc",
-        frage: "Gegeben: \\(f(x) = x^3 - 6x^2 + 12x - 5\\). Es gilt \\(f''(x) = 6x - 12\\). Welche Krümmung hat der Graph?",
+        frage: "Der Graph der Ableitungsfunktion \\(f'\\) verläuft für \\(x < 2\\) unterhalb und für \\(x > 2\\) oberhalb der \\(x\\)-Achse. Was folgt daraus für \\(f\\)?",
         optionen: [
-          "Rechtsgekrümmt auf \\((-\\infty, 2)\\), linksgekrümmt auf \\((2, \\infty)\\)",
-          "Linksgekrümmt auf \\((-\\infty, 2)\\), rechtsgekrümmt auf \\((2, \\infty)\\)",
-          "Überall linksgekrümmt",
-          "Überall rechtsgekrümmt"
+          "\\(f\\) fällt bis \\(x = 2\\) und steigt danach; bei \\(x = 2\\) liegt ein Tiefpunkt",
+          "\\(f\\) steigt bis \\(x = 2\\) und fällt danach; bei \\(x = 2\\) liegt ein Hochpunkt",
+          "\\(f\\) hat bei \\(x = 2\\) einen Wendepunkt",
+          "\\(f\\) ist auf ganz \\(\\mathbb{R}\\) streng monoton steigend"
         ],
         korrekt: 0,
-        tipp: "Setze \\(f''(x) = 0\\) und prüfe das Vorzeichen links und rechts der Nullstelle.",
-        loesungsweg: "\\(f''(x) = 6x - 12 = 0 \\Rightarrow x = 2\\). Für \\(x < 2\\): \\(f''(x) < 0\\) → rechtsgekrümmt. Für \\(x > 2\\): \\(f''(x) > 0\\) → linksgekrümmt."
+        tipp: "Das Vorzeichen von \\(f'\\) entscheidet über das Steigen und Fallen von \\(f\\).",
+        loesungsweg: "Unterhalb der Achse heißt \\(f'(x) < 0\\) – dort fällt \\(f\\); oberhalb heißt \\(f'(x) > 0\\) – dort steigt \\(f\\). An der Stelle \\(2\\) wechselt \\(f'\\) von \\(-\\) nach \\(+\\): ein Tiefpunkt. Ein Wendepunkt von \\(f\\) läge dort, wo \\(f'\\) selbst einen Extrempunkt hat."
       },
       {
         id: 21, level: 4, typ: "numerisch",
-        frage: "Gegeben: \\(f(x) = x^4 - 8x^2\\). Berechne \\(f''(x)\\) und bestimme, bei welchem positiven \\(x\\)-Wert ein Wendepunkt liegt (gerundet auf zwei Dezimalen).",
+        frage: "Gegeben ist \\(f(x) = \\frac{1}{4}x^4 - 2x^2 + 1\\). An welcher positiven Stelle hat der Graph einen Wendepunkt? Runde auf zwei Dezimalstellen.",
         loesung: 1.15,
         toleranz: 0.02,
-        tipp: "\\(f''(x) = 12x^2 - 16\\). Setze \\(f''(x) = 0\\).",
-        loesungsweg: "\\(f'(x) = 4x^3 - 16x\\), \\(f''(x) = 12x^2 - 16 = 0 \\Rightarrow x^2 = \\frac{4}{3} \\Rightarrow x = \\pm\\frac{2}{\\sqrt{3}} \\approx \\pm 1{,}15\\). Der positive Wendepunkt liegt bei \\(x \\approx 1{,}15\\)."
+        tipp: "Die Wendestellen findest du über die zweite Ableitung.",
+        loesungsweg: "\\(f'(x) = x^3 - 4x\\), \\(f''(x) = 3x^2 - 4 = 0 \\Rightarrow x^2 = \\frac{4}{3}\\), also $$x = \\frac{2}{\\sqrt{3}} \\approx 1{,}15$$ Wegen \\(f'''(x) = 6x \\neq 0\\) an dieser Stelle liegt dort tatsächlich ein Wendepunkt."
       },
       {
         id: 22, level: 4, typ: "mc",
-        frage: "Gegeben: \\(f'(x) = (x+1)(x-2)^2\\). Vervollständige die Monotonietabelle. Wo ist \\(f\\) streng monoton steigend?",
+        frage: "Ein Baumbestand nimmt weiter zu, aber die jährliche Zunahme wird von Jahr zu Jahr kleiner. Wie verläuft der Graph der Bestandsfunktion?",
         optionen: [
-          "\\((-\\infty, \\infty)\\) (überall steigend)",
-          "\\((-\\infty, -1)\\)",
-          "\\((-1, 2)\\) und \\((2, \\infty)\\)",
-          "\\((-\\infty, -1) \\cup (2, \\infty)\\)"
+          "steigend und rechtsgekrümmt",
+          "steigend und linksgekrümmt",
+          "fallend und rechtsgekrümmt",
+          "fallend und linksgekrümmt"
         ],
-        korrekt: 2,
-        tipp: "Beachte: \\((x-2)^2 \\geq 0\\) immer. Das Vorzeichen hängt von \\((x+1)\\) ab.",
-        loesungsweg: "\\(f'(x) = (x+1)(x-2)^2\\). Da \\((x-2)^2 \\geq 0\\), bestimmt \\((x+1)\\) das Vorzeichen. Für \\(x > -1\\): \\(f'(x) \\geq 0\\), also steigend auf \\((-1, 2)\\) und \\((2, \\infty)\\). Für \\(x < -1\\): \\(f'(x) < 0\\), also fallend."
+        korrekt: 0,
+        tipp: "Übersetze beide Angaben getrennt: „nimmt zu\" betrifft \\(f'\\), „Zunahme wird kleiner\" betrifft \\(f''\\).",
+        loesungsweg: "Der Bestand wächst: \\(f'(x) > 0\\) – der Graph steigt. Die Zunahme wird kleiner: \\(f'\\) fällt, also \\(f''(x) < 0\\) – der Graph ist rechtsgekrümmt. Ein steigender, linksgekrümmter Verlauf gehörte zu einer immer schneller wachsenden Größe."
       },
       {
         id: 23, level: 4, typ: "numerisch",
-        frage: "Gegeben: \\(f(x) = \\frac{1}{4}x^4 - 2x^2 + 1\\). An welcher positiven Stelle \\(x\\) hat \\(f\\) einen Wendepunkt? (Gerundet auf 2 Dezimalen.)",
-        loesung: 1.15,
-        toleranz: 0.02,
-        tipp: "Berechne \\(f''(x) = 3x^2 - 4\\) und löse \\(f''(x) = 0\\).",
-        loesungsweg: "\\(f'(x) = x^3 - 4x\\), \\(f''(x) = 3x^2 - 4 = 0 \\Rightarrow x^2 = \\frac{4}{3} \\Rightarrow x = \\frac{2\\sqrt{3}}{3} \\approx 1{,}15\\)."
+        frage: "An welcher Stelle ist die Steigung des Graphen von \\(f(x) = x^3 - 3x^2\\) am kleinsten?",
+        loesung: 1,
+        toleranz: 0,
+        tipp: "Gesucht ist die Minimalstelle von \\(f'\\) – also ist \\(f'\\) selbst zu untersuchen.",
+        loesungsweg: "Die Steigung wird durch \\(f'(x) = 3x^2 - 6x\\) beschrieben; als nach oben geöffnete Parabel hat sie ihr Minimum, wo ihre Ableitung null ist: $$f''(x) = 6x - 6 = 0 \\Rightarrow x = 1$$ Dort beträgt die Steigung \\(f'(1) = -3\\). Das ist zugleich die Wendestelle von \\(f\\)."
       },
       {
         id: 24, level: 4, typ: "mc",
@@ -315,76 +315,66 @@
           "Überall rechtsgekrümmt"
         ],
         korrekt: 0,
-        tipp: "\\(f''(x) = 0\\) bei \\(x = 2\\). Prüfe das Vorzeichen links und rechts davon.",
-        loesungsweg: "\\(f''(x) = -6x + 12 = 0 \\Rightarrow x = 2\\). Für \\(x < 2\\): \\(f''(x) > 0\\) → linksgekrümmt. Für \\(x > 2\\): \\(f''(x) < 0\\) → rechtsgekrümmt."
+        tipp: "Bestimme die Nullstelle von \\(f''\\) und prüfe das Vorzeichen links und rechts davon.",
+        loesungsweg: "\\(f''(x) = -6x + 12 = 0 \\Rightarrow x = 2\\). Für \\(x < 2\\) ist \\(f''(x) > 0\\) (linksgekrümmt), für \\(x > 2\\) ist \\(f''(x) < 0\\) (rechtsgekrümmt). Bei \\(x = 2\\) liegt der Wendepunkt."
       },
 
       // ═══════════════════════════════════════════════════════════
-      // LEVEL 5 — anspruchsvoll: Parameteraufgaben, Monotonie auf Intervallen
+      // LEVEL 5 — Parameterbedingungen, Sachkontext, Fehlersuche
       // ═══════════════════════════════════════════════════════════
 
       {
-        id: 25, level: 5, typ: "numerisch",
-        frage: "Gegeben: \\(f(x) = x^4 - 8x^2 + 7\\). Bestimme die Anzahl der Wendepunkte von \\(f\\).",
-        loesung: 2,
-        toleranz: 0,
-        tipp: "Berechne \\(f''(x)\\) und bestimme, wie viele Nullstellen mit Vorzeichenwechsel es gibt.",
-        loesungsweg: "\\(f'(x) = 4x^3 - 16x\\), \\(f''(x) = 12x^2 - 16\\). Nullstellen: \\(12x^2 = 16 \\Rightarrow x^2 = \\frac{4}{3} \\Rightarrow x = \\pm\\frac{2}{\\sqrt{3}}\\). Bei beiden wechselt \\(f''\\) das Vorzeichen → 2 Wendepunkte."
-      },
-      {
-        id: 26, level: 5, typ: "mc",
-        frage: "Gegeben: \\(f(x) = x^4 - 4x^3 + 4x^2\\). Auf welchen Intervallen ist \\(f\\) streng monoton steigend?",
+        id: 25, level: 5, typ: "mc",
+        frage: "Für welche Werte von \\(a\\) ist \\(f(x) = x^3 + ax^2 + 3x\\) auf ganz \\(\\mathbb{R}\\) monoton steigend?",
         optionen: [
-          "\\((0, 1) \\cup (2, \\infty)\\)",
-          "\\((-\\infty, 0) \\cup (1, 2)\\)",
-          "\\((0, \\infty)\\)",
-          "\\((1, \\infty)\\)"
+          "\\(-3 \\leq a \\leq 3\\)",
+          "\\(a \\geq 3\\)",
+          "\\(a \\leq -3\\)",
+          "für jedes \\(a\\)"
         ],
         korrekt: 0,
-        tipp: "\\(f'(x) = 4x^3 - 12x^2 + 8x = 4x(x-1)(x-2)\\). Erstelle eine Vorzeichentabelle.",
-        loesungsweg: "\\(f'(x) = 4x(x-1)(x-2)\\). Nullstellen: \\(x = 0, 1, 2\\). Vorzeichentabelle: Für \\(x < 0\\): (−)(−)(−) = − (fallend). Für \\(0 < x < 1\\): (+)(−)(−) = + (steigend). Für \\(1 < x < 2\\): (+)(+)(−) = − (fallend). Für \\(x > 2\\): (+)(+)(+) = + (steigend). Also steigt \\(f\\) auf \\((0,1) \\cup (2, \\infty)\\)."
+        tipp: "Die Ableitung darf nirgends negativ werden – untersuche, wann die quadratische Funktion \\(f'\\) keine zwei Nullstellen hat.",
+        loesungsweg: "$$f'(x) = 3x^2 + 2ax + 3$$ Als nach oben geöffnete Parabel ist \\(f'\\) genau dann nirgends negativ, wenn sie höchstens eine Nullstelle hat: $$(2a)^2 - 4 \\cdot 3 \\cdot 3 \\leq 0 \\Rightarrow 4a^2 \\leq 36 \\Rightarrow -3 \\leq a \\leq 3$$ Für \\(a = \\pm 3\\) berührt \\(f'\\) die Achse – dort entsteht ein Sattelpunkt, die Monotonie bleibt erhalten."
+      },
+      {
+        id: 26, level: 5, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = x^3 - 3x^2 + 2\\). Wie lang ist das Intervall, auf dem \\(f\\) streng monoton fällt?",
+        loesung: 2,
+        toleranz: 0,
+        tipp: "Bestimme die Grenzen des Intervalls über das Vorzeichen der Ableitung.",
+        loesungsweg: "$$f'(x) = 3x^2 - 6x = 3x(x-2) < 0 \\;\\Longleftrightarrow\\; 0 < x < 2$$ Das Monotonieintervall ist \\((0;\\,2)\\), seine Länge beträgt \\(2 - 0 = 2\\)."
       },
       {
         id: 27, level: 5, typ: "numerisch",
-        frage: "Gegeben: \\(f(x) = x^3 - 12x + 5\\). Bestimme die Länge des Intervalls, auf dem \\(f\\) streng monoton fallend ist.",
+        frage: "Ein Becken füllt sich; die Wassermenge beträgt \\(V(t) = t^3 - 12t^2 + 45t\\) (in Litern, \\(t\\) in Minuten, \\(0 \\leq t \\leq 6\\)). Bis zu welchem Zeitpunkt \\(t\\) nimmt die Zuflussgeschwindigkeit ab?",
         loesung: 4,
         toleranz: 0,
-        tipp: "\\(f'(x) = 3x^2 - 12 = 3(x^2 - 4) = 3(x-2)(x+2)\\). Auf welchem Intervall ist \\(f' < 0\\)?",
-        loesungsweg: "\\(f'(x) = 3(x-2)(x+2) < 0\\) für \\(x \\in (-2, 2)\\). Die Länge des Intervalls beträgt \\(2 - (-2) = 4\\)."
+        tipp: "Die Zuflussgeschwindigkeit ist \\(V'\\). Wann fällt diese Funktion?",
+        loesungsweg: "Zuflussgeschwindigkeit: \\(V'(t) = 3t^2 - 24t + 45\\). Sie fällt dort, wo ihre eigene Ableitung negativ ist: $$V''(t) = 6t - 24 < 0 \\;\\Longleftrightarrow\\; t < 4$$ Bis zur Minute \\(4\\) nimmt der Zufluss also ab (von \\(45\\) auf \\(V'(4) = -3\\) Liter pro Minute), danach wieder zu. Bei \\(t = 4\\) liegt die Wendestelle von \\(V\\)."
       },
       {
         id: 28, level: 5, typ: "mc",
-        frage: "Gegeben: \\(f(x) = x^5 - 5x^3\\). Auf welchem Intervall ist \\(f\\) streng monoton fallend?",
-        optionen: [
-          "\\((-\\sqrt{3},\\, 0) \\cup (0,\\, \\sqrt{3})\\), also \\((-\\sqrt{3},\\, \\sqrt{3})\\)",
-          "\\((-\\infty, -\\sqrt{3}) \\cup (\\sqrt{3}, \\infty)\\)",
-          "\\((-3, 3)\\)",
-          "\\((-\\infty, 0)\\)"
-        ],
-        korrekt: 0,
-        tipp: "\\(f'(x) = 5x^4 - 15x^2 = 5x^2(x^2 - 3)\\). Bestimme das Vorzeichen.",
-        loesungsweg: "\\(f'(x) = 5x^4 - 15x^2 = 5x^2(x^2 - 3)\\). Da \\(5x^2 \\geq 0\\), bestimmt \\((x^2 - 3)\\) das Vorzeichen. \\(x^2 - 3 < 0\\) für \\(-\\sqrt{3} < x < \\sqrt{3}\\). Also fällt \\(f\\) auf \\((-\\sqrt{3},\\, \\sqrt{3})\\) (bei \\(x=0\\) gilt \\(f'=0\\), aber kein Vorzeichenwechsel)."
+        frage: "Ein Schüler untersucht eine Funktion mit \\(f'(x) = (x-3)^2\\):<br>Schritt 1: \\(f'(x) \\geq 0\\) für alle \\(x\\)<br>Schritt 2: \\(f'(3) = 0\\)<br>Schritt 3: Also hat \\(f\\) bei \\(x = 3\\) einen Extrempunkt.<br>Welcher Schritt ist der erste fehlerhafte?",
+        optionen: ["Schritt 1", "Schritt 2", "Schritt 3", "Kein Schritt ist fehlerhaft"],
+        korrekt: 2,
+        tipp: "Reicht \\(f'(x_0) = 0\\) für einen Extrempunkt aus, oder muss noch etwas hinzukommen?",
+        loesungsweg: "Die Schritte 1 und 2 stimmen. Falsch ist Schritt 3: Für einen Extrempunkt muss \\(f'\\) das Vorzeichen wechseln. Hier ist \\(f'(x) = (x-3)^2 \\geq 0\\) auf beiden Seiten positiv – \\(f\\) steigt durchgehend, bei \\(x = 3\\) liegt lediglich ein Sattelpunkt mit waagerechter Tangente."
       },
       {
         id: 29, level: 5, typ: "numerisch",
-        frage: "Gegeben: \\(f(x) = x^4 - 8x^3 + 18x^2\\). Die Funktion hat zwei Wendepunkte. Gib die größere Wendestelle an.",
-        loesung: 3,
+        frage: "Der Graph der zweiten Ableitung \\(f''\\) ist eine Gerade mit der Steigung \\(3\\), die die \\(y\\)-Achse bei \\(-6\\) schneidet. An welcher Stelle hat der Graph von \\(f\\) einen Wendepunkt?",
+        loesung: 2,
         toleranz: 0,
-        tipp: "Berechne \\(f''(x)\\) und finde die Nullstellen. Prüfe, ob ein Vorzeichenwechsel vorliegt.",
-        loesungsweg: "\\(f'(x) = 4x^3 - 24x^2 + 36x\\), \\(f''(x) = 12x^2 - 48x + 36 = 12(x-1)(x-3)\\). Nullstellen: \\(x = 1\\) und \\(x = 3\\). Bei beiden wechselt \\(f''\\) das Vorzeichen → beide sind Wendepunkte. Die größere Wendestelle ist \\(x = 3\\)."
+        tipp: "Stelle zuerst den Term von \\(f''\\) auf.",
+        loesungsweg: "Aus den Angaben folgt \\(f''(x) = 3x - 6\\). Nullstelle: $$3x - 6 = 0 \\Rightarrow x = 2$$ Als lineare Funktion wechselt \\(f''\\) dort das Vorzeichen (von \\(-\\) nach \\(+\\)), also liegt bei \\(x = 2\\) ein Wendepunkt – der Graph von \\(f\\) geht von einer Rechts- in eine Linkskrümmung über."
       },
       {
-        id: 30, level: 5, typ: "mc",
-        frage: "Gegeben: \\(f(x) = x^5 - 10x^3 + 9x\\). Wie viele Wendepunkte hat \\(f\\)?",
-        optionen: [
-          "3",
-          "2",
-          "1",
-          "4"
-        ],
-        korrekt: 0,
-        tipp: "Berechne \\(f''(x)\\) und bestimme, wie viele Nullstellen mit Vorzeichenwechsel vorliegen.",
-        loesungsweg: "\\(f'(x) = 5x^4 - 30x^2 + 9\\), \\(f''(x) = 20x^3 - 60x = 20x(x^2 - 3)\\). Nullstellen: \\(x = 0\\), \\(x = \\pm\\sqrt{3}\\). An jeder Stelle wechselt \\(f''\\) das Vorzeichen → 3 Wendepunkte."
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Wie lang ist das Intervall, auf dem der Graph von \\(f(x) = x^4 - 12x^2\\) rechtsgekrümmt ist? Runde auf zwei Dezimalstellen.",
+        loesung: 2.83,
+        toleranz: 0.02,
+        tipp: "Rechtskrümmung bedeutet \\(f''(x) < 0\\) – bestimme die Grenzen dieses Bereichs.",
+        loesungsweg: "$$f''(x) = 12x^2 - 24 < 0 \\;\\Longleftrightarrow\\; x^2 < 2 \\;\\Longleftrightarrow\\; -\\sqrt{2} < x < \\sqrt{2}$$ Die Intervalllänge beträgt $$2\\sqrt{2} \\approx 2{,}83$$ An den Rändern \\(\\pm\\sqrt{2}\\) liegen die beiden Wendepunkte."
       },
 
       // ═══════════════════════════════════════════════════════════
@@ -419,24 +409,19 @@
       },
       {
         id: 33, level: 6, typ: "numerisch",
-        frage: "Gegeben: \\(f(x) = x^4 - 4x^3 + 6x^2 - 4x + 1\\). Berechne \\(f''(1)\\) direkt durch zweifaches Ableiten.",
-        loesung: 0,
+        frage: "Der Graph von \\(f(x) = x^3 + ax^2 + bx\\) hat bei \\(x = 1\\) einen Wendepunkt, und \\(f\\) ist auf ganz \\(\\mathbb{R}\\) monoton steigend. Wie groß muss \\(b\\) mindestens sein?",
+        loesung: 3,
         toleranz: 0,
-        tipp: "Leite \\(f(x) = x^4 - 4x^3 + 6x^2 - 4x + 1\\) direkt ab: Potenzregel gliedweise. Dann nochmals ableiten und \\(x=1\\) einsetzen.",
-        loesungsweg: "\\(f'(x) = 4x^3 - 12x^2 + 12x - 4\\). \\(f''(x) = 12x^2 - 24x + 12\\). Einsetzen: \\(f''(1) = 12 - 24 + 12 = 0\\). (Hinweis: \\(f(x) = (x-1)^4\\) erklärt das Ergebnis, aber die Ableitung erfolgt hier gliedweise ohne Kettenregel.)"
+        tipp: "Die Lage des Wendepunkts legt \\(a\\) fest; die Monotonie wird dann zu einer Bedingung an \\(b\\).",
+        loesungsweg: "Aus \\(f''(x) = 6x + 2a\\) und \\(f''(1) = 0\\) folgt \\(6 + 2a = 0\\), also \\(a = -3\\). Monotonie verlangt \\(f'(x) = 3x^2 - 6x + b \\geq 0\\) für alle \\(x\\). Als nach oben geöffnete Parabel ist das genau dann erfüllt, wenn sie höchstens eine Nullstelle hat: $$36 - 12b \\leq 0 \\Rightarrow b \\geq 3$$ Der kleinstmögliche Wert ist \\(b = 3\\); dann ist \\(f'(x) = 3(x-1)^2\\) und der Wendepunkt zugleich Sattelpunkt."
       },
       {
-        id: 34, level: 6, typ: "mc", festeReihenfolge: true,
-        frage: "Gegeben: \\(f(x) = x^5 - 5x^4 + 5x^3 + 5x^2 - 6x\\). Welche Aussage über Monotonie und Krümmung ist korrekt?",
-        optionen: [
-          "\\(f'(x) = 5x^4 - 20x^3 + 15x^2 + 10x - 6\\); Vorzeichen wechselt dreimal → drei Extremstellen",
-          "\\(f''(x) = 20x^3 - 60x^2 + 30x + 10\\); drei Wendepunkte",
-          "\\(f\\) ist auf \\((- \\infty, \\infty)\\) steigend, da Grad 5 ungerade",
-          "\\(f\\) hat genau einen Wendepunkt"
-        ],
-        korrekt: 1,
-        tipp: "Leite zweimal ab: \\(f''(x) = 20x^3 - 60x^2 + 30x + 10\\). Wie oft wechselt \\(f''\\) das Vorzeichen?",
-        loesungsweg: "\\(f'(x) = 5x^4 - 20x^3 + 15x^2 + 10x - 6\\) hat vier reelle Nullstellen mit Vorzeichenwechsel → vier Extremstellen (Aussage A ist falsch). \\(f''(x) = 20x^3 - 60x^2 + 30x + 10\\) hat drei reelle Nullstellen mit Vorzeichenwechsel → drei Wendepunkte. Aussage B ist korrekt."
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Für welchen Wert von \\(a\\) hat der Graph von \\(f(x) = x^4 - ax^2\\) zwei Wendepunkte, deren \\(x\\)-Koordinaten den Abstand \\(2\\) haben?",
+        loesung: 6,
+        toleranz: 0,
+        tipp: "Bestimme die Wendestellen allgemein in Abhängigkeit von \\(a\\) und drücke ihren Abstand dadurch aus.",
+        loesungsweg: "$$f''(x) = 12x^2 - 2a = 0 \\Rightarrow x^2 = \\frac{a}{6} \\Rightarrow x = \\pm\\sqrt{\\frac{a}{6}}$$ Zwei Wendestellen gibt es nur für \\(a > 0\\); ihr Abstand beträgt \\(2\\sqrt{\\frac{a}{6}}\\). Bedingung: $$2\\sqrt{\\frac{a}{6}} = 2 \\Rightarrow \\frac{a}{6} = 1 \\Rightarrow a = 6$$ Probe: \\(f''(x) = 12x^2 - 12\\) hat die Nullstellen \\(\\pm 1\\) – Abstand \\(2\\) ✓."
       },
       {
         id: 35, level: 6, typ: "mc",
