@@ -260,67 +260,70 @@
         tipp: "Erst \\(k = 6 \\cdot 9\\) berechnen, dann \\(y = \\frac{k}{18}\\).",
         loesungsweg: "$$k = 6 \\cdot 9 = 54$$ $$y = \\frac{54}{18} = 3$$"
       },
-      // ========== LEVEL 5 -- Graphen interpretieren ==========
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 5 — Zuordnungsart erkennen, prüfen, begründen
+      // ═══════════════════════════════════════════════════════════
       {
-        id: 25,
-        level: 5,
-        typ: "mc",
-        frage: "Ein Graph geht durch den Ursprung \\((0;\\,0)\\) und verläuft als Gerade. Welche Zuordnung liegt vor?",
-        optionen: ["proportional", "antiproportional", "weder noch"],
+        id: 25, level: 5, typ: "mc",
+        frage: "Ist die Zuordnung mit den Wertepaaren \\((2 \\mid 5)\\), \\((4 \\mid 10)\\) und \\((6 \\mid 16)\\) proportional?",
+        optionen: [
+            "Nein – der Quotient \\(\\frac{y}{x}\\) ist nicht bei allen Paaren gleich (\\(2{,}5\\); \\(2{,}5\\); \\(2{,}\\overline{6}\\))",
+            "Ja, denn \\(y\\) wächst, wenn \\(x\\) wächst",
+            "Ja, denn die \\(x\\)-Werte haben immer den Abstand \\(2\\)",
+            "Das lässt sich nur mit einem Graphen entscheiden"
+        ],
         korrekt: 0,
-        tipp: "Eine Gerade durch den Ursprung ist das typische Merkmal einer …?",
-        loesungsweg: "Eine <b>Gerade durch den Ursprung</b> ist der Graph einer proportionalen Zuordnung: \\(y = k \\cdot x\\)."
+        tipp: "Bilde für jedes Paar den Quotienten \\(\\frac{y}{x}\\) und vergleiche.",
+        loesungsweg: "$$\\frac{5}{2} = 2{,}5, \\qquad \\frac{10}{4} = 2{,}5, \\qquad \\frac{16}{6} \\approx 2{,}67$$ Bei einer proportionalen Zuordnung müsste der Quotient überall gleich sein. Das dritte Paar passt nicht – mit \\((6 \\mid 15)\\) wäre die Zuordnung proportional. Dass \\(y\\) mit \\(x\\) wächst, genügt nicht."
       },
       {
-        id: 26,
-        level: 5,
-        typ: "numerisch",
-        frage: "Der Graph einer proportionalen Zuordnung geht durch \\((0;\\,0)\\) und \\((4;\\,10)\\). Bestimme \\(k\\) (die Steigung).",
-        loesung: 2.5,
-        toleranz: 0.01,
-        tipp: "Steigung = \\(\\frac{\\Delta y}{\\Delta x} = \\frac{10 - 0}{4 - 0}\\).",
-        loesungsweg: "$$k = \\frac{10}{4} = 2{,}5$$"
+        id: 26, level: 5, typ: "numerisch",
+        frage: "\\(6\\) Arbeiter benötigen für eine Aufgabe \\(8\\) Tage. Wie lange brauchen \\(4\\) Arbeiter (in Tagen)?",
+        loesung: 12, toleranz: 0.01,
+        tipp: "Weniger Arbeiter brauchen mehr Zeit – überlege, welche Größe konstant bleibt.",
+        loesungsweg: "Die Arbeitsmenge ist konstant: \\(6 \\cdot 8 = 48\\) Arbeitertage. $$4 \\cdot t = 48 \\Rightarrow t = 12\\;\\text{Tage}$$ Das ist eine antiproportionale Zuordnung: Halb so viele Arbeiter brauchen doppelt so lange."
       },
       {
-        id: 27,
-        level: 5,
-        typ: "mc",
-        frage: "Der Graph einer Zuordnung ist eine Kurve (Hyperbel), die sich beiden Achsen annähert, sie aber nie berührt. Welche Zuordnung liegt vor?",
-        optionen: ["proportional", "antiproportional", "weder noch"],
-        korrekt: 1,
-        tipp: "Die Hyperbel \\(y = \\frac{k}{x}\\) nähert sich den Achsen an, ohne sie zu schneiden.",
-        loesungsweg: "Die beschriebene Kurve ist eine <b>Hyperbel</b> -- der typische Graph einer antiproportionalen Zuordnung \\(y = \\frac{k}{x}\\)."
+        id: 27, level: 5, typ: "mc",
+        frage: "Ein Schüler rechnet: „\\(6\\) Arbeiter brauchen \\(8\\) Tage, also brauchen \\(12\\) Arbeiter \\(16\\) Tage.\" Was ist dazu zu sagen?",
+        optionen: [
+            "Falsch – hier wurde antiproportional wie proportional gerechnet; richtig sind \\(4\\) Tage",
+            "Richtig, doppelt so viele Arbeiter brauchen doppelt so lange",
+            "Falsch, richtig wären \\(8\\) Tage",
+            "Richtig, wenn die Arbeiter unterschiedlich schnell sind"
+        ],
+        korrekt: 0,
+        tipp: "Prüfe die Plausibilität: Sollte es mit mehr Arbeitern länger dauern?",
+        loesungsweg: "Mehr Arbeiter bedeuten weniger Zeit – die Zuordnung ist antiproportional. Bei konstanter Arbeitsmenge \\(48\\) Arbeitertage: $$12 \\cdot t = 48 \\Rightarrow t = 4\\;\\text{Tage}$$ Der Fehler entsteht durch den Dreisatz „mal 2 bei beiden Größen\", der nur bei proportionalen Zuordnungen erlaubt ist."
       },
       {
-        id: 28,
-        level: 5,
-        typ: "numerisch",
-        frage: "Der Graph einer proportionalen Zuordnung geht durch \\((0;\\,0)\\) und \\((6;\\,15)\\). Berechne \\(y\\) für \\(x = 10\\).",
-        loesung: 25,
-        toleranz: 0,
-        tipp: "Bestimme zuerst \\(k = \\frac{15}{6}\\), dann \\(y = k \\cdot 10\\).",
-        loesungsweg: "$$k = \\frac{15}{6} = 2{,}5$$ $$y = 2{,}5 \\cdot 10 = 25$$"
+        id: 28, level: 5, typ: "numerisch",
+        frage: "\\(5\\) Maschinen füllen in \\(3\\) Stunden \\(600\\) Flaschen ab. Wie viele Flaschen schaffen \\(8\\) Maschinen in \\(5\\) Stunden?",
+        loesung: 1600, toleranz: 1,
+        tipp: "Rechne zuerst aus, wie viele Flaschen eine Maschine in einer Stunde schafft.",
+        loesungsweg: "Eine Maschine in einer Stunde: $$\\frac{600}{5 \\cdot 3} = 40\\;\\text{Flaschen}$$ Für \\(8\\) Maschinen in \\(5\\) Stunden: $$8 \\cdot 5 \\cdot 40 = 1600\\;\\text{Flaschen}$$ Hier wirken zwei proportionale Zusammenhänge zugleich."
       },
       {
-        id: 29,
-        level: 5,
-        typ: "mc",
-        frage: "Welcher Graph gehört NICHT zu einer proportionalen Zuordnung?",
-        optionen: ["Gerade durch \\((0;\\,0)\\) und \\((2;\\,6)\\)", "Gerade durch \\((0;\\,0)\\) und \\((5;\\,10)\\)", "Gerade durch \\((1;\\,3)\\) und \\((3;\\,7)\\)", "Gerade durch \\((0;\\,0)\\) und \\((3;\\,9)\\)"],
-        korrekt: 2,
-        tipp: "Eine proportionale Zuordnung geht IMMER durch den Ursprung \\((0;\\,0)\\).",
-        loesungsweg: "Die Gerade durch \\((1;\\,3)\\) und \\((3;\\,7)\\) hat die Steigung \\(k = \\frac{7-3}{3-1} = 2\\), also \\(y = 2x + 1\\). Für \\(x = 0\\) ist \\(y = 1 \\neq 0\\) — die Gerade geht nicht durch den Ursprung und ist daher <b>keine</b> proportionale Zuordnung."
+        id: 29, level: 5, typ: "numerisch",
+        frage: "\\(12\\) Liter Benzin kosten \\(21\\,€\\). Wie viel kosten \\(20\\) Liter (in Euro)?",
+        loesung: 35, toleranz: 0.01,
+        tipp: "Bestimme zuerst den Preis für einen Liter.",
+        loesungsweg: "Ein Liter: \\(\\frac{21}{12} = 1{,}75\\,€\\). Für \\(20\\) Liter: $$20 \\cdot 1{,}75 = 35\\,€$$"
       },
       {
-        id: 30,
-        level: 5,
-        typ: "numerisch",
-        frage: "Eine Hyperbel (antiproportionale Zuordnung) geht durch \\((3;\\,8)\\). Berechne \\(y\\) für \\(x = 6\\).",
-        loesung: 4,
-        toleranz: 0,
-        tipp: "\\(k = 3 \\cdot 8 = 24\\). Dann \\(y = \\frac{24}{6}\\).",
-        loesungsweg: "$$k = 3 \\cdot 8 = 24$$ $$y = \\frac{24}{6} = 4$$"
+        id: 30, level: 5, typ: "mc",
+        frage: "„Doppelt so viele Arbeiter brauchen immer die halbe Zeit.\" Trifft das zu?",
+        optionen: [
+            "Nur im Modell – in der Praxis stimmt es oft nicht, etwa weil sich Arbeiter behindern oder Maschinen fehlen",
+            "Ja, das ist ein mathematisches Gesetz ohne Ausnahme",
+            "Nein, die Zeit bleibt immer gleich",
+            "Nein, doppelt so viele Arbeiter brauchen doppelt so lange"
+        ],
+        korrekt: 0,
+        tipp: "Überlege, welche Annahmen im antiproportionalen Modell stecken.",
+        loesungsweg: "Rechnerisch ist die Zuordnung antiproportional: \\(\\text{Arbeiter} \\cdot \\text{Zeit} = \\text{konstant}\\). Das Modell setzt aber voraus, dass alle gleich schnell arbeiten, sich nicht gegenseitig behindern und genug Material und Platz da ist. Für ein Loch, das nur eine Person graben kann, gilt es offensichtlich nicht – ein gutes Beispiel für die Grenzen eines mathematischen Modells."
       },
+
       // ========== LEVEL 6 -- Zusammengesetzte Dreisätze und Textaufgaben ==========
       {
         id: 31,

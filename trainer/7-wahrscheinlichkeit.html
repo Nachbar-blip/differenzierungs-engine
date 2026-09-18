@@ -207,98 +207,116 @@
             loesungsweg: "\\(P(\\text{kein Regen}) = 1 - 0{,}35 = 0{,}65\\)."
         },
 
-        // ===== Level 5: Baumdiagramme (2-stufig), Pfadregeln =====
-        {
-            id: 25, level: 5, typ: "numerisch",
-            frage: "Eine Münze wird zweimal geworfen. Wie groß ist \\(P(\\text{2× Kopf})\\)? Gib das Ergebnis als Dezimalzahl ein.",
-            loesung: 0.25, toleranz: 0.01,
-            tipp: "Produktregel (UND): Die Wahrscheinlichkeiten entlang eines Pfades werden multipliziert.",
-            loesungsweg: "\\(P(\\text{KK}) = \\frac{1}{2} \\cdot \\frac{1}{2} = \\frac{1}{4} = 0{,}25\\)."
-        },
-        {
-            id: 26, level: 5, typ: "mc",
-            frage: "Münze zweimal werfen: Welche Pfadregel verwendet man, um \\(P(\\text{Kopf und dann Zahl})\\) zu berechnen?",
-            optionen: ["Summenregel (addieren)", "Produktregel (multiplizieren)", "Differenzregel (subtrahieren)", "Keine Regel nötig"],
-            korrekt: 1,
-            tipp: "Entlang eines Pfades im Baumdiagramm gilt: UND = multiplizieren.",
-            loesungsweg: "Für einen einzelnen Pfad (Kopf UND Zahl) wird die Produktregel angewendet: \\(P = \\frac{1}{2} \\cdot \\frac{1}{2} = \\frac{1}{4}\\)."
-        },
-        {
-            id: 27, level: 5, typ: "numerisch",
-            frage: "Münze zweimal werfen: Wie groß ist \\(P(\\text{genau einmal Kopf})\\)? Gib das Ergebnis als Dezimalzahl ein.",
-            loesung: 0.5, toleranz: 0.01,
-            tipp: "Es gibt zwei Pfade mit genau einmal Kopf: KZ und ZK. Berechne jeden Pfad und addiere (Summenregel).",
-            loesungsweg: "\\(P(\\text{KZ}) = \\frac{1}{2} \\cdot \\frac{1}{2} = \\frac{1}{4}\\). \\(P(\\text{ZK}) = \\frac{1}{4}\\). Summenregel: \\(P = \\frac{1}{4} + \\frac{1}{4} = \\frac{1}{2} = 0{,}5\\)."
-        },
-        {
-            id: 28, level: 5, typ: "mc",
-            frage: "Ein Würfel wird zweimal geworfen. Wie groß ist \\(P(\\text{zweimal eine 6})\\)?",
-            optionen: ["\\(\\frac{1}{6}\\)", "\\(\\frac{1}{12}\\)", "\\(\\frac{1}{36}\\)", "\\(\\frac{2}{6}\\)"],
-            korrekt: 2,
-            tipp: "Produktregel: \\(P = \\frac{1}{6} \\cdot \\frac{1}{6}\\).",
-            loesungsweg: "\\(P(\\text{6 und 6}) = \\frac{1}{6} \\cdot \\frac{1}{6} = \\frac{1}{36}\\)."
-        },
-        {
-            id: 29, level: 5, typ: "numerisch",
-            frage: "Ein Würfel wird zweimal geworfen. Wie groß ist \\(P(\\text{mindestens eine 6})\\)? Berechne über das Gegenereignis. Runde auf zwei Nachkommastellen.",
-            loesung: 0.31, toleranz: 0.01,
-            tipp: "Gegenereignis: \"keine 6\". \\(P(\\text{keine 6}) = \\frac{5}{6} \\cdot \\frac{5}{6}\\). Dann: \\(P = 1 - P(\\text{keine 6})\\).",
-            loesungsweg: "\\(P(\\text{keine 6}) = \\frac{5}{6} \\cdot \\frac{5}{6} = \\frac{25}{36}\\). Also \\(P(\\text{mind. eine 6}) = 1 - \\frac{25}{36} = \\frac{11}{36} \\approx 0{,}31\\)."
-        },
-        {
-            id: 30, level: 5, typ: "numerisch",
-            frage: "Eine Ampel ist mit Wahrscheinlichkeit \\(0{,}4\\) grün. Du fährst an zwei unabhängigen Ampeln vorbei. Wie groß ist \\(P(\\text{beide grün})\\)?",
-            loesung: 0.16, toleranz: 0.01,
-            tipp: "Produktregel: \\(P = 0{,}4 \\cdot 0{,}4\\).",
-            loesungsweg: "\\(P(\\text{beide grün}) = 0{,}4 \\cdot 0{,}4 = 0{,}16\\)."
-        },
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 5 — Zufallsgeräte gestalten, Häufigkeiten deuten
+      // ═══════════════════════════════════════════════════════════
+      {
+        id: 25, level: 5, typ: "numerisch",
+        frage: "In einer Urne sollen \\(12\\) Kugeln liegen; die Wahrscheinlichkeit, eine rote zu ziehen, soll \\(\\frac{1}{3}\\) betragen. Wie viele rote Kugeln müssen es sein?",
+        loesung: 4, toleranz: 0,
+        tipp: "Der Anteil der roten Kugeln an allen Kugeln muss \\(\\frac13\\) ergeben.",
+        loesungsweg: "$$\\frac{r}{12} = \\frac{1}{3} \\Rightarrow r = 4$$ Vier rote und acht andersfarbige Kugeln erfüllen die Bedingung."
+      },
+      {
+        id: 26, level: 5, typ: "numerisch",
+        frage: "Ein Glücksrad hat \\(8\\) gleich große Felder. Wie viele davon müssen rot sein, damit \\(P(\\text{rot}) = 0{,}25\\) gilt?",
+        loesung: 2, toleranz: 0,
+        tipp: "Rechne \\(0{,}25\\) in einen Bruch mit dem Nenner \\(8\\) um.",
+        loesungsweg: "$$0{,}25 = \\frac{1}{4} = \\frac{2}{8}$$ Zwei der acht Felder müssen rot sein."
+      },
+      {
+        id: 27, level: 5, typ: "mc",
+        frage: "Ein Schüler gibt für ein Ereignis die Wahrscheinlichkeit \\(P = 1{,}2\\) an. Was ist dazu zu sagen?",
+        optionen: [
+            "Unmöglich – Wahrscheinlichkeiten liegen stets zwischen \\(0\\) und \\(1\\)",
+            "Das bedeutet, das Ereignis tritt besonders sicher ein",
+            "Das ist erlaubt, wenn man in Prozent rechnet",
+            "Das bedeutet \\(120\\) Versuche"
+        ],
+        korrekt: 0,
+        tipp: "Was bedeutet \\(P = 1\\), und kann etwas „sicherer als sicher\" sein?",
+        loesungsweg: "\\(P = 1\\) steht für das sichere Ereignis, \\(P = 0\\) für das unmögliche; dazwischen liegen alle anderen. Ein Wert über \\(1\\) (also über \\(100\\,\\%\\)) kann nicht vorkommen und weist auf einen Rechenfehler hin – etwa auf eine Verwechslung von Anzahl und Anteil."
+      },
+      {
+        id: 28, level: 5, typ: "numerisch",
+        frage: "Ein Würfel wird \\(600\\)-mal geworfen. Wie viele Sechsen erwartet man?",
+        loesung: 100, toleranz: 0,
+        tipp: "Multipliziere die Wahrscheinlichkeit mit der Anzahl der Versuche.",
+        loesungsweg: "$$600 \\cdot \\frac{1}{6} = 100$$ Tatsächlich werden es selten genau \\(100\\) sein – je mehr Würfe, desto näher liegt die relative Häufigkeit aber bei \\(\\frac16\\) (Gesetz der großen Zahlen)."
+      },
+      {
+        id: 29, level: 5, typ: "numerisch",
+        frage: "In einer Klasse haben \\(18\\) von \\(25\\) Kindern ein Haustier. Wie groß ist die Wahrscheinlichkeit, ein Kind <b>ohne</b> Haustier auszuwählen? Runde auf zwei Dezimalstellen.",
+        loesung: 0.28, toleranz: 0.01,
+        tipp: "Nutze das Gegenereignis – oder zähle die Kinder ohne Haustier direkt.",
+        loesungsweg: "$$P(\\text{kein Haustier}) = 1 - \\frac{18}{25} = \\frac{7}{25} = 0{,}28$$"
+      },
+      {
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Ein Glücksrad zeigt nur die Farben Rot, Blau und Gelb. Es gilt \\(P(\\text{rot}) = 0{,}4\\) und \\(P(\\text{blau}) = 0{,}25\\). Wie groß ist \\(P(\\text{gelb})\\)?",
+        loesung: 0.35, toleranz: 0.01,
+        tipp: "Die Wahrscheinlichkeiten aller möglichen Ergebnisse ergeben zusammen \\(1\\).",
+        loesungsweg: "$$P(\\text{gelb}) = 1 - 0{,}4 - 0{,}25 = 0{,}35$$"
+      },
 
-        // ===== Level 6: Anwendungsaufgaben =====
-        {
-            id: 31, level: 6, typ: "mc",
-            frage: "In einer Urne sind \\(3\\) rote, \\(5\\) blaue und \\(2\\) grüne Kugeln. Du ziehst eine Kugel. Wie groß ist \\(P(\\text{blau})\\)?",
-            optionen: ["\\(\\frac{3}{10}\\)", "\\(\\frac{5}{8}\\)", "\\(\\frac{5}{10} = \\frac{1}{2}\\)", "\\(\\frac{2}{5}\\)"],
-            korrekt: 2,
-            tipp: "Insgesamt \\(3 + 5 + 2 = 10\\) Kugeln, davon \\(5\\) blaue.",
-            loesungsweg: "\\(P(\\text{blau}) = \\frac{5}{10} = \\frac{1}{2}\\)."
-        },
-        {
-            id: 32, level: 6, typ: "numerisch",
-            frage: "Aus einer Urne mit \\(4\\) roten und \\(6\\) blauen Kugeln wird ohne Zurücklegen zweimal gezogen. Wie groß ist \\(P(\\text{2× rot})\\)? Gib das Ergebnis als Dezimalzahl ein (auf zwei Nachkommastellen).",
-            loesung: 0.13, toleranz: 0.01,
-            tipp: "Erster Zug: \\(\\frac{4}{10}\\). Zweiter Zug (ohne Zurücklegen): \\(\\frac{3}{9}\\).",
-            loesungsweg: "\\(P(\\text{2× rot}) = \\frac{4}{10} \\cdot \\frac{3}{9} = \\frac{12}{90} = \\frac{2}{15} \\approx 0{,}13\\)."
-        },
-        {
-            id: 33, level: 6, typ: "mc",
-            frage: "Ein Spiel: Zwei Spieler würfeln je einmal. Spieler A gewinnt bei Augensumme \\(> 7\\), Spieler B bei Augensumme \\(\\leq 7\\). Ist das Spiel fair?",
-            optionen: ["Ja, beide haben gleiche Chancen", "Nein, Spieler A hat mehr Chancen", "Nein, Spieler B hat mehr Chancen", "Das kann man nicht berechnen"],
-            korrekt: 2,
-            tipp: "Zähle die Paare \\((a,b)\\) mit \\(a + b > 7\\) und mit \\(a + b \\leq 7\\). Insgesamt gibt es \\(36\\) Paare.",
-            loesungsweg: "Paare mit Summe \\(> 7\\): \\(15\\) Stück. Paare mit Summe \\(\\leq 7\\): \\(21\\) Stück. Da \\(21 > 15\\), hat Spieler B mehr Chancen -- das Spiel ist nicht fair."
-        },
-        {
-            id: 34, level: 6, typ: "numerisch",
-            frage: "In einer Schachtel sind \\(12\\) Lose, davon \\(3\\) Gewinne. Du ziehst \\(2\\) Lose ohne Zurücklegen. Wie groß ist \\(P(\\text{kein Gewinn})\\)? Runde auf zwei Nachkommastellen.",
-            loesung: 0.55, toleranz: 0.01,
-            tipp: "Erster Zug Niete: \\(\\frac{9}{12}\\). Zweiter Zug Niete: \\(\\frac{8}{11}\\). Produktregel anwenden.",
-            loesungsweg: "\\(P(\\text{kein Gewinn}) = \\frac{9}{12} \\cdot \\frac{8}{11} = \\frac{72}{132} = \\frac{6}{11} \\approx 0{,}55\\)."
-        },
-        {
-            id: 35, level: 6, typ: "mc",
-            frage: "Ein Glücksrad hat \\(4\\) gleich große Felder: Rot, Blau, Grün, Gelb. Spieler A gewinnt bei Rot oder Blau, Spieler B bei Grün. Ist das Spiel fair?",
-            optionen: ["Ja, fair", "Nein, Spieler A hat Vorteil", "Nein, Spieler B hat Vorteil", "Nein, keiner kann gewinnen"],
-            korrekt: 1,
-            tipp: "\\(P(A) = \\frac{2}{4}\\), \\(P(B) = \\frac{1}{4}\\). Vergleiche die Wahrscheinlichkeiten.",
-            loesungsweg: "\\(P(A) = \\frac{2}{4} = \\frac{1}{2}\\), \\(P(B) = \\frac{1}{4}\\). Spieler A hat eine höhere Gewinnwahrscheinlichkeit -- das Spiel ist nicht fair."
-        },
-        {
-            id: 36, level: 6, typ: "numerisch",
-            frage: "Aus einer Urne mit \\(5\\) roten und \\(3\\) blauen Kugeln wird ohne Zurücklegen zweimal gezogen. Wie groß ist \\(P(\\text{erst rot, dann blau})\\)? Runde auf zwei Nachkommastellen.",
-            loesung: 0.27, toleranz: 0.01,
-            tipp: "Erster Zug rot: \\(\\frac{5}{8}\\). Zweiter Zug blau (ohne Zurücklegen): \\(\\frac{3}{7}\\).",
-            loesungsweg: "\\(P = \\frac{5}{8} \\cdot \\frac{3}{7} = \\frac{15}{56} \\approx 0{,}27\\)."
-        }
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 6 — Fairness beurteilen, Modelle prüfen, gestalten
+      // ═══════════════════════════════════════════════════════════
+      {
+        id: 31, level: 6, typ: "mc",
+        frage: "Bei welchem Zufallsversuch darf man <b>nicht</b> davon ausgehen, dass alle Ergebnisse gleich wahrscheinlich sind?",
+        optionen: [
+            "Beim Werfen eines Reißnagels (Spitze oben oder unten)",
+            "Beim Werfen eines fairen Würfels",
+            "Beim Ziehen einer Kugel aus einer Urne mit gleich großen Kugeln",
+            "Beim Drehen eines Glücksrads mit gleich großen Feldern"
+        ],
+        korrekt: 0,
+        tipp: "Welche Gleichheit muss vorliegen, damit man mit der Laplace-Regel rechnen darf?",
+        loesungsweg: "Die Laplace-Annahme setzt voraus, dass die Ergebnisse aus Symmetriegründen gleichberechtigt sind – bei Würfel, Urne und Glücksrad ist das gegeben. Der Reißnagel ist unsymmetrisch; wie oft er auf der Spitze landet, lässt sich nur durch viele Versuche schätzen (relative Häufigkeit), nicht vorher berechnen."
+      },
+      {
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Bei einem Spiel würfelt man einmal: Bei einer Sechs gewinnt man \\(5\\,€\\), sonst zahlt man \\(1\\,€\\). Wie groß ist der durchschnittliche Gewinn pro Spiel in Euro?",
+        loesung: 0, toleranz: 0.01,
+        tipp: "Gewichte Gewinn und Verlust mit ihren Wahrscheinlichkeiten.",
+        loesungsweg: "$$\\frac{1}{6} \\cdot 5 + \\frac{5}{6} \\cdot (-1) = \\frac{5}{6} - \\frac{5}{6} = 0$$ Auf lange Sicht gewinnt und verliert man gleich viel – das Spiel ist <b>fair</b>. Bei \\(4\\,€\\) Gewinn wäre es zum Nachteil des Spielers."
+      },
+      {
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Ein Glücksrad hat \\(20\\) gleich große Felder. Wie viele davon müssen Gewinnfelder sein, damit die Gewinnwahrscheinlichkeit \\(0{,}15\\) beträgt?",
+        loesung: 3, toleranz: 0,
+        tipp: "Multipliziere die gewünschte Wahrscheinlichkeit mit der Feldanzahl.",
+        loesungsweg: "$$0{,}15 \\cdot 20 = 3$$ Drei Gewinnfelder. Wäre die Zahl keine ganze, ließe sich die Wahrscheinlichkeit mit \\(20\\) Feldern nicht genau erreichen – man bräuchte eine andere Feldanzahl."
+      },
+      {
+        id: 34, level: 6, typ: "mc",
+        frage: "Für ein Glücksrad werden angegeben: \\(P(\\text{rot}) = 0{,}5\\), \\(P(\\text{blau}) = 0{,}3\\), \\(P(\\text{gelb}) = 0{,}4\\). Was fällt auf?",
+        optionen: [
+            "Die Angaben können nicht stimmen – die Summe beträgt \\(1{,}2\\) statt \\(1\\)",
+            "Alles in Ordnung, die Werte liegen ja zwischen \\(0\\) und \\(1\\)",
+            "Rot ist zu wahrscheinlich angegeben",
+            "Es fehlt eine vierte Farbe"
+        ],
+        korrekt: 0,
+        tipp: "Addiere alle angegebenen Wahrscheinlichkeiten.",
+        loesungsweg: "$$0{,}5 + 0{,}3 + 0{,}4 = 1{,}2 > 1$$ Da genau eine der drei Farben eintreten muss, müsste die Summe \\(1\\) ergeben. Die Angaben sind also widersprüchlich – auch wenn jeder einzelne Wert für sich zulässig aussieht."
+      },
+      {
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Eine Münze wird zweimal geworfen. Wie groß ist die Wahrscheinlichkeit, zweimal Kopf zu erhalten?",
+        loesung: 0.25, toleranz: 0.01,
+        tipp: "Zähle alle möglichen Ergebnisse der beiden Würfe auf.",
+        loesungsweg: "Möglich sind \\(KK\\), \\(KZ\\), \\(ZK\\), \\(ZZ\\) – vier gleichwahrscheinliche Ergebnisse. $$P(KK) = \\frac{1}{4} = 0{,}25$$ Nur eines davon ist „zweimal Kopf\"; „genau einmal Kopf\" hätte dagegen die Wahrscheinlichkeit \\(\\frac24\\)."
+      },
+      {
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Ein Würfel wird \\(60\\)-mal geworfen; die Eins fällt dabei \\(18\\)-mal. Wie viele Einsen hätte man bei einem fairen Würfel erwartet?",
+        loesung: 10, toleranz: 0,
+        tipp: "Erwartete Anzahl heißt: Wahrscheinlichkeit mal Anzahl der Würfe.",
+        loesungsweg: "$$60 \\cdot \\frac{1}{6} = 10$$ Beobachtet wurden \\(18\\) – fast doppelt so viele. Das ist ein Hinweis darauf, dass der Würfel gezinkt sein könnte, aber kein Beweis: Auch faire Würfel liefern Abweichungen, die bei nur \\(60\\) Würfen recht groß ausfallen können."
+      }
+
     ];
     </script>
     <script src="../p3-reflexion.js"></script>

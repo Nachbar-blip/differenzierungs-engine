@@ -199,128 +199,122 @@
         tipp: "Zwei Seiten sind gleich lang -- das kennzeichnet einen bestimmten Typ.",
         loesungsweg: "Da \\(a = b = 5\\,\\text{cm}\\) und \\(c = 8\\,\\text{cm}\\), sind genau zwei Seiten gleich lang. Das ist ein <b>gleichschenkliges Dreieck</b>."
       },
-      // ========== LEVEL 4 -- mittel: Kongrünzsätze und Außenwinkelsatz ==========
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 4 — Konstruierbarkeit, Kongruenz anwenden, Außenwinkel
+      // ═══════════════════════════════════════════════════════════
       {
-        id: 19,
-        level: 4,
-        typ: "mc",
-        frage: "Zwei Dreiecke stimmen in allen drei Seitenlängen überein. Welcher Kongrünzsatz gilt?",
-        optionen: ["SWS", "SSS", "WSW", "SSW"],
-        korrekt: 1,
-        tipp: "Drei Seiten -- also S, S und S.",
-        loesungsweg: "Stimmen alle drei Seiten überein, gilt der Kongrünzsatz <b>SSS</b> (Seite-Seite-Seite)."
+        id: 19, level: 4, typ: "numerisch",
+        frage: "Kann man ein Dreieck mit den Seiten \\(3\\,\\text{cm}\\), \\(4\\,\\text{cm}\\) und \\(8\\,\\text{cm}\\) konstruieren? Gib \\(1\\) für ja und \\(0\\) für nein an.",
+        loesung: 0, toleranz: 0,
+        tipp: "Vergleiche die Summe der beiden kürzeren Seiten mit der längsten.",
+        loesungsweg: "Die Dreiecksungleichung verlangt, dass die Summe zweier Seiten größer ist als die dritte: $$3 + 4 = 7 < 8$$ Die beiden kurzen Seiten reichen nicht bis zueinander – das Dreieck lässt sich nicht schließen. Antwort: \\(0\\)."
       },
       {
-        id: 20,
-        level: 4,
-        typ: "mc",
-        frage: "Gegeben sind zwei Seiten und der von ihnen eingeschlossene Winkel. Welcher Kongrünzsatz passt?",
-        optionen: ["SSS", "SSW", "SWS", "WSW"],
-        korrekt: 2,
-        tipp: "Zwei Seiten mit dem Winkel dazwischen -- Seite, Winkel, Seite.",
-        loesungsweg: "Zwei Seiten und der <b>eingeschlossene</b> Winkel bestimmen das Dreieck eindeutig. Es gilt der Kongrünzsatz <b>SWS</b>."
+        id: 20, level: 4, typ: "numerisch",
+        frage: "Ein Dreieck hat die Seiten \\(a = 5\\,\\text{cm}\\) und \\(b = 7\\,\\text{cm}\\). Wie lang darf die dritte Seite höchstens sein, wenn sie eine ganze Zahl in cm ist?",
+        loesung: 11, toleranz: 0,
+        tipp: "Die dritte Seite muss kürzer sein als die Summe der beiden anderen.",
+        loesungsweg: "Bedingung: \\(c < 5 + 7 = 12\\) (und \\(c > 7 - 5 = 2\\)). Die größte ganze Zahl darunter ist $$c = 11\\,\\text{cm}$$"
       },
       {
-        id: 21,
-        level: 4,
-        typ: "mc",
-        frage: "Gegeben sind eine Seite und die beiden anliegenden Winkel. Welcher Kongrünzsatz passt?",
-        optionen: ["SSS", "SWS", "SSW", "WSW"],
-        korrekt: 3,
-        tipp: "Winkel -- Seite -- Winkel.",
-        loesungsweg: "Eine Seite und die beiden anliegenden Winkel bestimmen das Dreieck eindeutig. Es gilt der Kongrünzsatz <b>WSW</b> (Winkel-Seite-Winkel)."
+        id: 21, level: 4, typ: "mc",
+        frage: "Zwei Dreiecke stimmen in zwei Seiten und dem von ihnen eingeschlossenen Winkel überein. Was folgt daraus?",
+        optionen: [
+            "Sie sind kongruent – das ist der Kongruenzsatz SWS",
+            "Sie sind nur ähnlich, aber nicht unbedingt kongruent",
+            "Es folgt nichts, dazu bräuchte man alle drei Seiten",
+            "Sie sind kongruent, aber nur wenn der Winkel ein rechter ist"
+        ],
+        korrekt: 0,
+        tipp: "Überlege beim Konstruieren: Sind die übrigen Stücke damit schon festgelegt?",
+        loesungsweg: "Sind zwei Seiten und der eingeschlossene Winkel gegeben, so liegt das Dreieck eindeutig fest – beim Konstruieren bleibt keine Wahl mehr. Das ist der Satz SWS. Vorsicht beim Fall SsW: Dort ist der Winkel <b>nicht</b> eingeschlossen, und es kann zwei verschiedene Dreiecke geben."
       },
       {
-        id: 22,
-        level: 4,
-        typ: "numerisch",
-        frage: "Der Außenwinkel an der Ecke \\(C\\) eines Dreiecks beträgt \\(130°\\). Wie groß ist der Innenwinkel \\(\\gamma\\) in Grad?",
-        loesung: 50,
-        toleranz: 0,
-        tipp: "Innenwinkel und Außenwinkel an derselben Ecke ergänzen sich zu \\(180°\\).",
-        loesungsweg: "$$\\gamma = 180° - 130° = 50°$$"
+        id: 22, level: 4, typ: "numerisch",
+        frage: "Ein Dreieck hat die Innenwinkel \\(40°\\) und \\(65°\\). Wie groß ist der Außenwinkel an der dritten Ecke (in Grad)?",
+        loesung: 105, toleranz: 0,
+        tipp: "Bestimme zuerst den dritten Innenwinkel – der Außenwinkel ergänzt ihn zu \\(180°\\).",
+        loesungsweg: "Dritter Innenwinkel: \\(180° - 40° - 65° = 75°\\). Außenwinkel: $$180° - 75° = 105°$$ Er ist zugleich die Summe der beiden nicht anliegenden Innenwinkel: \\(40° + 65° = 105°\\) – das ist der Außenwinkelsatz."
       },
       {
-        id: 23,
-        level: 4,
-        typ: "numerisch",
-        frage: "In einem Dreieck gilt \\(\\alpha = 65°\\) und \\(\\beta = 45°\\). Wie groß ist der Außenwinkel an \\(C\\) in Grad?",
-        loesung: 110,
-        toleranz: 0,
-        tipp: "Der Außenwinkel an einer Ecke ist gleich der Summe der beiden nicht anliegenden Innenwinkel.",
-        loesungsweg: "Außenwinkelsatz: Der Außenwinkel an \\(C\\) ist gleich \\(\\alpha + \\beta\\): $$\\delta_C = 65° + 45° = 110°$$"
+        id: 23, level: 4, typ: "numerisch",
+        frage: "In einem gleichschenkligen Dreieck beträgt jeder Basiswinkel \\(50°\\). Wie groß ist der Winkel an der Spitze (in Grad)?",
+        loesung: 80, toleranz: 0,
+        tipp: "Die beiden Basiswinkel sind gleich groß; die Winkelsumme beträgt \\(180°\\).",
+        loesungsweg: "$$180° - 2 \\cdot 50° = 80°$$"
       },
       {
-        id: 24,
-        level: 4,
-        typ: "mc",
-        frage: "Welche Angabe reicht <b>nicht</b> aus, um ein Dreieck eindeutig zu konstruieren?",
-        optionen: ["Drei Seitenlängen (SSS)", "Zwei Seiten und der eingeschlossene Winkel (SWS)", "Drei Winkel (WWW)", "Zwei Seiten und der der größeren Seite gegenüberliegende Winkel (SsW)"],
-        korrekt: 2,
-        tipp: "Drei Winkel legen nur die Form, nicht die Größe fest.",
-        loesungsweg: "Bei <b>WWW</b> (drei Winkel) ist das Dreieck nicht eindeutig bestimmt -- man kann es beliebig vergrößern oder verkleinern. Es sind dann unendlich viele ähnliche Dreiecke möglich."
+        id: 24, level: 4, typ: "mc",
+        frage: "Zwei Dreiecke stimmen in allen drei Winkeln überein. Sind sie deshalb kongruent?",
+        optionen: [
+            "Nein – sie sind nur ähnlich; die Größe ist damit nicht festgelegt",
+            "Ja, drei übereinstimmende Stücke genügen immer",
+            "Ja, das ist der Kongruenzsatz WWW",
+            "Nur wenn eines der Dreiecke rechtwinklig ist"
+        ],
+        korrekt: 0,
+        tipp: "Denke an ein Dreieck und seine maßstäbliche Vergrößerung.",
+        loesungsweg: "Gleiche Winkel legen nur die <b>Form</b> fest, nicht die Größe: Eine Vergrößerung hat dieselben Winkel, ist aber nicht deckungsgleich. Einen Kongruenzsatz WWW gibt es deshalb nicht – für Kongruenz muss mindestens eine Seitenlänge bekannt sein (SSS, SWS, WSW, SsW)."
       },
-      // ========== LEVEL 5 -- anspruchsvoll: Winkel an Parallelen ==========
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 5 — mehrschrittige Winkelbestimmungen, Begründungen
+      // ═══════════════════════════════════════════════════════════
       {
-        id: 25,
-        level: 5,
-        typ: "mc",
-        frage: "Zwei parallele Geraden werden von einer dritten Geraden geschnitten. Welche Winkel sind gleich groß?",
-        optionen: ["Nebenwinkel", "Stufenwinkel (F-Winkel)", "Supplementwinkel", "Keine davon"],
-        korrekt: 1,
-        tipp: "Denke an die F-Form: Stufenwinkel an Parallelen sind …",
-        loesungsweg: "<b>Stufenwinkel</b> (auch F-Winkel) an parallelen Geraden sind gleich groß. Ebenso sind Wechselwinkel (Z-Winkel) gleich groß."
-      },
-      {
-        id: 26,
-        level: 5,
-        typ: "numerisch",
-        frage: "Zwei parallele Geraden werden von einer Transversalen geschnitten. Ein Stufenwinkel beträgt \\(62°\\). Wie groß ist der zugehörige Wechselwinkel auf der anderen Seite der Transversalen in Grad?",
-        loesung: 62,
-        toleranz: 0,
-        tipp: "Wechselwinkel an Parallelen sind genauso groß wie Stufenwinkel -- nämlich gleich groß.",
-        loesungsweg: "Stufenwinkel und Wechselwinkel an parallelen Geraden sind jeweils gleich groß: $$\\text{Wechselwinkel} = 62°$$"
+        id: 25, level: 5, typ: "numerisch",
+        frage: "In einem Dreieck ist \\(\\gamma = 60°\\) und \\(\\alpha\\) dreimal so groß wie \\(\\beta\\). Wie groß ist \\(\\beta\\) (in Grad)?",
+        loesung: 30, toleranz: 0,
+        tipp: "Drücke \\(\\alpha\\) durch \\(\\beta\\) aus und nutze die Winkelsumme.",
+        loesungsweg: "$$3\\beta + \\beta + 60° = 180° \\Rightarrow 4\\beta = 120° \\Rightarrow \\beta = 30°$$ Damit ist \\(\\alpha = 90°\\) – das Dreieck ist rechtwinklig."
       },
       {
-        id: 27,
-        level: 5,
-        typ: "numerisch",
-        frage: "An einer Parallelen-Konfiguration ist ein Winkel \\(\\alpha = 115°\\). Wie groß ist der Nebenwinkel von \\(\\alpha\\) in Grad?",
-        loesung: 65,
-        toleranz: 0,
-        tipp: "Nebenwinkel ergänzen sich zu \\(180°\\).",
-        loesungsweg: "$$\\text{Nebenwinkel} = 180° - 115° = 65°$$"
+        id: 26, level: 5, typ: "numerisch",
+        frage: "In einem Dreieck beträgt \\(\\gamma = 80°\\). Welchen Winkel schließen die Winkelhalbierenden von \\(\\alpha\\) und \\(\\beta\\) ein (in Grad)?",
+        loesung: 130, toleranz: 0,
+        tipp: "Betrachte das Teildreieck aus den beiden Winkelhalbierenden und der Seite \\(c\\).",
+        loesungsweg: "Es gilt \\(\\alpha + \\beta = 100°\\), also \\(\\frac{\\alpha}{2} + \\frac{\\beta}{2} = 50°\\). Im Teildreieck bleibt für den gesuchten Winkel $$180° - 50° = 130°$$ Allgemein ist dieser Winkel \\(90° + \\frac{\\gamma}{2}\\) – er ist also immer stumpf."
       },
       {
-        id: 28,
-        level: 5,
-        typ: "numerisch",
-        frage: "Zwei Geraden schneiden sich. Ein Scheitelwinkel beträgt \\(73°\\). Wie groß ist der gegenüberliegende Scheitelwinkel in Grad?",
-        loesung: 73,
-        toleranz: 0,
-        tipp: "Scheitelwinkel sind immer …",
-        loesungsweg: "Scheitelwinkel sind stets gleich groß: $$\\text{Scheitelwinkel} = 73°$$"
+        id: 27, level: 5, typ: "mc",
+        frage: "Ein Dreieck soll aus \\(c = 6\\,\\text{cm}\\), \\(\\alpha = 50°\\) und \\(\\beta = 60°\\) konstruiert werden. In welcher Reihenfolge geht man vor?",
+        optionen: [
+            "Strecke \\(c\\) zeichnen, an ihren Enden die Winkel \\(\\alpha\\) und \\(\\beta\\) antragen, der Schnittpunkt der freien Schenkel ist \\(C\\)",
+            "Zuerst \\(C\\) frei wählen, dann die Winkel antragen",
+            "Zuerst beide Winkel zeichnen, dann \\(c\\) dazwischen legen",
+            "Zuerst den dritten Winkel berechnen, sonst geht es nicht"
+        ],
+        korrekt: 0,
+        tipp: "Welches Stück lässt sich ohne weitere Überlegung sofort zeichnen?",
+        loesungsweg: "Man beginnt mit der gegebenen Strecke, weil ihre Länge feststeht. An ihren Endpunkten werden die beiden anliegenden Winkel angetragen; die freien Schenkel schneiden sich in \\(C\\). Das ist die Konstruktion nach WSW – der dritte Winkel (\\(70°\\)) ergibt sich von selbst und wird nicht gebraucht."
       },
       {
-        id: 29,
-        level: 5,
-        typ: "numerisch",
-        frage: "Zwei parallele Geraden werden geschnitten. Ein Stufenwinkel beträgt \\(48°\\). Wie groß ist der Nebenwinkel des entsprechenden Wechselwinkels in Grad?",
-        loesung: 132,
-        toleranz: 0,
-        tipp: "Erst den Wechselwinkel bestimmen (gleich dem Stufenwinkel), dann den Nebenwinkel berechnen.",
-        loesungsweg: "Wechselwinkel \\(= 48°\\) (gleich dem Stufenwinkel). Nebenwinkel: $$180° - 48° = 132°$$"
+        id: 28, level: 5, typ: "numerisch",
+        frage: "In einem gleichschenkligen Dreieck beträgt der Außenwinkel an der Basis \\(115°\\). Wie groß ist der Winkel an der Spitze (in Grad)?",
+        loesung: 50, toleranz: 0,
+        tipp: "Bestimme zuerst den Basiswinkel als Nebenwinkel.",
+        loesungsweg: "Basiswinkel: \\(180° - 115° = 65°\\); beide Basiswinkel sind gleich groß. Spitze: $$180° - 2 \\cdot 65° = 50°$$"
       },
       {
-        id: 30,
-        level: 5,
-        typ: "mc",
-        frage: "Welche Aussage ist korrekt? An zwei parallelen Geraden mit Transversale gilt:",
-        optionen: ["Stufenwinkel ergänzen sich zu \\(180°\\)", "Wechselwinkel sind gleich groß", "Nebenwinkel sind gleich groß", "Scheitelwinkel ergänzen sich zu \\(180°\\)"],
-        korrekt: 1,
-        tipp: "Wechselwinkel (Z-Winkel) an Parallelen haben eine besondere Eigenschaft.",
-        loesungsweg: "<b>Wechselwinkel</b> an parallelen Geraden sind gleich groß (Z-Winkel). Stufenwinkel sind ebenfalls gleich groß. Nebenwinkel ergänzen sich zu \\(180°\\)."
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Ein Dreieck hat die Seiten \\(a = 6\\,\\text{cm}\\) und \\(b = 9\\,\\text{cm}\\). Wie kurz darf die dritte Seite mindestens sein, wenn sie eine ganze Zahl in cm ist?",
+        loesung: 4, toleranz: 0,
+        tipp: "Neben der oberen gibt es auch eine untere Schranke: Die Differenz der beiden Seiten.",
+        loesungsweg: "Bedingungen: \\(c < 6 + 9 = 15\\) und \\(c > 9 - 6 = 3\\). Die kleinste ganze Zahl über \\(3\\) ist $$c = 4\\,\\text{cm}$$ Wäre \\(c = 3\\), lägen alle drei Punkte auf einer Geraden."
       },
+      {
+        id: 30, level: 5, typ: "mc",
+        frage: "Ein Schüler behauptet: „Ein Dreieck kann zwei rechte Winkel haben, wenn es groß genug ist.\" Was ist dazu zu sagen?",
+        optionen: [
+            "Falsch – zwei rechte Winkel ergäben bereits \\(180°\\), für den dritten bliebe nichts übrig",
+            "Richtig, bei sehr großen Dreiecken ist das möglich",
+            "Richtig, aber nur bei gleichschenkligen Dreiecken",
+            "Falsch, denn ein Dreieck hat nie einen rechten Winkel"
+        ],
+        korrekt: 0,
+        tipp: "Addiere zwei rechte Winkel und vergleiche mit der Winkelsumme.",
+        loesungsweg: "Die Winkelsumme im Dreieck beträgt stets \\(180°\\). Zwei rechte Winkel verbrauchen diese Summe vollständig; der dritte Winkel müsste \\(0°\\) sein – dann gäbe es aber kein Dreieck. In jedem Dreieck ist also höchstens ein Winkel rechtwinklig oder stumpf."
+      },
+
       // ========== LEVEL 6 -- wagnerisch: Komplexe Berechnungen, Vierecke über Dreiecke ==========
       {
         id: 31,

@@ -321,67 +321,64 @@
         tipp: "\\(\\text{GGT}(12, 18) = 6\\). Beide Terme enthalten \\(a\\) und \\(b\\).",
         loesungsweg: "$$12a^2b + 18ab^2 = 6ab \\cdot 2a + 6ab \\cdot 3b = 6ab(2a + 3b)$$"
       },
-      // ========== LEVEL 6 — wagnerisch: Komplexe Termumformungen ==========
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 6 — Terme aus Figuren, Gleichwertigkeit prüfen, Fehlersuche
+      // ═══════════════════════════════════════════════════════════
       {
-        id: 31,
-        level: 6,
-        typ: "mc",
-        frage: "Multipliziere aus: \\((x + 3)(x - 1)\\).",
-        optionen: ["\\(x^2 + 2x - 3\\)", "\\(x^2 - 4x + 3\\)", "\\(x^2 + 4x - 3\\)", "\\(x^2 - 2x - 3\\)"],
+        id: 31, level: 6, typ: "mc",
+        frage: "Ein Schüler vereinfacht \\(5x - (3x - 7)\\) zu \\(2x - 7\\). Was ist dazu zu sagen?",
+        optionen: [
+            "Falsch – das Minus vor der Klammer kehrt beide Vorzeichen um: \\(5x - 3x + 7 = 2x + 7\\)",
+            "Richtig, die Klammer kann einfach weggelassen werden",
+            "Falsch, richtig wäre \\(8x - 7\\)",
+            "Richtig, aber nur für positive \\(x\\)"
+        ],
         korrekt: 0,
-        tipp: "Verwende die FOIL-Methode: Erste, Äußere, Innere, Letzte.",
-        loesungsweg: "$$\\begin{aligned}(x + 3)(x - 1) &= x \\cdot x + x \\cdot (-1) + 3 \\cdot x + 3 \\cdot (-1) \\\\ &= x^2 - x + 3x - 3 = x^2 + 2x - 3\\end{aligned}$$"
+        tipp: "Setze \\(x = 1\\) in den Ausgangsterm und in beide Ergebnisse ein.",
+        loesungsweg: "Probe mit \\(x = 1\\): \\(5 - (3-7) = 5 + 4 = 9\\). Der Schülerterm liefert \\(2 - 7 = -5\\), der richtige \\(2 + 7 = 9\\) ✓. Vor einer Klammer mit Minuszeichen ändert <b>jeder</b> Summand sein Vorzeichen."
       },
       {
-        id: 32,
-        level: 6,
-        typ: "numerisch",
-        frage: "Die Fläche eines Rechtecks hat die Seiten \\((x + 3)\\) und \\((x - 1)\\). Berechne die Fläche für \\(x = 5\\).",
-        loesung: 32,
-        toleranz: 0,
-        tipp: "Setze \\(x = 5\\) ein: Seiten sind \\(8\\) und \\(4\\).",
-        loesungsweg: "$$A = (5 + 3)(5 - 1) = 8 \\cdot 4 = 32$$"
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Ein Rechteck ist \\(x\\) Zentimeter breit und \\(3\\,\\text{cm}\\) länger als breit. Welchen Wert hat sein Umfang für \\(x = 7\\) (in cm)?",
+        loesung: 34, toleranz: 0,
+        tipp: "Stelle zuerst den Term für den Umfang auf und setze dann ein.",
+        loesungsweg: "Länge: \\(x + 3\\). Umfang: $$U = 2\\big(x + (x+3)\\big) = 4x + 6$$ Für \\(x = 7\\): \\(28 + 6 = 34\\,\\text{cm}\\). Der Term gilt für jede Breite – das Einsetzen ist nur die Probe."
       },
       {
-        id: 33,
-        level: 6,
-        typ: "mc",
-        frage: "Multipliziere aus: \\((a + b)(a - b)\\).",
-        optionen: ["\\(a^2 + b^2\\)", "\\(a^2 - b^2\\)", "\\(a^2 - 2ab + b^2\\)", "\\(a^2 + 2ab - b^2\\)"],
-        korrekt: 1,
-        tipp: "Das ist die 3. binomische Formel! Die mittleren Terme heben sich auf.",
-        loesungsweg: "$$\\begin{aligned}(a + b)(a - b) &= a^2 - ab + ab - b^2 = a^2 - b^2\\end{aligned}$$"
-      },
-      {
-        id: 34,
-        level: 6,
-        typ: "numerisch",
-        frage: "Vereinfache \\((2x + 1)(x - 3) + (x + 2)(x + 3)\\) und gib den Koeffizienten vor \\(x^2\\) an.",
-        loesung: 3,
-        toleranz: 0,
-        tipp: "Multipliziere beide Produkte einzeln aus und fasse die \\(x^2\\)-Terme zusammen.",
-        loesungsweg: "$$\\begin{aligned}(2x+1)(x-3) &= 2x^2 - 6x + x - 3 = 2x^2 - 5x - 3 \\\\ (x+2)(x+3) &= x^2 + 3x + 2x + 6 = x^2 + 5x + 6 \\\\ \\text{Summe} &= 3x^2 + 0x + 3 \\end{aligned}$$ Koeffizient vor \\(x^2 = 3\\)."
-      },
-      {
-        id: 35,
-        level: 6,
-        typ: "mc",
-        frage: "Ein quadratisches Grundstück mit Seitenlänge \\(a\\) wird um \\(2\\,\\text{m}\\) verlängert und um \\(2\\,\\text{m}\\) verkürzt. Welcher Term beschreibt die neue Fläche?",
-        optionen: ["\\(a^2 - 4\\)", "\\(a^2 + 4\\)", "\\(a^2\\)", "\\((a-2)^2\\)"],
+        id: 33, level: 6, typ: "mc",
+        frage: "Sind die Terme \\(3(x + 4)\\) und \\(3x + 12\\) gleichwertig?",
+        optionen: [
+            "Ja – sie liefern für jede Zahl denselben Wert, wie das Ausmultiplizieren zeigt",
+            "Nein, denn sie sehen verschieden aus",
+            "Nur für \\(x = 0\\)",
+            "Nur für positive \\(x\\)"
+        ],
         korrekt: 0,
-        tipp: "Die neuen Seiten sind \\((a + 2)\\) und \\((a - 2)\\). Welche binomische Formel passt?",
-        loesungsweg: "$$A = (a + 2)(a - 2) = a^2 - 4 \\quad \\text{(3. binomische Formel)}$$"
+        tipp: "Multipliziere die Klammer aus und vergleiche – und prüfe zusätzlich mit zwei Zahlen.",
+        loesungsweg: "$$3(x+4) = 3x + 12$$ Probe mit \\(x = 2\\): \\(3 \\cdot 6 = 18\\) und \\(6 + 12 = 18\\) ✓; mit \\(x = -1\\): \\(3 \\cdot 3 = 9\\) und \\(-3 + 12 = 9\\) ✓. Gleichwertig heißt: <b>für jede</b> Einsetzung gleicher Wert – einzelne Beispiele stützen das nur, bewiesen wird es durch die Umformung."
       },
       {
-        id: 36,
-        level: 6,
-        typ: "numerisch",
-        frage: "Vereinfache \\(3(x+2)^2 - 3x^2\\). Wie lautet der Koeffizient vor \\(x\\)?",
-        loesung: 12,
-        toleranz: 0,
-        tipp: "Löse zuerst \\((x+2)^2 = x^2 + 4x + 4\\) auf, dann multipliziere mit 3.",
-        loesungsweg: "$$\\begin{aligned}3(x+2)^2 - 3x^2 &= 3(x^2 + 4x + 4) - 3x^2 \\\\ &= 3x^2 + 12x + 12 - 3x^2 = 12x + 12\\end{aligned}$$ Koeffizient vor \\(x = 12\\)."
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Aus Streichhölzern werden Quadrate in einer Reihe gelegt: für \\(1\\) Quadrat braucht man \\(4\\), für \\(2\\) Quadrate \\(7\\), für \\(3\\) Quadrate \\(10\\) Hölzer. Wie viele Streichhölzer braucht man für \\(20\\) Quadrate?",
+        loesung: 61, toleranz: 0,
+        tipp: "Wie viele Hölzer kommen für jedes weitere Quadrat hinzu? Stelle daraus einen Term auf.",
+        loesungsweg: "Das erste Quadrat braucht \\(4\\) Hölzer, jedes weitere \\(3\\): $$H(n) = 4 + 3(n-1) = 3n + 1$$ Für \\(n = 20\\): \\(60 + 1 = 61\\) Streichhölzer."
+      },
+      {
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Vereinfache \\(4(2a - 3) - 2(3a - 5)\\) und gib den Wert für \\(a = 6\\) an.",
+        loesung: 10, toleranz: 0,
+        tipp: "Beide Klammern auflösen, dabei auf das Minuszeichen vor der zweiten achten, dann zusammenfassen.",
+        loesungsweg: "$$4(2a-3) - 2(3a-5) = 8a - 12 - 6a + 10 = 2a - 2$$ Für \\(a = 6\\): \\(12 - 2 = 10\\)."
+      },
+      {
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Für welchen Wert von \\(x\\) haben die Terme \\(5x - 3\\) und \\(2x + 9\\) denselben Wert?",
+        loesung: 4, toleranz: 0,
+        tipp: "Setze beide Terme gleich – so entsteht eine Gleichung.",
+        loesungsweg: "$$5x - 3 = 2x + 9 \\Rightarrow 3x = 12 \\Rightarrow x = 4$$ Probe: \\(5 \\cdot 4 - 3 = 17\\) und \\(2 \\cdot 4 + 9 = 17\\) ✓. Für alle anderen Zahlen unterscheiden sich die Terme – gleichwertig sind sie also <b>nicht</b>."
       }
+
     ];
     </script>
     <script src="../p3-reflexion.js"></script>

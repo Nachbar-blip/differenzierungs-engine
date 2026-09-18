@@ -321,67 +321,59 @@
         tipp: "Hauptnenner \\(15\\): Multipliziere beide Seiten mit \\(15\\).",
         loesungsweg: "$$\\frac{x-3}{5} = \\frac{x+1}{3} \\quad | \\cdot 15$$ $$3(x-3) = 5(x+1)$$ $$3x - 9 = 5x + 5 \\quad | -3x$$ $$-9 = 2x + 5 \\quad | -5$$ $$-14 = 2x \\quad | :2$$ $$x = -7$$"
       },
-      // ========== LEVEL 6 — wagnerisch: Textaufgaben & Ungleichungen ==========
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 6 — Gleichungen aus Texten mit zwei Bedingungen, Fehlersuche
+      // ═══════════════════════════════════════════════════════════
       {
-        id: 31,
-        level: 6,
-        typ: "numerisch",
-        frage: "Tim ist 3 Jahre älter als Mia. Zusammen sind sie 27 Jahre alt. Wie alt ist Mia?",
-        loesung: 12,
-        toleranz: 0,
-        tipp: "Setze Mias Alter als \\(x\\). Dann ist Tim \\(x + 3\\). Gleichung: \\(x + (x+3) = 27\\).",
-        loesungsweg: "Sei \\(x\\) = Mias Alter. Tim: \\(x + 3\\). $$x + (x + 3) = 27$$ $$2x + 3 = 27 \\quad | -3$$ $$2x = 24 \\quad | :2$$ $$x = 12$$ Mia ist 12 Jahre alt."
+        id: 31, level: 6, typ: "numerisch",
+        frage: "Anna ist heute \\(12\\) Jahre älter als Ben. In \\(10\\) Jahren wird Anna doppelt so alt sein wie Ben heute. Wie alt ist Ben heute?",
+        loesung: 22, toleranz: 0,
+        tipp: "Nenne Bens heutiges Alter \\(x\\) und schreibe Annas Alter damit auf – beides heute und in zehn Jahren.",
+        loesungsweg: "Ben heute: \\(x\\); Anna heute: \\(x + 12\\); Anna in zehn Jahren: \\(x + 22\\). Bedingung: $$x + 22 = 2x \\Rightarrow x = 22$$ Ben ist \\(22\\), Anna \\(34\\); in zehn Jahren ist Anna \\(44 = 2 \\cdot 22\\) ✓."
       },
       {
-        id: 32,
-        level: 6,
-        typ: "mc",
-        frage: "Ein Rechteck hat einen Umfang von 34 cm. Die Länge ist 5 cm mehr als die Breite. Wie breit ist das Rechteck?",
-        optionen: ["\\(6 \\text{ cm}\\)", "\\(11 \\text{ cm}\\)", "\\(7 \\text{ cm}\\)", "\\(5 \\text{ cm}\\)"],
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Die Summe dreier aufeinanderfolgender gerader Zahlen beträgt \\(54\\). Wie heißt die kleinste dieser Zahlen?",
+        loesung: 16, toleranz: 0,
+        tipp: "Nenne die kleinste Zahl \\(x\\); die beiden nächsten geraden Zahlen sind dann \\(x+2\\) und \\(x+4\\).",
+        loesungsweg: "$$x + (x+2) + (x+4) = 54 \\Rightarrow 3x + 6 = 54 \\Rightarrow x = 16$$ Die Zahlen sind \\(16\\), \\(18\\) und \\(20\\); ihre Summe ist \\(54\\) ✓."
+      },
+      {
+        id: 33, level: 6, typ: "mc",
+        frage: "Ein Schüler löst \\(3x + 12 = 2(x + 10)\\):<br>Schritt 1: \\(3x + 12 = 2x + 10\\)<br>Schritt 2: \\(x = -2\\)<br>Welcher Schritt ist der erste fehlerhafte?",
+        optionen: ["Schritt 1", "Schritt 2", "Beide Schritte sind falsch", "Kein Schritt ist fehlerhaft"],
         korrekt: 0,
-        tipp: "Umfang: \\(2 \\cdot (b + l) = 34\\), also \\(b + l = 17\\). Mit \\(l = b + 5\\): \\(b + b + 5 = 17\\).",
-        loesungsweg: "Sei \\(b\\) = Breite, \\(l = b + 5\\). $$2(b + b + 5) = 34$$ $$2(2b + 5) = 34$$ $$2b + 5 = 17 \\quad | -5$$ $$2b = 12 \\quad | :2$$ $$b = 6$$ Die Breite ist 6 cm."
+        tipp: "Wird beim Ausmultiplizieren wirklich jeder Summand in der Klammer erfasst?",
+        loesungsweg: "In Schritt 1 wurde nur \\(x\\) mit \\(2\\) multipliziert, die \\(10\\) aber nicht: Richtig ist \\(2(x+10) = 2x + 20\\). Damit $$3x + 12 = 2x + 20 \\Rightarrow x = 8$$ Probe: \\(3 \\cdot 8 + 12 = 36 = 2 \\cdot 18\\) ✓."
       },
       {
-        id: 33,
-        level: 6,
-        typ: "numerisch",
-        frage: "Drei aufeinanderfolgende Zahlen haben die Summe 45. Wie lautet die kleinste der drei Zahlen?",
-        loesung: 14,
-        toleranz: 0,
-        tipp: "Nenne die Zahlen \\(x\\), \\(x+1\\), \\(x+2\\). Stelle eine Gleichung auf.",
-        loesungsweg: "$$x + (x+1) + (x+2) = 45$$ $$3x + 3 = 45 \\quad | -3$$ $$3x = 42 \\quad | :3$$ $$x = 14$$ Die Zahlen sind 14, 15 und 16."
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Ein Rechteck ist doppelt so lang wie breit. Sein Umfang beträgt \\(48\\,\\text{cm}\\). Wie breit ist es (in cm)?",
+        loesung: 8, toleranz: 0,
+        tipp: "Drücke die Länge durch die Breite aus und setze in die Umfangsformel ein.",
+        loesungsweg: "Breite \\(x\\), Länge \\(2x\\): $$2(x + 2x) = 48 \\Rightarrow 6x = 48 \\Rightarrow x = 8\\,\\text{cm}$$ Das Rechteck ist \\(8\\,\\text{cm}\\) breit und \\(16\\,\\text{cm}\\) lang."
       },
       {
-        id: 34,
-        level: 6,
-        typ: "mc",
-        frage: "Löse die Ungleichung \\(x + 5 > 12\\). Welche Aussage stimmt?",
-        optionen: ["\\(x > 7\\)", "\\(x > 17\\)", "\\(x < 7\\)", "\\(x > 12\\)"],
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Löse die Gleichung \\(\\dfrac{x}{2} + \\dfrac{x}{3} = 10\\).",
+        loesung: 12, toleranz: 0.01,
+        tipp: "Multipliziere die ganze Gleichung mit dem Hauptnenner.",
+        loesungsweg: "Hauptnenner \\(6\\): $$3x + 2x = 60 \\Rightarrow 5x = 60 \\Rightarrow x = 12$$ Probe: \\(6 + 4 = 10\\) ✓."
+      },
+      {
+        id: 36, level: 6, typ: "mc",
+        frage: "Welche Lösungsmenge hat die Gleichung \\(2(x + 3) = 2x + 6\\)?",
+        optionen: [
+            "Alle Zahlen – beide Seiten sind für jedes \\(x\\) gleich",
+            "Nur \\(x = 0\\)",
+            "Nur \\(x = 3\\)",
+            "Keine Lösung"
+        ],
         korrekt: 0,
-        tipp: "Behandle die Ungleichung wie eine Gleichung: Subtrahiere \\(5\\).",
-        loesungsweg: "$$x + 5 > 12 \\quad | -5$$ $$x > 7$$"
-      },
-      {
-        id: 35,
-        level: 6,
-        typ: "numerisch",
-        frage: "Ein Busticket kostet 2 Euro. Lisa hat 15 Euro und kauft noch ein Getränk für 3 Euro. Für wie viele Fahrten reicht ihr Geld?",
-        loesung: 6,
-        toleranz: 0,
-        tipp: "Nach dem Getränk hat sie \\(15 - 3 = 12\\) Euro. Gleichung: \\(2x \\leq 12\\).",
-        loesungsweg: "Restgeld: \\(15 - 3 = 12\\) Euro. $$2x \\leq 12 \\quad | :2$$ $$x \\leq 6$$ Lisa kann 6 Fahrten bezahlen."
-      },
-      {
-        id: 36,
-        level: 6,
-        typ: "mc",
-        frage: "Anna denkt sich eine Zahl. Sie verdoppelt sie, addiert 8 und erhält 22. Welche Zahl hat Anna sich gedacht?",
-        optionen: ["\\(6\\)", "\\(7\\)", "\\(11\\)", "\\(15\\)"],
-        korrekt: 1,
-        tipp: "Gleichung aufstellen: \\(2x + 8 = 22\\).",
-        loesungsweg: "$$2x + 8 = 22 \\quad | -8$$ $$2x = 14 \\quad | :2$$ $$x = 7$$ Anna hat sich die 7 gedacht."
+        tipp: "Multipliziere die Klammer aus und vergleiche beide Seiten.",
+        loesungsweg: "$$2(x+3) = 2x + 6$$ Beide Seiten sind nach dem Ausmultiplizieren identisch; beim Umformen fällt \\(x\\) heraus und es bleibt die wahre Aussage \\(6 = 6\\). Die Gleichung ist also für <b>jede</b> Zahl erfüllt. Bliebe dagegen etwa \\(6 = 7\\) stehen, gäbe es keine Lösung."
       }
+
     ];
     </script>
     <script src="../p3-reflexion.js"></script>
