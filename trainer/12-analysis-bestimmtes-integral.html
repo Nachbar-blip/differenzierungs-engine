@@ -203,7 +203,7 @@
     },
     {
         id: 20, level: 4, typ: "numerisch",
-        frage: "Berechne den Flächeninhalt zwischen \\(f(x) = x^2 - 1\\) und der \\(x\\)-Achse auf \\([0, 1]\\). <br><em>Hinweis: \\(f(x) \\leq 0\\) auf diesem Intervall.</em>",
+        frage: "Berechne den Flächeninhalt zwischen \\(f(x) = x^2 - 1\\) und der \\(x\\)-Achse auf \\([0, 1]\\).",
         loesung: 0.67, toleranz: 0.01,
         tipp: "Da \\(f(x) \\leq 0\\): \\(A = -\\int_0^1 (x^2 - 1)\\,dx = \\left|\\int_0^1 (x^2 - 1)\\,dx\\right|\\).",
         loesungsweg: "\\(\\int_0^1 (x^2-1)\\,dx = \\left[\\frac{1}{3}x^3 - x\\right]_0^1 = \\frac{1}{3} - 1 = -\\frac{2}{3}\\). Flächeninhalt: \\(A = \\frac{2}{3} \\approx 0{,}67\\)."
@@ -223,7 +223,7 @@
     },
     {
         id: 22, level: 4, typ: "numerisch",
-        frage: "\\(f(x) = x^2 - 4\\) hat Nullstellen bei \\(x = -2\\) und \\(x = 2\\). <br>Berechne \\(\\displaystyle\\int_{-2}^{2} (x^2 - 4)\\, dx\\). Runde auf zwei Dezimalstellen.",
+        frage: "Berechne \\(\\displaystyle\\int_{-2}^{2} (x^2 - 4)\\, dx\\). Runde auf zwei Dezimalstellen.",
         loesung: -10.67, toleranz: 0.01,
         tipp: "Auf \\([-2, 2]\\) gilt \\(x^2 - 4 \\leq 0\\). Das Integral wird negativ.",
         loesungsweg: "\\(\\left[\\frac{1}{3}x^3 - 4x\\right]_{-2}^{2} = (\\frac{8}{3} - 8) - (-\\frac{8}{3} + 8) = \\frac{8}{3} - 8 + \\frac{8}{3} - 8 = \\frac{16}{3} - 16 = -\\frac{32}{3} \\approx -10{,}67\\)."
@@ -250,109 +250,110 @@
     },
 
     // ══════════════════════════════════════════════════════════════
-    // LEVEL 5 — Integralfunktion J(x) = ∫₀ˣ f(t) dt
+    // LEVEL 5 — Integralfunktion qualitativ, Parameter, Mittelwert
     // ══════════════════════════════════════════════════════════════
     {
         id: 25, level: 5, typ: "mc",
-        frage: "Sei \\(J(x) = \\displaystyle\\int_0^x f(t)\\, dt\\). Was gilt nach dem Hauptsatz der Differential- und Integralrechnung?",
+        frage: "Es sei \\(J(x) = \\displaystyle\\int_0^x f(t)\\, dt\\), wobei \\(f\\) auf \\([0;\\,3]\\) positiv und streng monoton fallend ist. Was gilt dort für \\(J\\)?",
         optionen: [
-            "\\(J'(x) = f(x)\\)",
-            "\\(J'(x) = F(x)\\)",
-            "\\(J'(x) = f'(x)\\)",
-            "\\(J'(x) = \\int f(x)\\,dx\\)"
+            "\\(J\\) ist streng monoton steigend und rechtsgekrümmt",
+            "\\(J\\) ist streng monoton steigend und linksgekrümmt",
+            "\\(J\\) ist streng monoton fallend",
+            "\\(J\\) hat an der Stelle \\(0\\) einen Hochpunkt"
         ],
         korrekt: 0,
-        tipp: "Der HDI besagt: Die Ableitung der Integralfunktion ist die Integrandfunktion.",
-        loesungsweg: "Hauptsatz: \\(J'(x) = \\frac{d}{dx}\\int_0^x f(t)\\,dt = f(x)\\)."
+        tipp: "Nach dem Hauptsatz ist \\(J' = f\\). Übersetze die beiden Angaben über \\(f\\) in Aussagen über \\(J'\\) und \\(J''\\).",
+        loesungsweg: "Nach dem Hauptsatz gilt \\(J'(x) = f(x)\\). Aus \\(f > 0\\) folgt \\(J' > 0\\): \\(J\\) steigt. Aus „\\(f\\) fällt\" folgt \\(J'' = f' < 0\\): \\(J\\) ist rechtsgekrümmt. Anschaulich: Es kommt ständig Fläche hinzu, aber immer weniger pro Schritt."
     },
     {
         id: 26, level: 5, typ: "numerisch",
-        frage: "Sei \\(J(x) = \\displaystyle\\int_0^x (2t + 1)\\, dt\\). Berechne \\(J(3)\\).",
-        loesung: 12, toleranz: 0,
-        tipp: "Berechne \\(\\int_0^3 (2t+1)\\,dt\\) mit der Stammfunktion \\(t^2 + t\\).",
-        loesungsweg: "\\(J(3) = \\left[t^2 + t\\right]_0^3 = (9 + 3) - 0 = 12\\)."
+        frage: "Für welchen Wert \\(b > 0\\) gilt \\(\\displaystyle\\int_0^b (2x - 4)\\, dx = 0\\)?",
+        loesung: 4, toleranz: 0,
+        tipp: "Berechne das Integral in Abhängigkeit von \\(b\\) und setze es null.",
+        loesungsweg: "$$\\int_0^b (2x-4)\\,dx = \\left[x^2 - 4x\\right]_0^b = b^2 - 4b = b(b-4)$$ Null wird das für \\(b = 0\\) und \\(b = 4\\); gesucht ist \\(b = 4\\). Inhaltlich: Die Fläche unterhalb der Achse (von \\(0\\) bis \\(2\\)) und die oberhalb (von \\(2\\) bis \\(4\\)) heben sich genau auf."
     },
     {
         id: 27, level: 5, typ: "numerisch",
-        frage: "Sei \\(J(x) = \\displaystyle\\int_0^x t^2\\, dt\\). Berechne \\(J'(4)\\).",
-        loesung: 16, toleranz: 0,
-        tipp: "Nach dem Hauptsatz gilt \\(J'(x) = f(x) = x^2\\). Einsetzen!",
-        loesungsweg: "\\(J'(x) = x^2\\) (Hauptsatz). \\(J'(4) = 4^2 = 16\\)."
+        frage: "Berechne den Mittelwert der Funktion \\(f(x) = x^2\\) über dem Intervall \\([0;\\,3]\\).",
+        loesung: 3, toleranz: 0,
+        tipp: "Der Mittelwert ist der Wert, den ein Rechteck gleicher Breite und gleichen Flächeninhalts als Höhe hätte.",
+        loesungsweg: "$$\\bar{f} = \\frac{1}{b-a}\\int_a^b f(x)\\,dx = \\frac{1}{3}\\int_0^3 x^2\\,dx = \\frac{1}{3}\\left[\\frac{x^3}{3}\\right]_0^3 = \\frac{1}{3} \\cdot 9 = 3$$ Ein Rechteck der Breite \\(3\\) und der Höhe \\(3\\) hat denselben Inhalt wie die Fläche unter der Parabel."
     },
     {
-        id: 28, level: 5, typ: "mc",
-        frage: "Welchen Wert hat \\(J(0) = \\displaystyle\\int_0^0 f(t)\\, dt\\)?",
-        optionen: ["\\(J(0) = 0\\)", "\\(J(0) = f(0)\\)", "\\(J(0) = 1\\)", "\\(J(0) = F(0)\\)"],
-        korrekt: 0,
-        tipp: "Was passiert bei einem Integral, dessen obere und untere Grenze gleich sind?",
-        loesungsweg: "\\(\\int_a^a f(t)\\,dt = 0\\) für jede Funktion \\(f\\). Also \\(J(0) = 0\\)."
+        id: 28, level: 5, typ: "numerisch",
+        frage: "Ein Bestand ändert sich mit der Rate \\(r(t) = 4 - 2t\\) (Einheiten pro Stunde). Zu Beginn beträgt er \\(10\\) Einheiten. Wie groß ist er nach \\(3\\) Stunden?",
+        loesung: 13, toleranz: 0,
+        tipp: "Die Gesamtänderung über einen Zeitraum ist das Integral der Änderungsrate.",
+        loesungsweg: "Gesamtänderung: $$\\int_0^3 (4 - 2t)\\,dt = \\left[4t - t^2\\right]_0^3 = 12 - 9 = 3$$ Bestand nach drei Stunden: \\(B(3) = 10 + 3 = 13\\). Beachte: Ab \\(t = 2\\) ist die Rate negativ, der Bestand nimmt dann wieder ab – der Höchststand von \\(14\\) wird bei \\(t = 2\\) erreicht."
     },
     {
         id: 29, level: 5, typ: "numerisch",
-        frage: "Sei \\(J(x) = \\displaystyle\\int_1^x \\frac{1}{t^2}\\, dt\\). Berechne \\(J(2)\\).",
+        frage: "Berechne den Flächeninhalt, den der Graph von \\(f(x) = x^3 - x\\) mit der \\(x\\)-Achse über dem Intervall \\([-1;\\,1]\\) einschließt.",
         loesung: 0.5, toleranz: 0.01,
-        tipp: "Stammfunktion von \\(t^{-2}\\) ist \\(-t^{-1} = -\\frac{1}{t}\\).",
-        loesungsweg: "\\(J(2) = \\left[-\\frac{1}{t}\\right]_1^2 = -\\frac{1}{2} - \\left(-\\frac{1}{1}\\right) = -\\frac{1}{2} + 1 = \\frac{1}{2}\\)."
+        tipp: "Prüfe zuerst, ob der Graph im Intervall die Achse kreuzt – dort muss getrennt gerechnet werden.",
+        loesungsweg: "Nullstellen: \\(x(x-1)(x+1)\\), also \\(-1\\), \\(0\\) und \\(1\\). Auf \\([-1;0]\\) ist \\(f \\geq 0\\), auf \\([0;1]\\) ist \\(f \\leq 0\\). $$\\int_{-1}^{0}(x^3-x)\\,dx = \\left[\\frac{x^4}{4} - \\frac{x^2}{2}\\right]_{-1}^{0} = 0 - \\left(\\frac14 - \\frac12\\right) = \\frac14$$ Das zweite Teilstück liefert betragsmäßig denselben Wert. Gesamtfläche: \\(\\frac14 + \\frac14 = 0{,}5\\). (Das orientierte Integral über \\([-1;1]\\) wäre dagegen null.)"
     },
     {
-        id: 30, level: 5, typ: "numerisch",
-        frage: "Sei \\(J(x) = \\displaystyle\\int_0^x e^t\\, dt\\). Berechne \\(J(2)\\). Runde auf zwei Dezimalstellen.",
-        loesung: 6.39, toleranz: 0.01,
-        tipp: "\\(J(x) = e^x - 1\\). Einsetzen: \\(J(2) = e^2 - 1\\).",
-        loesungsweg: "\\(J(2) = \\left[e^t\\right]_0^2 = e^2 - e^0 = e^2 - 1 \\approx 7{,}389 - 1 = 6{,}39\\)."
+        id: 30, level: 5, typ: "mc",
+        frage: "Ein Schüler berechnet \\(\\displaystyle\\int_{-1}^{1} x^2\\, dx\\):<br>Schritt 1: \\(x^2\\) ist symmetrisch.<br>Schritt 2: Bei symmetrischen Funktionen heben sich die Anteile links und rechts der \\(y\\)-Achse auf.<br>Schritt 3: Also ist das Integral \\(0\\).<br>Welcher Schritt ist der erste fehlerhafte?",
+        optionen: ["Schritt 1", "Schritt 2", "Schritt 3", "Kein Schritt ist fehlerhaft"],
+        korrekt: 1,
+        tipp: "Bei welcher Art von Symmetrie heben sich die Anteile auf – Achsen- oder Punktsymmetrie?",
+        loesungsweg: "Schritt 1 stimmt: \\(x^2\\) ist achsensymmetrisch. Schritt 2 verwechselt die Symmetrien: Aufheben tun sich die Anteile nur bei <b>Punkt</b>symmetrie (etwa bei \\(x^3\\)), weil dort ein Vorzeichenwechsel auftritt. Bei Achsensymmetrie verdoppeln sie sich: $$\\int_{-1}^{1} x^2\\,dx = 2\\int_0^1 x^2\\,dx = \\frac{2}{3}$$"
     },
 
     // ══════════════════════════════════════════════════════════════
-    // LEVEL 6 — Rekonstruierter Bestand, orientierter Flächeninhalt
+    // LEVEL 6 — Rekonstruktion mit Vorzeichenwechsel, Parameter, Abi-Format
     // ══════════════════════════════════════════════════════════════
     {
-        id: 31, level: 6, typ: "numerisch",
-        frage: "Ein Behälter wird mit der Rate \\(r(t) = 6t\\) (Liter/min) befüllt. Wie viel Liter fließen in den ersten 3 Minuten hinein?",
-        loesung: 27, toleranz: 0,
-        tipp: "Gesamtmenge = \\(\\int_0^3 6t\\,dt\\).",
-        loesungsweg: "\\(\\int_0^3 6t\\,dt = \\left[3t^2\\right]_0^3 = 3 \\cdot 9 = 27\\) Liter."
+        id: 31, level: 6, typ: "mc",
+        frage: "Für \\(J(x) = \\displaystyle\\int_0^x f(t)\\,dt\\) ist bekannt: \\(f\\) hat an der Stelle \\(2\\) eine Nullstelle und wechselt dort das Vorzeichen von \\(+\\) nach \\(-\\). Was folgt für \\(J\\)?",
+        optionen: [
+            "\\(J\\) hat an der Stelle \\(2\\) einen Hochpunkt",
+            "\\(J\\) hat an der Stelle \\(2\\) einen Tiefpunkt",
+            "\\(J\\) hat an der Stelle \\(2\\) eine Nullstelle",
+            "\\(J\\) hat an der Stelle \\(2\\) einen Sattelpunkt"
+        ],
+        korrekt: 0,
+        tipp: "Der Hauptsatz übersetzt Aussagen über \\(f\\) in Aussagen über die Ableitung von \\(J\\).",
+        loesungsweg: "Wegen \\(J' = f\\) bedeutet der Vorzeichenwechsel von \\(f\\) bei \\(2\\) von \\(+\\) nach \\(-\\), dass \\(J'\\) dort von positiv zu negativ wechselt: \\(J\\) steigt bis \\(2\\) und fällt danach – ein Hochpunkt. Über die Nullstellen von \\(J\\) sagt die Angabe nichts; sie hängen von der bis dahin aufgesammelten Fläche ab."
     },
     {
         id: 32, level: 6, typ: "numerisch",
-        frage: "Die Geschwindigkeit eines Objekts ist \\(v(t) = 3t^2 - 12t + 9\\) (m/s). <br>Berechne die zurückgelegte Strecke (Wegintegral) von \\(t = 0\\) bis \\(t = 1\\). <br><em>Hinweis: Prüfe, ob \\(v(t) \\geq 0\\) auf \\([0, 1]\\).</em>",
+        frage: "Für welchen Wert \\(a > 0\\) gilt \\(\\displaystyle\\int_0^a 3x^2\\, dx = 64\\)?",
         loesung: 4, toleranz: 0,
-        tipp: "\\(v(t) = 3(t-1)(t-3)\\). Auf \\([0,1]\\): \\(v(t) \\geq 0\\). Also \\(\\int_0^1 v(t)\\,dt\\).",
-        loesungsweg: "\\(\\int_0^1 (3t^2-12t+9)\\,dt = \\left[t^3-6t^2+9t\\right]_0^1 = 1 - 6 + 9 = 4\\) m."
+        tipp: "Berechne das Integral in Abhängigkeit von der oberen Grenze.",
+        loesungsweg: "$$\\int_0^a 3x^2\\,dx = \\left[x^3\\right]_0^a = a^3$$ Bedingung: \\(a^3 = 64 \\Rightarrow a = 4\\)."
     },
     {
-        id: 33, level: 6, typ: "mc",
-        frage: "Was ist der Unterschied zwischen dem orientierten Integral \\(\\int_a^b f(x)\\,dx\\) und dem Flächeninhalt \\(A\\)?",
-        optionen: [
-            "Das Integral kann negativ sein; der Flächeninhalt \\(A = \\int_a^b |f(x)|\\,dx\\) ist stets \\(\\geq 0\\)",
-            "Es gibt keinen Unterschied",
-            "Der Flächeninhalt kann negativ sein, das Integral nicht",
-            "Beides ist immer positiv"
-        ],
-        korrekt: 0,
-        tipp: "Orientiert heißt: Unterhalb der x-Achse zählt negativ. Fläche ist immer positiv.",
-        loesungsweg: "Das orientierte Integral berücksichtigt das Vorzeichen. Der Flächeninhalt wird durch \\(A = \\int_a^b |f(x)|\\,dx \\geq 0\\) berechnet."
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Wasser strömt mit der Rate \\(r(t) = t^2 - 6t + 8\\) (Liter pro Minute) in ein Becken; negative Werte bedeuten Abfluss. Wie viele Liter fließen zwischen \\(t = 2\\) und \\(t = 4\\) netto ab? Runde auf zwei Dezimalstellen.",
+        loesung: 1.33, toleranz: 0.01,
+        tipp: "Bestimme zuerst das Vorzeichen der Rate im betrachteten Zeitraum und integriere dann.",
+        loesungsweg: "Wegen \\(r(t) = (t-2)(t-4)\\) ist die Rate zwischen \\(2\\) und \\(4\\) negativ – es fließt tatsächlich ab. $$\\int_2^4 (t^2 - 6t + 8)\\,dt = \\left[\\frac{t^3}{3} - 3t^2 + 8t\\right]_2^4 = \\left(\\frac{64}{3} - 16\\right) - \\left(\\frac{8}{3} + 4\\right) = \\frac{56}{3} - 20 = -\\frac{4}{3}$$ Es fließen also rund \\(1{,}33\\) Liter ab."
     },
     {
         id: 34, level: 6, typ: "numerisch",
-        frage: "Berechne den orientierten Flächeninhalt \\(\\displaystyle\\int_0^{3\\pi/2} \\cos(x)\\, dx\\). Runde auf zwei Dezimalstellen.",
-        loesung: -1, toleranz: 0.01,
-        tipp: "Stammfunktion: \\(\\sin(x)\\). \\(\\sin(3\\pi/2) = -1\\).",
-        loesungsweg: "\\(\\left[\\sin(x)\\right]_0^{3\\pi/2} = \\sin(3\\pi/2) - \\sin(0) = -1 - 0 = -1\\)."
+        frage: "Für welchen Wert von \\(c\\) gilt \\(\\displaystyle\\int_0^3 \\left(x^2 + c\\right) dx = 0\\)?",
+        loesung: -3, toleranz: 0,
+        tipp: "Der konstante Summand liefert beim Integrieren ein Rechteck.",
+        loesungsweg: "$$\\int_0^3 (x^2 + c)\\,dx = \\left[\\frac{x^3}{3} + cx\\right]_0^3 = 9 + 3c$$ Bedingung: \\(9 + 3c = 0 \\Rightarrow c = -3\\). Die Fläche unter der Parabel und die Rechteckfläche unterhalb der Achse heben sich dann auf."
     },
     {
         id: 35, level: 6, typ: "numerisch",
-        frage: "Ein Bestand ändert sich mit der Rate \\(r(t) = 4 - 2t\\). Anfangsbestand: \\(B(0) = 10\\). <br>Berechne \\(B(3)\\).",
-        loesung: 13, toleranz: 0,
-        tipp: "\\(B(3) = B(0) + \\int_0^3 (4 - 2t)\\,dt\\).",
-        loesungsweg: "\\(\\int_0^3 (4-2t)\\,dt = \\left[4t - t^2\\right]_0^3 = 12 - 9 = 3\\). Also \\(B(3) = 10 + 3 = 13\\)."
+        frage: "Ein Objekt bewegt sich mit der Geschwindigkeit \\(v(t) = 3t^2 - 12t + 9\\) (in m/s) geradlinig. Welche <b>Strecke</b> legt es zwischen \\(t = 0\\) und \\(t = 3\\) zurück (in Metern)?",
+        loesung: 8, toleranz: 0,
+        tipp: "Strecke und Verschiebung sind verschieden, sobald die Geschwindigkeit das Vorzeichen wechselt – prüfe das zuerst.",
+        loesungsweg: "\\(v(t) = 3(t-1)(t-3)\\): positiv auf \\([0;1]\\), negativ auf \\([1;3]\\) – das Objekt kehrt bei \\(t = 1\\) um. Deshalb getrennt rechnen; Stammfunktion \\(s(t) = t^3 - 6t^2 + 9t\\): $$\\int_0^1 v\\,dt = 1 - 6 + 9 = 4, \\qquad \\int_1^3 v\\,dt = (27 - 54 + 27) - 4 = -4$$ Zurückgelegte Strecke: \\(|4| + |-4| = 8\\,\\text{m}\\). (Die Verschiebung beträgt dagegen nur \\(0\\,\\text{m}\\) – das Objekt ist wieder am Ausgangspunkt.)"
     },
     {
         id: 36, level: 6, typ: "numerisch",
-        frage: "Berechne den tatsächlichen Flächeninhalt zwischen \\(f(x) = \\sin(x)\\) und der \\(x\\)-Achse auf \\([0, 2\\pi]\\). <br><em>Hinweis: Nullstelle bei \\(x = \\pi\\). Aufteilen!</em>",
+        frage: "Berechne den Flächeninhalt, den der Graph von \\(f(x) = \\sin(x)\\) mit der \\(x\\)-Achse über dem Intervall \\([0;\\,2\\pi]\\) einschließt.",
         loesung: 4, toleranz: 0.01,
-        tipp: "\\(A = \\left|\\int_0^\\pi \\sin(x)\\,dx\\right| + \\left|\\int_\\pi^{2\\pi} \\sin(x)\\,dx\\right|\\).",
-        loesungsweg: "\\(\\int_0^\\pi \\sin(x)\\,dx = [-\\cos(x)]_0^\\pi = 1+1 = 2\\). \\(\\int_\\pi^{2\\pi} \\sin(x)\\,dx = [-\\cos(x)]_\\pi^{2\\pi} = -1-1 = -2\\). \\(A = 2 + |-2| = 2 + 2 = 4\\)."
+        tipp: "Untersuche zuerst, wo der Graph im Intervall die Achse kreuzt.",
+        loesungsweg: "Im Innern des Intervalls liegt die Nullstelle \\(x = \\pi\\); dort wechselt der Sinus das Vorzeichen, also muss getrennt gerechnet werden: $$\\int_0^{\\pi}\\sin x\\,dx = \\left[-\\cos x\\right]_0^{\\pi} = 1 + 1 = 2$$ $$\\int_{\\pi}^{2\\pi}\\sin x\\,dx = \\left[-\\cos x\\right]_{\\pi}^{2\\pi} = -1 - 1 = -2$$ Gesamtfläche: \\(|2| + |-2| = 4\\). Das orientierte Integral über das ganze Intervall wäre dagegen null."
     }
+
 
     ];
     </script>

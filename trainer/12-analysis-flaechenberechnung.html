@@ -198,119 +198,102 @@
     },
 
     // ══════════════════════════════════════════════════════════════
-    // LEVEL 4 — Fläche zwischen Parabel und Gerade
+    // LEVEL 4 — Schnitt- und Nullstellen selbst bestimmen, Begründung
     // ══════════════════════════════════════════════════════════════
     {
         id: 19, level: 4, typ: "numerisch",
-        frage: "Berechne die Fläche zwischen \\(f(x) = x^2\\) und \\(g(x) = x + 2\\). <br><em>Schnittpunkte bestimmen!</em>",
+        frage: "Berechne den Inhalt der Fläche, die die Graphen von \\(f(x) = x^2\\) und \\(g(x) = x + 2\\) einschließen.",
         loesung: 4.5, toleranz: 0.01,
-        tipp: "\\(x^2 = x + 2 \\Rightarrow x^2 - x - 2 = 0 \\Rightarrow (x-2)(x+1) = 0\\). SP: \\(x = -1, x = 2\\).",
-        loesungsweg: "\\(A = \\int_{-1}^{2} (x+2-x^2)\\,dx = \\left[\\frac{1}{2}x^2+2x-\\frac{1}{3}x^3\\right]_{-1}^{2} = (2+4-\\frac{8}{3}) - (\\frac{1}{2}-2+\\frac{1}{3}) = \\frac{10}{3}-(-\\frac{7}{6}) = \\frac{10}{3}+\\frac{7}{6} = \\frac{27}{6} = 4{,}5\\)."
+        tipp: "Die Integrationsgrenzen sind die Stellen, an denen sich die beiden Graphen schneiden.",
+        loesungsweg: "Schnittstellen: \\(x^2 = x+2 \\Rightarrow x^2 - x - 2 = (x-2)(x+1) = 0\\), also \\(x = -1\\) und \\(x = 2\\). Zwischen ihnen verläuft die Gerade oberhalb der Parabel: $$A = \\int_{-1}^{2}\\big(x + 2 - x^2\\big)dx = \\left[\\frac{x^2}{2} + 2x - \\frac{x^3}{3}\\right]_{-1}^{2} = \\frac{10}{3} + \\frac{7}{6} = 4{,}5$$"
     },
     {
         id: 20, level: 4, typ: "numerisch",
-        frage: "Berechne die Fläche zwischen \\(f(x) = -x^2 + 4\\) und \\(g(x) = 0\\) (x-Achse). <br><em>Nullstellen: \\(x = -2, x = 2\\).</em> Runde auf zwei Dezimalstellen.",
+        frage: "Berechne den Inhalt der Fläche, die der Graph von \\(f(x) = -x^2 + 4\\) mit der \\(x\\)-Achse einschließt. Runde auf zwei Dezimalstellen.",
         loesung: 10.67, toleranz: 0.01,
-        tipp: "Auf \\([-2, 2]\\) ist \\(f(x) \\geq 0\\). Also direkt integrieren.",
-        loesungsweg: "\\(A = \\int_{-2}^{2} (-x^2+4)\\,dx = \\left[-\\frac{1}{3}x^3+4x\\right]_{-2}^{2} = (-\\frac{8}{3}+8)-(\\frac{8}{3}-8) = \\frac{32}{3} \\approx 10{,}67\\)."
+        tipp: "Bestimme zuerst die Nullstellen – sie begrenzen die Fläche.",
+        loesungsweg: "Nullstellen: \\(-x^2 + 4 = 0 \\Rightarrow x = \\pm 2\\). Dazwischen ist \\(f(x) \\geq 0\\): $$A = \\int_{-2}^{2}\\big(4 - x^2\\big)dx = \\left[4x - \\frac{x^3}{3}\\right]_{-2}^{2} = \\frac{32}{3} \\approx 10{,}67$$"
     },
     {
         id: 21, level: 4, typ: "mc",
-        frage: "Die Fläche zwischen \\(f(x) = x^2 - 1\\) und \\(g(x) = 3\\) soll berechnet werden. Welcher Ansatz ist korrekt?",
+        frage: "Warum berechnet man den Inhalt der Fläche zwischen zwei Graphen als \\(\\int_a^b (f - g)\\,dx\\) mit der oberen Funktion \\(f\\)?",
         optionen: [
-            "\\(A = \\int_{-2}^{2}(3 - (x^2-1))\\,dx = \\int_{-2}^{2}(4-x^2)\\,dx\\)",
-            "\\(A = \\int_{-2}^{2}(x^2-1-3)\\,dx\\)",
-            "\\(A = \\int_{-1}^{3}(3-x^2)\\,dx\\)",
-            "\\(A = \\int_{-2}^{2}3\\,dx - \\int_{-2}^{2}1\\,dx\\)"
+            "Weil die Differenz an jeder Stelle die Höhe des Flächenstreifens angibt – sie muss positiv sein",
+            "Weil man beim Integrieren grundsätzlich die größere Funktion zuerst schreibt",
+            "Weil das Integral über \\(g\\) sonst negativ wäre",
+            "Weil sich die Integrationskonstanten sonst nicht aufheben"
         ],
         korrekt: 0,
-        tipp: "Schnittpunkte: \\(x^2 - 1 = 3 \\Rightarrow x = \\pm 2\\). Auf \\([-2,2]\\): \\(g(x) \\geq f(x)\\), also obere minus untere.",
-        loesungsweg: "\\(A = \\int_{-2}^{2}(g(x)-f(x))\\,dx = \\int_{-2}^{2}(3-(x^2-1))\\,dx = \\int_{-2}^{2}(4-x^2)\\,dx = \\frac{32}{3} \\approx 10{,}67\\)."
+        tipp: "Denke an die Streifen, aus denen die Fläche zusammengesetzt ist: Wie lang ist ein einzelner Streifen an der Stelle \\(x\\)?",
+        loesungsweg: "Die Fläche lässt sich in senkrechte Streifen zerlegen; ein Streifen an der Stelle \\(x\\) hat die Länge \\(f(x) - g(x)\\), wenn \\(f\\) dort oben verläuft. Nur so ergibt sich eine positive Höhe. Wo die Graphen ihre Lage tauschen, muss deshalb geteilt und die Differenz neu geordnet werden – das gilt unabhängig davon, ob die Funktionen selbst positiv oder negativ sind."
     },
     {
         id: 22, level: 4, typ: "numerisch",
-        frage: "Berechne die Fläche zwischen \\(f(x) = x^2\\) und \\(g(x) = 3x - 2\\). <br><em>Schnittpunkte: \\(x^2 = 3x - 2 \\Rightarrow x = 1, x = 2\\).</em> Runde auf zwei Dezimalstellen.",
-        loesung: 0.17, toleranz: 0.01,
-        tipp: "Auf \\([1, 2]\\): \\(g(x) \\geq f(x)\\). \\(A = \\int_1^2 (3x-2-x^2)\\,dx\\).",
-        loesungsweg: "\\(A = \\left[\\frac{3}{2}x^2-2x-\\frac{1}{3}x^3\\right]_1^2 = (6-4-\\frac{8}{3})-(\\frac{3}{2}-2-\\frac{1}{3}) = -\\frac{2}{3}-(-\\frac{5}{6}) = -\\frac{2}{3}+\\frac{5}{6} = \\frac{1}{6} \\approx 0{,}17\\)."
+        frage: "Berechne den Inhalt der Fläche, die der Graph von \\(f(x) = e^x\\) mit der \\(x\\)-Achse sowie den Geraden \\(x = 0\\) und \\(x = 1\\) einschließt. Runde auf zwei Dezimalstellen.",
+        loesung: 1.72, toleranz: 0.01,
+        tipp: "Die e-Funktion ist überall positiv – eine Fallunterscheidung ist nicht nötig.",
+        loesungsweg: "$$A = \\int_0^1 e^x\\,dx = \\left[e^x\\right]_0^1 = e - 1 \\approx 1{,}72$$"
     },
     {
-        id: 23, level: 4, typ: "mc",
-        frage: "Was muss man tun, bevor man die Fläche zwischen \\(f\\) und \\(g\\) berechnet?",
-        optionen: [
-            "Die Schnittpunkte von \\(f\\) und \\(g\\) bestimmen (\\(f(x) = g(x)\\) lösen)",
-            "Beide Funktionen ableiten",
-            "Den Mittelwert beider Funktionen berechnen",
-            "Die Stammfunktionen addieren"
-        ],
-        korrekt: 0,
-        tipp: "Die Schnittpunkte bilden die Integrationsgrenzen.",
-        loesungsweg: "Man löst \\(f(x) = g(x)\\), um die Schnittpunkte (= Integrationsgrenzen) zu bestimmen. Dann integriert man \\(|f - g|\\)."
+        id: 23, level: 4, typ: "numerisch",
+        frage: "Berechne den Inhalt der Fläche, die der Graph von \\(f(x) = x^2 - 4x + 3\\) zwischen seinen Nullstellen mit der \\(x\\)-Achse einschließt. Runde auf zwei Dezimalstellen.",
+        loesung: 1.33, toleranz: 0.01,
+        tipp: "Zwischen den Nullstellen verläuft die Parabel unterhalb der Achse – das Integral wird dort negativ.",
+        loesungsweg: "Nullstellen: \\(x^2 - 4x + 3 = (x-1)(x-3) = 0\\), also \\(1\\) und \\(3\\). $$\\int_1^3 \\big(x^2 - 4x + 3\\big)dx = \\left[\\frac{x^3}{3} - 2x^2 + 3x\\right]_1^3 = 0 - \\frac{4}{3} = -\\frac{4}{3}$$ Der Flächeninhalt ist der Betrag: \\(\\frac{4}{3} \\approx 1{,}33\\)."
     },
     {
         id: 24, level: 4, typ: "numerisch",
-        frage: "Berechne die Fläche zwischen \\(f(x) = x^2 - 4x + 3\\) und der \\(x\\)-Achse. <br><em>Nullstellen: \\(x = 1, x = 3\\).</em> Runde auf zwei Dezimalstellen.",
-        loesung: 1.33, toleranz: 0.01,
-        tipp: "Auf \\([1, 3]\\) gilt \\(f(x) \\leq 0\\). \\(A = \\left|\\int_1^3 (x^2-4x+3)\\,dx\\right|\\).",
-        loesungsweg: "\\(\\int_1^3 (x^2-4x+3)\\,dx = \\left[\\frac{1}{3}x^3-2x^2+3x\\right]_1^3 = (9-18+9)-(\\frac{1}{3}-2+3) = 0-\\frac{4}{3} = -\\frac{4}{3}\\). \\(A = \\frac{4}{3} \\approx 1{,}33\\)."
+        frage: "Berechne den Inhalt der Fläche, die die Graphen von \\(f(x) = x^3\\) und \\(g(x) = x\\) über dem Intervall \\([0;\\,1]\\) einschließen.",
+        loesung: 0.25, toleranz: 0.01,
+        tipp: "Prüfe zuerst, welcher der beiden Graphen im Intervall oben verläuft.",
+        loesungsweg: "Für \\(0 < x < 1\\) gilt \\(x^3 < x\\) – die Gerade verläuft oberhalb: $$A = \\int_0^1 \\big(x - x^3\\big)dx = \\left[\\frac{x^2}{2} - \\frac{x^4}{4}\\right]_0^1 = \\frac{1}{2} - \\frac{1}{4} = 0{,}25$$"
     },
 
     // ══════════════════════════════════════════════════════════════
-    // LEVEL 5 — Fläche mit mehreren Schnittpunkten (aufteilen)
+    // LEVEL 5 — Tangentenfläche, Halbierung, Parameter, Fehlersuche
     // ══════════════════════════════════════════════════════════════
     {
         id: 25, level: 5, typ: "numerisch",
-        frage: "Berechne die Fläche zwischen \\(f(x) = x^3 - 4x\\) und der \\(x\\)-Achse auf \\([0, 2]\\).",
-        loesung: 4, toleranz: 0.01,
-        tipp: "Nullstelle bei \\(x = 0\\) und \\(x = 2\\). Auf \\([0, 2]\\): \\(f(x) \\leq 0\\).",
-        loesungsweg: "\\(\\int_0^2 (x^3-4x)\\,dx = \\left[\\frac{1}{4}x^4-2x^2\\right]_0^2 = (4-8)-0 = -4\\). \\(A = |-4| = 4\\)."
+        frage: "Die Tangente an den Graphen von \\(f(x) = x^2\\) an der Stelle \\(1\\) schließt mit dem Graphen und der Geraden \\(x = 3\\) eine Fläche ein. Berechne deren Inhalt. Runde auf zwei Dezimalstellen.",
+        loesung: 2.67, toleranz: 0.01,
+        tipp: "Stelle zuerst die Tangentengleichung auf; die Differenz von Parabel und Tangente lässt sich als vollständiges Quadrat schreiben.",
+        loesungsweg: "Tangente: \\(f(1) = 1\\), \\(f'(1) = 2\\), also \\(t(x) = 2(x-1) + 1 = 2x - 1\\). Differenz: $$x^2 - (2x - 1) = (x-1)^2 \\geq 0$$ Die Parabel liegt also überall oberhalb der Tangente (Berührung bei \\(x = 1\\)): $$A = \\int_1^3 (x-1)^2 dx = \\left[\\frac{(x-1)^3}{3}\\right]_1^3 = \\frac{8}{3} \\approx 2{,}67$$"
     },
     {
         id: 26, level: 5, typ: "numerisch",
-        frage: "Berechne die gesamte Fläche zwischen \\(f(x) = x^3 - x\\) und der \\(x\\)-Achse auf \\([-1, 1]\\). <br><em>Nullstellen: \\(x = -1, 0, 1\\).</em>",
-        loesung: 0.5, toleranz: 0.01,
-        tipp: "Aufteilen: \\([-1, 0]\\) und \\([0, 1]\\). Beträge addieren!",
-        loesungsweg: "\\(\\int_{-1}^0 (x^3-x)\\,dx = [\\frac{1}{4}x^4-\\frac{1}{2}x^2]_{-1}^0 = 0-(\\frac{1}{4}-\\frac{1}{2}) = \\frac{1}{4}\\). \\(\\int_0^1 (x^3-x)\\,dx = \\frac{1}{4}-\\frac{1}{2} = -\\frac{1}{4}\\). \\(A = \\frac{1}{4}+\\frac{1}{4} = \\frac{1}{2}\\)."
+        frage: "Der Graph von \\(f(x) = x^2\\) schließt über dem Intervall \\([0;\\,2]\\) mit der \\(x\\)-Achse eine Fläche ein. Die Gerade \\(x = c\\) teilt sie in zwei inhaltsgleiche Teile. Bestimme \\(c\\) und runde auf zwei Dezimalstellen.",
+        loesung: 1.59, toleranz: 0.01,
+        tipp: "Berechne zuerst die Gesamtfläche; der linke Teil muss halb so groß sein.",
+        loesungsweg: "Gesamtfläche: \\(\\int_0^2 x^2 dx = \\frac{8}{3}\\). Der linke Teil soll \\(\\frac{4}{3}\\) betragen: $$\\int_0^c x^2 dx = \\frac{c^3}{3} = \\frac{4}{3} \\Rightarrow c^3 = 4 \\Rightarrow c = \\sqrt[3]{4} \\approx 1{,}59$$ Die Teilungsstelle liegt also rechts von der Mitte – weil die Fläche nach rechts hin schneller wächst."
     },
     {
         id: 27, level: 5, typ: "numerisch",
-        frage: "Berechne die Fläche zwischen \\(f(x) = x^2 - 4\\) und \\(g(x) = -x^2 + 4\\). <br><em>Schnittpunkte: \\(x = -2, x = 2\\).</em> Runde auf zwei Dezimalstellen.",
-        loesung: 21.33, toleranz: 0.01,
-        tipp: "\\(g(x) \\geq f(x)\\) auf \\([-2, 2]\\). \\(A = \\int_{-2}^{2}(-x^2+4-x^2+4)\\,dx = \\int_{-2}^{2}(8-2x^2)\\,dx\\).",
-        loesungsweg: "\\(A = \\left[8x-\\frac{2}{3}x^3\\right]_{-2}^{2} = (16-\\frac{16}{3})-(-16+\\frac{16}{3}) = 32-\\frac{32}{3} = \\frac{64}{3} \\approx 21{,}33\\)."
+        frage: "Für welchen Wert \\(a > 0\\) schließt der Graph von \\(f(x) = a - x^2\\) mit der \\(x\\)-Achse eine Fläche vom Inhalt \\(36\\) ein?",
+        loesung: 9, toleranz: 0,
+        tipp: "Bestimme Nullstellen und Flächeninhalt zunächst allgemein in Abhängigkeit von \\(a\\).",
+        loesungsweg: "Nullstellen: \\(x = \\pm\\sqrt{a}\\). Wegen der Symmetrie: $$A = 2\\int_0^{\\sqrt{a}}\\big(a - x^2\\big)dx = 2\\left[ax - \\frac{x^3}{3}\\right]_0^{\\sqrt{a}} = 2\\left(a\\sqrt{a} - \\frac{a\\sqrt{a}}{3}\\right) = \\frac{4a\\sqrt{a}}{3}$$ Bedingung: $$\\frac{4}{3}a^{3/2} = 36 \\Rightarrow a^{3/2} = 27 \\Rightarrow a = 9$$"
     },
     {
-        id: 28, level: 5, typ: "mc",
-        frage: "\\(f(x) = x^2\\) und \\(g(x) = x + 6\\). Was sind die Schnittpunkte?",
-        optionen: [
-            "\\(x = -2\\) und \\(x = 3\\)",
-            "\\(x = -3\\) und \\(x = 2\\)",
-            "\\(x = 0\\) und \\(x = 6\\)",
-            "\\(x = -1\\) und \\(x = 6\\)"
-        ],
-        korrekt: 0,
-        tipp: "\\(x^2 = x + 6 \\Rightarrow x^2 - x - 6 = 0\\). Faktorisieren!",
-        loesungsweg: "\\(x^2 - x - 6 = (x-3)(x+2) = 0\\). Schnittpunkte: \\(x = -2\\) und \\(x = 3\\)."
+        id: 28, level: 5, typ: "numerisch",
+        frage: "Berechne den gesamten Inhalt der Fläche, die der Graph von \\(f(x) = x^3 - 4x\\) mit der \\(x\\)-Achse einschließt.",
+        loesung: 8, toleranz: 0.01,
+        tipp: "Der Graph kreuzt die Achse mehrfach – die Teilflächen müssen einzeln berechnet werden.",
+        loesungsweg: "Nullstellen: \\(x(x-2)(x+2)\\), also \\(-2\\), \\(0\\) und \\(2\\). Auf \\([0;2]\\) liegt der Graph unterhalb der Achse: $$\\left|\\int_0^2 \\big(x^3 - 4x\\big)dx\\right| = \\left|\\left[\\frac{x^4}{4} - 2x^2\\right]_0^2\\right| = |4 - 8| = 4$$ Wegen der Punktsymmetrie ist die linke Teilfläche genauso groß. Gesamt: \\(4 + 4 = 8\\). (Das Integral über \\([-2;2]\\) wäre dagegen null.)"
     },
     {
         id: 29, level: 5, typ: "numerisch",
-        frage: "Berechne die Fläche zwischen \\(f(x) = x^2\\) und \\(g(x) = x + 6\\) (aus vorheriger Aufgabe). Runde auf zwei Dezimalstellen.",
-        loesung: 20.83, toleranz: 0.01,
-        tipp: "Schnittpunkte: \\(x = -2, x = 3\\). \\(g(x) \\geq f(x)\\) auf \\([-2, 3]\\).",
-        loesungsweg: "\\(A = \\int_{-2}^{3}(x+6-x^2)\\,dx = \\left[\\frac{1}{2}x^2+6x-\\frac{1}{3}x^3\\right]_{-2}^{3} = (\\frac{9}{2}+18-9)-(2-12+\\frac{8}{3}) = \\frac{27}{2}-(-\\frac{22}{3}) = \\frac{81+44}{6} = \\frac{125}{6} \\approx 20{,}83\\)."
+        frage: "Berechne den Inhalt der Fläche, die die Graphen von \\(f(x) = e^x\\) und \\(g(x) = 1\\) über dem Intervall \\([0;\\,2]\\) einschließen. Runde auf zwei Dezimalstellen.",
+        loesung: 4.39, toleranz: 0.01,
+        tipp: "Welcher der beiden Graphen verläuft für \\(x > 0\\) oberhalb?",
+        loesungsweg: "Für \\(x > 0\\) ist \\(e^x > 1\\); die Graphen berühren sich bei \\(x = 0\\). $$A = \\int_0^2\\big(e^x - 1\\big)dx = \\left[e^x - x\\right]_0^2 = \\big(e^2 - 2\\big) - 1 = e^2 - 3 \\approx 4{,}39$$"
     },
     {
         id: 30, level: 5, typ: "mc",
-        frage: "Bei der Fläche zwischen \\(f\\) und \\(g\\) mit drei Schnittpunkten \\(x_1 < x_2 < x_3\\): Welche Strategie?",
-        optionen: [
-            "Zwei Teilintegrale berechnen: \\(\\int_{x_1}^{x_2}|f-g|\\,dx + \\int_{x_2}^{x_3}|f-g|\\,dx\\)",
-            "Ein einziges Integral \\(\\int_{x_1}^{x_3}(f-g)\\,dx\\) genügt",
-            "Nur das größte Teilintervall integrieren",
-            "Die drei Schnittpunkte mitteln"
-        ],
+        frage: "Ein Schüler berechnet die Fläche zwischen \\(f(x) = x^2 - 1\\) und der \\(x\\)-Achse über \\([0;\\,2]\\):<br>Schritt 1: \\(\\int_0^2 (x^2-1)\\,dx = \\left[\\frac{x^3}{3} - x\\right]_0^2\\)<br>Schritt 2: \\(= \\frac{8}{3} - 2 = \\frac{2}{3}\\)<br>Schritt 3: Also beträgt die Fläche \\(\\frac{2}{3}\\).<br>Welcher Schritt ist der erste fehlerhafte?",
+        optionen: ["Schritt 1", "Schritt 2", "Schritt 3", "Kein Schritt ist fehlerhaft"],
         korrekt: 0,
-        tipp: "An Schnittpunkten kann sich ändern, welche Funktion oben liegt.",
-        loesungsweg: "An jedem Schnittpunkt kann sich die Reihenfolge (oben/unten) ändern. Daher: Aufteilen und Beträge der Teilintegrale addieren."
+        tipp: "Hat der Graph im Intervall \\([0;2]\\) eine Nullstelle?",
+        loesungsweg: "Schon der Ansatz in Schritt 1 ist falsch: Bei \\(x = 1\\) wechselt \\(f\\) das Vorzeichen, also muss geteilt werden. $$\\left|\\int_0^1 (x^2-1)dx\\right| = \\frac{2}{3}, \\qquad \\int_1^2 (x^2-1)dx = \\frac{4}{3}$$ Die Fläche beträgt \\(\\frac{2}{3} + \\frac{4}{3} = 2\\). Der Wert \\(\\frac{2}{3}\\) ist das orientierte Integral, bei dem sich die Anteile teilweise aufheben."
     },
 
     // ══════════════════════════════════════════════════════════════

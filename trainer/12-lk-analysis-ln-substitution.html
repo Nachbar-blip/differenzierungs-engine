@@ -58,7 +58,7 @@
     },
     {
         id: 5, level: 1, typ: "mc",
-        frage: "Welche Aussage ist richtig?",
+        frage: "Welche Aussage über das unbestimmte Integral von \\(x^{-1}\\) ist richtig?",
         optionen: [
             "\\(\\int x^{-1}\\,dx = \\ln|x| + C\\) (Sonderfall der Potenzregel)",
             "\\(\\int x^{-1}\\,dx = \\frac{x^0}{0} + C\\)",
@@ -177,184 +177,156 @@
     },
 
     // ══════════════════════════════════════════════════════════════
-    // LEVEL 4 — ∫ 1/(ax+b) dx = (1/a)·ln|ax+b| + C
+    // LEVEL 4 — lineare Substitution in bestimmten Integralen
     // ══════════════════════════════════════════════════════════════
     {
-        id: 19, level: 4, typ: "mc",
-        frage: "Wie lautet \\(\\displaystyle\\int \\frac{1}{3x+2}\\,dx\\)?",
-        optionen: [
-            "\\(\\frac{1}{3}\\ln|3x+2| + C\\)",
-            "\\(3\\ln|3x+2| + C\\)",
-            "\\(\\ln|3x+2| + C\\)",
-            "\\(\\frac{1}{3x+2} + C\\)"
-        ],
-        korrekt: 0,
-        tipp: "Lineare Substitution: \\(\\int \\frac{1}{ax+b}\\,dx = \\frac{1}{a}\\ln|ax+b| + C\\).",
-        loesungsweg: "\\(\\int \\frac{1}{3x+2}\\,dx = \\frac{1}{3}\\ln|3x+2| + C\\). Innere Ableitung: 3, also Faktor \\(\\frac{1}{3}\\)."
+        id: 19, level: 4, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^1 e^{2x}\\,dx\\) und runde auf zwei Dezimalstellen.",
+        loesung: 3.19, toleranz: 0.01,
+        tipp: "Die innere Ableitung erscheint beim Aufleiten als Nenner des Vorfaktors.",
+        loesungsweg: "$$\\int_0^1 e^{2x}dx = \\left[\\frac{1}{2}e^{2x}\\right]_0^1 = \\frac{e^2 - 1}{2} \\approx \\frac{7{,}389 - 1}{2} \\approx 3{,}19$$"
     },
     {
-        id: 20, level: 4, typ: "mc",
-        frage: "Wie lautet \\(\\displaystyle\\int \\frac{1}{2x-1}\\,dx\\)?",
-        optionen: [
-            "\\(\\frac{1}{2}\\ln|2x-1| + C\\)",
-            "\\(2\\ln|2x-1| + C\\)",
-            "\\(\\ln|2x-1| + C\\)",
-            "\\(-\\frac{1}{(2x-1)^2} + C\\)"
-        ],
-        korrekt: 0,
-        tipp: "Innere Ableitung von \\(2x - 1\\) ist 2. Also Faktor \\(\\frac{1}{2}\\) vor den ln.",
-        loesungsweg: "\\(\\int \\frac{1}{2x-1}\\,dx = \\frac{1}{2}\\ln|2x-1| + C\\)."
+        id: 20, level: 4, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_1^3 \\frac{1}{2x}\\,dx\\) und runde auf zwei Dezimalstellen.",
+        loesung: 0.55, toleranz: 0.01,
+        tipp: "Der konstante Faktor lässt sich vor das Integral ziehen.",
+        loesungsweg: "$$\\int_1^3 \\frac{1}{2x}dx = \\frac{1}{2}\\left[\\ln|x|\\right]_1^3 = \\frac{1}{2}\\big(\\ln 3 - 0\\big) = \\frac{\\ln 3}{2} \\approx 0{,}55$$"
     },
     {
         id: 21, level: 4, typ: "numerisch",
-        frage: "Berechne \\(\\displaystyle\\int_1^3 \\frac{1}{2x+1}\\,dx\\). Runde auf zwei Dezimalstellen.",
-        loesung: 0.42, toleranz: 0.01,
-        tipp: "\\(\\left[\\frac{1}{2}\\ln|2x+1|\\right]_1^3\\). Einsetzen!",
-        loesungsweg: "\\(\\left[\\frac{1}{2}\\ln|2x+1|\\right]_1^3 = \\frac{1}{2}\\ln(7) - \\frac{1}{2}\\ln(3) = \\frac{1}{2}\\ln\\left(\\frac{7}{3}\\right) \\approx \\frac{1}{2} \\cdot 0{,}847 = 0{,}42\\)."
+        frage: "Berechne \\(\\displaystyle\\int_0^1 (3x - 1)^3\\,dx\\).",
+        loesung: 1.25, toleranz: 0.01,
+        tipp: "Potenz um eins erhöhen und durch die innere Ableitung teilen.",
+        loesungsweg: "$$\\int_0^1 (3x-1)^3 dx = \\left[\\frac{(3x-1)^4}{4 \\cdot 3}\\right]_0^1 = \\frac{16 - 1}{12} = \\frac{15}{12} = 1{,}25$$"
     },
     {
-        id: 22, level: 4, typ: "numerisch",
-        frage: "Berechne \\(\\displaystyle\\int_0^1 \\frac{4}{4x+1}\\,dx\\). Runde auf zwei Dezimalstellen.",
-        loesung: 1.61, toleranz: 0.01,
-        tipp: "\\(\\int \\frac{4}{4x+1}\\,dx = 4 \\cdot \\frac{1}{4}\\ln|4x+1| = \\ln|4x+1|\\).",
-        loesungsweg: "\\(\\left[\\ln|4x+1|\\right]_0^1 = \\ln(5) - \\ln(1) = \\ln(5) \\approx 1{,}61\\)."
-    },
-    {
-        id: 23, level: 4, typ: "mc",
-        frage: "Wie lautet die allgemeine Regel für \\(\\displaystyle\\int \\frac{1}{ax+b}\\,dx\\)?",
+        id: 22, level: 4, typ: "mc",
+        frage: "Bei welcher Stammfunktion wurde der Vorfaktor <b>falsch</b> bestimmt?",
         optionen: [
-            "\\(\\frac{1}{a}\\ln|ax+b| + C\\)",
-            "\\(a \\cdot \\ln|ax+b| + C\\)",
-            "\\(\\frac{\\ln|ax+b|}{ax+b} + C\\)",
-            "\\(-\\frac{1}{(ax+b)^2} + C\\)"
+            "\\(\\displaystyle\\int e^{5x}dx = e^{5x} + C\\)",
+            "\\(\\displaystyle\\int e^{-x}dx = -e^{-x} + C\\)",
+            "\\(\\displaystyle\\int \\frac{1}{4x}dx = \\frac{1}{4}\\ln|x| + C\\)",
+            "\\(\\displaystyle\\int \\sin(3x)dx = -\\frac{1}{3}\\cos(3x) + C\\)"
         ],
         korrekt: 0,
-        tipp: "Wie bei \\(e^{ax+b}\\): Durch die innere Ableitung \\(a\\) teilen.",
-        loesungsweg: "\\(\\int \\frac{1}{ax+b}\\,dx = \\frac{1}{a}\\ln|ax+b| + C\\)."
+        tipp: "Leite jede angegebene Stammfunktion ab und vergleiche mit dem Integranden.",
+        loesungsweg: "Ableiten der ersten Zeile liefert \\(\\left(e^{5x}\\right)' = 5e^{5x}\\) – um den Faktor \\(5\\) zu groß. Richtig ist \\(\\frac{1}{5}e^{5x} + C\\). Die übrigen drei Zeilen halten der Probe stand."
+    },
+    {
+        id: 23, level: 4, typ: "numerisch",
+        frage: "Berechne den Inhalt der Fläche, die der Graph von \\(f(x) = \\frac{1}{x}\\) mit der \\(x\\)-Achse sowie den Geraden \\(x = 1\\) und \\(x = e^2\\) einschließt.",
+        loesung: 2, toleranz: 0.01,
+        tipp: "Die Stammfunktion ist der natürliche Logarithmus – an den Grenzen ergeben sich besonders glatte Werte.",
+        loesungsweg: "$$A = \\int_1^{e^2}\\frac{1}{x}dx = \\left[\\ln x\\right]_1^{e^2} = \\ln\\!\\left(e^2\\right) - \\ln 1 = 2 - 0 = 2$$"
     },
     {
         id: 24, level: 4, typ: "numerisch",
-        frage: "Berechne \\(\\displaystyle\\int_2^{e+1} \\frac{1}{x-1}\\,dx\\).",
+        frage: "Berechne \\(\\displaystyle\\int_0^{\\pi/2} \\sin(2x)\\,dx\\).",
         loesung: 1, toleranz: 0.01,
-        tipp: "\\(\\int \\frac{1}{x-1}\\,dx = \\ln|x-1| + C\\). Innere Ableitung: 1.",
-        loesungsweg: "\\(\\left[\\ln|x-1|\\right]_2^{e+1} = \\ln(e+1-1) - \\ln(2-1) = \\ln(e) - \\ln(1) = 1 - 0 = 1\\)."
+        tipp: "Die Stammfunktion von \\(\\sin(ax)\\) trägt den Faktor \\(-\\frac{1}{a}\\).",
+        loesungsweg: "$$\\int_0^{\\pi/2}\\sin(2x)dx = \\left[-\\frac{1}{2}\\cos(2x)\\right]_0^{\\pi/2} = -\\frac{\\cos\\pi}{2} + \\frac{\\cos 0}{2} = \\frac{1}{2} + \\frac{1}{2} = 1$$"
     },
 
     // ══════════════════════════════════════════════════════════════
-    // LEVEL 5 — ∫ sin(ax+b), ∫ cos(ax+b) dx
+    // LEVEL 5 — Substitution mit nichtlinearer innerer Funktion
     // ══════════════════════════════════════════════════════════════
     {
-        id: 25, level: 5, typ: "mc",
-        frage: "Wie lautet \\(\\displaystyle\\int \\sin(2x)\\,dx\\)?",
-        optionen: [
-            "\\(-\\frac{1}{2}\\cos(2x) + C\\)",
-            "\\(-2\\cos(2x) + C\\)",
-            "\\(\\frac{1}{2}\\cos(2x) + C\\)",
-            "\\(-\\cos(2x) + C\\)"
-        ],
-        korrekt: 0,
-        tipp: "Stammfunktion von \\(\\sin\\) ist \\(-\\cos\\). Innere Ableitung: 2, also Faktor \\(\\frac{1}{2}\\).",
-        loesungsweg: "\\(\\int \\sin(2x)\\,dx = -\\frac{1}{2}\\cos(2x) + C\\). Probe: \\((-\\frac{1}{2}\\cos(2x))' = -\\frac{1}{2} \\cdot (-\\sin(2x)) \\cdot 2 = \\sin(2x)\\). \\(\\checkmark\\)"
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^1 x \\cdot e^{x^2}\\,dx\\) und runde auf zwei Dezimalstellen.",
+        loesung: 0.86, toleranz: 0.01,
+        tipp: "Betrachte die innere Funktion \\(u = x^2\\) – ihre Ableitung steckt bis auf einen konstanten Faktor bereits im Integranden.",
+        loesungsweg: "Mit \\(u = x^2\\) ist \\(u' = 2x\\); der Integrand enthält \\(x = \\frac{u'}{2}\\). Also $$\\int_0^1 x e^{x^2}dx = \\left[\\frac{1}{2}e^{x^2}\\right]_0^1 = \\frac{e - 1}{2} \\approx 0{,}86$$ (Probe durch Ableiten: \\(\\left(\\frac12 e^{x^2}\\right)' = \\frac12 e^{x^2}\\cdot 2x = x e^{x^2}\\) ✓)"
     },
     {
-        id: 26, level: 5, typ: "mc",
-        frage: "Wie lautet \\(\\displaystyle\\int \\cos(3x - 1)\\,dx\\)?",
-        optionen: [
-            "\\(\\frac{1}{3}\\sin(3x-1) + C\\)",
-            "\\(3\\sin(3x-1) + C\\)",
-            "\\(-\\frac{1}{3}\\sin(3x-1) + C\\)",
-            "\\(\\sin(3x-1) + C\\)"
-        ],
-        korrekt: 0,
-        tipp: "Stammfunktion von \\(\\cos\\) ist \\(\\sin\\). Innere Ableitung: 3, also Faktor \\(\\frac{1}{3}\\).",
-        loesungsweg: "\\(\\int \\cos(3x-1)\\,dx = \\frac{1}{3}\\sin(3x-1) + C\\)."
+        id: 26, level: 5, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^1 \\frac{x}{x^2 + 1}\\,dx\\) und runde auf zwei Dezimalstellen.",
+        loesung: 0.35, toleranz: 0.01,
+        tipp: "Vergleiche den Zähler mit der Ableitung des Nenners.",
+        loesungsweg: "Der Nenner hat die Ableitung \\(2x\\), der Zähler ist gerade die Hälfte davon. Für Integranden der Form \\(\\frac{u'}{u}\\) ist \\(\\ln|u|\\) die Stammfunktion: $$\\int_0^1 \\frac{x}{x^2+1}dx = \\frac{1}{2}\\left[\\ln\\!\\left(x^2+1\\right)\\right]_0^1 = \\frac{\\ln 2}{2} \\approx 0{,}35$$"
     },
     {
         id: 27, level: 5, typ: "numerisch",
-        frage: "Berechne \\(\\displaystyle\\int_0^{\\pi/2} \\sin(2x)\\,dx\\).",
-        loesung: 1, toleranz: 0.01,
-        tipp: "\\(\\left[-\\frac{1}{2}\\cos(2x)\\right]_0^{\\pi/2}\\). Beachte: \\(\\cos(\\pi) = -1\\), \\(\\cos(0) = 1\\).",
-        loesungsweg: "\\(\\left[-\\frac{1}{2}\\cos(2x)\\right]_0^{\\pi/2} = -\\frac{1}{2}\\cos(\\pi) + \\frac{1}{2}\\cos(0) = -\\frac{1}{2}(-1) + \\frac{1}{2}(1) = \\frac{1}{2} + \\frac{1}{2} = 1\\)."
+        frage: "Berechne \\(\\displaystyle\\int_0^1 2x\\left(x^2 + 1\\right)^3 dx\\).",
+        loesung: 3.75, toleranz: 0.01,
+        tipp: "Substituiere \\(u = x^2 + 1\\) und passe die Integrationsgrenzen mit an.",
+        loesungsweg: "Mit \\(u = x^2+1\\), \\(du = 2x\\,dx\\) und den neuen Grenzen \\(u(0) = 1\\), \\(u(1) = 2\\): $$\\int_1^2 u^3\\,du = \\left[\\frac{u^4}{4}\\right]_1^2 = \\frac{16 - 1}{4} = 3{,}75$$"
     },
     {
         id: 28, level: 5, typ: "numerisch",
-        frage: "Berechne \\(\\displaystyle\\int_0^{\\pi} \\cos\\left(\\frac{x}{2}\\right)\\,dx\\).",
-        loesung: 2, toleranz: 0.01,
-        tipp: "\\(\\int \\cos(x/2)\\,dx = 2\\sin(x/2) + C\\). Innere Ableitung: \\(\\frac{1}{2}\\), Kehrwert: 2.",
-        loesungsweg: "\\(\\left[2\\sin(x/2)\\right]_0^{\\pi} = 2\\sin(\\pi/2) - 2\\sin(0) = 2 \\cdot 1 - 0 = 2\\)."
+        frage: "Für welchen Wert \\(a > 1\\) gilt \\(\\displaystyle\\int_1^a \\frac{1}{x}\\,dx = 2\\)? Runde auf zwei Dezimalstellen.",
+        loesung: 7.39, toleranz: 0.01,
+        tipp: "Berechne das Integral in Abhängigkeit von der oberen Grenze und löse die entstehende Logarithmusgleichung.",
+        loesungsweg: "$$\\int_1^a \\frac{1}{x}dx = \\left[\\ln x\\right]_1^a = \\ln a$$ Bedingung: $$\\ln a = 2 \\Rightarrow a = e^2 \\approx 7{,}39$$"
     },
     {
-        id: 29, level: 5, typ: "numerisch",
-        frage: "Berechne \\(\\displaystyle\\int_0^{\\pi/4} \\cos(2x)\\,dx\\).",
-        loesung: 0.5, toleranz: 0.01,
-        tipp: "\\(\\int \\cos(2x)\\,dx = \\frac{1}{2}\\sin(2x)\\). Grenzen einsetzen.",
-        loesungsweg: "\\(\\left[\\frac{1}{2}\\sin(2x)\\right]_0^{\\pi/4} = \\frac{1}{2}\\sin(\\pi/2) - \\frac{1}{2}\\sin(0) = \\frac{1}{2} \\cdot 1 - 0 = 0{,}5\\)."
+        id: 29, level: 5, typ: "mc",
+        frage: "Ein Schüler berechnet \\(\\displaystyle\\int_0^1 2x\\left(x^2+1\\right)^3 dx\\):<br>Schritt 1: Substitution \\(u = x^2 + 1\\), \\(du = 2x\\,dx\\)<br>Schritt 2: \\(\\displaystyle\\int_0^1 u^3\\,du\\)<br>Schritt 3: \\(= \\left[\\frac{u^4}{4}\\right]_0^1 = \\frac{1}{4}\\)<br>Welcher Schritt ist der erste fehlerhafte?",
+        optionen: ["Schritt 1", "Schritt 2", "Schritt 3", "Kein Schritt ist fehlerhaft"],
+        korrekt: 1,
+        tipp: "Worauf beziehen sich die Grenzen \\(0\\) und \\(1\\), nachdem die Variable gewechselt wurde?",
+        loesungsweg: "Die Substitution in Schritt 1 ist richtig. In Schritt 2 werden jedoch die alten Grenzen beibehalten, obwohl nun über \\(u\\) integriert wird. Richtig sind \\(u(0) = 1\\) und \\(u(1) = 2\\): $$\\int_1^2 u^3 du = \\frac{16-1}{4} = 3{,}75$$ Alternativ hätte man zu \\(x\\) zurücksubstituieren müssen, bevor die Grenzen eingesetzt werden."
     },
     {
         id: 30, level: 5, typ: "numerisch",
-        frage: "Berechne \\(\\displaystyle\\int_0^{\\pi/3} \\sin(3x)\\,dx\\). Runde auf zwei Dezimalstellen.",
-        loesung: 0.67, toleranz: 0.01,
-        tipp: "\\(\\left[-\\frac{1}{3}\\cos(3x)\\right]_0^{\\pi/3}\\). \\(\\cos(\\pi) = -1\\), \\(\\cos(0) = 1\\).",
-        loesungsweg: "\\(\\left[-\\frac{1}{3}\\cos(3x)\\right]_0^{\\pi/3} = -\\frac{1}{3}\\cos(\\pi) + \\frac{1}{3}\\cos(0) = \\frac{1}{3} + \\frac{1}{3} = \\frac{2}{3} \\approx 0{,}67\\)."
+        frage: "Berechne \\(\\displaystyle\\int_0^{\\pi/2} \\sin(x)\\cos(x)\\,dx\\).",
+        loesung: 0.5, toleranz: 0.01,
+        tipp: "Einer der beiden Faktoren ist die Ableitung des anderen.",
+        loesungsweg: "Mit \\(u = \\sin x\\) und \\(du = \\cos x\\,dx\\) sowie den Grenzen \\(u(0) = 0\\), \\(u(\\pi/2) = 1\\): $$\\int_0^1 u\\,du = \\left[\\frac{u^2}{2}\\right]_0^1 = 0{,}5$$"
     },
 
     // ══════════════════════════════════════════════════════════════
-    // LEVEL 6 — Kombination: Partialbruch-Hinweis, gemischte Aufgaben
+    // LEVEL 6 — partielle Integration, uneigentliche Integrale
     // ══════════════════════════════════════════════════════════════
     {
-        id: 31, level: 6, typ: "mc",
-        frage: "Wie integriert man \\(\\displaystyle\\int \\frac{2x+1}{x^2+x}\\,dx\\)?",
-        optionen: [
-            "Erkennen, dass Zähler = Ableitung des Nenners: \\(\\ln|x^2+x| + C\\)",
-            "Partialbruchzerlegung notwendig",
-            "Lineare Substitution \\(u = x^2 + x\\)",
-            "Nicht mit Standardmethoden lösbar"
-        ],
-        korrekt: 0,
-        tipp: "Prüfe: Ist der Zähler die Ableitung des Nenners? \\((x^2+x)' = 2x+1\\). Ja!",
-        loesungsweg: "Da \\((x^2+x)' = 2x+1\\) = Zähler, gilt: \\(\\int \\frac{2x+1}{x^2+x}\\,dx = \\ln|x^2+x| + C\\). (Logarithmische Integration.)"
+        id: 31, level: 6, typ: "numerisch",
+        frage: "Berechne \\(\\displaystyle\\int_0^1 x \\cdot e^{x}\\,dx\\).",
+        loesung: 1, toleranz: 0.01,
+        tipp: "Hier hilft keine Substitution – zerlege den Integranden in ein Produkt \\(u \\cdot v'\\) und wende die partielle Integration an.",
+        loesungsweg: "Mit \\(u = x\\), \\(v' = e^x\\), also \\(u' = 1\\), \\(v = e^x\\): $$\\int_0^1 x e^x dx = \\left[x e^x\\right]_0^1 - \\int_0^1 e^x dx = e - \\left[e^x\\right]_0^1 = e - (e - 1) = 1$$"
     },
     {
         id: 32, level: 6, typ: "numerisch",
-        frage: "Berechne \\(\\displaystyle\\int_1^2 \\frac{2x+1}{x^2+x}\\,dx\\). Runde auf zwei Dezimalstellen.",
-        loesung: 1.1, toleranz: 0.01,
-        tipp: "\\(\\left[\\ln|x^2+x|\\right]_1^2 = \\ln(6) - \\ln(2) = \\ln(3)\\).",
-        loesungsweg: "\\(\\left[\\ln|x^2+x|\\right]_1^2 = \\ln(2^2+2) - \\ln(1^2+1) = \\ln(6) - \\ln(2) = \\ln(3) \\approx 1{,}10\\)."
+        frage: "Berechne \\(\\displaystyle\\int_0^{\\pi} x \\cdot \\sin(x)\\,dx\\) und runde auf zwei Dezimalstellen.",
+        loesung: 3.14, toleranz: 0.01,
+        tipp: "Partielle Integration mit \\(u = x\\); die trigonometrische Funktion wird dabei aufgeleitet.",
+        loesungsweg: "Mit \\(u = x\\), \\(v' = \\sin x\\), also \\(v = -\\cos x\\): $$\\int_0^{\\pi} x\\sin x\\,dx = \\left[-x\\cos x\\right]_0^{\\pi} + \\int_0^{\\pi}\\cos x\\,dx = \\pi + \\left[\\sin x\\right]_0^{\\pi} = \\pi + 0 \\approx 3{,}14$$"
     },
     {
         id: 33, level: 6, typ: "numerisch",
-        frage: "Berechne \\(\\displaystyle\\int_0^1 \\left(e^{2x} + \\frac{1}{x+1}\\right)\\,dx\\). Runde auf zwei Dezimalstellen.",
-        loesung: 3.89, toleranz: 0.01,
-        tipp: "\\(\\int e^{2x}\\,dx = \\frac{1}{2}e^{2x}\\). \\(\\int \\frac{1}{x+1}\\,dx = \\ln|x+1|\\).",
-        loesungsweg: "\\(\\left[\\frac{1}{2}e^{2x} + \\ln|x+1|\\right]_0^1 = (\\frac{1}{2}e^2 + \\ln 2) - (\\frac{1}{2} + 0) = \\frac{e^2-1}{2} + \\ln 2 \\approx 3{,}195 + 0{,}693 = 3{,}89\\)."
+        frage: "Berechne das uneigentliche Integral \\(\\displaystyle\\int_2^{\\infty} \\frac{1}{x^2}\\,dx\\).",
+        loesung: 0.5, toleranz: 0.01,
+        tipp: "Rechne zunächst mit einer endlichen oberen Grenze \\(b\\) und lasse diese anschließend über alle Grenzen wachsen.",
+        loesungsweg: "$$\\int_2^{b}\\frac{1}{x^2}dx = \\left[-\\frac{1}{x}\\right]_2^{b} = \\frac{1}{2} - \\frac{1}{b}$$ Für \\(b \\to \\infty\\) strebt \\(\\frac{1}{b}\\) gegen \\(0\\), also $$\\int_2^{\\infty}\\frac{1}{x^2}dx = \\frac{1}{2}$$ Die unbegrenzte Fläche hat einen endlichen Inhalt."
     },
     {
         id: 34, level: 6, typ: "mc",
-        frage: "Welche Methode eignet sich für \\(\\displaystyle\\int \\frac{3}{x+5}\\,dx\\)?",
+        frage: "Welche Aussage über die uneigentlichen Integrale \\(\\displaystyle\\int_1^{\\infty}\\frac{1}{x}dx\\) und \\(\\displaystyle\\int_1^{\\infty}\\frac{1}{x^2}dx\\) trifft zu?",
         optionen: [
-            "Lineare Substitution: \\(\\frac{3}{1}\\ln|x+5| + C = 3\\ln|x+5| + C\\)",
-            "Partialbruchzerlegung",
-            "Produktregel rückwärts",
-            "Potenzregel mit \\(n = -1\\)"
+            "Das erste existiert nicht, das zweite hat den Wert \\(1\\)",
+            "Beide existieren, weil der Integrand jeweils gegen \\(0\\) strebt",
+            "Beide existieren nicht, weil das Intervall unbeschränkt ist",
+            "Das erste hat den Wert \\(1\\), das zweite existiert nicht"
         ],
         korrekt: 0,
-        tipp: "\\(\\frac{3}{x+5}\\) hat die Form \\(\\frac{k}{ax+b}\\) mit \\(a = 1\\).",
-        loesungsweg: "\\(\\int \\frac{3}{x+5}\\,dx = 3 \\cdot \\frac{1}{1}\\ln|x+5| + C = 3\\ln|x+5| + C\\)."
+        tipp: "Berechne beide mit endlicher oberer Grenze \\(b\\) und vergleiche das Verhalten für \\(b \\to \\infty\\).",
+        loesungsweg: "$$\\int_1^{b}\\frac{1}{x}dx = \\ln b \\longrightarrow \\infty, \\qquad \\int_1^{b}\\frac{1}{x^2}dx = 1 - \\frac{1}{b} \\longrightarrow 1$$ Dass der Integrand gegen null strebt, genügt also <b>nicht</b> – entscheidend ist, wie schnell er das tut."
     },
     {
         id: 35, level: 6, typ: "numerisch",
-        frage: "Berechne \\(\\displaystyle\\int_0^{\\pi} \\left(\\sin(2x) + e^{-x}\\right)\\,dx\\). Runde auf zwei Dezimalstellen.",
-        loesung: 0.96, toleranz: 0.01,
-        tipp: "\\(\\int \\sin(2x)\\,dx = -\\frac{1}{2}\\cos(2x)\\), \\(\\int e^{-x}\\,dx = -e^{-x}\\).",
-        loesungsweg: "\\(\\left[-\\frac{1}{2}\\cos(2x) - e^{-x}\\right]_0^\\pi = (-\\frac{1}{2}\\cos(2\\pi) - e^{-\\pi}) - (-\\frac{1}{2}\\cos(0) - e^0) = (-\\frac{1}{2} - e^{-\\pi}) - (-\\frac{1}{2} - 1) = -e^{-\\pi} + 1 \\approx -0{,}043 + 1 = 0{,}96\\)."
+        frage: "Berechne \\(\\displaystyle\\int_1^{e^2} \\ln(x)\\,dx\\) und runde auf zwei Dezimalstellen.",
+        loesung: 8.39, toleranz: 0.01,
+        tipp: "Schreibe den Integranden als Produkt \\(1 \\cdot \\ln x\\) – dann lässt sich partiell integrieren.",
+        loesungsweg: "Mit \\(u = \\ln x\\), \\(v' = 1\\), also \\(u' = \\frac{1}{x}\\), \\(v = x\\): $$\\int \\ln x\\,dx = x\\ln x - \\int x \\cdot \\frac{1}{x}dx = x\\ln x - x$$ $$\\left[x\\ln x - x\\right]_1^{e^2} = \\left(2e^2 - e^2\\right) - (0 - 1) = e^2 + 1 \\approx 8{,}39$$"
     },
     {
         id: 36, level: 6, typ: "numerisch",
-        frage: "Berechne \\(\\displaystyle\\int_1^e \\left(\\frac{2}{x} + 3x\\right)\\,dx\\). Runde auf zwei Dezimalstellen.",
-        loesung: 11.58, toleranz: 0.05,
-        tipp: "\\(\\int \\frac{2}{x}\\,dx = 2\\ln|x|\\), \\(\\int 3x\\,dx = \\frac{3}{2}x^2\\).",
-        loesungsweg: "\\(\\left[2\\ln|x| + \\frac{3}{2}x^2\\right]_1^e = (2\\ln(e) + \\frac{3}{2}e^2) - (2\\ln(1) + \\frac{3}{2}) = (2 + \\frac{3}{2}e^2) - \\frac{3}{2} = 2 + \\frac{3}{2}(e^2 - 1) \\approx 2 + \\frac{3}{2} \\cdot 6{,}389 = 2 + 9{,}58 = 11{,}58\\)."
+        frage: "Berechne \\(\\displaystyle\\int_0^4 \\frac{x}{\\sqrt{x^2 + 9}}\\,dx\\).",
+        loesung: 2, toleranz: 0.01,
+        tipp: "Die Ableitung des Wurzelinhalts steckt bis auf einen Faktor im Zähler.",
+        loesungsweg: "Mit \\(u = x^2 + 9\\), \\(du = 2x\\,dx\\), Grenzen \\(u(0) = 9\\), \\(u(4) = 25\\): $$\\frac{1}{2}\\int_9^{25} u^{-1/2}du = \\frac{1}{2}\\left[2\\sqrt{u}\\right]_9^{25} = \\sqrt{25} - \\sqrt{9} = 5 - 3 = 2$$"
     }
+
 
     ];
     </script>
