@@ -262,87 +262,111 @@ const AUFGABEN = [
     tipp: "Schau dir besonders den Übergang von März zu April an: Geht die Linie hoch oder runter?",
     loesungsweg: "Von März (\\(12\\) €) auf April (\\(10\\) €) sinkt der Betrag: $$12 - 10 = 2$$ Also stimmt die erste Aussage. Die Linie steigt nicht jeden Monat (April sinkt), am meisten war es im März, und Januar (\\(5\\) €) ist weniger als April (\\(10\\) €)."
   },
-  // ========== LEVEL 5 — knifflig: passende Darstellung wählen, Fehler erkennen ==========
+  // ═══════════════════════════════════════════════════════════
+  // LEVEL 5 — mehrschrittig auswerten und Darstellungsfehler finden
+  // ═══════════════════════════════════════════════════════════
   {
     id: 25,
     level: 5,
-    typ: "mc",
-    frage: "Du willst zeigen, wie sich die Temperatur im Laufe eines Tages verändert. Welche Darstellung passt am besten?",
-    optionen: ["Strichliste", "Liniendiagramm", "Kreisdiagramm", "ungeordnete Liste"],
-    korrekt: 1,
-    tipp: "Bei welcher Darstellung kann man eine Entwicklung über die Zeit gut verfolgen?",
-    loesungsweg: "Ein Liniendiagramm zeigt Veränderungen über die Zeit am besten: Die Linie steigt und fällt mit der Temperatur. Strichlisten zählen nur, Kreisdiagramme zeigen Anteile am Ganzen, und eine ungeordnete Liste zeigt keinen Verlauf."
+    typ: "numerisch",
+    frage: "Bei einer Umfrage unter \\(30\\) Kindern nennt ein Drittel Fußball als Lieblingssport, \\(12\\) Kinder nennen Schwimmen, die übrigen Reiten. Wie viele Kinder nennen Reiten?",
+    loesung: 8,
+    toleranz: 0,
+    tipp: "Rechne zuerst aus, wie viele Kinder Fußball genannt haben.",
+    loesungsweg: "Fußball: \\(30 : 3 = 10\\) Kinder. Schwimmen: \\(12\\) Kinder. $$30 - 10 - 12 = 8 \\text{ Kinder}$$"
   },
   {
     id: 26,
     level: 5,
-    typ: "mc",
-    frage: "Du stehst in der Pause auf dem Schulhof und zählst, wie viele Kinder Apfel, Banane oder Birne essen. Womit erfasst du die Daten beim Zählen am besten?",
-    optionen: ["Kreisdiagramm", "Liniendiagramm", "Strichliste", "Säulendiagramm"],
-    korrekt: 2,
-    tipp: "Beim Zählen kommt immer wieder ein Kind dazu. Wo kannst du schnell einen Eintrag ergänzen?",
-    loesungsweg: "Mit einer Strichliste kannst du bei jedem Kind sofort einen Strich ergänzen — perfekt zum Erfassen. Diagramme zeichnet man erst danach, wenn alle Daten gesammelt sind."
+    typ: "numerisch",
+    frage: "In einem Bilddiagramm steht ein Buchsymbol für \\(4\\) gelesene Bücher. Bei Lena sind \\(5\\) ganze Symbole und ein halbes abgebildet. Wie viele Bücher hat sie gelesen?",
+    loesung: 22,
+    toleranz: 0,
+    tipp: "Wie viele Bücher stellt ein halbes Symbol dar?",
+    loesungsweg: "Ganze Symbole: \\(5 \\cdot 4 = 20\\) Bücher. Halbes Symbol: \\(4 : 2 = 2\\) Bücher. $$20 + 2 = 22 \\text{ Bücher}$$"
   },
   {
     id: 27,
     level: 5,
-    typ: "mc",
-    frage: "Du willst zeigen, welchen Anteil die Mädchen an der ganzen Klasse haben. Welches Diagramm zeigt Anteile am Ganzen am besten?",
-    optionen: ["Säulendiagramm", "Liniendiagramm", "Strichliste", "Kreisdiagramm"],
-    korrekt: 3,
-    tipp: "Denke an eine Pizza, die in Stücke geteilt wird. 🍕",
-    loesungsweg: "Ein Kreisdiagramm teilt den ganzen Kreis wie eine Pizza in Stücke auf — so sieht man sofort, wie groß jeder Anteil am Ganzen ist. Säulen vergleichen Werte, Linien zeigen Verläufe, Strichlisten dienen dem Zählen."
+    typ: "numerisch",
+    frage: "Die Besucherzahlen einer Woche lauten \\(12\\), \\(15\\), \\(9\\), \\(18\\) und \\(11\\). Um wie viele Besucher liegt der Donnerstagswert (\\(18\\)) über dem Durchschnitt der fünf Tage?",
+    loesung: 5,
+    toleranz: 0,
+    tipp: "Berechne zuerst den Durchschnitt aller fünf Tage.",
+    loesungsweg: "Summe: \\(12 + 15 + 9 + 18 + 11 = 65\\). Durchschnitt: \\(65 : 5 = 13\\). $$18 - 13 = 5 \\text{ Besucher}$$"
   },
   {
     id: 28,
     level: 5,
     typ: "mc",
-    frage: "Leo zeichnet ein Säulendiagramm zur Umfrage „Lieblingsfarbe“: Blau \\(8\\), Rot \\(6\\), Grün \\(4\\). In seinem Diagramm ist die Säule für Rot genauso hoch wie die für Blau. Welcher Fehler ist das?",
-    optionen: ["Die Achsenbeschriftung fehlt.", "Die Säulenhöhe passt nicht zum Wert aus der Tabelle.", "Er hat die falschen Farben für die Säulen benutzt.", "Er hat zu viele Säulen gezeichnet."],
-    korrekt: 1,
-    tipp: "Vergleiche die Werte in der Tabelle: Dürfen die Säulen für Blau und Rot gleich hoch sein?",
-    loesungsweg: "Blau hat den Wert \\(8\\), Rot nur \\(6\\) — die Säulen dürfen also nicht gleich hoch sein. Leos Säulenhöhe passt nicht zu den Werten. Die Säulenhöhe muss immer genau den Wert aus der Tabelle zeigen."
+    frage: "Leo zeichnet ein Säulendiagramm zur Umfrage „Lieblingsfarbe\": Blau \\(8\\), Rot \\(6\\), Grün \\(4\\). In seinem Diagramm ist die Säule für Rot genauso hoch wie die für Blau. Welcher Fehler ist das?",
+    optionen: [
+      "Die Säulenhöhen passen nicht zu den Werten — Rot müsste niedriger sein als Blau",
+      "Er hat die falschen Farben verwendet",
+      "Er hätte ein Kreisdiagramm nehmen müssen",
+      "Kein Fehler, die Höhe darf frei gewählt werden"
+    ],
+    korrekt: 0,
+    tipp: "Wofür steht die Höhe einer Säule?",
+    loesungsweg: "Die Höhe einer Säule stellt den Wert dar. Bei \\(6\\) gegenüber \\(8\\) muss die Säule für Rot sichtbar niedriger sein als die für Blau. Sonst zeigt das Diagramm etwas anderes als die Daten."
   },
   {
     id: 29,
     level: 5,
     typ: "mc",
     frage: "In Mias Säulendiagramm beginnt die senkrechte Achse erst bei \\(20\\) statt bei \\(0\\). Die Werte: Klasse 5a \\(22\\) Punkte, Klasse 5b \\(26\\) Punkte. Die Säule der 5b sieht dreimal so hoch aus wie die der 5a. Welche Aussage stimmt?",
-    optionen: ["Die Klasse 5b hat wirklich dreimal so viele Punkte.", "Die Klasse 5a hat mehr Punkte als die 5b.", "Das Diagramm ist fehlerfrei und nicht irreführend.", "Das Diagramm täuscht, weil die Achse nicht bei \\(0\\) beginnt."],
-    korrekt: 3,
-    tipp: "Vergleiche die echten Zahlen: Ist \\(26\\) wirklich dreimal so viel wie \\(22\\)?",
-    loesungsweg: "\\(26\\) ist nur wenig mehr als \\(22\\) — auf keinen Fall dreimal so viel. Weil die Achse erst bei \\(20\\) beginnt, sieht man nur die Spitzen: \\(2\\) über \\(20\\) gegen \\(6\\) über \\(20\\). So wirkt der Unterschied viel größer, als er ist. Das Diagramm täuscht."
+    optionen: [
+      "Das Diagramm täuscht — die 5b hat nur \\(4\\) Punkte mehr, nicht dreimal so viele",
+      "Die 5b hat tatsächlich dreimal so viele Punkte",
+      "Der Achsenbeginn spielt für den Eindruck keine Rolle",
+      "Das Diagramm ist falsch, weil Säulen immer gleich hoch sein müssen"
+    ],
+    korrekt: 0,
+    tipp: "Vergleiche den Unterschied der Zahlen mit dem Unterschied der Säulenhöhen.",
+    loesungsweg: "\\(26 - 22 = 4\\) Punkte Unterschied — das sind knapp \\(20\\,\\%\\) mehr. Weil die Achse erst bei \\(20\\) beginnt, werden nur die Werte oberhalb von \\(20\\) gezeigt (\\(2\\) gegen \\(6\\)), und der Unterschied wirkt dreifach. Ein <b>abgeschnittener Achsenanfang</b> übertreibt Unterschiede."
   },
   {
     id: 30,
     level: 5,
     typ: "mc",
     frage: "In einem Bilddiagramm steht ein ⚽-Symbol für \\(2\\) Tore. Paul hat \\(7\\) Tore geschossen. Sein Trainer zeichnet dafür \\(3\\) Symbole. Welche Aussage stimmt?",
-    optionen: ["\\(3\\) Symbole zeigen nur \\(6\\) Tore — es fehlt ein halbes Symbol.", "\\(3\\) Symbole sind genau richtig.", "Man müsste \\(7\\) Symbole zeichnen.", "Man müsste \\(14\\) Symbole zeichnen."],
+    optionen: [
+      "Es fehlt ein halbes Symbol — \\(3\\) Symbole stehen nur für \\(6\\) Tore",
+      "Das stimmt so, \\(7\\) wird auf \\(6\\) abgerundet",
+      "Er hätte \\(7\\) Symbole zeichnen müssen",
+      "Er hätte \\(4\\) ganze Symbole zeichnen müssen"
+    ],
     korrekt: 0,
-    tipp: "Rechne aus, für wie viele Tore \\(3\\) Symbole stehen. Passt das zu \\(7\\)?",
-    loesungsweg: "$$3 \\cdot 2 = 6$$ Drei Symbole zeigen nur \\(6\\) Tore, Paul hat aber \\(7\\) geschossen. Richtig wären \\(3\\) ganze und ein halbes Symbol, denn \\(3{,}5 \\cdot 2 = 7\\). \\(7\\) Symbole wären \\(14\\) Tore, \\(14\\) Symbole sogar \\(28\\) Tore."
+    tipp: "Wie viele Tore zeigen \\(3\\) Symbole — und wie viele hat Paul?",
+    loesungsweg: "\\(3 \\cdot 2 = 6\\) Tore, Paul hat aber \\(7\\). Das siebte Tor wird durch ein <b>halbes</b> Symbol dargestellt: \\(3\\frac12\\) Symbole. Runden wäre hier falsch, weil das Diagramm die echten Zahlen zeigen soll."
   },
-  // ========== LEVEL 6 — schwer: mehrschrittige Interpretation und Sachaufgaben ==========
+  // ═══════════════════════════════════════════════════════════
+  // LEVEL 6 — fehlende Werte erschließen, Darstellungen beurteilen
+  // ═══════════════════════════════════════════════════════════
   {
     id: 31,
     level: 6,
     typ: "numerisch",
-    frage: "Kuchenverkauf beim Schulfest laut Tabelle: Schokokuchen \\(24\\) Stück, Apfelkuchen \\(18\\) Stück, Käsekuchen \\(13\\) Stück. Jedes Stück kostet \\(2\\) €. Wie viel Geld wurde insgesamt eingenommen? Gib das Ergebnis in Euro an. 🎪",
-    loesung: 110,
+    frage: "Ein Diagramm zeigt vier Messwerte mit dem Durchschnitt \\(20\\). Drei davon lauten \\(15\\), \\(22\\) und \\(25\\). Wie groß ist der vierte Wert?",
+    loesung: 18,
     toleranz: 0,
-    tipp: "Erst alle Stücke zusammenzählen, dann mit dem Preis pro Stück multiplizieren.",
-    loesungsweg: "Anzahl der Stücke: $$24 + 18 + 13 = 55$$ Einnahmen: $$55 \\cdot 2 = 110$$ Es wurden \\(110\\) € eingenommen."
+    tipp: "Rechne zuerst aus, wie groß die Summe aller vier Werte sein muss.",
+    loesungsweg: "Summe aller vier Werte: \\(4 \\cdot 20 = 80\\). Die drei bekannten ergeben \\(15 + 22 + 25 = 62\\). $$80 - 62 = 18$$"
   },
   {
     id: 32,
     level: 6,
     typ: "mc",
-    frage: "Umfrage „Lieblingsjahreszeit“ in der Klasse 5a mit \\(28\\) Kindern: Sommer \\(12\\), Winter \\(7\\), Frühling \\(5\\). Alle übrigen Kinder wählten Herbst. Wie viele Kinder wählten Herbst?",
-    optionen: ["\\(6\\)", "\\(24\\)", "\\(4\\)", "\\(5\\)"],
-    korrekt: 2,
-    tipp: "Zähle zuerst zusammen, wie viele Kinder schon in der Tabelle stehen. Wie viele fehlen dann noch bis \\(28\\)?",
-    loesungsweg: "In der Tabelle stehen schon $$12 + 7 + 5 = 24$$ Kinder. Für Herbst bleiben: $$28 - 24 = 4$$ Kinder. \\(24\\) ist nur die Zwischensumme, nicht die Antwort."
+    frage: "Ein Säulendiagramm zeigt für jeden Monat die Anzahl der Regentage. Darüber steht die Überschrift „Regenmenge in Millimetern\". Passt die Überschrift?",
+    optionen: [
+      "Nein — gezählt wurden Tage, nicht Millimeter; ein einziger Tag kann viel oder wenig Regen bringen",
+      "Ja, Regentage und Regenmenge bedeuten dasselbe",
+      "Ja, solange die Säulen richtig hoch sind",
+      "Nein, die Überschrift müsste „Temperatur\" heißen"
+    ],
+    korrekt: 0,
+    tipp: "Überlege, ob \\(10\\) Regentage automatisch mehr Regen bedeuten als \\(5\\) Regentage.",
+    loesungsweg: "Die Säulen zählen <b>Tage</b>, die Überschrift verspricht eine <b>Menge</b>. Fünf Starkregentage können mehr Millimeter bringen als zehn Nieseltage. Überschrift und Achsenbeschriftung müssen zu den erhobenen Daten passen, sonst wird das Diagramm falsch verstanden."
   },
   {
     id: 33,
@@ -351,39 +375,45 @@ const AUFGABEN = [
     frage: "Ein Liniendiagramm zeigt die Besucher der Schülerbücherei: Am Montag kamen \\(40\\) Kinder, danach jeden Tag \\(10\\) mehr als am Vortag — bis Donnerstag. Am Freitag kamen nur halb so viele Kinder wie am Donnerstag. Wie viele Kinder kamen am Freitag?",
     loesung: 35,
     toleranz: 0,
-    tipp: "Schreibe die Werte Tag für Tag auf: Montag \\(40\\), Dienstag …, und arbeite dich bis Freitag vor.",
-    loesungsweg: "Montag \\(40\\), Dienstag \\(50\\), Mittwoch \\(60\\), Donnerstag \\(70\\). Freitag ist die Hälfte von Donnerstag: $$70 : 2 = 35$$ Am Freitag kamen \\(35\\) Kinder."
+    tipp: "Schreibe zuerst die Werte von Montag bis Donnerstag auf.",
+    loesungsweg: "Montag \\(40\\), Dienstag \\(50\\), Mittwoch \\(60\\), Donnerstag \\(70\\). $$70 : 2 = 35 \\text{ Kinder}$$"
   },
   {
     id: 34,
     level: 6,
     typ: "numerisch",
-    frage: "Die Strichliste des Pausenverkaufs zeigt für Trinkpäckchen: ||||| ||||| |||||. Ein Päckchen kostet \\(50\\) Cent. Wie viel Geld wurde mit den Trinkpäckchen eingenommen? Gib das Ergebnis in Euro an.",
-    loesung: 7.5,
+    frage: "In einem Kreisdiagramm entspricht die halbe Kreisfläche \\(60\\) befragten Kindern. Wie viele Kinder wurden insgesamt befragt?",
+    loesung: 120,
     toleranz: 0,
-    tipp: "Zähle erst die Strichliste aus. Denke daran: \\(2\\) Päckchen kosten zusammen \\(1\\) €.",
-    loesungsweg: "Strichliste: $$3 \\cdot 5 = 15$$ Päckchen. Je \\(2\\) Päckchen kosten \\(1\\) €, also: $$15 \\cdot 0{,}50\\ € = 7{,}50\\ €$$ Es wurden \\(7{,}50\\) € eingenommen — als Zahl: \\(7{,}5\\)."
+    tipp: "Der ganze Kreis steht immer für die gesamte befragte Gruppe.",
+    loesungsweg: "Die Hälfte entspricht \\(60\\) Kindern, der ganze Kreis also $$2 \\cdot 60 = 120 \\text{ Kindern}$$ Im Kreisdiagramm zeigt jeder Sektor seinen Anteil am Ganzen — deshalb lässt sich vom Teil auf die Gesamtzahl schließen."
   },
   {
     id: 35,
     level: 6,
     typ: "mc",
-    frage: "Tabelle der Regentage: April \\(14\\), Mai \\(9\\), Juni \\(6\\). Welche Aussage stimmt? 🌧️",
-    optionen: ["Die Zahl der Regentage ist von April bis Juni immer kleiner geworden.", "Im Mai gab es mehr Regentage als im April.", "Zusammen waren es \\(30\\) Regentage.", "Im Juni gab es halb so viele Regentage wie im April."],
+    frage: "Eine Zeitung titelt „Unfälle explodiert!\" und zeigt ein Diagramm mit zwei Säulen (\\(20\\) und \\(22\\) Unfälle), dessen Achse bei \\(18\\) beginnt. Wie ist das zu beurteilen?",
+    optionen: [
+      "Irreführend — es sind \\(2\\) Unfälle mehr, nur der Achsenbeginn lässt es dramatisch aussehen",
+      "Die Überschrift passt, die Säule ist ja viel höher",
+      "Das Diagramm ist falsch gezeichnet, die Werte stimmen nicht",
+      "Der Achsenbeginn darf frei gewählt werden, also ist alles in Ordnung"
+    ],
     korrekt: 0,
-    tipp: "Prüfe jede Aussage einzeln nach — auch die mit Rechnung: Was ist die Hälfte von \\(14\\)? Was ergibt die Summe?",
-    loesungsweg: "\\(14 > 9 > 6\\): Die Zahl wird immer kleiner — die erste Aussage stimmt. Die Summe ist $$14 + 9 + 6 = 29$$, nicht \\(30\\). Die Hälfte von \\(14\\) ist \\(7\\), der Juni hatte aber \\(6\\) Regentage — also nicht genau die Hälfte."
+    tipp: "Wie groß ist der tatsächliche Unterschied zwischen den beiden Zahlen?",
+    loesungsweg: "\\(22 - 20 = 2\\) Unfälle — rund ein Zehntel mehr. Weil die Achse erst bei \\(18\\) beginnt, werden nur \\(2\\) gegen \\(4\\) Einheiten gezeigt, die Säule wirkt doppelt so hoch. Die Zahlen stimmen, der <b>Eindruck</b> täuscht — genau deshalb lohnt der Blick auf den Achsenanfang."
   },
   {
     id: 36,
     level: 6,
     typ: "numerisch",
-    frage: "Klassensprecherwahl in der 5b, Stimmen laut Tabelle: Ela \\(9\\), Ben \\(7\\), Chris \\(5\\). Wie viele Stimmen fehlen Chris, um genauso viele Stimmen wie Ela zu haben?",
-    loesung: 4,
+    frage: "Bei einer Wahl hat Ela \\(9\\) Stimmen und Chris \\(5\\). Sechs Kinder haben noch nicht gewählt und stimmen für Ela oder Chris. Wie viele dieser sechs Stimmen braucht Chris mindestens, um am Ende mehr Stimmen als Ela zu haben?",
+    loesung: 6,
     toleranz: 0,
-    tipp: "Vergleiche nur Chris und Ela. Wie groß ist der Abstand zwischen ihren Stimmen?",
-    loesungsweg: "Ela hat \\(9\\) Stimmen, Chris hat \\(5\\). $$9 - 5 = 4$$ Chris fehlen \\(4\\) Stimmen. Bens Ergebnis wird für diese Frage nicht gebraucht."
+    tipp: "Jede Stimme, die Chris nicht bekommt, geht an Ela — probiere die Fälle durch.",
+    loesungsweg: "Bekommt Chris \\(5\\) Stimmen, hat er \\(10\\), Ela aber \\(9 + 1 = 10\\) — Gleichstand. Erst mit allen \\(6\\) Stimmen führt er: $$5 + 6 = 11 > 9$$ Chris braucht also <b>alle sechs</b> Stimmen. Jede fehlende Stimme zählt doppelt, weil sie zugleich der Gegenseite zugutekommt."
   }
+
 ];
     </script>
     <script src="../p3-reflexion.js"></script>

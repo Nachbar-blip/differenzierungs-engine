@@ -262,66 +262,78 @@ const AUFGABEN = [
     tipp: "Suche Teiler-Paare: \\(1 \\cdot 20\\), \\(2 \\cdot 10\\), \\(4 \\cdot 5\\). Fehlt in einer Liste etwas?",
     loesungsweg: "Teiler-Paare von \\(20\\): $$1 \\cdot 20, \\quad 2 \\cdot 10, \\quad 4 \\cdot 5$$ Alle Teiler: \\(1, 2, 4, 5, 10, 20\\). In den anderen Listen fehlt die \\(4\\) oder die \\(2\\) — oder die \\(1\\) und die \\(20\\)."
   },
-  // ========== LEVEL 5 — anspruchsvoll: Primzahlen und Primfaktorzerlegung ==========
+  // ═══════════════════════════════════════════════════════════
+  // LEVEL 5 — Teilbarkeit begründen, abzählen, Fehler finden
+  // ═══════════════════════════════════════════════════════════
   {
     id: 25,
     level: 5,
-    typ: "mc",
-    frage: "Welche dieser Zahlen ist eine Primzahl?",
-    optionen: ["\\(21\\)", "\\(17\\)", "\\(15\\)", "\\(27\\)"],
-    korrekt: 1,
-    tipp: "Eine Primzahl hat genau zwei Teiler: \\(1\\) und sich selbst. Prüfe bei jeder Zahl, ob sie noch andere Teiler hat.",
-    loesungsweg: "$$21 = 3 \\cdot 7, \\quad 15 = 3 \\cdot 5, \\quad 27 = 3 \\cdot 9$$ Diese drei haben mehr als zwei Teiler. Die \\(17\\) lässt sich nur als \\(1 \\cdot 17\\) schreiben — sie ist eine Primzahl."
+    typ: "numerisch",
+    frage: "Welche Zahl zwischen \\(40\\) und \\(60\\) hat genau drei Teiler?",
+    loesung: 49,
+    toleranz: 0,
+    tipp: "Schreibe für einige Zahlen alle Teiler auf — welche Art von Zahl hat wohl eine ungerade Teileranzahl?",
+    loesungsweg: "Die Zahl \\(49\\) hat die Teiler \\(1\\), \\(7\\) und \\(49\\) — genau drei. Genau drei Teiler haben nur <b>Quadrate von Primzahlen</b>: \\(1\\), die Primzahl selbst und ihr Quadrat. Zwischen \\(40\\) und \\(60\\) ist \\(49 = 7 \\cdot 7\\) die einzige solche Zahl."
   },
   {
     id: 26,
     level: 5,
-    typ: "numerisch",
-    frage: "Wie viele Primzahlen gibt es zwischen \\(1\\) und \\(20\\)?",
-    loesung: 8,
-    toleranz: 0,
-    tipp: "Gehe alle Zahlen von \\(2\\) bis \\(19\\) durch und streiche jede, die sich als Produkt schreiben lässt. Achtung: Die \\(1\\) ist KEINE Primzahl.",
-    loesungsweg: "Die Primzahlen zwischen \\(1\\) und \\(20\\): $$2, 3, 5, 7, 11, 13, 17, 19$$ Das sind \\(8\\) Primzahlen. Die \\(1\\) zählt nicht mit, denn sie hat nur einen Teiler."
+    typ: "mc",
+    frage: "Ist die Summe zweier ungerader Zahlen immer gerade?",
+    optionen: [
+      "Ja — jede ungerade Zahl hat einen Einer übrig, die beiden Einer ergänzen sich zu einem Paar",
+      "Nein, ungerade plus ungerade bleibt ungerade",
+      "Nur wenn beide Zahlen gleich groß sind",
+      "Nur bei einstelligen Zahlen"
+    ],
+    korrekt: 0,
+    tipp: "Probiere mehrere Beispiele: \\(3 + 5\\), \\(7 + 9\\), \\(11 + 13\\).",
+    loesungsweg: "\\(3 + 5 = 8\\), \\(7 + 9 = 16\\), \\(11 + 13 = 24\\) — stets gerade. Eine ungerade Zahl ist eine gerade Zahl plus \\(1\\). Zwei davon ergeben eine gerade Zahl plus \\(2\\) — und das ist wieder gerade. Es gilt also <b>immer</b>, nicht nur in Beispielen."
   },
   {
     id: 27,
     level: 5,
-    typ: "mc",
-    frage: "Welches ist die richtige Primfaktorzerlegung von \\(36\\)?",
-    optionen: ["\\(2 \\cdot 2 \\cdot 3 \\cdot 3\\)", "\\(2 \\cdot 3 \\cdot 6\\)", "\\(4 \\cdot 9\\)", "\\(2 \\cdot 2 \\cdot 9\\)"],
-    korrekt: 0,
-    tipp: "Bei einer Primfaktorzerlegung müssen ALLE Faktoren Primzahlen sein. Sind \\(4\\), \\(6\\) und \\(9\\) Primzahlen?",
-    loesungsweg: "Zerlege Schritt für Schritt: $$36 = 2 \\cdot 18 = 2 \\cdot 2 \\cdot 9 = 2 \\cdot 2 \\cdot 3 \\cdot 3$$ Die anderen Produkte ergeben zwar auch \\(36\\), aber \\(6\\), \\(4\\) und \\(9\\) sind keine Primzahlen."
+    typ: "numerisch",
+    frage: "Wie viele Zahlen von \\(1\\) bis \\(50\\) sind durch \\(6\\) teilbar?",
+    loesung: 8,
+    toleranz: 0,
+    tipp: "Zähle die Sechserreihe auf, bis du \\(50\\) überschreitest.",
+    loesungsweg: "\\(6, 12, 18, 24, 30, 36, 42, 48\\) — die nächste Zahl \\(54\\) ist zu groß. Es sind also <b>8</b> Zahlen. Rechnerisch: \\(50 : 6 = 8\\) Rest \\(2\\)."
   },
   {
     id: 28,
     level: 5,
     typ: "numerisch",
-    frage: "Ergänze die Primfaktorzerlegung: \\(30 = 2 \\cdot 3 \\cdot \\square\\). Welche Zahl fehlt?",
-    loesung: 5,
+    frage: "Welches ist die kleinste Zahl größer als \\(0\\), die sowohl durch \\(4\\) als auch durch \\(6\\) teilbar ist?",
+    loesung: 12,
     toleranz: 0,
-    tipp: "Rechne zuerst \\(2 \\cdot 3\\). Mit welcher Zahl musst du das Ergebnis multiplizieren, um \\(30\\) zu erhalten?",
-    loesungsweg: "$$2 \\cdot 3 = 6$$ $$30 : 6 = 5$$ Also: \\(30 = 2 \\cdot 3 \\cdot 5\\). Die \\(5\\) ist eine Primzahl — die Zerlegung ist vollständig."
+    tipp: "Schreibe beide Reihen auf und suche die erste gemeinsame Zahl.",
+    loesungsweg: "Viererreihe: \\(4, 8, 12, \\ldots\\) Sechserreihe: \\(6, 12, \\ldots\\) Die erste gemeinsame Zahl ist \\(12\\) — das kleinste gemeinsame Vielfache. \\(24\\) wäre zwar auch durch beide teilbar, aber nicht die kleinste solche Zahl."
   },
   {
     id: 29,
     level: 5,
-    typ: "mc",
-    frage: "Welche dieser Zahlen ist KEINE Primzahl?",
-    optionen: ["\\(31\\)", "\\(41\\)", "\\(51\\)", "\\(61\\)"],
-    korrekt: 2,
-    tipp: "Prüfe die Quersummen: Ist eine der Zahlen durch \\(3\\) teilbar?",
-    loesungsweg: "Quersumme von \\(51\\): $$5 + 1 = 6$$ Die \\(6\\) ist durch \\(3\\) teilbar, also auch \\(51\\): $$51 = 3 \\cdot 17$$ Damit ist \\(51\\) keine Primzahl. \\(31\\), \\(41\\) und \\(61\\) haben nur die Teiler \\(1\\) und sich selbst."
+    typ: "numerisch",
+    frage: "Eine Zahl ist durch \\(2\\) und durch \\(3\\) teilbar. Durch welche weitere Zahl ist sie dann mit Sicherheit auch teilbar?",
+    loesung: 6,
+    toleranz: 0,
+    tipp: "Prüfe an Beispielen wie \\(12\\), \\(18\\) und \\(24\\), was diese Zahlen gemeinsam haben.",
+    loesungsweg: "Wer durch \\(2\\) und durch \\(3\\) teilbar ist, enthält beide Faktoren — also auch \\(2 \\cdot 3 = 6\\). Beispiele: \\(12\\), \\(18\\), \\(24\\) sind alle durch \\(6\\) teilbar. Achtung: Bei \\(4\\) und \\(6\\) funktioniert dieser Trick nicht, weil beide den Faktor \\(2\\) gemeinsam haben."
   },
   {
     id: 30,
     level: 5,
-    typ: "numerisch",
-    frage: "Zerlege \\(42\\) in Primfaktoren. Wie heißt der GRÖSSTE Primfaktor von \\(42\\)?",
-    loesung: 7,
-    toleranz: 0,
-    tipp: "Teile zuerst durch \\(2\\), dann prüfe die \\(3\\) — und schau, was übrig bleibt.",
-    loesungsweg: "$$42 = 2 \\cdot 21 = 2 \\cdot 3 \\cdot 7$$ Die Primfaktoren sind \\(2\\), \\(3\\) und \\(7\\). Der größte ist \\(7\\)."
+    typ: "mc",
+    frage: "Ein Schüler rechnet: „Die Quersumme von \\(453\\) ist \\(12\\), also ist \\(453\\) durch \\(3\\) und durch \\(9\\) teilbar.\" Was ist dazu zu sagen?",
+    optionen: [
+      "Nur die Hälfte stimmt — \\(12\\) ist durch \\(3\\) teilbar, aber nicht durch \\(9\\)",
+      "Richtig, die Quersumme entscheidet für beide Zahlen gleich",
+      "Falsch, \\(453\\) ist durch keine von beiden teilbar",
+      "Richtig, aber nur weil \\(453\\) ungerade ist"
+    ],
+    korrekt: 0,
+    tipp: "Prüfe die Quersumme \\(12\\) selbst: Ist sie durch \\(9\\) teilbar?",
+    loesungsweg: "Die Quersumme \\(4 + 5 + 3 = 12\\) ist durch \\(3\\) teilbar, also ist es auch \\(453\\) (\\(453 : 3 = 151\\)). Durch \\(9\\) ist \\(12\\) aber <b>nicht</b> teilbar — und damit auch \\(453\\) nicht. Beide Regeln nutzen dieselbe Quersumme, prüfen aber Verschiedenes."
   },
   // ========== LEVEL 6 — wagnerisch: Sachaufgaben ==========
   {
@@ -384,6 +396,7 @@ const AUFGABEN = [
     tipp: "Suche die Teiler von \\(23\\). Wie viele findest du? Und Vorsicht: Auch aus \\(15\\) Kindern (ungerade!) könnte man Gruppen bilden.",
     loesungsweg: "Die \\(23\\) hat nur die Teiler \\(1\\) und \\(23\\) — sie ist eine Primzahl. Darum gibt es keine passende Gruppengröße dazwischen. Ungerade allein ist nicht der Grund: Aus \\(15\\) Kindern könnte man z. B. \\(3\\) Gruppen zu je \\(5\\) Kindern bilden. Und \\(23\\) ist nicht durch \\(3\\) teilbar, denn die Quersumme \\(5\\) ist es nicht."
   }
+
 ];
     </script>
     <script src="../p3-reflexion.js"></script>

@@ -262,66 +262,78 @@ const AUFGABEN = [
     tipp: "Mira hat nur die Reihenfolge der Zahlen vertauscht — wie heißt das Vertauschungsgesetz?",
     loesungsweg: "Das Vertauschen von Summanden ist das <b>Kommutativgesetz</b>. So wird die Rechnung leicht: $$8 + 2 + 27 = 10 + 27 = 37$$"
   },
-  // ========== LEVEL 5 — anspruchsvoll: Potenzen und verschachtelte Ausdrücke ==========
+  // ═══════════════════════════════════════════════════════════
+  // LEVEL 5 — Rechenwege durchschauen: Klammern, Fehlersuche, Rätsel
+  // ═══════════════════════════════════════════════════════════
   {
     id: 25,
     level: 5,
-    typ: "numerisch",
-    frage: "Berechne: \\(2^3 + 3^2\\)",
-    loesung: 17,
-    toleranz: 0,
-    tipp: "\\(2^3\\) heißt \\(2 \\cdot 2 \\cdot 2\\) — nicht \\(2 \\cdot 3\\)!",
-    loesungsweg: "$$2^3 = 2 \\cdot 2 \\cdot 2 = 8$$ $$3^2 = 3 \\cdot 3 = 9$$ $$8 + 9 = 17$$"
+    typ: "mc",
+    frage: "Wie müssen Klammern gesetzt werden, damit \\(2 + 3 \\cdot 4\\) den Wert \\(20\\) ergibt?",
+    optionen: [
+      "\\((2 + 3) \\cdot 4\\)",
+      "\\(2 + (3 \\cdot 4)\\)",
+      "Gar nicht — \\(20\\) ist nicht erreichbar",
+      "\\(2 + 3 \\cdot (4)\\)"
+    ],
+    korrekt: 0,
+    tipp: "Klammern werden zuerst gerechnet — welche Zwischenzahl brauchst du vor dem Mal-Rechnen?",
+    loesungsweg: "$$(2 + 3) \\cdot 4 = 5 \\cdot 4 = 20$$ Ohne Klammern gilt Punkt vor Strich: \\(2 + 3 \\cdot 4 = 2 + 12 = 14\\). Die Klammer erzwingt hier die Addition zuerst."
   },
   {
     id: 26,
     level: 5,
-    typ: "numerisch",
-    frage: "Berechne: \\(10^4\\)",
-    loesung: 10000,
-    toleranz: 0,
-    tipp: "Bei Zehnerpotenzen zeigt der Exponent, wie viele Nullen die Zahl hat.",
-    loesungsweg: "$$10^4 = 10 \\cdot 10 \\cdot 10 \\cdot 10 = 10\\,000$$ Der Exponent \\(4\\) bedeutet: eine \\(1\\) mit \\(4\\) Nullen."
+    typ: "mc",
+    frage: "Mila rechnet \\(100 - 4 \\cdot 3 = 288\\). Was ist dazu zu sagen?",
+    optionen: [
+      "Falsch — sie hat zuerst subtrahiert; richtig ist \\(100 - 12 = 88\\)",
+      "Richtig, \\(96 \\cdot 3 = 288\\)",
+      "Falsch, richtig wäre \\(292\\)",
+      "Richtig, aber sie hätte runden sollen"
+    ],
+    korrekt: 0,
+    tipp: "Welche Rechenart wird zuerst ausgeführt?",
+    loesungsweg: "Punkt vor Strich: erst \\(4 \\cdot 3 = 12\\), dann $$100 - 12 = 88$$ Mila hat \\(100 - 4 = 96\\) gerechnet und danach mit \\(3\\) multipliziert. Schon ein Blick auf die Größenordnung entlarvt den Fehler: Von \\(100\\) wird etwas abgezogen, das Ergebnis kann nicht \\(288\\) sein."
   },
   {
     id: 27,
     level: 5,
     typ: "numerisch",
-    frage: "Berechne: \\(100 - 4 \\cdot (3 + 2^2)\\)",
-    loesung: 72,
+    frage: "Denke dir eine Zahl, verdopple sie, addiere \\(6\\) und teile das Ergebnis durch \\(2\\). Heraus kommt \\(19\\). Welche Zahl war es?",
+    loesung: 16,
     toleranz: 0,
-    tipp: "Reihenfolge: erst die Potenz in der Klammer, dann die Klammer, dann mal, dann minus.",
-    loesungsweg: "$$2^2 = 4$$ $$3 + 4 = 7$$ $$4 \\cdot 7 = 28$$ $$100 - 28 = 72$$"
+    tipp: "Gehe die Schritte rückwärts und drehe dabei jede Rechenart um.",
+    loesungsweg: "Rückwärts: \\(19 \\cdot 2 = 38\\), dann \\(38 - 6 = 32\\), dann \\(32 : 2 = 16\\). Probe: \\(16 \\cdot 2 = 32\\), \\(32 + 6 = 38\\), \\(38 : 2 = 19\\) ✓"
   },
   {
     id: 28,
     level: 5,
-    typ: "mc",
-    frage: "Was bedeutet \\(3^4\\)?",
-    optionen: ["\\(3 \\cdot 4\\)", "\\(4 \\cdot 4 \\cdot 4\\)", "\\(3 + 3 + 3 + 3\\)", "\\(3 \\cdot 3 \\cdot 3 \\cdot 3\\)"],
-    korrekt: 3,
-    tipp: "Die Basis \\(3\\) wird so oft mit sich selbst multipliziert, wie der Exponent \\(4\\) angibt.",
-    loesungsweg: "$$3^4 = 3 \\cdot 3 \\cdot 3 \\cdot 3 = 81$$ Vorsicht: \\(3 \\cdot 4 = 12\\) ist der häufigste Fehler — Potenz heißt malnehmen mit sich selbst, nicht mal dem Exponenten."
+    typ: "numerisch",
+    frage: "Für einen Ausflug stehen \\(3\\) Busse mit je \\(52\\) Sitzplätzen bereit. Es fahren \\(148\\) Kinder mit. Wie viele Plätze bleiben frei?",
+    loesung: 8,
+    toleranz: 0,
+    tipp: "Wie viele Plätze gibt es insgesamt?",
+    loesungsweg: "Plätze insgesamt: \\(3 \\cdot 52 = 156\\). $$156 - 148 = 8 \\text{ freie Plätze}$$"
   },
   {
     id: 29,
     level: 5,
-    typ: "mc",
-    frage: "Was ergibt \\((18 - 2 \\cdot 5) : 4 + 6\\)?",
-    optionen: ["\\(2\\)", "\\(8\\)", "\\(26\\)", "\\(38\\)"],
-    korrekt: 1,
-    tipp: "In der Klammer gilt auch Punkt vor Strich: rechne dort zuerst \\(2 \\cdot 5\\).",
-    loesungsweg: "$$18 - 2 \\cdot 5 = 18 - 10 = 8$$ $$8 : 4 = 2$$ $$2 + 6 = 8$$ Wer stur von links rechnet (\\(18-2=16\\), \\(16 \\cdot 5 = 80\\), ...), landet fälschlich bei \\(26\\)."
+    typ: "numerisch",
+    frage: "Berechne geschickt: \\(25 \\cdot 17 \\cdot 4\\)",
+    loesung: 1700,
+    toleranz: 0,
+    tipp: "Welche beiden Faktoren ergeben zusammen eine runde Zahl? Die Reihenfolge darf vertauscht werden.",
+    loesungsweg: "$$25 \\cdot 4 = 100, \\qquad 100 \\cdot 17 = 1700$$ Beim Multiplizieren dürfen die Faktoren beliebig vertauscht und zusammengefasst werden — das spart hier die schriftliche Rechnung."
   },
   {
     id: 30,
     level: 5,
-    typ: "mc",
-    frage: "Welche Aussage stimmt?",
-    optionen: ["\\(2^3 = 6\\)", "\\(3^2 = 6\\)", "\\(2^3 = 8\\)", "\\(2^3 = 9\\)"],
-    korrekt: 2,
-    tipp: "Schreibe die Potenzen als Malkette aus und rechne nach.",
-    loesungsweg: "$$2^3 = 2 \\cdot 2 \\cdot 2 = 8 \\quad \\checkmark$$ Dagegen: \\(3^2 = 3 \\cdot 3 = 9\\). Die \\(6\\) entsteht durch den Fehler \\(2 \\cdot 3\\)."
+    typ: "numerisch",
+    frage: "Mila kauft \\(6\\) Hefte zu je \\(1\\,€\\) und \\(4\\) gleich teure Blöcke. Sie bezahlt insgesamt \\(22\\,€\\). Wie viel Euro kostet ein Block?",
+    loesung: 4,
+    toleranz: 0,
+    tipp: "Ziehe zuerst den Preis der Hefte vom Gesamtbetrag ab.",
+    loesungsweg: "Hefte: \\(6 \\cdot 1 = 6\\,€\\). Für die Blöcke bleiben \\(22 - 6 = 16\\,€\\). $$16 : 4 = 4\\,€ \\text{ je Block}$$"
   },
   // ========== LEVEL 6 — wagnerisch: Sachaufgaben und einfache Gleichungen ==========
   {
@@ -384,6 +396,7 @@ const AUFGABEN = [
     tipp: "Berechne zuerst den Gesamtpreis: \\(3 \\cdot 8 + 4\\).",
     loesungsweg: "Gesamtpreis: $$3 \\cdot 8 + 4 = 24 + 4 = 28 \\text{ Euro}$$ Rückgeld: $$50 - 28 = 22 \\text{ Euro}$$ Vorsicht: \\(28\\) Euro ist nur der Preis — das Rückgeld muss man noch ausrechnen!"
   }
+
 ];
     </script>
     <script src="../p3-reflexion.js"></script>
