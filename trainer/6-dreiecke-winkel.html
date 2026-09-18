@@ -262,66 +262,62 @@ const AUFGABEN = [
     tipp: "Zwei gleiche Winkel bedeuten auch zwei gleiche Seiten.",
     loesungsweg: "Die beiden gleichen Winkel \\(65^\\circ\\) zeigen: Zwei Seiten sind gleich lang — das Dreieck ist <b>gleichschenklig</b>. Gleichseitig wäre es nur bei drei mal \\(60^\\circ\\). Kein Winkel ist \\(90^\\circ\\) oder größer."
   },
-  // ========== LEVEL 5 — anspruchsvoll: Fläche, Umfang & besondere Linien ==========
+  // ═══════════════════════════════════════════════════════════
+  // LEVEL 5 — Winkel kombinieren, begründen, Fälle abzählen
+  // ═══════════════════════════════════════════════════════════
   {
-    id: 25,
-    level: 5,
-    typ: "numerisch",
-    frage: "Ein Dreieck hat die Grundseite \\(g = 8 \\text{ cm}\\) und die zugehörige Höhe \\(h = 5 \\text{ cm}\\). Berechne den Flächeninhalt. Gib das Ergebnis in cm² an.",
-    loesung: 20,
-    toleranz: 0,
-    tipp: "Formel: \\(A = \\dfrac{g \\cdot h}{2}\\). Vergiss das Teilen durch \\(2\\) nicht!",
-    loesungsweg: "$$A = \\frac{g \\cdot h}{2} = \\frac{8 \\cdot 5}{2} = \\frac{40}{2} = 20 \\text{ cm}^2$$"
-  },
-  {
-    id: 26,
-    level: 5,
-    typ: "numerisch",
-    frage: "Ein Dreieck hat die Seiten \\(6 \\text{ cm}\\), \\(7 \\text{ cm}\\) und \\(9 \\text{ cm}\\). Berechne den Umfang. Gib das Ergebnis in cm an.",
-    loesung: 22,
-    toleranz: 0,
-    tipp: "Der Umfang ist der Weg einmal außen herum: Addiere alle drei Seiten.",
-    loesungsweg: "$$U = 6 + 7 + 9 = 22 \\text{ cm}$$"
-  },
-  {
-    id: 27,
-    level: 5,
-    typ: "mc",
-    frage: "Welche besondere Linie im Dreieck steht senkrecht auf einer Seite und geht durch deren Mittelpunkt?",
-    optionen: ["die Höhe", "die Winkelhalbierende", "die Mittelsenkrechte", "die Grundseite"],
-    korrekt: 2,
-    tipp: "Der Name der Linie beschreibt genau, was sie tut: „Mitte“ und „senkrecht“.",
-    loesungsweg: "Die <b>Mittelsenkrechte</b> steht senkrecht (im \\(90^\\circ\\)-Winkel) auf einer Seite und geht durch deren Mittelpunkt. Die Höhe steht zwar auch senkrecht, geht aber durch die gegenüberliegende Ecke — nicht unbedingt durch die Seitenmitte."
-  },
-  {
-    id: 28,
-    level: 5,
-    typ: "numerisch",
-    frage: "Ein Dreieck hat den Flächeninhalt \\(A = 24 \\text{ cm}^2\\) und die Grundseite \\(g = 6 \\text{ cm}\\). Wie lang ist die zugehörige Höhe \\(h\\)? Gib das Ergebnis in cm an.",
-    loesung: 8,
-    toleranz: 0,
-    tipp: "Stelle die Formel um: Aus \\(A = \\dfrac{g \\cdot h}{2}\\) wird \\(h = \\dfrac{2 \\cdot A}{g}\\).",
-    loesungsweg: "$$A = \\frac{g \\cdot h}{2} \\quad \\Rightarrow \\quad h = \\frac{2 \\cdot A}{g}$$ $$h = \\frac{2 \\cdot 24}{6} = \\frac{48}{6} = 8 \\text{ cm}$$"
-  },
-  {
-    id: 29,
-    level: 5,
-    typ: "mc",
-    frage: "Was macht die Winkelhalbierende in einem Dreieck?",
-    optionen: ["Sie teilt eine Seite in zwei gleich lange Hälften.", "Sie teilt einen Winkel in zwei gleich große Teile.", "Sie steht senkrecht auf einer Seite.", "Sie verbindet die Mittelpunkte zweier Seiten."],
-    korrekt: 1,
-    tipp: "Der Name sagt es schon: Was wird hier halbiert — eine Seite oder ein Winkel?",
-    loesungsweg: "Die <b>Winkelhalbierende</b> startet in einer Ecke und teilt den dortigen Winkel in zwei gleich große Teile. Das Halbieren einer Seite übernimmt dagegen die Seitenhalbierende bzw. die Mittelsenkrechte."
-  },
-  {
-    id: 30,
-    level: 5,
-    typ: "mc",
-    frage: "Ein gleichseitiges Dreieck hat die Seitenlänge \\(7 \\text{ cm}\\). Wie groß ist sein Umfang?",
-    optionen: ["\\(21 \\text{ cm}\\)", "\\(14 \\text{ cm}\\)", "\\(49 \\text{ cm}\\)", "\\(24{,}5 \\text{ cm}\\)"],
+    id: 25, level: 5, typ: "mc",
+    frage: "Kann ein gleichschenkliges Dreieck einen Basiswinkel von \\(95°\\) haben?",
+    optionen: [
+        "Nein – beide Basiswinkel sind gleich groß, zusammen wären das schon \\(190°\\)",
+        "Ja, wenn der Winkel an der Spitze klein genug ist",
+        "Ja, gleichschenklige Dreiecke dürfen stumpfe Winkel haben",
+        "Das hängt von den Seitenlängen ab"
+    ],
     korrekt: 0,
-    tipp: "Wie viele Seiten hat das Dreieck — und wie lang ist jede davon?",
-    loesungsweg: "Alle drei Seiten sind gleich lang: $$U = 3 \\cdot 7 = 21 \\text{ cm}$$ Achtung: \\(49\\) wäre \\(7 \\cdot 7\\) — das ist keine Umfangsrechnung!"
+    tipp: "Wie viele Basiswinkel gibt es, und wie groß ist die Winkelsumme?",
+    loesungsweg: "Die beiden Basiswinkel sind stets gleich groß. Bei \\(95°\\) ergäben sie zusammen \\(190°\\) – mehr als die gesamte Winkelsumme von \\(180°\\). Ein stumpfer Winkel ist im gleichschenkligen Dreieck nur an der <b>Spitze</b> möglich."
+  },
+  {
+    id: 26, level: 5, typ: "numerisch",
+    frage: "In einem Dreieck ist \\(\\gamma = 90°\\) und \\(\\beta\\) doppelt so groß wie \\(\\alpha\\). Wie groß ist \\(\\alpha\\) (in Grad)?",
+    loesung: 30, toleranz: 0,
+    tipp: "Drücke \\(\\beta\\) durch \\(\\alpha\\) aus und nutze die Winkelsumme.",
+    loesungsweg: "$$\\alpha + 2\\alpha + 90° = 180° \\Rightarrow 3\\alpha = 90° \\Rightarrow \\alpha = 30°$$ Damit ist \\(\\beta = 60°\\)."
+  },
+  {
+    id: 27, level: 5, typ: "mc",
+    frage: "Ein Schüler rechnet: „Im Dreieck sind \\(\\alpha = 70°\\) und \\(\\beta = 60°\\), also ist \\(\\gamma = 70 + 60 = 130°\\).\" Was ist dazu zu sagen?",
+    optionen: [
+        "Falsch – die Winkel werden von \\(180°\\) abgezogen: \\(\\gamma = 50°\\)",
+        "Richtig, der dritte Winkel ist die Summe der beiden anderen",
+        "Falsch, richtig wäre \\(\\gamma = 10°\\)",
+        "Richtig, wenn das Dreieck stumpfwinklig ist"
+    ],
+    korrekt: 0,
+    tipp: "Prüfe: Wie groß wäre die Winkelsumme mit dem Ergebnis des Schülers?",
+    loesungsweg: "$$\\gamma = 180° - 70° - 60° = 50°$$ Mit \\(130°\\) käme man auf eine Winkelsumme von \\(260°\\) – unmöglich. Die Summe der beiden anderen Winkel ist übrigens der <b>Außenwinkel</b> bei \\(\\gamma\\), nicht der Innenwinkel."
+  },
+  {
+    id: 28, level: 5, typ: "numerisch",
+    frage: "Wie viele verschiedene Dreiecke mit ganzzahligen Seitenlängen und dem Umfang \\(12\\) gibt es? (Dreiecke mit denselben Seiten in anderer Reihenfolge zählen nur einmal.)",
+    loesung: 3, toleranz: 0,
+    tipp: "Gehe die Möglichkeiten geordnet durch (\\(a \\leq b \\leq c\\)) und prüfe jedes Mal die Dreiecksungleichung.",
+    loesungsweg: "Möglich sind \\((2\\mid5\\mid5)\\), \\((3\\mid4\\mid5)\\) und \\((4\\mid4\\mid4)\\) – also <b>3</b>. Ausgeschlossen sind etwa \\((1\\mid5\\mid6)\\) und \\((2\\mid4\\mid6)\\), weil dort die Summe der kürzeren Seiten die längste nicht übertrifft."
+  },
+  {
+    id: 29, level: 5, typ: "numerisch",
+    frage: "Ein Außenwinkel eines Dreiecks beträgt \\(130°\\). Die beiden nicht anliegenden Innenwinkel sind gleich groß. Wie groß ist jeder von ihnen (in Grad)?",
+    loesung: 65, toleranz: 0,
+    tipp: "Der Außenwinkel ist so groß wie die Summe der beiden nicht anliegenden Innenwinkel.",
+    loesungsweg: "Die beiden Winkel ergeben zusammen \\(130°\\) und sind gleich groß: $$130° : 2 = 65°$$ (Der dritte Innenwinkel beträgt \\(50°\\) – zusammen \\(180°\\) ✓.)"
+  },
+  {
+    id: 30, level: 5, typ: "numerisch",
+    frage: "In einem gleichschenkligen Dreieck beträgt der Winkel an der Spitze \\(40°\\). Wie groß ist jeder Basiswinkel (in Grad)?",
+    loesung: 70, toleranz: 0,
+    tipp: "Der Rest der Winkelsumme verteilt sich gleichmäßig auf die beiden Basiswinkel.",
+    loesungsweg: "$$\\frac{180° - 40°}{2} = \\frac{140°}{2} = 70°$$"
   },
   // ========== LEVEL 6 — wagnerisch: Kombinationen & Sachkontexte ==========
   {
@@ -384,6 +380,7 @@ const AUFGABEN = [
     tipp: "Erst den Nebenwinkel von \\(120^\\circ\\) berechnen — das ist der erste Innenwinkel. Dann der Innenwinkelsatz.",
     loesungsweg: "Schritt 1 — Nebenwinkel: $$180^\\circ - 120^\\circ = 60^\\circ$$ Schritt 2 — Innenwinkelsatz: $$180^\\circ - 60^\\circ - 70^\\circ = 50^\\circ$$ Achtung: \\(60^\\circ\\) ist nur der erste Innenwinkel, nicht der gesuchte dritte!"
   }
+
 ];
     </script>
     <script src="../p3-reflexion.js"></script>

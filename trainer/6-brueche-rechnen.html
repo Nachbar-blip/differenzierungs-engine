@@ -162,7 +162,7 @@ const AUFGABEN = [
     typ: "numerisch",
     frage: "Rechne: \\(\\dfrac{1}{2} + \\dfrac{1}{4}\\). Gib das Ergebnis als Dezimalzahl an.",
     loesung: 0.75,
-    toleranz: 0,
+    toleranz: 0.01,
     tipp: "Erweitere \\(\\dfrac{1}{2}\\) auf Viertel und addiere. Wie schreibt man \\(\\dfrac{3}{4}\\) als Dezimalzahl?",
     loesungsweg: "$$\\frac{1}{2} + \\frac{1}{4} = \\frac{2}{4} + \\frac{1}{4} = \\frac{3}{4}$$ Und \\(\\dfrac{3}{4} = 0{,}75\\), denn \\(3 : 4 = 0{,}75\\)."
   },
@@ -182,7 +182,7 @@ const AUFGABEN = [
     typ: "numerisch",
     frage: "Rechne: \\(\\dfrac{7}{10} - \\dfrac{1}{5}\\). Gib das Ergebnis als Dezimalzahl an.",
     loesung: 0.5,
-    toleranz: 0,
+    toleranz: 0.01,
     tipp: "Erweitere \\(\\dfrac{1}{5}\\) auf Zehntel. Zehntel kannst du leicht als Dezimalzahl schreiben.",
     loesungsweg: "$$\\frac{7}{10} - \\frac{1}{5} = \\frac{7}{10} - \\frac{2}{10} = \\frac{5}{10} = \\frac{1}{2}$$ Als Dezimalzahl: \\(0{,}5\\)."
   },
@@ -267,67 +267,64 @@ const AUFGABEN = [
     tipp: "Ein Fünftel von 10 km sind 2 km. Und zwei Fünftel?",
     loesungsweg: "$$\\frac{2}{5} \\cdot 10 = \\frac{2 \\cdot 10}{5} = \\frac{20}{5} = 4$$ Die Busstrecke ist 4 km lang."
   },
-  // ========== LEVEL 5 — anspruchsvoll: Division (Kehrwert), Bruch ↔ Dezimalbruch ==========
-  {
-    id: 25,
-    level: 5,
-    typ: "numerisch",
-    frage: "Wandle \\(\\dfrac{3}{5}\\) in eine Dezimalzahl um.",
-    loesung: 0.6,
-    toleranz: 0,
-    tipp: "Erweitere den Bruch auf Zehntel — oder rechne 3 geteilt durch 5.",
-    loesungsweg: "$$\\frac{3}{5} = \\frac{3 \\cdot 2}{5 \\cdot 2} = \\frac{6}{10} = 0{,}6$$ Kontrolle: \\(3 : 5 = 0{,}6\\). ✓"
-  },
-  {
-    id: 26,
-    level: 5,
-    typ: "mc",
-    frage: "Rechne: \\(\\dfrac{2}{3} : \\dfrac{4}{5}\\)",
-    optionen: ["\\(\\dfrac{8}{15}\\)", "\\(\\dfrac{6}{5}\\)", "\\(\\dfrac{3}{10}\\)", "\\(\\dfrac{5}{6}\\)"],
-    korrekt: 3,
-    tipp: "Durch einen Bruch teilst du, indem du mit seinem Kehrwert multiplizierst: \\(\\cdot \\dfrac{5}{4}\\).",
-    loesungsweg: "$$\\frac{2}{3} : \\frac{4}{5} = \\frac{2}{3} \\cdot \\frac{5}{4} = \\frac{10}{12} = \\frac{5}{6}$$ Wichtig: Der ZWEITE Bruch wird gestürzt, nicht der erste! \\(\\dfrac{8}{15}\\) entsteht, wenn man einfach multipliziert."
-  },
-  {
-    id: 27,
-    level: 5,
-    typ: "numerisch",
-    frage: "Ein Eimer fasst 6 Liter. Eine Gießkanne fasst \\(\\dfrac{3}{4}\\) Liter. 🪴 Wie oft kannst du die Gießkanne aus dem vollen Eimer füllen?",
-    loesung: 8,
-    toleranz: 0,
-    tipp: "Gesucht ist \\(6 : \\dfrac{3}{4}\\). Multipliziere mit dem Kehrwert \\(\\dfrac{4}{3}\\).",
-    loesungsweg: "$$6 : \\frac{3}{4} = 6 \\cdot \\frac{4}{3} = \\frac{24}{3} = 8$$ Du kannst die Gießkanne 8-mal füllen. Probe: \\(8 \\cdot \\dfrac{3}{4} = 6\\). ✓"
-  },
-  {
-    id: 28,
-    level: 5,
-    typ: "mc",
-    frage: "Schreibe \\(0{,}4\\) als vollständig gekürzten Bruch.",
-    optionen: ["\\(\\dfrac{2}{5}\\)", "\\(\\dfrac{1}{4}\\)", "\\(\\dfrac{4}{100}\\)", "\\(\\dfrac{1}{40}\\)"],
-    korrekt: 0,
-    tipp: "\\(0{,}4\\) bedeutet 4 Zehntel. Schreibe das als Bruch und kürze.",
-    loesungsweg: "$$0{,}4 = \\frac{4}{10} = \\frac{2}{5}$$ Vorsicht: \\(0{,}4\\) ist NICHT \\(\\dfrac{1}{4}\\) — ein Viertel wäre \\(0{,}25\\). Und \\(\\dfrac{4}{100}\\) wäre \\(0{,}04\\)."
-  },
-  {
-    id: 29,
-    level: 5,
-    typ: "numerisch",
-    frage: "Wandle \\(\\dfrac{7}{2}\\) in eine Dezimalzahl um.",
-    loesung: 3.5,
-    toleranz: 0,
-    tipp: "Rechne 7 geteilt durch 2. Es kommt mehr als ein Ganzes heraus.",
-    loesungsweg: "$$\\frac{7}{2} = 7 : 2 = 3{,}5$$ Anders gedacht: \\(\\dfrac{7}{2} = \\dfrac{6}{2} + \\dfrac{1}{2} = 3 + 0{,}5 = 3{,}5\\)."
-  },
-  {
-    id: 30,
-    level: 5,
-    typ: "mc",
-    frage: "Wie oft passt \\(\\dfrac{1}{8}\\) in \\(\\dfrac{1}{2}\\)? Berechne \\(\\dfrac{1}{2} : \\dfrac{1}{8}\\). 🍰",
-    optionen: ["\\(\\dfrac{1}{16}\\)", "\\(4\\)", "\\(\\dfrac{1}{4}\\)", "\\(16\\)"],
-    korrekt: 1,
-    tipp: "Stürze den zweiten Bruch: \\(\\dfrac{1}{2} \\cdot \\dfrac{8}{1}\\). Oder denk an eine Torte: Wie viele Achtelstücke sind eine halbe Torte?",
-    loesungsweg: "$$\\frac{1}{2} : \\frac{1}{8} = \\frac{1}{2} \\cdot \\frac{8}{1} = \\frac{8}{2} = 4$$ Eine halbe Torte besteht aus 4 Achtelstücken. \\(\\dfrac{1}{16}\\) entsteht, wenn man multipliziert statt dividiert."
-  },
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 5 — Umkehraufgaben, Fehlersuche, mehrschrittige Anteile
+      // ═══════════════════════════════════════════════════════════
+      {
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Drei Viertel einer Zahl sind \\(18\\). Wie heißt die Zahl?",
+        loesung: 24, toleranz: 0,
+        tipp: "Überlege zuerst, wie groß ein Viertel der Zahl ist.",
+        loesungsweg: "Wenn \\(\\frac{3}{4}\\) der Zahl \\(18\\) sind, ist \\(\\frac{1}{4}\\) davon \\(18 : 3 = 6\\). Die ganze Zahl ist dann $$4 \\cdot 6 = 24$$ Probe: \\(\\frac34\\) von \\(24\\) sind \\(18\\) ✓."
+      },
+      {
+        id: 26, level: 5, typ: "mc",
+        frage: "Ein Schüler rechnet \\(\\frac{1}{2} + \\frac{1}{3} = \\frac{2}{5}\\). Was ist dazu zu sagen?",
+        optionen: [
+            "Falsch – Zähler und Nenner dürfen nicht einzeln addiert werden; richtig ist \\(\\frac{3}{6} + \\frac{2}{6} = \\frac{5}{6}\\)",
+            "Richtig, so addiert man Brüche",
+            "Falsch, richtig wäre \\(\\frac{1}{5}\\)",
+            "Richtig, aber das Ergebnis muss noch gekürzt werden"
+        ],
+        korrekt: 0,
+        tipp: "Das Ergebnis \\(\\frac25\\) ist kleiner als \\(\\frac12\\) – kann eine Summe kleiner sein als ein Summand?",
+        loesungsweg: "Brüche müssen vor dem Addieren gleichnamig gemacht werden: $$\\frac12 + \\frac13 = \\frac36 + \\frac26 = \\frac56$$ Der Fehler fällt auch ohne Rechnung auf: Die Summe \\(\\frac25 = 0{,}4\\) wäre kleiner als der erste Summand \\(\\frac12 = 0{,}5\\)."
+      },
+      {
+        id: 27, level: 5, typ: "mc",
+        frage: "Welcher Bruch ist größer: \\(\\frac{3}{8}\\) oder \\(\\frac{2}{5}\\)?",
+        optionen: [
+            "\\(\\frac{2}{5}\\), denn \\(\\frac{16}{40} > \\frac{15}{40}\\)",
+            "\\(\\frac{3}{8}\\), denn \\(3 > 2\\)",
+            "\\(\\frac{3}{8}\\), denn \\(8 > 5\\)",
+            "Beide sind gleich groß"
+        ],
+        korrekt: 0,
+        tipp: "Mache die Brüche gleichnamig – ein gemeinsamer Nenner ist \\(40\\).",
+        loesungsweg: "$$\\frac38 = \\frac{15}{40}, \\qquad \\frac25 = \\frac{16}{40}$$ Also ist \\(\\frac25\\) größer. Weder der größere Zähler noch der größere Nenner entscheidet allein – nur der Vergleich bei gleichem Nenner (oder als Dezimalzahl: \\(0{,}375 < 0{,}4\\))."
+      },
+      {
+        id: 28, level: 5, typ: "numerisch",
+        frage: "In einer Tüte sind \\(24\\) Gummibärchen. Tim isst ein Drittel davon, danach isst Lisa ein Viertel vom Rest. Wie viele bleiben übrig?",
+        loesung: 12, toleranz: 0,
+        tipp: "Rechne Schritt für Schritt – Lisas Anteil bezieht sich auf den <b>Rest</b>, nicht auf die volle Tüte.",
+        loesungsweg: "Tim isst \\(\\frac13\\) von \\(24\\), also \\(8\\); es bleiben \\(16\\). Lisa isst \\(\\frac14\\) von \\(16\\), also \\(4\\). $$16 - 4 = 12$$ Übrig bleiben \\(12\\) Gummibärchen."
+      },
+      {
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Wie viele halbe Liter passen in \\(3\\) Liter?",
+        loesung: 6, toleranz: 0,
+        tipp: "Denke an Gefäße: Wie oft passt ein halber Liter in einen ganzen?",
+        loesungsweg: "$$3 : \\frac12 = 3 \\cdot 2 = 6$$ Das Teilen durch einen Bruch kleiner als \\(1\\) macht das Ergebnis <b>größer</b> – weil viele kleine Portionen in die Menge passen."
+      },
+      {
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Zwei Fünftel einer Klasse sind \\(10\\) Kinder. Wie viele Kinder hat die Klasse?",
+        loesung: 25, toleranz: 0,
+        tipp: "Bestimme zuerst, wie viele Kinder einem Fünftel entsprechen.",
+        loesungsweg: "Ein Fünftel: \\(10 : 2 = 5\\) Kinder. Die ganze Klasse: $$5 \\cdot 5 = 25$$ Probe: \\(\\frac25\\) von \\(25\\) sind \\(10\\) ✓."
+      },
+
   // ========== LEVEL 6 — wagnerisch: Sachaufgaben & gemischte Rechenausdrücke ==========
   {
     id: 31,
@@ -335,7 +332,7 @@ const AUFGABEN = [
     typ: "numerisch",
     frage: "Ein Pfannkuchen-Rezept für 4 Personen braucht \\(\\dfrac{3}{4}\\) Liter Milch. Ayla kocht für 8 Personen. Wie viel Milch braucht sie? Gib das Ergebnis als Dezimalzahl in Litern an.",
     loesung: 1.5,
-    toleranz: 0,
+    toleranz: 0.01,
     tipp: "8 Personen sind doppelt so viele wie 4. Verdopple also \\(\\dfrac{3}{4}\\) Liter.",
     loesungsweg: "Doppelte Menge: $$2 \\cdot \\frac{3}{4} = \\frac{6}{4} = \\frac{3}{2} = 1{,}5$$ Ayla braucht \\(1{,}5\\) Liter Milch."
   },

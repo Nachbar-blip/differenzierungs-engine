@@ -215,12 +215,12 @@ const AUFGABEN = [
   {
     id: 20,
     level: 4,
-    typ: "mc",
-    frage: "Mache die Probe: Welche Zahl ist die Lösung der Gleichung \\(4x - 1 = 19\\)?",
-    optionen: ["\\(4\\)", "\\(5\\)", "\\(6\\)", "\\(20\\)"],
-    korrekt: 1,
-    tipp: "Setze jede Zahl für \\(x\\) ein und rechne aus. Bei welcher kommt \\(19\\) heraus?",
-    loesungsweg: "Probe durch Einsetzen: $$4 \\cdot 5 - 1 = 20 - 1 = 19 \\quad \\checkmark$$ Die anderen passen nicht: \\(4 \\cdot 4 - 1 = 15\\), \\(4 \\cdot 6 - 1 = 23\\), \\(4 \\cdot 20 - 1 = 79\\)."
+    typ: "numerisch",
+    frage: "Ein Taxi kostet \\(3\\,€\\) Grundpreis und \\(2\\,€\\) je gefahrenem Kilometer. Eine Fahrt kostet \\(19\\,€\\). Wie viele Kilometer waren es?",
+    loesung: 8,
+    toleranz: 0,
+    tipp: "Stelle zuerst eine Gleichung auf: Grundpreis plus Kilometerpreis mal Anzahl der Kilometer.",
+    loesungsweg: "Mit \\(x\\) als Anzahl der Kilometer gilt \\(3 + 2x = 19\\). $$2x = 16 \\quad \\Rightarrow \\quad x = 8$$ Probe: \\(3 + 2 \\cdot 8 = 19\\) ✓ — die Fahrt war \\(8\\,\\text{km}\\) lang."
   },
   {
     id: 21,
@@ -262,66 +262,73 @@ const AUFGABEN = [
     tipp: "Mache die Probe: Setze \\(6\\) für \\(x\\) ein und rechne die linke Seite komplett aus.",
     loesungsweg: "Probe: $$3 \\cdot 6 + 2 = 18 + 2 = 20$$ Es kommt \\(20\\) heraus, nicht \\(18\\) — Leon hat das \\(+\\,2\\) vergessen. Also ist \\(6\\) keine Lösung."
   },
-  // ========== LEVEL 5 — anspruchsvoll: Lösbarkeit im Zahlenbereich ==========
+  // ═══════════════════════════════════════════════════════════
+  // LEVEL 5 — Gleichungen aufstellen, Fehler finden, Lösbarkeit prüfen
+  // ═══════════════════════════════════════════════════════════
   {
     id: 25,
     level: 5,
-    typ: "mc",
-    frage: "Hat die Gleichung \\(x + 7 = 3\\) eine Lösung in den natürlichen Zahlen?",
-    optionen: ["Nein — \\(x\\) müsste \\(-4\\) sein, und das ist keine natürliche Zahl", "Ja, \\(x = 4\\)", "Ja, \\(x = 10\\)", "Ja, \\(x = -4\\)"],
-    korrekt: 0,
-    tipp: "Kann eine natürliche Zahl plus \\(7\\) jemals nur \\(3\\) ergeben? \\(7\\) ist doch schon größer als \\(3\\).",
-    loesungsweg: "Schon \\(0 + 7 = 7\\) ist größer als \\(3\\) — jede natürliche Zahl macht die linke Seite noch größer. Es müsste $$x = 3 - 7 = -4$$ gelten, aber \\(-4\\) ist keine natürliche Zahl. Also: keine Lösung in den natürlichen Zahlen."
+    typ: "numerisch",
+    frage: "Das Dreifache einer Zahl, vermindert um \\(7\\), ergibt \\(20\\). Wie heißt die Zahl?",
+    loesung: 9,
+    toleranz: 0,
+    tipp: "Schreibe den Satz als Gleichung auf, bevor du rechnest.",
+    loesungsweg: "Gleichung: \\(3x - 7 = 20\\). $$3x = 27 \\quad \\Rightarrow \\quad x = 9$$ Probe: \\(3 \\cdot 9 - 7 = 20\\) ✓"
   },
   {
     id: 26,
     level: 5,
     typ: "mc",
-    frage: "Hat die Gleichung \\(3 \\cdot x = 7\\) eine Lösung in den natürlichen Zahlen?",
-    optionen: ["Ja, \\(x = 2\\)", "Ja, \\(x = 3\\)", "Nein, denn \\(7 : 3\\) geht nicht ohne Rest auf", "Ja, \\(x = 21\\)"],
-    korrekt: 2,
-    tipp: "Gibt es eine Zahl in der Dreierreihe, die genau \\(7\\) ergibt?",
-    loesungsweg: "Die Dreierreihe: \\(3, 6, 9, \\ldots\\) — die \\(7\\) kommt nicht vor. $$7 : 3 = 2 \\text{ Rest } 1$$ Also gibt es keine natürliche Zahl als Lösung. (\\(3 \\cdot 2 = 6\\) und \\(3 \\cdot 3 = 9\\) verfehlen die \\(7\\) beide.)"
+    frage: "Ein Schüler löst \\(5x + 3 = 23\\) so: „\\(23 : 5 = 4{,}6\\), dann minus \\(3\\) ergibt \\(1{,}6\\).\" Was ist dazu zu sagen?",
+    optionen: [
+      "Falsch — zuerst muss die \\(3\\) weg, dann wird geteilt: \\(x = 4\\)",
+      "Richtig, \\(x = 1{,}6\\)",
+      "Falsch, richtig wäre \\(x = 5{,}2\\)",
+      "Richtig, aber das Ergebnis muss gerundet werden"
+    ],
+    korrekt: 0,
+    tipp: "Mache die Probe mit \\(1{,}6\\) — kommt dabei \\(23\\) heraus?",
+    loesungsweg: "Die Rechenschritte müssen in umgekehrter Reihenfolge rückgängig gemacht werden: erst die Addition, dann die Multiplikation. $$5x + 3 = 23 \\;\\Rightarrow\\; 5x = 20 \\;\\Rightarrow\\; x = 4$$ Probe: \\(5 \\cdot 4 + 3 = 23\\) ✓. Mit \\(1{,}6\\) käme \\(5 \\cdot 1{,}6 + 3 = 11\\) heraus."
   },
   {
     id: 27,
     level: 5,
-    typ: "mc",
-    frage: "Welche dieser Gleichungen hat KEINE Lösung in den natürlichen Zahlen?",
-    optionen: ["\\(x + 2 = 9\\)", "\\(x - 3 = 1\\)", "\\(2x = 8\\)", "\\(x + 10 = 4\\)"],
-    korrekt: 3,
-    tipp: "Bei welcher Gleichung müsste \\(x\\) kleiner als \\(0\\) sein?",
-    loesungsweg: "Bei \\(x + 10 = 4\\) müsste $$x = 4 - 10 = -6$$ sein — keine natürliche Zahl. Die anderen sind lösbar: \\(x + 2 = 9\\) mit \\(x = 7\\), \\(x - 3 = 1\\) mit \\(x = 4\\), \\(2x = 8\\) mit \\(x = 4\\)."
+    typ: "numerisch",
+    frage: "Die Gleichung \\(2 \\cdot x = 9\\) hat in den natürlichen Zahlen keine Lösung. Erlaubt man Kommazahlen, gibt es eine. Gib sie als Dezimalzahl an.",
+    loesung: 4.5,
+    toleranz: 0.01,
+    tipp: "Zwischen welchen beiden natürlichen Zahlen wird die \\(9\\) übersprungen?",
+    loesungsweg: "In den natürlichen Zahlen: \\(2 \\cdot 4 = 8\\) und \\(2 \\cdot 5 = 10\\) — die \\(9\\) wird übersprungen. Mit Kommazahlen: $$x = 9 : 2 = 4{,}5$$ Probe: \\(2 \\cdot 4{,}5 = 9\\) ✓. Der Zahlenbereich entscheidet also, ob eine Gleichung lösbar ist."
   },
   {
     id: 28,
     level: 5,
     typ: "numerisch",
-    frage: "Die Gleichung \\(2 \\cdot x = 9\\) hat in den natürlichen Zahlen keine Lösung. Erlaubt man aber Kommazahlen, gibt es eine. Gib sie als Dezimalzahl an.",
-    loesung: 4.5,
+    frage: "Wie viele natürliche Zahlen (die \\(0\\) zählt mit) erfüllen die Ungleichung \\(3x < 14\\)?",
+    loesung: 5,
     toleranz: 0,
-    tipp: "Welche Zahl liegt genau in der Mitte zwischen \\(4\\) und \\(5\\)? Denn \\(2 \\cdot 4 = 8\\) und \\(2 \\cdot 5 = 10\\).",
-    loesungsweg: "In den natürlichen Zahlen: \\(2 \\cdot 4 = 8\\) und \\(2 \\cdot 5 = 10\\) — die \\(9\\) wird übersprungen. Mit Kommazahlen: $$x = 9 : 2 = 4{,}5$$ Probe: \\(2 \\cdot 4{,}5 = 9\\) — stimmt! Der Zahlenbereich entscheidet also, ob eine Gleichung lösbar ist."
+    tipp: "Probiere der Reihe nach \\(x = 0, 1, 2, \\ldots\\) — wann wird die linke Seite zu groß?",
+    loesungsweg: "\\(3 \\cdot 0 = 0\\), \\(3 \\cdot 1 = 3\\), \\(3 \\cdot 2 = 6\\), \\(3 \\cdot 3 = 9\\), \\(3 \\cdot 4 = 12\\) — alle kleiner als \\(14\\). Ab \\(3 \\cdot 5 = 15\\) ist es zu groß. Es passen also die Zahlen \\(0, 1, 2, 3, 4\\): <b>5</b> Stück."
   },
   {
     id: 29,
     level: 5,
     typ: "mc",
-    frage: "Hat die Gleichung \\(x + 4 = 4\\) eine Lösung in den natürlichen Zahlen (die \\(0\\) zählt mit)?",
-    optionen: ["Ja, \\(x = 0\\)", "Nein, es gibt keine", "Ja, \\(x = 4\\)", "Ja, \\(x = 8\\)"],
+    frage: "Welche dieser Gleichungen hat KEINE Lösung in den natürlichen Zahlen?",
+    optionen: ["\\(x + 10 = 4\\)", "\\(x + 2 = 9\\)", "\\(x - 3 = 1\\)", "\\(2x = 8\\)"],
     korrekt: 0,
-    tipp: "Gibt es eine Zahl, die beim Addieren gar nichts verändert?",
-    loesungsweg: "Es gilt $$0 + 4 = 4 \\quad \\checkmark$$ Die \\(0\\) ist eine natürliche Zahl und verändert beim Addieren nichts. Also ist \\(x = 0\\) die Lösung. (\\(4 + 4 = 8\\) und \\(8 + 4 = 12\\) passen nicht.)"
+    tipp: "Bei welcher Gleichung müsste \\(x\\) kleiner als \\(0\\) sein?",
+    loesungsweg: "Bei \\(x + 10 = 4\\) müsste $$x = 4 - 10 = -6$$ sein — keine natürliche Zahl. Die anderen sind lösbar: \\(x = 7\\), \\(x = 4\\) und \\(x = 4\\)."
   },
   {
     id: 30,
     level: 5,
-    typ: "mc",
-    frage: "Wie viele natürliche Zahlen (die \\(0\\) zählt mit) erfüllen die Ungleichung \\(x + 2 < 2\\)?",
-    optionen: ["genau eine", "keine", "zwei", "unendlich viele"],
-    korrekt: 1,
-    tipp: "Prüfe schon die kleinste natürliche Zahl: Was ergibt \\(0 + 2\\)? Ist das kleiner als \\(2\\)?",
-    loesungsweg: "Schon die kleinste Zahl scheitert: $$0 + 2 = 2, \\quad \\text{aber } 2 < 2 \\text{ ist falsch.}$$ Jede größere Zahl macht die linke Seite nur noch größer. Also erfüllt keine einzige natürliche Zahl diese Ungleichung."
+    typ: "numerisch",
+    frage: "Anna und Ben haben zusammen \\(34\\) Sticker. Anna hat \\(6\\) Sticker mehr als Ben. Wie viele Sticker hat Ben?",
+    loesung: 14,
+    toleranz: 0,
+    tipp: "Nenne Bens Anzahl \\(x\\) — wie schreibst du dann Annas Anzahl?",
+    loesungsweg: "Ben: \\(x\\), Anna: \\(x + 6\\). $$x + (x + 6) = 34 \\;\\Rightarrow\\; 2x = 28 \\;\\Rightarrow\\; x = 14$$ Ben hat \\(14\\), Anna \\(20\\) Sticker — zusammen \\(34\\) ✓"
   },
   // ========== LEVEL 6 — wagnerisch: Sachaufgaben als Gleichung aufstellen und lösen ==========
   {
@@ -384,6 +391,7 @@ const AUFGABEN = [
     tipp: "Nenne die Seitenzahl des Buchs \\(x\\). Gelesen hat Amir \\(3 \\cdot 40\\) Seiten. Gleichung: \\(x - 120 = 35\\).",
     loesungsweg: "Gelesen: \\(3 \\cdot 40 = 120\\) Seiten. Gleichung: $$x - 120 = 35$$ Rückwärts: $$x = 35 + 120 = 155$$ Probe: \\(155 - 120 = 35\\) — stimmt! Das Buch hat \\(155\\) Seiten."
   }
+
 ];
     </script>
     <script src="../p3-reflexion.js"></script>

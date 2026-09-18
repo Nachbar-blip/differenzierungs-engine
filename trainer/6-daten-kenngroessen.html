@@ -338,21 +338,21 @@ const AUFGABEN = [
     id: 32,
     level: 6,
     typ: "numerisch",
-    frage: "🏊 Emil schwimmt fünfmal \\(50\\) m. Seine Zeiten in Sekunden: \\(62\\), \\(58\\), \\(60\\), \\(64\\), \\(56\\). Berechne seine Durchschnittszeit. Gib das Ergebnis in Sekunden an.",
-    loesung: 60,
+    frage: "Fünf Zahlen haben den Mittelwert \\(5\\) und die Spannweite \\(6\\). Die kleinste Zahl ist \\(2\\). Wie groß ist die größte Zahl?",
+    loesung: 8,
     toleranz: 0,
-    tipp: "Addiere geschickt: \\(62 + 58\\) und \\(64 + 56\\) ergeben runde Zahlen.",
-    loesungsweg: "$$62 + 58 + 60 + 64 + 56 = 300$$ $$\\bar{x} = \\frac{300}{5} = 60$$ Emil braucht im Durchschnitt 60 Sekunden."
+    tipp: "Was sagt die Spannweite über kleinste und größte Zahl aus?",
+    loesungsweg: "Die Spannweite ist die Differenz zwischen größter und kleinster Zahl: $$2 + 6 = 8$$ Der Mittelwert wird dafür gar nicht gebraucht — er ist eine Zusatzangabe, die nur zeigt, dass die übrigen drei Zahlen zusammen \\(25 - 2 - 8 = 15\\) ergeben."
   },
   {
     id: 33,
     level: 6,
-    typ: "mc",
-    frage: "Fünf Kinder haben gespart: \\(5\\) €, \\(6\\) €, \\(6\\) €, \\(7\\) € und \\(46\\) €. Welche Aussage stimmt?",
-    optionen: ["Der Mittelwert beträgt \\(6\\) €.", "Die meisten Kinder haben etwa \\(14\\) € gespart.", "Der Median (\\(6\\) €) beschreibt die Gruppe besser als der Mittelwert (\\(14\\) €).", "Die Spannweite beträgt \\(46\\) €."],
-    korrekt: 2,
-    tipp: "Berechne Mittelwert und Median. Was macht der Ausreißer \\(46\\) € mit dem Mittelwert?",
-    loesungsweg: "Mittelwert: $$\\frac{5 + 6 + 6 + 7 + 46}{5} = \\frac{70}{5} = 14$$ Median (geordnete Mitte): \\(6\\) €. Vier von fünf Kindern haben \\(5\\) bis \\(7\\) € — der Ausreißer \\(46\\) € zieht den Mittelwert hoch. Der Median beschreibt die Gruppe darum besser. Die Spannweite wäre \\(46 - 5 = 41\\) €."
+    typ: "numerisch",
+    frage: "Vier Zahlen haben den Mittelwert \\(9\\). Eine fünfte Zahl kommt hinzu, danach beträgt der Mittelwert \\(10\\). Wie groß ist die fünfte Zahl?",
+    loesung: 14,
+    toleranz: 0,
+    tipp: "Arbeite über die Summen: Wie groß ist die Summe vorher, wie groß nachher?",
+    loesungsweg: "Summe der vier Zahlen: \\(4 \\cdot 9 = 36\\). Summe der fünf Zahlen: \\(5 \\cdot 10 = 50\\). $$50 - 36 = 14$$ Die fünfte Zahl ist \\(14\\) — sie muss über dem alten Mittelwert liegen, damit dieser steigt."
   },
   {
     id: 34,
@@ -377,12 +377,17 @@ const AUFGABEN = [
   {
     id: 36,
     level: 6,
-    typ: "numerisch",
-    frage: "Eine Woche lang wird mittags die Temperatur gemessen (in \\(^\\circ\\text{C}\\)): \\(18\\), \\(21\\), \\(19\\), \\(22\\), \\(20\\), \\(23\\), \\(17\\). Bestimme den Median der Temperaturen. Gib das Ergebnis in Grad Celsius an.",
-    loesung: 20,
-    toleranz: 0,
-    tipp: "Sieben Werte: Ordnen, dann ist der vierte Wert der Median.",
-    loesungsweg: "Geordnet: $$17,\\ 18,\\ 19,\\ \\underline{20},\\ 21,\\ 22,\\ 23$$ Der vierte von sieben Werten steht in der Mitte: $$\\text{Median} = 20$$ Der Median ist \\(20\\,{}^\\circ\\text{C}\\)."
+    typ: "mc",
+    frage: "In einer Firma verdienen sechs Angestellte je \\(2000\\,€\\), die Chefin \\(16000\\,€\\). Welche Kenngröße beschreibt den typischen Verdienst besser?",
+    optionen: [
+      "Der Zentralwert \\(2000\\,€\\) — der Mittelwert wird durch den einen hohen Wert nach oben gezogen",
+      "Der Mittelwert, denn er berücksichtigt alle Werte",
+      "Die Spannweite, denn sie zeigt den Unterschied",
+      "Beide sind hier gleich gut geeignet"
+    ],
+    korrekt: 0,
+    tipp: "Berechne beide Werte und vergleiche sie mit dem, was die sechs Angestellten tatsächlich verdienen.",
+    loesungsweg: "Mittelwert: \\((6 \\cdot 2000 + 16000) : 7 = 28000 : 7 = 4000\\,€\\). Zentralwert (vierter von sieben geordneten Werten): \\(2000\\,€\\). Sechs von sieben Personen verdienen \\(2000\\,€\\) — der Mittelwert von \\(4000\\,€\\) beschreibt niemanden. Einzelne <b>Ausreißer</b> verzerren den Mittelwert, den Zentralwert kaum."
   }
 ];
     </script>

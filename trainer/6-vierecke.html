@@ -262,77 +262,89 @@ const AUFGABEN = [
     tipp: "Im Rechteck halbieren sich die Diagonalen zwar auch — aber stehen sie dort senkrecht aufeinander?",
     loesungsweg: "In der Raute stehen die Diagonalen senkrecht aufeinander und halbieren sich gegenseitig. Im Rechteck halbieren sie sich zwar, stehen aber nicht senkrecht. Im allgemeinen Parallelogramm ebenfalls nicht."
   },
-  // ========== LEVEL 5 — anspruchsvoll: Flächeninhalt Parallelogramm und Trapez ==========
+  // ═══════════════════════════════════════════════════════════
+  // LEVEL 5 — Umkehraufgaben, Fehlersuche, zusammengesetzte Flächen
+  // ═══════════════════════════════════════════════════════════
   {
     id: 25,
     level: 5,
     typ: "numerisch",
-    frage: "Ein Parallelogramm hat die Grundseite \\(g = 8\\) cm und die Höhe \\(h = 5\\) cm. Berechne den Flächeninhalt. Gib das Ergebnis in cm² an.",
-    loesung: 40,
+    frage: "Ein Parallelogramm hat den Flächeninhalt \\(48\\,\\text{cm}^2\\) und die Grundseite \\(12\\,\\text{cm}\\). Wie lang ist die zugehörige Höhe (in cm)?",
+    loesung: 4,
     toleranz: 0,
-    tipp: "Formel für das Parallelogramm: \\(A = g \\cdot h\\).",
-    loesungsweg: "$$A = g \\cdot h$$ $$A = 8 \\text{ cm} \\cdot 5 \\text{ cm} = 40 \\text{ cm}^2$$"
+    tipp: "Welche Zahl ergibt mit \\(12\\) multipliziert \\(48\\)?",
+    loesungsweg: "Aus \\(A = g \\cdot h\\) folgt $$h = \\frac{48}{12} = 4\\,\\text{cm}$$ Probe: \\(12 \\cdot 4 = 48\\) ✓"
   },
   {
     id: 26,
     level: 5,
     typ: "mc",
-    frage: "Mit welcher Formel berechnest du den Flächeninhalt eines Trapezes mit den parallelen Seiten \\(a\\) und \\(c\\) und der Höhe \\(h\\)?",
-    optionen: ["\\(A = a \\cdot c \\cdot h\\)", "\\(A = a \\cdot h\\)", "\\(A = \\dfrac{a + c}{2} \\cdot h\\)", "\\(A = 2 \\cdot (a + c)\\)"],
-    korrekt: 2,
-    tipp: "Beim Trapez rechnet man mit der MITTLEREN Länge der beiden parallelen Seiten.",
-    loesungsweg: "Die parallelen Seiten \\(a\\) und \\(c\\) sind verschieden lang. Man nimmt ihren Mittelwert und multipliziert mit der Höhe: $$A = \\frac{a + c}{2} \\cdot h$$"
+    frage: "Zwei Parallelogramme haben beide die Seiten \\(6\\,\\text{cm}\\) und \\(4\\,\\text{cm}\\). Müssen sie denselben Flächeninhalt haben?",
+    optionen: [
+      "Nein — je flacher das Parallelogramm gekippt ist, desto kleiner ist die Höhe und damit die Fläche",
+      "Ja, gleiche Seiten bedeuten immer gleiche Fläche",
+      "Ja, die Fläche ist stets \\(6 \\cdot 4 = 24\\,\\text{cm}^2\\)",
+      "Nein, aber nur wenn die Seiten unterschiedlich angeordnet sind"
+    ],
+    korrekt: 0,
+    tipp: "Stell dir vor, du kippst ein Parallelogramm immer weiter zur Seite — was passiert mit seiner Höhe?",
+    loesungsweg: "In die Flächenformel geht nicht die Nachbarseite ein, sondern die <b>Höhe</b>: \\(A = g \\cdot h\\). Beim Kippen bleiben die Seiten gleich lang, die Höhe wird aber kleiner. Nur im Rechteck fallen Höhe und Nachbarseite zusammen — dort sind es genau \\(24\\,\\text{cm}^2\\)."
   },
   {
     id: 27,
     level: 5,
     typ: "numerisch",
-    frage: "Ein Trapez hat die parallelen Seiten \\(a = 10\\) cm und \\(c = 6\\) cm, die Höhe beträgt \\(h = 4\\) cm. Berechne den Flächeninhalt. Gib das Ergebnis in cm² an.",
-    loesung: 32,
+    frage: "Ein Trapez hat die parallelen Seiten \\(10\\,\\text{cm}\\) und \\(6\\,\\text{cm}\\) und den Flächeninhalt \\(32\\,\\text{cm}^2\\). Wie hoch ist es (in cm)?",
+    loesung: 4,
     toleranz: 0,
-    tipp: "Erst den Mittelwert von \\(a\\) und \\(c\\) bilden, dann mit \\(h\\) multiplizieren.",
-    loesungsweg: "$$A = \\frac{a + c}{2} \\cdot h = \\frac{10 + 6}{2} \\cdot 4$$ $$A = \\frac{16}{2} \\cdot 4 = 8 \\cdot 4 = 32 \\text{ cm}^2$$"
+    tipp: "Berechne zuerst den Mittelwert der beiden parallelen Seiten.",
+    loesungsweg: "Mittelwert der parallelen Seiten: \\(\\frac{10 + 6}{2} = 8\\). Aus \\(A = 8 \\cdot h = 32\\) folgt $$h = \\frac{32}{8} = 4\\,\\text{cm}$$"
   },
   {
     id: 28,
     level: 5,
-    typ: "numerisch",
-    frage: "Ein Parallelogramm hat den Flächeninhalt \\(A = 54\\) cm² und die Grundseite \\(g = 9\\) cm. Wie groß ist die Höhe \\(h\\)? Gib das Ergebnis in cm an.",
-    loesung: 6,
-    toleranz: 0,
-    tipp: "Stelle die Formel \\(A = g \\cdot h\\) nach \\(h\\) um: Teile \\(A\\) durch \\(g\\).",
-    loesungsweg: "$$A = g \\cdot h \\quad \\Rightarrow \\quad h = A : g$$ $$h = 54 \\text{ cm}^2 : 9 \\text{ cm} = 6 \\text{ cm}$$"
+    typ: "mc",
+    frage: "Ein Schüler berechnet die Fläche eines Parallelogramms mit der Grundseite \\(9\\,\\text{cm}\\), der Nachbarseite \\(5\\,\\text{cm}\\) und der Höhe \\(4\\,\\text{cm}\\) als \\(45\\,\\text{cm}^2\\). Was ist dazu zu sagen?",
+    optionen: [
+      "Falsch — er hat mit der Nachbarseite statt mit der Höhe gerechnet; richtig sind \\(36\\,\\text{cm}^2\\)",
+      "Richtig, \\(9 \\cdot 5 = 45\\)",
+      "Falsch, richtig wären \\(20\\,\\text{cm}^2\\)",
+      "Richtig, die Höhe wird hier nicht gebraucht"
+    ],
+    korrekt: 0,
+    tipp: "Welche der drei Angaben gehört in die Formel \\(A = g \\cdot h\\)?",
+    loesungsweg: "$$A = g \\cdot h = 9 \\cdot 4 = 36\\,\\text{cm}^2$$ Die Nachbarseite \\(5\\,\\text{cm}\\) ist eine Zusatzangabe, die nicht in die Flächenformel gehört — sie wird nur für den Umfang gebraucht."
   },
   {
     id: 29,
     level: 5,
-    typ: "mc",
-    frage: "Ein Parallelogramm hat die Grundseite \\(g = 7\\) cm und die Höhe \\(h = 4\\) cm. Wie groß ist der Flächeninhalt?",
-    optionen: ["\\(28 \\text{ cm}^2\\)", "\\(22 \\text{ cm}^2\\)", "\\(11 \\text{ cm}^2\\)", "\\(14 \\text{ cm}^2\\)"],
-    korrekt: 0,
-    tipp: "Fläche heißt multiplizieren: \\(g \\cdot h\\). Nicht mit dem Umfang verwechseln!",
-    loesungsweg: "$$A = g \\cdot h = 7 \\text{ cm} \\cdot 4 \\text{ cm} = 28 \\text{ cm}^2$$ Achtung: \\(22 \\text{ cm}^2\\) sieht aus wie der Umfang \\(2 \\cdot (7 + 4) = 22\\) — das wäre aber eine ganz andere Rechnung."
+    typ: "numerisch",
+    frage: "Eine Fläche besteht aus einem Rechteck (\\(8\\,\\text{cm}\\) lang, \\(5\\,\\text{cm}\\) breit) und einem daran angesetzten Dreieck mit der Grundseite \\(8\\,\\text{cm}\\) und der Höhe \\(3\\,\\text{cm}\\). Wie groß ist die Gesamtfläche (in \\(\\text{cm}^2\\))?",
+    loesung: 52,
+    toleranz: 0,
+    tipp: "Zerlege die Figur in zwei bekannte Teilflächen und addiere.",
+    loesungsweg: "Rechteck: \\(8 \\cdot 5 = 40\\,\\text{cm}^2\\). Dreieck: \\(\\frac{8 \\cdot 3}{2} = 12\\,\\text{cm}^2\\). $$40 + 12 = 52\\,\\text{cm}^2$$"
   },
   {
     id: 30,
     level: 5,
     typ: "numerisch",
-    frage: "Ein Trapez hat die parallelen Seiten \\(a = 12\\) cm und \\(c = 8\\) cm sowie die Höhe \\(h = 5\\) cm. Berechne den Flächeninhalt. Gib das Ergebnis in cm² an.",
-    loesung: 50,
+    frage: "Ein Rechteck ist \\(9\\,\\text{cm}\\) lang und hat den Umfang \\(26\\,\\text{cm}\\). Wie breit ist es (in cm)?",
+    loesung: 4,
     toleranz: 0,
-    tipp: "Trapezformel: \\(A = \\dfrac{a + c}{2} \\cdot h\\). Rechne Schritt für Schritt.",
-    loesungsweg: "$$A = \\frac{a + c}{2} \\cdot h = \\frac{12 + 8}{2} \\cdot 5$$ $$A = \\frac{20}{2} \\cdot 5 = 10 \\cdot 5 = 50 \\text{ cm}^2$$"
+    tipp: "Halbiere zuerst den Umfang — was erhältst du damit?",
+    loesungsweg: "Der halbe Umfang ist Länge plus Breite: \\(26 : 2 = 13\\). $$b = 13 - 9 = 4\\,\\text{cm}$$ Probe: \\(2 \\cdot (9 + 4) = 26\\) ✓"
   },
   // ========== LEVEL 6 — wagnerisch: Sachaufgaben und Begründungen ==========
   {
     id: 31,
     level: 6,
     typ: "numerisch",
-    frage: "Familie Yilmaz hat ein rechteckiges Grundstück 🏡, das \\(25\\) m lang und \\(18\\) m breit ist. Sie möchte einen Zaun um das ganze Grundstück bauen. Wie viele Meter Zaun braucht sie? Gib das Ergebnis in m an.",
-    loesung: 86,
+    frage: "Ein Quadrat und ein Rechteck haben beide den Umfang \\(24\\,\\text{cm}\\). Das Rechteck ist \\(8\\,\\text{cm}\\) lang. Um wie viele \\(\\text{cm}^2\\) ist das Quadrat größer?",
+    loesung: 4,
     toleranz: 0,
-    tipp: "Ein Zaun läuft am Rand entlang — gesucht ist also der Umfang: \\(U = 2 \\cdot (l + b)\\).",
-    loesungsweg: "Der Zaun umschließt das Rechteck, gesucht ist der Umfang: $$U = 2 \\cdot (25 \\text{ m} + 18 \\text{ m})$$ $$U = 2 \\cdot 43 \\text{ m} = 86 \\text{ m}$$ Familie Yilmaz braucht \\(86\\) m Zaun."
+    tipp: "Bestimme für beide Figuren zuerst die Seitenlängen aus dem Umfang.",
+    loesungsweg: "Quadrat: \\(24 : 4 = 6\\,\\text{cm}\\) Seitenlänge, also \\(A = 36\\,\\text{cm}^2\\). Rechteck: halber Umfang \\(12\\), Länge \\(8\\), also Breite \\(4\\) und \\(A = 32\\,\\text{cm}^2\\). $$36 - 32 = 4\\,\\text{cm}^2$$ Bei gleichem Umfang hat das Quadrat stets die größte Fläche — gleicher Umfang bedeutet also nicht gleiche Fläche."
   },
   {
     id: 32,
@@ -384,6 +396,7 @@ const AUFGABEN = [
     tipp: "Für die Fläche zählt nicht die schräge Seite, sondern die Höhe, die senkrecht auf der Grundseite steht.",
     loesungsweg: "Beim Parallelogramm gilt \\(A = g \\cdot h\\): Grundseite mal zugehörige Höhe. $$A = 6 \\text{ m} \\cdot 3 \\text{ m} = 18 \\text{ m}^2$$ Der häufigste Fehler ist \\(6 \\cdot 4\\) — aber die schräge Seite ist keine Höhe! Und \\(2 \\cdot (6+4)\\) wäre der Umfang."
   }
+
 ];
     </script>
     <script src="../p3-reflexion.js"></script>

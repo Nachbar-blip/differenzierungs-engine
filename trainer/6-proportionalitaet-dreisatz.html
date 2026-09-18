@@ -217,7 +217,7 @@ const AUFGABEN = [
     typ: "numerisch",
     frage: "\\(6\\) Flaschen Limo kosten zusammen \\(9\\) €. Wie viel € kostet \\(1\\) Flasche? Gib das Ergebnis in € an.",
     loesung: 1.5,
-    toleranz: 0,
+    toleranz: 0.01,
     tipp: "Rechne \\(9 : 6\\). Das Ergebnis ist keine ganze Zahl.",
     loesungsweg: "$$9 : 6 = 1{,}5$$ Eine Flasche kostet \\(1{,}50\\) €."
   },
@@ -238,7 +238,7 @@ const AUFGABEN = [
     typ: "numerisch",
     frage: "\\(5\\) Hefte kosten \\(4\\) €. Was kosten \\(8\\) Hefte? Gib das Ergebnis in € an.",
     loesung: 6.4,
-    toleranz: 0,
+    toleranz: 0.01,
     tipp: "Erst der Schritt zur Einheit: Was kostet \\(1\\) Heft? Dann mal \\(8\\).",
     loesungsweg: "Schritt 1 — auf \\(1\\) Heft: $$4 : 5 = 0{,}8$$ Schritt 2 — auf \\(8\\) Hefte: $$0{,}8 \\cdot 8 = 6{,}4$$ \\(8\\) Hefte kosten \\(6{,}40\\) €."
   },
@@ -292,66 +292,73 @@ const AUFGABEN = [
     tipp: "Rechne zuerst aus, wie viel Gramm eine Person bekommt.",
     loesungsweg: "Schritt 1 — eine Person: $$300 : 6 = 50$$ Jede Person bekommt \\(50\\) g. Schritt 2 — vier Personen: $$50 \\cdot 4 = 200$$ Für \\(4\\) Personen braucht man \\(200\\) g. \\(450\\) g käme heraus, wenn man \\(300 : 4 \\cdot 6\\) rechnet — die Zahlen wurden vertauscht."
   },
-  // ========== LEVEL 5 — anspruchsvoll: unbequeme Zahlen & Runden im Sachkontext ==========
+  // ═══════════════════════════════════════════════════════════
+  // LEVEL 5 — Zuordnungsart erkennen, Fehler finden, runden im Sachkontext
+  // ═══════════════════════════════════════════════════════════
   {
     id: 25,
     level: 5,
-    typ: "numerisch",
-    frage: "An der Käsetheke kosten \\(250\\) g Käse \\(3{,}20\\) €. 🧀 Was kosten \\(400\\) g? Gib das Ergebnis in € an.",
-    loesung: 5.12,
-    toleranz: 0,
-    tipp: "Rechne über \\(50\\) g: \\(250\\) g sind \\(5\\) Portionen zu \\(50\\) g, \\(400\\) g sind \\(8\\) Portionen.",
-    loesungsweg: "Schritt 1 — Preis für \\(50\\) g: $$3{,}2 : 5 = 0{,}64$$ Schritt 2 — \\(400\\) g sind \\(8\\) Portionen zu \\(50\\) g: $$0{,}64 \\cdot 8 = 5{,}12$$ \\(400\\) g Käse kosten \\(5{,}12\\) €."
+    typ: "mc",
+    frage: "\\(4\\) Maler streichen eine Halle in \\(9\\) Tagen. Ein Schüler rechnet: „\\(6\\) Maler brauchen \\(9 \\cdot \\frac{6}{4} = 13{,}5\\) Tage.\" Was ist dazu zu sagen?",
+    optionen: [
+      "Falsch — mehr Maler brauchen weniger Zeit; richtig sind \\(6\\) Tage",
+      "Richtig, mehr Maler bedeuten mehr Arbeitstage",
+      "Falsch, richtig wären \\(15\\) Tage",
+      "Richtig, aber das Ergebnis muss aufgerundet werden"
+    ],
+    korrekt: 0,
+    tipp: "Überlege zuerst: Wird die Zeit größer oder kleiner, wenn mehr Leute mitarbeiten?",
+    loesungsweg: "Hier liegt eine <b>antiproportionale</b> Zuordnung vor: mehr Maler, weniger Tage. Die gesamte Arbeit beträgt \\(4 \\cdot 9 = 36\\) Malertage. $$36 : 6 = 6 \\text{ Tage}$$ Der Schüler hat wie bei einer proportionalen Zuordnung gerechnet."
   },
   {
     id: 26,
     level: 5,
-    typ: "mc",
-    frage: "Ein Rezept für \\(4\\) Personen braucht \\(3\\) Eier. Oma kocht für \\(10\\) Personen. Wie viele Eier muss sie mindestens nehmen?",
-    optionen: ["\\(7\\)", "\\(8\\)", "\\(7{,}5\\)", "\\(9\\)"],
-    korrekt: 1,
-    tipp: "Rechne erst genau: \\(3 : 4 \\cdot 10\\). Überlege dann: Kann man ein halbes Ei kaufen?",
-    loesungsweg: "Dreisatz: $$3 : 4 = 0{,}75, \\quad 0{,}75 \\cdot 10 = 7{,}5$$ Rechnerisch braucht Oma \\(7{,}5\\) Eier. Halbe Eier gibt es aber nicht — im Sachkontext muss sie aufrunden: \\(8\\) Eier. Mit \\(7\\) Eiern (abgerundet) würde es nicht reichen!"
+    typ: "numerisch",
+    frage: "\\(7\\) gleiche Hefte kosten \\(8{,}05\\,€\\). Wie viel kosten \\(12\\) dieser Hefte (in Euro)?",
+    loesung: 13.8,
+    toleranz: 0.01,
+    tipp: "Rechne über den Preis für ein einzelnes Heft.",
+    loesungsweg: "Ein Heft: \\(8{,}05 : 7 = 1{,}15\\,€\\). Zwölf Hefte: $$12 \\cdot 1{,}15 = 13{,}80\\,€$$"
   },
   {
     id: 27,
     level: 5,
     typ: "numerisch",
-    frage: "\\(3\\) kg Orangen kosten \\(7\\) €. Was kosten \\(5\\) kg? Gib das Ergebnis in € an, gerundet auf \\(2\\) Nachkommastellen.",
-    loesung: 11.67,
+    frage: "Für \\(4\\) Kuchen braucht man \\(14\\) Eier. Für \\(5\\) Kuchen rechnet man \\(17{,}5\\) Eier. Wie viele Eier muss man tatsächlich kaufen?",
+    loesung: 18,
     toleranz: 0,
-    tipp: "Rechne erst mal \\(5\\), dann geteilt durch \\(3\\) — so bleiben die Zahlen länger glatt.",
-    loesungsweg: "Geschickte Reihenfolge: $$7 \\cdot 5 = 35, \\quad 35 : 3 = 11{,}666\\ldots$$ Gerundet auf ganze Cent: \\(5\\) kg Orangen kosten \\(11{,}67\\) €."
+    tipp: "Eier gibt es nur ganz — in welche Richtung muss man hier runden?",
+    loesungsweg: "Ein Kuchen: \\(14 : 4 = 3{,}5\\) Eier. Fünf Kuchen: \\(5 \\cdot 3{,}5 = 17{,}5\\). Mit \\(17\\) Eiern reicht es nicht, also muss man <b>aufrunden</b>: \\(18\\) Eier. Der Sachzusammenhang entscheidet über die Rundungsrichtung, nicht die Kommastelle."
   },
   {
     id: 28,
     level: 5,
-    typ: "mc",
-    frage: "In \\(6\\) Minuten laufen \\(27\\) Liter Wasser in die Badewanne. Wie viele Liter sind es nach \\(10\\) Minuten?",
-    optionen: ["\\(40\\) Liter", "\\(54\\) Liter", "\\(45\\) Liter", "\\(37\\) Liter"],
-    korrekt: 2,
-    tipp: "Wie viele Liter laufen in \\(1\\) Minute? \\(27 : 6\\) ist keine ganze Zahl — das ist okay!",
-    loesungsweg: "Schritt 1: $$27 : 6 = 4{,}5$$ Pro Minute laufen \\(4{,}5\\) Liter ein. Schritt 2: $$4{,}5 \\cdot 10 = 45$$ Nach \\(10\\) Minuten sind es \\(45\\) Liter. \\(37\\) Liter käme heraus, wenn man \\(27 + 10\\) addiert — beim Dreisatz wird aber multipliziert, nicht addiert!"
+    typ: "numerisch",
+    frage: "Packung A: \\(2{,}5\\,\\text{kg}\\) für \\(11{,}50\\,€\\). Packung B: \\(4\\,\\text{kg}\\) für \\(20{,}00\\,€\\). Wie hoch ist der günstigere Kilopreis (in Euro)?",
+    loesung: 4.6,
+    toleranz: 0.01,
+    tipp: "Rechne für beide Packungen den Preis für ein Kilogramm aus.",
+    loesungsweg: "Packung A: \\(11{,}50 : 2{,}5 = 4{,}60\\,€\\) je kg. Packung B: \\(20{,}00 : 4 = 5{,}00\\,€\\) je kg. Der günstigere Kilopreis beträgt \\(4{,}60\\,€\\) — die <b>kleinere</b> Packung ist hier die günstigere, die größere Packung lohnt sich nicht immer."
   },
   {
     id: 29,
     level: 5,
     typ: "numerisch",
-    frage: "Ein Auto verbraucht auf \\(100\\) km genau \\(6{,}5\\) Liter Benzin. Wie viel Liter braucht es für \\(250\\) km? Gib das Ergebnis in Litern an.",
-    loesung: 16.25,
+    frage: "Ein Futtervorrat reicht für \\(15\\) Pferde \\(8\\) Tage. Wie viele Tage reicht er für \\(12\\) Pferde?",
+    loesung: 10,
     toleranz: 0,
-    tipp: "\\(250\\) km sind \\(2{,}5\\)-mal so weit wie \\(100\\) km.",
-    loesungsweg: "Der Faktor von \\(100\\) km auf \\(250\\) km ist $$250 : 100 = 2{,}5$$ Also: $$6{,}5 \\cdot 2{,}5 = 16{,}25$$ Für \\(250\\) km braucht das Auto \\(16{,}25\\) Liter."
+    tipp: "Weniger Pferde — reicht das Futter länger oder kürzer?",
+    loesungsweg: "Der Vorrat umfasst \\(15 \\cdot 8 = 120\\) Pferdetagesrationen. $$120 : 12 = 10 \\text{ Tage}$$ Weniger Pferde, mehr Tage — eine antiproportionale Zuordnung."
   },
   {
     id: 30,
     level: 5,
     typ: "numerisch",
-    frage: "Ein Eimer Farbe reicht für \\(12\\) m² Wand. Familie Yilmaz will \\(40\\) m² streichen. 🎨 Wie viele Eimer muss sie kaufen?",
-    loesung: 4,
+    frage: "Ein Wasserhahn füllt in \\(6\\) Minuten \\(21\\) Liter. Wie viele Liter fließen in \\(4\\) Minuten?",
+    loesung: 14,
     toleranz: 0,
-    tipp: "Rechne \\(40 : 12\\). Das Ergebnis ist keine ganze Zahl — überlege, ob du auf- oder abrunden musst.",
-    loesungsweg: "$$40 : 12 = 3{,}33\\ldots$$ Rechnerisch braucht die Familie gut \\(3\\) Eimer. Mit nur \\(3\\) Eimern schafft sie aber bloß \\(36\\) m² — das reicht nicht. Im Sachkontext wird aufgerundet: Sie muss \\(4\\) Eimer kaufen."
+    tipp: "Bestimme zuerst, wie viel in einer Minute fließt.",
+    loesungsweg: "Eine Minute: \\(21 : 6 = 3{,}5\\) Liter. Vier Minuten: $$4 \\cdot 3{,}5 = 14 \\text{ Liter}$$"
   },
   // ========== LEVEL 6 — wagnerisch: mehrschrittige Sachaufgaben ==========
   {
@@ -360,7 +367,7 @@ const AUFGABEN = [
     typ: "numerisch",
     frage: "Amir kauft für das Klassenfest ein: \\(3\\) kg Äpfel kosten \\(5{,}40\\) €, er braucht aber \\(5\\) kg. Dazu nimmt er \\(2\\) Flaschen Saft für je \\(1{,}80\\) €. Wie viel € bezahlt Amir insgesamt? Gib das Ergebnis in € an.",
     loesung: 12.6,
-    toleranz: 0,
+    toleranz: 0.01,
     tipp: "Drei Schritte: Preis für \\(1\\) kg Äpfel, dann für \\(5\\) kg, dann den Saft dazurechnen.",
     loesungsweg: "Äpfel pro kg: $$5{,}4 : 3 = 1{,}8$$ Äpfel gesamt: $$1{,}8 \\cdot 5 = 9$$ Saft: $$2 \\cdot 1{,}8 = 3{,}6$$ Alles zusammen: $$9 + 3{,}6 = 12{,}6$$ Amir bezahlt \\(12{,}60\\) €."
   },
@@ -424,6 +431,7 @@ const AUFGABEN = [
     tipp: "Rechne zuerst aus, wie viel Zucker \\(24\\) Muffins brauchen. Vergleiche dann mit dem Packungsinhalt.",
     loesungsweg: "Zucker pro Muffin: $$200 : 8 = 25 \\text{ g}$$ Für \\(24\\) Muffins: $$25 \\cdot 24 = 600 \\text{ g}$$ Eine Packung hat nur \\(500\\) g — das reicht nicht. Also: $$600 : 500 = 1{,}2$$ Aufrunden: Frau Okafor muss \\(2\\) Packungen öffnen. (\\(3\\) wäre die Anzahl der Rezept-Durchgänge, nicht der Packungen!)"
   }
+
 ];
     </script>
     <script src="../p3-reflexion.js"></script>
