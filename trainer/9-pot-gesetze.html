@@ -264,139 +264,110 @@
         loesungsweg: "$$x^{-2} \\cdot (x^3)^{-1} = x^{-2} \\cdot x^{-3} = x^{-5} = \\frac{1}{x^5}$$ Beide Schreibweisen sind äquivalent."
       },
 
-      // ========== LEVEL 5 — schwer: komplexe Brüche und Umformungen ==========
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 5 — Gleichungen und Fehlersuche statt Auswahl-Vereinfachen
+      // ═══════════════════════════════════════════════════════════
       {
-        id: 25,
-        level: 5,
-        typ: "mc",
-        frage: "Vereinfache: \\(\\dfrac{(a^3 b^2)^2 \\cdot a^{-1}}{a^4 b^3}\\)",
-        optionen: ["\\(a b\\)", "\\(a^2 b\\)", "\\(a b^2\\)", "\\(\\dfrac{b}{a}\\)"],
-        korrekt: 0,
-        tipp: "Zähler auspotenzieren: \\((a^3 b^2)^2 = a^6 b^4\\).",
-        loesungsweg: "$$\\frac{(a^3 b^2)^2 \\cdot a^{-1}}{a^4 b^3} = \\frac{a^6 b^4 \\cdot a^{-1}}{a^4 b^3} = \\frac{a^{5} b^4}{a^4 b^3} = a^{5-4} \\cdot b^{4-3} = a b$$"
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Vereinfache \\(\\dfrac{(a^3 b^2)^2 \\cdot a^{-1}}{a^4 b^3}\\) und gib den Exponenten von \\(a\\) im Ergebnis an.",
+        loesung: 1, toleranz: 0,
+        tipp: "Löse zuerst die Klammer auf; dabei werden die Exponenten multipliziert.",
+        loesungsweg: "Zähler: \\((a^3b^2)^2 \\cdot a^{-1} = a^6 b^4 \\cdot a^{-1} = a^5 b^4\\). Division: $$\\frac{a^5 b^4}{a^4 b^3} = a^{1} b^{1}$$ Der Exponent von \\(a\\) ist \\(1\\)."
       },
       {
-        id: 26,
-        level: 5,
-        typ: "mc",
-        frage: "Vereinfache: \\(\\left(\\dfrac{x^{-2} y^3}{x y^{-1}}\\right)^2\\)",
-        optionen: ["\\(\\dfrac{y^8}{x^6}\\)", "\\(\\dfrac{y^6}{x^4}\\)", "\\(\\dfrac{x^6}{y^8}\\)", "\\(\\dfrac{y^4}{x^6}\\)"],
-        korrekt: 0,
-        tipp: "Zuerst innen vereinfachen, dann Klammer quadrieren.",
-        loesungsweg: "Innen: \\(\\dfrac{x^{-2} y^3}{x y^{-1}} = x^{-2-1} \\cdot y^{3-(-1)} = x^{-3} y^4\\). Dann $$\\left(x^{-3} y^4\\right)^2 = x^{-6} y^8 = \\frac{y^8}{x^6}$$"
+        id: 26, level: 5, typ: "numerisch",
+        frage: "Löse die Gleichung \\(2^{x+1} \\cdot 4 = 32\\).",
+        loesung: 2, toleranz: 0.01,
+        tipp: "Schreibe alle Zahlen als Zweierpotenzen und vergleiche dann die Exponenten.",
+        loesungsweg: "$$2^{x+1} \\cdot 2^2 = 2^5 \\Rightarrow 2^{x+3} = 2^5$$ Exponentenvergleich: \\(x + 3 = 5\\), also \\(x = 2\\)."
       },
       {
-        id: 27,
-        level: 5,
-        typ: "mc",
-        frage: "Vereinfache: \\(\\dfrac{3^{n+2}}{3^n}\\)",
-        optionen: ["\\(9\\)", "\\(3^2 \\cdot n\\)", "\\(3\\)", "\\(27\\)"],
+        id: 27, level: 5, typ: "mc",
+        frage: "Ein Schüler formt um: \\(\\dfrac{x^6}{x^2} = x^3\\). Wo steckt der Fehler?",
+        optionen: [
+            "Beim Dividieren werden die Exponenten subtrahiert, nicht dividiert: \\(x^{6-2} = x^4\\)",
+            "Der Bruch lässt sich gar nicht vereinfachen",
+            "Es müsste \\(x^{12}\\) heißen",
+            "Der Schritt ist richtig"
+        ],
         korrekt: 0,
-        tipp: "Exponenten subtrahieren: \\((n+2) - n = 2\\).",
-        loesungsweg: "$$\\frac{3^{n+2}}{3^n} = 3^{(n+2)-n} = 3^2 = 9$$"
+        tipp: "Schreibe \\(x^6\\) und \\(x^2\\) ausführlich als Produkte und kürze.",
+        loesungsweg: "Ausgeschrieben: $$\\frac{x \\cdot x \\cdot x \\cdot x \\cdot x \\cdot x}{x \\cdot x} = x^4$$ Beim Dividieren von Potenzen gleicher Basis werden die Exponenten <b>subtrahiert</b>: \\(6 - 2 = 4\\). Der Schüler hat stattdessen \\(6 : 2\\) gerechnet."
       },
       {
-        id: 28,
-        level: 5,
-        typ: "mc",
-        frage: "Vereinfache: \\(\\dfrac{2^{n+1} \\cdot 2^{n-1}}{4^n}\\)",
-        optionen: ["\\(1\\)", "\\(2\\)", "\\(2^n\\)", "\\(\\dfrac{1}{2}\\)"],
-        korrekt: 0,
-        tipp: "Achtung: \\(4^n = (2^2)^n = 2^{2n}\\). Dann alles auf Basis 2 bringen.",
-        loesungsweg: "Zähler: \\(2^{n+1} \\cdot 2^{n-1} = 2^{(n+1)+(n-1)} = 2^{2n}\\). Nenner: \\(4^n = 2^{2n}\\). Also $$\\frac{2^{2n}}{2^{2n}} = 2^0 = 1$$"
+        id: 28, level: 5, typ: "numerisch",
+        frage: "Vereinfache \\(\\dfrac{2^{n+1} \\cdot 2^{n-1}}{4^n}\\). Welche Zahl ergibt sich?",
+        loesung: 1, toleranz: 0,
+        tipp: "Schreibe auch den Nenner als Zweierpotenz.",
+        loesungsweg: "Zähler: \\(2^{n+1} \\cdot 2^{n-1} = 2^{2n}\\). Nenner: \\(4^n = (2^2)^n = 2^{2n}\\). $$\\frac{2^{2n}}{2^{2n}} = 2^0 = 1$$ Der Term hat also für jedes \\(n\\) den Wert \\(1\\)."
       },
       {
-        id: 29,
-        level: 5,
-        typ: "mc",
-        frage: "Vereinfache: \\(\\dfrac{a^{-3} b^2}{(a b)^{-1}}\\)",
-        optionen: ["\\(\\dfrac{b^3}{a^2}\\)", "\\(\\dfrac{1}{a^2 b^3}\\)", "\\(a^2 b^3\\)", "\\(\\dfrac{b}{a^4}\\)"],
-        korrekt: 0,
-        tipp: "Bedenke: \\((ab)^{-1} = a^{-1} b^{-1}\\). Division durch \\(a^{-1} b^{-1}\\) heißt Multiplikation mit \\(a b\\).",
-        loesungsweg: "$$\\frac{a^{-3} b^2}{(ab)^{-1}} = \\frac{a^{-3} b^2}{a^{-1} b^{-1}} = a^{-3-(-1)} \\cdot b^{2-(-1)} = a^{-2} b^3 = \\frac{b^3}{a^2}$$"
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Ein Blatt Papier ist \\(0{,}1\\,\\text{mm}\\) dick. Wie dick ist der Stapel in Millimetern, wenn man es \\(10\\)-mal faltet?",
+        loesung: 102.4, toleranz: 0.1,
+        tipp: "Bei jeder Faltung verdoppelt sich die Dicke – das ist eine Zweierpotenz.",
+        loesungsweg: "Nach \\(10\\) Faltungen liegen \\(2^{10} = 1024\\) Lagen übereinander: $$0{,}1\\,\\text{mm} \\cdot 1024 = 102{,}4\\,\\text{mm}$$ Das sind gut \\(10\\,\\text{cm}\\) – Potenzen wachsen schneller, als man erwartet."
       },
       {
-        id: 30,
-        level: 5,
-        typ: "numerisch",
-        frage: "Berechne: \\(\\left(\\dfrac{1}{2}\\right)^{-3}\\)",
-        loesung: 8,
-        toleranz: 0,
-        tipp: "\\(\\left(\\dfrac{1}{2}\\right)^{-3} = 2^3\\).",
-        loesungsweg: "$$\\left(\\frac{1}{2}\\right)^{-3} = \\frac{1}{\\left(\\frac{1}{2}\\right)^3} = \\frac{1}{\\frac{1}{8}} = 8$$ Alternativ: \\(\\left(\\tfrac{1}{2}\\right)^{-3} = 2^3 = 8\\)."
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Berechne \\(\\left(\\dfrac{1}{2}\\right)^{-3}\\).",
+        loesung: 8, toleranz: 0,
+        tipp: "Ein negativer Exponent bedeutet den Kehrwert der Basis.",
+        loesungsweg: "$$\\left(\\frac{1}{2}\\right)^{-3} = 2^3 = 8$$ Der Kehrwert von \\(\\frac12\\) ist \\(2\\); der Exponent wird dabei positiv."
       },
 
-      // ========== LEVEL 6 — sehr schwer: Parameter, Begründungen, komplexe Terme ==========
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 6 — Exponentengleichungen, Begründungen, Sachbezug
+      // ═══════════════════════════════════════════════════════════
       {
-        id: 31,
-        level: 6,
-        typ: "mc",
-        frage: "Für welches \\(n\\) gilt \\(x^n \\cdot x^5 = x^{12}\\)?",
-        optionen: ["\\(n = 2{,}4\\)", "\\(n = 7\\)", "\\(n = 17\\)", "\\(n = 60\\)"],
-        korrekt: 1,
-        tipp: "Exponenten addieren: \\(n + 5 = 12\\).",
-        loesungsweg: "$$x^n \\cdot x^5 = x^{n+5} = x^{12} \\Rightarrow n + 5 = 12 \\Rightarrow n = 7$$"
+        id: 31, level: 6, typ: "numerisch",
+        frage: "Für welches \\(n\\) gilt \\(\\dfrac{2^{n+3}}{2^{n-1}} = 16\\)?",
+        loesung: 0, toleranz: 0,
+        tipp: "Vereinfache zuerst die linke Seite – der Wert hängt möglicherweise gar nicht von \\(n\\) ab.",
+        loesungsweg: "$$\\frac{2^{n+3}}{2^{n-1}} = 2^{(n+3)-(n-1)} = 2^4 = 16$$ Die Gleichung ist also für <b>jedes</b> \\(n\\) erfüllt – \\(n\\) kürzt sich heraus. Als Antwort genügt ein beliebiger Wert, etwa \\(n = 0\\); die eigentliche Erkenntnis ist die Unabhängigkeit von \\(n\\)."
       },
       {
-        id: 32,
-        level: 6,
-        typ: "mc",
-        frage: "Vereinfache: \\(\\dfrac{\\left(x^{n+1}\\right)^2 \\cdot x^{-n}}{x^{n+2}}\\)",
-        optionen: ["\\(1\\)", "\\(x\\)", "\\(x^n\\)", "\\(x^{n+1}\\)"],
-        korrekt: 0,
-        tipp: "Zähler zuerst: \\((x^{n+1})^2 = x^{2n+2}\\), dann alles zusammen.",
-        loesungsweg: "Zähler: \\(x^{2(n+1)} \\cdot x^{-n} = x^{2n+2-n} = x^{n+2}\\). Bruch: $$\\frac{x^{n+2}}{x^{n+2}} = x^0 = 1$$"
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Vereinfache \\(\\dfrac{\\left(x^{n+1}\\right)^2 \\cdot x^{-n}}{x^{n+2}}\\) und gib den Exponenten des Ergebnisses an.",
+        loesung: 0, toleranz: 0,
+        tipp: "Klammer auflösen (Exponenten multiplizieren), dann im Zähler addieren und zum Schluss subtrahieren.",
+        loesungsweg: "Zähler: \\(\\left(x^{n+1}\\right)^2 \\cdot x^{-n} = x^{2n+2} \\cdot x^{-n} = x^{n+2}\\). Division: $$\\frac{x^{n+2}}{x^{n+2}} = x^0$$ Der Exponent ist \\(0\\), der Term also konstant \\(1\\)."
       },
       {
-        id: 33,
-        level: 6,
-        typ: "mc",
-        frage: "Vereinfache: \\(\\dfrac{9^n \\cdot 3^{n+1}}{27^n}\\)",
-        optionen: ["\\(3\\)", "\\(3^n\\)", "\\(9\\)", "\\(1\\)"],
-        korrekt: 0,
-        tipp: "Alles auf Basis 3 bringen: \\(9 = 3^2\\), \\(27 = 3^3\\).",
-        loesungsweg: "Zähler: \\(9^n \\cdot 3^{n+1} = 3^{2n} \\cdot 3^{n+1} = 3^{3n+1}\\). Nenner: \\(27^n = 3^{3n}\\). Bruch: $$\\frac{3^{3n+1}}{3^{3n}} = 3^{(3n+1)-3n} = 3^1 = 3$$"
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Vereinfache \\(\\dfrac{9^n \\cdot 3^{n+1}}{27^n}\\). Welche Zahl ergibt sich?",
+        loesung: 3, toleranz: 0,
+        tipp: "Führe alle Potenzen auf die Basis \\(3\\) zurück.",
+        loesungsweg: "\\(9^n = 3^{2n}\\) und \\(27^n = 3^{3n}\\): $$\\frac{3^{2n} \\cdot 3^{n+1}}{3^{3n}} = \\frac{3^{3n+1}}{3^{3n}} = 3^1 = 3$$ Auch hier hebt sich \\(n\\) vollständig weg."
       },
       {
-        id: 34,
-        level: 6,
-        typ: "mc",
-        frage: "Welche Aussage über \\(a^0\\) (mit \\(a \\neq 0\\)) ist richtig?",
+        id: 34, level: 6, typ: "mc",
+        frage: "Ein Schüler behauptet: \\((a + b)^2 = a^2 + b^2\\), denn „beim Potenzieren wird jeder Summand potenziert\". Was ist dazu zu sagen?",
         optionen: [
-          "\\(a^0 = 0\\), weil die Potenz null Faktoren hat",
-          "\\(a^0 = 1\\), damit das Gesetz \\(\\dfrac{a^n}{a^n} = a^{n-n}\\) gilt",
-          "\\(a^0 = a\\), weil die Basis erhalten bleibt",
-          "\\(a^0\\) ist nicht definiert"
+            "Falsch – die Potenzgesetze gelten für Produkte, nicht für Summen; richtig ist \\((a+b)^2 = a^2 + 2ab + b^2\\)",
+            "Richtig, das ist das Distributivgesetz",
+            "Richtig, aber nur für positive \\(a\\) und \\(b\\)",
+            "Falsch, richtig wäre \\((a+b)^2 = a^2 \\cdot b^2\\)"
         ],
-        korrekt: 1,
-        tipp: "Überlege, was \\(\\dfrac{a^n}{a^n}\\) ergibt.",
-        loesungsweg: "Es gilt \\(\\dfrac{a^n}{a^n} = 1\\). Nach dem Potenzgesetz ist \\(\\dfrac{a^n}{a^n} = a^{n-n} = a^0\\). Damit das Gesetz weiter gilt, muss \\(a^0 = 1\\) definiert werden (für \\(a \\neq 0\\))."
-      },
-      {
-        id: 35,
-        level: 6,
-        typ: "mc",
-        frage: "Vereinfache: \\(\\left(\\dfrac{a^2 b^{-3}}{a^{-1} b^2}\\right)^{-2}\\)",
-        optionen: ["\\(\\dfrac{b^{10}}{a^6}\\)", "\\(\\dfrac{a^6}{b^{10}}\\)", "\\(\\dfrac{b^{10}}{a^4}\\)", "\\(\\dfrac{a^{10}}{b^6}\\)"],
         korrekt: 0,
-        tipp: "Erst innen vereinfachen, dann mit dem negativen Exponenten umformen.",
-        loesungsweg: "Innen: \\(\\dfrac{a^2 b^{-3}}{a^{-1} b^2} = a^{2-(-1)} \\cdot b^{-3-2} = a^3 b^{-5}\\). Dann: $$(a^3 b^{-5})^{-2} = a^{-6} b^{10} = \\frac{b^{10}}{a^6}$$"
+        tipp: "Prüfe die Behauptung mit \\(a = 3\\) und \\(b = 4\\).",
+        loesungsweg: "Gegenbeispiel: \\((3+4)^2 = 49\\), aber \\(3^2 + 4^2 = 25\\). Die Regel \\((a \\cdot b)^n = a^n b^n\\) gilt für <b>Produkte</b>; für Summen gibt es kein entsprechendes Gesetz – dort hilft die binomische Formel: \\((a+b)^2 = a^2 + 2ab + b^2\\)."
       },
       {
-        id: 36,
-        level: 6,
-        typ: "mc",
-        frage: "Für welche \\(n \\in \\mathbb{Z}\\) gilt \\(\\dfrac{2^{n+3}}{2^{n-1}} = 16\\)?",
-        optionen: [
-          "Nur für \\(n = 0\\)",
-          "Nur für \\(n = 4\\)",
-          "Für jedes \\(n \\in \\mathbb{Z}\\)",
-          "Für kein \\(n\\)"
-        ],
-        korrekt: 2,
-        tipp: "Vereinfache die linke Seite zuerst mit den Potenzgesetzen. Fällt \\(n\\) vielleicht komplett heraus?",
-        loesungsweg: "$$\\frac{2^{n+3}}{2^{n-1}} = 2^{(n+3)-(n-1)} = 2^{4} = 16$$ Die linke Seite ist unabhängig von \\(n\\) immer gleich 16. Die Gleichung gilt also für <b>jedes</b> \\(n \\in \\mathbb{Z}\\)."
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Löse die Gleichung \\(3^{2x} = 81\\).",
+        loesung: 2, toleranz: 0.01,
+        tipp: "Schreibe die rechte Seite als Potenz zur Basis \\(3\\).",
+        loesungsweg: "$$81 = 3^4 \\Rightarrow 3^{2x} = 3^4$$ Exponentenvergleich: \\(2x = 4\\), also \\(x = 2\\)."
+      },
+      {
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Eine Bakterienkultur verdoppelt sich alle \\(20\\) Minuten. Um welchen Faktor wächst sie in \\(4\\) Stunden?",
+        loesung: 4096, toleranz: 0,
+        tipp: "Zähle zuerst die Verdopplungsschritte im gesamten Zeitraum.",
+        loesungsweg: "In \\(4\\) Stunden \\(= 240\\) Minuten liegen $$\\frac{240}{20} = 12$$ Verdopplungen. Der Wachstumsfaktor ist also $$2^{12} = 4096$$"
       }
+
     ];
     </script>
     <script src="../p3-reflexion.js"></script>

@@ -273,123 +273,110 @@
         "bereich": "Algebra"
     },
 
-    // ═══════════════════════════════════════════════════════════════
-    // Level 5: Einfache Logarithmus- und Exponentialgleichungen
-    // ═══════════════════════════════════════════════════════════════
-
-    {
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 5 — Gleichungen, die den Logarithmus wirklich brauchen
+      // ═══════════════════════════════════════════════════════════
+      {
         id: 25, level: 5, typ: "numerisch",
-        frage: "Löse die Gleichung \\(\\log_2(x) = 3\\).",
-        loesung: 8,
-        toleranz: 0,
-        tipp: "Wandle die Gleichung in die Form \\(b^y = x\\) um.",
-        loesungsweg: "\\(\\log_2(x) = 3 \\Leftrightarrow x = 2^3 = 8\\).",
-        "bereich": "Algebra"
-    },
-    {
+        frage: "Löse die Gleichung \\(3^x = 20\\). Runde auf zwei Dezimalstellen.",
+        loesung: 2.73, toleranz: 0.01,
+        tipp: "Hier hilft kein Probieren – logarithmiere beide Seiten.",
+        loesungsweg: "$$3^x = 20 \\;\\Longrightarrow\\; x = \\log_3 20 = \\frac{\\lg 20}{\\lg 3} \\approx \\frac{1{,}301}{0{,}477} \\approx 2{,}73$$ Probe: \\(3^{2{,}73} \\approx 20{,}0\\) ✓."
+      },
+      {
         id: 26, level: 5, typ: "numerisch",
-        frage: "Löse die Gleichung \\(\\lg(x) = 2\\).",
-        loesung: 100,
-        toleranz: 0,
-        tipp: "\\(\\lg\\) ist der Logarithmus zur Basis \\(10\\).",
-        loesungsweg: "\\(\\lg(x) = 2 \\Leftrightarrow x = 10^2 = 100\\).",
-        "bereich": "Algebra"
-    },
-    {
+        frage: "Löse die Gleichung \\(2 \\cdot 3^x = 54\\).",
+        loesung: 3, toleranz: 0.01,
+        tipp: "Isoliere zuerst die Potenz, bevor du den Logarithmus anwendest.",
+        loesungsweg: "$$2 \\cdot 3^x = 54 \\Rightarrow 3^x = 27 \\Rightarrow x = 3$$ Weil \\(27\\) eine Potenz von \\(3\\) ist, lässt sich der Exponent hier direkt ablesen."
+      },
+      {
         id: 27, level: 5, typ: "numerisch",
-        frage: "Löse \\(2^x = 32\\).",
-        loesung: 5,
-        toleranz: 0,
-        tipp: "Schreibe \\(32\\) als Zweierpotenz oder wende \\(\\log_2\\) an.",
-        loesungsweg: "\\(2^x = 32 = 2^5 \\Rightarrow x = 5\\). Alternativ: \\(x = \\log_2(32) = 5\\).",
-        "bereich": "Algebra"
-    },
-    {
+        frage: "Löse die Gleichung \\(\\lg(x) + \\lg(x-3) = 1\\).",
+        loesung: 5, toleranz: 0.01,
+        tipp: "Fasse die linke Seite mit einem Logarithmusgesetz zusammen – und prüfe am Ende, ob beide Logarithmen definiert sind.",
+        loesungsweg: "$$\\lg\\big(x(x-3)\\big) = 1 \\Rightarrow x(x-3) = 10 \\Rightarrow x^2 - 3x - 10 = 0$$ $$x_{1/2} = 1{,}5 \\pm \\sqrt{2{,}25 + 10} = 1{,}5 \\pm 3{,}5$$ Die Lösung \\(x = -2\\) ist eine Scheinlösung (Logarithmen negativer Zahlen sind nicht definiert). Es bleibt \\(x = 5\\); Probe: \\(\\lg 5 + \\lg 2 = \\lg 10 = 1\\) ✓."
+      },
+      {
         id: 28, level: 5, typ: "numerisch",
-        frage: "Löse \\(3^x = 81\\).",
-        loesung: 4,
-        toleranz: 0,
-        tipp: "Welche Potenz von \\(3\\) ergibt \\(81\\)?",
-        loesungsweg: "\\(3^4 = 81\\), also \\(x = \\log_3(81) = 4\\).",
-        "bereich": "Algebra"
-    },
-    {
-        id: 29, level: 5, typ: "numerisch",
-        frage: "Löse \\(\\log_2(x) + \\log_2(4) = 5\\).",
-        loesung: 8,
-        toleranz: 0,
-        tipp: "Zuerst \\(\\log_2(4) = 2\\) berechnen, dann umformen.",
-        loesungsweg: "\\(\\log_2(x) + 2 = 5 \\Leftrightarrow \\log_2(x) = 3 \\Leftrightarrow x = 2^3 = 8\\).",
-        "bereich": "Algebra"
-    },
-    {
+        frage: "Ein Bestand wächst in \\(2\\) Jahren von \\(400\\) auf \\(900\\). Mit welchem Faktor wächst er pro Jahr? Runde auf zwei Dezimalstellen.",
+        loesung: 1.5, toleranz: 0.01,
+        tipp: "Der Faktor für zwei Jahre ist das Quadrat des Jahresfaktors.",
+        loesungsweg: "$$400 \\cdot q^2 = 900 \\Rightarrow q^2 = 2{,}25 \\Rightarrow q = 1{,}5$$ Der Bestand wächst also jährlich um \\(50\\,\\%\\). Probe: \\(400 \\to 600 \\to 900\\) ✓."
+      },
+      {
+        id: 29, level: 5, typ: "mc",
+        frage: "Ein Schüler rechnet \\(\\lg(3 + 7) = \\lg 3 + \\lg 7\\). Warum ist das falsch?",
+        optionen: [
+            "Ein Logarithmusgesetz gibt es nur für Produkte: \\(\\lg(a \\cdot b) = \\lg a + \\lg b\\)",
+            "Weil \\(3 + 7\\) keine Zehnerpotenz ist",
+            "Weil man Logarithmen grundsätzlich nicht addieren darf",
+            "Es ist richtig, nur ungewöhnlich geschrieben"
+        ],
+        korrekt: 0,
+        tipp: "Rechne beide Seiten mit dem Taschenrechner aus und vergleiche.",
+        loesungsweg: "Die Summenregel gilt für das <b>Produkt</b> im Argument. Hier: $$\\lg 10 = 1, \\qquad \\lg 3 + \\lg 7 = \\lg 21 \\approx 1{,}32$$ Die Werte stimmen nicht überein. Für Summen im Argument gibt es kein Logarithmusgesetz – der Term \\(\\lg(a+b)\\) lässt sich nicht zerlegen."
+      },
+      {
         id: 30, level: 5, typ: "numerisch",
-        frage: "Löse \\(3 \\cdot 2^x = 48\\).",
-        loesung: 4,
-        toleranz: 0,
-        tipp: "Isoliere zuerst die Potenz (durch \\(3\\) teilen).",
-        loesungsweg: "\\(3 \\cdot 2^x = 48 \\Leftrightarrow 2^x = 16 \\Leftrightarrow x = \\log_2(16) = 4\\).",
-        "bereich": "Algebra"
-    },
+        frage: "Eine radioaktive Substanz zerfällt jährlich um \\(15\\,\\%\\). Nach wie vielen Jahren ist noch die Hälfte vorhanden? Runde auf zwei Dezimalstellen.",
+        loesung: 4.27, toleranz: 0.02,
+        tipp: "Stelle die Zerfallsgleichung mit dem Faktor \\(0{,}85\\) auf.",
+        loesungsweg: "$$0{,}85^n = 0{,}5 \\Rightarrow n = \\frac{\\lg 0{,}5}{\\lg 0{,}85} \\approx \\frac{-0{,}301}{-0{,}0706} \\approx 4{,}27$$ Die Halbwertszeit beträgt rund \\(4{,}27\\) Jahre."
+      },
 
-    // ═══════════════════════════════════════════════════════════════
-    // Level 6: Anwendungen und Basiswechsel
-    // ═══════════════════════════════════════════════════════════════
-
-    {
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 6 — Wachstumsprozesse mit unbequemen Zahlen, Begründung
+      // ═══════════════════════════════════════════════════════════
+      {
         id: 31, level: 6, typ: "numerisch",
-        frage: "Ein Bakterienstamm verdoppelt sich stündlich. Startwert \\(100\\). Nach wie vielen Stunden sind es \\(1600\\) Bakterien?",
-        loesung: 4,
-        toleranz: 0,
-        tipp: "Ansatz: \\(100 \\cdot 2^t = 1600\\). Löse nach \\(t\\) auf.",
-        loesungsweg: "\\(100 \\cdot 2^t = 1600 \\Leftrightarrow 2^t = 16 \\Leftrightarrow t = \\log_2(16) = 4\\) Stunden.",
-        "bereich": "Algebra"
-    },
-    {
-        id: 32, level: 6, typ: "numerisch",
-        frage: "Ein radioaktives Material hat eine Halbwertszeit von \\(5\\) Jahren. Nach wie vielen Jahren ist nur noch \\(\\frac{1}{8}\\) der ursprünglichen Menge vorhanden?",
-        loesung: 15,
-        toleranz: 0,
-        tipp: "\\(\\frac{1}{8} = \\left(\\frac{1}{2}\\right)^3\\) — wie viele Halbwertszeiten sind das?",
-        loesungsweg: "\\(\\frac{1}{8} = \\left(\\frac{1}{2}\\right)^3\\), also sind \\(3\\) Halbwertszeiten nötig: \\(3 \\cdot 5 = 15\\) Jahre.",
-        "bereich": "Algebra"
-    },
-    {
+        frage: "Ein Kapital wird mit \\(5\\,\\%\\) jährlich verzinst. Nach wie vielen Jahren hat es sich verdoppelt? Runde auf zwei Dezimalstellen.",
+        loesung: 14.21, toleranz: 0.05,
+        tipp: "Der Anfangsbetrag kürzt sich heraus – es bleibt eine Gleichung mit dem Wachstumsfaktor.",
+        loesungsweg: "$$K_0 \\cdot 1{,}05^n = 2K_0 \\Rightarrow 1{,}05^n = 2$$ $$n = \\frac{\\lg 2}{\\lg 1{,}05} \\approx \\frac{0{,}301}{0{,}0212} \\approx 14{,}21$$ Nach gut \\(14\\) Jahren ist das Kapital verdoppelt – unabhängig von seiner Höhe."
+      },
+      {
+        id: 32, level: 6, typ: "mc",
+        frage: "Warum braucht man für \\(1{,}07^n = 3\\) einen Logarithmus, für \\(2^n = 8\\) dagegen nicht?",
+        optionen: [
+            "Weil \\(3\\) keine Potenz von \\(1{,}07\\) ist – der Exponent lässt sich nicht ablesen, sondern nur über den Logarithmus bestimmen",
+            "Weil \\(1{,}07\\) keine natürliche Zahl ist",
+            "Weil der Logarithmus nur für Basen über \\(1\\) definiert ist",
+            "Man braucht in beiden Fällen einen Logarithmus"
+        ],
+        korrekt: 0,
+        tipp: "Bei welcher der beiden Gleichungen kann man den Exponenten durch Probieren finden?",
+        loesungsweg: "\\(8 = 2^3\\) ist eine Potenz der Basis – der Exponent ist ablesbar. Bei \\(1{,}07^n = 3\\) liegt die Lösung zwischen den ganzen Zahlen (\\(n \\approx 16{,}24\\)) und lässt sich nur über den Logarithmus bestimmen. Genau dafür wurde er eingeführt: Er ist die Umkehrung des Potenzierens nach dem Exponenten."
+      },
+      {
         id: 33, level: 6, typ: "numerisch",
-        frage: "Löse \\(2^x = 10\\) mit der Basiswechselformel. Runde auf zwei Nachkommastellen.",
-        loesung: 3.32,
-        toleranz: 0.01,
-        tipp: "Basiswechsel: \\(\\log_2(10) = \\frac{\\lg(10)}{\\lg(2)} = \\frac{1}{\\lg(2)}\\).",
-        loesungsweg: "\\(x = \\log_2(10) = \\frac{\\lg(10)}{\\lg(2)} = \\frac{1}{0{,}30103} \\approx 3{,}32\\).",
-        "bereich": "Algebra"
-    },
-    {
-        id: 34, level: 6, typ: "mc",
-        frage: "Eine Population wächst nach \\(N(t) = 500 \\cdot 2^t\\) (in Stunden). Wann erreicht sie \\(4000\\)?",
-        optionen: ["\\(t = 2\\)", "\\(t = 3\\)", "\\(t = 4\\)", "\\(t = 8\\)"],
-        korrekt: 1,
-        tipp: "\\(500 \\cdot 2^t = 4000 \\Rightarrow 2^t = 8\\).",
-        loesungsweg: "\\(500 \\cdot 2^t = 4000 \\Leftrightarrow 2^t = 8 \\Leftrightarrow t = \\log_2(8) = 3\\) Stunden.",
-        "bereich": "Algebra"
-    },
-    {
+        frage: "Ein Medikament wird im Körper stündlich um \\(12\\,\\%\\) abgebaut. Zu Beginn sind \\(200\\,\\text{mg}\\) vorhanden. Nach wie vielen Stunden sind weniger als \\(50\\,\\text{mg}\\) übrig? Runde auf zwei Dezimalstellen.",
+        loesung: 10.84, toleranz: 0.05,
+        tipp: "Teile zuerst durch den Anfangswert – dann steht eine reine Potenzgleichung da.",
+        loesungsweg: "$$200 \\cdot 0{,}88^t = 50 \\Rightarrow 0{,}88^t = 0{,}25$$ $$t = \\frac{\\lg 0{,}25}{\\lg 0{,}88} \\approx \\frac{-0{,}602}{-0{,}0555} \\approx 10{,}84$$ Nach knapp \\(11\\) Stunden ist die Menge unter \\(50\\,\\text{mg}\\) gefallen."
+      },
+      {
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Ein Bestand wächst in \\(6\\) Jahren von \\(500\\) auf \\(1200\\). Wie groß ist die jährliche Wachstumsrate in Prozent? Runde auf eine Dezimalstelle.",
+        loesung: 15.7, toleranz: 0.2,
+        tipp: "Bestimme zuerst den Wachstumsfaktor pro Jahr über die sechste Wurzel.",
+        loesungsweg: "$$500 \\cdot q^6 = 1200 \\Rightarrow q = \\sqrt[6]{2{,}4} \\approx 1{,}157$$ Die jährliche Wachstumsrate beträgt also rund \\(15{,}7\\,\\%\\). (Der naive Ansatz „\\(140\\,\\%\\) Zuwachs geteilt durch \\(6\\)\" ergäbe fälschlich \\(23{,}3\\,\\%\\) – Wachstum addiert sich nicht.)"
+      },
+      {
         id: 35, level: 6, typ: "numerisch",
-        frage: "Ein Medikament wird im Körper pro Stunde auf \\(50\\,\\%\\) abgebaut. Startdosis \\(200\\) mg. Nach wie vielen Stunden sind nur noch \\(25\\) mg im Körper?",
-        loesung: 3,
-        toleranz: 0,
-        tipp: "Ansatz: \\(200 \\cdot 0{,}5^t = 25\\). Bestimme zuerst den Faktor.",
-        loesungsweg: "\\(200 \\cdot 0{,}5^t = 25 \\Leftrightarrow 0{,}5^t = \\frac{1}{8} = 0{,}5^3 \\Leftrightarrow t = 3\\) Stunden.",
-        "bereich": "Algebra"
-    },
-    {
+        frage: "Löse die Gleichung \\(\\lg(x+3) + \\lg(x) = 1\\).",
+        loesung: 2, toleranz: 0.01,
+        tipp: "Fasse zusammen und prüfe am Ende beide Lösungen auf Gültigkeit.",
+        loesungsweg: "$$\\lg\\big(x(x+3)\\big) = 1 \\Rightarrow x^2 + 3x - 10 = 0$$ $$x_{1/2} = -1{,}5 \\pm 3{,}5 \\Rightarrow x = 2 \\;\\text{oder}\\; x = -5$$ Für \\(x = -5\\) wären beide Logarithmen undefiniert – Scheinlösung. Es bleibt \\(x = 2\\); Probe: \\(\\lg 5 + \\lg 2 = 1\\) ✓."
+      },
+      {
         id: 36, level: 6, typ: "numerisch",
-        frage: "Ein Guthaben von \\(1000\\,€\\) wächst jährlich mit Faktor \\(1{,}05\\). Nach wie vielen Jahren ist es auf \\(2000\\,€\\) angewachsen? Runde auf zwei Nachkommastellen.",
-        loesung: 14.21,
-        toleranz: 0.05,
-        tipp: "\\(1{,}05^t = 2 \\Rightarrow t = \\frac{\\lg(2)}{\\lg(1{,}05)}\\).",
-        loesungsweg: "\\(1000 \\cdot 1{,}05^t = 2000 \\Leftrightarrow 1{,}05^t = 2 \\Leftrightarrow t = \\frac{\\lg(2)}{\\lg(1{,}05)} \\approx \\frac{0{,}3010}{0{,}0212} \\approx 14{,}21\\) Jahre.",
-        "bereich": "Algebra"
-    }
+        frage: "Zwei Bakterienkulturen: A startet mit \\(100\\) Zellen und verdoppelt sich alle \\(3\\) Stunden, B startet mit \\(400\\) Zellen und wächst stündlich um \\(10\\,\\%\\). Nach wie vielen Stunden hat A die Kultur B eingeholt? Runde auf eine Dezimalstelle.",
+        loesung: 10.2, toleranz: 0.2,
+        tipp: "Stelle beide Wachstumsfunktionen auf, setze sie gleich und logarithmiere.",
+        loesungsweg: "\\(A(t) = 100 \\cdot 2^{t/3}\\), \\(B(t) = 400 \\cdot 1{,}1^{t}\\). Gleichsetzen und durch \\(100\\) teilen: $$2^{t/3} = 4 \\cdot 1{,}1^t$$ Logarithmieren: $$\\frac{t}{3}\\lg 2 = \\lg 4 + t \\lg 1{,}1$$ $$t\\,(0{,}1003 - 0{,}0414) = 0{,}602 \\Rightarrow t \\approx \\frac{0{,}602}{0{,}0590} \\approx 10{,}2$$ Nach gut \\(10\\) Stunden zieht A gleich – die Verdopplung alle drei Stunden entspricht rund \\(26\\,\\%\\) Wachstum pro Stunde und schlägt damit die \\(10\\,\\%\\) von B."
+      }
+
 
     ];
     </script>

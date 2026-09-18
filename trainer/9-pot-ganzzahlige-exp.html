@@ -186,68 +186,64 @@
         loesungsweg: "\\(x^{-2} \\cdot x^{-3} = x^{-5} = \\frac{1}{x^5}\\)."
     },
 
-    // ═══════════════════════════════════════════════════════════════
-    // Level 4: Zehnerpotenzen, wissenschaftliche Notation, Anwendung
-    // ═══════════════════════════════════════════════════════════════
-
-    {
-        id: 19, level: 4, typ: "mc",
-        frage: "Schreibe \\(0{,}000 \\, 01\\) als Zehnerpotenz.",
-        optionen: ["\\(10^{-4}\\)", "\\(10^{-5}\\)", "\\(10^{5}\\)", "\\(10^{-6}\\)"],
-        korrekt: 1,
-        tipp: "Zähle, wie viele Stellen du das Komma nach rechts verschieben musst.",
-        loesungsweg: "\\(0{,}00001 = \\frac{1}{100\\,000} = \\frac{1}{10^5} = 10^{-5}\\)."
-    },
-    {
-        id: 20, level: 4, typ: "numerisch",
-        frage: "Berechne: \\(10^{-3} \\cdot 10^{5}\\). Gib den Exponenten der Zehnerpotenz als ganze Zahl an.",
-        loesung: 2,
-        toleranz: 0,
-        tipp: "Gleiche Basis: Exponenten addieren.",
-        loesungsweg: "\\(10^{-3} \\cdot 10^{5} = 10^{-3+5} = 10^{2}\\). Der Exponent ist 2."
-    },
-    {
-        id: 21, level: 4, typ: "mc",
-        frage: "Welche der folgenden Zahlen ist in wissenschaftlicher Notation korrekt geschrieben?",
-        optionen: [
-            "\\(34{,}5 \\cdot 10^{3}\\)",
-            "\\(3{,}45 \\cdot 10^{4}\\)",
-            "\\(0{,}345 \\cdot 10^{5}\\)",
-            "\\(345 \\cdot 10^{2}\\)"
-        ],
-        korrekt: 1,
-        tipp: "Bei wissenschaftlicher Notation steht genau eine Stelle vor dem Komma (1–9).",
-        loesungsweg: "\\(3{,}45 \\cdot 10^{4} = 34\\,500\\). Nur diese Form hat genau eine Stelle (3) vor dem Komma."
-    },
-    {
-        id: 22, level: 4, typ: "mc",
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 4 — negative Exponenten anwenden statt Notation üben
+      // ═══════════════════════════════════════════════════════════
+      {
+        id: 19, level: 4, typ: "numerisch",
+        frage: "Schreibe \\(2^{-4}\\) als Bruch. Welchen Nenner hat er?",
+        loesung: 16, toleranz: 0,
+        tipp: "Ein negativer Exponent bedeutet den Kehrwert der entsprechenden Potenz.",
+        loesungsweg: "$$2^{-4} = \\frac{1}{2^4} = \\frac{1}{16}$$ Der Nenner ist \\(16\\)."
+      },
+      {
+        id: 20, level: 4, typ: "mc",
         frage: "Was ist größer: \\(2^{-3}\\) oder \\(3^{-2}\\)?",
         optionen: [
-            "\\(2^{-3}\\), weil \\(\\frac{1}{8} > \\frac{1}{9}\\)",
-            "\\(3^{-2}\\), weil \\(\\frac{1}{9} > \\frac{1}{8}\\)",
-            "Beide sind gleich",
-            "\\(2^{-3}\\), weil \\(-3 < -2\\)"
+            "\\(3^{-2}\\), denn \\(\\frac{1}{9} > \\frac{1}{8}\\) ist falsch – richtig ist \\(2^{-3} = \\frac18 > \\frac19 = 3^{-2}\\)",
+            "\\(3^{-2}\\), weil die Basis größer ist",
+            "Beide sind gleich groß",
+            "Das lässt sich ohne Taschenrechner nicht entscheiden"
         ],
         korrekt: 0,
-        tipp: "Rechne beide Werte als Brüche aus und vergleiche.",
-        loesungsweg: "\\(2^{-3} = \\frac{1}{8} \\approx 0{,}125\\) und \\(3^{-2} = \\frac{1}{9} \\approx 0{,}111\\). Da \\(\\frac{1}{8} > \\frac{1}{9}\\), ist \\(2^{-3}\\) größer."
-    },
-    {
+        tipp: "Schreibe beide Potenzen als Bruch und vergleiche die Nenner.",
+        loesungsweg: "$$2^{-3} = \\frac{1}{8} = 0{,}125, \\qquad 3^{-2} = \\frac{1}{9} \\approx 0{,}111$$ Bei gleichen Zählern ist der Bruch mit dem <b>kleineren</b> Nenner größer: \\(2^{-3} > 3^{-2}\\). Eine größere Basis führt bei negativem Exponenten also zu einem kleineren Wert."
+      },
+      {
+        id: 21, level: 4, typ: "mc",
+        frage: "Ein Schüler schreibt \\(x^{-2} = -x^2\\). Warum ist das falsch?",
+        optionen: [
+            "Ein negativer Exponent erzeugt den Kehrwert, kein negatives Vorzeichen: \\(x^{-2} = \\frac{1}{x^2}\\)",
+            "Weil \\(x\\) auch negativ sein könnte",
+            "Weil man \\(x^{-2}\\) gar nicht umformen darf",
+            "Es ist richtig, solange \\(x > 0\\) ist"
+        ],
+        korrekt: 0,
+        tipp: "Setze \\(x = 2\\) in beide Terme ein und vergleiche.",
+        loesungsweg: "Für \\(x = 2\\): $$x^{-2} = \\frac{1}{4} = 0{,}25, \\qquad -x^2 = -4$$ Der erste Wert ist positiv, der zweite negativ – die Terme sind völlig verschieden. Der negative Exponent bedeutet den Kehrwert: \\(x^{-n} = \\frac{1}{x^n}\\); das Vorzeichen der Potenz bleibt davon unberührt."
+      },
+      {
+        id: 22, level: 4, typ: "numerisch",
+        frage: "Löse die Gleichung \\(3 \\cdot 2^{-x} = 0{,}75\\).",
+        loesung: 2, toleranz: 0.01,
+        tipp: "Isoliere zuerst die Potenz und schreibe die rechte Seite als Bruch.",
+        loesungsweg: "$$3 \\cdot 2^{-x} = 0{,}75 \\Rightarrow 2^{-x} = 0{,}25 = \\frac{1}{4} = 2^{-2}$$ Vergleich der Exponenten: \\(-x = -2\\), also \\(x = 2\\)."
+      },
+      {
         id: 23, level: 4, typ: "numerisch",
-        frage: "Ein Bakterium hat einen Durchmesser von \\(2 \\cdot 10^{-6}\\,\\text{m}\\). Wie viele Bakterien passen nebeneinander auf \\(1\\,\\text{mm} = 10^{-3}\\,\\text{m}\\)? Gib die Antwort als ganze Zahl an.",
-        loesung: 500,
-        toleranz: 0,
-        tipp: "Dividiere: \\(\\frac{10^{-3}}{2 \\cdot 10^{-6}}\\).",
-        loesungsweg: "\\(\\frac{10^{-3}}{2 \\cdot 10^{-6}} = \\frac{1}{2} \\cdot 10^{-3-(-6)} = 0{,}5 \\cdot 10^{3} = 500\\)."
-    },
-    {
+        frage: "Der Graph von \\(f(x) = a \\cdot x^{-2}\\) verläuft durch den Punkt \\(P(2 \\mid 3)\\). Bestimme \\(a\\).",
+        loesung: 12, toleranz: 0.01,
+        tipp: "Setze die Koordinaten des Punktes in die Funktionsgleichung ein.",
+        loesungsweg: "$$f(2) = a \\cdot 2^{-2} = \\frac{a}{4} = 3 \\Rightarrow a = 12$$ Die Funktion lautet \\(f(x) = \\frac{12}{x^2}\\)."
+      },
+      {
         id: 24, level: 4, typ: "mc",
-        frage: "Vereinfache: \\(\\frac{6x^{-2} \\cdot x^3}{3x}\\).",
-        optionen: ["\\(2x^{-2}\\)", "\\(2\\)", "\\(2x\\)", "\\(6x^{-1}\\)"],
-        korrekt: 1,
-        tipp: "Zähler zusammenfassen, dann kürzen.",
-        loesungsweg: "Zähler: \\(6x^{-2} \\cdot x^3 = 6x^{1}\\). Dann: \\(\\frac{6x}{3x} = 2\\)."
-    },
+        frage: "Vereinfache: \\(\\dfrac{6x^{-2} \\cdot x^3}{3x}\\)",
+        optionen: ["\\(2\\)", "\\(2x\\)", "\\(2x^{-2}\\)", "\\(\\frac{2}{x}\\)"],
+        korrekt: 0,
+        tipp: "Fasse zuerst den Zähler zusammen – die Exponenten werden dabei addiert.",
+        loesungsweg: "Zähler: \\(6x^{-2} \\cdot x^3 = 6x^{1}\\). Damit $$\\frac{6x}{3x} = 2$$ Die Variablen kürzen sich vollständig weg."
+      },
 
     // ═══════════════════════════════════════════════════════════════
     // Level 5: Gleichungen lösen und komplexe Termvereinfachungen
@@ -307,68 +303,64 @@
         loesungsweg: "\\(4^{-2} \\cdot 4^5 = 4^{3}\\). Dann: \\(\\frac{4^3}{4^2} = 4^{3-2} = 4^1\\). Exponent = 1."
     },
 
-    // ═══════════════════════════════════════════════════════════════
-    // Level 6: Textaufgaben (umgekehrte Proportionalität)
-    // ═══════════════════════════════════════════════════════════════
-
-    {
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 6 — Parameter aus Punkten, Eigenschaften begründen
+      // ═══════════════════════════════════════════════════════════
+      {
         id: 31, level: 6, typ: "numerisch",
-        frage: "Bei konstanter Temperatur gilt für ein Gas das Gesetz \\(p \\cdot V = 120\\) (in passenden Einheiten). Wie groß ist der Druck \\(p\\), wenn \\(V = 4\\)?",
-        loesung: 30,
-        toleranz: 0,
-        tipp: "Löse die Gleichung \\(p \\cdot V = 120\\) nach \\(p\\) auf.",
-        loesungsweg: "\\(p = \\frac{120}{V} = \\frac{120}{4} = 30\\). Der Druck beträgt 30 Einheiten."
-    },
-    {
+        frage: "Der Graph von \\(f(x) = a \\cdot x^{-n}\\) verläuft durch \\(P(1 \\mid 8)\\) und \\(Q(2 \\mid 2)\\). Bestimme \\(n\\).",
+        loesung: 2, toleranz: 0.01,
+        tipp: "Der erste Punkt liefert \\(a\\) sofort – setze dann den zweiten ein.",
+        loesungsweg: "Aus \\(f(1) = a \\cdot 1 = 8\\) folgt \\(a = 8\\). Zweiter Punkt: $$\\frac{8}{2^n} = 2 \\Rightarrow 2^n = 4 \\Rightarrow n = 2$$ Die Funktion lautet \\(f(x) = \\frac{8}{x^2}\\)."
+      },
+      {
         id: 32, level: 6, typ: "numerisch",
-        frage: "Ein Gas erfüllt \\(p \\cdot V = 60\\). Bei welchem Volumen \\(V\\) beträgt der Druck \\(p = 12\\)?",
-        loesung: 5,
-        toleranz: 0,
-        tipp: "Aus \\(p \\cdot V = 60\\) folgt \\(V = \\frac{60}{p}\\).",
-        loesungsweg: "\\(V = \\frac{60}{p} = \\frac{60}{12} = 5\\)."
-    },
-    {
+        frage: "Für ein Gas gilt bei konstanter Temperatur \\(p \\cdot V = 120\\). Um welchen Faktor ändert sich der Druck, wenn das Volumen verdreifacht wird? Runde auf zwei Dezimalstellen.",
+        loesung: 0.33, toleranz: 0.01,
+        tipp: "Drücke den Druck als Funktion des Volumens aus und vergleiche \\(p(3V)\\) mit \\(p(V)\\).",
+        loesungsweg: "$$p(V) = \\frac{120}{V} \\Rightarrow p(3V) = \\frac{120}{3V} = \\frac{1}{3} \\cdot p(V)$$ Der Druck sinkt also auf ein Drittel (Faktor \\(\\approx 0{,}33\\)) – das gilt unabhängig vom Ausgangsvolumen und ist gerade die umgekehrte Proportionalität."
+      },
+      {
         id: 33, level: 6, typ: "mc",
-        frage: "Druck \\(p\\) und Volumen \\(V\\) sind bei konstanter Temperatur umgekehrt proportional. Welche Funktionsgleichung beschreibt diesen Zusammenhang?",
+        frage: "Welche Aussage über \\(f(x) = \\dfrac{a}{x^n}\\) mit \\(a > 0\\) und geradem \\(n\\) trifft zu?",
         optionen: [
-            "\\(p(V) = k \\cdot V\\)",
-            "\\(p(V) = \\frac{k}{V}\\)",
-            "\\(p(V) = V^2\\)",
-            "\\(p(V) = k + V\\)"
+            "Der Graph ist achsensymmetrisch zur \\(y\\)-Achse und verläuft ganz oberhalb der \\(x\\)-Achse",
+            "Der Graph ist punktsymmetrisch zum Ursprung",
+            "Der Graph schneidet die \\(x\\)-Achse genau einmal",
+            "Die Funktion ist auch an der Stelle \\(0\\) definiert"
         ],
-        korrekt: 1,
-        tipp: "Umgekehrte Proportionalität heißt: Produkt ist konstant.",
-        loesungsweg: "Umgekehrte Proportionalität: \\(p \\cdot V = k\\), also \\(p(V) = \\frac{k}{V}\\). Das ist eine Hyperbel."
-    },
-    {
+        korrekt: 0,
+        tipp: "Prüfe \\(f(-x)\\) und überlege, welches Vorzeichen \\(x^n\\) bei geradem \\(n\\) hat.",
+        loesungsweg: "Für gerades \\(n\\) gilt \\((-x)^n = x^n\\), also \\(f(-x) = f(x)\\): Achsensymmetrie zur \\(y\\)-Achse. Da \\(x^n > 0\\) für alle \\(x \\neq 0\\) und \\(a > 0\\) ist, ist \\(f(x) > 0\\) – der Graph bleibt oberhalb der Achse und hat keine Nullstelle. An der Stelle \\(0\\) ist die Funktion nicht definiert (Polstelle)."
+      },
+      {
         id: 34, level: 6, typ: "numerisch",
-        frage: "Für ein Gas gilt \\(p(V) = \\frac{200}{V}\\). Verdoppelt man das Volumen von \\(V = 10\\) auf \\(V = 20\\), wie groß ist der neue Druck?",
-        loesung: 10,
-        toleranz: 0,
-        tipp: "Setze \\(V = 20\\) in die Formel ein.",
-        loesungsweg: "\\(p(20) = \\frac{200}{20} = 10\\). Bei Verdopplung des Volumens halbiert sich der Druck (von 20 auf 10)."
-    },
-    {
+        frage: "Für welchen Wert von \\(x\\) gilt \\(2^{x} = \\dfrac{1}{32}\\)?",
+        loesung: -5, toleranz: 0.01,
+        tipp: "Schreibe die rechte Seite als Zweierpotenz mit negativem Exponenten.",
+        loesungsweg: "$$\\frac{1}{32} = \\frac{1}{2^5} = 2^{-5}$$ Vergleich der Exponenten bei gleicher Basis: \\(x = -5\\)."
+      },
+      {
         id: 35, level: 6, typ: "numerisch",
-        frage: "6 Arbeiter benötigen für eine Aufgabe 12 Stunden. Wie viele Stunden brauchen 8 Arbeiter (bei gleicher Arbeitsleistung)?",
-        loesung: 9,
-        toleranz: 0,
-        tipp: "Umgekehrte Proportionalität: Arbeiter-Anzahl mal Stunden = konstant.",
-        loesungsweg: "Konstante: \\(6 \\cdot 12 = 72\\) Arbeiterstunden. Für 8 Arbeiter: \\(t = \\frac{72}{8} = 9\\) Stunden."
-    },
-    {
-        id: 36, level: 6, typ: "mc", festeReihenfolge: true,
-        frage: "Welche der folgenden Aussagen über \\(f(x) = \\frac{a}{x^n}\\) mit \\(a \\neq 0\\) und \\(n \\in \\mathbb{N}\\) ist falsch?",
+        frage: "Zwei Größen sind umgekehrt proportional: Zu \\(x = 4\\) gehört \\(y = 15\\). Welcher Wert gehört zu \\(x = 10\\)?",
+        loesung: 6, toleranz: 0.01,
+        tipp: "Bei umgekehrter Proportionalität ist das Produkt \\(x \\cdot y\\) konstant.",
+        loesungsweg: "Produkt: \\(4 \\cdot 15 = 60\\). Also \\(y = \\frac{60}{x}\\) und $$y(10) = \\frac{60}{10} = 6$$ In Potenzschreibweise: \\(y = 60 \\cdot x^{-1}\\)."
+      },
+      {
+        id: 36, level: 6, typ: "mc",
+        frage: "Warum gilt \\(a^0 = 1\\) für jedes \\(a \\neq 0\\)?",
         optionen: [
-            "\\(f(x) = a \\cdot x^{-n}\\)",
-            "\\(f(-x) = f(x)\\) gilt für alle geraden \\(n\\)",
-            "\\(f(x)\\) ist für \\(x = 0\\) nicht definiert",
-            "\\(f(x) = a \\cdot x^{-n}\\) ist dasselbe wie \\(f(x) = a \\cdot (-x)^n\\)"
+            "Weil \\(a^0 = a^{n-n} = \\frac{a^n}{a^n} = 1\\) – es folgt zwingend aus der Divisionsregel",
+            "Weil man das so festgelegt hat, ohne Begründung",
+            "Weil jede Zahl mit null multipliziert eins ergibt",
+            "Weil \\(a^0\\) gar nicht definiert ist"
         ],
-        korrekt: 3,
-        tipp: "Prüfe jede Aussage mit der Definition \\(x^{-n} = \\frac{1}{x^n}\\). Bei Option D: Vergleiche \\(x^{-n}\\) und \\((-x)^n\\).",
-        loesungsweg: "A: korrekt (Definition negativer Exponent). B: korrekt, da \\((-x)^n = x^n\\) für gerades \\(n\\), also \\(f(-x) = \\frac{a}{(-x)^n} = \\frac{a}{x^n} = f(x)\\). C: korrekt, Nenner \\(x^n = 0\\) bei \\(x = 0\\). D: falsch — \\(x^{-n} = \\frac{1}{x^n}\\), aber \\((-x)^n = x^n\\) (für gerades \\(n\\)) oder \\(-x^n\\) (für ungerades \\(n\\)) — das ist nicht dasselbe wie \\(x^{-n}\\)."
-    }
+        korrekt: 0,
+        tipp: "Wende die Regel \\(\\frac{a^m}{a^n} = a^{m-n}\\) auf den Fall \\(m = n\\) an.",
+        loesungsweg: "Die Divisionsregel liefert für \\(m = n\\): $$\\frac{a^n}{a^n} = a^{n-n} = a^0$$ Der Bruch links ist offensichtlich \\(1\\) (für \\(a \\neq 0\\)), also muss \\(a^0 = 1\\) gelten. Die Festlegung ist damit nicht willkürlich, sondern die einzige, bei der die Potenzgesetze widerspruchsfrei bleiben. Für \\(a = 0\\) versagt das Argument – \\(0^0\\) bleibt undefiniert."
+      }
+
 
     ];
     </script>

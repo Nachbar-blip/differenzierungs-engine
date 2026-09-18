@@ -199,64 +199,63 @@
         "bereich": "Algebra"
     },
 
-    // ═══════════════════════════════════════════════════════════════
-    // Level 4: Rechnen & Einheiten-Umrechnung
-    // ═══════════════════════════════════════════════════════════════
-
-    {
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 4 — Umrechnen mit Zehnerpotenzen, Plausibilität
+      // ═══════════════════════════════════════════════════════════
+      {
         id: 19, level: 4, typ: "numerisch",
-        frage: "Wie viele Meter sind \\(4{,}5\\) km? (Antwort in m)",
-        loesung: 4500,
-        toleranz: 0,
-        tipp: "1 km = \\(10^3\\) m.",
-        loesungsweg: "\\(4{,}5 \\text{ km} = 4{,}5 \\cdot 10^3 \\text{ m} = 4500 \\text{ m}\\).",
-        "bereich": "Algebra"
-    },
-    {
+        frage: "Ein Virus hat einen Durchmesser von \\(1{,}2 \\cdot 10^{-7}\\,\\text{m}\\). Wie viele solcher Viren passen nebeneinander auf eine Strecke von \\(1\\,\\text{mm}\\)? Runde auf ganze Zahlen.",
+        loesung: 8333, toleranz: 5,
+        tipp: "Rechne zuerst beide Längen in dieselbe Einheit um – am besten in Meter mit Zehnerpotenzen.",
+        loesungsweg: "\\(1\\,\\text{mm} = 10^{-3}\\,\\text{m}\\). Anzahl: $$\\frac{10^{-3}}{1{,}2 \\cdot 10^{-7}} = \\frac{1}{1{,}2} \\cdot 10^{4} \\approx 8333$$"
+      },
+      {
         id: 20, level: 4, typ: "numerisch",
-        frage: "Wie viele Meter sind \\(250\\) nm? Gib den Exponenten an: \\(2{,}5 \\cdot 10^{?}\\) m.",
-        loesung: -7,
-        toleranz: 0,
-        tipp: "1 nm = \\(10^{-9}\\) m. \\(250 = 2{,}5 \\cdot 10^2\\).",
-        loesungsweg: "\\(250 \\text{ nm} = 250 \\cdot 10^{-9} \\text{ m} = 2{,}5 \\cdot 10^2 \\cdot 10^{-9} \\text{ m} = 2{,}5 \\cdot 10^{-7}\\) m.",
-        "bereich": "Algebra"
-    },
-    {
+        frage: "Berechne \\(\\dfrac{6 \\cdot 10^{8}}{3 \\cdot 10^{5}}\\). Gib den Exponenten des Ergebnisses in wissenschaftlicher Notation an.",
+        loesung: 3, toleranz: 0,
+        tipp: "Teile Vorfaktoren und Zehnerpotenzen getrennt.",
+        loesungsweg: "$$\\frac{6}{3} = 2, \\qquad \\frac{10^8}{10^5} = 10^3$$ Ergebnis: \\(2 \\cdot 10^3 = 2000\\); der gesuchte Exponent ist \\(3\\)."
+      },
+      {
         id: 21, level: 4, typ: "mc",
-        frage: "\\(3\\) MW entsprechen wie vielen Watt?",
-        optionen: ["\\(3 \\cdot 10^3\\) W", "\\(3 \\cdot 10^6\\) W", "\\(3 \\cdot 10^9\\) W", "\\(3 \\cdot 10^{-6}\\) W"],
-        korrekt: 1,
-        tipp: "Mega = \\(10^6\\).",
-        loesungsweg: "\\(3 \\text{ MW} = 3 \\cdot 10^6 \\text{ W} = 3\\,000\\,000\\) W.",
-        "bereich": "Algebra"
-    },
-    {
-        id: 22, level: 4, typ: "mc",
-        frage: "\\(500\\) μs entsprechen wie vielen Sekunden?",
-        optionen: ["\\(5 \\cdot 10^{-4}\\) s", "\\(5 \\cdot 10^{-3}\\) s", "\\(5 \\cdot 10^{-6}\\) s", "\\(5 \\cdot 10^{2}\\) s"],
+        frage: "Ein Schüler schreibt \\(45 \\cdot 10^{6}\\) als „wissenschaftliche Notation\". Was ist daran nicht korrekt?",
+        optionen: [
+            "Der Vorfaktor muss zwischen \\(1\\) und \\(10\\) liegen – richtig ist \\(4{,}5 \\cdot 10^{7}\\)",
+            "Der Exponent muss immer positiv sein",
+            "Man darf keine Zehnerpotenzen mit geraden Exponenten verwenden",
+            "Es ist korrekt geschrieben"
+        ],
         korrekt: 0,
-        tipp: "1 μs = \\(10^{-6}\\) s. Dann \\(500\\) einsetzen und normieren.",
-        loesungsweg: "\\(500 \\text{ μs} = 500 \\cdot 10^{-6} \\text{ s} = 5 \\cdot 10^2 \\cdot 10^{-6} \\text{ s} = 5 \\cdot 10^{-4}\\) s.",
-        "bereich": "Algebra"
-    },
-    {
+        tipp: "Welche Bedingung muss die Zahl vor der Zehnerpotenz erfüllen?",
+        loesungsweg: "In wissenschaftlicher Notation gilt \\(1 \\leq |m| < 10\\) für den Vorfaktor. Aus \\(45 \\cdot 10^6\\) wird durch Verschieben des Kommas $$4{,}5 \\cdot 10^{7}$$ Der Wert bleibt gleich – nur die Schreibweise wird eindeutig. Negative Exponenten sind dabei ausdrücklich erlaubt."
+      },
+      {
+        id: 22, level: 4, typ: "numerisch",
+        frage: "Ein Blatt Papier ist \\(0{,}1\\,\\text{mm}\\) dick. Wie hoch ist ein Stapel aus \\(2 \\cdot 10^{5}\\) Blättern in Metern?",
+        loesung: 20, toleranz: 0.1,
+        tipp: "Rechne die Dicke zuerst in Meter um und multipliziere dann.",
+        loesungsweg: "\\(0{,}1\\,\\text{mm} = 10^{-4}\\,\\text{m}\\). $$2 \\cdot 10^{5} \\cdot 10^{-4} = 2 \\cdot 10^{1} = 20\\,\\text{m}$$"
+      },
+      {
         id: 23, level: 4, typ: "numerisch",
-        frage: "Ein Mobilfunkmast sendet mit \\(2\\) GHz. Wie viele Hertz sind das? (Antwort in Hz als ganze Zahl)",
-        loesung: 2000000000,
-        toleranz: 0,
-        tipp: "Giga = \\(10^9\\).",
-        loesungsweg: "\\(2 \\text{ GHz} = 2 \\cdot 10^9 \\text{ Hz} = 2\\,000\\,000\\,000\\) Hz.",
-        "bereich": "Algebra"
-    },
-    {
-        id: 24, level: 4, typ: "numerisch",
-        frage: "Eine Speicherkarte hat \\(32\\) GB. Wie viele MB sind das? (Antwort in MB)",
-        loesung: 32000,
-        toleranz: 0,
-        tipp: "1 GB = \\(10^3\\) MB (SI-Vorsätze).",
-        loesungsweg: "\\(32 \\text{ GB} = 32 \\cdot 10^9 \\text{ B} = 32 \\cdot 10^3 \\text{ MB} = 32\\,000\\) MB.",
-        "bereich": "Algebra"
-    },
+        frage: "Eine Speicherkarte fasst \\(32\\,\\text{GB}\\). Eine Fotodatei ist \\(8\\,\\text{MB}\\) groß. Wie viele Fotos passen darauf (\\(1\\,\\text{GB} = 1000\\,\\text{MB}\\))?",
+        loesung: 4000, toleranz: 0,
+        tipp: "Bringe beide Angaben auf dieselbe Einheit, bevor du teilst.",
+        loesungsweg: "\\(32\\,\\text{GB} = 32 \\cdot 10^3\\,\\text{MB} = 3{,}2 \\cdot 10^4\\,\\text{MB}\\). $$\\frac{3{,}2 \\cdot 10^4}{8} = 4 \\cdot 10^3 = 4000$$"
+      },
+      {
+        id: 24, level: 4, typ: "mc",
+        frage: "Welche der folgenden Angaben ist offensichtlich <b>unplausibel</b>?",
+        optionen: [
+            "Ein Mensch ist etwa \\(1{,}8 \\cdot 10^{3}\\,\\text{m}\\) groß",
+            "Ein Bakterium ist etwa \\(2 \\cdot 10^{-6}\\,\\text{m}\\) groß",
+            "Die Erde hat etwa \\(6 \\cdot 10^{24}\\,\\text{kg}\\) Masse",
+            "Ein Blatt Papier ist etwa \\(1 \\cdot 10^{-4}\\,\\text{m}\\) dick"
+        ],
+        korrekt: 0,
+        tipp: "Rechne jede Zehnerpotenz in eine vertraute Einheit um.",
+        loesungsweg: "\\(1{,}8 \\cdot 10^3\\,\\text{m} = 1800\\,\\text{m}\\) – das wäre fast zwei Kilometer. Richtig wäre \\(1{,}8 \\cdot 10^{0}\\,\\text{m}\\). Die übrigen Angaben stimmen größenordnungsmäßig: \\(2\\,\\mu\\text{m}\\) für ein Bakterium, \\(0{,}1\\,\\text{mm}\\) für Papier und die bekannte Erdmasse."
+      },
 
     // ═══════════════════════════════════════════════════════════════
     // Level 5: Physik-Anwendungen & Einheiten-Umrechnung

@@ -93,11 +93,11 @@
         id: 7,
         level: 2,
         typ: "numerisch",
-        frage: "Berechne \\(\\sqrt[3]{27}\\).",
+        frage: "Vereinfache \\(\\sqrt{x^6}\\) für \\(x > 0\\). Welchen Exponenten hat das Ergebnis?",
         loesung: 3,
         toleranz: 0,
-        tipp: "Welche Zahl ergibt hoch 3 genommen den Wert 27?",
-        loesungsweg: "Gesucht ist die Zahl \\(a\\) mit \\(a^3 = 27\\). Wegen \\(3^3 = 27\\) gilt: $$\\sqrt[3]{27} = 3$$"
+        tipp: "Schreibe die Wurzel als Potenz mit dem Exponenten \\(\\frac{1}{2}\\) – die Exponenten werden dann multipliziert.",
+        loesungsweg: "$$\\sqrt{x^6} = \\left(x^6\\right)^{1/2} = x^{6 \\cdot \\frac12} = x^3$$ Der gesuchte Exponent ist \\(3\\). (Für beliebige \\(x\\) müsste man \\(|x|^3\\) schreiben.)"
       },
       {
         id: 8,
@@ -143,16 +143,16 @@
         id: 11,
         level: 2,
         typ: "mc",
-        frage: "Vereinfache \\(\\sqrt{50}\\).",
+        frage: "Vereinfache \\(\\sqrt{18x^2}\\) für \\(x > 0\\).",
         optionen: [
-          "\\(25\\sqrt{2}\\)",
-          "\\(5\\sqrt{2}\\)",
-          "\\(10\\sqrt{5}\\)",
-          "\\(2\\sqrt{5}\\)"
+          "\\(9x\\sqrt{2}\\)",
+          "\\(3x\\sqrt{2}\\)",
+          "\\(3x^2\\sqrt{2}\\)",
+          "\\(18x\\)"
         ],
         korrekt: 1,
-        tipp: "Schreibe 50 als Produkt einer Quadratzahl und einer weiteren Zahl: \\(50 = 25 \\cdot 2\\).",
-        loesungsweg: "Zerlegung des Radikanden: $$\\sqrt{50} = \\sqrt{25 \\cdot 2} = \\sqrt{25} \\cdot \\sqrt{2} = 5\\sqrt{2}$$"
+        tipp: "Zerlege den Radikanden in Faktoren, aus denen sich die Wurzel ziehen lässt: \\(18 = 9 \\cdot 2\\).",
+        loesungsweg: "$$\\sqrt{18x^2} = \\sqrt{9 \\cdot 2 \\cdot x^2} = \\sqrt{9} \\cdot \\sqrt{x^2} \\cdot \\sqrt{2} = 3x\\sqrt{2}$$ Der Faktor \\(2\\) bleibt unter der Wurzel, weil er keine Quadratzahl ist."
       },
       {
         id: 12,
@@ -319,154 +319,110 @@
         loesungsweg: "Umformung: $$25^{-1/2} = \\dfrac{1}{25^{1/2}} = \\dfrac{1}{\\sqrt{25}} = \\dfrac{1}{5} = 0{,}2$$"
       },
 
-      // ========== LEVEL 5 — schwer (6 Aufgaben) ==========
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 5 — Wurzelgleichungen mit Probe, Umformen mit Variablen
+      // ═══════════════════════════════════════════════════════════
       {
-        id: 25,
-        level: 5,
-        typ: "mc",
-        frage: "Bestimme den Definitionsbereich von \\(f(x) = \\sqrt{x - 3}\\).",
-        optionen: [
-          "\\(\\mathbb{D} = \\mathbb{R}\\)",
-          "\\(\\mathbb{D} = [0; \\infty)\\)",
-          "\\(\\mathbb{D} = [3; \\infty)\\)",
-          "\\(\\mathbb{D} = (-\\infty; 3]\\)"
-        ],
-        korrekt: 2,
-        tipp: "Der Radikand muss \\(\\geq 0\\) sein, also \\(x - 3 \\geq 0\\).",
-        loesungsweg: "Der Term unter der Wurzel (Radikand) muss nicht-negativ sein: $$x - 3 \\geq 0 \\Leftrightarrow x \\geq 3$$ Damit ist \\(\\mathbb{D} = [3; \\infty)\\)."
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Löse die Wurzelgleichung \\(\\sqrt{x + 6} = x\\).",
+        loesung: 3, toleranz: 0.01,
+        tipp: "Quadriere beide Seiten – und prüfe am Ende unbedingt, ob die gefundenen Werte die ursprüngliche Gleichung erfüllen.",
+        loesungsweg: "Quadrieren: $$x + 6 = x^2 \\Rightarrow x^2 - x - 6 = 0 \\Rightarrow x_{1/2} = 0{,}5 \\pm 2{,}5$$ Kandidaten: \\(x = 3\\) und \\(x = -2\\). Probe: \\(\\sqrt{9} = 3\\) ✓; \\(\\sqrt{4} = 2 \\neq -2\\) ✗. Die Lösung \\(-2\\) ist eine Scheinlösung, die beim Quadrieren entstanden ist – es bleibt \\(x = 3\\)."
       },
       {
-        id: 26,
-        level: 5,
-        typ: "numerisch",
+        id: 26, level: 5, typ: "numerisch",
+        frage: "Bestimme die kleinste Zahl des Definitionsbereichs von \\(f(x) = \\sqrt{2x - 6}\\).",
+        loesung: 3, toleranz: 0.01,
+        tipp: "Der Term unter der Wurzel darf nicht negativ werden.",
+        loesungsweg: "$$2x - 6 \\geq 0 \\Rightarrow x \\geq 3$$ Der Definitionsbereich ist \\([3;\\infty)\\); die kleinste Zahl darin ist \\(3\\) (dort hat \\(f\\) den Wert \\(0\\))."
+      },
+      {
+        id: 27, level: 5, typ: "mc",
+        frage: "Ein Schüler rechnet \\(\\sqrt{9 + 16} = \\sqrt{9} + \\sqrt{16} = 7\\). Warum ist das falsch?",
+        optionen: [
+            "Die Wurzel lässt sich nur über Produkte zerlegen; hier ist \\(\\sqrt{25} = 5\\)",
+            "Weil \\(9 + 16\\) keine Quadratzahl ist",
+            "Weil man Wurzeln nicht addieren darf",
+            "Es ist richtig, nur unüblich geschrieben"
+        ],
+        korrekt: 0,
+        tipp: "Rechne zuerst die Summe unter der Wurzel aus und vergleiche.",
+        loesungsweg: "$$\\sqrt{9+16} = \\sqrt{25} = 5 \\neq 7$$ Das Wurzelgesetz \\(\\sqrt{a \\cdot b} = \\sqrt{a}\\cdot\\sqrt{b}\\) gilt für <b>Produkte</b>. Für Summen unter der Wurzel gibt es kein entsprechendes Gesetz. (Der Fehler ist derselbe wie bei \\((a+b)^2 = a^2+b^2\\).)"
+      },
+      {
+        id: 28, level: 5, typ: "numerisch",
         frage: "Gegeben ist \\(f(x) = 2\\sqrt{x - 1} + 3\\). Berechne \\(f(5)\\).",
-        loesung: 7,
-        toleranz: 0,
-        tipp: "Setze \\(x = 5\\) ein und arbeite von innen nach außen.",
-        loesungsweg: "Einsetzen: $$f(5) = 2\\sqrt{5 - 1} + 3 = 2\\sqrt{4} + 3 = 2 \\cdot 2 + 3 = 4 + 3 = 7$$"
+        loesung: 7, toleranz: 0.01,
+        tipp: "Erst den Term unter der Wurzel berechnen, dann die Wurzel ziehen und zum Schluss die übrigen Rechenschritte.",
+        loesungsweg: "$$f(5) = 2\\sqrt{5-1} + 3 = 2 \\cdot 2 + 3 = 7$$"
       },
       {
-        id: 27,
-        level: 5,
-        typ: "mc",
-        frage: "Welcher Definitionsbereich gehört zu \\(f(x) = \\sqrt{2x + 6}\\)?",
-        optionen: [
-          "\\(\\mathbb{D} = [-6; \\infty)\\)",
-          "\\(\\mathbb{D} = [-3; \\infty)\\)",
-          "\\(\\mathbb{D} = [3; \\infty)\\)",
-          "\\(\\mathbb{D} = [0; \\infty)\\)"
-        ],
-        korrekt: 1,
-        tipp: "Löse die Ungleichung \\(2x + 6 \\geq 0\\) nach \\(x\\) auf.",
-        loesungsweg: "Der Radikand muss \\(\\geq 0\\) sein: $$2x + 6 \\geq 0 \\Leftrightarrow 2x \\geq -6 \\Leftrightarrow x \\geq -3$$ Also: \\(\\mathbb{D} = [-3; \\infty)\\)."
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Für welches \\(x\\) gilt \\(\\sqrt{x} = 12 - x\\)? Gib die kleinere Lösung an, die die Gleichung wirklich erfüllt.",
+        loesung: 9, toleranz: 0.01,
+        tipp: "Quadriere und prüfe beide Kandidaten in der Ausgangsgleichung.",
+        loesungsweg: "Quadrieren: $$x = 144 - 24x + x^2 \\Rightarrow x^2 - 25x + 144 = 0$$ $$x_{1/2} = 12{,}5 \\pm \\sqrt{156{,}25 - 144} = 12{,}5 \\pm 3{,}5$$ Kandidaten: \\(9\\) und \\(16\\). Probe: \\(\\sqrt{9} = 3 = 12 - 9\\) ✓; \\(\\sqrt{16} = 4 \\neq 12 - 16 = -4\\) ✗. Lösung: \\(x = 9\\)."
       },
       {
-        id: 28,
-        level: 5,
-        typ: "numerisch",
-        frage: "Die Funktion \\(f(x) = \\sqrt{x - 4} + 2\\) ist gegenüber \\(g(x) = \\sqrt{x}\\) verschoben. Um wie viele Einheiten wurde der Graph nach rechts verschoben?",
-        loesung: 4,
-        toleranz: 0,
-        tipp: "Bei \\(\\sqrt{x - d}\\) erfolgt eine Verschiebung um \\(d\\) nach rechts.",
-        loesungsweg: "Allgemeine Form: \\(f(x) = \\sqrt{x - d} + e\\) ist der Graph von \\(g(x) = \\sqrt{x}\\), verschoben um \\(d\\) nach rechts und \\(e\\) nach oben. Hier: \\(d = 4\\), \\(e = 2\\). Der Graph wurde also um <b>4</b> Einheiten nach rechts verschoben."
-      },
-      {
-        id: 29,
-        level: 5,
-        typ: "numerisch",
-        frage: "Berechne \\(f(10)\\) für \\(f(x) = 3\\sqrt{x - 1} - 4\\).",
-        loesung: 5,
-        toleranz: 0,
-        tipp: "Erst Radikand ausrechnen, dann Wurzel, dann multiplizieren und addieren.",
-        loesungsweg: "Einsetzen: $$f(10) = 3\\sqrt{10 - 1} - 4 = 3\\sqrt{9} - 4 = 3 \\cdot 3 - 4 = 9 - 4 = 5$$"
-      },
-      {
-        id: 30,
-        level: 5,
-        typ: "mc",
-        frage: "Welchen Definitionsbereich hat \\(f(x) = \\sqrt{9 - x}\\)?",
-        optionen: [
-          "\\(\\mathbb{D} = [9; \\infty)\\)",
-          "\\(\\mathbb{D} = (-\\infty; 9]\\)",
-          "\\(\\mathbb{D} = [-9; 9]\\)",
-          "\\(\\mathbb{D} = \\mathbb{R}\\)"
-        ],
-        korrekt: 1,
-        tipp: "Der Radikand \\(9 - x\\) muss nicht-negativ sein.",
-        loesungsweg: "Bedingung: $$9 - x \\geq 0 \\Leftrightarrow 9 \\geq x \\Leftrightarrow x \\leq 9$$ Also: \\(\\mathbb{D} = (-\\infty; 9]\\)."
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Schreibe \\(\\sqrt[3]{x^2} \\cdot \\sqrt{x}\\) als Potenz von \\(x\\) und gib den Exponenten als Dezimalzahl an (zwei Dezimalstellen).",
+        loesung: 1.17, toleranz: 0.01,
+        tipp: "Wandle beide Wurzeln in Potenzen mit gebrochenem Exponenten um und addiere dann.",
+        loesungsweg: "$$\\sqrt[3]{x^2} = x^{2/3}, \\qquad \\sqrt{x} = x^{1/2}$$ $$x^{2/3} \\cdot x^{1/2} = x^{2/3 + 1/2} = x^{7/6} \\approx x^{1{,}17}$$"
       },
 
-      // ========== LEVEL 6 — sehr schwer (6 Aufgaben) ==========
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 6 — Umkehrfunktionen, rationale Exponenten, Sachbezug
+      // ═══════════════════════════════════════════════════════════
       {
-        id: 31,
-        level: 6,
-        typ: "mc",
-        frage: "Gegeben ist \\(f(x) = x^2\\) mit \\(x \\geq 0\\). Wie lautet die Umkehrfunktion \\(f^{-1}\\)?",
+        id: 31, level: 6, typ: "mc",
+        frage: "Welche Funktion ist die Umkehrfunktion von \\(f(x) = x^2\\) mit \\(x \\geq 0\\)?",
         optionen: [
-          "\\(f^{-1}(x) = x^2\\)",
-          "\\(f^{-1}(x) = \\sqrt{x}\\)",
-          "\\(f^{-1}(x) = \\dfrac{1}{x^2}\\)",
-          "\\(f^{-1}(x) = -\\sqrt{x}\\)"
+            "\\(f^{-1}(x) = \\sqrt{x}\\) für \\(x \\geq 0\\)",
+            "\\(f^{-1}(x) = -\\sqrt{x}\\)",
+            "\\(f^{-1}(x) = \\frac{1}{x^2}\\)",
+            "\\(f\\) hat keine Umkehrfunktion"
         ],
-        korrekt: 1,
-        tipp: "Tausche \\(x\\) und \\(y\\) in \\(y = x^2\\) und löse nach \\(y\\) auf (mit \\(y \\geq 0\\)).",
-        loesungsweg: "Ansatz \\(y = x^2\\), Variablen tauschen: \\(x = y^2\\). Auflösen nach \\(y\\) mit \\(y \\geq 0\\): $$y = \\sqrt{x}$$ Die Umkehrfunktion ist also \\(f^{-1}(x) = \\sqrt{x}\\). Die Wurzelfunktion ist die Umkehrung der Quadratfunktion auf \\([0; \\infty)\\)."
+        korrekt: 0,
+        tipp: "Warum muss der Definitionsbereich überhaupt auf \\(x \\geq 0\\) eingeschränkt werden?",
+        loesungsweg: "Auf ganz \\(\\mathbb{R}\\) ist \\(x^2\\) nicht umkehrbar, weil \\(2\\) und \\(-2\\) denselben Wert liefern. Mit der Einschränkung \\(x \\geq 0\\) ist jeder Wert nur einmal getroffen, und die Umkehrung ist die Wurzelfunktion \\(\\sqrt{x}\\) (ebenfalls für \\(x \\geq 0\\))."
       },
       {
-        id: 32,
-        level: 6,
-        typ: "numerisch",
-        frage: "Die Seitenlänge eines Quadrats mit Flächeninhalt \\(A = 144\\,\\text{cm}^2\\) beträgt \\(s = \\sqrt{A}\\). Berechne \\(s\\) in cm.",
-        loesung: 12,
-        toleranz: 0,
-        tipp: "Setze \\(A = 144\\) in \\(s = \\sqrt{A}\\) ein.",
-        loesungsweg: "Einsetzen: $$s = \\sqrt{144} = 12$$ (denn \\(12^2 = 144\\)). Die Seitenlänge beträgt \\(s = 12\\) cm."
-      },
-      {
-        id: 33,
-        level: 6,
-        typ: "numerisch",
+        id: 32, level: 6, typ: "numerisch",
         frage: "Für welches \\(x > 0\\) gilt \\(x^{3/2} = 8\\)?",
-        loesung: 4,
-        toleranz: 0,
-        tipp: "Beide Seiten hoch \\(\\tfrac{2}{3}\\) nehmen.",
-        loesungsweg: "Ausgangsgleichung: \\(x^{3/2} = 8\\). Beide Seiten hoch \\(\\tfrac{2}{3}\\): $$(x^{3/2})^{2/3} = 8^{2/3}$$ Links: \\(x^{(3/2)\\cdot(2/3)} = x^1 = x\\). Rechts: \\(8^{2/3} = (\\sqrt[3]{8})^2 = 2^2 = 4\\). Also: $$x = 4$$ Kontrolle: \\(4^{3/2} = (\\sqrt{4})^3 = 2^3 = 8\\) \\(\\checkmark\\)"
+        loesung: 4, toleranz: 0.01,
+        tipp: "Potenziere beide Seiten mit dem Kehrwert des Exponenten.",
+        loesungsweg: "$$\\left(x^{3/2}\\right)^{2/3} = 8^{2/3} \\Rightarrow x = \\left(\\sqrt[3]{8}\\right)^2 = 2^2 = 4$$ Probe: \\(4^{3/2} = \\left(\\sqrt{4}\\right)^3 = 8\\) ✓."
       },
       {
-        id: 34,
-        level: 6,
-        typ: "mc",
-        frage: "Welche Funktion ist die Umkehrfunktion von \\(f(x) = x^3\\)?",
-        optionen: [
-          "\\(f^{-1}(x) = \\sqrt{x}\\)",
-          "\\(f^{-1}(x) = \\sqrt[3]{x}\\)",
-          "\\(f^{-1}(x) = x^{-3}\\)",
-          "\\(f^{-1}(x) = 3x\\)"
-        ],
-        korrekt: 1,
-        tipp: "Die Umkehrung des Potenzierens mit \\(n\\) ist das Ziehen der \\(n\\)-ten Wurzel.",
-        loesungsweg: "Ansatz \\(y = x^3\\), Variablen tauschen: \\(x = y^3\\). Auflösen nach \\(y\\): $$y = \\sqrt[3]{x} = x^{1/3}$$ Die Umkehrfunktion von \\(f(x) = x^3\\) ist also \\(f^{-1}(x) = \\sqrt[3]{x}\\). Diese ist auf ganz \\(\\mathbb{R}\\) definiert, weil man aus jeder reellen Zahl die dritte Wurzel ziehen kann."
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Vereinfache \\(\\dfrac{x^{5/6} \\cdot x^{1/3}}{x^{1/2}}\\) und gib den Exponenten des Ergebnisses als Dezimalzahl an (zwei Dezimalstellen).",
+        loesung: 0.67, toleranz: 0.01,
+        tipp: "Im Zähler addieren, danach den Nennerexponenten subtrahieren – bringe die Brüche auf einen gemeinsamen Nenner.",
+        loesungsweg: "$$\\frac{5}{6} + \\frac{1}{3} - \\frac{1}{2} = \\frac{5 + 2 - 3}{6} = \\frac{4}{6} = \\frac{2}{3} \\approx 0{,}67$$ Das Ergebnis ist \\(x^{2/3} = \\sqrt[3]{x^2}\\)."
       },
       {
-        id: 35,
-        level: 6,
-        typ: "numerisch",
-        frage: "Ein Würfel hat das Volumen \\(V = 125\\,\\text{cm}^3\\). Die Kantenlänge ist \\(a = V^{1/3}\\). Berechne \\(a\\) in cm.",
-        loesung: 5,
-        toleranz: 0,
-        tipp: "\\(V^{1/3} = \\sqrt[3]{V}\\). Welche Zahl hoch 3 ergibt 125?",
-        loesungsweg: "Die Kantenlänge ist $$a = V^{1/3} = 125^{1/3} = \\sqrt[3]{125}$$ Wegen \\(5^3 = 125\\) gilt: $$a = 5 \\text{ cm}$$"
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Der Flächeninhalt eines Quadrats wächst um den Faktor \\(9\\). Um welchen Faktor wächst seine Seitenlänge?",
+        loesung: 3, toleranz: 0.01,
+        tipp: "Die Seitenlänge ist die Wurzel aus dem Flächeninhalt.",
+        loesungsweg: "$$a = \\sqrt{A} \\Rightarrow a_{\\text{neu}} = \\sqrt{9A} = 3\\sqrt{A} = 3a$$ Die Seite wird also dreimal so lang. Allgemein: Ein Faktor \\(k\\) bei der Fläche bedeutet den Faktor \\(\\sqrt{k}\\) bei der Länge."
       },
       {
-        id: 36,
-        level: 6,
-        typ: "numerisch",
-        frage: "Vereinfache \\(\\dfrac{x^{5/6} \\cdot x^{1/3}}{x^{1/2}}\\) und gib den Exponenten von \\(x\\) als Dezimalzahl an.",
-        loesung: 0.6666666666666666,
-        toleranz: 0.01,
-        tipp: "Zähler-Exponenten addieren, dann Nenner-Exponenten subtrahieren.",
-        loesungsweg: "Zähler: \\(x^{5/6} \\cdot x^{1/3} = x^{5/6 + 2/6} = x^{7/6}\\). Dann dividieren: $$\\dfrac{x^{7/6}}{x^{1/2}} = x^{7/6 - 3/6} = x^{4/6} = x^{2/3}$$ Der Exponent ist \\(\\tfrac{2}{3} \\approx 0{,}6667\\)."
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Ein Würfel hat das Volumen \\(V = 512\\,\\text{cm}^3\\). Um wie viel Zentimeter ist seine Kante länger als die eines Würfels mit \\(V = 125\\,\\text{cm}^3\\)?",
+        loesung: 3, toleranz: 0.01,
+        tipp: "Bestimme beide Kantenlängen über die dritte Wurzel.",
+        loesungsweg: "$$\\sqrt[3]{512} = 8, \\qquad \\sqrt[3]{125} = 5$$ Die Differenz beträgt \\(8 - 5 = 3\\,\\text{cm}\\) – obwohl sich die Volumina um mehr als das Vierfache unterscheiden."
+      },
+      {
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Löse die Gleichung \\(\\sqrt{x} + 2 = \\sqrt{x + 16}\\).",
+        loesung: 9, toleranz: 0.01,
+        tipp: "Quadriere beide Seiten; es bleibt noch eine Wurzel übrig, die erneut isoliert werden muss.",
+        loesungsweg: "Quadrieren: $$x + 4\\sqrt{x} + 4 = x + 16 \\Rightarrow 4\\sqrt{x} = 12 \\Rightarrow \\sqrt{x} = 3$$ Erneut quadrieren: \\(x = 9\\). Probe: \\(3 + 2 = 5 = \\sqrt{25}\\) ✓."
       }
+
     ];
     </script>
     <script src="../p3-reflexion.js"></script>
