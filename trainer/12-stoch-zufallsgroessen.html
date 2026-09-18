@@ -254,62 +254,61 @@
       },
 
       // ═══════════════════════════════════════════════════════════
-      // Level 5 — Standardabweichung σ(X), Interpretation
+      // LEVEL 5 — Verteilung aus Sachtext, Streuung selbst berechnen
       // ═══════════════════════════════════════════════════════════
-
       {
         id: 25, level: 5, typ: "numerisch",
-        frage: "Berechne die Standardabweichung \\(\\sigma(X)\\) für \\(V(X) = 0{,}61\\).",
-        loesung: 0.78, toleranz: 0.01,
-        tipp: "\\(\\sigma(X) = \\sqrt{V(X)}\\)",
-        loesungsweg: "\\(\\sigma(X) = \\sqrt{0{,}61} \\approx 0{,}781 \\approx 0{,}78\\)"
+        frage: "Bei einem Würfelspiel erhält man bei einer Sechs \\(12\\,€\\), bei einer Vier oder Fünf \\(2\\,€\\) und sonst nichts. Berechne den Erwartungswert des Gewinns in Euro und runde auf zwei Dezimalstellen.",
+        loesung: 2.67, toleranz: 0.01,
+        tipp: "Stelle zuerst die Verteilung auf: Welche Auszahlungen gibt es, und mit welchen Wahrscheinlichkeiten?",
+        loesungsweg: "Verteilung: \\(P(X = 12) = \\frac{1}{6}\\), \\(P(X = 2) = \\frac{2}{6}\\), \\(P(X = 0) = \\frac{3}{6}\\). $$E(X) = \\frac{1}{6}\\cdot 12 + \\frac{2}{6}\\cdot 2 + \\frac{3}{6}\\cdot 0 = 2 + \\frac{2}{3} \\approx 2{,}67\\,€$$"
       },
       {
         id: 26, level: 5, typ: "numerisch",
-        frage: "Berechne \\(\\sigma(X)\\) für die Verteilung: \\(P(X=2) = 0{,}4\\), \\(P(X=5) = 0{,}6\\). (\\(V(X) = 2{,}16\\))",
+        frage: "Eine Zufallsgröße hat die Verteilung \\(P(X = 2) = 0{,}4\\) und \\(P(X = 5) = 0{,}6\\). Berechne die Standardabweichung \\(\\sigma(X)\\) und runde auf zwei Dezimalstellen.",
         loesung: 1.47, toleranz: 0.01,
-        tipp: "\\(\\sigma(X) = \\sqrt{V(X)} = \\sqrt{2{,}16}\\)",
-        loesungsweg: "\\(\\sigma(X) = \\sqrt{2{,}16} \\approx 1{,}47\\)"
+        tipp: "Erst den Erwartungswert, dann die Varianz – der Verschiebungssatz \\(V(X) = E(X^2) - E(X)^2\\) spart Rechenschritte.",
+        loesungsweg: "$$E(X) = 0{,}4 \\cdot 2 + 0{,}6 \\cdot 5 = 3{,}8$$ $$E(X^2) = 0{,}4 \\cdot 4 + 0{,}6 \\cdot 25 = 16{,}6$$ $$V(X) = 16{,}6 - 3{,}8^2 = 16{,}6 - 14{,}44 = 2{,}16$$ $$\\sigma(X) = \\sqrt{2{,}16} \\approx 1{,}47$$"
       },
       {
         id: 27, level: 5, typ: "mc",
-        frage: "Zwei Zufallsgrößen haben denselben Erwartungswert \\(E(X) = 5\\). Zufallsgröße \\(A\\) hat \\(\\sigma = 0{,}5\\), Zufallsgröße \\(B\\) hat \\(\\sigma = 3\\). Was bedeutet das?",
+        frage: "Zwei Glücksspiele haben denselben Erwartungswert \\(E(X) = 5\\,€\\); Spiel A hat \\(\\sigma = 1\\,€\\), Spiel B hat \\(\\sigma = 8\\,€\\). Was folgt daraus?",
         optionen: [
-          "Die Werte von \\(A\\) liegen näher am Erwartungswert als die von \\(B\\)",
-          "Die Werte von \\(B\\) liegen näher am Erwartungswert als die von \\(A\\)",
-          "\\(A\\) hat mehr mögliche Werte als \\(B\\)",
-          "Beide streuen gleich stark"
+            "Auf lange Sicht bringen beide gleich viel; bei B schwanken die einzelnen Ergebnisse aber viel stärker",
+            "Spiel B ist auf Dauer lohnender, weil dort größere Gewinne möglich sind",
+            "Spiel A ist auf Dauer lohnender, weil es sicherer ist",
+            "Die Angaben widersprechen sich – gleicher Erwartungswert bedeutet gleiche Streuung"
         ],
         korrekt: 0,
-        tipp: "Eine kleinere Standardabweichung bedeutet weniger Streuung.",
-        loesungsweg: "Die Standardabweichung misst die durchschnittliche Abweichung vom Erwartungswert. \\(\\sigma_A = 0{,}5 < 3 = \\sigma_B\\), also liegen die Werte von \\(A\\) näher am Erwartungswert."
+        tipp: "Was beschreibt der Erwartungswert, und was zusätzlich die Standardabweichung?",
+        loesungsweg: "Der Erwartungswert beschreibt den Durchschnitt auf lange Sicht – er ist bei beiden Spielen gleich. Die Standardabweichung beschreibt, wie weit die einzelnen Ergebnisse typischerweise davon abweichen: Bei B sind hohe Gewinne <b>und</b> hohe Verluste viel wahrscheinlicher. Welches Spiel man vorzieht, ist deshalb eine Frage der Risikobereitschaft, nicht des Erwartungswerts."
       },
       {
         id: 28, level: 5, typ: "numerisch",
-        frage: "Ein fairer Würfel wird geworfen. Berechne \\(\\sigma(X)\\). (\\(V(X) \\approx 2{,}917\\))",
-        loesung: 1.71, toleranz: 0.01,
-        tipp: "\\(\\sigma = \\sqrt{V(X)} = \\sqrt{2{,}917}\\)",
-        loesungsweg: "\\(\\sigma(X) = \\sqrt{2{,}917} \\approx 1{,}708 \\approx 1{,}71\\)"
+        frage: "Ein fairer Würfel wird geworfen; \\(X\\) sei die Augenzahl. Berechne die Varianz \\(V(X)\\) und runde auf zwei Dezimalstellen.",
+        loesung: 2.92, toleranz: 0.01,
+        tipp: "Verwende den Verschiebungssatz: Bestimme \\(E(X)\\) und \\(E(X^2)\\) getrennt.",
+        loesungsweg: "$$E(X) = 3{,}5, \\qquad E(X^2) = \\frac{1}{6}(1 + 4 + 9 + 16 + 25 + 36) = \\frac{91}{6} \\approx 15{,}167$$ $$V(X) = 15{,}167 - 3{,}5^2 = 15{,}167 - 12{,}25 \\approx 2{,}92$$"
       },
       {
-        id: 29, level: 5, typ: "mc",
-        frage: "Welche Einheit hat die Standardabweichung im Vergleich zur Varianz?",
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Bei einem Spiel gewinnt man mit der Wahrscheinlichkeit \\(0{,}25\\) den Betrag \\(x\\) und verliert sonst \\(2\\,€\\). Für welchen Betrag \\(x\\) in Euro ist das Spiel fair?",
+        loesung: 6, toleranz: 0.01,
+        tipp: "Fair heißt: Der Erwartungswert des Gewinns ist null.",
+        loesungsweg: "$$E(X) = 0{,}25 \\cdot x + 0{,}75 \\cdot (-2) = 0{,}25x - 1{,}5$$ Fairness verlangt \\(E(X) = 0\\): $$0{,}25x = 1{,}5 \\Rightarrow x = 6\\,€$$ Der Gewinn muss also das Dreifache des Verlusts betragen – passend dazu, dass Verlieren dreimal so wahrscheinlich ist."
+      },
+      {
+        id: 30, level: 5, typ: "mc",
+        frage: "Bei einem Spiel beträgt der erwartete Gewinn \\(E(X) = 1{,}50\\,€\\). Wie ist das zu verstehen?",
         optionen: [
-          "Dieselbe Einheit wie die Zufallsgröße \\(X\\)",
-          "Das Quadrat der Einheit von \\(X\\)",
-          "Sie ist einheitenlos",
-          "Die Wurzel der Einheit von \\(X\\)"
+            "Bei sehr vielen Spielen liegt der durchschnittliche Gewinn pro Spiel nahe bei \\(1{,}50\\,€\\)",
+            "Bei jedem Spiel gewinnt man \\(1{,}50\\,€\\)",
+            "Man gewinnt in der Hälfte der Fälle \\(3\\,€\\)",
+            "Nach zwei Spielen hat man sicher \\(3\\,€\\) gewonnen"
         ],
         korrekt: 0,
-        tipp: "\\(\\sigma = \\sqrt{V(X)}\\). Wenn \\(X\\) in Euro gemessen wird, in welcher Einheit ist dann \\(\\sigma\\)?",
-        loesungsweg: "Da \\(V(X)\\) in (Einheit)² gemessen wird und \\(\\sigma = \\sqrt{V(X)}\\), hat \\(\\sigma\\) dieselbe Einheit wie \\(X\\). Das macht die Standardabweichung besser interpretierbar als die Varianz."
-      },
-      {
-        id: 30, level: 5, typ: "numerisch",
-        frage: "Gegeben: \\(P(X=0) = 0{,}5\\), \\(P(X=4) = 0{,}5\\). Berechne \\(\\sigma(X)\\).",
-        loesung: 2, toleranz: 0.01,
-        tipp: "Berechne erst \\(E(X)\\), dann \\(V(X)\\), dann \\(\\sigma(X)\\).",
-        loesungsweg: "\\(E(X) = 0 \\cdot 0{,}5 + 4 \\cdot 0{,}5 = 2\\). \\(V(X) = (0-2)^2 \\cdot 0{,}5 + (4-2)^2 \\cdot 0{,}5 = 4 \\cdot 0{,}5 + 4 \\cdot 0{,}5 = 4\\). \\(\\sigma(X) = \\sqrt{4} = 2\\)"
+        tipp: "Der Erwartungswert muss selbst kein möglicher Ausgang des Spiels sein.",
+        loesungsweg: "Der Erwartungswert ist der Mittelwert auf lange Sicht (Gesetz der großen Zahlen), nicht der Ausgang eines einzelnen Spiels. Häufig ist er sogar unmöglich als Einzelergebnis – etwa \\(3{,}5\\) beim Würfel. Über die Verteilung der einzelnen Ausgänge sagt er nichts; dafür braucht man zusätzlich die Standardabweichung."
       },
 
       // ═══════════════════════════════════════════════════════════

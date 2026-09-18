@@ -249,109 +249,110 @@
         loesungsweg: "\\(P(X \\ge 1) = 1 - P(X=0) = 1 - 0{,}9^6 = 1 - 0{,}531441 = 0{,}4686\\)."
     },
 
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 5 — Erwartungswert E(X) und Standardabweichung σ
-    // ══════════════════════════════════════════════════════════════
-    {
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 5 — n bzw. p aus Bedingungen, Intervalle, Modellkritik
+      // ═══════════════════════════════════════════════════════════
+      {
         id: 25, level: 5, typ: "numerisch",
-        frage: "Berechne den Erwartungswert \\(E(X)\\) für \\(X \\sim B(20;\\, 0{,}3)\\).",
-        loesung: 6, toleranz: 0,
-        tipp: "Für die Binomialverteilung gilt: \\(E(X) = n \\cdot p\\).",
-        loesungsweg: "\\(E(X) = n \\cdot p = 20 \\cdot 0{,}3 = 6\\)."
-    },
-    {
+        frage: "Wie oft muss man mindestens würfeln, damit mit einer Wahrscheinlichkeit von mindestens \\(95\\,\\%\\) wenigstens eine Sechs fällt?",
+        loesung: 17, toleranz: 0,
+        tipp: "Betrachte das Gegenereignis „keine einzige Sechs\" und stelle eine Ungleichung für \\(n\\) auf.",
+        loesungsweg: "Gegenereignis: keine Sechs bei \\(n\\) Würfen, also \\(\\left(\\frac{5}{6}\\right)^n\\). Bedingung: $$1 - \\left(\\tfrac{5}{6}\\right)^n \\geq 0{,}95 \\;\\Longleftrightarrow\\; \\left(\\tfrac{5}{6}\\right)^n \\leq 0{,}05$$ Logarithmieren (Basis kleiner \\(1\\), Ungleichungszeichen dreht sich): $$n \\geq \\frac{\\ln 0{,}05}{\\ln \\frac{5}{6}} \\approx 16{,}43$$ Also sind mindestens \\(17\\) Würfe nötig."
+      },
+      {
         id: 26, level: 5, typ: "numerisch",
-        frage: "Berechne die Standardabweichung \\(\\sigma\\) für \\(X \\sim B(100;\\, 0{,}2)\\). Runde auf zwei Dezimalstellen.",
-        loesung: 4, toleranz: 0.01,
-        tipp: "\\(\\sigma = \\sqrt{n \\cdot p \\cdot (1-p)}\\).",
-        loesungsweg: "\\(\\sigma = \\sqrt{100 \\cdot 0{,}2 \\cdot 0{,}8} = \\sqrt{16} = 4\\)."
-    },
-    {
+        frage: "Für eine Bernoullikette der Länge \\(10\\) gilt \\(P(X \\geq 1) = 0{,}8926\\). Bestimme die Trefferwahrscheinlichkeit \\(p\\) und runde auf zwei Dezimalstellen.",
+        loesung: 0.2, toleranz: 0.01,
+        tipp: "Auch hier führt das Gegenereignis am schnellsten zum Ziel.",
+        loesungsweg: "$$P(X \\geq 1) = 1 - (1-p)^{10} = 0{,}8926 \\Rightarrow (1-p)^{10} = 0{,}1074$$ Zehnte Wurzel: $$1 - p = \\sqrt[10]{0{,}1074} \\approx 0{,}80 \\Rightarrow p \\approx 0{,}20$$"
+      },
+      {
         id: 27, level: 5, typ: "numerisch",
-        frage: "Berechne die Varianz \\(\\text{Var}(X)\\) für \\(X \\sim B(50;\\, 0{,}4)\\).",
-        loesung: 12, toleranz: 0,
-        tipp: "\\(\\text{Var}(X) = n \\cdot p \\cdot (1-p)\\).",
-        loesungsweg: "\\(\\text{Var}(X) = 50 \\cdot 0{,}4 \\cdot 0{,}6 = 12\\)."
-    },
-    {
+        frage: "Eine Zufallsgröße ist binomialverteilt mit \\(n = 50\\) und \\(p = 0{,}3\\). Berechne \\(P(12 \\leq X \\leq 18)\\) und runde auf zwei Dezimalstellen.",
+        loesung: 0.72, toleranz: 0.02,
+        tipp: "Schreibe die Wahrscheinlichkeit als Differenz zweier kumulierter Werte – achte darauf, welche Grenze dabei abgezogen wird.",
+        loesungsweg: "$$P(12 \\leq X \\leq 18) = P(X \\leq 18) - P(X \\leq 11)$$ Mit dem Tafelwerk (oder dem Rechner) ergibt sich $$\\approx 0{,}9449 - 0{,}2246 = 0{,}7204 \\approx 0{,}72$$ Häufiger Fehler ist das Abziehen von \\(P(X \\leq 12)\\) – dann fehlt der Wert für \\(X = 12\\)."
+      },
+      {
         id: 28, level: 5, typ: "numerisch",
-        frage: "Berechne \\(E(X)\\) für \\(X \\sim B(60;\\, 0{,}15)\\).",
-        loesung: 9, toleranz: 0,
-        tipp: "\\(E(X) = n \\cdot p = 60 \\cdot 0{,}15\\).",
-        loesungsweg: "\\(E(X) = 60 \\cdot 0{,}15 = 9\\)."
-    },
-    {
-        id: 29, level: 5, typ: "numerisch",
-        frage: "Berechne \\(\\sigma\\) für \\(X \\sim B(36;\\, 0{,}5)\\).",
-        loesung: 3, toleranz: 0.01,
-        tipp: "\\(\\sigma = \\sqrt{n \\cdot p \\cdot (1-p)} = \\sqrt{36 \\cdot 0{,}5 \\cdot 0{,}5}\\).",
-        loesungsweg: "\\(\\sigma = \\sqrt{36 \\cdot 0{,}5 \\cdot 0{,}5} = \\sqrt{9} = 3\\)."
-    },
-    {
-        id: 30, level: 5, typ: "mc",
-        frage: "Für \\(X \\sim B(n;\\, p)\\) gilt \\(E(X) = 12\\) und \\(\\sigma = 3\\). Welche Werte haben \\(n\\) und \\(p\\)?",
+        frage: "Eine binomialverteilte Zufallsgröße hat den Erwartungswert \\(\\mu = 18\\) und die Standardabweichung \\(\\sigma = 3\\). Bestimme \\(n\\).",
+        loesung: 36, toleranz: 0,
+        tipp: "Zwei Formeln, zwei Unbekannte: \\(\\mu = np\\) und \\(\\sigma^2 = np(1-p)\\).",
+        loesungsweg: "Aus \\(\\sigma^2 = np(1-p) = 9\\) und \\(np = 18\\) folgt $$18(1-p) = 9 \\Rightarrow 1 - p = 0{,}5 \\Rightarrow p = 0{,}5$$ Damit \\(n = \\frac{\\mu}{p} = \\frac{18}{0{,}5} = 36\\)."
+      },
+      {
+        id: 29, level: 5, typ: "mc",
+        frage: "Aus einer Urne mit \\(10\\) Kugeln (\\(4\\) rote) wird fünfmal <b>ohne</b> Zurücklegen gezogen. Warum ist die Anzahl der roten Kugeln hier <b>nicht</b> binomialverteilt?",
         optionen: [
-            "\\(n = 48\\), \\(p = 0{,}25\\)",
-            "\\(n = 36\\), \\(p = \\frac{1}{3}\\)",
-            "\\(n = 24\\), \\(p = 0{,}5\\)",
-            "\\(n = 16\\), \\(p = 0{,}75\\)"
+            "Weil sich die Trefferwahrscheinlichkeit von Zug zu Zug ändert – die Züge sind nicht unabhängig",
+            "Weil die Anzahl der Züge zu klein ist",
+            "Weil es mehr als zwei mögliche Farben geben könnte",
+            "Weil \\(n \\cdot p\\) keine ganze Zahl ist"
         ],
         korrekt: 0,
-        tipp: "Aus \\(E(X) = np = 12\\) und \\(\\sigma^2 = np(1-p) = 9\\). Teile: \\(1-p = \\frac{9}{12}\\).",
-        loesungsweg: "\\(np = 12\\) und \\(np(1-p) = 9\\). Division: \\(1-p = \\frac{9}{12} = 0{,}75\\), also \\(p = 0{,}25\\). Dann \\(n = \\frac{12}{0{,}25} = 48\\). Antwort: \\(n=48\\), \\(p=0{,}25\\)."
-    },
+        tipp: "Prüfe die beiden Voraussetzungen einer Bernoullikette: gleichbleibendes \\(p\\) und unabhängige Versuche.",
+        loesungsweg: "Beim ersten Zug ist \\(p = 0{,}4\\); danach hängt die Wahrscheinlichkeit davon ab, was bereits gezogen wurde (z. B. \\(\\frac{3}{9}\\) oder \\(\\frac{4}{9}\\)). Beide Bedingungen der Bernoullikette – konstante Trefferwahrscheinlichkeit und Unabhängigkeit – sind verletzt. Beim Ziehen <b>mit</b> Zurücklegen wäre das Modell dagegen anwendbar."
+      },
+      {
+        id: 30, level: 5, typ: "numerisch",
+        frage: "In einer Lieferung sind erfahrungsgemäß \\(4\\,\\%\\) der Teile defekt. Wie groß ist die Wahrscheinlichkeit, dass unter \\(20\\) zufällig geprüften Teilen höchstens eines defekt ist? Runde auf drei Dezimalstellen.",
+        loesung: 0.81, toleranz: 0.005,
+        tipp: "„Höchstens eines\" umfasst zwei Fälle, die sich einzeln berechnen lassen.",
+        loesungsweg: "Mit \\(n = 20\\) und \\(p = 0{,}04\\): $$P(X = 0) = 0{,}96^{20} \\approx 0{,}4420$$ $$P(X = 1) = 20 \\cdot 0{,}04 \\cdot 0{,}96^{19} \\approx 0{,}3683$$ $$P(X \\leq 1) \\approx 0{,}810$$"
+      },
 
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 6 — Sachaufgaben: komplexe Modellierung
-    // ══════════════════════════════════════════════════════════════
-    {
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 6 — Bedingungen an n und p, Intervalle, Beurteilung
+      // ═══════════════════════════════════════════════════════════
+      {
         id: 31, level: 6, typ: "numerisch",
-        frage: "Ein Medikament wirkt mit Wahrscheinlichkeit 0,8. Es werden 10 Patienten behandelt. Berechne die Wahrscheinlichkeit, dass das Medikament bei mindestens 9 Patienten wirkt. Runde auf vier Dezimalstellen.",
-        loesung: 0.3758, toleranz: 0.001,
-        tipp: "\\(P(X \\ge 9) = P(X=9) + P(X=10)\\) mit \\(n=10\\), \\(p=0{,}8\\).",
-        loesungsweg: "\\(P(X=10) = 0{,}8^{10} = 0{,}10737\\). \\(P(X=9) = \\binom{10}{9} \\cdot 0{,}8^9 \\cdot 0{,}2 = 10 \\cdot 0{,}1342 \\cdot 0{,}2 = 0{,}26844\\). \\(P(X \\ge 9) = 0{,}26844 + 0{,}10737 \\approx 0{,}3758\\)."
-    },
-    {
+        frage: "Bei einer Lotterie gewinnt jedes Los mit der Wahrscheinlichkeit \\(2\\,\\%\\). Wie viele Lose muss man mindestens kaufen, damit die Wahrscheinlichkeit für mindestens einen Gewinn über \\(50\\,\\%\\) liegt?",
+        loesung: 35, toleranz: 0,
+        tipp: "Auch hier führt das Gegenereignis „kein einziger Gewinn\" auf eine Ungleichung.",
+        loesungsweg: "$$1 - 0{,}98^n > 0{,}5 \\;\\Longleftrightarrow\\; 0{,}98^n < 0{,}5$$ $$n > \\frac{\\ln 0{,}5}{\\ln 0{,}98} \\approx 34{,}3$$ Man braucht also mindestens \\(35\\) Lose. Bemerkenswert: Obwohl \\(50\\) Lose dem Erwartungswert von einem Gewinn entsprächen, genügen schon \\(35\\) für eine Chance über \\(50\\,\\%\\)."
+      },
+      {
         id: 32, level: 6, typ: "numerisch",
-        frage: "In einer Klasse schreiben 15 Schüler einen Test. Jeder besteht unabhängig mit Wahrscheinlichkeit 0,7. Berechne die Wahrscheinlichkeit, dass höchstens 8 bestehen. Runde auf vier Dezimalstellen.",
-        loesung: 0.1311, toleranz: 0.002,
-        tipp: "\\(P(X \\le 8)\\) mit \\(X \\sim B(15;\\, 0{,}7)\\). Summiere \\(P(X=0) + \\ldots + P(X=8)\\). Nutze ggf. den Taschenrechner.",
-        loesungsweg: "\\(X \\sim B(15;\\, 0{,}7)\\). Mit der kumulierten Binomialverteilung: \\(P(X \\le 8) \\approx 0{,}1311\\). Der Erwartungswert liegt bei \\(E(X) = 10{,}5\\), daher ist \\(X \\le 8\\) relativ unwahrscheinlich."
-    },
-    {
+        frage: "Für welchen Wert von \\(p\\) gilt bei einer Bernoullikette der Länge \\(5\\), dass \\(P(X = 0) = P(X = 1)\\) ist? Runde auf zwei Dezimalstellen.",
+        loesung: 0.17, toleranz: 0.01,
+        tipp: "Schreibe beide Wahrscheinlichkeiten mit der Bernoulliformel auf und kürze den gemeinsamen Faktor.",
+        loesungsweg: "$$(1-p)^5 = 5p(1-p)^4$$ Kürzen mit \\((1-p)^4 \\neq 0\\): $$1 - p = 5p \\Rightarrow p = \\frac{1}{6} \\approx 0{,}17$$"
+      },
+      {
         id: 33, level: 6, typ: "numerisch",
-        frage: "Ein Basketballspieler trifft Freiwürfe mit \\(p = 0{,}75\\). Er wirft 8-mal. Berechne die Wahrscheinlichkeit, dass er genau 6-mal trifft. Runde auf vier Dezimalstellen.",
-        loesung: 0.3115, toleranz: 0.001,
-        tipp: "\\(P(X=6) = \\binom{8}{6} \\cdot 0{,}75^6 \\cdot 0{,}25^2\\).",
-        loesungsweg: "\\(P(X=6) = \\binom{8}{6} \\cdot 0{,}75^6 \\cdot 0{,}25^2 = 28 \\cdot 0{,}17798 \\cdot 0{,}0625 = 28 \\cdot 0{,}011124 \\approx 0{,}3115\\)."
-    },
-    {
-        id: 34, level: 6, typ: "numerisch",
-        frage: "Eine Maschine produziert 2% Ausschuss. Aus einer Lieferung von 20 Teilen wird eine Stichprobe gezogen. Berechne die Wahrscheinlichkeit, dass kein Teil defekt ist. Runde auf vier Dezimalstellen.",
-        loesung: 0.6676, toleranz: 0.001,
-        tipp: "\\(P(X=0) = (1-p)^n = 0{,}98^{20}\\).",
-        loesungsweg: "\\(P(X=0) = 0{,}98^{20} = 0{,}6676\\). Das bedeutet: Mit ca. 66,8% Wahrscheinlichkeit ist kein Teil defekt."
-    },
-    {
-        id: 35, level: 6, typ: "mc",
-        frage: "Bei einer Wahl stimmen 40% für Partei A. Man befragt 25 zufällige Personen. Welche Aussage über die Verteilung der Ja-Stimmen \\(X\\) ist korrekt?",
+        frage: "Eine faire Münze wird \\(100\\)-mal geworfen. Wie groß ist die Wahrscheinlichkeit, dass die Anzahl „Kopf\" zwischen \\(45\\) und \\(55\\) liegt (jeweils einschließlich)? Runde auf zwei Dezimalstellen.",
+        loesung: 0.73, toleranz: 0.02,
+        tipp: "Schreibe die Wahrscheinlichkeit als Differenz kumulierter Werte.",
+        loesungsweg: "$$P(45 \\leq X \\leq 55) = P(X \\leq 55) - P(X \\leq 44) \\approx 0{,}8644 - 0{,}1356 = 0{,}7288 \\approx 0{,}73$$ Zum Vergleich: Die \\(1\\sigma\\)-Umgebung reicht hier von \\(45\\) bis \\(55\\) (\\(\\mu = 50\\), \\(\\sigma = 5\\)) – die Sigma-Regel liefert mit \\(68\\,\\%\\) einen brauchbaren Näherungswert."
+      },
+      {
+        id: 34, level: 6, typ: "mc",
+        frage: "Ein Schüler rechnet: „\\(X\\) ist binomialverteilt mit \\(n = 20\\), \\(p = 0{,}5\\). Wegen \\(\\mu = 10\\) ist \\(P(X = 10)\\) am größten, und zwar etwa \\(0{,}5\\).\" Wo steckt der Fehler?",
         optionen: [
-            "\\(E(X) = 10\\) und \\(\\sigma \\approx 2{,}45\\)",
-            "\\(E(X) = 10\\) und \\(\\sigma = 6\\)",
-            "\\(E(X) = 15\\) und \\(\\sigma \\approx 2{,}45\\)",
-            "\\(E(X) = 10\\) und \\(\\sigma = 10\\)"
+            "\\(P(X = 10)\\) ist zwar der größte Einzelwert, beträgt aber nur etwa \\(0{,}18\\)",
+            "Der größte Einzelwert liegt nicht bei \\(X = 10\\)",
+            "Der Erwartungswert ist nicht \\(10\\)",
+            "Es gibt keinen Fehler"
         ],
         korrekt: 0,
-        tipp: "\\(E(X) = np = 25 \\cdot 0{,}4\\). \\(\\sigma = \\sqrt{np(1-p)} = \\sqrt{25 \\cdot 0{,}4 \\cdot 0{,}6}\\).",
-        loesungsweg: "\\(E(X) = 25 \\cdot 0{,}4 = 10\\). \\(\\sigma = \\sqrt{25 \\cdot 0{,}4 \\cdot 0{,}6} = \\sqrt{6} \\approx 2{,}449\\)."
-    },
-    {
+        tipp: "Wie viele Werte kann \\(X\\) annehmen – und wie verteilt sich die Gesamtwahrscheinlichkeit \\(1\\) darauf?",
+        loesungsweg: "Der Erwartungswert stimmt, und bei symmetrischer Verteilung ist \\(P(X = 10)\\) tatsächlich der größte Einzelwert. Er ist aber deutlich kleiner als \\(0{,}5\\): Die Wahrscheinlichkeit \\(1\\) verteilt sich auf \\(21\\) mögliche Werte, und $$P(X = 10) = \\binom{20}{10}0{,}5^{20} \\approx 0{,}176$$ Verwechselt wurde der wahrscheinlichste Einzelwert mit „etwa die Hälfte der Fälle\"."
+      },
+      {
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Ein Torwart hält jeden Elfmeter mit der Wahrscheinlichkeit \\(0{,}25\\). Wie viele Elfmeter muss er mindestens halten dürfen – also wie viele muss er schießen lassen – damit er mit mehr als \\(90\\,\\%\\) Wahrscheinlichkeit mindestens einen hält?",
+        loesung: 9, toleranz: 0,
+        tipp: "Gegenereignis: Er hält keinen einzigen.",
+        loesungsweg: "$$1 - 0{,}75^n > 0{,}9 \\;\\Longleftrightarrow\\; 0{,}75^n < 0{,}1$$ $$n > \\frac{\\ln 0{,}1}{\\ln 0{,}75} \\approx 8{,}0$$ Wegen \\(0{,}75^8 \\approx 0{,}100\\) (knapp nicht kleiner als \\(0{,}1\\)) sind mindestens \\(9\\) Elfmeter nötig; dann ist \\(1 - 0{,}75^9 \\approx 0{,}925\\)."
+      },
+      {
         id: 36, level: 6, typ: "numerisch",
-        frage: "Ein Glücksrad zeigt mit \\(p = 0{,}2\\) \u201EGewinn\u201C. Es wird 10-mal gedreht. Wie groß ist die Wahrscheinlichkeit, mindestens einmal zu gewinnen? Runde auf vier Dezimalstellen.",
-        loesung: 0.8926, toleranz: 0.001,
-        tipp: "Gegenereignis: \\(P(X \\ge 1) = 1 - P(X = 0) = 1 - 0{,}8^{10}\\).",
-        loesungsweg: "\\(P(X \\ge 1) = 1 - P(X=0) = 1 - 0{,}8^{10} = 1 - 0{,}10737 = 0{,}8926\\)."
-    }
+        frage: "Bei einer Qualitätskontrolle werden \\(10\\) Teile geprüft. Die Lieferung wird abgelehnt, wenn mehr als ein Teil defekt ist. Wie groß ist die Wahrscheinlichkeit für eine Ablehnung, wenn tatsächlich \\(10\\,\\%\\) der Teile defekt sind? Runde auf zwei Dezimalstellen.",
+        loesung: 0.26, toleranz: 0.01,
+        tipp: "Bestimme zuerst die Wahrscheinlichkeit für die Annahme und nutze das Gegenereignis.",
+        loesungsweg: "Annahme bedeutet höchstens ein defektes Teil: $$P(X = 0) = 0{,}9^{10} \\approx 0{,}3487, \\qquad P(X = 1) = 10 \\cdot 0{,}1 \\cdot 0{,}9^9 \\approx 0{,}3874$$ $$P(\\text{Annahme}) \\approx 0{,}7361 \\Rightarrow P(\\text{Ablehnung}) \\approx 0{,}264 \\approx 0{,}26$$ Trotz „nur\" \\(10\\,\\%\\) Ausschuss wird also rund jede vierte Lieferung abgelehnt."
+      }
+
 
     ];
     </script>
