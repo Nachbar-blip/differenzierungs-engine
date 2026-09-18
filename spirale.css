@@ -146,11 +146,11 @@ header p {
     text-align: center;
     line-height: 1.7;
     min-height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 12px;
+    /* Kein Flex: Inline-Formeln \(...\) sind eigene Elemente und wuerden im
+       Flex-Container je eine eigene Zeile bilden (Sichtpruefung 2026-09-17).
+       Abstand der abgesetzten Formeln regelt .katex-display unten. */
+    display: block;
+    padding-block: 8px;
 }
 
 /* KaTeX inside task card */
