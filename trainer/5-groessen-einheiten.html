@@ -262,128 +262,153 @@ const AUFGABEN = [
     tipp: "Rechne \\(2\\ \\text{h}\\) in Minuten um, dann subtrahiere \\(35\\ \\text{min}\\).",
     loesungsweg: "$$2\\ \\text{h} = 120\\ \\text{min}$$ $$120\\ \\text{min} - 35\\ \\text{min} = 85\\ \\text{min}$$"
   },
-  // ========== LEVEL 5 — anspruchsvoll: Flächen & Volumen ==========
+  // ═══════════════════════════════════════════════════════════
+  // LEVEL 5 — mehrschrittig: Zeitspannen, Preisvergleich, Fehlersuche
+  // ═══════════════════════════════════════════════════════════
   {
     id: 25,
     level: 5,
-    typ: "numerisch",
-    frage: "Rechne um: \\(3\\ \\text{m}^2\\). Gib das Ergebnis in cm² an.",
-    loesung: 30000,
-    toleranz: 0,
-    tipp: "Bei Flächen ist der Umrechnungsfaktor \\(100 \\cdot 100 = 10000\\), nicht \\(100\\)!",
-    loesungsweg: "Ein Quadrat mit \\(1\\ \\text{m}\\) Seitenlänge hat \\(100\\ \\text{cm} \\cdot 100\\ \\text{cm} = 10000\\ \\text{cm}^2\\). $$3\\ \\text{m}^2 = 3 \\cdot 10000\\ \\text{cm}^2 = 30000\\ \\text{cm}^2$$"
+    typ: "mc",
+    frage: "Ein Schüler schreibt \\(2\\,\\text{m}\\ 5\\,\\text{cm} = 25\\,\\text{cm}\\). Was ist dazu zu sagen?",
+    optionen: [
+      "Falsch — \\(2\\,\\text{m}\\) sind \\(200\\,\\text{cm}\\), also insgesamt \\(205\\,\\text{cm}\\)",
+      "Richtig, man schreibt die Zahlen einfach hintereinander",
+      "Falsch, richtig wären \\(250\\,\\text{cm}\\)",
+      "Richtig, aber die Einheit müsste \\(\\text{m}\\) heißen"
+    ],
+    korrekt: 0,
+    tipp: "Rechne zuerst die Meter allein in Zentimeter um.",
+    loesungsweg: "$$2\\,\\text{m} = 200\\,\\text{cm}, \\qquad 200 + 5 = 205\\,\\text{cm}$$ Die Ziffern hintereinanderzuschreiben funktioniert nur zufällig bei Einheiten mit dem Faktor \\(10\\) — hier ist der Faktor \\(100\\)."
   },
   {
     id: 26,
     level: 5,
-    typ: "mc",
-    frage: "Ein Bauernhof hat \\(2\\ \\text{ha}\\) Weidefläche. Wie viele Quadratmeter sind das? 🐄",
-    optionen: ["\\(2000\\ \\text{m}^2\\)", "\\(20000\\ \\text{m}^2\\)", "\\(200000\\ \\text{m}^2\\)", "\\(200\\ \\text{m}^2\\)"],
-    korrekt: 1,
-    tipp: "Ein Hektar ist ein Quadrat mit \\(100\\ \\text{m}\\) Seitenlänge.",
-    loesungsweg: "$$1\\ \\text{ha} = 100\\ \\text{m} \\cdot 100\\ \\text{m} = 10000\\ \\text{m}^2$$ $$2\\ \\text{ha} = 2 \\cdot 10000\\ \\text{m}^2 = 20000\\ \\text{m}^2$$"
+    typ: "numerisch",
+    frage: "Ein Zug fährt um \\(9{:}40\\) Uhr ab und kommt um \\(12{:}25\\) Uhr an. Wie viele Minuten dauert die Fahrt?",
+    loesung: 165,
+    toleranz: 0,
+    tipp: "Rechne erst bis zur vollen Stunde, dann in Stundenschritten weiter.",
+    loesungsweg: "Von \\(9{:}40\\) bis \\(12{:}40\\) sind es \\(3\\) Stunden, das ist \\(15\\) Minuten zu viel. $$3 \\cdot 60 - 15 = 180 - 15 = 165 \\text{ Minuten}$$ (Also \\(2\\) Stunden \\(45\\) Minuten.)"
   },
   {
     id: 27,
     level: 5,
     typ: "numerisch",
-    frage: "In einer Flasche sind \\(1{,}5\\) Liter Apfelsaft. Gib die Menge in ml an.",
-    loesung: 1500,
+    frage: "\\(1{,}5\\,\\text{kg}\\) Äpfel kosten \\(3{,}60\\,€\\), \\(2\\,\\text{kg}\\) kosten \\(4{,}60\\,€\\). Wie viele Cent kostet das Kilogramm beim günstigeren Angebot?",
+    loesung: 230,
     toleranz: 0,
-    tipp: "Ein Liter hat \\(1000\\) Milliliter.",
-    loesungsweg: "$$1\\ \\text{l} = 1000\\ \\text{ml}$$ $$1{,}5\\ \\text{l} = 1000\\ \\text{ml} + 500\\ \\text{ml} = 1500\\ \\text{ml}$$"
+    tipp: "Rechne für beide Angebote den Preis für ein Kilogramm aus.",
+    loesungsweg: "Erstes Angebot: \\(3{,}60 : 1{,}5 = 2{,}40\\,€\\) je kg. Zweites Angebot: \\(4{,}60 : 2 = 2{,}30\\,€\\) je kg. Günstiger ist das zweite mit \\(2{,}30\\,€ = 230\\) Cent je Kilogramm."
   },
   {
     id: 28,
     level: 5,
-    typ: "mc",
-    frage: "Ein Sportplatz hat eine Fläche von \\(45000\\ \\text{m}^2\\). Wie viel ist das in Hektar?",
-    optionen: ["\\(450\\ \\text{ha}\\)", "\\(45\\ \\text{ha}\\)", "\\(4{,}5\\ \\text{ha}\\)", "\\(0{,}45\\ \\text{ha}\\)"],
-    korrekt: 2,
-    tipp: "\\(10000\\ \\text{m}^2\\) sind \\(1\\ \\text{ha}\\). Wie oft passt das in \\(45000\\ \\text{m}^2\\)?",
-    loesungsweg: "$$10000\\ \\text{m}^2 = 1\\ \\text{ha}$$ $$45000\\ \\text{m}^2 = 45000 : 10000\\ \\text{ha} = 4{,}5\\ \\text{ha}$$"
+    typ: "numerisch",
+    frage: "Ein Rezept für \\(4\\) Personen braucht \\(600\\,\\text{g}\\) Mehl. Wie viel Gramm Mehl braucht man für \\(6\\) Personen?",
+    loesung: 900,
+    toleranz: 0,
+    tipp: "Rechne zuerst aus, wie viel Mehl auf eine Person entfällt.",
+    loesungsweg: "Eine Person: \\(600 : 4 = 150\\,\\text{g}\\). Sechs Personen: $$6 \\cdot 150 = 900\\,\\text{g}$$"
   },
   {
     id: 29,
     level: 5,
     typ: "numerisch",
-    frage: "Rechne um: \\(5\\ \\text{dm}^2\\). Gib das Ergebnis in cm² an.",
-    loesung: 500,
-    toleranz: 0,
-    tipp: "Ein Quadratdezimeter ist ein Quadrat mit \\(10\\ \\text{cm}\\) Seitenlänge.",
-    loesungsweg: "$$1\\ \\text{dm}^2 = 10\\ \\text{cm} \\cdot 10\\ \\text{cm} = 100\\ \\text{cm}^2$$ $$5\\ \\text{dm}^2 = 5 \\cdot 100\\ \\text{cm}^2 = 500\\ \\text{cm}^2$$"
+    frage: "Lisa läuft \\(3\\) Runden zu je \\(400\\,\\text{m}\\) und anschließend noch \\(1{,}2\\,\\text{km}\\). Wie viele Kilometer legt sie insgesamt zurück?",
+    loesung: 2.4,
+    toleranz: 0.01,
+    tipp: "Bringe beide Angaben zuerst auf dieselbe Einheit.",
+    loesungsweg: "Runden: \\(3 \\cdot 400 = 1200\\,\\text{m} = 1{,}2\\,\\text{km}\\). $$1{,}2 + 1{,}2 = 2{,}4\\,\\text{km}$$"
   },
   {
     id: 30,
     level: 5,
     typ: "mc",
-    frage: "Aus einer \\(1\\)-Liter-Flasche werden Becher mit je \\(200\\ \\text{ml}\\) gefüllt. Wie viele volle Becher schafft man? 🥤",
-    optionen: ["\\(4\\) Becher", "\\(10\\) Becher", "\\(2\\) Becher", "\\(5\\) Becher"],
-    korrekt: 3,
-    tipp: "Rechne den Liter erst in Milliliter um, dann teile durch \\(200\\).",
-    loesungsweg: "$$1\\ \\text{l} = 1000\\ \\text{ml}$$ $$1000\\ \\text{ml} : 200\\ \\text{ml} = 5$$ Man kann \\(5\\) Becher füllen."
+    frage: "Was ist mehr: \\(2500\\,\\text{g}\\) oder \\(2{,}4\\,\\text{kg}\\)?",
+    optionen: [
+      "\\(2500\\,\\text{g}\\), denn das sind \\(2{,}5\\,\\text{kg}\\)",
+      "\\(2{,}4\\,\\text{kg}\\), denn \\(2{,}4\\) ist mehr als \\(2\\)",
+      "Beide sind gleich viel",
+      "Das lässt sich nicht vergleichen, die Einheiten sind verschieden"
+    ],
+    korrekt: 0,
+    tipp: "Rechne beide Angaben in Kilogramm um, bevor du vergleichst.",
+    loesungsweg: "$$2500\\,\\text{g} = 2{,}5\\,\\text{kg} > 2{,}4\\,\\text{kg}$$ Zahlen aus verschiedenen Einheiten darf man nie direkt vergleichen — erst umrechnen, dann vergleichen."
   },
-  // ========== LEVEL 6 — wagnerisch: Sachaufgaben & Schätzen ==========
+  // ═══════════════════════════════════════════════════════════
+  // LEVEL 6 — Umrechnungen begründen, Sachentscheidungen, Planung
+  // ═══════════════════════════════════════════════════════════
   {
     id: 31,
     level: 6,
     typ: "numerisch",
-    frage: "Leon kauft ein Brot für \\(2{,}45\\ €\\), Milch für \\(1{,}15\\ €\\) und Saft für \\(1{,}90\\ €\\). Er zahlt mit einem \\(10\\ €\\)-Schein. Wie viel Rückgeld bekommt er? Gib das Ergebnis in € an. 🥖",
-    loesung: 4.5,
-    toleranz: 0,
-    tipp: "Rechne in Cent: Addiere erst alle Preise, dann ziehe die Summe von \\(1000\\ \\text{ct}\\) ab.",
-    loesungsweg: "In Cent rechnen: $$245\\ \\text{ct} + 115\\ \\text{ct} + 190\\ \\text{ct} = 550\\ \\text{ct}$$ $$1000\\ \\text{ct} - 550\\ \\text{ct} = 450\\ \\text{ct} = 4{,}50\\ €$$ Leon bekommt \\(4{,}50\\ €\\) zurück."
+    frage: "Ein Wasserhahn tropft und verliert dabei \\(20\\,\\text{ml}\\) pro Minute. Wie viele Liter gehen in einer Stunde verloren?",
+    loesung: 1.2,
+    toleranz: 0.01,
+    tipp: "Rechne erst die Menge für eine Stunde in Millilitern aus.",
+    loesungsweg: "Eine Stunde hat \\(60\\) Minuten: \\(60 \\cdot 20 = 1200\\,\\text{ml}\\). $$1200\\,\\text{ml} = 1{,}2\\,\\text{l}$$"
   },
   {
     id: 32,
     level: 6,
     typ: "mc",
-    frage: "Schätze: Wie schwer ist ein voll gepackter Schulranzen ungefähr? 🎒",
-    optionen: ["\\(500\\ \\text{g}\\)", "\\(50\\ \\text{kg}\\)", "\\(5\\ \\text{kg}\\)", "\\(50\\ \\text{g}\\)"],
-    korrekt: 2,
-    tipp: "Vergleiche: Eine Tüte Mehl wiegt \\(1\\ \\text{kg}\\). Wie viele Tüten Mehl fühlen sich wie dein Ranzen an?",
-    loesungsweg: "Ein voller Schulranzen mit Büchern und Heften wiegt etwa so viel wie \\(5\\) Tüten Mehl, also ungefähr \\(5\\ \\text{kg}\\). \\(500\\ \\text{g}\\) wäre nur ein einzelnes Buch, \\(50\\ \\text{kg}\\) könnte kein Kind tragen, und \\(50\\ \\text{g}\\) wiegt gerade mal ein Brief."
+    frage: "Warum sind \\(1\\,\\text{m}^2\\) nicht \\(100\\,\\text{cm}^2\\), sondern \\(10\\,000\\,\\text{cm}^2\\)?",
+    optionen: [
+      "Weil ein Quadratmeter \\(100\\,\\text{cm}\\) lang und \\(100\\,\\text{cm}\\) breit ist: \\(100 \\cdot 100\\)",
+      "Weil bei Flächen immer mit \\(100\\) multipliziert wird",
+      "Weil \\(1\\,\\text{m}\\) gleich \\(10\\,000\\,\\text{cm}\\) ist",
+      "Das stimmt nicht — \\(1\\,\\text{m}^2\\) sind tatsächlich \\(100\\,\\text{cm}^2\\)"
+    ],
+    korrekt: 0,
+    tipp: "Zeichne ein Quadrat mit \\(1\\,\\text{m}\\) Seitenlänge und schreibe die Seiten in Zentimetern an.",
+    loesungsweg: "Bei einer Fläche werden <b>beide</b> Seitenlängen umgerechnet: $$1\\,\\text{m}^2 = 100\\,\\text{cm} \\cdot 100\\,\\text{cm} = 10\\,000\\,\\text{cm}^2$$ Deshalb ist der Umrechnungsfaktor bei Flächen \\(100\\) statt \\(10\\) — und bei Volumen sogar \\(1000\\)."
   },
   {
     id: 33,
     level: 6,
     typ: "numerisch",
-    frage: "Für einen Pfannkuchenteig für \\(4\\) Personen braucht man \\(300\\ \\text{g}\\) Mehl. Zeynep kocht für \\(6\\) Personen. Wie viel Mehl braucht sie? Gib das Ergebnis in g an. 🥞",
-    loesung: 450,
+    frage: "Eine Tafel Schokolade mit \\(100\\,\\text{g}\\) kostet \\(1{,}20\\,€\\). Ein Beutel mit \\(250\\,\\text{g}\\) kostet \\(2{,}75\\,€\\). Wie viele Cent spart man beim Beutel je \\(100\\,\\text{g}\\)?",
+    loesung: 10,
     toleranz: 0,
-    tipp: "Rechne zuerst aus, wie viel Mehl eine Person braucht.",
-    loesungsweg: "Für \\(1\\) Person: $$300\\ \\text{g} : 4 = 75\\ \\text{g}$$ Für \\(6\\) Personen: $$6 \\cdot 75\\ \\text{g} = 450\\ \\text{g}$$"
+    tipp: "Rechne aus, was \\(100\\,\\text{g}\\) aus dem Beutel kosten.",
+    loesungsweg: "Der Beutel enthält \\(2{,}5\\)-mal \\(100\\,\\text{g}\\): \\(2{,}75 : 2{,}5 = 1{,}10\\,€\\) je \\(100\\,\\text{g}\\). $$1{,}20 - 1{,}10 = 0{,}10\\,€ = 10 \\text{ Cent}$$"
   },
   {
     id: 34,
     level: 6,
-    typ: "mc",
-    frage: "Schätze: Wie hoch ist eine Zimmertür ungefähr? 🚪",
-    optionen: ["\\(2\\ \\text{m}\\)", "\\(20\\ \\text{cm}\\)", "\\(20\\ \\text{m}\\)", "\\(2\\ \\text{km}\\)"],
-    korrekt: 0,
-    tipp: "Vergleiche mit deiner eigenen Körpergröße: Passt du durch die Tür, ohne dich zu bücken?",
-    loesungsweg: "Eine Zimmertür ist etwas höher als ein Erwachsener, also ungefähr \\(2\\ \\text{m}\\). \\(20\\ \\text{cm}\\) ist so lang wie ein Stift, \\(20\\ \\text{m}\\) so hoch wie ein Haus mit \\(6\\) Stockwerken, und \\(2\\ \\text{km}\\) ist eine halbe Stunde Fußweg."
+    typ: "numerisch",
+    frage: "Ein Schwimmbecken ist \\(10\\,\\text{m}\\) lang, \\(5\\,\\text{m}\\) breit und \\(1{,}5\\,\\text{m}\\) tief. Wie viele Liter Wasser passen hinein? (\\(1\\,\\text{m}^3 = 1000\\,\\text{l}\\))",
+    loesung: 75000,
+    toleranz: 0,
+    tipp: "Berechne zuerst das Volumen in Kubikmetern.",
+    loesungsweg: "$$V = 10 \\cdot 5 \\cdot 1{,}5 = 75\\,\\text{m}^3$$ $$75 \\cdot 1000 = 75\\,000\\,\\text{l}$$"
   },
   {
     id: 35,
     level: 6,
-    typ: "numerisch",
-    frage: "Milans Zug fährt um 8:35 Uhr ab und kommt um 10:20 Uhr an. Wie lange dauert die Fahrt? Gib das Ergebnis in min an. 🚆",
-    loesung: 105,
-    toleranz: 0,
-    tipp: "Rechne in Etappen: erst bis 9:00 Uhr, dann bis 10:00 Uhr, dann bis 10:20 Uhr.",
-    loesungsweg: "Von 8:35 bis 9:00 Uhr: \\(25\\ \\text{min}\\). Von 9:00 bis 10:00 Uhr: \\(60\\ \\text{min}\\). Von 10:00 bis 10:20 Uhr: \\(20\\ \\text{min}\\). $$25\\ \\text{min} + 60\\ \\text{min} + 20\\ \\text{min} = 105\\ \\text{min}$$"
+    typ: "mc",
+    frage: "Ein Schüler schreibt \\(1{,}5\\,\\text{h} = 1\\,\\text{h}\\ 50\\,\\text{min}\\). Was ist dazu zu sagen?",
+    optionen: [
+      "Falsch — \\(0{,}5\\,\\text{h}\\) sind die Hälfte von \\(60\\) Minuten, also \\(1\\,\\text{h}\\ 30\\,\\text{min}\\)",
+      "Richtig, nach dem Komma steht die Minutenzahl",
+      "Falsch, richtig wären \\(1\\,\\text{h}\\ 15\\,\\text{min}\\)",
+      "Richtig, aber nur bei Fahrplänen"
+    ],
+    korrekt: 0,
+    tipp: "Eine Stunde hat nicht \\(100\\), sondern \\(60\\) Minuten.",
+    loesungsweg: "$$0{,}5\\,\\text{h} = \\frac{60}{2} = 30\\,\\text{min}$$ Also sind \\(1{,}5\\,\\text{h} = 1\\,\\text{h}\\ 30\\,\\text{min}\\). Die Zeit ist die einzige gängige Größe, die <b>nicht</b> dezimal aufgebaut ist — deshalb funktioniert das Ablesen der Nachkommastelle hier nicht."
   },
   {
     id: 36,
     level: 6,
-    typ: "mc",
-    frage: "Schätze: Wie viel Wasser passt ungefähr in eine volle Badewanne? 🛁",
-    optionen: ["\\(15\\ \\text{l}\\)", "\\(1{,}5\\ \\text{l}\\)", "\\(15000\\ \\text{l}\\)", "\\(150\\ \\text{l}\\)"],
-    korrekt: 3,
-    tipp: "Vergleiche mit einem Wassereimer: In einen Eimer passen etwa \\(10\\) Liter.",
-    loesungsweg: "In eine Badewanne passen ungefähr \\(15\\) volle Eimer Wasser, also etwa \\(150\\ \\text{l}\\). \\(1{,}5\\ \\text{l}\\) ist nur eine große Flasche, \\(15\\ \\text{l}\\) sind eineinhalb Eimer, und \\(15000\\ \\text{l}\\) wären ein kleines Schwimmbecken."
+    typ: "numerisch",
+    frage: "Bei einer Veranstaltung gibt es \\(3\\) Vorträge zu je \\(25\\) Minuten, dazwischen jeweils eine Pause von \\(5\\) Minuten. Wie viele Minuten dauert die Veranstaltung insgesamt?",
+    loesung: 85,
+    toleranz: 0,
+    tipp: "Wie viele Pausen liegen zwischen drei Vorträgen — drei oder zwei?",
+    loesungsweg: "Vorträge: \\(3 \\cdot 25 = 75\\) Minuten. Zwischen drei Vorträgen liegen nur <b>zwei</b> Pausen: \\(2 \\cdot 5 = 10\\) Minuten. $$75 + 10 = 85 \\text{ Minuten}$$"
   }
+
 ];
     </script>
     <script src="../p3-reflexion.js"></script>

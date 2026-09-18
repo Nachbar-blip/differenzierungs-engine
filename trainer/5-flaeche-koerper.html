@@ -262,128 +262,153 @@ const AUFGABEN = [
     tipp: "Denke an einen Schuhkarton: Vorderseite und Deckel sind verschieden groß.",
     loesungsweg: "Ein Quader hat 8 Ecken, 12 Kanten und 6 rechteckige Flächen. Der Würfel hat zwar dieselben Anzahlen, aber bei ihm sind alle 6 Flächen gleich große Quadrate — hier sind die Flächen verschieden groß, also ist es ein Quader."
   },
-  // ========== LEVEL 5 — anspruchsvoll: Oberflächeninhalt und Volumen von Quader/Würfel ==========
+  // ═══════════════════════════════════════════════════════════
+  // LEVEL 5 — Umkehraufgaben, zusammengesetzte Figuren, Fehlersuche
+  // ═══════════════════════════════════════════════════════════
   {
     id: 25,
     level: 5,
     typ: "numerisch",
-    frage: "Ein Würfel hat die Kantenlänge 3 cm. Berechne sein Volumen. Gib das Ergebnis in cm³ an.",
-    loesung: 27,
+    frage: "Ein Quader hat das Volumen \\(60\\,\\text{cm}^3\\) und die Grundfläche \\(12\\,\\text{cm}^2\\). Wie hoch ist er (in cm)?",
+    loesung: 5,
     toleranz: 0,
-    tipp: "Volumen beim Würfel: Kante mal Kante mal Kante.",
-    loesungsweg: "$$V = 3 \\cdot 3 \\cdot 3 = 27$$ Das Volumen beträgt \\(27\\ \\text{cm}^3\\)."
+    tipp: "Das Volumen entsteht, indem die Grundfläche mit der Höhe multipliziert wird.",
+    loesungsweg: "Aus \\(V = G \\cdot h\\) folgt $$h = \\frac{60}{12} = 5\\,\\text{cm}$$ Probe: \\(12 \\cdot 5 = 60\\) ✓"
   },
   {
     id: 26,
     level: 5,
     typ: "mc",
-    frage: "Ein Quader ist 4 cm lang, 3 cm breit und 2 cm hoch. Wie groß ist sein Volumen?",
-    optionen: ["\\(24\\ \\text{cm}^3\\)", "\\(9\\ \\text{cm}^3\\)", "\\(52\\ \\text{cm}^3\\)", "\\(12\\ \\text{cm}^3\\)"],
+    frage: "Tim soll den Umfang eines Rechtecks mit den Seiten \\(5\\,\\text{cm}\\) und \\(3\\,\\text{cm}\\) berechnen und rechnet \\(5 \\cdot 3 = 15\\,\\text{cm}\\). Was ist dazu zu sagen?",
+    optionen: [
+      "Falsch — er hat die Fläche berechnet; der Umfang beträgt \\(16\\,\\text{cm}\\)",
+      "Richtig, \\(15\\,\\text{cm}\\) ist der Umfang",
+      "Falsch, der Umfang beträgt \\(8\\,\\text{cm}\\)",
+      "Richtig, aber die Einheit müsste \\(\\text{cm}^2\\) heißen"
+    ],
     korrekt: 0,
-    tipp: "Multipliziere alle drei Kantenlängen miteinander.",
-    loesungsweg: "$$V = 4 \\cdot 3 \\cdot 2 = 24$$ Das Volumen beträgt \\(24\\ \\text{cm}^3\\). \\(9\\) wäre nur die Summe \\(4+3+2\\), und \\(52\\ \\text{cm}^2\\) wäre der Oberflächeninhalt."
+    tipp: "Der Umfang ist der Weg einmal außen herum — wie viele Seiten läuft man ab?",
+    loesungsweg: "$$U = 2 \\cdot (5 + 3) = 16\\,\\text{cm}$$ Tims Rechnung \\(5 \\cdot 3 = 15\\) ergibt den Flächeninhalt in \\(\\text{cm}^2\\). Umfang wird addiert, Fläche multipliziert — und die Einheit verrät, welches von beidem gemeint ist."
   },
   {
     id: 27,
     level: 5,
     typ: "numerisch",
-    frage: "Ein Würfel hat die Kantenlänge 4 cm. Berechne seinen Oberflächeninhalt. Gib das Ergebnis in cm² an.",
-    loesung: 96,
+    frage: "Aus einem Rechteck von \\(10\\,\\text{cm} \\times 6\\,\\text{cm}\\) wird in einer Ecke ein Rechteck von \\(4\\,\\text{cm} \\times 3\\,\\text{cm}\\) ausgeschnitten. Wie groß ist die verbleibende Fläche (in \\(\\text{cm}^2\\))?",
+    loesung: 48,
     toleranz: 0,
-    tipp: "Eine Fläche ist \\(4 \\cdot 4\\) groß — und der Würfel hat 6 davon.",
-    loesungsweg: "Eine Fläche: $$4 \\cdot 4 = 16\\ \\text{cm}^2$$ Alle 6 Flächen: $$O = 6 \\cdot 16 = 96$$ Der Oberflächeninhalt beträgt \\(96\\ \\text{cm}^2\\)."
+    tipp: "Berechne beide Rechtecke einzeln — was muss man dann tun?",
+    loesungsweg: "Großes Rechteck: \\(10 \\cdot 6 = 60\\,\\text{cm}^2\\). Ausschnitt: \\(4 \\cdot 3 = 12\\,\\text{cm}^2\\). $$60 - 12 = 48\\,\\text{cm}^2$$"
   },
   {
     id: 28,
     level: 5,
-    typ: "mc",
-    frage: "Mit welcher Formel berechnest du das Volumen eines Quaders mit den Kanten \\(a\\), \\(b\\) und \\(c\\)?",
-    optionen: ["\\(V = a + b + c\\)", "\\(V = 2 \\cdot (a + b + c)\\)", "\\(V = a \\cdot b \\cdot c\\)", "\\(V = 6 \\cdot a \\cdot b\\)"],
-    korrekt: 2,
-    tipp: "Volumen heißt: Wie viele Einheitswürfel passen hinein? Länge mal Breite mal Höhe.",
-    loesungsweg: "In die unterste Schicht passen \\(a \\cdot b\\) Einheitswürfel, und es gibt \\(c\\) solcher Schichten: $$V = a \\cdot b \\cdot c$$"
+    typ: "numerisch",
+    frage: "Ein Würfel hat die Oberfläche \\(54\\,\\text{cm}^2\\). Wie lang ist eine Kante (in cm)?",
+    loesung: 3,
+    toleranz: 0,
+    tipp: "Aus wie vielen gleich großen Quadraten besteht die Oberfläche eines Würfels?",
+    loesungsweg: "Die Oberfläche besteht aus \\(6\\) gleichen Quadraten: \\(54 : 6 = 9\\,\\text{cm}^2\\) je Quadrat. Ein Quadrat mit \\(9\\,\\text{cm}^2\\) hat die Seitenlänge $$3\\,\\text{cm} \\quad (3 \\cdot 3 = 9)$$"
   },
   {
     id: 29,
     level: 5,
     typ: "numerisch",
-    frage: "Ein Quader ist 5 cm lang, 4 cm breit und 3 cm hoch. Berechne seinen Oberflächeninhalt. Gib das Ergebnis in cm² an.",
-    loesung: 94,
-    toleranz: 0,
-    tipp: "Der Quader hat 3 verschieden große Flächenpaare: \\(5 \\cdot 4\\), \\(5 \\cdot 3\\) und \\(4 \\cdot 3\\) — jedes doppelt.",
-    loesungsweg: "$$O = 2 \\cdot (5 \\cdot 4) + 2 \\cdot (5 \\cdot 3) + 2 \\cdot (4 \\cdot 3)$$ $$O = 2 \\cdot 20 + 2 \\cdot 15 + 2 \\cdot 12$$ $$O = 40 + 30 + 24 = 94$$ Der Oberflächeninhalt beträgt \\(94\\ \\text{cm}^2\\)."
+    frage: "Eine Wand ist \\(4\\,\\text{m}\\) lang und \\(2{,}5\\,\\text{m}\\) hoch. Ein Fenster von \\(1{,}2\\,\\text{m} \\times 1\\,\\text{m}\\) wird nicht gestrichen. Wie viele \\(\\text{m}^2\\) müssen gestrichen werden?",
+    loesung: 8.8,
+    toleranz: 0.01,
+    tipp: "Die Fensterfläche gehört nicht dazu — was folgt daraus für die Rechnung?",
+    loesungsweg: "Wand: \\(4 \\cdot 2{,}5 = 10\\,\\text{m}^2\\). Fenster: \\(1{,}2 \\cdot 1 = 1{,}2\\,\\text{m}^2\\). $$10 - 1{,}2 = 8{,}8\\,\\text{m}^2$$"
   },
   {
     id: 30,
     level: 5,
-    typ: "mc",
-    frage: "Ein Spielwürfel hat die Kantenlänge 2 cm. Wie groß ist sein Volumen? 🎲",
-    optionen: ["\\(6\\ \\text{cm}^3\\)", "\\(4\\ \\text{cm}^3\\)", "\\(24\\ \\text{cm}^3\\)", "\\(8\\ \\text{cm}^3\\)"],
-    korrekt: 3,
-    tipp: "Rechne \\(2 \\cdot 2 \\cdot 2\\) — nicht \\(2 \\cdot 3\\)!",
-    loesungsweg: "$$V = 2 \\cdot 2 \\cdot 2 = 8$$ Das Volumen beträgt \\(8\\ \\text{cm}^3\\). \\(4\\ \\text{cm}^2\\) wäre nur eine Fläche (\\(2 \\cdot 2\\)), \\(24\\ \\text{cm}^2\\) der Oberflächeninhalt und \\(6\\) die Anzahl der Flächen."
+    typ: "numerisch",
+    frage: "Ein Aquarium ist \\(50\\,\\text{cm}\\) lang, \\(30\\,\\text{cm}\\) breit und \\(40\\,\\text{cm}\\) hoch. Wie viele Liter fasst es? (\\(1\\,\\text{l} = 1000\\,\\text{cm}^3\\))",
+    loesung: 60,
+    toleranz: 0,
+    tipp: "Berechne zuerst das Volumen in \\(\\text{cm}^3\\) und rechne dann in Liter um.",
+    loesungsweg: "$$V = 50 \\cdot 30 \\cdot 40 = 60\\,000\\,\\text{cm}^3$$ $$60\\,000 : 1000 = 60\\,\\text{l}$$"
   },
-  // ========== LEVEL 6 — wagnerisch: Sachaufgaben (Zimmer, Aquarium, Geschenkpapier) ==========
+  // ═══════════════════════════════════════════════════════════
+  // LEVEL 6 — Zusammenhänge begründen, Spezialfälle, Verallgemeinerung
+  // ═══════════════════════════════════════════════════════════
   {
     id: 31,
     level: 6,
-    typ: "numerisch",
-    frage: "Nadias Zimmer ist 5 m lang und 4 m breit. Der Boden soll komplett mit Teppich ausgelegt werden. Wie viel Teppich wird gebraucht? Gib das Ergebnis in m² an.",
-    loesung: 20,
-    toleranz: 0,
-    tipp: "Der Boden ist ein Rechteck. Gesucht ist sein Flächeninhalt, nicht der Umfang.",
-    loesungsweg: "$$A = 5 \\cdot 4 = 20$$ Nadia braucht \\(20\\ \\text{m}^2\\) Teppich."
+    typ: "mc",
+    frage: "Zwei Rechtecke haben denselben Umfang. Haben sie dann auch dieselbe Fläche?",
+    optionen: [
+      "Nein — bei \\(U = 12\\,\\text{cm}\\) hat \\(1 \\times 5\\) die Fläche \\(5\\,\\text{cm}^2\\), \\(3 \\times 3\\) aber \\(9\\,\\text{cm}^2\\)",
+      "Ja, gleicher Umfang bedeutet gleiche Fläche",
+      "Ja, aber nur bei ganzzahligen Seitenlängen",
+      "Nein, die Fläche ist immer genau halb so groß wie der Umfang"
+    ],
+    korrekt: 0,
+    tipp: "Suche zwei verschiedene Rechtecke, deren Seiten zusammen jeweils \\(6\\,\\text{cm}\\) ergeben.",
+    loesungsweg: "Bei \\(U = 12\\,\\text{cm}\\) ist die Summe zweier benachbarter Seiten \\(6\\,\\text{cm}\\). Möglich sind \\(1 \\times 5\\) (\\(5\\,\\text{cm}^2\\)), \\(2 \\times 4\\) (\\(8\\,\\text{cm}^2\\)) und \\(3 \\times 3\\) (\\(9\\,\\text{cm}^2\\)). Gleicher Umfang sagt also <b>nichts</b> über die Fläche; am größten wird sie beim Quadrat."
   },
   {
     id: 32,
     level: 6,
-    typ: "mc",
-    frage: "Yusufs Aquarium ist 40 cm lang, 30 cm breit und 20 cm hoch. Wie viele Liter Wasser passen hinein, wenn er es bis zum Rand füllt? (1 Liter = 1000 cm³) 🐠",
-    optionen: ["\\(240\\ \\text{Liter}\\)", "\\(24\\ \\text{Liter}\\)", "\\(2400\\ \\text{Liter}\\)", "\\(90\\ \\text{Liter}\\)"],
-    korrekt: 1,
-    tipp: "Berechne erst das Volumen in \\(\\text{cm}^3\\), teile dann durch \\(1000\\).",
-    loesungsweg: "$$V = 40 \\cdot 30 \\cdot 20 = 24\\,000\\ \\text{cm}^3$$ $$24\\,000 : 1000 = 24$$ Es passen \\(24\\) Liter hinein. Tipp zur Kontrolle: \\(240\\) Liter wären schon eine volle Badewanne — viel zu viel für dieses Aquarium!"
+    typ: "numerisch",
+    frage: "Ein Rechteck hat den Flächeninhalt \\(24\\,\\text{cm}^2\\) und den Umfang \\(20\\,\\text{cm}\\). Wie lang ist die längere Seite (in cm)?",
+    loesung: 6,
+    toleranz: 0,
+    tipp: "Der halbe Umfang ist die Summe zweier benachbarter Seiten — welche zwei Zahlen ergeben zusammen das und multipliziert \\(24\\)?",
+    loesungsweg: "Halber Umfang: \\(20 : 2 = 10\\), also \\(a + b = 10\\) und \\(a \\cdot b = 24\\). Passend sind \\(4\\) und \\(6\\): $$4 + 6 = 10, \\qquad 4 \\cdot 6 = 24$$ Die längere Seite misst \\(6\\,\\text{cm}\\)."
   },
   {
     id: 33,
     level: 6,
-    typ: "numerisch",
-    frage: "Finn verpackt eine würfelförmige Geschenkbox mit der Kantenlänge 10 cm. Wie viel Geschenkpapier braucht er mindestens, um alle Flächen zu bedecken? Gib das Ergebnis in cm² an. 🎁",
-    loesung: 600,
-    toleranz: 0,
-    tipp: "Gesucht ist der Oberflächeninhalt: 6 gleich große quadratische Flächen.",
-    loesungsweg: "Eine Fläche: $$10 \\cdot 10 = 100\\ \\text{cm}^2$$ Alle 6 Flächen: $$O = 6 \\cdot 100 = 600$$ Finn braucht mindestens \\(600\\ \\text{cm}^2\\) Geschenkpapier."
+    typ: "mc",
+    frage: "Die Kantenlänge eines Würfels wird verdoppelt. Wie ändert sich sein Volumen?",
+    optionen: [
+      "Es wird achtmal so groß, denn alle drei Kanten werden verdoppelt",
+      "Es verdoppelt sich",
+      "Es wird viermal so groß",
+      "Es bleibt gleich, nur die Oberfläche wächst"
+    ],
+    korrekt: 0,
+    tipp: "Rechne es an einem Beispiel nach: Kante \\(2\\,\\text{cm}\\) gegen Kante \\(4\\,\\text{cm}\\).",
+    loesungsweg: "Kante \\(2\\,\\text{cm}\\): \\(V = 2 \\cdot 2 \\cdot 2 = 8\\,\\text{cm}^3\\). Kante \\(4\\,\\text{cm}\\): \\(V = 4 \\cdot 4 \\cdot 4 = 64\\,\\text{cm}^3\\). $$64 : 8 = 8$$ Beim Volumen wirkt die Verdopplung in <b>drei</b> Richtungen (\\(2 \\cdot 2 \\cdot 2\\)), bei der Oberfläche nur in zweien — sie wird vierfach."
   },
   {
     id: 34,
     level: 6,
-    typ: "mc",
-    frage: "Eine Wand in Elifs Zimmer ist 6 m lang und 3 m hoch. In der Wand ist ein Fenster mit 2 m² Fläche, das nicht gestrichen wird. Wie viel Wandfläche muss gestrichen werden?",
-    optionen: ["\\(16\\ \\text{m}^2\\)", "\\(18\\ \\text{m}^2\\)", "\\(20\\ \\text{m}^2\\)", "\\(7\\ \\text{m}^2\\)"],
-    korrekt: 0,
-    tipp: "Berechne erst die ganze Wandfläche, ziehe dann das Fenster ab.",
-    loesungsweg: "Ganze Wand: $$6 \\cdot 3 = 18\\ \\text{m}^2$$ Fenster abziehen: $$18 - 2 = 16$$ Es müssen \\(16\\ \\text{m}^2\\) gestrichen werden. Wer \\(18\\ \\text{m}^2\\) wählt, hat das Fenster vergessen."
+    typ: "numerisch",
+    frage: "Wie viele Quader mit den Kanten \\(2\\,\\text{cm}\\), \\(3\\,\\text{cm}\\) und \\(4\\,\\text{cm}\\) passen lückenlos in einen Würfel mit der Kantenlänge \\(12\\,\\text{cm}\\)?",
+    loesung: 72,
+    toleranz: 0,
+    tipp: "Vergleiche die Volumen — oder überlege, wie oft jede Kante in \\(12\\,\\text{cm}\\) passt.",
+    loesungsweg: "Würfel: \\(12^3 = 1728\\,\\text{cm}^3\\); Quader: \\(2 \\cdot 3 \\cdot 4 = 24\\,\\text{cm}^3\\). $$1728 : 24 = 72$$ Es geht auch lückenlos auf, denn \\(12\\) ist durch \\(2\\), \\(3\\) und \\(4\\) teilbar: \\(6 \\cdot 4 \\cdot 3 = 72\\)."
   },
   {
     id: 35,
     level: 6,
     typ: "numerisch",
-    frage: "Pauls Kaninchengehege im Garten ist ein Rechteck: 3 m lang und 2 m breit. Er baut rundherum einen Zaun. Wie viele Meter Zaun braucht er? Gib das Ergebnis in m an. 🐰",
-    loesung: 10,
+    frage: "Ein quadratisches Grundstück hat den Umfang \\(48\\,\\text{m}\\). Wie groß ist seine Fläche (in \\(\\text{m}^2\\))?",
+    loesung: 144,
     toleranz: 0,
-    tipp: "Rundherum heißt Umfang: \\(2 \\cdot (3 + 2)\\).",
-    loesungsweg: "$$U = 2 \\cdot (3 + 2) = 2 \\cdot 5 = 10$$ Paul braucht \\(10\\ \\text{m}\\) Zaun. Achtung: \\(3 \\cdot 2 = 6\\ \\text{m}^2\\) wäre die Fläche des Geheges — die hilft beim Zaun nicht."
+    tipp: "Bestimme zuerst die Seitenlänge aus dem Umfang.",
+    loesungsweg: "Seitenlänge: \\(48 : 4 = 12\\,\\text{m}\\). Fläche: $$12 \\cdot 12 = 144\\,\\text{m}^2$$"
   },
   {
     id: 36,
     level: 6,
     typ: "mc",
-    frage: "Ein Sandkasten ist quaderförmig: 2 m lang, 2 m breit und \\(0{,}5\\) m tief. Wie viel Sand passt hinein, wenn er ganz gefüllt wird?",
-    optionen: ["\\(2\\ \\text{m}^3\\)", "\\(4\\ \\text{m}^3\\)", "\\(4{,}5\\ \\text{m}^3\\)", "\\(1\\ \\text{m}^3\\)"],
+    frage: "Kann ein Rechteck gleichzeitig den Flächeninhalt \\(36\\,\\text{cm}^2\\) und den Umfang \\(24\\,\\text{cm}\\) haben?",
+    optionen: [
+      "Ja — das Quadrat mit der Seite \\(6\\,\\text{cm}\\); es ist ein Sonderfall des Rechtecks",
+      "Nein, Fläche und Umfang können nie so zusammenpassen",
+      "Ja, zum Beispiel \\(9\\,\\text{cm} \\times 4\\,\\text{cm}\\)",
+      "Nein, ein Quadrat ist kein Rechteck"
+    ],
     korrekt: 0,
-    tipp: "Volumen = Länge \\(\\cdot\\) Breite \\(\\cdot\\) Tiefe. \\(0{,}5\\ \\text{m}\\) ist ein halber Meter.",
-    loesungsweg: "$$V = 2 \\cdot 2 \\cdot 0{,}5$$ $$V = 4 \\cdot 0{,}5 = 2$$ Es passen \\(2\\ \\text{m}^3\\) Sand hinein. \\(4\\ \\text{m}^2\\) wäre nur die Grundfläche — die Tiefe darf nicht vergessen werden!"
+    tipp: "Suche zwei Seitenlängen, die zusammen \\(12\\,\\text{cm}\\) ergeben und multipliziert \\(36\\).",
+    loesungsweg: "Gesucht sind \\(a + b = 12\\) und \\(a \\cdot b = 36\\); das erfüllt nur \\(a = b = 6\\). Ein Quadrat hat vier rechte Winkel und gegenüberliegend gleich lange Seiten — es ist damit ein besonderes <b>Rechteck</b>. Bei \\(9 \\times 4\\) wäre der Umfang \\(26\\,\\text{cm}\\)."
   }
+
 ];
     </script>
     <script src="../p3-reflexion.js"></script>

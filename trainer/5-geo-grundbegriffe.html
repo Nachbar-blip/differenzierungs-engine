@@ -236,7 +236,7 @@ const AUFGABEN = [
     id: 22,
     level: 4,
     typ: "numerisch",
-    frage: "Wie viele Symmetrieachsen hat ein Quadrat?",
+    frage: "Wie viele Symmetrieachsen besitzt ein Quadrat insgesamt?",
     loesung: 4,
     toleranz: 0,
     tipp: "Denk an die Linien durch die Seitenmitten UND an die Diagonalen.",
@@ -262,128 +262,153 @@ const AUFGABEN = [
     tipp: "Probiere den Spiegel einmal senkrecht und einmal waagerecht durch die Mitte.",
     loesungsweg: "Beim H funktioniert der Spiegel senkrecht durch die Mitte (links/rechts gleich) UND waagerecht durch den Querbalken (oben/unten gleich). Das H hat also \\(2\\) Symmetrieachsen."
   },
-  // ========== LEVEL 5 — schwerer: Spiegelpunkt-Koordinaten berechnen ==========
+  // ═══════════════════════════════════════════════════════════
+  // LEVEL 5 — Spiegelungen umkehren und verketten, Winkel kombinieren
+  // ═══════════════════════════════════════════════════════════
   {
     id: 25,
     level: 5,
     typ: "numerisch",
-    frage: "Der Punkt \\(P(3|5)\\) wird an der waagerechten Spiegelgeraden durch \\(y = 6\\) gespiegelt. Wie lautet die y-Koordinate des Spiegelpunkts \\(P'\\)?",
-    loesung: 7,
+    frage: "Der Punkt \\(P(2\\mid5)\\) wird an der senkrechten Geraden \\(x = 6\\) gespiegelt. Wie lautet die \\(x\\)-Koordinate des Bildpunktes?",
+    loesung: 10,
     toleranz: 0,
-    tipp: "Wie weit liegt \\(P\\) unter der Spiegelgeraden? Genauso weit liegt \\(P'\\) darüber.",
-    loesungsweg: "Abstand von \\(P\\) zur Spiegelgeraden: $$6 - 5 = 1$$ \\(P'\\) liegt \\(1\\) Schritt über der Spiegelgeraden: $$6 + 1 = 7$$ Also \\(P'(3|7)\\) — die y-Koordinate von \\(P'\\) ist \\(7\\)."
+    tipp: "Wie weit ist \\(P\\) von der Spiegelachse entfernt? Genauso weit liegt das Bild auf der anderen Seite.",
+    loesungsweg: "Der Abstand von \\(P\\) zur Achse beträgt \\(6 - 2 = 4\\). Das Bild liegt \\(4\\) Einheiten auf der anderen Seite: $$6 + 4 = 10$$ Die \\(y\\)-Koordinate bleibt \\(5\\), der Bildpunkt ist \\(P'(10\\mid5)\\)."
   },
   {
     id: 26,
     level: 5,
-    typ: "mc",
-    frage: "Der Punkt \\(A(2|6)\\) wird an der senkrechten Spiegelgeraden durch \\(x = 4\\) gespiegelt. Wo landet der Spiegelpunkt \\(A'\\)?",
-    optionen: ["\\(A'(0|6)\\)", "\\(A'(6|6)\\)", "\\(A'(2|4)\\)", "\\(A'(4|6)\\)"],
-    korrekt: 1,
-    tipp: "Bei einer senkrechten Spiegelgeraden ändert sich nur die x-Koordinate. Wie weit liegt \\(A\\) links von der Geraden?",
-    loesungsweg: "\\(A\\) liegt \\(2\\) Schritte links von der Spiegelgeraden \\(x = 4\\). Also liegt \\(A'\\) genau \\(2\\) Schritte rechts davon: $$4 + 2 = 6$$ Damit gilt \\(A'(6|6)\\). Wer \\(A'(0|6)\\) wählt, hat in die falsche Richtung gespiegelt — und \\(A'(4|6)\\) läge direkt auf der Spiegelgeraden."
+    typ: "numerisch",
+    frage: "Ein Punkt wurde an der Geraden \\(x = 4\\) gespiegelt; sein Bild ist \\(P'(6\\mid3)\\). Wie lautet die \\(x\\)-Koordinate des ursprünglichen Punktes?",
+    loesung: 2,
+    toleranz: 0,
+    tipp: "Spiegle einfach zurück — die Spiegelung macht sich selbst rückgängig.",
+    loesungsweg: "\\(P'\\) liegt \\(6 - 4 = 2\\) Einheiten rechts der Achse, also lag \\(P\\) zwei Einheiten links davon: $$4 - 2 = 2$$ Der Punkt war \\(P(2\\mid3)\\). Spiegelt man das Bild noch einmal an derselben Achse, erhält man das Original zurück."
   },
   {
     id: 27,
     level: 5,
-    typ: "numerisch",
-    frage: "Der Punkt \\(B(4|7)\\) wird an der waagerechten Spiegelgeraden durch \\(y = 5\\) gespiegelt. Wie lautet die y-Koordinate des Spiegelpunkts \\(B'\\)?",
-    loesung: 3,
-    toleranz: 0,
-    tipp: "\\(B\\) liegt \\(2\\) Schritte über der Spiegelgeraden. Wie weit liegt \\(B'\\) darunter?",
-    loesungsweg: "Abstand von \\(B\\) zur Spiegelgeraden: $$7 - 5 = 2$$ \\(B'\\) liegt \\(2\\) Schritte unter der Spiegelgeraden: $$5 - 2 = 3$$ Also \\(B'(4|3)\\) — die y-Koordinate ist \\(3\\)."
+    typ: "mc",
+    frage: "Ein Schüler sagt: „Beim Spiegeln an einer senkrechten Achse ändern sich beide Koordinaten.\" Stimmt das?",
+    optionen: [
+      "Nein — nur die \\(x\\)-Koordinate ändert sich, die Höhe bleibt gleich",
+      "Ja, bei jeder Spiegelung ändern sich beide Koordinaten",
+      "Nein, es ändert sich nur die \\(y\\)-Koordinate",
+      "Das hängt davon ab, wie weit der Punkt entfernt ist"
+    ],
+    korrekt: 0,
+    tipp: "Wandert ein Punkt beim Spiegeln an einer senkrechten Achse nach oben oder unten?",
+    loesungsweg: "Bei einer senkrechten Spiegelachse wandert der Punkt nur seitlich; seine Höhe über der \\(x\\)-Achse bleibt unverändert. Aus \\(P(2\\mid5)\\) wird an \\(x = 6\\) der Punkt \\(P'(10\\mid5)\\) — die \\(y\\)-Koordinate \\(5\\) bleibt stehen."
   },
   {
     id: 28,
     level: 5,
-    typ: "mc",
-    frage: "Der Punkt \\(C(5|1)\\) wird an der senkrechten Spiegelgeraden durch \\(x = 7\\) gespiegelt. Wo liegt der Spiegelpunkt \\(C'\\)?",
-    optionen: ["\\(C'(3|1)\\)", "\\(C'(7|1)\\)", "\\(C'(9|1)\\)", "\\(C'(1|5)\\)"],
-    korrekt: 2,
-    tipp: "Bei einer senkrechten Spiegelgeraden ändert sich nur die x-Koordinate. Wie weit liegt \\(C\\) von der Geraden entfernt?",
-    loesungsweg: "\\(C\\) liegt \\(2\\) Schritte links von der Spiegelgeraden \\(x = 7\\). Also liegt \\(C'\\) genau \\(2\\) Schritte rechts davon: $$7 + 2 = 9$$ Damit gilt \\(C'(9|1)\\). \\(C'(3|1)\\) wäre in die falsche Richtung gespiegelt, \\(C'(7|1)\\) läge auf der Spiegelgeraden und \\(C'(1|5)\\) ist nur ein Zahlendreher."
+    typ: "numerisch",
+    frage: "Ein Punkt wird zuerst an der Geraden \\(x = 3\\) und danach an der Geraden \\(x = 7\\) gespiegelt. Um wie viele Einheiten hat er sich insgesamt nach rechts bewegt?",
+    loesung: 8,
+    toleranz: 0,
+    tipp: "Probiere es mit einem konkreten Punkt, zum Beispiel \\(x = 1\\).",
+    loesungsweg: "Beispiel \\(x = 1\\): Spiegelung an \\(x = 3\\) ergibt \\(5\\), Spiegelung an \\(x = 7\\) ergibt \\(9\\). Verschiebung: \\(9 - 1 = 8\\). Das gilt für <b>jeden</b> Punkt: Zwei Spiegelungen an parallelen Achsen ergeben eine Verschiebung um den doppelten Achsenabstand, hier \\(2 \\cdot 4 = 8\\)."
   },
   {
     id: 29,
     level: 5,
     typ: "numerisch",
-    frage: "Der Punkt \\(D(2|3)\\) wird an der senkrechten Spiegelgeraden durch \\(x = 5\\) gespiegelt. Wie lautet die x-Koordinate des Spiegelpunkts \\(D'\\)?",
-    loesung: 8,
+    frage: "Ein Winkel misst \\(35^\\circ\\). Wie groß sind sein Nebenwinkel und sein Ergänzungswinkel zu \\(90^\\circ\\) zusammen (in Grad)?",
+    loesung: 200,
     toleranz: 0,
-    tipp: "Wie weit ist \\(D\\) von der Spiegelgeraden entfernt? Genauso weit liegt \\(D'\\) auf der anderen Seite.",
-    loesungsweg: "Abstand von \\(D\\) zur Spiegelgeraden: $$5 - 2 = 3$$ \\(D'\\) liegt \\(3\\) Schritte auf der anderen Seite: $$5 + 3 = 8$$ Also \\(D'(8|3)\\) — die x-Koordinate ist \\(8\\)."
+    tipp: "Berechne beide Winkel einzeln und addiere erst dann.",
+    loesungsweg: "Nebenwinkel: \\(180^\\circ - 35^\\circ = 145^\\circ\\). Ergänzungswinkel zu \\(90^\\circ\\): \\(90^\\circ - 35^\\circ = 55^\\circ\\). $$145^\\circ + 55^\\circ = 200^\\circ$$"
   },
   {
     id: 30,
     level: 5,
     typ: "numerisch",
-    frage: "Der Punkt \\(E(2|3)\\) wird zuerst an der senkrechten Geraden durch \\(x = 4\\) gespiegelt. Das Ergebnis wird danach an der senkrechten Geraden durch \\(x = 7\\) gespiegelt. Wie lautet die x-Koordinate des Punktes am Ende?",
-    loesung: 8,
+    frage: "Ein Rechteck ist \\(6\\,\\text{cm}\\) lang und \\(4\\,\\text{cm}\\) breit. Wie viele Symmetrieachsen hat diese Figur?",
+    loesung: 2,
     toleranz: 0,
-    tipp: "Mache die beiden Spiegelungen nacheinander: Wie weit liegt der Punkt jeweils von der Spiegelgeraden entfernt?",
-    loesungsweg: "Schritt 1 — Spiegelung an \\(x = 4\\): \\(E(2|3)\\) liegt \\(2\\) Schritte links davon, also $$4 + 2 = 6$$ Das ergibt \\(E'(6|3)\\). Schritt 2 — Spiegelung an \\(x = 7\\): \\(E'\\) liegt \\(1\\) Schritt links davon, also $$7 + 1 = 8$$ Das ergibt \\(E''(8|3)\\). Die x-Koordinate am Ende ist \\(8\\)."
+    tipp: "Sind die Diagonalen hier wirklich Symmetrieachsen? Falte gedanklich entlang einer Diagonale.",
+    loesungsweg: "Nur die beiden Achsen durch die Seitenmitten (waagerecht und senkrecht) sind Symmetrieachsen: <b>2</b>. Beim Falten entlang einer Diagonale liegen die Ecken nicht aufeinander — anders als beim Quadrat, das deshalb \\(4\\) Achsen hat."
   },
-  // ========== LEVEL 6 — knifflig: Kombination & Begründung ==========
+  // ═══════════════════════════════════════════════════════════
+  // LEVEL 6 — Eigenschaften begründen und verallgemeinern
+  // ═══════════════════════════════════════════════════════════
   {
     id: 31,
     level: 6,
     typ: "mc",
     frage: "Die Gerade \\(g\\) ist parallel zu \\(h\\), und \\(h\\) ist parallel zu \\(k\\). Was gilt dann für \\(g\\) und \\(k\\)?",
-    optionen: ["\\(g\\) steht senkrecht auf \\(k\\)", "\\(g\\) ist parallel zu \\(k\\)", "\\(g\\) schneidet \\(k\\) in genau einem Punkt", "Das kann man nicht wissen"],
-    korrekt: 1,
-    tipp: "Stell dir drei Bahnschienen nebeneinander vor: Schiene 1 parallel zu 2, Schiene 2 parallel zu 3.",
-    loesungsweg: "Alle drei Geraden laufen in dieselbe Richtung: Wenn \\(g \\parallel h\\) und \\(h \\parallel k\\) gilt, dann gilt auch \\(g \\parallel k\\). Parallelität „vererbt“ sich — die Geraden können sich nie schneiden."
+    optionen: [
+      "\\(g\\) und \\(k\\) sind ebenfalls parallel zueinander",
+      "\\(g\\) und \\(k\\) stehen senkrecht aufeinander",
+      "\\(g\\) und \\(k\\) schneiden sich in genau einem Punkt",
+      "Darüber lässt sich nichts sagen"
+    ],
+    korrekt: 0,
+    tipp: "Alle drei Geraden haben dieselbe Richtung — was heißt das für die erste und die letzte?",
+    loesungsweg: "Parallele Geraden haben dieselbe Richtung. Hat \\(g\\) dieselbe Richtung wie \\(h\\) und \\(h\\) dieselbe wie \\(k\\), so haben auch \\(g\\) und \\(k\\) dieselbe Richtung — sie sind parallel. Diese Eigenschaft überträgt sich also weiter."
   },
   {
     id: 32,
     level: 6,
     typ: "mc",
     frage: "Die Gerade \\(g\\) steht senkrecht auf \\(h\\), und \\(h\\) steht senkrecht auf \\(k\\). Wie liegen \\(g\\) und \\(k\\) zueinander?",
-    optionen: ["parallel", "senkrecht", "Sie bilden einen Winkel von \\(45^\\circ\\)", "Das kann man nicht wissen"],
+    optionen: [
+      "Sie sind parallel — zweimal um \\(90^\\circ\\) gedreht ergibt wieder dieselbe Richtung",
+      "Sie stehen senkrecht aufeinander",
+      "Sie schneiden sich unter \\(45^\\circ\\)",
+      "Darüber lässt sich nichts sagen"
+    ],
     korrekt: 0,
-    tipp: "Zeichne es im Kopf: \\(h\\) waagerecht — wie verlaufen dann \\(g\\) und \\(k\\)?",
-    loesungsweg: "Wenn \\(h\\) waagerecht liegt, stehen \\(g\\) und \\(k\\) beide senkrecht dazu — beide verlaufen also senkrecht nach oben, in dieselbe Richtung. Damit gilt: \\(g \\parallel k\\). Zweimal senkrecht abbiegen bedeutet: wieder in die ursprüngliche Richtung schauen."
+    tipp: "Zeichne die drei Geraden nacheinander auf kariertes Papier.",
+    loesungsweg: "\\(g\\) und \\(k\\) sind beide um \\(90^\\circ\\) gegen \\(h\\) gedreht — also in dieselbe Richtung. Damit sind sie <b>parallel</b>. Anders als bei der Parallelität überträgt sich die Senkrechtbeziehung nicht weiter."
   },
   {
     id: 33,
     level: 6,
-    typ: "mc",
-    frage: "Zwei Winkel ergeben zusammen einen gestreckten Winkel. Der erste misst \\(65^\\circ\\). Wie groß ist der zweite — und welche Winkelart hat er?",
-    optionen: ["\\(25^\\circ\\), spitzer Winkel", "\\(125^\\circ\\), spitzer Winkel", "\\(115^\\circ\\), stumpfer Winkel", "\\(295^\\circ\\), überstumpfer Winkel"],
-    korrekt: 2,
-    tipp: "Überlege zuerst: Wie viele Grad hat ein gestreckter Winkel insgesamt?",
-    loesungsweg: "Zusammen \\(180^\\circ\\), also: $$180^\\circ - 65^\\circ = 115^\\circ$$ Wegen \\(90^\\circ < 115^\\circ < 180^\\circ\\) ist das ein stumpfer Winkel. Wer \\(25^\\circ\\) rechnet, hat mit \\(90^\\circ\\) statt \\(180^\\circ\\) gerechnet; \\(295^\\circ\\) käme bei \\(360^\\circ\\) heraus."
+    typ: "numerisch",
+    frage: "Zwei Winkel ergeben zusammen einen gestreckten Winkel. Der erste misst \\(65^\\circ\\). Wie groß ist der zweite (in Grad)?",
+    loesung: 115,
+    toleranz: 0,
+    tipp: "Wie groß ist ein gestreckter Winkel?",
+    loesungsweg: "Ein gestreckter Winkel misst \\(180^\\circ\\). $$180^\\circ - 65^\\circ = 115^\\circ$$ Der zweite Winkel ist damit größer als \\(90^\\circ\\), aber kleiner als \\(180^\\circ\\) — also ein <b>stumpfer</b> Winkel."
   },
   {
     id: 34,
     level: 6,
     typ: "mc",
     frage: "Ein Punkt liegt genau auf der Spiegelachse. Was passiert mit ihm bei der Spiegelung?",
-    optionen: ["Er wandert auf die andere Seite der Achse", "Er verschwindet aus der Figur", "Er landet immer im Ursprung", "Er bleibt genau an seinem Platz"],
-    korrekt: 3,
-    tipp: "Wie weit ist ein Punkt AUF dem Spiegel vom Spiegel entfernt?",
-    loesungsweg: "Der Spiegelpunkt liegt immer genauso weit hinter der Achse wie das Original davor. Ein Punkt auf der Achse hat den Abstand \\(0\\) — sein Spiegelbild liegt also ebenfalls im Abstand \\(0\\): Er bleibt, wo er ist. Solche Punkte nennt man Fixpunkte."
+    optionen: [
+      "Er bleibt an seinem Platz, denn sein Abstand zur Achse ist \\(0\\)",
+      "Er wandert auf die andere Seite der Achse",
+      "Er verschwindet, weil er keinen Bildpunkt hat",
+      "Er wandert an den Rand der Zeichnung"
+    ],
+    korrekt: 0,
+    tipp: "Das Bild liegt genauso weit von der Achse entfernt wie das Original — wie weit ist das hier?",
+    loesungsweg: "Der Bildpunkt hat denselben Abstand zur Achse wie der Originalpunkt. Ist dieser Abstand \\(0\\), so fällt der Bildpunkt mit dem Original zusammen: er bleibt liegen. Alle Punkte der Spiegelachse sind solche <b>Fixpunkte</b>."
   },
   {
     id: 35,
     level: 6,
-    typ: "mc",
-    frage: "Ein Dreieck wird um \\(4\\) Kästchen nach rechts verschoben. Was gilt für das Original und das verschobene Bild?",
-    optionen: ["Das Bild ist größer als das Original", "Original und Bild sind deckungsgleich", "Das Bild ist spiegelverkehrt", "Das Bild ist um \\(90^\\circ\\) gedreht"],
-    korrekt: 1,
-    tipp: "Ändert eine Verschiebung irgendetwas an Form oder Größe der Figur?",
-    loesungsweg: "Beim Verschieben (und auch beim Spiegeln und Drehen) bleiben alle Seitenlängen und Winkel gleich — nur der Ort ändert sich. Original und Bild passen exakt aufeinander: Sie sind deckungsgleich. Gespiegelt oder gedreht wird bei einer reinen Verschiebung nichts."
+    typ: "numerisch",
+    frage: "Ein Dreieck wird um \\(4\\) Kästchen nach rechts verschoben. Eine seiner Seiten war \\(5\\) Kästchen lang. Wie lang ist diese Seite im verschobenen Bild?",
+    loesung: 5,
+    toleranz: 0,
+    tipp: "Ändert eine Verschiebung die Form oder nur die Lage einer Figur?",
+    loesungsweg: "Beim Verschieben wandert jeder Punkt um dieselbe Strecke in dieselbe Richtung — Längen und Winkel bleiben unverändert. Die Seite ist also weiterhin \\(5\\) Kästchen lang. Original und Bild sind <b>deckungsgleich</b>."
   },
   {
     id: 36,
     level: 6,
-    typ: "mc",
-    frage: "Welche Aussage ist wahr?",
-    optionen: ["Jeder stumpfe Winkel ist größer als \\(90^\\circ\\) und kleiner als \\(180^\\circ\\)", "Ein spitzer Winkel misst immer genau \\(45^\\circ\\)", "Ein überstumpfer Winkel ist kleiner als \\(180^\\circ\\)", "Zwei parallele Geraden schneiden sich in genau einem Punkt"],
-    korrekt: 0,
-    tipp: "Gehe die Aussagen einzeln durch und suche für jede ein Gegenbeispiel.",
-    loesungsweg: "Stumpfe Winkel liegen zwischen \\(90^\\circ\\) und \\(180^\\circ\\) — die erste Aussage stimmt. Spitze Winkel können alles zwischen \\(0^\\circ\\) und \\(90^\\circ\\) sein (nicht nur \\(45^\\circ\\)). Überstumpfe Winkel sind GRÖSSER als \\(180^\\circ\\). Und parallele Geraden schneiden sich nie."
+    typ: "numerisch",
+    frage: "Ein Winkel ist dreimal so groß wie sein Nebenwinkel. Wie groß ist der größere der beiden Winkel (in Grad)?",
+    loesung: 135,
+    toleranz: 0,
+    tipp: "Nebenwinkel ergeben zusammen \\(180^\\circ\\) — teile diese in vier gleiche Teile auf.",
+    loesungsweg: "Der kleinere Winkel sei \\(x\\), der größere \\(3x\\). $$x + 3x = 180^\\circ \\;\\Rightarrow\\; 4x = 180^\\circ \\;\\Rightarrow\\; x = 45^\\circ$$ Der größere Winkel misst \\(3 \\cdot 45^\\circ = 135^\\circ\\). Probe: \\(45^\\circ + 135^\\circ = 180^\\circ\\) ✓"
   }
+
 ];
     </script>
     <script src="../p3-reflexion.js"></script>
