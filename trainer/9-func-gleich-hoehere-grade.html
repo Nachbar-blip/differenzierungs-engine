@@ -167,51 +167,52 @@
         loesungsweg: "\\(u^2 + 3u + 2 = 0\\) liefert \\(u_{1,2} = -1{,}5 \\pm 0{,}5\\), also \\(u_1 = -1,\\ u_2 = -2\\). Beide sind negativ! Da \\(x^2 \\geq 0\\) für alle reellen \\(x\\), gibt es keine Lösung. Anzahl reeller Lösungen: 0."
     },
 
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 4 — Biquadratisch mit gemischten Fällen, Substitution allgemein
-    // ══════════════════════════════════════════════════════════════
-    {
-        id: 19, level: 4, typ: "numerisch",        frage: "Löse \\(x^4 - 3x^2 - 4 = 0\\). Gib die <strong>positive</strong> Lösung an.",
-        loesung: 2, toleranz: 0,
-        tipp: "Mit \\(u = x^2\\): \\(u^2 - 3u - 4 = 0\\). Ein negatives \\(u\\) liefert keine reelle Lösung!",
-        loesungsweg: "\\(u^2 - 3u - 4 = 0\\). \\(u_{1,2} = 1{,}5 \\pm \\sqrt{2{,}25 + 4} = 1{,}5 \\pm 2{,}5\\). \\(u_1 = 4,\\ u_2 = -1\\). \\(x^2 = 4 \\Rightarrow x = \\pm 2\\); \\(x^2 = -1\\) hat keine reelle Lösung. Lösungen: \\(\\{-2, 2\\}\\). Positive: \\(x = 2\\)."
-    },
-    {
-        id: 20, level: 4, typ: "numerisch",        frage: "Wie viele reelle Lösungen hat \\(x^4 - 3x^2 - 4 = 0\\)?",
-        loesung: 2, toleranz: 0,
-        tipp: "Aus zwei \\(u\\)-Werten (einer positiv, einer negativ) entstehen nur beim positiven \\(u\\) reelle \\(x\\)-Werte.",
-        loesungsweg: "\\(u_1 = 4\\) (positiv) liefert \\(x = \\pm 2\\). \\(u_2 = -1\\) (negativ) liefert keine reelle Lösung. Anzahl reeller Lösungen: 2."
-    },
-    {
-        id: 21, level: 4, typ: "numerisch",        frage: "Löse \\(x^4 - 2x^2 - 8 = 0\\). Gib die <strong>positive</strong> Lösung an.",
-        loesung: 2, toleranz: 0,
-        tipp: "Mit \\(u = x^2\\): \\(u^2 - 2u - 8 = 0\\). \\(p = -2,\\ q = -8\\).",
-        loesungsweg: "\\(u_{1,2} = 1 \\pm \\sqrt{1 + 8} = 1 \\pm 3\\). \\(u_1 = 4,\\ u_2 = -2\\). \\(x^2 = 4 \\Rightarrow x = \\pm 2\\); \\(x^2 = -2\\) nicht reell. Positive Lösung: \\(x = 2\\)."
-    },
-    {
-        id: 22, level: 4, typ: "numerisch",        frage: "Löse \\((x^2 - 3)^2 - 4(x^2 - 3) + 3 = 0\\) mit Substitution \\(u = x^2 - 3\\). Gib die <strong>größte</strong> Lösung für \\(x\\) an. Runde auf zwei Nachkommastellen.",
-        loesung: 2.449, toleranz: 0.01,
-        tipp: "Substituiere \\(u = x^2 - 3\\): \\(u^2 - 4u + 3 = 0\\). Rücksubstitution: \\(x^2 = u + 3\\).",
-        loesungsweg: "\\(u^2 - 4u + 3 = 0 \\Rightarrow u_{1,2} = 2 \\pm 1\\). \\(u_1 = 3,\\ u_2 = 1\\). Rück: \\(x^2 = u + 3\\). \\(x^2 = 6 \\Rightarrow x = \\pm\\sqrt{6} \\approx \\pm 2{,}449\\); \\(x^2 = 4 \\Rightarrow x = \\pm 2\\). Größte: \\(x = \\sqrt{6} \\approx 2{,}449\\)."
-    },
-    {
-        id: 23, level: 4, typ: "mc",        frage: "Welche Lösungsmenge hat \\(x^4 - 16 = 0\\)?",
-        optionen: [
-            "\\(\\{-2, 2\\}\\)",
-            "\\(\\{-2, 2, -4, 4\\}\\)",
-            "\\(\\{2, 4\\}\\)",
-            "\\(\\{-4, 4\\}\\)"
-        ],
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 4 — Verfahren selbst wählen, Gruppieren, Umkehraufgabe
+      // ═══════════════════════════════════════════════════════════
+      {
+        id: 19, level: 4, typ: "numerisch",
+        frage: "Bestimme die größte Lösung der Gleichung \\(x^3 - 2x^2 - 9x + 18 = 0\\).",
+        loesung: 3, toleranz: 0,
+        tipp: "Fasse je zwei Summanden zusammen – in beiden Paaren steckt derselbe Faktor.",
+        loesungsweg: "Paarweise ausklammern: $$x^2(x - 2) - 9(x - 2) = (x-2)(x^2 - 9) = (x-2)(x-3)(x+3)$$ Lösungen: \\(-3\\), \\(2\\) und \\(3\\); die größte ist \\(3\\)."
+      },
+      {
+        id: 20, level: 4, typ: "numerisch",
+        frage: "Für welchen Wert von \\(a\\) hat die Gleichung \\(x^3 - ax = 0\\) die Lösungen \\(0\\), \\(3\\) und \\(-3\\)?",
+        loesung: 9, toleranz: 0,
+        tipp: "Setze eine der gegebenen Lösungen ein – die Gleichung muss dann erfüllt sein.",
+        loesungsweg: "Einsetzen von \\(x = 3\\): $$27 - 3a = 0 \\Rightarrow a = 9$$ Probe: \\(x^3 - 9x = x(x-3)(x+3)\\) – die Lösungsmenge stimmt."
+      },
+      {
+        id: 21, level: 4, typ: "mc",
+        frage: "Ein Schüler löst \\(x^3 = 4x\\):<br>Schritt 1: Beide Seiten durch \\(x\\) teilen: \\(x^2 = 4\\)<br>Schritt 2: \\(x = 2\\) oder \\(x = -2\\)<br>Welcher Schritt ist der erste fehlerhafte?",
+        optionen: ["Schritt 1", "Schritt 2", "Beide Schritte sind falsch", "Kein Schritt ist fehlerhaft"],
         korrekt: 0,
-        tipp: "Mit \\(u = x^2\\): \\(u^2 = 16 \\Rightarrow u = \\pm 4\\). Prüfe, welche \\(u\\)-Werte reelle \\(x\\)-Werte ergeben.",
-        loesungsweg: "\\(u^2 - 16 = 0 \\Rightarrow u = \\pm 4\\). \\(x^2 = 4 \\Rightarrow x = \\pm 2\\); \\(x^2 = -4\\) hat keine reelle Lösung. Lösungsmenge: \\(\\{-2, 2\\}\\)."
-    },
-    {
-        id: 24, level: 4, typ: "numerisch",        frage: "Löse \\(x^4 - 6x^2 + 5 = 0\\). Gib die <strong>kleinste positive</strong> Lösung an.",
+        tipp: "Was passiert, wenn man durch eine Größe teilt, die null sein könnte?",
+        loesungsweg: "In Schritt 1 wird durch \\(x\\) geteilt – erlaubt ist das nur für \\(x \\neq 0\\). Dabei geht die Lösung \\(x = 0\\) verloren. Richtig ist Ausklammern: $$x^3 - 4x = x(x^2 - 4) = x(x-2)(x+2) = 0$$ mit den drei Lösungen \\(0\\), \\(2\\) und \\(-2\\)."
+      },
+      {
+        id: 22, level: 4, typ: "numerisch",
+        frage: "Wie viele Lösungen hat die Gleichung \\(x^4 - 13x^2 + 36 = 0\\)?",
+        loesung: 4, toleranz: 0,
+        tipp: "Die Gleichung enthält nur gerade Potenzen – sie lässt sich auf eine quadratische zurückführen.",
+        loesungsweg: "Mit \\(u = x^2\\): $$u^2 - 13u + 36 = 0 \\Rightarrow u = 4 \\;\\text{oder}\\; u = 9$$ Rücksubstitution: \\(x = \\pm 2\\) und \\(x = \\pm 3\\) – also <b>4</b> Lösungen."
+      },
+      {
+        id: 23, level: 4, typ: "numerisch",
+        frage: "Wie viele reelle Lösungen hat die Gleichung \\(x^3 + 4x = 0\\)?",
         loesung: 1, toleranz: 0,
-        tipp: "Mit \\(u = x^2\\): \\(u^2 - 6u + 5 = 0\\).",
-        loesungsweg: "\\(u_{1,2} = 3 \\pm \\sqrt{9 - 5} = 3 \\pm 2\\). \\(u_1 = 5,\\ u_2 = 1\\). \\(x^2 = 5 \\Rightarrow x = \\pm\\sqrt{5}\\); \\(x^2 = 1 \\Rightarrow x = \\pm 1\\). Positive Lösungen: \\(1\\) und \\(\\sqrt{5} \\approx 2{,}236\\). Kleinste positive: \\(x = 1\\)."
-    },
+        tipp: "Klammere aus und prüfe, ob der zweite Faktor überhaupt null werden kann.",
+        loesungsweg: "$$x(x^2 + 4) = 0$$ Der erste Faktor liefert \\(x = 0\\). Der zweite ist wegen \\(x^2 + 4 \\geq 4\\) niemals null. Es gibt also genau <b>eine</b> reelle Lösung."
+      },
+      {
+        id: 24, level: 4, typ: "numerisch",
+        frage: "Das Volumen eines Würfels mit der Kantenlänge \\(x\\) ist genauso groß wie das Vierfache seiner Kantenlänge. Wie lang ist die Kante (\\(x > 0\\))?",
+        loesung: 2, toleranz: 0,
+        tipp: "Übersetze den Text in eine Gleichung und löse sie durch Ausklammern.",
+        loesungsweg: "Ansatz: \\(x^3 = 4x\\), also $$x^3 - 4x = x(x-2)(x+2) = 0$$ Die Lösungen \\(0\\) und \\(-2\\) scheiden als Kantenlänge aus; es bleibt \\(x = 2\\)."
+      },
 
     // ══════════════════════════════════════════════════════════════
     // LEVEL 5 — Mehrere Lösungen, kombinierte Verfahren
@@ -263,10 +264,10 @@
     // LEVEL 6 — Parameter, Lösbarkeit begründen
     // ══════════════════════════════════════════════════════════════
     {
-        id: 31, level: 6, typ: "numerisch",        frage: "Für welchen Wert von \\(a\\) hat die Gleichung \\(x^4 - 6x^2 + a = 0\\) genau eine doppelte Lösung für \\(u = x^2\\)? (Diskriminante \\(= 0\\))",
-        loesung: 9, toleranz: 0,
-        tipp: "Mit \\(u = x^2\\): \\(u^2 - 6u + a = 0\\). Doppelte Lösung \\(\\Leftrightarrow\\) Diskriminante \\(= 0 \\Leftrightarrow 9 - a = 0\\).",
-        loesungsweg: "Substituiere \\(u = x^2\\): \\(u^2 - 6u + a = 0\\) mit \\(p = -6,\\ q = a\\). Bedingung: \\(D = \\left(\\frac{p}{2}\\right)^2 - q = 9 - a = 0 \\Rightarrow a = 9\\). (Dann: \\(u = 3\\) doppelt, \\(x = \\pm\\sqrt{3}\\).)"
+        id: 31, level: 6, typ: "numerisch",        frage: "Für welchen Wert von \\(k > 0\\) hat die Gleichung \\(x^4 - kx^2 + 9 = 0\\) genau <b>zwei</b> verschiedene Lösungen?",
+        loesung: 6, toleranz: 0,
+        tipp: "Führe die Gleichung auf eine quadratische zurück und überlege, wie viele \\(x\\)-Werte zu einer positiven Lösung gehören.",
+        loesungsweg: "Mit \\(u = x^2\\): \\(u^2 - ku + 9 = 0\\). Jede positive Lösung \\(u\\) liefert zwei Werte \\(x = \\pm\\sqrt{u}\\). Genau zwei \\(x\\)-Lösungen gibt es also, wenn es genau <b>eine</b> positive Lösung \\(u\\) gibt – hier bei einer doppelten: $$\\left(\\frac{k}{2}\\right)^2 - 9 = 0 \\Rightarrow k = 6$$ Dann ist \\(u = 3\\) und \\(x = \\pm\\sqrt{3}\\). Für \\(k > 6\\) gäbe es zwei positive \\(u\\) und damit vier Lösungen, für \\(0 < k < 6\\) gar keine."
     },
     {
         id: 32, level: 6, typ: "mc",        frage: "Für welche Werte von \\(c\\) hat \\(x^4 + c = 0\\) keine reelle Lösung?",
@@ -287,10 +288,10 @@
         loesungsweg: "Mit \\(u = x^2\\): \\(u^2 - 2u + k = 0\\). Nach Vieta: \\(u_1 \\cdot u_2 = k\\) und \\(u_1 + u_2 = 2\\). Damit \\(x = 0\\) Lösung wird, muss ein \\(u\\)-Wert \\(= 0\\) sein, also \\(k = 0\\). Dann ist \\(u^2 - 2u = u(u - 2) = 0\\) mit \\(u_1 = 0,\\ u_2 = 2\\). Rücksubstitution: \\(x = 0\\) (einfach) und \\(x = \\pm\\sqrt{2}\\). Insgesamt 3 verschiedene Lösungen: \\(\\{-\\sqrt{2},\\ 0,\\ \\sqrt{2}\\}\\)."
     },
     {
-        id: 34, level: 6, typ: "numerisch",        frage: "Die Gleichung \\(x^3 + ax = 0\\) hat \\(x = 3\\) als Lösung. Bestimme \\(a\\).",
-        loesung: -9, toleranz: 0,
-        tipp: "Setze \\(x = 3\\) in die Gleichung ein: \\(27 + 3a = 0\\).",
-        loesungsweg: "Einsetzen: \\(3^3 + a \\cdot 3 = 27 + 3a = 0 \\Rightarrow 3a = -27 \\Rightarrow a = -9\\). Kontrolle: \\(x^3 - 9x = x(x^2 - 9) = 0\\) hat Lösungen \\(0, \\pm 3\\)."
+        id: 34, level: 6, typ: "numerisch",        frage: "Die Gleichung \\(x^3 + ax^2 + bx = 0\\) hat genau die Lösungen \\(0\\), \\(2\\) und \\(5\\). Bestimme \\(b\\).",
+        loesung: 10, toleranz: 0,
+        tipp: "Schreibe die linke Seite als Produkt aus den Faktoren, die zu den vorgegebenen Lösungen gehören.",
+        loesungsweg: "Aus den Lösungen folgt die Produktdarstellung $$x(x-2)(x-5) = x\\left(x^2 - 7x + 10\\right) = x^3 - 7x^2 + 10x$$ Koeffizientenvergleich: \\(a = -7\\) und \\(b = 10\\)."
     },
     {
         id: 35, level: 6, typ: "mc",        frage: "Begründe die Anzahl der Lösungen von \\(x^4 + 5x^2 + 6 = 0\\).",

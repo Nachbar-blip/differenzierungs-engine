@@ -101,10 +101,10 @@
         },
         {
             id: 11, level: 2, typ: "numerisch",
-            frage: "Berechne die Nullstelle von \\(f(x) = \\frac{1}{2}x - 3\\).",
-            loesung: 6, toleranz: 0,
-            tipp: "\\(\\frac{1}{2}x - 3 = 0\\).",
-            loesungsweg: "\\(\\frac{1}{2}x = 3 \\Rightarrow x = 6\\)."
+            frage: "Berechne die Nullstelle von \\(f(x) = \\frac{1}{3}x - 4\\).",
+            loesung: 12, toleranz: 0,
+            tipp: "\\(\\frac{1}{3}x - 4 = 0\\).",
+            loesungsweg: "\\(\\frac{1}{3}x = 4 \\Rightarrow x = 12\\)."
         },
         {
             id: 12, level: 2, typ: "mc",
@@ -209,42 +209,41 @@
         },
 
         // ===== Level 5: Schnittpunkt zweier Geraden =====
-        {
-            id: 25, level: 5, typ: "numerisch",
-            frage: "Bestimme den x-Wert des Schnittpunkts von \\(f(x) = 2x + 1\\) und \\(g(x) = -x + 7\\).",
-            loesung: 2, toleranz: 0,
-            tipp: "Setze \\(f(x) = g(x)\\) und löse nach \\(x\\).",
-            loesungsweg: "\\(2x + 1 = -x + 7 \\Rightarrow 3x = 6 \\Rightarrow x = 2\\)."
-        },
-        {
-            id: 26, level: 5, typ: "numerisch",
-            frage: "Bestimme den y-Wert des Schnittpunkts von \\(f(x) = 2x + 1\\) und \\(g(x) = -x + 7\\).",
-            loesung: 5, toleranz: 0,
-            tipp: "Setze \\(x = 2\\) in eine der Gleichungen ein.",
-            loesungsweg: "\\(f(2) = 2 \\cdot 2 + 1 = 5\\). Schnittpunkt: \\(S(2\\,|\\,5)\\)."
-        },
-        {
-            id: 27, level: 5, typ: "numerisch",
-            frage: "Bestimme den x-Wert des Schnittpunkts von \\(f(x) = 3x - 4\\) und \\(g(x) = x + 2\\).",
-            loesung: 3, toleranz: 0,
-            tipp: "\\(3x - 4 = x + 2\\).",
-            loesungsweg: "\\(3x - 4 = x + 2 \\Rightarrow 2x = 6 \\Rightarrow x = 3\\)."
-        },
-        {
-            id: 28, level: 5, typ: "mc",
-            frage: "Wo schneiden sich \\(f(x) = 0{,}5x + 2\\) und \\(g(x) = -0{,}5x + 4\\)?",
-            optionen: ["\\(S(1\\,|\\,2{,}5)\\)", "\\(S(2\\,|\\,3)\\)", "\\(S(3\\,|\\,3{,}5)\\)", "\\(S(4\\,|\\,4)\\)"],
-            korrekt: 1,
-            tipp: "Setze die Gleichungen gleich.",
-            loesungsweg: "\\(0{,}5x + 2 = -0{,}5x + 4 \\Rightarrow x = 2\\). \\(f(2) = 1 + 2 = 3\\). Also \\(S(2\\,|\\,3)\\)."
-        },
-        {
-            id: 29, level: 5, typ: "numerisch",
-            frage: "Bestimme den x-Wert des Schnittpunkts von \\(f(x) = -2x + 10\\) und \\(g(x) = x + 1\\).",
-            loesung: 3, toleranz: 0,
-            tipp: "\\(-2x + 10 = x + 1\\).",
-            loesungsweg: "\\(-2x + 10 = x + 1 \\Rightarrow 9 = 3x \\Rightarrow x = 3\\)."
-        },
+            {
+              id: 25, level: 5, typ: "numerisch",
+              frage: "Kerze A ist \\(20\\,\\text{cm}\\) lang und brennt \\(2\\,\\text{cm}\\) pro Stunde ab, Kerze B ist \\(15\\,\\text{cm}\\) lang und brennt \\(1\\,\\text{cm}\\) pro Stunde ab. Nach wie vielen Stunden sind beide gleich lang?",
+              loesung: 5, toleranz: 0.01,
+              tipp: "Stelle für jede Kerze eine Längenfunktion auf und setze beide gleich.",
+              loesungsweg: "\\(L_A(t) = 20 - 2t\\), \\(L_B(t) = 15 - t\\). Gleichsetzen: $$20 - 2t = 15 - t \\Rightarrow 5 = t$$ Nach \\(5\\) Stunden sind beide \\(10\\,\\text{cm}\\) lang."
+            },
+            {
+              id: 26, level: 5, typ: "numerisch",
+              frage: "Für welchen Wert von \\(m\\) schneiden sich \\(f(x) = mx + 2\\) und \\(g(x) = 3x - 4\\) an der Stelle \\(x = 2\\)?",
+              loesung: 0, toleranz: 0.01,
+              tipp: "Berechne zuerst, welchen Wert \\(g\\) an der Stelle \\(2\\) hat – dort muss auch \\(f\\) liegen.",
+              loesungsweg: "\\(g(2) = 6 - 4 = 2\\). Also muss \\(f(2) = 2\\) gelten: $$2m + 2 = 2 \\Rightarrow m = 0$$ Die Gerade \\(f\\) ist dann die waagerechte Gerade \\(y = 2\\)."
+            },
+            {
+              id: 27, level: 5, typ: "numerisch",
+              frage: "Die Gerade \\(f(x) = -2x + 6\\) schließt mit den beiden Koordinatenachsen ein Dreieck ein. Berechne dessen Flächeninhalt.",
+              loesung: 9, toleranz: 0.01,
+              tipp: "Die Katheten des Dreiecks sind die Abschnitte auf den beiden Achsen.",
+              loesungsweg: "Nullstelle: \\(-2x + 6 = 0 \\Rightarrow x = 3\\). \\(y\\)-Achsenabschnitt: \\(f(0) = 6\\). Das rechtwinklige Dreieck hat die Katheten \\(3\\) und \\(6\\): $$A = \\frac{1}{2} \\cdot 3 \\cdot 6 = 9$$"
+            },
+            {
+              id: 28, level: 5, typ: "numerisch",
+              frage: "Die Gerade \\(g\\) verläuft durch \\(A(0\\mid1)\\) und \\(B(4\\mid9)\\). Bestimme die \\(x\\)-Koordinate ihres Schnittpunkts mit \\(h(x) = -x + 11\\). Runde auf zwei Dezimalstellen.",
+              loesung: 3.33, toleranz: 0.01,
+              tipp: "Stelle zuerst die Gleichung von \\(g\\) auf – der Punkt \\(A\\) liegt günstig.",
+              loesungsweg: "Steigung: \\(m = \\frac{9-1}{4-0} = 2\\); wegen \\(A(0\\mid1)\\) ist \\(g(x) = 2x + 1\\). Gleichsetzen: $$2x + 1 = -x + 11 \\Rightarrow 3x = 10 \\Rightarrow x = \\frac{10}{3} \\approx 3{,}33$$"
+            },
+            {
+              id: 29, level: 5, typ: "numerisch",
+              frage: "Die Gerade \\(h\\) steht senkrecht auf \\(f(x) = 0{,}5x + 3\\) und verläuft durch den Schnittpunkt von \\(f\\) mit der \\(y\\)-Achse. Berechne \\(h(2)\\).",
+              loesung: -1, toleranz: 0.01,
+              tipp: "Zwei Schritte: erst die Steigung von \\(h\\) aus der Senkrechtbedingung, dann den gemeinsamen Punkt.",
+              loesungsweg: "Senkrecht: \\(m_h = -\\frac{1}{0{,}5} = -2\\). Schnittpunkt von \\(f\\) mit der \\(y\\)-Achse: \\((0\\mid3)\\) – dort verläuft auch \\(h\\), also \\(h(x) = -2x + 3\\). $$h(2) = -4 + 3 = -1$$"
+            },
         {
             id: 30, level: 5, typ: "mc",
             frage: "Welche Lage haben \\(f(x) = 2x + 3\\) und \\(g(x) = 2x - 5\\) zueinander?",
@@ -254,50 +253,59 @@
             loesungsweg: "Beide haben \\(m = 2\\) (parallel), aber verschiedene \\(n\\) (\\(3\\) und \\(-5\\)). Also parallel, nicht identisch — kein Schnittpunkt."
         },
 
-        // ===== Level 6: Textaufgaben / Modellierung =====
-        {
-            id: 31, level: 6, typ: "numerisch",
-            frage: "Ein Taxiunternehmen verlangt eine Grundgebühr von \\(3{,}50\\) EUR und \\(1{,}20\\) EUR pro gefahrenen Kilometer. Wie viel kostet eine Fahrt über \\(12\\) km (in EUR)?",
-            loesung: 17.9, toleranz: 0.01,
-            tipp: "Stelle eine lineare Funktion \\(K(x) = 1{,}20x + 3{,}50\\) auf.",
-            loesungsweg: "\\(K(x) = 1{,}20x + 3{,}50\\). \\(K(12) = 1{,}20 \\cdot 12 + 3{,}50 = 14{,}40 + 3{,}50 = 17{,}90\\) EUR."
-        },
-        {
-            id: 32, level: 6, typ: "numerisch",
-            frage: "Ein Handy-Tarif kostet \\(8\\) EUR Grundgebühr pro Monat plus \\(0{,}10\\) EUR pro Minute. Wie viele Minuten wurden bei einer Monatsrechnung von \\(20\\) EUR telefoniert?",
-            loesung: 120, toleranz: 0,
-            tipp: "\\(20 = 0{,}10x + 8\\).",
-            loesungsweg: "\\(20 = 0{,}10x + 8 \\Rightarrow 12 = 0{,}10x \\Rightarrow x = 120\\) Minuten."
-        },
-        {
-            id: 33, level: 6, typ: "numerisch",
-            frage: "Ein Pool enthält \\(300\\) Liter Wasser. Pro Minute fließen \\(15\\) Liter zu. Wie viele Liter enthält er nach \\(20\\) Minuten?",
-            loesung: 600, toleranz: 0,
-            tipp: "\\(V(t) = 15t + 300\\).",
-            loesungsweg: "\\(V(t) = 15t + 300\\). \\(V(20) = 15 \\cdot 20 + 300 = 300 + 300 = 600\\) Liter."
-        },
-        {
-            id: 34, level: 6, typ: "numerisch",
-            frage: "Tarif A: \\(5\\) EUR Grundgebühr + \\(0{,}50\\) EUR/Minute. Tarif B: \\(11\\) EUR Grundgebühr + \\(0{,}20\\) EUR/Minute. Bei wie vielen Minuten kosten beide Tarife gleich viel?",
-            loesung: 20, toleranz: 0,
-            tipp: "Setze \\(0{,}50x + 5 = 0{,}20x + 11\\) und löse nach \\(x\\).",
-            loesungsweg: "\\(0{,}50x + 5 = 0{,}20x + 11 \\Rightarrow 0{,}30x = 6 \\Rightarrow x = 20\\). Bei \\(20\\) Minuten kosten beide Tarife gleich viel (je 15 EUR); für mehr als 20 Minuten ist B günstiger."
-        },
-        {
-            id: 35, level: 6, typ: "mc",
-            frage: "Eine Kerze ist zu Beginn \\(20\\) cm lang und brennt gleichmäßig mit \\(2\\) cm pro Stunde ab. Welche Funktion beschreibt die Länge \\(L(t)\\) in cm nach \\(t\\) Stunden?",
-            optionen: ["\\(L(t) = 2t + 20\\)", "\\(L(t) = -2t + 20\\)", "\\(L(t) = 20t - 2\\)", "\\(L(t) = -20t + 2\\)"],
-            korrekt: 1,
-            tipp: "Startwert ist \\(n\\). Abnahme bedeutet negatives \\(m\\).",
-            loesungsweg: "Startlänge: \\(n = 20\\). Die Kerze wird kürzer, also \\(m = -2\\). Also \\(L(t) = -2t + 20\\)."
-        },
-        {
-            id: 36, level: 6, typ: "numerisch",
-            frage: "Ein Auto fährt mit konstanter Geschwindigkeit. Nach \\(2\\) Stunden hat es \\(180\\) km, nach \\(5\\) Stunden \\(405\\) km zurückgelegt. Wie groß ist die Geschwindigkeit in km/h?",
-            loesung: 75, toleranz: 0,
-            tipp: "Die Geschwindigkeit entspricht dem Anstieg der Geraden.",
-            loesungsweg: "\\(m = \\frac{405 - 180}{5 - 2} = \\frac{225}{3} = 75\\) km/h."
-        }
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 6 — Modellieren, Parameter, Begründen
+      // ═══════════════════════════════════════════════════════════
+      {
+        id: 31, level: 6, typ: "numerisch",
+        frage: "Zwei Handytarife: Tarif A kostet \\(5\\,€\\) Grundgebühr und \\(0{,}80\\,€\\) je Gigabyte, Tarif B kostet keine Grundgebühr, aber \\(1{,}30\\,€\\) je Gigabyte. Ab welchem Verbrauch in GB ist Tarif A günstiger?",
+        loesung: 10, toleranz: 0.01,
+        tipp: "Stelle für beide Tarife eine Kostenfunktion auf und bestimme die Stelle, an der sie gleich viel kosten.",
+        loesungsweg: "\\(K_A(x) = 0{,}8x + 5\\), \\(K_B(x) = 1{,}3x\\). Gleichsetzen: $$0{,}8x + 5 = 1{,}3x \\Rightarrow 5 = 0{,}5x \\Rightarrow x = 10$$ Bis \\(10\\,\\text{GB}\\) ist Tarif B günstiger, ab \\(10\\,\\text{GB}\\) Tarif A – denn A steigt flacher an."
+      },
+      {
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Für welchen Wert von \\(b\\) schneiden sich die Geraden \\(f(x) = 2x + b\\) und \\(g(x) = -3x + 5\\) auf der \\(y\\)-Achse?",
+        loesung: 5, toleranz: 0,
+        tipp: "Welche \\(x\\)-Koordinate hat jeder Punkt auf der \\(y\\)-Achse?",
+        loesungsweg: "Auf der \\(y\\)-Achse ist \\(x = 0\\). Dort gilt \\(f(0) = b\\) und \\(g(0) = 5\\). Ein gemeinsamer Punkt entsteht genau dann, wenn $$b = 5$$ Die \\(y\\)-Achsenabschnitte müssen also übereinstimmen."
+      },
+      {
+        id: 33, level: 6, typ: "mc",
+        frage: "Warum haben die Geraden \\(f(x) = 3x + 1\\) und \\(g(x) = 3x - 4\\) keinen Schnittpunkt?",
+        optionen: [
+            "Sie haben dieselbe Steigung, aber verschiedene \\(y\\)-Achsenabschnitte – beim Gleichsetzen entsteht ein Widerspruch",
+            "Weil ihre \\(y\\)-Achsenabschnitte verschiedene Vorzeichen haben",
+            "Weil beide Steigungen positiv sind",
+            "Sie haben einen Schnittpunkt, er liegt nur außerhalb des sichtbaren Bereichs"
+        ],
+        korrekt: 0,
+        tipp: "Setze die beiden Terme gleich und schau, was passiert.",
+        loesungsweg: "Gleichsetzen: $$3x + 1 = 3x - 4 \\Rightarrow 1 = -4$$ Eine falsche Aussage – die Gleichung hat keine Lösung. Geometrisch: Gleiche Steigung bedeutet parallele Geraden; da die \\(y\\)-Achsenabschnitte verschieden sind, sind sie echt parallel und treffen sich nirgends."
+      },
+      {
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Ein Zug fährt mit gleichbleibender Geschwindigkeit. Nach \\(2\\) Stunden hat er \\(40\\,\\text{km}\\) vom Startbahnhof zurückgelegt, nach \\(6\\) Stunden \\(70\\,\\text{km}\\). Wie weit war er zum Zeitpunkt \\(t = 0\\) vom Startbahnhof entfernt?",
+        loesung: 25, toleranz: 0.01,
+        tipp: "Bestimme zuerst die Geschwindigkeit als Steigung und dann den Anfangswert.",
+        loesungsweg: "Steigung: $$m = \\frac{70 - 40}{6 - 2} = 7{,}5 \\;\\text{km/h}$$ Einsetzen von \\((2 \\mid 40)\\): \\(40 = 7{,}5 \\cdot 2 + c \\Rightarrow c = 25\\). Der Zug war zu Beginn bereits \\(25\\,\\text{km}\\) entfernt."
+      },
+      {
+        id: 35, level: 6, typ: "mc",
+        frage: "Ein Schüler bestimmt die Gerade durch \\(A(1\\mid3)\\) und \\(B(4\\mid9)\\):<br>Schritt 1: \\(m = \\frac{9 - 3}{4 - 1} = 2\\)<br>Schritt 2: \\(y = 2x + 3\\), denn \\(A\\) hat den \\(y\\)-Wert \\(3\\)<br>Welcher Schritt ist der erste fehlerhafte?",
+        optionen: ["Schritt 1", "Schritt 2", "Beide Schritte sind falsch", "Kein Schritt ist fehlerhaft"],
+        korrekt: 1,
+        tipp: "Prüfe, ob der Punkt \\(A\\) die aufgestellte Gleichung wirklich erfüllt.",
+        loesungsweg: "Die Steigung in Schritt 1 stimmt. In Schritt 2 wird der \\(y\\)-Wert von \\(A\\) fälschlich als \\(y\\)-Achsenabschnitt verwendet – das gilt nur für Punkte <b>auf</b> der \\(y\\)-Achse. Richtig: Einsetzen von \\(A\\) in \\(y = 2x + b\\) ergibt $$3 = 2 + b \\Rightarrow b = 1$$ also \\(y = 2x + 1\\). Probe mit \\(B\\): \\(2 \\cdot 4 + 1 = 9\\) ✓."
+      },
+      {
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Eine Kerze brennt gleichmäßig ab. Nach \\(2\\) Stunden ist sie \\(18\\,\\text{cm}\\) lang, nach \\(5\\) Stunden \\(12\\,\\text{cm}\\). Nach wie vielen Stunden ist sie vollständig abgebrannt?",
+        loesung: 11, toleranz: 0.01,
+        tipp: "Stelle die Längenfunktion auf und bestimme ihre Nullstelle.",
+        loesungsweg: "Abbrandgeschwindigkeit: $$m = \\frac{12 - 18}{5 - 2} = -2 \\;\\text{cm/h}$$ Anfangslänge aus \\((2 \\mid 18)\\): \\(18 = -2 \\cdot 2 + c \\Rightarrow c = 22\\). Also \\(L(t) = -2t + 22\\). Nullstelle: $$-2t + 22 = 0 \\Rightarrow t = 11$$ Nach \\(11\\) Stunden ist die Kerze abgebrannt."
+      }
+
     ];
     </script>
     <script src="../p3-reflexion.js"></script>

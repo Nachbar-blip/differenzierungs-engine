@@ -318,141 +318,110 @@
         loesungsweg: "$$-5t^2 + 10t + 15 = 0 \\quad | : (-5)$$ $$t^2 - 2t - 3 = 0$$ \\(p = -2\\), \\(q = -3\\): $$t_{1/2} = 1 \\pm \\sqrt{1 + 3} = 1 \\pm 2$$ \\(t_1 = 3\\), \\(t_2 = -1\\) (verwerfen). Der Ball landet nach \\(3\\) s."
       },
 
-      // ========== LEVEL 5 — Modellieren aus Text, Schnittpunkte, Scheitelform (6 Aufgaben) ==========
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 5 — Term aus Sachdaten aufstellen, Gültigkeitsbereich
+      // ═══════════════════════════════════════════════════════════
       {
-        id: 25,
-        level: 5,
-        typ: "numerisch",
-        frage: "Ein Stein wird von einer \\(20\\) m hohen Klippe mit \\(15\\) m/s senkrecht nach oben geworfen. Die Höhe ist \\(h(t) = -5t^2 + 15t + 20\\) (in m). Welche maximale Höhe (in m) erreicht der Stein?",
-        loesung: 31.25,
-        toleranz: 0.01,
-        "bereich": "Analysis",
-        tipp: "\\(t_s = -\\frac{b}{2a} = -\\frac{15}{-10} = 1{,}5\\). Dann \\(h(1{,}5)\\) berechnen.",
-        loesungsweg: "\\(t_s = -\\frac{15}{-10} = 1{,}5\\) s. $$h(1{,}5) = -5 \\cdot 2{,}25 + 15 \\cdot 1{,}5 + 20$$ $$= -11{,}25 + 22{,}5 + 20 = 31{,}25 \\text{ m}$$"
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Eine Brücke hat einen parabelförmigen Bogen: Er ist \\(40\\,\\text{m}\\) breit und in der Mitte \\(8\\,\\text{m}\\) hoch; an beiden Enden liegt er auf Höhe \\(0\\). Wie hoch ist der Bogen \\(10\\,\\text{m}\\) vom linken Ende entfernt?",
+        loesung: 6, toleranz: 0.05,
+        tipp: "Lege den Scheitel in die Mitte und stelle die Funktion in Scheitelpunktform auf.",
+        loesungsweg: "Scheitel bei \\((20 \\mid 8)\\), also \\(h(x) = a(x-20)^2 + 8\\). Aus \\(h(0) = 0\\): $$400a + 8 = 0 \\Rightarrow a = -0{,}02$$ An der Stelle \\(x = 10\\): $$h(10) = -0{,}02 \\cdot 100 + 8 = 6\\,\\text{m}$$"
       },
       {
-        id: 26,
-        level: 5,
-        typ: "numerisch",
-        frage: "Der Gewinn eines Unternehmens ist \\(G(x) = -2x^2 + 20x - 18\\) (in Tausend €). Bei welcher Stückzahl \\(x\\) ist der Gewinn maximal?",
-        loesung: 5,
-        toleranz: 0,
-        "bereich": "Analysis",
-        tipp: "\\(x_s = -\\frac{b}{2a}\\) mit \\(a = -2\\), \\(b = 20\\).",
-        loesungsweg: "$$x_s = -\\frac{20}{2 \\cdot (-2)} = -\\frac{20}{-4} = 5$$ Bei \\(x = 5\\) Tausend Stück ist der Gewinn maximal."
+        id: 26, level: 5, typ: "numerisch",
+        frage: "Ein Wasserstrahl beginnt im Ursprung, trifft bei \\(x = 4\\) wieder auf den Boden und erreicht bei \\(x = 2\\) die Höhe \\(4\\). Sein Verlauf hat die Form \\(f(x) = a \\cdot x(x-4)\\). Bestimme \\(a\\).",
+        loesung: -1, toleranz: 0.01,
+        tipp: "Setze den bekannten Hochpunkt in den Ansatz ein.",
+        loesungsweg: "$$f(2) = a \\cdot 2 \\cdot (2-4) = -4a = 4 \\Rightarrow a = -1$$ Der Strahl folgt also \\(f(x) = -x(x-4) = -x^2 + 4x\\)."
       },
       {
-        id: 27,
-        level: 5,
-        typ: "numerisch",
-        frage: "Gegeben sind \\(f(x) = x^2 - 2\\) und \\(g(x) = 2x + 1\\). Bestimme den größeren \\(x\\)-Wert der Schnittpunkte.",
-        loesung: 3,
-        toleranz: 0,
-        "bereich": "Analysis",
-        tipp: "\\(f(x) = g(x)\\) gleichsetzen: \\(x^2 - 2 = 2x + 1\\).",
-        loesungsweg: "$$x^2 - 2 = 2x + 1$$ $$x^2 - 2x - 3 = 0$$ \\(p = -2\\), \\(q = -3\\): $$x_{1/2} = 1 \\pm \\sqrt{1 + 3} = 1 \\pm 2$$ \\(x_1 = 3\\), \\(x_2 = -1\\). Der größere Wert ist \\(3\\)."
+        id: 27, level: 5, typ: "numerisch",
+        frage: "Gegeben sind \\(f(x) = x^2 - 2\\) und \\(g(x) = 2x + 1\\). Bestimme den größeren \\(x\\)-Wert der beiden Schnittstellen. Runde auf zwei Dezimalstellen.",
+        loesung: 3.0, toleranz: 0.02,
+        tipp: "Setze die beiden Terme gleich und löse die entstehende quadratische Gleichung.",
+        loesungsweg: "$$x^2 - 2 = 2x + 1 \\Rightarrow x^2 - 2x - 3 = 0$$ $$x_{1/2} = 1 \\pm \\sqrt{1 + 3} = 1 \\pm 2$$ Die Schnittstellen sind \\(-1\\) und \\(3\\); die größere ist \\(3\\)."
       },
       {
-        id: 28,
-        level: 5,
-        typ: "numerisch",
-        frage: "Ein rechteckiges Spielfeld hat den Umfang \\(40\\) m. Die Breite ist \\(x\\), die Länge \\(20 - x\\). Die Fläche ist \\(A(x) = x(20-x)\\). Bei welcher Breite \\(x\\) (in m) ist die Fläche maximal?",
-        loesung: 10,
-        toleranz: 0,
-        "bereich": "Analysis",
-        tipp: "Ausmultiplizieren: \\(A(x) = -x^2 + 20x\\). Dann \\(x_s = -\\frac{b}{2a}\\).",
-        loesungsweg: "$$A(x) = x(20 - x) = -x^2 + 20x$$ \\(a = -1\\), \\(b = 20\\): $$x_s = -\\frac{20}{-2} = 10 \\text{ m}$$ Das Rechteck ist ein Quadrat mit Seitenlänge \\(10\\) m."
+        id: 28, level: 5, typ: "numerisch",
+        frage: "Der Gewinn eines Unternehmens beträgt \\(G(x) = -2x^2 + 20x - 18\\) (in Tausend €, \\(x\\) in Tausend Stück). Bei welcher Stückzahl \\(x\\) ist der Gewinn am größten?",
+        loesung: 5, toleranz: 0.01,
+        tipp: "Der größte Gewinn gehört zum Scheitelpunkt der nach unten geöffneten Parabel.",
+        loesungsweg: "Quadratische Ergänzung: $$G(x) = -2\\left(x^2 - 10x\\right) - 18 = -2(x-5)^2 + 32$$ Der Scheitel liegt bei \\((5 \\mid 32)\\): Bei \\(5\\) Tausend Stück ist der Gewinn mit \\(32\\) Tausend € maximal."
       },
       {
-        id: 29,
-        level: 5,
-        typ: "numerisch",
-        frage: "Rechteck mit Umfang \\(40\\) m, \\(A(x) = -x^2 + 20x\\): Wie groß ist die maximale Fläche (in m²)?",
-        loesung: 100,
-        toleranz: 0,
-        "bereich": "Analysis",
-        tipp: "\\(x_s = 10\\) einsetzen.",
-        loesungsweg: "$$A(10) = -100 + 200 = 100 \\text{ m}^2$$ Das Quadrat mit Seite \\(10\\) m liefert die maximale Fläche."
+        id: 29, level: 5, typ: "mc",
+        frage: "Ein Rechteck hat den Umfang \\(40\\,\\text{m}\\); seine Breite ist \\(x\\), sein Flächeninhalt also \\(A(x) = x(20 - x)\\). Welche Werte von \\(x\\) sind im Sachzusammenhang sinnvoll?",
+        optionen: [
+            "\\(0 < x < 20\\)",
+            "\\(0 \\leq x \\leq 40\\)",
+            "alle reellen Zahlen",
+            "\\(0 < x < 40\\)"
+        ],
+        korrekt: 0,
+        tipp: "Beide Seitenlängen müssen positiv sein – wie lang ist die zweite Seite?",
+        loesungsweg: "Die zweite Seite ist \\(20 - x\\). Beide Seiten müssen positiv sein: \\(x > 0\\) und \\(20 - x > 0\\), also $$0 < x < 20$$ Für \\(x = 0\\) oder \\(x = 20\\) entartet das Rechteck zu einer Strecke, für größere \\(x\\) wäre die zweite Seite negativ. Die Funktion \\(A\\) selbst ist zwar für alle \\(x\\) definiert – sinnvoll ist aber nur dieser Bereich."
       },
       {
-        id: 30,
-        level: 5,
-        typ: "numerisch",
-        frage: "Zwei Parabeln \\(f(x) = x^2\\) und \\(g(x) = -x^2 + 8\\) schneiden sich. Berechne den positiven \\(x\\)-Wert eines Schnittpunktes.",
-        loesung: 2,
-        toleranz: 0,
-        "bereich": "Analysis",
-        tipp: "\\(x^2 = -x^2 + 8\\) umstellen zu \\(2x^2 = 8\\).",
-        loesungsweg: "$$x^2 = -x^2 + 8$$ $$2x^2 = 8 \\Rightarrow x^2 = 4$$ $$x = \\pm 2$$ Der positive Schnittpunkt liegt bei \\(x = 2\\), also \\(P(2 \\mid 4)\\)."
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Ein Rechteck hat den Umfang \\(40\\,\\text{m}\\). Wie groß ist sein größtmöglicher Flächeninhalt in \\(\\text{m}^2\\)?",
+        loesung: 100, toleranz: 0.01,
+        tipp: "Stelle die Fläche als Funktion einer Seitenlänge dar und suche den Scheitelpunkt.",
+        loesungsweg: "Mit der Breite \\(x\\) ist die Länge \\(20 - x\\), also $$A(x) = x(20-x) = -x^2 + 20x = -(x-10)^2 + 100$$ Der Scheitel liegt bei \\((10 \\mid 100)\\): Das Quadrat mit \\(10\\,\\text{m}\\) Seitenlänge hat mit \\(100\\,\\text{m}^2\\) die größte Fläche."
       },
 
-      // ========== LEVEL 6 — Optimierung mit Nebenbedingung, anspruchsvolles Modellieren (6 Aufgaben) ==========
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 6 — Modellieren ohne Termvorgabe, Umkehrung, Deutung
+      // ═══════════════════════════════════════════════════════════
       {
-        id: 31,
-        level: 6,
-        typ: "numerisch",
-        frage: "Ein rechteckiger Garten soll an einer Hauswand mit \\(60\\) m Zaun auf drei Seiten eingezäunt werden. Welche Breite \\(x\\) (senkrecht zur Wand, in m) liefert die maximale Fläche?",
-        loesung: 15,
-        toleranz: 0,
-        "bereich": "Analysis",
-        tipp: "\\(2x + y = 60 \\Rightarrow y = 60 - 2x\\). \\(A(x) = x \\cdot (60 - 2x)\\). Scheitel suchen.",
-        loesungsweg: "$$A(x) = x(60 - 2x) = -2x^2 + 60x$$ \\(a = -2\\), \\(b = 60\\): $$x_s = -\\frac{60}{-4} = 15 \\text{ m}$$"
+        id: 31, level: 6, typ: "numerisch",
+        frage: "Ein rechteckiger Garten soll an einer Hauswand mit \\(60\\,\\text{m}\\) Zaun auf drei Seiten eingezäunt werden. Wie groß ist die größtmögliche Fläche in \\(\\text{m}^2\\)?",
+        loesung: 450, toleranz: 0.5,
+        tipp: "Die beiden Seiten senkrecht zur Wand sind gleich lang – drücke die dritte Seite dadurch aus.",
+        loesungsweg: "Seiten senkrecht zur Wand: \\(x\\); Seite parallel zur Wand: \\(60 - 2x\\). $$A(x) = x(60 - 2x) = -2x^2 + 60x = -2(x - 15)^2 + 450$$ Maximum bei \\(x = 15\\,\\text{m}\\) mit \\(A = 450\\,\\text{m}^2\\) (Seiten \\(15\\,\\text{m}\\) und \\(30\\,\\text{m}\\))."
       },
       {
-        id: 32,
-        level: 6,
-        typ: "numerisch",
-        frage: "Garten an der Hauswand mit \\(60\\) m Zaun (\\(A(x) = -2x^2 + 60x\\)): Welchen maximalen Flächeninhalt (in m²) erreicht der Garten?",
-        loesung: 450,
-        toleranz: 0,
-        "bereich": "Analysis",
-        tipp: "\\(x_s = 15\\), Länge \\(y = 60 - 30 = 30\\).",
-        loesungsweg: "Breite \\(x = 15\\) m, Länge \\(y = 60 - 2 \\cdot 15 = 30\\) m. $$A_{\\max} = 15 \\cdot 30 = 450 \\text{ m}^2$$"
+        id: 32, level: 6, typ: "mc",
+        frage: "Ein Ball wird geworfen; seine Höhe beschreibt \\(h(t) = -5t^2 + 20t + 15\\) (in Metern, \\(t\\) in Sekunden). Was bedeutet der Summand \\(15\\) im Sachzusammenhang?",
+        optionen: [
+            "die Abwurfhöhe – die Höhe zum Zeitpunkt \\(t = 0\\)",
+            "die größte erreichte Höhe",
+            "die Zeit bis zum Aufschlag",
+            "die Abwurfgeschwindigkeit"
+        ],
+        korrekt: 0,
+        tipp: "Setze \\(t = 0\\) ein und überlege, was dieser Zeitpunkt bedeutet.",
+        loesungsweg: "\\(h(0) = 15\\): Zum Zeitpunkt des Abwurfs ist der Ball \\(15\\,\\text{m}\\) hoch – er wird also etwa von einem Turm geworfen. Die größte Höhe steht im Scheitelpunkt (\\(h(2) = 35\\,\\text{m}\\)), die Abwurfgeschwindigkeit steckt im Faktor \\(20\\)."
       },
       {
-        id: 33,
-        level: 6,
-        typ: "numerisch",
-        frage: "Eine Parabolantenne hat im Querschnitt die Gleichung \\(f(x) = 0{,}25x^2\\) (in m, \\(-2 \\leq x \\leq 2\\)). Wie tief (in m) ist die Schüssel in der Mitte gegenüber dem Rand?",
-        loesung: 1,
-        toleranz: 0,
-        "bereich": "Analysis",
-        tipp: "Tiefe = \\(f(2) - f(0)\\) (Rand minus Mitte).",
-        loesungsweg: "Mitte: \\(f(0) = 0\\). Rand: \\(f(2) = 0{,}25 \\cdot 4 = 1\\) m. Tiefe: \\(1 - 0 = 1\\) m."
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Ein Tunnel hat einen parabelförmigen Querschnitt: Er ist \\(10\\,\\text{m}\\) breit und in der Mitte \\(5\\,\\text{m}\\) hoch. Wie hoch ist er \\(3\\,\\text{m}\\) neben der Mitte? Runde auf eine Dezimalstelle.",
+        loesung: 3.2, toleranz: 0.05,
+        tipp: "Lege den Scheitel auf die \\(y\\)-Achse; die Ränder liegen dann symmetrisch zum Ursprung.",
+        loesungsweg: "Ansatz \\(h(x) = ax^2 + 5\\) mit den Nullstellen \\(\\pm 5\\): $$h(5) = 25a + 5 = 0 \\Rightarrow a = -0{,}2$$ An der Stelle \\(x = 3\\): $$h(3) = -0{,}2 \\cdot 9 + 5 = 3{,}2\\,\\text{m}$$"
       },
       {
-        id: 34,
-        level: 6,
-        typ: "numerisch",
-        frage: "Ein rechteckiges Grundstück mit Umfang \\(80\\) m soll maximale Fläche haben. Berechne diese maximale Fläche in m².",
-        loesung: 400,
-        toleranz: 0,
-        "bereich": "Analysis",
-        tipp: "\\(2x + 2y = 80 \\Rightarrow y = 40 - x\\). \\(A(x) = x(40-x)\\).",
-        loesungsweg: "$$A(x) = x(40 - x) = -x^2 + 40x$$ \\(x_s = -\\frac{40}{-2} = 20\\) m, \\(y = 20\\) m. $$A_{\\max} = 20 \\cdot 20 = 400 \\text{ m}^2$$ Das Quadrat mit Seite \\(20\\) m liefert das Maximum."
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Ein rechteckiges Grundstück ist \\(4\\,\\text{m}\\) länger als breit und hat den Flächeninhalt \\(96\\,\\text{m}^2\\). Wie breit ist es?",
+        loesung: 8, toleranz: 0.01,
+        tipp: "Stelle mit der Breite als Unbekannter eine quadratische Gleichung auf.",
+        loesungsweg: "$$x(x+4) = 96 \\Rightarrow x^2 + 4x - 96 = 0$$ $$x_{1/2} = -2 \\pm \\sqrt{4 + 96} = -2 \\pm 10$$ Die negative Lösung scheidet aus: Die Breite beträgt \\(8\\,\\text{m}\\), die Länge \\(12\\,\\text{m}\\)."
       },
       {
-        id: 35,
-        level: 6,
-        typ: "numerisch",
-        frage: "Ein Ball wird von einem \\(1{,}25\\) m hohen Tisch mit \\(5\\) m/s horizontal geschossen. Die Höhe über dem Boden in Abhängigkeit von \\(x\\) (Wurfweite) ist \\(h(x) = -0{,}2x^2 + 1{,}25\\) (in m). Bei welcher Wurfweite \\(x\\) (in m) trifft er auf?",
-        loesung: 2.5,
-        toleranz: 0.01,
-        "bereich": "Analysis",
-        tipp: "\\(h(x) = 0\\): \\(-0{,}2x^2 + 1{,}25 = 0\\).",
-        loesungsweg: "$$-0{,}2x^2 + 1{,}25 = 0 \\Rightarrow 0{,}2x^2 = 1{,}25$$ $$x^2 = 6{,}25 \\Rightarrow x = 2{,}5 \\text{ m}$$ (negative Lösung verwerfen)."
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Ein Ball wird von einem \\(1{,}25\\,\\text{m}\\) hohen Tisch waagerecht geschossen; seine Flugbahn ist \\(h(x) = -0{,}2x^2 + 1{,}25\\) (Angaben in Metern). In welcher Entfernung schlägt er auf dem Boden auf? Runde auf zwei Dezimalstellen.",
+        loesung: 2.5, toleranz: 0.02,
+        tipp: "Der Aufschlag liegt dort, wo die Höhe null wird.",
+        loesungsweg: "$$-0{,}2x^2 + 1{,}25 = 0 \\Rightarrow x^2 = 6{,}25 \\Rightarrow x = 2{,}5$$ Die negative Lösung liegt hinter dem Abschusspunkt und entfällt: Der Ball landet \\(2{,}5\\,\\text{m}\\) entfernt."
       },
       {
-        id: 36,
-        level: 6,
-        typ: "numerisch",
-        frage: "Gewinn \\(G(x) = -0{,}5x^2 + 8x - 14\\) (in Tausend €). Ab welcher Stückzahl \\(x\\) (in Tausend Stück, untere Gewinngrenze) wird überhaupt Gewinn erwirtschaftet (Nullstelle)?",
-        loesung: 2,
-        toleranz: 0,
-        "bereich": "Analysis",
-        tipp: "\\(G(x) = 0\\). Teile durch \\(-0{,}5\\), dann p-q-Formel.",
-        loesungsweg: "$$-0{,}5x^2 + 8x - 14 = 0 \\quad | : (-0{,}5)$$ $$x^2 - 16x + 28 = 0$$ \\(p = -16\\), \\(q = 28\\): $$x_{1/2} = 8 \\pm \\sqrt{64 - 28} = 8 \\pm \\sqrt{36} = 8 \\pm 6$$ \\(x_1 = 14\\), \\(x_2 = 2\\). Ab \\(x = 2\\) Tausend Stück beginnt die Gewinnzone (bis \\(x = 14\\))."
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Der Gewinn beträgt \\(G(x) = -0{,}5x^2 + 8x - 14\\) (in Tausend €). Ab welcher Stückzahl \\(x\\) (in Tausend Stück) wird überhaupt Gewinn erzielt?",
+        loesung: 2, toleranz: 0.01,
+        tipp: "Gesucht ist die kleinere Nullstelle – ab dort ist der Gewinn positiv.",
+        loesungsweg: "$$-0{,}5x^2 + 8x - 14 = 0 \\;\\mid \\cdot(-2) \\Rightarrow x^2 - 16x + 28 = 0$$ $$x_{1/2} = 8 \\pm \\sqrt{64 - 28} = 8 \\pm 6$$ Nullstellen bei \\(2\\) und \\(14\\). Dazwischen ist \\(G\\) positiv – ab \\(2\\) Tausend Stück wird Gewinn erzielt, ab \\(14\\) Tausend Stück wieder Verlust."
       }
+
     ];
     </script>
     <script src="../p3-reflexion.js"></script>

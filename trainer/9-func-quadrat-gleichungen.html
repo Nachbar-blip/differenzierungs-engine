@@ -301,51 +301,60 @@
         loesungsweg: "\\(D = (-4)^2 - 4 \\cdot 2 \\cdot 5 = 16 - 40 = -24 < 0\\). Keine reelle Lösung."
     },
 
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 6 — Umformen, Substitution, Textaufgaben
-    // ══════════════════════════════════════════════════════════════
-    {
-        id: 31, level: 6, typ: "numerisch",
-        frage: "Löse \\(x^2 + 3x = 10\\). Gib die <strong>positive</strong> Lösung an.",
-        loesung: 2, toleranz: 0,
-        tipp: "Bringe zuerst alles auf eine Seite: \\(x^2 + 3x - 10 = 0\\). Dann pq-Formel.",
-        loesungsweg: "\\(x^2 + 3x - 10 = 0\\) mit \\(p = 3,\\ q = -10\\). \\(x_{1,2} = -1{,}5 \\pm \\sqrt{2{,}25 + 10} = -1{,}5 \\pm \\sqrt{12{,}25} = -1{,}5 \\pm 3{,}5\\). Also \\(x_1 = 2\\) und \\(x_2 = -5\\). Positive Lösung: \\(x = 2\\)."
-    },
-    {
-        id: 32, level: 6, typ: "numerisch",
-        frage: "Löse die biquadratische Gleichung \\(x^4 - 5x^2 + 4 = 0\\) durch Substitution \\(t = x^2\\). Gib die <strong>größte</strong> Lösung für \\(x\\) an.",
-        loesung: 2, toleranz: 0,
-        tipp: "Substituiere \\(t = x^2\\): \\(t^2 - 5t + 4 = 0\\). Löse erst nach \\(t\\), dann Wurzel für \\(x\\).",
-        loesungsweg: "Mit \\(t = x^2\\): \\(t^2 - 5t + 4 = 0\\). pq-Formel: \\(t_{1,2} = 2{,}5 \\pm \\sqrt{6{,}25 - 4} = 2{,}5 \\pm 1{,}5\\). Also \\(t_1 = 4\\) und \\(t_2 = 1\\). Rücksubstitution: \\(x^2 = 4 \\Rightarrow x = \\pm 2\\); \\(x^2 = 1 \\Rightarrow x = \\pm 1\\). Größte Lösung: \\(x = 2\\)."
-    },
-    {
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 6 — Parameterbedingungen, Umkehraufgaben, Begründungen
+      // ═══════════════════════════════════════════════════════════
+      {
+        id: 31, level: 6, typ: "mc",
+        frage: "Für welche Werte von \\(q\\) hat die Gleichung \\(x^2 - 6x + q = 0\\) zwei verschiedene Lösungen?",
+        optionen: ["\\(q < 9\\)", "\\(q > 9\\)", "\\(q = 9\\)", "für jedes \\(q\\)"],
+        korrekt: 0,
+        tipp: "Entscheidend ist das Vorzeichen des Ausdrucks unter der Wurzel in der \\(p\\)-\\(q\\)-Formel.",
+        loesungsweg: "Mit \\(p = -6\\): $$\\left(\\frac{p}{2}\\right)^2 - q = 9 - q > 0 \\Rightarrow q < 9$$ Für \\(q = 9\\) gibt es genau eine (doppelte) Lösung, für \\(q > 9\\) keine reelle."
+      },
+      {
+        id: 32, level: 6, typ: "mc",
+        frage: "Ein Schüler löst \\(x^2 - 4x - 5 = 0\\):<br>Schritt 1: \\(p = -4\\), \\(q = -5\\)<br>Schritt 2: \\(x_{1/2} = 2 \\pm \\sqrt{4 - 5}\\)<br>Schritt 3: Die Wurzel ist negativ, also gibt es keine Lösung.<br>Welcher Schritt ist der erste fehlerhafte?",
+        optionen: ["Schritt 1", "Schritt 2", "Schritt 3", "Kein Schritt ist fehlerhaft"],
+        korrekt: 1,
+        tipp: "Achte auf das Vorzeichen von \\(q\\) beim Einsetzen in die Formel.",
+        loesungsweg: "Schritt 1 stimmt. In Schritt 2 wird \\(-q\\) falsch eingesetzt: Unter der Wurzel steht \\(\\left(\\frac{p}{2}\\right)^2 - q = 4 - (-5) = 9\\), nicht \\(4 - 5\\). Richtig: $$x_{1/2} = 2 \\pm 3 \\Rightarrow x_1 = 5, \\; x_2 = -1$$ Probe: \\(25 - 20 - 5 = 0\\) ✓."
+      },
+      {
         id: 33, level: 6, typ: "numerisch",
-        frage: "Das Produkt zweier aufeinanderfolgender natürlicher Zahlen ist 72. Wie heißt die <strong>kleinere</strong> der beiden Zahlen?",
-        loesung: 8, toleranz: 0,
-        tipp: "Sei \\(x\\) die kleinere Zahl. Dann ist \\(x(x + 1) = 72\\), also \\(x^2 + x - 72 = 0\\).",
-        loesungsweg: "\\(x(x+1) = 72 \\Leftrightarrow x^2 + x - 72 = 0\\). pq-Formel: \\(x_{1,2} = -0{,}5 \\pm \\sqrt{0{,}25 + 72} = -0{,}5 \\pm \\sqrt{72{,}25} = -0{,}5 \\pm 8{,}5\\). Also \\(x_1 = 8\\) und \\(x_2 = -9\\). Als natürliche Zahl: \\(x = 8\\); die Folgezahl ist 9."
-    },
-    {
+        frage: "Die Summe zweier Zahlen ist \\(12\\), ihr Produkt \\(35\\). Wie groß ist die größere der beiden Zahlen?",
+        loesung: 7, toleranz: 0,
+        tipp: "Drücke die zweite Zahl durch die erste aus – so entsteht eine quadratische Gleichung.",
+        loesungsweg: "Mit \\(y = 12 - x\\) folgt $$x(12 - x) = 35 \\Rightarrow x^2 - 12x + 35 = 0$$ $$x_{1/2} = 6 \\pm \\sqrt{36 - 35} = 6 \\pm 1$$ Die Zahlen sind \\(5\\) und \\(7\\); die größere ist \\(7\\). (Über den Satz von Vieta hätte man sie auch direkt raten können.)"
+      },
+      {
         id: 34, level: 6, typ: "numerisch",
-        frage: "Ein Rechteck ist 3 cm länger als breit und hat einen Flächeninhalt von 40 cm². Wie breit ist das Rechteck (in cm)?",
+        frage: "Ein Rechteck ist \\(3\\,\\text{cm}\\) länger als breit und hat den Flächeninhalt \\(40\\,\\text{cm}^2\\). Wie breit ist es?",
         loesung: 5, toleranz: 0,
-        tipp: "Sei \\(b\\) die Breite. Dann ist die Länge \\(b + 3\\) und es gilt \\(b \\cdot (b + 3) = 40\\).",
-        loesungsweg: "\\(b(b+3) = 40 \\Leftrightarrow b^2 + 3b - 40 = 0\\). pq-Formel: \\(b_{1,2} = -1{,}5 \\pm \\sqrt{2{,}25 + 40} = -1{,}5 \\pm \\sqrt{42{,}25} = -1{,}5 \\pm 6{,}5\\). Also \\(b_1 = 5\\) und \\(b_2 = -8\\). Eine Breite muss positiv sein: \\(b = 5\\) cm."
-    },
-    {
+        tipp: "Nenne die Breite \\(x\\) und drücke die Länge dadurch aus.",
+        loesungsweg: "$$x(x+3) = 40 \\Rightarrow x^2 + 3x - 40 = 0$$ $$x_{1/2} = -1{,}5 \\pm \\sqrt{2{,}25 + 40} = -1{,}5 \\pm 6{,}5$$ Die negative Lösung \\(-8\\) scheidet als Länge aus; die Breite beträgt \\(5\\,\\text{cm}\\) (Länge \\(8\\,\\text{cm}\\))."
+      },
+      {
         id: 35, level: 6, typ: "numerisch",
-        frage: "Löse \\((x - 2)^2 = 9\\). Gib die <strong>größere</strong> Lösung an.",
-        loesung: 5, toleranz: 0,
-        tipp: "Wurzelziehen auf beiden Seiten mit \\(\\pm\\): \\(x - 2 = \\pm 3\\).",
-        loesungsweg: "\\((x-2)^2 = 9 \\Rightarrow x - 2 = \\pm 3\\). Also \\(x = 2 + 3 = 5\\) oder \\(x = 2 - 3 = -1\\). Größere Lösung: \\(x = 5\\)."
-    },
-    {
-        id: 36, level: 6, typ: "numerisch",
-        frage: "Löse \\(x^4 - 13x^2 + 36 = 0\\) durch Substitution \\(t = x^2\\). Gib die <strong>größte</strong> Lösung für \\(x\\) an.",
-        loesung: 3, toleranz: 0,
-        tipp: "\\(t^2 - 13t + 36 = 0\\). pq-Formel: \\(t_{1,2} = 6{,}5 \\pm \\sqrt{42{,}25 - 36}\\).",
-        loesungsweg: "Mit \\(t = x^2\\): \\(t^2 - 13t + 36 = 0\\). \\(t_{1,2} = 6{,}5 \\pm \\sqrt{6{,}25} = 6{,}5 \\pm 2{,}5\\). Also \\(t_1 = 9\\) und \\(t_2 = 4\\). Rücksubstitution: \\(x^2 = 9 \\Rightarrow x = \\pm 3\\); \\(x^2 = 4 \\Rightarrow x = \\pm 2\\). Größte Lösung: \\(x = 3\\)."
-    }
+        frage: "Eine Gleichung der Form \\(x^2 + px + q = 0\\) soll genau die Lösungen \\(-2\\) und \\(5\\) haben. Bestimme \\(q\\).",
+        loesung: -10, toleranz: 0,
+        tipp: "Schreibe die Gleichung als Produkt der zugehörigen Linearfaktoren.",
+        loesungsweg: "$$(x+2)(x-5) = x^2 - 3x - 10$$ Koeffizientenvergleich: \\(p = -3\\) und \\(q = -10\\). (Nach Vieta ist \\(q\\) das Produkt der Lösungen: \\(-2 \\cdot 5 = -10\\).)"
+      },
+      {
+        id: 36, level: 6, typ: "mc",
+        frage: "Die Parabel zu \\(f(x) = x^2 - 4x + 7\\) hat den Scheitelpunkt \\((2 \\mid 3)\\). Wie viele Nullstellen hat \\(f\\), und warum?",
+        optionen: [
+            "Keine – die Parabel ist nach oben geöffnet, ihr tiefster Punkt liegt aber schon oberhalb der \\(x\\)-Achse",
+            "Eine – der Scheitelpunkt ist die einzige Nullstelle",
+            "Zwei – jede quadratische Funktion hat zwei Nullstellen",
+            "Das lässt sich aus dem Scheitelpunkt nicht ableiten"
+        ],
+        korrekt: 0,
+        tipp: "Welcher Punkt einer nach oben geöffneten Parabel liegt am tiefsten?",
+        loesungsweg: "Wegen \\(a = 1 > 0\\) ist die Parabel nach oben geöffnet; der Scheitel ist ihr tiefster Punkt. Da er mit \\(y = 3\\) bereits über der \\(x\\)-Achse liegt, gilt \\(f(x) \\geq 3 > 0\\) für alle \\(x\\) – es gibt keine Nullstelle. Die Rechnung bestätigt das: \\(x_{1/2} = 2 \\pm \\sqrt{4 - 7}\\) ist nicht lösbar."
+      }
+
 
     ];
     </script>
