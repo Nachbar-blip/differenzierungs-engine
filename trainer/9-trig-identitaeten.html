@@ -202,67 +202,63 @@
             loesungsweg: "Gegenkathete \\(= 3\\), Ankathete \\(= 4\\), also Hypotenuse \\(= \\sqrt{9+16} = 5\\). Damit \\(\\sin\\alpha = \\dfrac{3}{5} = 0{,}6\\)."
         },
 
-        // ===== LEVEL 4: Supplement- und Komplementwinkel =====
-        {
-            id: 19,
-            level: 4,
-            typ: "numerisch",
-            frage: "Gegeben: \\(\\sin(40°) \\approx 0{,}643\\). Wie groß ist \\(\\sin(140°)\\) (drei Nachkommastellen)?",
-            loesung: 0.643,
-            toleranz: 0.005,
-            tipp: "\\(140° = 180° - 40°\\).",
-            loesungsweg: "\\(\\sin(140°) = \\sin(180°-40°) = \\sin(40°) \\approx 0{,}643\\). Supplementwinkel haben denselben Sinuswert."
-        },
-        {
-            id: 20,
-            level: 4,
-            typ: "numerisch",
-            frage: "Gegeben: \\(\\cos(50°) \\approx 0{,}643\\). Bestimme \\(\\cos(130°)\\) (drei Nachkommastellen).",
-            loesung: -0.643,
-            toleranz: 0.005,
-            tipp: "\\(130° = 180° - 50°\\), und beim Kosinus wechselt das Vorzeichen.",
-            loesungsweg: "\\(\\cos(130°) = \\cos(180°-50°) = -\\cos(50°) \\approx -0{,}643\\)."
-        },
-        {
-            id: 21,
-            level: 4,
-            typ: "mc",
-            frage: "Welcher Ausdruck ist gleich \\(\\sin(110°)\\)?",
-            optionen: ["\\(\\sin(70°)\\)", "\\(-\\sin(70°)\\)", "\\(\\cos(70°)\\)", "\\(-\\cos(70°)\\)"],
-            korrekt: 0,
-            tipp: "\\(110° = 180° - 70°\\).",
-            loesungsweg: "\\(\\sin(110°) = \\sin(180°-70°) = \\sin(70°)\\)."
-        },
-        {
-            id: 22,
-            level: 4,
-            typ: "mc",
-            frage: "Welcher Ausdruck ist gleich \\(\\cos(120°)\\)?",
-            optionen: ["\\(-\\cos(60°)\\)", "\\(\\cos(60°)\\)", "\\(\\sin(60°)\\)", "\\(-\\sin(60°)\\)"],
-            korrekt: 0,
-            tipp: "\\(120° = 180° - 60°\\), beim Kosinus Vorzeichenwechsel.",
-            loesungsweg: "\\(\\cos(120°) = \\cos(180°-60°) = -\\cos(60°) = -\\dfrac{1}{2}\\)."
-        },
-        {
-            id: 23,
-            level: 4,
-            typ: "numerisch",
-            frage: "Berechne \\(\\sin(90° - 35°) - \\cos(35°)\\).",
-            loesung: 0,
-            toleranz: 0.001,
-            tipp: "Nutze \\(\\sin(90°-\\alpha) = \\cos\\alpha\\).",
-            loesungsweg: "\\(\\sin(90°-35°) = \\cos(35°)\\). Also ist die Differenz \\(\\cos(35°) - \\cos(35°) = 0\\)."
-        },
-        {
-            id: 24,
-            level: 4,
-            typ: "mc",
-            frage: "Wahr oder falsch: Für jeden Winkel \\(\\alpha\\) mit \\(0° \\leq \\alpha \\leq 180°\\) gilt \\(\\sin(180°-\\alpha) + \\cos(180°-\\alpha) = \\sin\\alpha - \\cos\\alpha\\).",
-            optionen: ["Wahr", "Falsch"],
-            korrekt: 0,
-            tipp: "Wende beide Supplementwinkelformeln einzeln an und addiere.",
-            loesungsweg: "<b>Wahr.</b> \\(\\sin(180°-\\alpha) = \\sin\\alpha\\) und \\(\\cos(180°-\\alpha) = -\\cos\\alpha\\). Summe: \\(\\sin\\alpha + (-\\cos\\alpha) = \\sin\\alpha - \\cos\\alpha\\). Stimmt!"
-        },
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 4 — Beziehungen anwenden statt Supplementregel wiederholen
+      // ═══════════════════════════════════════════════════════════
+      {
+        id: 19, level: 4, typ: "numerisch",
+        frage: "Für welchen Winkel \\(\\alpha\\) mit \\(0° < \\alpha < 90°\\) gilt \\(\\sin\\alpha = \\cos\\alpha\\)? Gib den Winkel in Grad an.",
+        loesung: 45, toleranz: 0.1,
+        tipp: "Teile beide Seiten durch \\(\\cos\\alpha\\) – dann steht dort der Tangens.",
+        loesungsweg: "$$\\sin\\alpha = \\cos\\alpha \\;\\Big| : \\cos\\alpha \\Rightarrow \\tan\\alpha = 1 \\Rightarrow \\alpha = 45°$$ Anschaulich: Nur im gleichschenklig-rechtwinkligen Dreieck sind Gegen- und Ankathete gleich lang."
+      },
+      {
+        id: 20, level: 4, typ: "numerisch",
+        frage: "Für einen spitzen Winkel gilt \\(\\sin\\alpha = 0{,}6\\). Berechne \\(\\cos\\alpha\\) und runde auf zwei Dezimalstellen.",
+        loesung: 0.8, toleranz: 0.01,
+        tipp: "Nutze den trigonometrischen Pythagoras \\(\\sin^2\\alpha + \\cos^2\\alpha = 1\\).",
+        loesungsweg: "$$\\cos^2\\alpha = 1 - 0{,}36 = 0{,}64 \\Rightarrow \\cos\\alpha = 0{,}8$$ Das positive Vorzeichen gilt, weil \\(\\alpha\\) spitz ist. (Es handelt sich um das bekannte \\(3\\text{-}4\\text{-}5\\)-Dreieck.)"
+      },
+      {
+        id: 21, level: 4, typ: "numerisch",
+        frage: "Für einen spitzen Winkel gilt \\(\\sin\\alpha = 0{,}6\\) und \\(\\cos\\alpha = 0{,}8\\). Berechne \\(\\tan\\alpha\\) und runde auf zwei Dezimalstellen.",
+        loesung: 0.75, toleranz: 0.01,
+        tipp: "Der Tangens lässt sich als Quotient von Sinus und Kosinus schreiben.",
+        loesungsweg: "$$\\tan\\alpha = \\frac{\\sin\\alpha}{\\cos\\alpha} = \\frac{0{,}6}{0{,}8} = 0{,}75$$ Die Beziehung folgt direkt aus den Definitionen im rechtwinkligen Dreieck: \\(\\frac{\\text{Gegenkathete}}{\\text{Hypotenuse}} : \\frac{\\text{Ankathete}}{\\text{Hypotenuse}}\\)."
+      },
+      {
+        id: 22, level: 4, typ: "mc",
+        frage: "Ein Schüler schließt aus \\(\\sin^2\\alpha + \\cos^2\\alpha = 1\\), dass auch \\(\\sin\\alpha + \\cos\\alpha = 1\\) gilt. Was ist dazu zu sagen?",
+        optionen: [
+            "Falsch – man darf aus einer Summe von Quadraten nicht die Wurzel gliedweise ziehen; für \\(45°\\) ergibt sich etwa \\(1{,}41\\)",
+            "Richtig, das folgt durch Wurzelziehen",
+            "Richtig, aber nur für spitze Winkel",
+            "Falsch, richtig wäre \\(\\sin\\alpha + \\cos\\alpha = 2\\)"
+        ],
+        korrekt: 0,
+        tipp: "Prüfe die Behauptung für \\(\\alpha = 45°\\) und für \\(\\alpha = 30°\\).",
+        loesungsweg: "Für \\(45°\\): \\(\\sin + \\cos \\approx 0{,}707 + 0{,}707 = 1{,}41 \\neq 1\\). Für \\(30°\\): \\(0{,}5 + 0{,}866 = 1{,}37\\). Die Wurzel aus einer Summe ist nicht die Summe der Wurzeln – derselbe Fehlertyp wie bei \\(\\sqrt{a^2+b^2} \\neq a + b\\). Nur für \\(\\alpha = 0°\\) oder \\(90°\\) ergibt die Summe zufällig \\(1\\)."
+      },
+      {
+        id: 23, level: 4, typ: "numerisch",
+        frage: "Berechne \\(\\sin(150°)\\) und runde auf zwei Dezimalstellen.",
+        loesung: 0.5, toleranz: 0.01,
+        tipp: "Nutze die Beziehung \\(\\sin(180° - \\alpha) = \\sin\\alpha\\) und einen bekannten Wert.",
+        loesungsweg: "$$\\sin(150°) = \\sin(180° - 30°) = \\sin(30°) = 0{,}5$$ Am Einheitskreis liegen beide Winkel symmetrisch zur \\(y\\)-Achse und haben deshalb denselben \\(y\\)-Wert."
+      },
+      {
+        id: 24, level: 4, typ: "mc",
+        frage: "Warum kann \\(\\sin\\alpha\\) für einen spitzen Winkel nie größer als \\(1\\) werden?",
+        optionen: [
+            "Weil die Gegenkathete im rechtwinkligen Dreieck nie länger als die Hypotenuse ist",
+            "Weil Winkel höchstens \\(90°\\) groß sind",
+            "Weil der Sinus als Bruch immer kleiner als sein Nenner ist",
+            "Weil \\(\\sin\\alpha\\) nur für \\(\\alpha < 45°\\) definiert ist"
+        ],
+        korrekt: 0,
+        tipp: "Welche Seite steht im Bruch oben, welche unten – und welche ist im rechtwinkligen Dreieck die längste?",
+        loesungsweg: "Es gilt \\(\\sin\\alpha = \\frac{\\text{Gegenkathete}}{\\text{Hypotenuse}}\\). Die Hypotenuse liegt dem rechten Winkel gegenüber und ist stets die längste Seite, der Zähler also höchstens so groß wie der Nenner: \\(\\sin\\alpha \\leq 1\\). Gleichheit gäbe es nur im Grenzfall \\(\\alpha = 90°\\)."
+      },
 
         // ===== LEVEL 5: Ausdrücke vereinfachen =====
         {
@@ -276,14 +272,11 @@
             loesungsweg: "Aus \\(\\sin^2\\alpha + \\cos^2\\alpha = 1\\) folgt direkt \\(\\cos^2\\alpha = 1 - \\sin^2\\alpha\\)."
         },
         {
-            id: 26,
-            level: 5,
-            typ: "mc",
-            frage: "Vereinfache: \\(\\dfrac{\\sin\\alpha}{\\tan\\alpha}\\)",
-            optionen: ["\\(\\cos\\alpha\\)", "\\(\\sin\\alpha\\)", "\\(1\\)", "\\(\\tan\\alpha\\)"],
-            korrekt: 0,
-            tipp: "Ersetze \\(\\tan\\alpha\\) durch \\(\\sin\\alpha/\\cos\\alpha\\).",
-            loesungsweg: "\\(\\dfrac{\\sin\\alpha}{\\tan\\alpha} = \\dfrac{\\sin\\alpha}{\\sin\\alpha/\\cos\\alpha} = \\sin\\alpha \\cdot \\dfrac{\\cos\\alpha}{\\sin\\alpha} = \\cos\\alpha\\)."
+          id: 26, level: 5, typ: "numerisch",
+          frage: "Fuer einen spitzen Winkel gilt \(\tan\alpha = 2\). Berechne \(\sin^2\alpha\) und runde auf zwei Dezimalstellen.",
+          loesung: 0.8, toleranz: 0.01,
+          tipp: "Schreibe \(\tan\alpha\) als Quotient und setze in den trigonometrischen Pythagoras ein.",
+          loesungsweg: "Aus \(\tan\alpha = \frac{\sin\alpha}{\cos\alpha} = 2\) folgt \(\sin\alpha = 2\cos\alpha\). Einsetzen in \(\sin^2\alpha + \cos^2\alpha = 1\): $$4\cos^2\alpha + \cos^2\alpha = 1 \Rightarrow \cos^2\alpha = 0{,}2$$ Damit \(\sin^2\alpha = 1 - 0{,}2 = 0{,}8\). (Der Winkel ist rund \(63{,}4°\).)"
         },
         {
             id: 27,

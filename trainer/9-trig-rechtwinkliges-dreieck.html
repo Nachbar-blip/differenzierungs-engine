@@ -264,67 +264,57 @@
             loesungsweg: "\\(a = 15 \\cdot \\sin(50°) \\approx 15 \\cdot 0{,}766 \\approx 11{,}49\\) cm."
         },
 
-        // ===== LEVEL 5: Anwendungsaufgaben =====
-        {
-            id: 25,
-            level: 5,
-            typ: "numerisch",
-            frage: "Eine 5 m lange Leiter lehnt in einem Winkel von \\(70°\\) zum Boden an einer Wand. In welcher Höhe berührt sie die Wand? (in m, zwei Nachkommastellen)",
-            loesung: 4.7,
-            toleranz: 0.05,
-            tipp: "Höhe = Gegenkathete des Winkels am Boden. Nutze \\(\\sin\\).",
-            loesungsweg: "\\(h = 5 \\cdot \\sin(70°) \\approx 5 \\cdot 0{,}9397 \\approx 4{,}70\\) m."
-        },
-        {
-            id: 26,
-            level: 5,
-            typ: "numerisch",
-            frage: "Ein Turm wirft aus \\(30\\) m Entfernung unter einem Sehwinkel von \\(35°\\) (gemessen vom Boden zur Turmspitze) einen Schatten. Wie hoch ist der Turm? (in m, zwei Nachkommastellen)",
-            loesung: 21.01,
-            toleranz: 0.1,
-            tipp: "Höhe = Gegenkathete, Abstand = Ankathete. Nutze \\(\\tan\\).",
-            loesungsweg: "\\(h = 30 \\cdot \\tan(35°) \\approx 30 \\cdot 0{,}7002 \\approx 21{,}01\\) m."
-        },
-        {
-            id: 27,
-            level: 5,
-            typ: "numerisch",
-            frage: "Eine Straße steigt auf 100 m horizontaler Entfernung um 12 m an. Wie groß ist der Steigungswinkel in Grad (eine Nachkommastelle)?",
-            loesung: 6.8,
-            toleranz: 0.2,
-            tipp: "\\(\\tan(\\alpha) = \\dfrac{\\text{Höhe}}{\\text{horizontale Strecke}} = \\dfrac{12}{100}\\)",
-            loesungsweg: "\\(\\tan(\\alpha) = 0{,}12 \\Rightarrow \\alpha = \\arctan(0{,}12) \\approx 6{,}84°\\)."
-        },
-        {
-            id: 28,
-            level: 5,
-            typ: "numerisch",
-            frage: "Ein Böschungswinkel beträgt \\(25°\\). Die Böschung (Hypotenuse) ist 8 m lang. Wie hoch ist die Böschung (Gegenkathete) in m, zwei Nachkommastellen?",
-            loesung: 3.38,
-            toleranz: 0.05,
-            tipp: "\\(h = 8 \\cdot \\sin(25°)\\)",
-            loesungsweg: "\\(h = 8 \\cdot \\sin(25°) \\approx 8 \\cdot 0{,}4226 \\approx 3{,}38\\) m."
-        },
-        {
-            id: 29,
-            level: 5,
-            typ: "numerisch",
-            frage: "Von einem Leuchtturm (Höhe 40 m) sieht man ein Schiff unter einem Tiefenwinkel von \\(20°\\). Wie weit ist das Schiff vom Fuß des Leuchtturms entfernt? (in m, eine Nachkommastelle)",
-            loesung: 109.9,
-            toleranz: 0.5,
-            tipp: "Der Tiefenwinkel liegt oben am Turm. Der Abstand ist die Ankathete des \\(20°\\)-Winkels, die Höhe die Gegenkathete. Also \\(\\tan(20°) = \\dfrac{40}{x}\\).",
-            loesungsweg: "\\(x = \\dfrac{40}{\\tan(20°)} \\approx \\dfrac{40}{0{,}364} \\approx 109{,}9\\) m."
-        },
-        {
-            id: 30,
-            level: 5,
-            typ: "mc",
-            frage: "Eine 6 m lange Leiter steht 1,5 m von der Wand entfernt. Welchen Winkel bildet sie mit dem Boden (gerundet)?",
-            optionen: ["75,5°", "14,5°", "60°", "78,5°"],
-            korrekt: 0,
-            tipp: "\\(\\cos(\\alpha) = \\dfrac{1{,}5}{6}\\)",
-            loesungsweg: "\\(\\cos(\\alpha) = \\dfrac{1{,}5}{6} = 0{,}25 \\Rightarrow \\alpha = \\arccos(0{,}25) \\approx 75{,}52°\\)."
-        },
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 5 — mehrschrittige Bestimmungen, Fehlersuche
+      // ═══════════════════════════════════════════════════════════
+      {
+        id: 25, level: 5, typ: "mc",
+        frage: "Gesucht ist in einem rechtwinkligen Dreieck die Gegenkathete zu \\(\\alpha = 40°\\) bei der Hypotenuse \\(c = 10\\). Ein Schüler rechnet \\(a = 10 \\cdot \\cos(40°)\\). Was ist dazu zu sagen?",
+        optionen: [
+            "Falsch – zur Gegenkathete gehört der Sinus: \\(a = 10 \\cdot \\sin(40°) \\approx 6{,}43\\)",
+            "Richtig, Kosinus und Sinus sind bei \\(40°\\) gleich",
+            "Falsch, richtig wäre \\(a = \\frac{10}{\\cos(40°)}\\)",
+            "Richtig, denn die Hypotenuse steht immer im Nenner"
+        ],
+        korrekt: 0,
+        tipp: "Welches Verhältnis beschreibt der Sinus, welches der Kosinus?",
+        loesungsweg: "\\(\\sin\\alpha = \\frac{\\text{Gegenkathete}}{\\text{Hypotenuse}}\\), also \\(a = c \\cdot \\sin\\alpha \\approx 6{,}43\\). Der Schüler hat die <b>An</b>kathete berechnet: \\(10 \\cdot \\cos(40°) \\approx 7{,}66\\) – das ist die Seite \\(b\\). Das Vertauschen von Gegen- und Ankathete ist der häufigste Fehler bei diesen Aufgaben."
+      },
+      {
+        id: 26, level: 5, typ: "numerisch",
+        frage: "In einem rechtwinkligen Dreieck ist die Kathete \\(a = 6\\,\\text{cm}\\) lang, der ihr gegenüberliegende Winkel beträgt \\(\\alpha = 35°\\). Berechne die Hypotenuse \\(c\\) in cm. Runde auf zwei Dezimalstellen.",
+        loesung: 10.46, toleranz: 0.05,
+        tipp: "Stelle die Sinusbeziehung nach der Hypotenuse um.",
+        loesungsweg: "$$\\sin\\alpha = \\frac{a}{c} \\Rightarrow c = \\frac{a}{\\sin\\alpha} = \\frac{6}{\\sin(35°)} \\approx \\frac{6}{0{,}5736} \\approx 10{,}46\\,\\text{cm}$$"
+      },
+      {
+        id: 27, level: 5, typ: "numerisch",
+        frage: "Ein rechtwinkliges Dreieck hat die Hypotenuse \\(c = 10\\,\\text{cm}\\) und den Winkel \\(\\alpha = 40°\\). Berechne seinen Flächeninhalt in \\(\\text{cm}^2\\). Runde auf zwei Dezimalstellen.",
+        loesung: 24.62, toleranz: 0.1,
+        tipp: "Bestimme zuerst beide Katheten – sie sind zugleich Grundseite und Höhe.",
+        loesungsweg: "$$a = 10 \\cdot \\sin(40°) \\approx 6{,}43, \\qquad b = 10 \\cdot \\cos(40°) \\approx 7{,}66$$ Im rechtwinkligen Dreieck stehen die Katheten senkrecht aufeinander: $$A = \\frac{1}{2} \\cdot 6{,}43 \\cdot 7{,}66 \\approx 24{,}62\\,\\text{cm}^2$$"
+      },
+      {
+        id: 28, level: 5, typ: "numerisch",
+        frage: "In einem Dreieck ist die Seite \\(b = 12\\,\\text{cm}\\) lang und schließt mit der Seite \\(c\\) den Winkel \\(\\alpha = 50°\\) ein. Wie hoch ist das Dreieck über der Seite \\(c\\)? Runde auf zwei Dezimalstellen.",
+        loesung: 9.19, toleranz: 0.05,
+        tipp: "Die Höhe teilt das Dreieck in zwei rechtwinklige Teildreiecke – betrachte das mit der Seite \\(b\\) als Hypotenuse.",
+        loesungsweg: "Im linken Teildreieck ist \\(b\\) die Hypotenuse und \\(h_c\\) die Gegenkathete zu \\(\\alpha\\): $$h_c = b \\cdot \\sin\\alpha = 12 \\cdot \\sin(50°) \\approx 9{,}19\\,\\text{cm}$$ Diese Zerlegung ist der Schlüssel für den Sinussatz im allgemeinen Dreieck."
+      },
+      {
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Ein Satteldach hat \\(6\\,\\text{m}\\) lange Sparren und eine Dachneigung von \\(35°\\). Wie breit ist das Haus? Runde auf zwei Dezimalstellen.",
+        loesung: 9.83, toleranz: 0.05,
+        tipp: "Der Sparren ist die Hypotenuse; die halbe Hausbreite ist die anliegende Kathete.",
+        loesungsweg: "Halbe Breite: \\(6 \\cdot \\cos(35°) \\approx 4{,}91\\,\\text{m}\\). Gesamte Breite: $$2 \\cdot 4{,}91 \\approx 9{,}83\\,\\text{m}$$"
+      },
+      {
+        id: 30, level: 5, typ: "numerisch",
+        frage: "In einem rechtwinkligen Dreieck gilt \\(\\tan\\alpha = 1{,}5\\); die Ankathete ist \\(8\\,\\text{cm}\\) lang. Wie lang ist die Gegenkathete in cm?",
+        loesung: 12, toleranz: 0.01,
+        tipp: "Der Tangens verbindet die beiden Katheten unmittelbar miteinander.",
+        loesungsweg: "$$\\tan\\alpha = \\frac{\\text{Gegenkathete}}{\\text{Ankathete}} \\Rightarrow \\text{Gegenkathete} = 1{,}5 \\cdot 8 = 12\\,\\text{cm}$$ Die Hypotenuse wird hier gar nicht gebraucht."
+      },
 
         // ===== LEVEL 6: Zwei-Schritt-Probleme =====
         {

@@ -225,58 +225,56 @@
       },
 
       // ═══════════════════════════════════════════════════════════
-      // Level 5 — Ausreißer (1,5·IQR-Regel)
+      // LEVEL 5 — Ausreißer und Quartile aus Rohdaten, Fehlersuche
       // ═══════════════════════════════════════════════════════════
-
       {
-        id: 25, level: 5, typ: "mc",
-        frage: "Ein Datenwert gilt als Ausreißer, wenn er kleiner als \\(Q_1 - 1{,}5 \\cdot \\text{IQR}\\) oder größer als \\(Q_3 + 1{,}5 \\cdot \\text{IQR}\\) ist. Gegeben: \\(Q_1 = 10\\), \\(Q_3 = 20\\). Ab welchem Wert nach oben gilt ein Wert als Ausreißer?",
-        optionen: ["größer als \\(35\\)", "größer als \\(30\\)", "größer als \\(25\\)", "größer als \\(40\\)"],
-        korrekt: 0,
-        tipp: "\\(\\text{IQR} = 10\\), obere Grenze \\(= Q_3 + 1{,}5 \\cdot \\text{IQR}\\).",
-        loesungsweg: "\\(\\text{IQR} = 20 - 10 = 10\\). Obere Ausreißergrenze: \\(20 + 1{,}5 \\cdot 10 = 20 + 15 = 35\\)."
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Gegeben ist die sortierte Datenreihe \\(4,\\ 6,\\ 7,\\ 9,\\ 11,\\ 12,\\ 14,\\ 30\\). Bestimme den Interquartilsabstand.",
+        loesung: 6.5, toleranz: 0.01,
+        tipp: "Teile die Reihe in zwei Hälften und bestimme in jeder Hälfte den Median.",
+        loesungsweg: "Untere Hälfte \\(4, 6, 7, 9\\): \\(Q_1 = \\frac{6+7}{2} = 6{,}5\\). Obere Hälfte \\(11, 12, 14, 30\\): \\(Q_3 = \\frac{12+14}{2} = 13\\). $$\\text{IQR} = Q_3 - Q_1 = 13 - 6{,}5 = 6{,}5$$"
       },
       {
         id: 26, level: 5, typ: "numerisch",
-        frage: "Gegeben: \\(Q_1 = 8\\), \\(Q_3 = 16\\). Berechne die untere Ausreißergrenze \\(Q_1 - 1{,}5 \\cdot \\text{IQR}\\).",
-        loesung: -4, toleranz: 0.01,
-        tipp: "\\(\\text{IQR} = 16 - 8 = 8\\).",
-        loesungsweg: "\\(\\text{IQR} = 8\\). Untere Grenze: \\(8 - 1{,}5 \\cdot 8 = 8 - 12 = -4\\)."
+        frage: "Für eine Datenreihe gilt \\(Q_1 = 8\\) und \\(Q_3 = 16\\). Ab welchem Wert gilt ein großer Datenwert als Ausreißer?",
+        loesung: 28, toleranz: 0.01,
+        tipp: "Die obere Grenze liegt anderthalb Interquartilsabstände über dem oberen Quartil.",
+        loesungsweg: "\\(\\text{IQR} = 16 - 8 = 8\\). Obere Ausreißergrenze: $$Q_3 + 1{,}5 \\cdot \\text{IQR} = 16 + 12 = 28$$ Werte über \\(28\\) gelten als Ausreißer."
       },
       {
         id: 27, level: 5, typ: "mc",
-        frage: "Gegeben: \\(Q_1 = 20\\), \\(Q_3 = 30\\). Ein Wert von 50 wird gemessen. Ist er ein Ausreißer?",
-        optionen: [
-          "Ja, da \\(50 > Q_3 + 1{,}5 \\cdot \\text{IQR} = 45\\)",
-          "Nein, da \\(50 < 60\\)",
-          "Nein, da 50 im normalen Bereich liegt",
-          "Das lässt sich ohne Median nicht entscheiden"
-        ],
-        korrekt: 0,
-        tipp: "\\(\\text{IQR} = 10\\), also obere Grenze \\(= 30 + 15 = 45\\).",
-        loesungsweg: "\\(\\text{IQR} = 30 - 20 = 10\\). Obere Grenze: \\(30 + 1{,}5 \\cdot 10 = 45\\). Da \\(50 > 45\\), ist 50 ein Ausreißer."
+        frage: "Ein Schüler prüft, ob \\(50\\) bei \\(Q_1 = 20\\) und \\(Q_3 = 30\\) ein Ausreißer ist:<br>Schritt 1: \\(\\text{IQR} = 10\\)<br>Schritt 2: Grenze \\(= Q_3 + \\text{IQR} = 40\\)<br>Schritt 3: \\(50 > 40\\), also Ausreißer<br>Welcher Schritt ist der erste fehlerhafte?",
+        optionen: ["Schritt 1", "Schritt 2", "Schritt 3", "Kein Schritt ist fehlerhaft"],
+        korrekt: 1,
+        tipp: "Mit welchem Faktor wird der Interquartilsabstand bei der Ausreißergrenze versehen?",
+        loesungsweg: "Der Interquartilsabstand in Schritt 1 stimmt. In Schritt 2 fehlt der Faktor \\(1{,}5\\): $$Q_3 + 1{,}5 \\cdot \\text{IQR} = 30 + 15 = 45$$ Das Ergebnis „Ausreißer\" bleibt hier zwar richtig (\\(50 > 45\\)), aber die Grenze war falsch – bei einem Wert von \\(42\\) hätte der Fehler zur falschen Entscheidung geführt."
       },
       {
         id: 28, level: 5, typ: "numerisch",
-        frage: "Sortierte Liste: \\(5,\\ 7,\\ 8,\\ 9,\\ 10,\\ 11,\\ 12,\\ 25\\). Es gilt \\(Q_1 = 7{,}5\\), \\(Q_3 = 11{,}5\\). Berechne die obere Ausreißergrenze \\(Q_3 + 1{,}5 \\cdot \\text{IQR}\\).",
-        loesung: 17.5, toleranz: 0.01,
-        tipp: "\\(\\text{IQR} = 11{,}5 - 7{,}5 = 4\\).",
-        loesungsweg: "\\(\\text{IQR} = 4\\). Obere Grenze: \\(11{,}5 + 1{,}5 \\cdot 4 = 11{,}5 + 6 = 17{,}5\\). Der Wert 25 liegt darüber und ist somit ein Ausreißer."
+        frage: "Sortierte Liste: \\(5,\\ 7,\\ 8,\\ 9,\\ 10,\\ 11,\\ 12,\\ 25\\). Wie viele Werte sind Ausreißer?",
+        loesung: 1, toleranz: 0,
+        tipp: "Bestimme zuerst die Quartile aus den Daten, dann beide Ausreißergrenzen.",
+        loesungsweg: "Untere Hälfte \\(5, 7, 8, 9\\): \\(Q_1 = 7{,}5\\); obere Hälfte \\(10, 11, 12, 25\\): \\(Q_3 = 11{,}5\\). \\(\\text{IQR} = 4\\). Grenzen: $$7{,}5 - 6 = 1{,}5 \\quad\\text{und}\\quad 11{,}5 + 6 = 17{,}5$$ Nur der Wert \\(25\\) liegt außerhalb – also <b>ein</b> Ausreißer."
       },
       {
-        id: 29, level: 5, typ: "mc",
-        frage: "Für eine Datenreihe gilt \\(Q_1 = 12\\), \\(Q_3 = 24\\). Welcher der Werte ist ein Ausreißer?",
-        optionen: ["\\(45\\)", "\\(30\\)", "\\(6\\)", "\\(38\\)"],
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Bestimme den Median der Datenreihe \\(12,\\ 7,\\ 15,\\ 9,\\ 20,\\ 11\\).",
+        loesung: 11.5, toleranz: 0.01,
+        tipp: "Sortiere zuerst – bei gerader Anzahl liegt der Median zwischen den beiden mittleren Werten.",
+        loesungsweg: "Sortiert: \\(7, 9, 11, 12, 15, 20\\). Bei \\(n = 6\\) ist der Median der Mittelwert des dritten und vierten Wertes: $$\\tilde{x} = \\frac{11 + 12}{2} = 11{,}5$$ Ein häufiger Fehler ist, einfach den dritten Wert zu nehmen."
+      },
+      {
+        id: 30, level: 5, typ: "mc",
+        frage: "Zwei Klassen schreiben dieselbe Arbeit. Klasse A hat den Median \\(9\\) und den Interquartilsabstand \\(2\\), Klasse B den Median \\(9\\) und den Interquartilsabstand \\(7\\). Was lässt sich sagen?",
+        optionen: [
+            "Die mittleren Leistungen sind vergleichbar, in Klasse B liegen die Ergebnisse aber viel weiter auseinander",
+            "Klasse A ist insgesamt besser",
+            "Klasse B ist insgesamt besser",
+            "Die Angaben widersprechen sich"
+        ],
         korrekt: 0,
-        tipp: "\\(\\text{IQR} = 12\\). Obere Grenze: \\(24 + 18 = 42\\).",
-        loesungsweg: "\\(\\text{IQR} = 24 - 12 = 12\\). Obere Grenze: \\(24 + 1{,}5 \\cdot 12 = 24 + 18 = 42\\). Untere Grenze: \\(12 - 18 = -6\\). Nur 45 liegt oberhalb von 42 und ist damit Ausreißer."
-      },
-      {
-        id: 30, level: 5, typ: "numerisch",
-        frage: "Gegeben: \\(Q_1 = 50\\), \\(Q_3 = 80\\). Berechne \\(1{,}5 \\cdot \\text{IQR}\\).",
-        loesung: 45, toleranz: 0,
-        tipp: "\\(\\text{IQR} = 80 - 50\\).",
-        loesungsweg: "\\(\\text{IQR} = 30\\). \\(1{,}5 \\cdot 30 = 45\\)."
+        tipp: "Der Median beschreibt die Mitte, der Interquartilsabstand die Streuung des mittleren Bereichs.",
+        loesungsweg: "Gleicher Median bedeutet: Die jeweils mittlere Leistung ist gleich. Der größere Interquartilsabstand in Klasse B zeigt, dass die mittleren \\(50\\,\\%\\) der Ergebnisse dort über eine viel größere Spanne verteilt sind – die Klasse ist leistungsheterogener. Über „besser\" sagt das nichts."
       },
 
       // ═══════════════════════════════════════════════════════════
@@ -317,17 +315,11 @@
         loesungsweg: "\\(\\text{IQR} = 13{,}5 - 5{,}5 = 8\\). Untere Grenze: \\(5{,}5 - 1{,}5 \\cdot 8 = -6{,}5\\). Obere Grenze: \\(13{,}5 + 1{,}5 \\cdot 8 = 25{,}5\\). Alle Werte liegen im Bereich \\([-6{,}5;\\ 25{,}5]\\) — keine Ausreißer."
       },
       {
-        id: 34, level: 6, typ: "mc",
-        frage: "Zwei Klassen schreiben dieselbe Arbeit. Boxplot A (Klasse 9a): Median 12, \\(\\text{IQR} = 4\\). Boxplot B (Klasse 9b): Median 10, \\(\\text{IQR} = 8\\). Welche Aussage trifft zu?",
-        optionen: [
-          "9a hat einen höheren typischen Punktwert und eine homogenere Leistung",
-          "9b ist insgesamt besser, weil die Box breiter ist",
-          "Beide Klassen sind gleich gut",
-          "9a ist schlechter, da ihr Median niedriger ist"
-        ],
-        korrekt: 0,
-        tipp: "Median = typischer Wert, \\(\\text{IQR}\\) = Streuung der mittleren 50%.",
-        loesungsweg: "9a hat den höheren Median (12 > 10) und kleineren \\(\\text{IQR}\\) (4 < 8). Also: typisch bessere Leistung und weniger Streuung im mittleren Bereich."
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Zwei Klassen schreiben dieselbe Arbeit. Klasse 9a: Median \(12\), \(Q_1 = 10\), \(Q_3 = 14\). Klasse 9b: Median \(10\), \(Q_1 = 6\), \(Q_3 = 14\). Um wie viel ist der Interquartilsabstand der 9b groesser?",
+        loesung: 4, toleranz: 0.01,
+        tipp: "Berechne beide Interquartilsabstaende und bilde die Differenz.",
+        loesungsweg: "9a: \(\text{IQR} = 14 - 10 = 4\). 9b: \(\text{IQR} = 14 - 6 = 8\). Differenz: $$8 - 4 = 4$$ Beide Klassen erreichen im oberen Quartil denselben Wert, aber in der 9b streuen die mittleren 50 % doppelt so weit - die Leistungen liegen dort deutlich weiter auseinander."
       },
       {
         id: 35, level: 6, typ: "numerisch",

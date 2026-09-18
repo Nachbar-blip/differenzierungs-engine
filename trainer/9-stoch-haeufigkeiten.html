@@ -307,69 +307,63 @@
       },
 
       // ═══════════════════════════════════════════════════════════
-      // Level 6 — Kritische Interpretation, Repräsentativität
+      // LEVEL 6 — Stichproben beurteilen, rechnen und entscheiden
       // ═══════════════════════════════════════════════════════════
-
       {
         id: 31, level: 6, typ: "mc",
-        frage: "Eine Umfrage nur unter Lehrkräften einer Schule ergibt, dass 92 % die Einführung einer Hausaufgabenpflicht befürworten. Warum ist dieses Ergebnis NICHT repräsentativ für die gesamte Schulgemeinschaft?",
+        frage: "Eine Umfrage nur unter Lehrkräften einer Schule ergibt, dass \\(92\\,\\%\\) die Einführung eines Handyverbots befürworten. Was folgt daraus für die ganze Schulgemeinschaft?",
         optionen: [
-          "Die Stichprobe ist nicht aus der gesamten Grundgesamtheit gezogen — Schüler und Eltern fehlen",
-          "Die Stichprobe ist zu klein",
-          "Die relative Häufigkeit müsste als Bruch angegeben werden",
-          "92 % ist ein unmöglicher Wert"
+            "Nichts Belastbares – die Stichprobe ist nicht repräsentativ, weil eine betroffene Gruppe gar nicht befragt wurde",
+            "Auch in der ganzen Schulgemeinschaft sind rund \\(92\\,\\%\\) dafür",
+            "Mindestens die Hälfte der Schülerschaft ist dafür",
+            "Die Umfrage ist wertlos, weil Prozentangaben bei Umfragen unzulässig sind"
         ],
         korrekt: 0,
-        tipp: "Eine repräsentative Stichprobe muss die Struktur der Grundgesamtheit widerspiegeln.",
-        loesungsweg: "Die Grundgesamtheit umfasst auch Schüler und Eltern. Da nur Lehrkräfte befragt wurden, ist die Stichprobe verzerrt und nicht repräsentativ für die gesamte Schulgemeinschaft."
+        tipp: "Wer gehört zur Grundgesamtheit, über die eine Aussage getroffen werden soll – und wer wurde befragt?",
+        loesungsweg: "Die Stichprobe umfasst nur eine von mehreren betroffenen Gruppen; die Schülerschaft ist systematisch ausgeschlossen. Eine solche Auswahl ist verzerrt, und die \\(92\\,\\%\\) lassen sich nicht auf die gesamte Schulgemeinschaft übertragen. Für die <b>Lehrkräfte</b> ist der Wert dagegen aussagekräftig."
       },
       {
         id: 32, level: 6, typ: "numerisch",
-        frage: "Zwei Stichproben zur gleichen Frage: Stichprobe A: \\(n = 50\\), \\(h_n(\\text{Ja}) = 0{,}60\\). Stichprobe B: \\(n = 2000\\), \\(h_n(\\text{Ja}) = 0{,}52\\). Welcher Wert ist als Schätzung der tatsächlichen Quote vertrauenswürdiger? Gib den Wert ein.",
-        loesung: 0.52, toleranz: 0.001,
-        tipp: "Nach dem empirischen Gesetz der großen Zahlen: Je größer \\(n\\), desto stabiler \\(h_n\\).",
-        loesungsweg: "Stichprobe B hat deutlich mehr Daten. Nach dem Gesetz der großen Zahlen ist \\(h_n = 0{,}52\\) die bessere Schätzung."
+        frage: "Zwei Stichproben zur gleichen Frage: A mit \\(n = 50\\) und \\(26\\) Ja-Stimmen, B mit \\(n = 200\\) und \\(104\\) Ja-Stimmen. Wie groß ist die relative Häufigkeit, wenn man beide Stichproben zusammenfasst?",
+        loesung: 0.52, toleranz: 0.005,
+        tipp: "Fasse Ja-Stimmen und Befragte jeweils zusammen, bevor du teilst.",
+        loesungsweg: "$$h = \\frac{26 + 104}{50 + 200} = \\frac{130}{250} = 0{,}52$$ Hier stimmen beide Einzelwerte ohnehin überein (\\(0{,}52\\)); bei verschiedenen Werten würde die größere Stichprobe das Gesamtergebnis stärker prägen – ein Mittelwert der beiden Anteile wäre falsch."
       },
       {
-        id: 33, level: 6, typ: "numerisch",
-        frage: "Aus einer Langzeitstudie weiß man: Die relative Häufigkeit, dass eine bestimmte Reißzwecke mit der Spitze nach oben fällt, liegt stabil bei 0,62. Mit wie vielen \"Spitze oben\"-Ergebnissen rechnet man näherungsweise bei 1500 Würfen?",
-        loesung: 930, toleranz: 5,
-        tipp: "\\(H_n \\approx h_n \\cdot n\\)",
-        loesungsweg: "Erwartete absolute Häufigkeit: \\(H_n \\approx 0{,}62 \\cdot 1500 = 930\\)."
-      },
-      {
-        id: 34, level: 6, typ: "mc",
-        frage: "Ein Würfel wird 300-mal geworfen, die Sechs erscheint 78-mal. \\(h_n(6) = 0{,}26\\). Welche Schlussfolgerung ist am sachlich angemessensten?",
+        id: 33, level: 6, typ: "mc",
+        frage: "Ein Schüler notiert für ein Merkmal die relative Häufigkeit \\(h_n = 1{,}2\\). Was ist dazu zu sagen?",
         optionen: [
-          "Es besteht ein begründeter Verdacht, dass der Würfel nicht fair ist — eine größere Stichprobe sollte dies klären",
-          "Der Würfel ist garantiert gezinkt — weitere Experimente sind überflüssig",
-          "Die Abweichung liegt im normalen Zufallsbereich und kann komplett ignoriert werden",
-          "Das Ergebnis ist mathematisch unmöglich"
+            "Das kann nicht stimmen – relative Häufigkeiten liegen stets zwischen \\(0\\) und \\(1\\)",
+            "Das bedeutet, das Merkmal trat bei \\(120\\) von \\(100\\) Personen auf",
+            "Das ist möglich, wenn mehrere Antworten erlaubt waren",
+            "Das bedeutet einen Zuwachs von \\(20\\,\\%\\)"
         ],
         korrekt: 0,
-        tipp: "Erwartet wäre \\(h_n \\approx 0{,}167\\). Die Abweichung ist deutlich, aber garantiert ist nichts.",
-        loesungsweg: "\\(h_n = 0{,}26\\) liegt deutlich über dem erwarteten Wert \\(\\frac{1}{6} \\approx 0{,}167\\). Das ist ein starker Hinweis auf eine Unregelmäßigkeit, aber kein Beweis. Eine größere Stichprobe würde mehr Sicherheit geben."
+        tipp: "Wie ist die relative Häufigkeit definiert, und wie groß kann der Zähler höchstens werden?",
+        loesungsweg: "Es gilt \\(h_n = \\frac{k}{n}\\) mit \\(0 \\leq k \\leq n\\), also stets \\(0 \\leq h_n \\leq 1\\) (bzw. \\(0\\,\\%\\) bis \\(100\\,\\%\\)). Ein Wert über \\(1\\) weist auf einen Rechen- oder Zählfehler hin – etwa auf eine verwechselte Division. Auch bei Mehrfachantworten wäre jede Antwortoption für sich wieder höchstens \\(1\\)."
+      },
+      {
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Ein Würfel wird \\(300\\)-mal geworfen; die Sechs erscheint \\(78\\)-mal. Um wie viele Würfe weicht das von der erwarteten Anzahl ab?",
+        loesung: 28, toleranz: 0,
+        tipp: "Wie oft erwartet man bei einem fairen Würfel die Sechs unter \\(300\\) Würfen?",
+        loesungsweg: "Erwartet: \\(300 \\cdot \\frac{1}{6} = 50\\). Beobachtet: \\(78\\). $$78 - 50 = 28$$ Die relative Häufigkeit \\(0{,}26\\) liegt deutlich über \\(\\frac16 \\approx 0{,}167\\) – ein Hinweis darauf, dass der Würfel nicht fair sein könnte."
       },
       {
         id: 35, level: 6, typ: "numerisch",
-        frage: "In einer Stadt mit 80000 Einwohnern wird eine repräsentative Stichprobe von 1200 Personen befragt. 288 nutzen regelmäßig den ÖPNV. Schätze die absolute Anzahl der ÖPNV-Nutzer in der gesamten Stadt.",
-        loesung: 19200, toleranz: 50,
-        tipp: "Berechne \\(h_n\\) der Stichprobe und übertrage auf die Grundgesamtheit.",
-        loesungsweg: "\\(h_n = \\frac{288}{1200} = 0{,}24\\). Schätzung: \\(0{,}24 \\cdot 80000 = 19200\\) Einwohner."
+        frage: "In einer Stadt mit \\(80\\,000\\) Einwohnern befürworten in einer repräsentativen Stichprobe von \\(1200\\) Befragten \\(432\\) Personen ein Projekt. Mit wie vielen Befürwortern ist in der Gesamtbevölkerung zu rechnen?",
+        loesung: 28800, toleranz: 10,
+        tipp: "Bestimme zuerst den Anteil in der Stichprobe und übertrage ihn auf die Gesamtzahl.",
+        loesungsweg: "$$h = \\frac{432}{1200} = 0{,}36$$ Hochrechnung: $$0{,}36 \\cdot 80\\,000 = 28\\,800$$ Die Hochrechnung setzt voraus, dass die Stichprobe tatsächlich repräsentativ ist."
       },
       {
-        id: 36, level: 6, typ: "mc",
-        frage: "Eine Online-Umfrage auf einer Fußballseite ergibt, dass 89 % der Befragten Fußball als beliebteste Sportart nennen. Welcher Kritikpunkt ist am wichtigsten?",
-        optionen: [
-          "Die Stichprobe ist selbst-selektiv und nicht repräsentativ für die Gesamtbevölkerung",
-          "Die Prozentangabe 89 % ist mathematisch falsch",
-          "Die relative Häufigkeit hätte als Bruch angegeben werden müssen",
-          "Eine Umfrage mit weniger als 1000 Personen ist grundsätzlich unbrauchbar"
-        ],
-        korrekt: 0,
-        tipp: "Wer nimmt an einer Umfrage auf einer Fußballseite teil?",
-        loesungsweg: "Die Teilnehmer sind bereits an Fußball interessiert (Selbst-Selektion). Die Stichprobe spiegelt also nicht die Gesamtbevölkerung wider und ist deshalb nicht repräsentativ."
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Eine Münze wird geworfen; nach \\(20\\) Würfen liegt die relative Häufigkeit für Kopf bei \\(0{,}65\\). Wie viele Kopf-Würfe müssten in den nächsten \\(30\\) Würfen fallen, damit die relative Häufigkeit nach \\(50\\) Würfen genau \\(0{,}5\\) beträgt?",
+        loesung: 12, toleranz: 0,
+        tipp: "Rechne beide Male mit absoluten Anzahlen statt mit Anteilen.",
+        loesungsweg: "Bisher: \\(0{,}65 \\cdot 20 = 13\\) Kopf-Würfe. Ziel nach \\(50\\) Würfen: \\(0{,}5 \\cdot 50 = 25\\). $$25 - 13 = 12$$ In den nächsten \\(30\\) Würfen müssten also genau \\(12\\)-mal Kopf fallen – weniger als die Hälfte. Das Gesetz der großen Zahlen sorgt nicht für einen Ausgleich, sondern dafür, dass frühe Abweichungen mit wachsendem \\(n\\) an Gewicht verlieren."
       }
+
 
     ];
     </script>
