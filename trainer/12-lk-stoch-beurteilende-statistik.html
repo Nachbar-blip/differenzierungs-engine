@@ -291,87 +291,63 @@
         loesungsweg: "Da \\(X = 65 \\le 67\\), liegt das Ergebnis im Ablehnungsbereich. \\(H_0\\) wird auf dem 5 %-Niveau abgelehnt."
     },
 
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 5 — Fehler 1. und 2. Art
-    // ══════════════════════════════════════════════════════════════
-    {
-        id: 25, level: 5, typ: "mc",
-        frage: "Was ist ein <strong>Fehler 1. Art</strong> (\\(\\alpha\\)-Fehler)?",
-        optionen: [
-            "\\(H_0\\) wird abgelehnt, obwohl \\(H_0\\) in Wirklichkeit wahr ist",
-            "\\(H_0\\) wird beibehalten, obwohl \\(H_0\\) in Wirklichkeit falsch ist",
-            "\\(H_1\\) wird abgelehnt, obwohl \\(H_1\\) wahr ist",
-            "Der Test liefert kein Ergebnis"
-        ],
-        korrekt: 0,
-        tipp: "Fehler 1. Art = fälschliches Ablehnen der Nullhypothese.",
-        loesungsweg: "Fehler 1. Art: \\(H_0\\) wird abgelehnt, obwohl sie wahr ist. Die Wahrscheinlichkeit dafür ist höchstens \\(\\alpha\\)."
-    },
-    {
-        id: 26, level: 5, typ: "mc",
-        frage: "Was ist ein <strong>Fehler 2. Art</strong> (\\(\\beta\\)-Fehler)?",
-        optionen: [
-            "\\(H_0\\) wird beibehalten, obwohl \\(H_0\\) in Wirklichkeit falsch ist",
-            "\\(H_0\\) wird abgelehnt, obwohl \\(H_0\\) in Wirklichkeit wahr ist",
-            "\\(H_1\\) wird abgelehnt, obwohl \\(H_0\\) falsch ist",
-            "Beide Hypothesen werden gleichzeitig abgelehnt"
-        ],
-        korrekt: 0,
-        tipp: "Fehler 2. Art = fälschliches Beibehalten der Nullhypothese.",
-        loesungsweg: "Fehler 2. Art: \\(H_0\\) wird beibehalten (nicht abgelehnt), obwohl sie falsch ist und \\(H_1\\) zutrifft. Die Wahrscheinlichkeit dafür ist \\(\\beta\\)."
-    },
-    {
-        id: 27, level: 5, typ: "mc",
-        frage: "Ein Medikament-Test prüft \\(H_0\\colon\\) \u201EDas Medikament wirkt nicht\u201C gegen \\(H_1\\colon\\) \u201EDas Medikament wirkt\u201C. Was bedeutet ein Fehler 1. Art im Sachkontext?",
-        optionen: [
-            "Man schließt, dass das Medikament wirkt, obwohl es in Wirklichkeit nicht wirkt",
-            "Man schließt, dass das Medikament nicht wirkt, obwohl es in Wirklichkeit wirkt",
-            "Das Medikament hat Nebenwirkungen",
-            "Die Stichprobe ist zu klein"
-        ],
-        korrekt: 0,
-        tipp: "Fehler 1. Art = \\(H_0\\) fälschlicherweise ablehnen. Hier: fälschlich Wirksamkeit feststellen.",
-        loesungsweg: "Fehler 1. Art: \\(H_0\\) (keine Wirkung) wird abgelehnt, obwohl sie stimmt. Man lässt ein unwirksames Medikament zu."
-    },
-    {
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 5 — Ablehnungsbereich selbst bestimmen, Fehler 2. Art rechnen
+      // ═══════════════════════════════════════════════════════════
+      {
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Ein linksseitiger Test prüft \\(H_0\\colon p = 0{,}5\\) bei \\(n = 100\\) auf dem Niveau \\(\\alpha = 0{,}05\\). Aus der kumulierten Binomialverteilung ist bekannt: \\(P(X \\leq 41) = 0{,}0443\\) und \\(P(X \\leq 42) = 0{,}0666\\). Bis zu welcher Trefferzahl reicht der Ablehnungsbereich?",
+        loesung: 41, toleranz: 0,
+        tipp: "Der Ablehnungsbereich darf höchstens die Wahrscheinlichkeit \\(\\alpha\\) auf sich vereinen.",
+        loesungsweg: "Gesucht ist das größte \\(k\\) mit \\(P(X \\leq k) \\leq 0{,}05\\). Wegen $$P(X \\leq 41) = 0{,}0443 \\leq 0{,}05 \\quad\\text{und}\\quad P(X \\leq 42) = 0{,}0666 > 0{,}05$$ ist \\(k = 41\\). Der Ablehnungsbereich lautet \\(\\{0; 1; \\ldots; 41\\}\\), das tatsächliche Signifikanzniveau beträgt \\(4{,}43\\,\\%\\)."
+      },
+      {
+        id: 26, level: 5, typ: "numerisch",
+        frage: "Beim Test aus der vorigen Aufgabe (Ablehnungsbereich \\(\\{0; \\ldots; 41\\}\\), \\(n = 100\\)) gelte in Wirklichkeit \\(p = 0{,}4\\). Wie groß ist dann die Wahrscheinlichkeit für einen Fehler 2. Art? Runde auf zwei Dezimalstellen.",
+        loesung: 0.38, toleranz: 0.02,
+        tipp: "Der Fehler 2. Art bedeutet: \\(H_0\\) wird beibehalten, obwohl sie falsch ist – das Ergebnis fällt also <b>nicht</b> in den Ablehnungsbereich.",
+        loesungsweg: "$$\\beta = P_{p=0{,}4}(X \\geq 42) = 1 - P_{p=0{,}4}(X \\leq 41) \\approx 0{,}38$$ Obwohl die wahre Trefferquote deutlich unter \\(0{,}5\\) liegt, bleibt \\(H_0\\) in rund \\(38\\,\\%\\) der Fälle unentdeckt – ein größerer Stichprobenumfang würde das verringern."
+      },
+      {
+        id: 27, level: 5, typ: "numerisch",
+        frage: "Wie groß muss der Stichprobenumfang \\(n\\) mindestens sein, damit das \\(95\\,\\%\\)-Konfidenzintervall für \\(p\\) bei einer beobachteten relativen Häufigkeit von \\(0{,}5\\) höchstens \\(0{,}04\\) breit ist?",
+        loesung: 2401, toleranz: 2,
+        tipp: "Die halbe Intervallbreite beträgt \\(1{,}96 \\cdot \\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}}\\).",
+        loesungsweg: "$$2 \\cdot 1{,}96 \\cdot \\frac{0{,}5}{\\sqrt{n}} \\leq 0{,}04 \\;\\Longleftrightarrow\\; \\sqrt{n} \\geq \\frac{1{,}96}{0{,}04} = 49$$ $$n \\geq 2401$$ Für eine Halbierung der Breite wäre der vierfache Umfang nötig."
+      },
+      {
         id: 28, level: 5, typ: "mc",
-        frage: "Wie verändert sich die Wahrscheinlichkeit für einen Fehler 2. Art, wenn man das Signifikanzniveau \\(\\alpha\\) <strong>verkleinert</strong>?",
+        frage: "Ein Hersteller möchte nachweisen, dass sein neues Verfahren <b>weniger</b> Ausschuss erzeugt als die bisherige Quote \\(p_0 = 0{,}1\\). Welche Nullhypothese ist dafür sinnvoll?",
         optionen: [
-            "Die Wahrscheinlichkeit für einen Fehler 2. Art steigt (bei gleichem \\(n\\))",
-            "Die Wahrscheinlichkeit für einen Fehler 2. Art sinkt",
-            "Beide Fehlerwahrscheinlichkeiten sinken gleichzeitig",
-            "Es gibt keinen Zusammenhang zwischen den beiden Fehlern"
+            "\\(H_0\\colon p \\geq 0{,}1\\) – abgelehnt wird sie nur bei deutlich weniger Ausschuss",
+            "\\(H_0\\colon p \\leq 0{,}1\\), damit die Verbesserung die Nullhypothese ist",
+            "\\(H_0\\colon p = 0{,}1\\) mit zweiseitigem Test, weil beide Richtungen interessieren",
+            "Die Wahl ist beliebig, das Ergebnis hängt nicht davon ab"
         ],
         korrekt: 0,
-        tipp: "Bei festem Stichprobenumfang: Wird \\(\\alpha\\) kleiner, wird der Ablehnungsbereich kleiner — was passiert dann mit \\(\\beta\\)?",
-        loesungsweg: "Bei festem \\(n\\) stehen \\(\\alpha\\) und \\(\\beta\\) in einem Spannungsverhältnis: Verkleinert man \\(\\alpha\\), wird der Ablehnungsbereich kleiner, sodass \\(\\beta\\) steigt. Nur eine Vergrößerung von \\(n\\) kann beide gleichzeitig senken."
-    },
-    {
+        tipp: "Was möchte der Hersteller zeigen – und was soll erst durch die Daten erzwungen werden?",
+        loesungsweg: "Die Behauptung, die belegt werden soll, gehört in die <b>Gegen</b>hypothese: \\(H_1\\colon p < 0{,}1\\). Als Nullhypothese bleibt \\(H_0\\colon p \\geq 0{,}1\\). Nur so ist die Irrtumswahrscheinlichkeit \\(\\alpha\\) für den Fall kontrolliert, dass eine Verbesserung behauptet wird, die es nicht gibt. Der Test ist damit linksseitig."
+      },
+      {
         id: 29, level: 5, typ: "mc",
-        frage: "Bei einem Test mit \\(H_0\\colon p \\ge 0{,}5\\) und \\(n = 100\\) liegt der Ablehnungsbereich bei \\(X \\le 41\\). Der wahre Anteil ist \\(p = 0{,}45\\). Was ist die Wahrscheinlichkeit des Fehlers 2. Art näherungsweise? <br><em>Hinweis: Bei \\(p = 0{,}45\\) ist \\(\\mu = 45\\) und \\(\\sigma \\approx 4{,}97\\). \\(P(X > 41) = P\\!\\left(Z > \\frac{41-45}{4{,}97}\\right) = P(Z > -0{,}81) \\approx 0{,}79\\).</em>",
+        frage: "Wie verändert sich die Wahrscheinlichkeit für einen Fehler 2. Art, wenn man bei gleichem Stichprobenumfang das Signifikanzniveau \\(\\alpha\\) verkleinert?",
         optionen: [
-            "\\(\\beta \\approx 0{,}79\\) — es ist sehr wahrscheinlich, dass \\(H_0\\) fälschlich beibehalten wird",
-            "\\(\\beta \\approx 0{,}21\\)",
-            "\\(\\beta \\approx 0{,}05\\)",
-            "\\(\\beta = 0\\)"
+            "Sie wird größer – der Ablehnungsbereich schrumpft",
+            "Sie wird ebenfalls kleiner",
+            "Sie bleibt unverändert",
+            "Sie wird null"
         ],
         korrekt: 0,
-        tipp: "Fehler 2. Art = \\(H_0\\) wird nicht abgelehnt, obwohl \\(p = 0{,}45 < 0{,}5\\). Das heißt \\(P(X > 41 \\mid p = 0{,}45)\\).",
-        loesungsweg: "Bei \\(p = 0{,}45\\): \\(\\mu = 45\\), \\(\\sigma \\approx 4{,}97\\). \\(P(X > 41) = P\\!\\left(Z > \\frac{41 - 45}{4{,}97}\\right) = P(Z > -0{,}81) = \\Phi(0{,}81) \\approx 0{,}79\\). Der Fehler 2. Art ist also sehr hoch."
-    },
-    {
-        id: 30, level: 5, typ: "mc",
-        frage: "Wie kann man sowohl den Fehler 1. Art als auch den Fehler 2. Art gleichzeitig verkleinern?",
-        optionen: [
-            "Den Stichprobenumfang \\(n\\) vergrößern",
-            "Das Signifikanzniveau \\(\\alpha\\) verkleinern",
-            "Das Signifikanzniveau \\(\\alpha\\) vergrößern",
-            "Es ist grundsätzlich unmöglich"
-        ],
-        korrekt: 0,
-        tipp: "Bei festem \\(n\\) sind \\(\\alpha\\) und \\(\\beta\\) gegenläufig. Welche Größe kann man noch verändern?",
-        loesungsweg: "Durch Vergrößerung des Stichprobenumfangs \\(n\\) wird der Test trennschärfer: Sowohl \\(\\alpha\\) als auch \\(\\beta\\) können gesenkt werden."
-    },
+        tipp: "Was passiert mit dem Ablehnungsbereich, wenn weniger Ergebnisse zur Ablehnung führen dürfen?",
+        loesungsweg: "Ein kleineres \\(\\alpha\\) verkleinert den Ablehnungsbereich: Es kommt seltener zu einem Fehlalarm (Fehler 1. Art), aber auch seltener zur Ablehnung einer tatsächlich falschen \\(H_0\\) – \\(\\beta\\) wächst. Beide Fehler lassen sich bei festem \\(n\\) nur gegeneinander abwägen; gleichzeitig verkleinern kann man sie nur durch ein größeres \\(n\\)."
+      },
+      {
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Bei einer Umfrage unter \\(n = 400\\) Personen sprechen sich \\(240\\) für einen Vorschlag aus. Berechne die obere Grenze des \\(95\\,\\%\\)-Konfidenzintervalls für \\(p\\) und runde auf drei Dezimalstellen.",
+        loesung: 0.648, toleranz: 0.003,
+        tipp: "Verwende \\(\\hat{p} \\pm 1{,}96\\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}}\\).",
+        loesungsweg: "\\(\\hat{p} = \\frac{240}{400} = 0{,}6\\). $$1{,}96 \\cdot \\sqrt{\\frac{0{,}6 \\cdot 0{,}4}{400}} = 1{,}96 \\cdot 0{,}0245 \\approx 0{,}048$$ Obere Grenze: \\(0{,}6 + 0{,}048 = 0{,}648\\). Das Intervall \\([0{,}552;\\,0{,}648]\\) enthält bei \\(95\\,\\%\\) aller Stichproben den wahren Anteil."
+      },
 
     // ══════════════════════════════════════════════════════════════
     // LEVEL 6 — Komplexe Testaufgaben, zweiseitige Tests, Sachkontexte
@@ -391,17 +367,17 @@
     },
     {
         id: 32, level: 6, typ: "numerisch",
-        frage: "Zweiseitiger Test: \\(H_0\\colon p = 0{,}5\\), \\(n = 400\\), \\(\\alpha = 0{,}05\\). Mit der Sigma-Regel (\\(z = 1{,}96\\)): Berechne die <strong>obere Ablehnungsgrenze</strong> \\(k_2 = n \\cdot p + 1{,}96 \\cdot \\sqrt{n \\cdot p \\cdot (1-p)}\\). Runde auf ganze Zahlen.",
-        loesung: 220, toleranz: 1,
-        tipp: "\\(\\mu = 200\\), \\(\\sigma = \\sqrt{400 \\cdot 0{,}25} = 10\\). \\(k_2 = 200 + 1{,}96 \\cdot 10\\).",
-        loesungsweg: "\\(\\mu = 200\\), \\(\\sigma = 10\\). \\(k_2 = 200 + 1{,}96 \\cdot 10 = 200 + 19{,}6 = 219{,}6\\). Aufgerundet: \\(k_2 = 220\\)."
+        frage: "Ein zweiseitiger Test prüft \\(H_0\\colon p = 0{,}5\\) bei \\(n = 400\\) auf dem Niveau \\(\\alpha = 0{,}05\\). Bestimme die größte Trefferzahl, die noch zur Ablehnung von \\(H_0\\) führt (untere Seite).",
+        loesung: 180, toleranz: 1,
+        tipp: "Verteile \\(\\alpha\\) auf beide Seiten und bestimme mit der Näherung über \\(\\mu\\) und \\(\\sigma\\) die untere Grenze des Annahmebereichs.",
+        loesungsweg: "\\(\\mu = 400 \\cdot 0{,}5 = 200\\), \\(\\sigma = \\sqrt{400 \\cdot 0{,}25} = 10\\). Bei zweiseitigem Test entfallen auf jede Seite \\(2{,}5\\,\\%\\), das entspricht \\(z = 1{,}96\\): $$\\mu - 1{,}96\\sigma = 200 - 19{,}6 = 180{,}4$$ Der Annahmebereich beginnt also bei \\(181\\); die größte Trefferzahl, die noch zur Ablehnung führt, ist \\(180\\). (Symmetrisch dazu wird ab \\(220\\) abgelehnt.)"
     },
     {
         id: 33, level: 6, typ: "numerisch",
-        frage: "Gleicher Test wie zuvor: \\(H_0\\colon p = 0{,}5\\), \\(n = 400\\), \\(\\alpha = 0{,}05\\). Berechne die <strong>untere Ablehnungsgrenze</strong> \\(k_1 = n \\cdot p - 1{,}96 \\cdot \\sqrt{n \\cdot p \\cdot (1-p)}\\). Runde auf ganze Zahlen.",
-        loesung: 180, toleranz: 1,
-        tipp: "\\(k_1 = 200 - 1{,}96 \\cdot 10\\).",
-        loesungsweg: "\\(k_1 = 200 - 19{,}6 = 180{,}4\\). Abgerundet: \\(k_1 = 180\\)."
+        frage: "Der Test aus der vorigen Aufgabe (\\(n = 400\\), Ablehnung bei \\(X \\leq 180\\) oder \\(X \\geq 220\\)) wird durchgeführt, während in Wirklichkeit \\(p = 0{,}45\\) gilt. Mit welcher Wahrscheinlichkeit wird \\(H_0\\) dann abgelehnt? Runde auf zwei Dezimalstellen.",
+        loesung: 0.52, toleranz: 0.03,
+        tipp: "Berechne \\(\\mu\\) und \\(\\sigma\\) für den wahren Wert \\(p = 0{,}45\\) und bestimme, welcher Anteil im Ablehnungsbereich liegt.",
+        loesungsweg: "Für \\(p = 0{,}45\\): \\(\\mu = 180\\), \\(\\sigma = \\sqrt{400 \\cdot 0{,}45 \\cdot 0{,}55} \\approx 9{,}95\\). Der obere Teil des Ablehnungsbereichs ist nun praktisch unerreichbar; entscheidend ist $$P(X \\leq 180) \\approx 0{,}52$$ Die Wahrscheinlichkeit, die falsche Nullhypothese tatsächlich zu verwerfen (die <b>Güte</b> des Tests), liegt also nur bei rund \\(52\\,\\%\\) – in knapp der Hälfte der Fälle tritt ein Fehler 2. Art auf."
     },
     {
         id: 34, level: 6, typ: "mc",
@@ -417,17 +393,11 @@
         loesungsweg: "\\(p_0 = 0{,}08 < 0{,}083\\) liegt nicht im Konfidenzintervall. Auf dem 5 %-Niveau wird die bisherige Fehlerquote abgelehnt — die neue Fehlerquote scheint höher zu sein."
     },
     {
-        id: 35, level: 6, typ: "mc",
-        frage: "Beim Testen einer Münze (\\(H_0\\colon p = 0{,}5\\), zweiseitig, \\(\\alpha = 0{,}05\\)) bei \\(n = 100\\) Würfen fallen 62 Mal Kopf. Der Ablehnungsbereich ist \\(X \\le 40\\) oder \\(X \\ge 60\\). Welche Entscheidung wird getroffen?",
-        optionen: [
-            "\\(H_0\\) wird abgelehnt, da \\(62 \\ge 60\\): Die Münze ist vermutlich nicht fair",
-            "\\(H_0\\) wird beibehalten, da \\(62\\) nahe bei \\(50\\) liegt",
-            "\\(H_0\\) wird beibehalten, da \\(62 < 100\\)",
-            "Keine Entscheidung möglich"
-        ],
-        korrekt: 0,
-        tipp: "Liegt \\(X = 62\\) im Ablehnungsbereich \\(X \\le 40\\) oder \\(X \\ge 60\\)?",
-        loesungsweg: "\\(X = 62 \\ge 60\\), also liegt das Ergebnis im Ablehnungsbereich. \\(H_0\\) wird abgelehnt: Die Münze ist auf dem 5 %-Niveau signifikant unfair."
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Eine Münze wird \\(100\\)-mal geworfen; geprüft wird \\(H_0\\colon p = 0{,}5\\) zweiseitig auf dem Niveau \\(\\alpha = 0{,}05\\). Bestimme die kleinste Trefferzahl, ab der \\(H_0\\) abgelehnt wird.",
+        loesung: 60, toleranz: 1,
+        tipp: "Verteile \\(\\alpha\\) auf beide Seiten und bestimme die obere Grenze des Annahmebereichs über \\(\\mu\\) und \\(\\sigma\\).",
+        loesungsweg: "\\(\\mu = 50\\), \\(\\sigma = \\sqrt{100 \\cdot 0{,}25} = 5\\). Zweiseitig entfallen auf jede Seite \\(2{,}5\\,\\%\\), also \\(z = 1{,}96\\): $$\\mu + 1{,}96\\sigma = 50 + 9{,}8 = 59{,}8$$ Der Annahmebereich endet damit bei \\(59\\); ab \\(60\\) Treffern wird \\(H_0\\) abgelehnt. Ein Ergebnis von \\(62\\)-mal Kopf läge also im Ablehnungsbereich – die Münze wäre auf dem \\(5\\,\\%\\)-Niveau auffällig."
     },
     {
         id: 36, level: 6, typ: "mc",

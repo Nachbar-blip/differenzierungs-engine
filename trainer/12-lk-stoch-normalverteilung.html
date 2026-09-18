@@ -247,120 +247,110 @@
         loesungsweg: "\\( P(-1{,}96 \\leq Z \\leq 1{,}96) = 2 \\cdot \\Phi(1{,}96) - 1 = 2 \\cdot 0{,}975 - 1 = 0{,}95 \\). Das ist das bekannte 95%-Intervall."
     },
 
-    // ===== LEVEL 5: Approximation Binomial → Normal =====
-    {
-        id: 25, level: 5, typ: "mc",
-        frage: "Wann darf die Binomialverteilung \\( B(n, p) \\) durch die Normalverteilung approximiert werden?",
-        optionen: [
-            "Wenn \\( n \\cdot p > 5 \\)",
-            "Wenn \\( \\sigma = \\sqrt{n \\cdot p \\cdot (1-p)} > 3 \\)",
-            "Wenn \\( n > 100 \\)",
-            "Wenn \\( p = 0{,}5 \\)"
-        ],
-        korrekt: 1,
-        tipp: "Die Faustregel bezieht sich auf die Standardabweichung σ.",
-        loesungsweg: "Die Faustregel für die Normalapproximation lautet: \\( \\sigma = \\sqrt{n \\cdot p \\cdot (1-p)} > 3 \\). Dann kann \\( B(n, p) \\) durch \\( N(\\mu, \\sigma^2) \\) mit \\( \\mu = n \\cdot p \\) approximiert werden."
-    },
-    {
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 5 — Umkehraufgaben: Quantil, Sigma und My bestimmen
+      // ═══════════════════════════════════════════════════════════
+      {
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Sei \\(X \\sim N(100;\\, 10^2)\\). Für welchen Wert \\(x\\) gilt \\(P(X \\leq x) = 0{,}9\\)? Runde auf eine Dezimalstelle.",
+        loesung: 112.8, toleranz: 0.3,
+        tipp: "Suche zuerst den \\(z\\)-Wert mit \\(\\Phi(z) = 0{,}9\\) und rechne ihn dann in die Skala von \\(X\\) um.",
+        loesungsweg: "Aus der Tabelle: \\(\\Phi(z) = 0{,}9\\) für \\(z \\approx 1{,}282\\). Rücktransformation mit \\(x = \\mu + z\\sigma\\): $$x = 100 + 1{,}282 \\cdot 10 \\approx 112{,}8$$ Dieser Wert heißt \\(90\\,\\%\\)-Quantil: \\(90\\,\\%\\) aller Werte liegen darunter."
+      },
+      {
         id: 26, level: 5, typ: "numerisch",
-        frage: "Sei \\( X \\sim B(400,\\, 0{,}3) \\). Berechne \\( \\mu \\) für die Normalapproximation.",
-        loesung: 120,
-        toleranz: 0.01,
-        tipp: "Für die Binomialverteilung gilt: \\( \\mu = n \\cdot p \\).",
-        loesungsweg: "\\( \\mu = n \\cdot p = 400 \\cdot 0{,}3 = 120 \\)"
-    },
-    {
+        frage: "Eine Abfüllmenge ist normalverteilt mit \\(\\mu = 500\\). Es gilt \\(P(X > 510) = 0{,}05\\). Bestimme \\(\\sigma\\) und runde auf zwei Dezimalstellen.",
+        loesung: 6.08, toleranz: 0.1,
+        tipp: "Der Abstand \\(510 - \\mu\\) entspricht genau \\(z \\cdot \\sigma\\) – welcher \\(z\\)-Wert gehört zu \\(5\\,\\%\\) oben?",
+        loesungsweg: "\\(P(X > 510) = 0{,}05\\) bedeutet \\(P(X \\leq 510) = 0{,}95\\), also \\(z \\approx 1{,}645\\). Aus \\(510 = \\mu + z\\sigma\\): $$\\sigma = \\frac{510 - 500}{1{,}645} \\approx 6{,}08$$"
+      },
+      {
         id: 27, level: 5, typ: "numerisch",
-        frage: "Sei \\( X \\sim B(400,\\, 0{,}3) \\). Berechne \\( \\sigma \\) für die Normalapproximation. Runde auf zwei Dezimalstellen.",
-        loesung: 9.17,
-        toleranz: 0.05,
-        tipp: "Verwende \\( \\sigma = \\sqrt{n \\cdot p \\cdot (1-p)} \\).",
-        loesungsweg: "\\( \\sigma = \\sqrt{400 \\cdot 0{,}3 \\cdot 0{,}7} = \\sqrt{84} \\approx 9{,}17 \\). Da \\( \\sigma > 3 \\), ist die Approximation zulässig."
-    },
-    {
-        id: 28, level: 5, typ: "mc",
-        frage: "Bei der Normalapproximation der Binomialverteilung: Wie wird \\( P(X \\leq 7) \\) mit Stetigkeitskorrektur berechnet?",
-        optionen: [
-            "\\( P(Y \\leq 7) \\) ohne Korrektur",
-            "\\( P(Y \\leq 7{,}5) \\)",
-            "\\( P(Y \\leq 6{,}5) \\)",
-            "\\( P(Y \\leq 8) \\)"
-        ],
-        korrekt: 1,
-        tipp: "Die Stetigkeitskorrektur erweitert das Intervall um 0,5 in Richtung der Ungleichung.",
-        loesungsweg: "Bei der Stetigkeitskorrektur wird \\( P(X \\leq 7) \\) zu \\( P(Y \\leq 7{,}5) \\). Man addiert 0,5, weil die diskrete Verteilung den Wert 7 einschließt und die stetige Verteilung diesen Bereich bis 7,5 abdecken muss."
-    },
-    {
+        frage: "Sei \\(X \\sim N(\\mu;\\, 4^2)\\) mit \\(P(X < 20) = 0{,}975\\). Bestimme \\(\\mu\\) und runde auf zwei Dezimalstellen.",
+        loesung: 12.16, toleranz: 0.1,
+        tipp: "Zu \\(0{,}975\\) gehört ein bekannter \\(z\\)-Wert; stelle damit die Gleichung für \\(\\mu\\) auf.",
+        loesungsweg: "\\(\\Phi(z) = 0{,}975\\) für \\(z = 1{,}96\\). Aus \\(20 = \\mu + 1{,}96 \\cdot 4\\): $$\\mu = 20 - 7{,}84 = 12{,}16$$"
+      },
+      {
+        id: 28, level: 5, typ: "numerisch",
+        frage: "Sei \\(X \\sim B(100;\\, 0{,}5)\\). Approximiere \\(P(X \\leq 60)\\) mit Stetigkeitskorrektur und runde auf drei Dezimalstellen.",
+        loesung: 0.982, toleranz: 0.003,
+        tipp: "Die Stetigkeitskorrektur verschiebt die Grenze um eine halbe Einheit nach außen.",
+        loesungsweg: "\\(\\mu = 50\\), \\(\\sigma = \\sqrt{100 \\cdot 0{,}25} = 5\\). Mit Korrektur wird \\(60\\) zu \\(60{,}5\\): $$z = \\frac{60{,}5 - 50}{5} = 2{,}1 \\Rightarrow \\Phi(2{,}1) \\approx 0{,}982$$"
+      },
+      {
         id: 29, level: 5, typ: "numerisch",
-        frage: "Sei \\( X \\sim B(100,\\, 0{,}5) \\). Approximiere \\( P(X \\leq 60) \\) mit Stetigkeitskorrektur. Gib den z-Wert an, der in \\( \\Phi \\) eingesetzt wird.",
-        loesung: 2.1,
-        toleranz: 0.01,
-        tipp: "Berechne \\( \\mu = np \\), \\( \\sigma = \\sqrt{np(1-p)} \\), dann \\( z = \\frac{60{,}5 - \\mu}{\\sigma} \\).",
-        loesungsweg: "\\( \\mu = 100 \\cdot 0{,}5 = 50 \\), \\( \\sigma = \\sqrt{100 \\cdot 0{,}5 \\cdot 0{,}5} = \\sqrt{25} = 5 \\). Mit Stetigkeitskorrektur: \\( z = \\frac{60{,}5 - 50}{5} = \\frac{10{,}5}{5} = 2{,}1 \\)."
-    },
-    {
+        frage: "Für \\(X \\sim B(100;\\, 0{,}5)\\) beträgt der exakte Wert \\(P(X \\leq 60) = 0{,}9824\\). Um wie viel weicht die Näherung <b>ohne</b> Stetigkeitskorrektur davon ab? Runde auf drei Dezimalstellen.",
+        loesung: 0.005, toleranz: 0.002,
+        tipp: "Rechne die Näherung einmal mit der Grenze \\(60\\) statt \\(60{,}5\\) und vergleiche.",
+        loesungsweg: "Ohne Korrektur: $$z = \\frac{60 - 50}{5} = 2 \\Rightarrow \\Phi(2) = 0{,}9772$$ Abweichung vom exakten Wert: $$0{,}9824 - 0{,}9772 = 0{,}0052 \\approx 0{,}005$$ Mit Korrektur (\\(0{,}9821\\)) beträgt die Abweichung dagegen nur \\(0{,}0003\\) – deshalb lohnt sich der halbe Schritt."
+      },
+      {
         id: 30, level: 5, typ: "mc",
-        frage: "Sei \\( X \\sim B(900,\\, 0{,}4) \\). Welche Normalverteilung wird zur Approximation verwendet?",
+        frage: "Warum verwendet man bei der Normalapproximation der Binomialverteilung eine Stetigkeitskorrektur?",
         optionen: [
-            "\\( N(360;\\, 14{,}7^2) \\)",
-            "\\( N(360;\\, 360) \\)",
-            "\\( N(540;\\, 14{,}7^2) \\)",
-            "\\( N(360;\\, 14{,}7) \\)"
+            "Weil eine diskrete Verteilung durch eine stetige ersetzt wird – der Balken über \\(k\\) reicht von \\(k-0{,}5\\) bis \\(k+0{,}5\\)",
+            "Weil die Normalverteilung sonst falsche Erwartungswerte liefert",
+            "Weil \\(n\\) nicht groß genug ist",
+            "Weil die Binomialverteilung nicht symmetrisch ist"
         ],
         korrekt: 0,
-        tipp: "Berechne \\( \\mu = np \\) und \\( \\sigma = \\sqrt{np(1-p)} \\). Die Normalverteilung wird als \\( N(\\mu;\\, \\sigma^2) \\) geschrieben.",
-        loesungsweg: "\\( \\mu = 900 \\cdot 0{,}4 = 360 \\). \\( \\sigma = \\sqrt{900 \\cdot 0{,}4 \\cdot 0{,}6} = \\sqrt{216} \\approx 14{,}7 \\). Also: \\( N(360;\\, 14{,}7^2) \\). Dabei ist \\( 14{,}7^2 \\approx 216 \\)."
-    },
+        tipp: "Stelle dir das Histogramm der Binomialverteilung vor, über das die Glockenkurve gelegt wird.",
+        loesungsweg: "Im Histogramm wird \\(P(X = k)\\) durch einen Balken der Breite \\(1\\) dargestellt, der von \\(k - 0{,}5\\) bis \\(k + 0{,}5\\) reicht. Die Fläche unter der Glockenkurve muss deshalb bis \\(k + 0{,}5\\) integriert werden, damit der ganze Balken erfasst ist. Erwartungswert und Streuung stimmen dagegen ohnehin überein, und je größer \\(n\\) ist, desto kleiner wird der Korrektureffekt."
+      },
 
-    // ===== LEVEL 6: Sachaufgaben =====
-    {
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 6 — Quantile im Sachkontext, Anforderungen an sigma
+      // ═══════════════════════════════════════════════════════════
+      {
         id: 31, level: 6, typ: "numerisch",
-        frage: "Eine Maschine füllt Flaschen mit im Mittel 500 ml. Die Standardabweichung beträgt 5 ml (normalverteilt). Wie groß ist die Wahrscheinlichkeit, dass eine Flasche weniger als 490 ml enthält? Hinweis: \\( \\Phi(2) = 0{,}9772 \\).",
-        loesung: 0.0228,
-        toleranz: 0.01,
-        tipp: "Berechne den z-Wert für 490 ml und nutze die Symmetrie.",
-        loesungsweg: "\\( z = \\frac{490 - 500}{5} = -2 \\). Also: \\( P(X < 490) = \\Phi(-2) = 1 - \\Phi(2) = 1 - 0{,}9772 = 0{,}0228 \\). Etwa 2,3% der Flaschen enthalten weniger als 490 ml."
-    },
-    {
+        frage: "Eine Maschine füllt Flaschen mit im Mittel \\(500\\,\\text{ml}\\) (\\(\\sigma = 5\\,\\text{ml}\\), normalverteilt). Ab welcher Füllmenge gehört eine Flasche zu den \\(10\\,\\%\\) am stärksten gefüllten? Runde auf eine Dezimalstelle.",
+        loesung: 506.4, toleranz: 0.3,
+        tipp: "Gesucht ist das \\(90\\,\\%\\)-Quantil der Verteilung.",
+        loesungsweg: "Zu \\(\\Phi(z) = 0{,}9\\) gehört \\(z \\approx 1{,}282\\): $$x = 500 + 1{,}282 \\cdot 5 \\approx 506{,}4\\,\\text{ml}$$"
+      },
+      {
         id: 32, level: 6, typ: "numerisch",
-        frage: "Die Körpergröße von Männern ist normalverteilt mit \\( \\mu = 178 \\) cm und \\( \\sigma = 8 \\) cm. Welcher Anteil ist zwischen 170 cm und 194 cm groß? Hinweis: \\( \\Phi(1) = 0{,}8413 \\), \\( \\Phi(2) = 0{,}9772 \\).",
-        loesung: 0.8185,
-        toleranz: 0.01,
-        tipp: "Transformiere beide Grenzen und berechne \\( \\Phi(z_2) - \\Phi(z_1) \\).",
-        loesungsweg: "\\( z_1 = \\frac{170-178}{8} = -1 \\), \\( z_2 = \\frac{194-178}{8} = 2 \\). \\( P(170 \\leq X \\leq 194) = \\Phi(2) - \\Phi(-1) = 0{,}9772 - (1 - 0{,}8413) = 0{,}9772 - 0{,}1587 = 0{,}8185 \\)."
-    },
-    {
+        frage: "Schrauben haben eine normalverteilte Länge mit \\(\\mu = 30\\,\\text{mm}\\). Mindestens \\(95\\,\\%\\) sollen zwischen \\(29\\,\\text{mm}\\) und \\(31\\,\\text{mm}\\) liegen. Wie groß darf \\(\\sigma\\) höchstens sein? Runde auf zwei Dezimalstellen.",
+        loesung: 0.51, toleranz: 0.02,
+        tipp: "Das symmetrische Intervall um \\(\\mu\\) mit \\(95\\,\\%\\) Anteil reicht \\(1{,}96\\sigma\\) nach jeder Seite.",
+        loesungsweg: "Die halbe Intervallbreite beträgt \\(1\\,\\text{mm}\\) und muss mindestens \\(1{,}96\\sigma\\) umfassen: $$1{,}96\\sigma \\leq 1 \\Rightarrow \\sigma \\leq \\frac{1}{1{,}96} \\approx 0{,}51\\,\\text{mm}$$ Eine größere Streuung würde den Ausschussanteil über \\(5\\,\\%\\) treiben."
+      },
+      {
         id: 33, level: 6, typ: "numerisch",
-        frage: "Bei einer Qualitätskontrolle werden 600 Bauteile geprüft. Die Ausschussquote beträgt \\( p = 0{,}05 \\). Berechne \\( \\sigma \\) für die Normalapproximation. Runde auf zwei Dezimalstellen.",
-        loesung: 5.34,
-        toleranz: 0.05,
-        tipp: "Verwende \\( \\sigma = \\sqrt{n \\cdot p \\cdot (1-p)} \\).",
-        loesungsweg: "\\( \\sigma = \\sqrt{600 \\cdot 0{,}05 \\cdot 0{,}95} = \\sqrt{28{,}5} \\approx 5{,}34 \\). Da \\( \\sigma > 3 \\), ist die Normalapproximation erlaubt."
-    },
-    {
+        frage: "Die Körpergröße von Männern ist normalverteilt mit \\(\\mu = 178\\,\\text{cm}\\) und \\(\\sigma = 8\\,\\text{cm}\\). Welche obere Grenze hat der mittlere Bereich, der genau \\(50\\,\\%\\) aller Männer umfasst? Runde auf eine Dezimalstelle.",
+        loesung: 183.4, toleranz: 0.3,
+        tipp: "Symmetrisch um \\(\\mu\\) liegen unterhalb der oberen Grenze \\(75\\,\\%\\) aller Werte.",
+        loesungsweg: "Die mittleren \\(50\\,\\%\\) reichen vom \\(25\\,\\%\\)- bis zum \\(75\\,\\%\\)-Quantil. Zu \\(\\Phi(z) = 0{,}75\\) gehört \\(z \\approx 0{,}674\\): $$x = 178 + 0{,}674 \\cdot 8 \\approx 183{,}4\\,\\text{cm}$$ (Die untere Grenze liegt entsprechend bei \\(172{,}6\\,\\text{cm}\\).)"
+      },
+      {
         id: 34, level: 6, typ: "numerisch",
-        frage: "Eine Batterie hat eine mittlere Lebensdauer von 2000 Stunden (\\( \\sigma = 200 \\) h, normalverteilt). Wie groß ist die Wahrscheinlichkeit, dass sie länger als 2300 Stunden hält? Hinweis: \\( \\Phi(1{,}5) = 0{,}9332 \\).",
-        loesung: 0.0668,
-        toleranz: 0.01,
-        tipp: "Berechne \\( z = \\frac{2300 - 2000}{200} \\) und nutze die Gegenwahrscheinlichkeit.",
-        loesungsweg: "\\( z = \\frac{2300 - 2000}{200} = 1{,}5 \\). Also: \\( P(X > 2300) = 1 - \\Phi(1{,}5) = 1 - 0{,}9332 = 0{,}0668 \\). Die Wahrscheinlichkeit beträgt etwa 6,7%."
-    },
-    {
+        frage: "Bei einer Kontrolle werden \\(600\\) Bauteile geprüft; die Ausschussquote beträgt \\(p = 0{,}1\\). Bestimme mit Normalapproximation und Stetigkeitskorrektur die Wahrscheinlichkeit für mindestens \\(70\\) fehlerhafte Teile. Runde auf drei Dezimalstellen.",
+        loesung: 0.098, toleranz: 0.005,
+        tipp: "Für „mindestens \\(70\\)\" wird die Grenze nach unten korrigiert.",
+        loesungsweg: "\\(\\mu = 60\\), \\(\\sigma = \\sqrt{600 \\cdot 0{,}1 \\cdot 0{,}9} = \\sqrt{54} \\approx 7{,}35\\). Mit Stetigkeitskorrektur: $$P(X \\geq 70) \\approx 1 - \\Phi\\!\\left(\\frac{69{,}5 - 60}{7{,}35}\\right) = 1 - \\Phi(1{,}29) \\approx 0{,}098$$ Die Laplace-Bedingung \\(\\sigma > 3\\) ist erfüllt, die Näherung also zulässig."
+      },
+      {
         id: 35, level: 6, typ: "numerisch",
-        frage: "Schrauben haben eine normalverteilte Länge mit \\( \\mu = 30 \\) mm und \\( \\sigma = 0{,}5 \\) mm. Schrauben mit einer Abweichung von mehr als 1 mm vom Sollwert werden aussortiert. Welcher Anteil wird aussortiert? Hinweis: \\( \\Phi(2) = 0{,}9772 \\).",
-        loesung: 0.0456,
-        toleranz: 0.01,
-        tipp: "Aussortiert werden Schrauben mit \\( X < 29 \\) oder \\( X > 31 \\). Berechne \\( P(|X - 30| > 1) \\).",
-        loesungsweg: "Akzeptiert: \\( 29 \\leq X \\leq 31 \\). \\( z = \\frac{1}{0{,}5} = 2 \\). \\( P(29 \\leq X \\leq 31) = 2\\Phi(2) - 1 = 2 \\cdot 0{,}9772 - 1 = 0{,}9544 \\). Aussortiert: \\( 1 - 0{,}9544 = 0{,}0456 \\), also etwa 4,6%."
-    },
-    {
-        id: 36, level: 6, typ: "numerisch",
-        frage: "In einer Klausur sind die Punkte normalverteilt mit \\( \\mu = 60 \\) und \\( \\sigma = 12 \\). Ab 84 Punkten gibt es eine 1. Welcher Anteil der Schüler bekommt eine 1? Hinweis: \\( \\Phi(2) = 0{,}9772 \\).",
-        loesung: 0.0228,
-        toleranz: 0.01,
-        tipp: "Berechne \\( z = \\frac{84 - 60}{12} \\) und nutze die Gegenwahrscheinlichkeit.",
-        loesungsweg: "\\( z = \\frac{84 - 60}{12} = 2 \\). \\( P(X \\geq 84) = 1 - \\Phi(2) = 1 - 0{,}9772 = 0{,}0228 \\). Etwa 2,3% der Schüler bekommen eine 1."
-    }
+        frage: "In einer Klausur sind die Punktzahlen normalverteilt mit \\(\\mu = 60\\) und \\(\\sigma = 12\\). Ab wie vielen Punkten gehört man zu den besten \\(15\\,\\%\\)? Runde auf eine Dezimalstelle.",
+        loesung: 72.4, toleranz: 0.3,
+        tipp: "Die besten \\(15\\,\\%\\) liegen oberhalb des \\(85\\,\\%\\)-Quantils.",
+        loesungsweg: "Zu \\(\\Phi(z) = 0{,}85\\) gehört \\(z \\approx 1{,}036\\): $$x = 60 + 1{,}036 \\cdot 12 \\approx 72{,}4$$ Wer also mindestens \\(73\\) Punkte erreicht, gehört sicher zum besten Sechstel."
+      },
+      {
+        id: 36, level: 6, typ: "mc",
+        frage: "Für welche der folgenden Binomialverteilungen ist die Normalapproximation am ehesten zulässig?",
+        optionen: [
+            "\\(B(1000;\\, 0{,}5)\\) – hier ist \\(\\sigma \\approx 15{,}8\\)",
+            "\\(B(20;\\, 0{,}5)\\) – hier ist \\(\\sigma \\approx 2{,}2\\)",
+            "\\(B(50;\\, 0{,}02)\\) – hier ist \\(\\sigma \\approx 1{,}0\\)",
+            "\\(B(10;\\, 0{,}9)\\) – hier ist \\(\\sigma \\approx 0{,}95\\)"
+        ],
+        korrekt: 0,
+        tipp: "Die Faustregel (Laplace-Bedingung) fordert \\(\\sigma > 3\\).",
+        loesungsweg: "Die Laplace-Bedingung \\(\\sigma = \\sqrt{np(1-p)} > 3\\) ist nur im ersten Fall erfüllt. Bei kleinen \\(n\\) oder extremen \\(p\\) ist die Binomialverteilung zu schief bzw. zu grobstufig, als dass die Glockenkurve gut passen würde – dort rechnet man exakt oder nutzt bei kleinem \\(np\\) die Poisson-Näherung."
+      }
+
 
     ];
     </script>
