@@ -124,64 +124,11 @@
     },
 
     // ═══════════════════════════════════════════════════════════════
-    // Level 3: Verhalten einfacher Funktionen, Annäherung per Wertetabelle
+    // Level 3: Grenzwerte gebrochenrationaler Funktionen, Asymptoten
     // ═══════════════════════════════════════════════════════════════
 
     {
         id: 13, level: 3, typ: "mc",
-        frage: "Setze für \\(f(x) = \\frac{5}{x}\\) die Werte \\(x = 10, 100, 1000\\) ein. Was vermutest du für \\(\\lim_{x \\to \\infty} f(x)\\)?",
-        optionen: ["\\(+\\infty\\)", "\\(5\\)", "\\(0\\)", "\\(1\\)"],
-        korrekt: 2,
-        tipp: "Rechne: \\(f(10) = 0{,}5\\), \\(f(100) = 0{,}05\\), \\(f(1000) = 0{,}005\\). Wohin entwickeln sich die Werte?",
-        loesungsweg: "\\(f(10) = 0{,}5\\), \\(f(100) = 0{,}05\\), \\(f(1000) = 0{,}005\\). Die Werte werden immer kleiner und nähern sich der 0. Also: \\(\\lim_{x \\to \\infty} \\frac{5}{x} = 0\\)."
-    },
-    {
-        id: 14, level: 3, typ: "mc",
-        frage: "Setze für \\(g(x) = \\frac{3}{x^2}\\) die Werte \\(x = 10, 100, 1000\\) ein. Was vermutest du für \\(\\lim_{x \\to \\infty} g(x)\\)?",
-        optionen: ["\\(3\\)", "\\(\\infty\\)", "\\(0\\)", "\\(-3\\)"],
-        korrekt: 2,
-        tipp: "Rechne: \\(g(10) = 0{,}03\\), \\(g(100) = 0{,}0003\\). Wohin geht das?",
-        loesungsweg: "\\(g(10) = 0{,}03\\), \\(g(100) = 0{,}0003\\), \\(g(1000) = 0{,}000003\\). Die Werte nähern sich immer mehr der 0. Also: \\(\\lim_{x \\to \\infty} \\frac{3}{x^2} = 0\\)."
-    },
-    {
-        id: 15, level: 3, typ: "mc",
-        frage: "Der Graph von \\(f\\) nähert sich für \\(x \\to \\infty\\) immer mehr der Geraden \\(y = 2\\), ohne sie zu erreichen. Was ist \\(\\lim_{x \\to \\infty} f(x)\\)?",
-        optionen: ["\\(0\\)", "\\(\\infty\\)", "\\(2\\)", "existiert nicht"],
-        korrekt: 2,
-        tipp: "Wenn sich ein Graph einer waagerechten Linie nähert, ist diese Linie der Grenzwert.",
-        loesungsweg: "Wenn der Graph sich der Geraden \\(y = 2\\) immer weiter annähert, bedeutet das: \\(\\lim_{x \\to \\infty} f(x) = 2\\). Die Gerade \\(y = 2\\) heißt waagerechte Asymptote."
-    },
-    {
-        id: 16, level: 3, typ: "mc",
-        frage: "Bei \\(f(x) = \\frac{1}{x - 3}\\): Was passiert, wenn \\(x\\) von rechts gegen 3 geht (z.B. \\(x = 3{,}1\\), \\(x = 3{,}01\\))?",
-        optionen: ["\\(f(x) \\to 0\\)", "\\(f(x) \\to +\\infty\\)", "\\(f(x) \\to -\\infty\\)", "\\(f(x) \\to 3\\)"],
-        korrekt: 1,
-        tipp: "Rechne: \\(f(3{,}1) = \\frac{1}{0{,}1} = 10\\), \\(f(3{,}01) = \\frac{1}{0{,}01} = 100\\). Was passiert mit den Werten?",
-        loesungsweg: "\\(f(3{,}1) = 10\\), \\(f(3{,}01) = 100\\), \\(f(3{,}001) = 1000\\). Die Funktionswerte wachsen unbegrenzt. Also: \\(\\lim_{x \\to 3^+} \\frac{1}{x-3} = +\\infty\\). Bei \\(x = 3\\) liegt eine senkrechte Asymptote vor."
-    },
-    {
-        id: 17, level: 3, typ: "mc",
-        frage: "Wie verhält sich \\(f(x) = \\frac{1}{x - 3}\\) für \\(x \\to \\infty\\)?",
-        optionen: ["\\(f(x) \\to 3\\)", "\\(f(x) \\to +\\infty\\)", "\\(f(x) \\to 0\\)", "\\(f(x) \\to 1\\)"],
-        korrekt: 2,
-        tipp: "Setze große \\(x\\)-Werte ein: \\(x = 100\\), \\(x = 1000\\). Was passiert mit \\(\\frac{1}{x-3}\\)?",
-        loesungsweg: "\\(f(100) = \\frac{1}{97} \\approx 0{,}01\\), \\(f(1000) = \\frac{1}{997} \\approx 0{,}001\\). Der Nenner wird immer größer, der Bruch immer kleiner. Also: \\(\\lim_{x \\to \\infty} \\frac{1}{x-3} = 0\\). Die \\(x\\)-Achse ist waagerechte Asymptote."
-    },
-    {
-        id: 18, level: 3, typ: "mc",
-        frage: "Ein Polynom \\(p(x) = x^3 - 2x + 5\\) ist …",
-        optionen: ["nur an ganzzahligen Stellen stetig", "überall stetig", "nur für \\(x > 0\\) stetig", "nirgends stetig"],
-        korrekt: 1,
-        tipp: "Polynome gehören zu den einfachsten Funktionsklassen. Was weißt du über ihre Stetigkeit?",
-        loesungsweg: "Jedes Polynom ist auf ganz \\(\\mathbb{R}\\) stetig — es gibt keine Definitionslücken und keine Sprünge."
-    },
-
-    // ═══════════════════════════════════════════════════════════════
-    // Level 4: Grenzwerte rationaler Funktionen für x → ±∞, Asymptoten
-    // ═══════════════════════════════════════════════════════════════
-
-    {
-        id: 19, level: 4, typ: "mc",
         frage: "Welche waagerechte Asymptote hat \\(f(x) = \\frac{3x^2 + 1}{x^2 - 5}\\)?",
         optionen: ["\\(y = 0\\)", "\\(y = 1\\)", "\\(y = 3\\)", "keine waagerechte Asymptote"],
         korrekt: 2,
@@ -189,7 +136,7 @@
         loesungsweg: "Zählergrad = Nennergrad = 2. Da die Grade gleich sind, bestimmen die führenden Koeffizienten den Grenzwert: \\(\\frac{3}{1} = 3\\). Waagerechte Asymptote: \\(y = 3\\)."
     },
     {
-        id: 20, level: 4, typ: "numerisch",
+        id: 14, level: 3, typ: "numerisch",
         frage: "Bestimme die waagerechte Asymptote von \\(f(x) = \\frac{5x - 3}{2x + 7}\\). Gib den \\(y\\)-Wert an.",
         loesung: 2.5,
         toleranz: 0.01,
@@ -197,15 +144,7 @@
         loesungsweg: "Zählergrad = Nennergrad = 1. Die führenden Koeffizienten sind 5 und 2. Also: waagerechte Asymptote bei \\(y = \\frac{5}{2} = 2{,}5\\)."
     },
     {
-        id: 21, level: 4, typ: "mc",
-        frage: "Welche waagerechte Asymptote hat \\(f(x) = \\frac{4x^3 + x}{2x^3 - 1}\\)?",
-        optionen: ["\\(y = 0\\)", "\\(y = 2\\)", "\\(y = 4\\)", "keine waagerechte Asymptote"],
-        korrekt: 1,
-        tipp: "Zähler- und Nennergrad sind gleich (beide 3). Die führenden Koeffizienten sind 4 (oben) und 2 (unten).",
-        loesungsweg: "Zählergrad = Nennergrad = 3. Wenn die Grade gleich sind, ist der Grenzwert der Quotient der führenden Koeffizienten: \\(\\frac{4}{2} = 2\\). Waagerechte Asymptote: \\(y = 2\\)."
-    },
-    {
-        id: 22, level: 4, typ: "mc",
+        id: 15, level: 3, typ: "mc",
         frage: "Was gilt für \\(\\lim_{x \\to \\infty} \\frac{x^2 + 1}{x^3 + x}\\)?",
         optionen: ["\\(+\\infty\\)", "\\(1\\)", "\\(0\\)", "\\(-\\infty\\)"],
         korrekt: 2,
@@ -213,7 +152,7 @@
         loesungsweg: "Zählergrad (2) ist kleiner als Nennergrad (3). Wenn der Nenner schneller wächst als der Zähler, wird der Bruch immer kleiner: \\(\\lim_{x \\to \\infty} \\frac{x^2+1}{x^3+x} = 0\\). Waagerechte Asymptote bei \\(y = 0\\) (die \\(x\\)-Achse)."
     },
     {
-        id: 23, level: 4, typ: "mc",
+        id: 16, level: 3, typ: "mc",
         frage: "Welches Verhalten zeigt \\(f(x) = \\frac{2x^3}{x^2 + 1}\\) für \\(x \\to \\infty\\)?",
         optionen: ["\\(f(x) \\to 0\\)", "\\(f(x) \\to 2\\)", "\\(f(x) \\to +\\infty\\)", "\\(f(x) \\to -\\infty\\)"],
         korrekt: 2,
@@ -221,124 +160,206 @@
         loesungsweg: "Zählergrad (3) > Nennergrad (2): Der Zähler wächst schneller als der Nenner. Für \\(x \\to \\infty\\) wird der Bruch unbeschränkt groß. Es gibt keine waagerechte Asymptote: \\(f(x) \\to +\\infty\\)."
     },
     {
-        id: 24, level: 4, typ: "numerisch",
+        id: 17, level: 3, typ: "numerisch",
         frage: "Bestimme die waagerechte Asymptote von \\(f(x) = \\frac{-6x + 1}{3x + 4}\\). Gib den \\(y\\)-Wert an.",
         loesung: -2,
         toleranz: 0,
         tipp: "Zähler und Nenner haben den gleichen Grad (1). Führende Koeffizienten: \\(-6\\) oben, \\(3\\) unten.",
         loesungsweg: "Zählergrad = Nennergrad = 1. Die führenden Koeffizienten sind \\(-6\\) und \\(3\\). Quotient: \\(\\frac{-6}{3} = -2\\). Waagerechte Asymptote: \\(y = -2\\)."
     },
+    {
+        id: 18, level: 3, typ: "mc",
+        frage: "Welche waagerechte Asymptote hat \\(f(x) = \\frac{4x^3 + x}{2x^3 - 1}\\)?",
+        optionen: ["\\(y = 0\\)", "\\(y = 2\\)", "\\(y = 4\\)", "keine waagerechte Asymptote"],
+        korrekt: 1,
+        tipp: "Zähler- und Nennergrad sind gleich (beide 3). Die führenden Koeffizienten sind 4 (oben) und 2 (unten).",
+        loesungsweg: "Zählergrad = Nennergrad = 3. Wenn die Grade gleich sind, ist der Grenzwert der Quotient der führenden Koeffizienten: \\(\\frac{4}{2} = 2\\). Waagerechte Asymptote: \\(y = 2\\)."
+    },
 
     // ═══════════════════════════════════════════════════════════════
-    // Level 5: Stückweise definierte Funktionen, links-/rechtsseitige GW
+    // Level 4: Verfahren selbst wählen — Lücke oder Polstelle, Kontext
+    // ═══════════════════════════════════════════════════════════════
+
+    {
+        id: 19, level: 4, typ: "numerisch",
+        frage: "Berechne \\(\\lim_{x \\to 5} \\frac{x^2 - 25}{x - 5}\\).",
+        loesung: 10,
+        toleranz: 0,
+        tipp: "Einsetzen führt auf \\(\\frac{0}{0}\\). Lässt sich der Zähler zerlegen?",
+        loesungsweg: "Einsetzen liefert \\(\\frac{0}{0}\\) – der Term muss erst umgeformt werden. Mit der dritten binomischen Formel: $$\\frac{x^2-25}{x-5} = \\frac{(x-5)(x+5)}{x-5} = x + 5 \\quad (x \\neq 5)$$ Grenzwert: \\(5 + 5 = 10\\)."
+    },
+    {
+        id: 20, level: 4, typ: "numerisch",
+        frage: "Berechne \\(\\lim_{x \\to 2} \\frac{x^2 - 4}{x^2 - 2x}\\).",
+        loesung: 2,
+        toleranz: 0,
+        tipp: "Zähler und Nenner haben beide bei \\(x = 2\\) eine Nullstelle. Zerlege beide in Faktoren.",
+        loesungsweg: "$$\\frac{x^2-4}{x^2-2x} = \\frac{(x-2)(x+2)}{x(x-2)} = \\frac{x+2}{x} \\quad (x \\neq 2)$$ Grenzwert: \\(\\frac{2+2}{2} = 2\\). Bei \\(x = 2\\) liegt also eine hebbare Lücke vor, keine Polstelle."
+    },
+    {
+        id: 21, level: 4, typ: "mc",
+        frage: "Wie verhält sich \\(f(x) = \\frac{x + 1}{(x - 2)^2}\\) für \\(x \\to 2\\)?",
+        optionen: [
+            "\\(f(x) \\to +\\infty\\) von beiden Seiten",
+            "\\(f(x) \\to -\\infty\\) von beiden Seiten",
+            "\\(f(x) \\to +\\infty\\) von rechts, \\(-\\infty\\) von links",
+            "\\(f(x) \\to 0\\)"
+        ],
+        korrekt: 0,
+        tipp: "Welches Vorzeichen hat der Nenner links und rechts von \\(2\\)? Und der Zähler?",
+        loesungsweg: "Der Zähler strebt gegen \\(3 > 0\\). Der Nenner \\((x-2)^2\\) ist als Quadrat auf beiden Seiten positiv und strebt gegen \\(0\\). Ein positiver Wert geteilt durch eine immer kleinere positive Zahl wächst über alle Grenzen: \\(f(x) \\to +\\infty\\) von beiden Seiten. Es liegt eine Polstelle ohne Vorzeichenwechsel vor."
+    },
+    {
+        id: 22, level: 4, typ: "mc",
+        frage: "Gegeben: \\(f(x) = \\begin{cases} x^2 & x < 1 \\\\ 2x - 1 & x \\geq 1 \\end{cases}\\). Ist \\(f\\) an \\(x = 1\\) stetig?",
+        optionen: ["Ja", "Nein, Sprungstelle", "Nein, hebbare Lücke", "Nein, Polstelle"],
+        korrekt: 0,
+        tipp: "Vergleiche den linksseitigen Grenzwert, den rechtsseitigen Grenzwert und den Funktionswert an der Stelle \\(1\\).",
+        loesungsweg: "\\(\\lim_{x \\to 1^-} x^2 = 1\\), \\(\\lim_{x \\to 1^+} (2x-1) = 1\\), \\(f(1) = 2 \\cdot 1 - 1 = 1\\). Links = Rechts = Funktionswert → stetig."
+    },
+    {
+        id: 23, level: 4, typ: "numerisch",
+        frage: "Gegeben: \\(f(x) = \\begin{cases} x + 3 & x < 1 \\\\ 2x + a & x \\geq 1 \\end{cases}\\). Bestimme \\(a\\) so, dass \\(f\\) bei \\(x = 1\\) stetig ist.",
+        loesung: 2,
+        toleranz: 0,
+        tipp: "An der Nahtstelle müssen beide Teilterme denselben Wert liefern.",
+        loesungsweg: "\\(\\lim_{x \\to 1^-} (x+3) = 4\\). \\(f(1) = 2 \\cdot 1 + a = 2 + a\\). Stetigkeit verlangt \\(2 + a = 4\\), also \\(a = 2\\)."
+    },
+    {
+        id: 24, level: 4, typ: "numerisch",
+        frage: "Nach einer Infusion beschreibt \\(c(t) = \\dfrac{200t}{t + 4}\\) die Wirkstoffkonzentration im Blut (in mg/l, \\(t\\) in Stunden). Welchem Wert nähert sich die Konzentration bei sehr langer Dauer?",
+        loesung: 200,
+        toleranz: 0,
+        tipp: "Untersuche das Verhalten des Bruchs für immer größere \\(t\\).",
+        loesungsweg: "Zähler- und Nennergrad sind gleich (beide 1), die führenden Koeffizienten sind \\(200\\) und \\(1\\): $$\\lim_{t \\to \\infty} \\frac{200t}{t+4} = 200$$ Die Konzentration nähert sich also dem Sättigungswert \\(200\\,\\text{mg/l}\\), ohne ihn je zu erreichen."
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // Level 5: mehrere Verfahren verbinden, Parameter, Fehlersuche
     // ═══════════════════════════════════════════════════════════════
 
     {
         id: 25, level: 5, typ: "mc",
-        frage: "Gegeben: \\(f(x) = \\begin{cases} x^2 & x < 1 \\\\ 2x - 1 & x \\geq 1 \\end{cases}\\). Ist \\(f\\) an \\(x = 1\\) stetig?",
-        optionen: ["Ja", "Nein, Sprungstelle", "Nein, hebbare Lücke", "Nein, Polstelle"],
-        korrekt: 0,
-        tipp: "Berechne linksseitigen GW (\\(x^2\\) für \\(x \\to 1^-\\)), rechtsseitigen GW (\\(2x-1\\) für \\(x \\to 1^+\\)) und \\(f(1)\\).",
-        loesungsweg: "\\(\\lim_{x \\to 1^-} x^2 = 1\\), \\(\\lim_{x \\to 1^+} (2x-1) = 1\\), \\(f(1) = 2 \\cdot 1 - 1 = 1\\). Links = Rechts = Funktionswert → stetig."
+        frage: "Ein Schüler berechnet \\(\\lim_{x \\to 1} \\frac{x^2 - 1}{x - 1}\\):<br>Schritt 1: Einsetzen von \\(x = 1\\) ergibt \\(\\frac{0}{0}\\).<br>Schritt 2: \\(\\frac{0}{0}\\) ist nicht definiert.<br>Schritt 3: Also existiert der Grenzwert nicht.<br>Welcher Schritt ist der erste fehlerhafte?",
+        optionen: ["Schritt 1", "Schritt 2", "Schritt 3", "Kein Schritt ist fehlerhaft"],
+        korrekt: 2,
+        tipp: "Was besagt \\(\\frac{0}{0}\\) über den Grenzwert – nichts oder alles?",
+        loesungsweg: "Die Schritte 1 und 2 sind richtig: Der Term ist an der Stelle \\(1\\) nicht definiert. Falsch ist der Schluss in Schritt 3: \\(\\frac{0}{0}\\) heißt nur, dass man den Grenzwert nicht durch Einsetzen bekommt. Kürzen liefert $$\\frac{(x-1)(x+1)}{x-1} = x+1 \\Rightarrow \\lim_{x \\to 1} \\frac{x^2-1}{x-1} = 2$$ Der Grenzwert existiert also."
     },
     {
-        id: 26, level: 5, typ: "mc",
-        frage: "Gegeben: \\(f(x) = \\begin{cases} 2x + 1 & x < 2 \\\\ 3x - 2 & x \\geq 2 \\end{cases}\\). Ist \\(f\\) bei \\(x = 2\\) stetig?",
-        optionen: ["Ja", "Nein, Sprungstelle", "Nein, hebbare Lücke", "Nein, Polstelle"],
-        korrekt: 1,
-        tipp: "Vergleiche \\(\\lim_{x \\to 2^-} f(x)\\) und \\(\\lim_{x \\to 2^+} f(x)\\).",
-        loesungsweg: "\\(\\lim_{x \\to 2^-} (2x+1) = 5\\), \\(\\lim_{x \\to 2^+} (3x-2) = 4\\). Da \\(5 \\neq 4\\), ist \\(f\\) bei \\(x = 2\\) nicht stetig (Sprungstelle)."
+        id: 26, level: 5, typ: "numerisch",
+        frage: "Der Graph von \\(f(x) = \\dfrac{x^2 + 3x}{x - 1}\\) besitzt eine schiefe Asymptote mit der Gleichung \\(y = mx + n\\). Bestimme \\(n\\).",
+        loesung: 4,
+        toleranz: 0,
+        tipp: "Zerlege den Bruch in einen ganzrationalen Anteil und einen Rest, der für große \\(x\\) verschwindet.",
+        loesungsweg: "Polynomdivision: $$(x^2 + 3x) : (x - 1) = x + 4 \\;\\text{Rest}\\; 4$$ also $$f(x) = x + 4 + \\frac{4}{x-1}$$ Für \\(x \\to \\pm\\infty\\) geht \\(\\frac{4}{x-1}\\) gegen \\(0\\); der Graph nähert sich der Geraden \\(y = x + 4\\). Damit ist \\(m = 1\\) und \\(n = 4\\)."
     },
     {
         id: 27, level: 5, typ: "numerisch",
-        frage: "Gegeben: \\(f(x) = \\begin{cases} x + 3 & x < 1 \\\\ 2x + a & x \\geq 1 \\end{cases}\\). Bestimme \\(a\\), sodass \\(f\\) bei \\(x = 1\\) stetig ist.",
-        loesung: 2,
+        frage: "Gegeben: \\(f(x) = \\begin{cases} ax + b & x < 1 \\\\ x^2 & x \\geq 1 \\end{cases}\\). Der Graph von \\(f\\) soll an der Stelle \\(1\\) weder einen Sprung noch einen Knick haben. Bestimme \\(b\\).",
+        loesung: -1,
         toleranz: 0,
-        tipp: "Stetigkeit erfordert: \\(\\lim_{x \\to 1^-} f(x) = f(1)\\). Setze beide Teile bei \\(x = 1\\) gleich.",
-        loesungsweg: "\\(\\lim_{x \\to 1^-} (x+3) = 4\\). \\(f(1) = 2 \\cdot 1 + a = 2 + a\\). Stetigkeit: \\(2 + a = 4 \\Rightarrow a = 2\\)."
+        tipp: "Kein Sprung bedeutet gleiche Funktionswerte, kein Knick bedeutet gleiche Steigungen an der Nahtstelle.",
+        loesungsweg: "Kein Knick: die Steigungen müssen übereinstimmen. Links ist die Steigung \\(a\\), rechts \\((x^2)' = 2x\\), an der Stelle \\(1\\) also \\(2\\). Daraus folgt \\(a = 2\\). Kein Sprung: \\(a \\cdot 1 + b = 1^2 = 1\\), also \\(2 + b = 1\\) und damit \\(b = -1\\)."
     },
     {
-        id: 28, level: 5, typ: "numerisch",
-        frage: "Berechne den linksseitigen Grenzwert: \\(\\lim_{x \\to 3^-} f(x)\\) mit \\(f(x) = \\begin{cases} x^2 - 1 & x < 3 \\\\ 10 & x \\geq 3 \\end{cases}\\).",
-        loesung: 8,
-        toleranz: 0,
-        tipp: "Für den linksseitigen GW verwende den Ausdruck, der für \\(x < 3\\) gilt.",
-        loesungsweg: "Für \\(x < 3\\) ist \\(f(x) = x^2 - 1\\). Also: \\(\\lim_{x \\to 3^-} (x^2 - 1) = 9 - 1 = 8\\)."
+        id: 28, level: 5, typ: "mc",
+        frage: "Wie verhält sich \\(f(x) = \\dfrac{x - 1}{(x - 3)(x + 2)}\\) für \\(x \\to 3^-\\) (also von links)?",
+        optionen: [
+            "\\(f(x) \\to -\\infty\\)",
+            "\\(f(x) \\to +\\infty\\)",
+            "\\(f(x) \\to 0\\)",
+            "\\(f(x) \\to \\frac{2}{5}\\)"
+        ],
+        korrekt: 0,
+        tipp: "Bestimme das Vorzeichen jedes einzelnen Faktors knapp links von \\(3\\), etwa für \\(x = 2{,}9\\).",
+        loesungsweg: "Für \\(x\\) knapp unter \\(3\\) gilt: Zähler \\(x - 1 \\approx 2 > 0\\), Faktor \\(x + 2 \\approx 5 > 0\\), aber \\(x - 3 < 0\\) und betragsmäßig winzig. Der Bruch ist also negativ mit wachsendem Betrag: \\(f(x) \\to -\\infty\\). Probe mit \\(x = 2{,}9\\): \\(\\frac{1{,}9}{(-0{,}1)\\cdot 4{,}9} \\approx -3{,}9\\); mit \\(x = 2{,}99\\) bereits \\(\\approx -39{,}9\\)."
     },
     {
         id: 29, level: 5, typ: "numerisch",
-        frage: "Gegeben: \\(f(x) = \\begin{cases} ax + 1 & x < 2 \\\\ x^2 - 1 & x \\geq 2 \\end{cases}\\). Bestimme \\(a\\) für Stetigkeit bei \\(x = 2\\).",
-        loesung: 1,
+        frage: "Für welchen Wert von \\(a\\) gilt \\(\\lim_{x \\to \\infty} \\dfrac{ax^2 + 3x}{2x^2 - 1} = 4\\)?",
+        loesung: 8,
         toleranz: 0,
-        tipp: "Setze die Werte bei \\(x = 2\\) gleich: linker Teil = rechter Teil.",
-        loesungsweg: "\\(f(2) = 2^2 - 1 = 3\\). \\(\\lim_{x \\to 2^-} (ax+1) = 2a+1\\). Stetigkeit: \\(2a + 1 = 3 \\Rightarrow a = 1\\)."
+        tipp: "Der Grenzwert hängt nur von den Gliedern höchsten Grades ab.",
+        loesungsweg: "Zähler- und Nennergrad sind gleich (beide 2), der Grenzwert ist der Quotient der führenden Koeffizienten: $$\\lim_{x \\to \\infty} \\frac{ax^2 + 3x}{2x^2 - 1} = \\frac{a}{2}$$ Aus \\(\\frac{a}{2} = 4\\) folgt \\(a = 8\\)."
     },
     {
-        id: 30, level: 5, typ: "mc",
-        frage: "Gegeben: \\(f(x) = \\begin{cases} \\frac{1}{x} & x > 0 \\\\ 0 & x = 0 \\\\ -\\frac{1}{x} & x < 0 \\end{cases}\\). Was gilt bei \\(x = 0\\)?",
-        optionen: ["\\(f\\) ist stetig", "Hebbare Lücke", "Sprungstelle", "Beide einseitigen GW existieren nicht"],
-        korrekt: 3,
-        tipp: "Was passiert mit \\(\\frac{1}{x}\\), wenn \\(x \\to 0^+\\)?",
-        loesungsweg: "\\(\\lim_{x \\to 0^+} \\frac{1}{x} = +\\infty\\) und \\(\\lim_{x \\to 0^-} \\left(-\\frac{1}{x}\\right) = +\\infty\\). Beide einseitigen Grenzwerte existieren nicht (im eigentlichen Sinne), da sie gegen Unendlich streben."
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Berechne \\(\\lim_{x \\to 2} \\dfrac{x^3 - 8}{x - 2}\\).",
+        loesung: 12,
+        toleranz: 0,
+        tipp: "Der Zähler hat bei \\(x = 2\\) eine Nullstelle – er lässt sich also durch \\((x-2)\\) teilen.",
+        loesungsweg: "Polynomdivision (oder die Formel für die Differenz zweier Kuben): $$x^3 - 8 = (x-2)(x^2 + 2x + 4)$$ Kürzen: $$\\frac{x^3-8}{x-2} = x^2 + 2x + 4 \\quad (x \\neq 2)$$ Grenzwert: \\(4 + 4 + 4 = 12\\)."
     },
 
     // ═══════════════════════════════════════════════════════════════
-    // Level 6: Parameterabhängige Stetigkeit, Begründungen
+    // Level 6: Fallunterscheidung und Aussagen über Grenzwertbegriffe
     // ═══════════════════════════════════════════════════════════════
 
     {
         id: 31, level: 6, typ: "numerisch",
-        frage: "Gegeben: \\(f(x) = \\begin{cases} ax^2 + 1 & x \\leq 1 \\\\ 3x + b & x > 1 \\end{cases}\\). Bestimme \\(a\\), wenn \\(b = -1\\) und \\(f\\) bei \\(x = 1\\) stetig sein soll.",
-        loesung: 1,
+        frage: "Für welchen Wert von \\(a\\) hat \\(f(x) = \\dfrac{x^2 - a}{x - 2}\\) an der Stelle \\(2\\) eine hebbare Lücke statt einer Polstelle?",
+        loesung: 4,
         toleranz: 0,
-        tipp: "Setze \\(x = 1\\) in beide Teile ein und fordere Gleichheit.",
-        loesungsweg: "\\(f(1) = a \\cdot 1 + 1 = a + 1\\). \\(\\lim_{x \\to 1^+} (3x - 1) = 2\\). Stetigkeit: \\(a + 1 = 2 \\Rightarrow a = 1\\)."
+        tipp: "Eine Lücke ist nur dann hebbar, wenn auch der Zähler an dieser Stelle null wird.",
+        loesungsweg: "Bei einer Polstelle strebt der Betrag von \\(f\\) gegen unendlich; hebbar ist die Lücke nur, wenn der Zähler an der Stelle \\(2\\) ebenfalls verschwindet: $$2^2 - a = 0 \\Rightarrow a = 4$$ Dann ist \\(f(x) = \\frac{(x-2)(x+2)}{x-2} = x + 2\\) für \\(x \\neq 2\\), und der Grenzwert \\(4\\) schließt die Lücke."
     },
     {
         id: 32, level: 6, typ: "mc",
-        frage: "Gegeben: \\(f(x) = \\begin{cases} x + 2 & x \\neq 2 \\\\ c & x = 2 \\end{cases}\\). Für welchen Wert von \\(c\\) ist \\(f\\) stetig?",
-        optionen: ["\\(c = 0\\)", "\\(c = 2\\)", "\\(c = 4\\)", "\\(c = -4\\)"],
+        frage: "Für zwei Funktionen gilt \\(\\lim_{x \\to 0} f(x) = 0\\) und \\(\\lim_{x \\to 0^+} g(x) = +\\infty\\). Was lässt sich über \\(\\lim_{x \\to 0^+} \\big(f(x) \\cdot g(x)\\big)\\) sagen?",
+        optionen: [
+            "Der Grenzwert ist stets \\(0\\)",
+            "Der Grenzwert ist stets \\(+\\infty\\)",
+            "Je nach \\(f\\) und \\(g\\) kann jeder Wert herauskommen – auch gar keiner",
+            "Der Grenzwert ist stets \\(1\\)"
+        ],
         korrekt: 2,
-        tipp: "Für Stetigkeit muss \\(f(2) = \\lim_{x \\to 2} f(x)\\) gelten. Was ergibt \\(x + 2\\) für \\(x \\to 2\\)?",
-        loesungsweg: "\\(\\lim_{x \\to 2} (x + 2) = 4\\). Damit \\(f\\) stetig ist, muss der definierte Wert \\(f(2) = c\\) gleich dem Grenzwert sein: \\(c = 4\\)."
+        tipp: "Probiere \\(f(x) = x\\) mit \\(g(x) = \\frac{1}{x}\\), dann \\(f(x) = x^2\\) mit \\(g(x) = \\frac{1}{x}\\) und schließlich \\(f(x) = 5x\\) mit \\(g(x) = \\frac{1}{x}\\).",
+        loesungsweg: "Der Produktsatz für Grenzwerte gilt nur, wenn beide Grenzwerte existieren (endlich sind). Hier liegt der unbestimmte Ausdruck \\(0 \\cdot \\infty\\) vor: mit \\(f(x)=x,\\; g(x)=\\frac{1}{x}\\) ergibt sich \\(1\\); mit \\(f(x)=x^2\\) ergibt sich \\(0\\); mit \\(f(x)=5x\\) ergibt sich \\(5\\); mit \\(f(x)=x,\\; g(x)=\\frac{1}{x^2}\\) sogar \\(+\\infty\\). Der Grenzwert ist ohne genauere Kenntnis der Funktionen nicht bestimmbar."
     },
     {
-        id: 33, level: 6, typ: "numerisch",
-        frage: "Gegeben: \\(f(x) = \\begin{cases} ax + 3 & x < 1 \\\\ 2x + 1 & x \\geq 1 \\end{cases}\\). Bestimme \\(a\\), sodass \\(f\\) bei \\(x = 1\\) stetig ist.",
-        loesung: 0,
+        id: 33, level: 6, typ: "mc",
+        frage: "Betrachtet wird \\(f(x) = \\dfrac{3x^2}{x^2 + 1}\\). Welche Aussage über die Funktionswerte von \\(f\\) trifft zu?",
+        optionen: [
+            "\\(f(x) < 3\\) für alle \\(x\\), und die Werte kommen der \\(3\\) beliebig nahe",
+            "\\(f\\) nimmt den Wert \\(3\\) an genau einer Stelle an",
+            "\\(f(x) > 3\\) für alle hinreichend großen \\(x\\)",
+            "\\(f\\) nimmt jeden Wert zwischen \\(0\\) und \\(4\\) an"
+        ],
+        korrekt: 0,
+        tipp: "Untersuche die Differenz \\(3 - f(x)\\): Kann sie null werden, und wie verhält sie sich für große \\(x\\)?",
+        loesungsweg: "Es gilt $$3 - f(x) = \\frac{3(x^2+1) - 3x^2}{x^2+1} = \\frac{3}{x^2+1} > 0$$ für jedes \\(x\\). Also ist \\(f(x) < 3\\) durchweg, der Wert \\(3\\) wird nie angenommen. Für \\(x \\to \\pm\\infty\\) geht \\(\\frac{3}{x^2+1}\\) gegen \\(0\\), die Funktionswerte kommen der \\(3\\) also beliebig nahe: \\(y = 3\\) ist waagerechte Asymptote."
+    },
+    {
+        id: 34, level: 6, typ: "numerisch",
+        frage: "An wie vielen Stellen ist \\(f(x) = |x^2 - 4|\\) nicht differenzierbar?",
+        loesung: 2,
         toleranz: 0,
-        tipp: "Stetigkeit: linksseitiger Grenzwert = Funktionswert bei \\(x = 1\\). Rechne \\(f(1)\\) mit dem zweiten Teil, dann setze gleich.",
-        loesungsweg: "\\(f(1) = 2 \\cdot 1 + 1 = 3\\). Linksseitiger Grenzwert: \\(\\lim_{x \\to 1^-} (ax+3) = a + 3\\). Stetigkeit: \\(a + 3 = 3 \\Rightarrow a = 0\\)."
-    },
-    {
-        id: 34, level: 6, typ: "mc",
-        frage: "Die Funktion \\(f(x) = |x|\\) ist bei \\(x = 0\\) …",
-        optionen: ["stetig und differenzierbar", "stetig, aber nicht differenzierbar", "nicht stetig", "weder stetig noch differenzierbar"],
-        korrekt: 1,
-        tipp: "Prüfe: \\(\\lim_{x \\to 0} |x| = 0 = f(0)\\). Existiert \\(f'(0)\\)? Vergleiche links- und rechtsseitige Ableitung.",
-        loesungsweg: "\\(\\lim_{x \\to 0} |x| = 0 = f(0)\\) → stetig. Aber: \\(f'(0^-) = -1 \\neq 1 = f'(0^+)\\) → nicht differenzierbar. Es liegt ein Knick vor."
+        tipp: "Der Betrag klappt die negativen Teile des Graphen nach oben. Wo entstehen dabei Knicke?",
+        loesungsweg: "Für \\(-2 < x < 2\\) ist \\(x^2 - 4 < 0\\), dort gilt \\(f(x) = 4 - x^2\\); außerhalb ist \\(f(x) = x^2 - 4\\). An den Nullstellen \\(x = -2\\) und \\(x = 2\\) stoßen beide Teile zusammen: die Steigungen sind dort \\(\\mp 4\\) und \\(\\pm 4\\), also verschieden – Knicke. Überall sonst ist \\(f\\) differenzierbar. Antwort: <b>2</b> Stellen (die Funktion ist dabei überall stetig)."
     },
     {
         id: 35, level: 6, typ: "numerisch",
-        frage: "Gegeben: \\(f(x) = \\begin{cases} x^2 + 2x + 4 & x \\neq 2 \\\\ k & x = 2 \\end{cases}\\). Bestimme \\(k\\) für Stetigkeit.",
-        loesung: 12,
+        frage: "Berechne \\(\\lim_{x \\to 1} \\dfrac{x^3 - x^2 - x + 1}{x - 1}\\).",
+        loesung: 0,
         toleranz: 0,
-        tipp: "Für Stetigkeit muss \\(f(2) = \\lim_{x \\to 2} f(x)\\) gelten. Setze \\(x = 2\\) in den Term \\(x^2 + 2x + 4\\) ein.",
-        loesungsweg: "\\(\\lim_{x \\to 2} (x^2 + 2x + 4) = 4 + 4 + 4 = 12\\). Damit \\(f\\) stetig ist, muss \\(f(2) = k = 12\\) gelten."
+        tipp: "Klammere im Zähler paarweise aus – er zerfällt in mehr als zwei Faktoren.",
+        loesungsweg: "Zähler gruppieren: $$x^3 - x^2 - x + 1 = x^2(x-1) - (x-1) = (x-1)(x^2-1) = (x-1)^2 (x+1)$$ Kürzen: $$\\frac{(x-1)^2 (x+1)}{x-1} = (x-1)(x+1) \\quad (x \\neq 1)$$ Grenzwert: \\((1-1)(1+1) = 0\\). Die Lücke bei \\(x = 1\\) ist also hebbar, obwohl der Nenner dort verschwindet."
     },
     {
         id: 36, level: 6, typ: "mc",
-        frage: "Welche Aussage ist korrekt?",
+        frage: "Von einer auf \\(\\mathbb{R}\\) definierten Funktion \\(f\\) ist bekannt: \\(\\lim_{x \\to 2} f(x) = 5\\). Welche Aussage folgt daraus zwingend?",
         optionen: [
-            "Jede stetige Funktion ist differenzierbar",
-            "Jede differenzierbare Funktion ist stetig",
-            "Stetigkeit und Differenzierbarkeit sind äquivalent",
-            "Differenzierbarkeit impliziert weder Stetigkeit noch umgekehrt"
+            "\\(f(2) = 5\\)",
+            "\\(f\\) ist an der Stelle \\(2\\) stetig",
+            "Die Werte \\(f(x)\\) liegen beliebig nahe bei \\(5\\), wenn \\(x\\) nahe genug bei \\(2\\) liegt; über \\(f(2)\\) selbst sagt das nichts",
+            "\\(f\\) ist an der Stelle \\(2\\) differenzierbar"
         ],
-        korrekt: 1,
-        tipp: "Denke an \\(f(x) = |x|\\): stetig, aber nicht differenzierbar bei \\(x = 0\\). Gilt die Umkehrung?",
-        loesungsweg: "Differenzierbarkeit ⇒ Stetigkeit (das ist ein Satz der Analysis). Aber: Stetigkeit ⇒ Differenzierbarkeit gilt NICHT (Gegenbeispiel: \\(|x|\\) bei \\(x = 0\\))."
+        korrekt: 2,
+        tipp: "Der Grenzwert beschreibt das Verhalten in der Umgebung der Stelle. Wird der Funktionswert an der Stelle selbst dabei überhaupt betrachtet?",
+        loesungsweg: "Der Grenzwert an der Stelle \\(2\\) macht nur eine Aussage über Stellen \\(x \\neq 2\\) in der Nähe von \\(2\\). Der Funktionswert \\(f(2)\\) darf davon abweichen – zum Beispiel erfüllt $$f(x) = \\begin{cases} x + 3 & x \\neq 2 \\\\ 0 & x = 2 \\end{cases}$$ die Voraussetzung, ist aber bei \\(2\\) unstetig und dort erst recht nicht differenzierbar. Stetigkeit läge erst vor, wenn zusätzlich \\(f(2) = 5\\) gälte."
     }
+
 
     ];
     </script>

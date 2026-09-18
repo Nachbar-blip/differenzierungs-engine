@@ -170,166 +170,168 @@
     },
 
     // ══════════════════════════════════════════════════════════════
-    // LEVEL 4 — Produktregel, e^x, sin, cos
+    // LEVEL 4 — Regel selbst wählen, Rückwärtsfragen, Sachkontext
     // ══════════════════════════════════════════════════════════════
     {
-        id: 19, level: 4, typ: "mc",
-        frage: "Wie lautet die Ableitung von \\(f(x) = e^x\\)?",
-        optionen: [
-            "\\(f'(x) = e^x\\)",
-            "\\(f'(x) = x \\cdot e^{x-1}\\)",
-            "\\(f'(x) = \\frac{e^x}{x}\\)",
-            "\\(f'(x) = e^{x+1}\\)"
-        ],
-        korrekt: 0,
-        tipp: "Die Exponentialfunktion ist die einzige Funktion, die ihre eigene Ableitung ist.",
-        loesungsweg: "\\((e^x)' = e^x\\). Die natürliche Exponentialfunktion ist ihre eigene Ableitung."
+        id: 19, level: 4, typ: "numerisch",
+        frage: "Gegeben ist \\(f(x) = x^2 \\cdot e^x\\). Berechne \\(f'(1)\\) und runde auf zwei Dezimalstellen.",
+        loesung: 8.15, toleranz: 0.01,
+        tipp: "Für ein Produkt zweier Funktionen gilt \\((u \\cdot v)' = u'v + uv'\\).",
+        loesungsweg: "Mit \\(u = x^2\\) und \\(v = e^x\\): $$f'(x) = 2x \\cdot e^x + x^2 \\cdot e^x = e^x(x^2 + 2x)$$ Einsetzen: \\(f'(1) = e \\cdot (1 + 2) = 3e \\approx 8{,}15\\)."
     },
     {
         id: 20, level: 4, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = x^2 \\cdot e^x\\). Berechne \\(f'(0)\\). <br><em>Hinweis: Produktregel verwenden!</em>",
-        loesung: 0, toleranz: 0,
-        tipp: "Produktregel: \\((u \\cdot v)' = u' \\cdot v + u \\cdot v'\\) mit \\(u = x^2\\) und \\(v = e^x\\).",
-        loesungsweg: "\\(f'(x) = 2x \\cdot e^x + x^2 \\cdot e^x = e^x(2x + x^2)\\). Einsetzen: \\(f'(0) = e^0 \\cdot (0 + 0) = 1 \\cdot 0 = 0\\)."
+        frage: "Gegeben ist \\(f(x) = x^3 - 6x^2 + 9x + 1\\). An zwei Stellen verläuft die Tangente waagerecht. Gib die größere dieser Stellen an.",
+        loesung: 3, toleranz: 0,
+        tipp: "Eine waagerechte Tangente bedeutet Steigung null.",
+        loesungsweg: "Waagerechte Tangente heißt \\(f'(x) = 0\\): $$f'(x) = 3x^2 - 12x + 9 = 3(x^2 - 4x + 3) = 3(x-1)(x-3)$$ Nullstellen: \\(x = 1\\) und \\(x = 3\\). Die größere Stelle ist \\(x = 3\\)."
     },
     {
         id: 21, level: 4, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = 3e^x + 2x^2\\). Berechne \\(f'(0)\\).",
-        loesung: 3, toleranz: 0,
-        tipp: "\\((e^x)' = e^x\\) und \\((x^2)' = 2x\\). Summenregel anwenden.",
-        loesungsweg: "\\(f'(x) = 3e^x + 4x\\). Einsetzen: \\(f'(0) = 3 \\cdot e^0 + 4 \\cdot 0 = 3 \\cdot 1 = 3\\)."
+        frage: "Ein Fahrzeug legt in den ersten Sekunden nach dem Start den Weg \\(s(t) = t^3 - 6t^2 + 12t\\) zurück (\\(s\\) in Metern, \\(t\\) in Sekunden). Welche Geschwindigkeit in m/s hat es nach \\(4\\) Sekunden?",
+        loesung: 12, toleranz: 0,
+        tipp: "Die Geschwindigkeit ist die momentane Änderungsrate des Weges.",
+        loesungsweg: "Die Geschwindigkeit ist die Ableitung des Weges nach der Zeit: $$s'(t) = 3t^2 - 12t + 12$$ Einsetzen: \\(s'(4) = 48 - 48 + 12 = 12\\). Das Fahrzeug fährt nach \\(4\\) Sekunden mit \\(12\\,\\text{m/s}\\)."
     },
     {
-        id: 22, level: 4, typ: "mc",
-        frage: "Wie lautet die Ableitung von \\(f(x) = \\sin(x)\\)?",
+        id: 22, level: 4, typ: "numerisch",
+        frage: "Für welchen Wert von \\(a\\) hat der Graph von \\(f(x) = x^3 + ax\\) an der Stelle \\(2\\) eine waagerechte Tangente?",
+        loesung: -12, toleranz: 0,
+        tipp: "Stelle die Ableitung auf und setze sie an der Stelle \\(2\\) gleich null.",
+        loesungsweg: "$$f'(x) = 3x^2 + a$$ Bedingung \\(f'(2) = 0\\): $$3 \\cdot 4 + a = 0 \\Rightarrow 12 + a = 0 \\Rightarrow a = -12$$"
+    },
+    {
+        id: 23, level: 4, typ: "mc",
+        frage: "In welcher Zeile steht eine <b>falsche</b> Ableitung?",
         optionen: [
-            "\\(f'(x) = \\cos(x)\\)",
-            "\\(f'(x) = -\\cos(x)\\)",
-            "\\(f'(x) = -\\sin(x)\\)",
-            "\\(f'(x) = \\sin(x)\\)"
+            "\\(\\left(\\frac{1}{x}\\right)' = \\frac{1}{x^2}\\)",
+            "\\((x^4)' = 4x^3\\)",
+            "\\((3e^x)' = 3e^x\\)",
+            "\\((\\cos(x))' = -\\sin(x)\\)"
         ],
         korrekt: 0,
-        tipp: "Merke dir die Ableitungskette: \\(\\sin \\to \\cos \\to -\\sin \\to -\\cos \\to \\sin\\).",
-        loesungsweg: "\\((\\sin(x))' = \\cos(x)\\)."
-    },
-    {
-        id: 23, level: 4, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = x \\cdot \\sin(x)\\). Berechne \\(f'(0)\\). <br><em>Hinweis: Produktregel!</em>",
-        loesung: 0, toleranz: 0,
-        tipp: "Produktregel mit \\(u = x\\), \\(v = \\sin(x)\\): \\(f'(x) = 1 \\cdot \\sin(x) + x \\cdot \\cos(x)\\).",
-        loesungsweg: "\\(f'(x) = \\sin(x) + x\\cos(x)\\). Einsetzen: \\(f'(0) = \\sin(0) + 0 \\cdot \\cos(0) = 0 + 0 = 0\\)."
+        tipp: "Schreibe \\(\\frac{1}{x}\\) als Potenz mit negativem Exponenten und wende die Potenzregel an.",
+        loesungsweg: "\\(\\frac{1}{x} = x^{-1}\\), also $$\\left(\\frac{1}{x}\\right)' = -1 \\cdot x^{-2} = -\\frac{1}{x^2}$$ Das Minuszeichen fehlt in der ersten Zeile. Die drei übrigen Ableitungen sind korrekt."
     },
     {
         id: 24, level: 4, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = x^2 \\cdot e^x\\). Berechne \\(f'(1)\\). <br>Runde auf zwei Dezimalstellen.",
-        loesung: 8.15, toleranz: 0.01,
-        tipp: "Produktregel: \\(f'(x) = 2x \\cdot e^x + x^2 \\cdot e^x = e^x(2x + x^2)\\).",
-        loesungsweg: "\\(f'(x) = e^x(x^2 + 2x)\\). Einsetzen: \\(f'(1) = e^1(1 + 2) = 3e \\approx 3 \\cdot 2{,}718 = 8{,}15\\)."
+        frage: "Gegeben ist \\(f(x) = x^2 + \\dfrac{4}{x}\\). Berechne \\(f'(2)\\).",
+        loesung: 3, toleranz: 0,
+        tipp: "Der zweite Summand lässt sich als Potenz mit negativem Exponenten schreiben.",
+        loesungsweg: "\\(f(x) = x^2 + 4x^{-1}\\), also $$f'(x) = 2x - 4x^{-2} = 2x - \\frac{4}{x^2}$$ Einsetzen: \\(f'(2) = 4 - \\frac{4}{4} = 4 - 1 = 3\\)."
     },
 
     // ══════════════════════════════════════════════════════════════
-    // LEVEL 5 — Komplexe Kombinationen, mehrere Regeln
+    // LEVEL 5 — mehrere Bedingungen verbinden, Fehlersuche
     // ══════════════════════════════════════════════════════════════
     {
-        id: 25, level: 5, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = (2x+1) \\cdot x^3\\). Berechne \\(f'(1)\\). <br><em>Produktregel oder erst ausmultiplizieren!</em>",
-        loesung: 11, toleranz: 0,
-        tipp: "Ausmultipliziert: \\(f(x) = 2x^4 + x^3\\). Oder: Produktregel mit \\(u = 2x+1\\), \\(v = x^3\\).",
-        loesungsweg: "\\(f(x) = 2x^4 + x^3\\), also \\(f'(x) = 8x^3 + 3x^2\\). Einsetzen: \\(f'(1) = 8 + 3 = 11\\)."
+        id: 25, level: 5, typ: "mc",
+        frage: "Ein Schüler leitet \\(f(x) = x^2 \\cdot e^x\\) ab:<br>Schritt 1: \\(u = x^2\\), \\(v = e^x\\)<br>Schritt 2: \\(u' = 2x\\), \\(v' = e^x\\)<br>Schritt 3: \\(f'(x) = u' \\cdot v' = 2x \\cdot e^x\\)<br>Welcher Schritt ist der erste fehlerhafte?",
+        optionen: ["Schritt 1", "Schritt 2", "Schritt 3", "Kein Schritt ist fehlerhaft"],
+        korrekt: 2,
+        tipp: "Wird bei einem Produkt wirklich Faktor für Faktor abgeleitet? Prüfe die Regel an \\(f(x) = x \\cdot x = x^2\\).",
+        loesungsweg: "Die Schritte 1 und 2 sind richtig. In Schritt 3 werden die Faktoren einzeln abgeleitet – das ist der klassische Fehler. Richtig ist $$f'(x) = u'v + uv' = 2x e^x + x^2 e^x = e^x(x^2 + 2x)$$ Gegenprobe zur falschen Regel: für \\(f(x) = x \\cdot x = x^2\\) lieferte sie \\(1 \\cdot 1 = 1\\) statt \\(2x\\)."
     },
     {
         id: 26, level: 5, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = x^2 \\cdot \\cos(x)\\). Berechne \\(f'(0)\\).",
-        loesung: 0, toleranz: 0,
-        tipp: "Produktregel: \\(u = x^2\\), \\(v = \\cos(x)\\). Beachte: \\((\\cos(x))' = -\\sin(x)\\).",
-        loesungsweg: "\\(f'(x) = 2x \\cdot \\cos(x) + x^2 \\cdot (-\\sin(x)) = 2x\\cos(x) - x^2\\sin(x)\\). Einsetzen: \\(f'(0) = 0 \\cdot 1 - 0 \\cdot 0 = 0\\)."
+        frage: "Für \\(f(x) = ax^2 + bx\\) gilt \\(f(1) = 5\\) und \\(f'(1) = 7\\). Bestimme \\(a\\).",
+        loesung: 2, toleranz: 0,
+        tipp: "Die eine Bedingung betrifft den Funktionswert, die andere die Steigung – beide liefern je eine Gleichung.",
+        loesungsweg: "\\(f(1) = a + b = 5\\). Mit \\(f'(x) = 2ax + b\\) folgt \\(f'(1) = 2a + b = 7\\). Subtraktion: $$(2a + b) - (a + b) = 7 - 5 \\Rightarrow a = 2$$ Kontrolle: \\(b = 3\\), also \\(f(x) = 2x^2 + 3x\\) mit \\(f(1) = 5\\) und \\(f'(1) = 4 + 3 = 7\\) ✓."
     },
     {
-        id: 27, level: 5, typ: "mc",
-        frage: "Wie lautet die Ableitung von \\(f(x) = x \\cdot e^x - 3x^2\\)?",
-        optionen: [
-            "\\(f'(x) = e^x + xe^x - 6x\\)",
-            "\\(f'(x) = xe^x - 6x\\)",
-            "\\(f'(x) = e^x + xe^x - 3x\\)",
-            "\\(f'(x) = e^x - 6x\\)"
-        ],
-        korrekt: 0,
-        tipp: "Produktregel für \\(x \\cdot e^x\\): \\((x \\cdot e^x)' = 1 \\cdot e^x + x \\cdot e^x\\). Dann \\(-3x^2\\) ableiten.",
-        loesungsweg: "\\((x \\cdot e^x)' = e^x + xe^x\\) (Produktregel). \\((-3x^2)' = -6x\\). Zusammen: \\(f'(x) = e^x + xe^x - 6x\\)."
+        id: 27, level: 5, typ: "numerisch",
+        frage: "An welcher Stelle \\(x > 0\\) hat der Graph von \\(f(x) = x^3 - 3x\\) die Steigung \\(9\\)?",
+        loesung: 2, toleranz: 0,
+        tipp: "Die Steigung an einer Stelle ist der Wert der Ableitung dort.",
+        loesungsweg: "$$f'(x) = 3x^2 - 3 = 9 \\Rightarrow 3x^2 = 12 \\Rightarrow x^2 = 4$$ Also \\(x = 2\\) oder \\(x = -2\\); gesucht ist die positive Stelle: \\(x = 2\\)."
     },
     {
         id: 28, level: 5, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = 2\\sin(x) + 3\\cos(x)\\). Berechne \\(f'(0)\\).",
-        loesung: 2, toleranz: 0,
-        tipp: "\\((\\sin(x))' = \\cos(x)\\) und \\((\\cos(x))' = -\\sin(x)\\).",
-        loesungsweg: "\\(f'(x) = 2\\cos(x) - 3\\sin(x)\\). Einsetzen: \\(f'(0) = 2 \\cdot 1 - 3 \\cdot 0 = 2\\)."
+        frage: "Gegeben ist \\(f(x) = (3x - 1) \\cdot e^x\\). Berechne \\(f'(1)\\) und runde auf zwei Dezimalstellen.",
+        loesung: 13.59, toleranz: 0.01,
+        tipp: "Leite das Produkt ab und fasse anschließend \\(e^x\\) aus.",
+        loesungsweg: "$$f'(x) = 3e^x + (3x-1)e^x = e^x(3x + 2)$$ Einsetzen: \\(f'(1) = e \\cdot 5 = 5e \\approx 13{,}59\\)."
     },
     {
         id: 29, level: 5, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = x^3 - 6x^2 + 9x + 1\\). Für welchen größeren \\(x\\)-Wert gilt \\(f'(x) = 0\\)?",
-        loesung: 3, toleranz: 0,
-        tipp: "Setze \\(f'(x) = 0\\) und löse die quadratische Gleichung. Es gibt zwei Nullstellen.",
-        loesungsweg: "\\(f'(x) = 3x^2 - 12x + 9 = 3(x^2 - 4x + 3) = 3(x-1)(x-3)\\). Nullstellen: \\(x = 1\\) und \\(x = 3\\). Der größere Wert ist \\(x = 3\\)."
+        frage: "Gegeben ist \\(f(x) = x \\cdot \\sin(x)\\). Berechne \\(f'(\\pi)\\) und runde auf zwei Dezimalstellen.",
+        loesung: -3.14, toleranz: 0.01,
+        tipp: "Denke an die Werte von \\(\\sin\\) und \\(\\cos\\) an der Stelle \\(\\pi\\).",
+        loesungsweg: "$$f'(x) = \\sin(x) + x\\cos(x)$$ Mit \\(\\sin(\\pi) = 0\\) und \\(\\cos(\\pi) = -1\\): $$f'(\\pi) = 0 + \\pi \\cdot (-1) = -\\pi \\approx -3{,}14$$"
     },
     {
         id: 30, level: 5, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = e^x + x^2 - 4x\\). Berechne \\(f'(0)\\).",
-        loesung: -3, toleranz: 0,
-        tipp: "Summenregel: Leite jeden Term einzeln ab.",
-        loesungsweg: "\\(f'(x) = e^x + 2x - 4\\). Einsetzen: \\(f'(0) = 1 + 0 - 4 = -3\\)."
+        frage: "Für welchen Wert von \\(k\\) hat der Graph von \\(f(x) = e^x - kx\\) an der Stelle \\(x = \\ln(3)\\) eine waagerechte Tangente?",
+        loesung: 3, toleranz: 0,
+        tipp: "Setze die Ableitung an der angegebenen Stelle gleich null und nutze \\(e^{\\ln(3)} = 3\\).",
+        loesungsweg: "$$f'(x) = e^x - k$$ Bedingung \\(f'(\\ln 3) = 0\\): $$e^{\\ln 3} - k = 0 \\Rightarrow 3 - k = 0 \\Rightarrow k = 3$$"
     },
 
     // ══════════════════════════════════════════════════════════════
-    // LEVEL 6 — Produktregel mit Trig/Exp, Mehrschritt-Aufgaben
+    // LEVEL 6 — Aussagen prüfen, Fallunterscheidung, Umkehrfragen
     // ══════════════════════════════════════════════════════════════
     {
-        id: 31, level: 6, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = e^x \\cdot \\sin(x)\\). Berechne \\(f'(0)\\).",
-        loesung: 1, toleranz: 0,
-        tipp: "Produktregel: \\(u = e^x\\), \\(v = \\sin(x)\\). Also \\(f'(x) = e^x\\sin(x) + e^x\\cos(x)\\).",
-        loesungsweg: "\\(f'(x) = e^x\\sin(x) + e^x\\cos(x) = e^x(\\sin(x) + \\cos(x))\\). Einsetzen: \\(f'(0) = e^0(\\sin(0) + \\cos(0)) = 1 \\cdot (0 + 1) = 1\\)."
-    },
-    {
-        id: 32, level: 6, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = e^x \\cdot \\cos(x)\\). Berechne \\(f'(0)\\).",
-        loesung: 1, toleranz: 0,
-        tipp: "Produktregel: \\(f'(x) = e^x\\cos(x) + e^x \\cdot (-\\sin(x))\\).",
-        loesungsweg: "\\(f'(x) = e^x\\cos(x) - e^x\\sin(x) = e^x(\\cos(x) - \\sin(x))\\). Einsetzen: \\(f'(0) = e^0(\\cos(0) - \\sin(0)) = 1 \\cdot (1 - 0) = 1\\)."
-    },
-    {
-        id: 33, level: 6, typ: "mc",
-        frage: "Gegeben ist \\(f(x) = x^2 \\cdot e^x\\). Welche Aussage über \\(f'(x)\\) ist korrekt?",
+        id: 31, level: 6, typ: "mc",
+        frage: "Betrachtet wird \\(f(x) = x^3 + 3x + 1\\). Welche Aussage über die Steigung des Graphen trifft zu?",
         optionen: [
-            "\\(f'(x) = e^x(x^2 + 2x)\\)",
-            "\\(f'(x) = 2x \\cdot e^x\\)",
-            "\\(f'(x) = e^x(x^2 - 2x)\\)",
-            "\\(f'(x) = x^2 \\cdot e^x + 2x\\)"
+            "Die Steigung ist an jeder Stelle mindestens \\(3\\)",
+            "Die Steigung ist an jeder Stelle höchstens \\(3\\)",
+            "Es gibt genau eine Stelle mit waagerechter Tangente",
+            "Die Steigung wird für betragsgroße \\(x\\) beliebig klein"
         ],
         korrekt: 0,
-        tipp: "Produktregel: \\(u = x^2\\), \\(v = e^x\\). \\(f'(x) = 2x \\cdot e^x + x^2 \\cdot e^x\\). Klammere \\(e^x\\) aus.",
-        loesungsweg: "\\(f'(x) = 2x \\cdot e^x + x^2 \\cdot e^x = e^x(2x + x^2) = e^x(x^2 + 2x)\\)."
+        tipp: "Untersuche, welche Werte der Term der Ableitung überhaupt annehmen kann.",
+        loesungsweg: "$$f'(x) = 3x^2 + 3$$ Da \\(3x^2 \\geq 0\\) für alle \\(x\\) gilt, ist \\(f'(x) \\geq 3\\), mit Gleichheit nur an der Stelle \\(x = 0\\). Die Steigung ist also nirgends kleiner als \\(3\\); insbesondere gibt es keine waagerechte Tangente, und für große \\(|x|\\) wächst die Steigung über alle Grenzen."
+    },
+    {
+        id: 32, level: 6, typ: "mc",
+        frage: "Für welche Werte von \\(a\\) besitzt der Graph von \\(f(x) = x^3 + ax\\) <b>keine</b> Stelle mit waagerechter Tangente?",
+        optionen: [
+            "\\(a > 0\\)",
+            "\\(a < 0\\)",
+            "\\(a \\geq 0\\)",
+            "Für jedes \\(a\\) gibt es eine solche Stelle"
+        ],
+        korrekt: 0,
+        tipp: "Untersuche, wann die Gleichung \\(f'(x) = 0\\) überhaupt eine Lösung hat.",
+        loesungsweg: "$$f'(x) = 3x^2 + a = 0 \\Rightarrow x^2 = -\\frac{a}{3}$$ Diese Gleichung ist nur lösbar, wenn \\(-\\frac{a}{3} \\geq 0\\), also \\(a \\leq 0\\). Für \\(a > 0\\) gibt es demnach keine waagerechte Tangente. Für \\(a = 0\\) liefert \\(x = 0\\) eine (Sattelpunkt von \\(x^3\\)) – deshalb ist \\(a \\geq 0\\) falsch."
+    },
+    {
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Der Graph von \\(f(x) = ax^3 + bx\\) hat im Punkt \\(P(1 \\mid 2)\\) eine waagerechte Tangente. Bestimme \\(a\\).",
+        loesung: -1, toleranz: 0,
+        tipp: "Der Punkt liefert eine Bedingung an den Funktionswert, die waagerechte Tangente eine an die Ableitung.",
+        loesungsweg: "Aus \\(f(1) = 2\\): \\(a + b = 2\\). Mit \\(f'(x) = 3ax^2 + b\\) und \\(f'(1) = 0\\): \\(3a + b = 0\\). Subtraktion: $$(3a + b) - (a + b) = 0 - 2 \\Rightarrow 2a = -2 \\Rightarrow a = -1$$ Dann ist \\(b = 3\\) und \\(f(x) = -x^3 + 3x\\); Kontrolle: \\(f(1) = 2\\) ✓, \\(f'(1) = -3 + 3 = 0\\) ✓."
     },
     {
         id: 34, level: 6, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = (x^2 + 1) \\cdot \\sin(x)\\). Berechne \\(f'\\left(\\frac{\\pi}{2}\\right)\\). <br>Runde auf zwei Dezimalstellen.",
-        loesung: 3.14, toleranz: 0.02,
-        tipp: "Produktregel: \\(f'(x) = 2x\\sin(x) + (x^2+1)\\cos(x)\\). Beachte: \\(\\sin(\\pi/2) = 1\\), \\(\\cos(\\pi/2) = 0\\).",
-        loesungsweg: "\\(f'(x) = 2x\\sin(x) + (x^2+1)\\cos(x)\\). Bei \\(x = \\frac{\\pi}{2}\\): \\(f' = 2 \\cdot \\frac{\\pi}{2} \\cdot 1 + (\\frac{\\pi^2}{4}+1) \\cdot 0 = \\pi \\approx 3{,}14\\)."
+        frage: "An welcher Stelle hat der Graph von \\(f(x) = x \\cdot e^x\\) seine kleinste Steigung?",
+        loesung: -2, toleranz: 0,
+        tipp: "Gesucht ist die Minimalstelle der Ableitungsfunktion – die Ableitung muss also selbst untersucht werden.",
+        loesungsweg: "Die Steigung wird durch \\(f'(x) = e^x + xe^x = e^x(1+x)\\) beschrieben. Diese Funktion wird minimal, wo ihre eigene Ableitung null ist: $$f''(x) = e^x(1+x) + e^x = e^x(2+x) = 0 \\Rightarrow x = -2$$ Da \\(e^x > 0\\) ist, wechselt \\(f''\\) bei \\(-2\\) von negativ zu positiv – dort liegt tatsächlich das Minimum der Steigung, mit \\(f'(-2) = -e^{-2} \\approx -0{,}14\\)."
     },
     {
-        id: 35, level: 6, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = (3x - 1) \\cdot e^x\\). Berechne \\(f'(0)\\).",
-        loesung: 2, toleranz: 0,
-        tipp: "Produktregel: \\(u = 3x - 1\\), \\(v = e^x\\). Also \\(f'(x) = 3e^x + (3x-1)e^x\\).",
-        loesungsweg: "\\(f'(x) = 3 \\cdot e^x + (3x-1) \\cdot e^x = e^x(3 + 3x - 1) = e^x(3x + 2)\\). Einsetzen: \\(f'(0) = 1 \\cdot 2 = 2\\)."
+        id: 35, level: 6, typ: "mc",
+        frage: "Für welche Funktion \\(F\\) gilt \\(F'(x) = (2x + 1) \\cdot e^x\\)?",
+        optionen: [
+            "\\(F(x) = (2x - 1) \\cdot e^x\\)",
+            "\\(F(x) = (2x + 1) \\cdot e^x\\)",
+            "\\(F(x) = 2x \\cdot e^x\\)",
+            "\\(F(x) = (x^2 + x) \\cdot e^x\\)"
+        ],
+        korrekt: 0,
+        tipp: "Leite die angebotenen Funktionen ab und vergleiche – rückwärts raten ist hier schneller als suchen.",
+        loesungsweg: "Ableiten der ersten Antwort: $$\\big((2x-1)e^x\\big)' = 2e^x + (2x-1)e^x = e^x(2x+1)$$ – das ist der gesuchte Term. Zur Kontrolle: \\(\\big((2x+1)e^x\\big)' = e^x(2x+3)\\), \\(\\big(2xe^x\\big)' = e^x(2x+2)\\), \\(\\big((x^2+x)e^x\\big)' = e^x(x^2+3x+1)\\)."
     },
     {
         id: 36, level: 6, typ: "numerisch",
-        frage: "Gegeben ist \\(f(x) = x \\cdot e^x + \\sin(x) - x^3\\). Berechne \\(f'(0)\\).",
-        loesung: 2, toleranz: 0,
-        tipp: "Leite jeden Term einzeln ab. \\((x \\cdot e^x)' = e^x + xe^x\\) (Produktregel).",
-        loesungsweg: "\\(f'(x) = e^x + xe^x + \\cos(x) - 3x^2\\). Einsetzen: \\(f'(0) = 1 + 0 + 1 - 0 = 2\\)."
+        frage: "Die Gerade \\(y = ax\\) mit \\(a > 0\\) berührt den Graphen von \\(f(x) = e^x\\). Bestimme \\(a\\) und runde auf zwei Dezimalstellen.",
+        loesung: 2.72, toleranz: 0.01,
+        tipp: "Beim Berühren stimmen an der Berührstelle sowohl die Funktionswerte als auch die Steigungen überein.",
+        loesungsweg: "An der Berührstelle \\(x_0\\) gilt zweierlei: $$e^{x_0} = a x_0 \\quad \\text{und} \\quad e^{x_0} = a$$ Gleichsetzen der rechten Seiten über \\(e^{x_0}\\): \\(a x_0 = a\\), wegen \\(a > 0\\) also \\(x_0 = 1\\). Damit \\(a = e^1 = e \\approx 2{,}72\\). Die Tangente \\(y = ex\\) berührt den Graphen im Punkt \\((1 \\mid e)\\)."
     }
+
 
     ];
     </script>
