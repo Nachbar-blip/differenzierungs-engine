@@ -16,321 +16,432 @@
     const THEMA_KEY = '10-vek-vektorprodukt';
     const THEMA_CONFIG = { name: 'Vektorprodukt & Normalen', bereich: 'geometrie', p3Enabled: true };
     const AUFGABEN = [
-
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 1 — Grundlagen Kreuzprodukt
-    // ══════════════════════════════════════════════════════════════
-    {
-        id: 1, level: 1, typ: "mc",
+      // ========== LEVEL 1 — babyleicht (6 Aufgaben) ==========
+      {
+        id: 1,
+        level: 1,
+        typ: "mc",
         frage: "Was ist das Ergebnis des Kreuzprodukts \\(\\vec{a} \\times \\vec{b}\\) zweier Vektoren im \\(\\mathbb{R}^3\\)?",
-        optionen: ["Eine reelle Zahl (Skalar)", "Ein Vektor im \\(\\mathbb{R}^3\\)", "Ein Vektor im \\(\\mathbb{R}^2\\)", "Eine Matrix"],
+        optionen: [
+          "Eine reelle Zahl (Skalar)",
+          "Ein Vektor im \\(\\mathbb{R}^3\\)",
+          "Ein Vektor im \\(\\mathbb{R}^2\\)",
+          "Eine Matrix"
+        ],
         korrekt: 1,
         tipp: "Im Gegensatz zum Skalarprodukt, das eine Zahl liefert, liefert das Kreuzprodukt etwas anderes.",
         loesungsweg: "Das Kreuzprodukt (Vektorprodukt) zweier Vektoren im \\(\\mathbb{R}^3\\) ergibt wieder einen Vektor im \\(\\mathbb{R}^3\\). Das unterscheidet es vom Skalarprodukt, das eine Zahl liefert."
-    },
-    {
-        id: 2, level: 1, typ: "mc",
+      },
+      {
+        id: 2,
+        level: 1,
+        typ: "mc",
         frage: "Welche Eigenschaft hat der Vektor \\(\\vec{a} \\times \\vec{b}\\) bezüglich \\(\\vec{a}\\) und \\(\\vec{b}\\)?",
-        optionen: ["Er ist parallel zu beiden", "Er steht senkrecht auf beiden", "Er ist die Summe beider", "Er ist der Mittelwert beider"],
+        optionen: [
+          "Er ist parallel zu beiden",
+          "Er steht senkrecht auf beiden",
+          "Er ist die Summe beider",
+          "Er ist der Mittelwert beider"
+        ],
         korrekt: 1,
         tipp: "Das Kreuzprodukt liefert einen Normalenvektor zur aufgespannten Ebene.",
         loesungsweg: "Der Kreuzproduktvektor \\(\\vec{a} \\times \\vec{b}\\) steht senkrecht auf beiden Ausgangsvektoren und damit auch senkrecht auf der von ihnen aufgespannten Ebene. Deshalb heißt er auch Normalenvektor."
-    },
-    {
-        id: 3, level: 1, typ: "mc",
-        frage: "In welchem Zahlenraum ist das Kreuzprodukt definiert?",
-        optionen: ["Nur im \\(\\mathbb{R}^2\\)", "Nur im \\(\\mathbb{R}^3\\)", "In \\(\\mathbb{R}^2\\) und \\(\\mathbb{R}^3\\)", "In jedem \\(\\mathbb{R}^n\\)"],
-        korrekt: 1,
-        tipp: "Die Formel \\((a_2 b_3 - a_3 b_2, \\ldots)\\) braucht drei Komponenten.",
-        loesungsweg: "Das klassische Kreuzprodukt ist ausschließlich für Vektoren im \\(\\mathbb{R}^3\\) definiert. Im \\(\\mathbb{R}^2\\) gibt es kein Kreuzprodukt im eigentlichen Sinne."
-    },
-    {
-        id: 4, level: 1, typ: "mc",
+      },
+      {
+        id: 3,
+        level: 1,
+        typ: "mc",
         frage: "Gilt \\(\\vec{a} \\times \\vec{b} = \\vec{b} \\times \\vec{a}\\)?",
-        optionen: ["Ja, immer", "Nein, es gilt \\(\\vec{a} \\times \\vec{b} = -(\\vec{b} \\times \\vec{a})\\)", "Nur wenn \\(\\vec{a} = \\vec{b}\\)", "Nur im \\(\\mathbb{R}^2\\)"],
+        optionen: [
+          "Ja, immer",
+          "Nein, es gilt \\(\\vec{a} \\times \\vec{b} = -(\\vec{b} \\times \\vec{a})\\)",
+          "Nur wenn \\(\\vec{a} = \\vec{b}\\)",
+          "Nur im \\(\\mathbb{R}^2\\)"
+        ],
         korrekt: 1,
         tipp: "Das Kreuzprodukt ist antikommutativ — das Vorzeichen dreht sich.",
         loesungsweg: "Beim Vertauschen der Reihenfolge dreht sich das Vorzeichen um: \\(\\vec{a} \\times \\vec{b} = -(\\vec{b} \\times \\vec{a})\\). Man sagt, das Kreuzprodukt ist antikommutativ."
-    },
-    {
-        id: 5, level: 1, typ: "mc",
+      },
+      {
+        id: 4,
+        level: 1,
+        typ: "mc",
         frage: "Was ergibt \\(\\vec{a} \\times \\vec{a}\\) für einen beliebigen Vektor \\(\\vec{a}\\)?",
-        optionen: ["\\(\\vec{a}\\)", "\\(2\\vec{a}\\)", "Der Nullvektor \\(\\vec{0}\\)", "Ein Einheitsvektor"],
+        optionen: [
+          "\\(\\vec{a}\\)",
+          "\\(2\\vec{a}\\)",
+          "Der Nullvektor \\(\\vec{0}\\)",
+          "Ein Einheitsvektor"
+        ],
         korrekt: 2,
         tipp: "Zwei gleiche (parallele) Vektoren spannen keine Ebene auf.",
         loesungsweg: "Da \\(\\vec{a}\\) parallel zu sich selbst ist, ist das Kreuzprodukt der Nullvektor: \\(\\vec{a} \\times \\vec{a} = \\vec{0}\\). Allgemein: Parallele Vektoren haben als Kreuzprodukt immer den Nullvektor."
-    },
-    {
-        id: 6, level: 1, typ: "mc",
-        frage: "Die Formel lautet \\(\\vec{a} \\times \\vec{b} = \\begin{pmatrix} a_2 b_3 - a_3 b_2 \\\\ a_3 b_1 - a_1 b_3 \\\\ a_1 b_2 - a_2 b_1 \\end{pmatrix}\\). Was berechnet man für die erste Komponente?",
-        optionen: ["\\(a_1 b_1 - a_2 b_2\\)", "\\(a_2 b_3 - a_3 b_2\\)", "\\(a_1 b_2 - a_2 b_1\\)", "\\(a_3 b_1 - a_1 b_3\\)"],
-        korrekt: 1,
-        tipp: "Die erste Komponente benutzt die zweiten und dritten Komponenten kreuzweise.",
-        loesungsweg: "Für die erste Komponente streicht man die ersten Komponenten von \\(\\vec{a}\\) und \\(\\vec{b}\\) und berechnet \\(a_2 b_3 - a_3 b_2\\) — ein kreuzweises Produkt der übrigen Komponenten."
-    },
-
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 2 — Einfache Kreuzprodukte mit Nullen
-    // ══════════════════════════════════════════════════════════════
-    {
-        id: 7, level: 2, typ: "numerisch",
+      },
+      {
+        id: 5,
+        level: 1,
+        typ: "numerisch",
         frage: "Berechne die dritte Komponente von \\(\\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} \\times \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\).",
-        loesung: 1, toleranz: 0,
+        loesung: 1,
+        toleranz: 0,
         tipp: "Dritte Komponente: \\(a_1 b_2 - a_2 b_1 = 1 \\cdot 1 - 0 \\cdot 0\\).",
         loesungsweg: "\\(\\vec{e}_1 \\times \\vec{e}_2 = \\begin{pmatrix} 0 \\cdot 0 - 0 \\cdot 1 \\\\ 0 \\cdot 0 - 1 \\cdot 0 \\\\ 1 \\cdot 1 - 0 \\cdot 0 \\end{pmatrix} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}\\). Die dritte Komponente ist \\(1\\)."
-    },
-    {
-        id: 8, level: 2, typ: "numerisch",
-        frage: "Berechne die zweite Komponente von \\(\\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix} \\times \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\).",
-        loesung: 1, toleranz: 0,
-        tipp: "Zweite Komponente: \\(a_3 b_1 - a_1 b_3 = 1 \\cdot 1 - 0 \\cdot 0\\).",
-        loesungsweg: "\\(\\vec{e}_3 \\times \\vec{e}_1 = \\begin{pmatrix} 0 \\cdot 0 - 1 \\cdot 0 \\\\ 1 \\cdot 1 - 0 \\cdot 0 \\\\ 0 \\cdot 0 - 0 \\cdot 1 \\end{pmatrix} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\). Die zweite Komponente ist \\(1\\)."
-    },
-    {
-        id: 9, level: 2, typ: "numerisch",
-        frage: "Berechne die dritte Komponente von \\(\\begin{pmatrix} 2 \\\\ 0 \\\\ 0 \\end{pmatrix} \\times \\begin{pmatrix} 0 \\\\ 3 \\\\ 0 \\end{pmatrix}\\).",
-        loesung: 6, toleranz: 0,
-        tipp: "Dritte Komponente: \\(a_1 b_2 - a_2 b_1 = 2 \\cdot 3 - 0 \\cdot 0\\).",
-        loesungsweg: "\\(\\begin{pmatrix} 2 \\\\ 0 \\\\ 0 \\end{pmatrix} \\times \\begin{pmatrix} 0 \\\\ 3 \\\\ 0 \\end{pmatrix} = \\begin{pmatrix} 0 \\cdot 0 - 0 \\cdot 3 \\\\ 0 \\cdot 0 - 2 \\cdot 0 \\\\ 2 \\cdot 3 - 0 \\cdot 0 \\end{pmatrix} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 6 \\end{pmatrix}\\). Dritte Komponente: \\(6\\)."
-    },
-    {
-        id: 10, level: 2, typ: "numerisch",
-        frage: "Berechne die zweite Komponente von \\(\\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} \\times \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}\\).",
-        loesung: -1, toleranz: 0,
-        tipp: "Zweite Komponente: \\(a_3 b_1 - a_1 b_3 = 0 \\cdot 0 - 1 \\cdot 1\\).",
-        loesungsweg: "\\(\\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} \\times \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix} = \\begin{pmatrix} 0 \\cdot 1 - 0 \\cdot 0 \\\\ 0 \\cdot 0 - 1 \\cdot 1 \\\\ 1 \\cdot 0 - 0 \\cdot 0 \\end{pmatrix} = \\begin{pmatrix} 0 \\\\ -1 \\\\ 0 \\end{pmatrix}\\). Zweite Komponente: \\(-1\\)."
-    },
-    {
-        id: 11, level: 2, typ: "mc",
+      },
+      {
+        id: 6,
+        level: 1,
+        typ: "mc",
         frage: "Welchen Vektor ergibt \\(\\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix} \\times \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}\\)?",
         optionen: [
-            "\\(\\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\)",
-            "\\(\\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\)",
-            "\\(\\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}\\)",
-            "\\(\\begin{pmatrix} -1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\)"
+          "\\(\\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\)",
+          "\\(\\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\)",
+          "\\(\\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}\\)",
+          "\\(\\begin{pmatrix} -1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\)"
         ],
         korrekt: 0,
         tipp: "Komponentenweise: \\((1 \\cdot 1 - 0 \\cdot 0, \\ 0 \\cdot 0 - 0 \\cdot 1, \\ 0 \\cdot 0 - 1 \\cdot 0)\\).",
         loesungsweg: "\\(\\vec{e}_2 \\times \\vec{e}_3 = \\begin{pmatrix} 1 \\cdot 1 - 0 \\cdot 0 \\\\ 0 \\cdot 0 - 0 \\cdot 1 \\\\ 0 \\cdot 0 - 1 \\cdot 0 \\end{pmatrix} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} = \\vec{e}_1\\)."
-    },
-    {
-        id: 12, level: 2, typ: "numerisch",
-        frage: "Berechne die dritte Komponente von \\(\\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix} \\times \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\).",
-        loesung: -1, toleranz: 0,
-        tipp: "Dritte Komponente: \\(a_1 b_2 - a_2 b_1 = 1 \\cdot 0 - 1 \\cdot 1\\).",
-        loesungsweg: "\\(\\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix} \\times \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} = \\begin{pmatrix} 1 \\cdot 0 - 0 \\cdot 0 \\\\ 0 \\cdot 1 - 1 \\cdot 0 \\\\ 1 \\cdot 0 - 1 \\cdot 1 \\end{pmatrix} = \\begin{pmatrix} 0 \\\\ 0 \\\\ -1 \\end{pmatrix}\\). Dritte Komponente: \\(-1\\)."
-    },
-
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 3 — Vollständige Kreuzprodukte mit drei Nicht-Null-Komponenten
-    // ══════════════════════════════════════════════════════════════
-    {
-        id: 13, level: 3, typ: "numerisch",
+      },
+      // ========== LEVEL 2 — leicht (6 Aufgaben) ==========
+      {
+        id: 7,
+        level: 2,
+        typ: "numerisch",
         frage: "Gegeben sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 4 \\\\ 5 \\\\ 6 \\end{pmatrix}\\). Berechne die erste Komponente von \\(\\vec{a} \\times \\vec{b}\\).",
-        loesung: -3, toleranz: 0,
+        loesung: -3,
+        toleranz: 0,
         tipp: "Erste Komponente: \\(a_2 b_3 - a_3 b_2 = 2 \\cdot 6 - 3 \\cdot 5\\).",
         loesungsweg: "\\(a_2 b_3 - a_3 b_2 = 2 \\cdot 6 - 3 \\cdot 5 = 12 - 15 = -3\\)."
-    },
-    {
-        id: 14, level: 3, typ: "numerisch",
-        frage: "Gegeben sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 4 \\\\ 5 \\\\ 6 \\end{pmatrix}\\). Berechne die zweite Komponente von \\(\\vec{a} \\times \\vec{b}\\).",
-        loesung: 6, toleranz: 0,
-        tipp: "Zweite Komponente: \\(a_3 b_1 - a_1 b_3 = 3 \\cdot 4 - 1 \\cdot 6\\).",
-        loesungsweg: "\\(a_3 b_1 - a_1 b_3 = 3 \\cdot 4 - 1 \\cdot 6 = 12 - 6 = 6\\)."
-    },
-    {
-        id: 15, level: 3, typ: "numerisch",
-        frage: "Gegeben sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 4 \\\\ 5 \\\\ 6 \\end{pmatrix}\\). Berechne die dritte Komponente von \\(\\vec{a} \\times \\vec{b}\\).",
-        loesung: -3, toleranz: 0,
-        tipp: "Dritte Komponente: \\(a_1 b_2 - a_2 b_1 = 1 \\cdot 5 - 2 \\cdot 4\\).",
-        loesungsweg: "\\(a_1 b_2 - a_2 b_1 = 1 \\cdot 5 - 2 \\cdot 4 = 5 - 8 = -3\\). Insgesamt: \\(\\vec{a} \\times \\vec{b} = \\begin{pmatrix} -3 \\\\ 6 \\\\ -3 \\end{pmatrix}\\)."
-    },
-    {
-        id: 16, level: 3, typ: "mc",
+      },
+      {
+        id: 8,
+        level: 2,
+        typ: "mc",
         frage: "Welcher Vektor ist \\(\\begin{pmatrix} 1 \\\\ 1 \\\\ 1 \\end{pmatrix} \\times \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix}\\)?",
         optionen: [
-            "\\(\\begin{pmatrix} 1 \\\\ -2 \\\\ 1 \\end{pmatrix}\\)",
-            "\\(\\begin{pmatrix} -1 \\\\ 2 \\\\ -1 \\end{pmatrix}\\)",
-            "\\(\\begin{pmatrix} 1 \\\\ 2 \\\\ 1 \\end{pmatrix}\\)",
-            "\\(\\begin{pmatrix} 3 \\\\ 2 \\\\ 1 \\end{pmatrix}\\)"
+          "\\(\\begin{pmatrix} 1 \\\\ -2 \\\\ 1 \\end{pmatrix}\\)",
+          "\\(\\begin{pmatrix} -1 \\\\ 2 \\\\ -1 \\end{pmatrix}\\)",
+          "\\(\\begin{pmatrix} 1 \\\\ 2 \\\\ 1 \\end{pmatrix}\\)",
+          "\\(\\begin{pmatrix} 3 \\\\ 2 \\\\ 1 \\end{pmatrix}\\)"
         ],
         korrekt: 0,
         tipp: "Berechne \\((1 \\cdot 3 - 1 \\cdot 2, \\ 1 \\cdot 1 - 1 \\cdot 3, \\ 1 \\cdot 2 - 1 \\cdot 1)\\).",
         loesungsweg: "\\(\\begin{pmatrix} 1 \\cdot 3 - 1 \\cdot 2 \\\\ 1 \\cdot 1 - 1 \\cdot 3 \\\\ 1 \\cdot 2 - 1 \\cdot 1 \\end{pmatrix} = \\begin{pmatrix} 1 \\\\ -2 \\\\ 1 \\end{pmatrix}\\)."
-    },
-    {
-        id: 17, level: 3, typ: "numerisch",
+      },
+      {
+        id: 9,
+        level: 2,
+        typ: "numerisch",
         frage: "Berechne die erste Komponente von \\(\\begin{pmatrix} 2 \\\\ -1 \\\\ 3 \\end{pmatrix} \\times \\begin{pmatrix} 1 \\\\ 2 \\\\ -1 \\end{pmatrix}\\).",
-        loesung: -5, toleranz: 0,
+        loesung: -5,
+        toleranz: 0,
         tipp: "Erste Komponente: \\(a_2 b_3 - a_3 b_2 = (-1) \\cdot (-1) - 3 \\cdot 2\\).",
         loesungsweg: "\\(a_2 b_3 - a_3 b_2 = (-1) \\cdot (-1) - 3 \\cdot 2 = 1 - 6 = -5\\)."
-    },
-    {
-        id: 18, level: 3, typ: "numerisch",
+      },
+      {
+        id: 10,
+        level: 2,
+        typ: "numerisch",
         frage: "Berechne die dritte Komponente von \\(\\begin{pmatrix} 3 \\\\ 1 \\\\ 2 \\end{pmatrix} \\times \\begin{pmatrix} 1 \\\\ 2 \\\\ 1 \\end{pmatrix}\\).",
-        loesung: 5, toleranz: 0,
+        loesung: 5,
+        toleranz: 0,
         tipp: "Dritte Komponente: \\(a_1 b_2 - a_2 b_1 = 3 \\cdot 2 - 1 \\cdot 1\\).",
         loesungsweg: "\\(a_1 b_2 - a_2 b_1 = 3 \\cdot 2 - 1 \\cdot 1 = 6 - 1 = 5\\). Vollständig: \\(\\begin{pmatrix} -3 \\\\ -1 \\\\ 5 \\end{pmatrix}\\)."
-    },
-
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 4 — Normalenvektor zu aufspannenden Vektoren
-    // ══════════════════════════════════════════════════════════════
-    {
-        id: 19, level: 4, typ: "mc",
-        frage: "Wie findet man einen Vektor, der senkrecht auf \\(\\vec{u}\\) und \\(\\vec{v}\\) steht?",
-        optionen: ["\\(\\vec{u} + \\vec{v}\\)", "\\(\\vec{u} \\cdot \\vec{v}\\) (Skalarprodukt)", "\\(\\vec{u} \\times \\vec{v}\\) (Kreuzprodukt)", "\\(\\vec{u} - \\vec{v}\\)"],
-        korrekt: 2,
-        tipp: "Das Kreuzprodukt liefert genau den Normalenvektor.",
-        loesungsweg: "Das Kreuzprodukt \\(\\vec{u} \\times \\vec{v}\\) ergibt einen Vektor, der senkrecht auf \\(\\vec{u}\\) und \\(\\vec{v}\\) steht. Er heißt Normalenvektor zur aufgespannten Ebene."
-    },
-    {
-        id: 20, level: 4, typ: "numerisch",
-        frage: "Ein Normalenvektor zur Ebene, die von \\(\\vec{u} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 2 \\end{pmatrix}\\) und \\(\\vec{v} = \\begin{pmatrix} 2 \\\\ 1 \\\\ 0 \\end{pmatrix}\\) aufgespannt wird, ist \\(\\vec{n} = \\vec{u} \\times \\vec{v}\\). Berechne die erste Komponente von \\(\\vec{n}\\).",
-        loesung: -2, toleranz: 0,
-        tipp: "Erste Komponente: \\(u_2 v_3 - u_3 v_2 = 0 \\cdot 0 - 2 \\cdot 1\\).",
-        loesungsweg: "\\(n_1 = u_2 v_3 - u_3 v_2 = 0 \\cdot 0 - 2 \\cdot 1 = -2\\)."
-    },
-    {
-        id: 21, level: 4, typ: "numerisch",
-        frage: "Gegeben: \\(\\vec{u} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 2 \\end{pmatrix}\\), \\(\\vec{v} = \\begin{pmatrix} 2 \\\\ 1 \\\\ 0 \\end{pmatrix}\\). Berechne die zweite Komponente von \\(\\vec{u} \\times \\vec{v}\\).",
-        loesung: 4, toleranz: 0,
-        tipp: "Zweite Komponente: \\(u_3 v_1 - u_1 v_3 = 2 \\cdot 2 - 1 \\cdot 0\\).",
-        loesungsweg: "\\(n_2 = u_3 v_1 - u_1 v_3 = 2 \\cdot 2 - 1 \\cdot 0 = 4\\)."
-    },
-    {
-        id: 22, level: 4, typ: "numerisch",
-        frage: "Gegeben: \\(\\vec{u} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 2 \\end{pmatrix}\\), \\(\\vec{v} = \\begin{pmatrix} 2 \\\\ 1 \\\\ 0 \\end{pmatrix}\\). Berechne die dritte Komponente von \\(\\vec{u} \\times \\vec{v}\\).",
-        loesung: 1, toleranz: 0,
-        tipp: "Dritte Komponente: \\(u_1 v_2 - u_2 v_1 = 1 \\cdot 1 - 0 \\cdot 2\\).",
-        loesungsweg: "\\(n_3 = u_1 v_2 - u_2 v_1 = 1 \\cdot 1 - 0 \\cdot 2 = 1\\). Normalenvektor: \\(\\vec{n} = \\begin{pmatrix} -2 \\\\ 4 \\\\ 1 \\end{pmatrix}\\)."
-    },
-    {
-        id: 23, level: 4, typ: "mc",
+      },
+      {
+        id: 11,
+        level: 2,
+        typ: "numerisch",
+        frage: "Berechne die dritte Komponente von \\(\\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix} \\times \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\).",
+        loesung: -1,
+        toleranz: 0,
+        tipp: "Dritte Komponente: \\(a_1 b_2 - a_2 b_1 = 1 \\cdot 0 - 1 \\cdot 1\\).",
+        loesungsweg: "\\(\\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\end{pmatrix} \\times \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix} = \\begin{pmatrix} 1 \\cdot 0 - 0 \\cdot 0 \\\\ 0 \\cdot 1 - 1 \\cdot 0 \\\\ 1 \\cdot 0 - 1 \\cdot 1 \\end{pmatrix} = \\begin{pmatrix} 0 \\\\ 0 \\\\ -1 \\end{pmatrix}\\). Dritte Komponente: \\(-1\\)."
+      },
+      {
+        id: 12,
+        level: 2,
+        typ: "numerisch",
+        frage: "Berechne die dritte Komponente von \\(\\begin{pmatrix} 2 \\\\ 0 \\\\ 0 \\end{pmatrix} \\times \\begin{pmatrix} 0 \\\\ 3 \\\\ 0 \\end{pmatrix}\\).",
+        loesung: 6,
+        toleranz: 0,
+        tipp: "Dritte Komponente: \\(a_1 b_2 - a_2 b_1 = 2 \\cdot 3 - 0 \\cdot 0\\).",
+        loesungsweg: "\\(\\begin{pmatrix} 2 \\\\ 0 \\\\ 0 \\end{pmatrix} \\times \\begin{pmatrix} 0 \\\\ 3 \\\\ 0 \\end{pmatrix} = \\begin{pmatrix} 0 \\cdot 0 - 0 \\cdot 3 \\\\ 0 \\cdot 0 - 2 \\cdot 0 \\\\ 2 \\cdot 3 - 0 \\cdot 0 \\end{pmatrix} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 6 \\end{pmatrix}\\). Dritte Komponente: \\(6\\)."
+      },
+      // ========== LEVEL 3 — nervenschonend (6 Aufgaben) ==========
+      {
+        id: 13,
+        level: 3,
+        typ: "numerisch",
+        frage: "Gegeben sind \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 4 \\\\ 5 \\\\ 6 \\end{pmatrix}\\). Berechne \\(|\\vec{a} \\times \\vec{b}|\\). Runde auf zwei Dezimalstellen.",
+        loesung: 7.35,
+        toleranz: 0.01,
+        tipp: "Erst alle drei Komponenten des Kreuzprodukts, dann der Betrag.",
+        loesungsweg: "\\(\\vec{a} \\times \\vec{b} = \\begin{pmatrix} -3 \\\\ 6 \\\\ -3 \\end{pmatrix}\\), Betrag \\(\\sqrt{9 + 36 + 9} = \\sqrt{54} \\approx 7{,}35\\)."
+      },
+      {
+        id: 14,
+        level: 3,
+        typ: "numerisch",
+        frage: "Berechne \\(|\\vec{a} \\times \\vec{b}|\\) für \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ -1 \\\\ 3 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 1 \\\\ 2 \\\\ -1 \\end{pmatrix}\\). Runde auf zwei Dezimalstellen.",
+        loesung: 8.66,
+        toleranz: 0.01,
+        tipp: "Vorzeichen bei den Produkten sorgfältig mitführen.",
+        loesungsweg: "\\(\\vec{a} \\times \\vec{b} = \\begin{pmatrix} -5 \\\\ 5 \\\\ 5 \\end{pmatrix}\\), Betrag \\(\\sqrt{75} \\approx 8{,}66\\)."
+      },
+      {
+        id: 15,
+        level: 3,
+        typ: "mc",
         frage: "Welcher Vektor ist ein Normalenvektor zur Ebene, die durch \\(\\vec{u} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 0 \\end{pmatrix}\\) und \\(\\vec{v} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 3 \\end{pmatrix}\\) aufgespannt wird?",
         optionen: [
-            "\\(\\begin{pmatrix} 6 \\\\ -3 \\\\ 1 \\end{pmatrix}\\)",
-            "\\(\\begin{pmatrix} 6 \\\\ 3 \\\\ 1 \\end{pmatrix}\\)",
-            "\\(\\begin{pmatrix} 1 \\\\ 3 \\\\ 3 \\end{pmatrix}\\)",
-            "\\(\\begin{pmatrix} -6 \\\\ -3 \\\\ 1 \\end{pmatrix}\\)"
+          "\\(\\begin{pmatrix} 6 \\\\ -3 \\\\ 1 \\end{pmatrix}\\)",
+          "\\(\\begin{pmatrix} 6 \\\\ 3 \\\\ 1 \\end{pmatrix}\\)",
+          "\\(\\begin{pmatrix} 1 \\\\ 3 \\\\ 3 \\end{pmatrix}\\)",
+          "\\(\\begin{pmatrix} -6 \\\\ -3 \\\\ 1 \\end{pmatrix}\\)"
         ],
         korrekt: 0,
         tipp: "Berechne \\(\\vec{u} \\times \\vec{v}\\) komponentenweise.",
         loesungsweg: "\\(\\vec{u} \\times \\vec{v} = \\begin{pmatrix} 2 \\cdot 3 - 0 \\cdot 1 \\\\ 0 \\cdot 0 - 1 \\cdot 3 \\\\ 1 \\cdot 1 - 2 \\cdot 0 \\end{pmatrix} = \\begin{pmatrix} 6 \\\\ -3 \\\\ 1 \\end{pmatrix}\\). Man kann mit dem Skalarprodukt prüfen: \\(\\vec{n} \\cdot \\vec{u} = 6+(-6)+0 = 0\\) und \\(\\vec{n} \\cdot \\vec{v} = 0+(-3)+3 = 0\\)."
-    },
-    {
-        id: 24, level: 4, typ: "numerisch",
-        frage: "Berechne die erste Komponente eines Normalenvektors \\(\\vec{n} = \\vec{u} \\times \\vec{v}\\) mit \\(\\vec{u} = \\begin{pmatrix} 3 \\\\ 1 \\\\ 2 \\end{pmatrix}\\) und \\(\\vec{v} = \\begin{pmatrix} 2 \\\\ 0 \\\\ 1 \\end{pmatrix}\\).",
-        loesung: 1, toleranz: 0,
-        tipp: "Erste Komponente: \\(u_2 v_3 - u_3 v_2 = 1 \\cdot 1 - 2 \\cdot 0\\).",
-        loesungsweg: "\\(n_1 = 1 \\cdot 1 - 2 \\cdot 0 = 1\\). Der vollständige Normalenvektor ist \\(\\begin{pmatrix} 1 \\\\ 1 \\\\ -2 \\end{pmatrix}\\)."
-    },
-
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 5 — Flächeninhalt des Parallelogramms
-    // ══════════════════════════════════════════════════════════════
-    {
-        id: 25, level: 5, typ: "mc",
-        frage: "Wie berechnet man den Flächeninhalt des Parallelogramms, das von zwei Vektoren \\(\\vec{a}\\) und \\(\\vec{b}\\) aufgespannt wird?",
+      },
+      {
+        id: 16,
+        level: 3,
+        typ: "numerisch",
+        frage: "Berechne den Flächeninhalt des Parallelogramms, das von \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ 1 \\\\ 2 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 2 \\end{pmatrix}\\) aufgespannt wird. Runde auf zwei Dezimalstellen.",
+        loesung: 4.12,
+        toleranz: 0.01,
+        tipp: "Der Flächeninhalt ist der Betrag des Kreuzprodukts.",
+        loesungsweg: "\\(\\vec{a} \\times \\vec{b} = \\begin{pmatrix} -2 \\\\ -2 \\\\ 3 \\end{pmatrix}\\), \\(A = \\sqrt{4 + 4 + 9} = \\sqrt{17} \\approx 4{,}12\\)."
+      },
+      {
+        id: 17,
+        level: 3,
+        typ: "numerisch",
+        frage: "Berechne den Betrag des Normalenvektors \\(\\vec{n} = \\vec{u} \\times \\vec{v}\\) mit \\(\\vec{u} = \\begin{pmatrix} 3 \\\\ 1 \\\\ 2 \\end{pmatrix}\\) und \\(\\vec{v} = \\begin{pmatrix} 2 \\\\ 0 \\\\ 1 \\end{pmatrix}\\). Runde auf zwei Dezimalstellen.",
+        loesung: 2.45,
+        toleranz: 0.01,
+        tipp: "Erst \\(\\vec{n}\\) berechnen, dann den Betrag.",
+        loesungsweg: "\\(\\vec{n} = \\begin{pmatrix} 1 \\\\ 1 \\\\ -2 \\end{pmatrix}\\), \\(|\\vec{n}| = \\sqrt{6} \\approx 2{,}45\\)."
+      },
+      {
+        id: 18,
+        level: 3,
+        typ: "numerisch",
+        frage: "Berechne den Flächeninhalt des Dreiecks mit \\(A(1|0|2)\\), \\(B(3|1|2)\\) und \\(C(1|2|3)\\). Runde auf zwei Dezimalstellen.",
+        loesung: 2.29,
+        toleranz: 0.01,
+        tipp: "Zwei Seitenvektoren von \\(A\\) aus, Kreuzprodukt, halber Betrag.",
+        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 2 \\\\ 1 \\\\ 0 \\end{pmatrix}\\), \\(\\overrightarrow{AC} = \\begin{pmatrix} 0 \\\\ 2 \\\\ 1 \\end{pmatrix}\\), Kreuzprodukt \\(\\begin{pmatrix} 1 \\\\ -2 \\\\ 4 \\end{pmatrix}\\). \\(A = \\frac{1}{2}\\sqrt{21} \\approx 2{,}29\\)."
+      },
+      // ========== LEVEL 4 — mittel (6 Aufgaben) ==========
+      {
+        id: 19,
+        level: 4,
+        typ: "numerisch",
+        frage: "Das Parallelogramm, das von \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 2 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} t \\\\ 1 \\\\ 1 \\end{pmatrix}\\) aufgespannt wird, hat den Flächeninhalt \\(5\\sqrt{2}\\). Bestimme den positiven Wert von \\(t\\).",
+        loesung: 3,
+        toleranz: 0,
+        tipp: "Berechne das Kreuzprodukt mit \\(t\\) als Platzhalter; zwei Komponenten hängen von \\(t\\) ab.",
+        loesungsweg: "\\(\\vec{a} \\times \\vec{b} = \\begin{pmatrix} 0 \\\\ 2t-1 \\\\ 1-2t \\end{pmatrix}\\), Betrag \\(\\sqrt{2} \\cdot |2t - 1|\\). \\(\\sqrt{2}|2t - 1| = 5\\sqrt{2} \\Rightarrow 2t - 1 = \\pm 5 \\Rightarrow t = 3\\) (positiv)."
+      },
+      {
+        id: 20,
+        level: 4,
+        typ: "numerisch",
+        frage: "Ein dreieckiges Sonnensegel ist an den Punkten \\(A(0|1|1)\\), \\(B(4|1|4)\\) und \\(C(1|5|2)\\) befestigt (Angaben in Metern). Berechne den Flächeninhalt des Segels in Quadratmetern. Runde auf zwei Dezimalstellen.",
+        loesung: 10.01,
+        toleranz: 0.01,
+        tipp: "Das Segel ist ein Dreieck im Raum.",
+        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 4 \\\\ 0 \\\\ 3 \\end{pmatrix}\\), \\(\\overrightarrow{AC} = \\begin{pmatrix} 1 \\\\ 4 \\\\ 1 \\end{pmatrix}\\), Kreuzprodukt \\(\\begin{pmatrix} -12 \\\\ -1 \\\\ 16 \\end{pmatrix}\\), Betrag \\(\\sqrt{401}\\). \\(A = \\frac{1}{2}\\sqrt{401} \\approx 10{,}01\\,\\text{m}^2\\)."
+      },
+      {
+        id: 21,
+        level: 4,
+        typ: "numerisch",
+        frage: "Bestimme den Normaleneinheitsvektor \\(\\vec{n}_0\\) zur Ebene, die von \\(\\vec{u} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 2 \\end{pmatrix}\\) und \\(\\vec{v} = \\begin{pmatrix} 2 \\\\ 1 \\\\ -2 \\end{pmatrix}\\) aufgespannt wird, und zwar den mit negativer erster Koordinate. Gib seine dritte Koordinate an. Runde auf zwei Dezimalstellen.",
+        loesung: -0.33,
+        toleranz: 0.01,
+        tipp: "Kreuzprodukt, dann durch den Betrag teilen; achte auf das geforderte Vorzeichen.",
+        loesungsweg: "\\(\\vec{u} \\times \\vec{v} = \\begin{pmatrix} -6 \\\\ 6 \\\\ -3 \\end{pmatrix}\\), Betrag \\(9\\). \\(\\vec{n}_0 = \\frac{1}{9}\\begin{pmatrix} -6 \\\\ 6 \\\\ -3 \\end{pmatrix}\\), dritte Koordinate \\(-\\frac{1}{3} \\approx -0{,}33\\)."
+      },
+      {
+        id: 22,
+        level: 4,
+        typ: "mc",
+        frage: "Welcher Vektor steht senkrecht auf \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ -1 \\end{pmatrix}\\) und auf \\(\\vec{b} = \\begin{pmatrix} 2 \\\\ 0 \\\\ 1 \\end{pmatrix}\\)?",
         optionen: [
-            "\\(A = \\vec{a} \\cdot \\vec{b}\\)",
-            "\\(A = |\\vec{a}| \\cdot |\\vec{b}|\\)",
-            "\\(A = |\\vec{a} \\times \\vec{b}|\\)",
-            "\\(A = \\frac{1}{2} |\\vec{a} \\times \\vec{b}|\\)"
+          "\\(\\begin{pmatrix} 2 \\\\ -3 \\\\ -4 \\end{pmatrix}\\)",
+          "\\(\\begin{pmatrix} 2 \\\\ 3 \\\\ -4 \\end{pmatrix}\\)",
+          "\\(\\begin{pmatrix} 3 \\\\ 2 \\\\ 1 \\end{pmatrix}\\)",
+          "\\(\\begin{pmatrix} 1 \\\\ -3 \\\\ -4 \\end{pmatrix}\\)"
         ],
-        korrekt: 2,
-        tipp: "Es ist der Betrag des Kreuzprodukts.",
-        loesungsweg: "Der Betrag des Kreuzprodukts \\(|\\vec{a} \\times \\vec{b}|\\) liefert genau den Flächeninhalt des von \\(\\vec{a}\\) und \\(\\vec{b}\\) aufgespannten Parallelogramms."
-    },
-    {
-        id: 26, level: 5, typ: "numerisch",
-        frage: "Berechne den Flächeninhalt des Parallelogramms, das von \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\) aufgespannt wird.",
-        loesung: 1, toleranz: 0,
-        tipp: "\\(\\vec{a} \\times \\vec{b} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}\\). Welcher Betrag?",
-        loesungsweg: "\\(\\vec{a} \\times \\vec{b} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}\\), Betrag \\(= \\sqrt{0^2 + 0^2 + 1^2} = 1\\). Das Einheitsquadrat hat Flächeninhalt \\(1\\)."
-    },
-    {
-        id: 27, level: 5, typ: "numerisch",
-        frage: "Berechne den Flächeninhalt des Parallelogramms, das von \\(\\vec{a} = \\begin{pmatrix} 3 \\\\ 0 \\\\ 0 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 4 \\\\ 0 \\end{pmatrix}\\) aufgespannt wird.",
-        loesung: 12, toleranz: 0,
-        tipp: "Ein Rechteck mit Seiten 3 und 4.",
-        loesungsweg: "\\(\\vec{a} \\times \\vec{b} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 12 \\end{pmatrix}\\), Betrag \\(= 12\\). Das Rechteck hat Fläche \\(3 \\cdot 4 = 12\\)."
-    },
-    {
-        id: 28, level: 5, typ: "numerisch",
-        frage: "Berechne den Flächeninhalt des Parallelogramms, das von \\(\\vec{a} = \\begin{pmatrix} 2 \\\\ 0 \\\\ 0 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 5 \\end{pmatrix}\\) aufgespannt wird.",
-        loesung: 10, toleranz: 0,
-        tipp: "\\(\\vec{a} \\times \\vec{b} = \\begin{pmatrix} 0 \\\\ -10 \\\\ 0 \\end{pmatrix}\\). Betrag nehmen!",
-        loesungsweg: "\\(\\vec{a} \\times \\vec{b} = \\begin{pmatrix} 0 \\cdot 5 - 0 \\cdot 0 \\\\ 0 \\cdot 0 - 2 \\cdot 5 \\\\ 2 \\cdot 0 - 0 \\cdot 0 \\end{pmatrix} = \\begin{pmatrix} 0 \\\\ -10 \\\\ 0 \\end{pmatrix}\\), Betrag \\(= 10\\)."
-    },
-    {
-        id: 29, level: 5, typ: "numerisch",
-        frage: "Berechne den Flächeninhalt des Parallelogramms, das von \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 0 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 3 \\\\ 1 \\\\ 0 \\end{pmatrix}\\) aufgespannt wird.",
-        loesung: 5, toleranz: 0,
-        tipp: "\\(\\vec{a} \\times \\vec{b} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\cdot 1 - 2 \\cdot 3 \\end{pmatrix}\\). Vergiss den Betrag nicht!",
-        loesungsweg: "\\(\\vec{a} \\times \\vec{b} = \\begin{pmatrix} 2 \\cdot 0 - 0 \\cdot 1 \\\\ 0 \\cdot 3 - 1 \\cdot 0 \\\\ 1 \\cdot 1 - 2 \\cdot 3 \\end{pmatrix} = \\begin{pmatrix} 0 \\\\ 0 \\\\ -5 \\end{pmatrix}\\), Betrag \\(= 5\\)."
-    },
-    {
-        id: 30, level: 5, typ: "mc",
-        frage: "Ein Parallelogramm wird von \\(\\vec{a} = \\begin{pmatrix} 4 \\\\ 0 \\\\ 0 \\end{pmatrix}\\) und \\(\\vec{b} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 3 \\end{pmatrix}\\) aufgespannt. Wie groß ist der Flächeninhalt?",
-        optionen: ["\\(7\\)", "\\(12\\)", "\\(6\\)", "\\(5\\)"],
-        korrekt: 1,
-        tipp: "Die Vektoren stehen senkrecht aufeinander, also ist es ein Rechteck.",
-        loesungsweg: "\\(\\vec{a} \\times \\vec{b} = \\begin{pmatrix} 0 \\\\ -12 \\\\ 0 \\end{pmatrix}\\), Betrag \\(= 12\\). Alternativ: Rechteck mit Seiten \\(4\\) und \\(3\\), Fläche \\(= 12\\)."
-    },
-
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 6 — Flächeninhalt eines Dreiecks (½·|AB × AC|)
-    // ══════════════════════════════════════════════════════════════
-    {
-        id: 31, level: 6, typ: "mc",
-        frage: "Wie berechnet man den Flächeninhalt eines Dreiecks mit den Eckpunkten \\(A\\), \\(B\\), \\(C\\) im Raum?",
+        korrekt: 0,
+        tipp: "Zwei Wege: Kreuzprodukt berechnen oder jede Option per Skalarprodukt prüfen.",
+        loesungsweg: "\\(\\vec{a} \\times \\vec{b} = \\begin{pmatrix} 2 \\\\ -3 \\\\ -4 \\end{pmatrix}\\). Probe: \\(2 - 6 + 4 = 0\\) und \\(4 + 0 - 4 = 0\\). Die anderen Optionen liefern mindestens ein Skalarprodukt ungleich \\(0\\)."
+      },
+      {
+        id: 23,
+        level: 4,
+        typ: "numerisch",
+        frage: "Berechne den Flächeninhalt des Parallelogramms \\(ABCD\\) mit \\(A(1|1|1)\\), \\(B(3|2|1)\\) und \\(D(1|3|4)\\). Runde auf zwei Dezimalstellen.",
+        loesung: 7.81,
+        toleranz: 0.01,
+        tipp: "Welche zwei Vektoren spannen das Parallelogramm auf? \\(C\\) wird nicht gebraucht.",
+        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 2 \\\\ 1 \\\\ 0 \\end{pmatrix}\\), \\(\\overrightarrow{AD} = \\begin{pmatrix} 0 \\\\ 2 \\\\ 3 \\end{pmatrix}\\), Kreuzprodukt \\(\\begin{pmatrix} 3 \\\\ -6 \\\\ 4 \\end{pmatrix}\\), \\(A = \\sqrt{61} \\approx 7{,}81\\)."
+      },
+      {
+        id: 24,
+        level: 4,
+        typ: "numerisch",
+        frage: "Berechne den Flächeninhalt des Dreiecks mit \\(A(2|1|0)\\), \\(B(4|3|1)\\) und \\(C(1|2|3)\\). Runde auf zwei Dezimalstellen.",
+        loesung: 4.74,
+        toleranz: 0.01,
+        tipp: "Seitenvektoren, Kreuzprodukt, halber Betrag.",
+        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 2 \\\\ 2 \\\\ 1 \\end{pmatrix}\\), \\(\\overrightarrow{AC} = \\begin{pmatrix} -1 \\\\ 1 \\\\ 3 \\end{pmatrix}\\), Kreuzprodukt \\(\\begin{pmatrix} 5 \\\\ -7 \\\\ 4 \\end{pmatrix}\\), Betrag \\(\\sqrt{90}\\). \\(A = \\frac{1}{2}\\sqrt{90} \\approx 4{,}74\\)."
+      },
+      // ========== LEVEL 5 — anspruchsvoll (6 Aufgaben) ==========
+      {
+        id: 25,
+        level: 5,
+        typ: "numerisch",
+        frage: "\\(ABCD\\) ist ein Parallelogramm mit \\(A(1|2|3)\\), \\(B(4|3|3)\\) und \\(C(6|6|5)\\). Bestimme \\(D\\) und berechne den Flächeninhalt des Parallelogramms. Runde auf zwei Dezimalstellen.",
+        loesung: 9.43,
+        toleranz: 0.01,
+        tipp: "Für die Fläche brauchst du zwei Seitenvektoren mit gemeinsamem Anfangspunkt.",
+        loesungsweg: "\\(D = A + C - B = (3|5|5)\\). \\(\\overrightarrow{AB} = \\begin{pmatrix} 3 \\\\ 1 \\\\ 0 \\end{pmatrix}\\), \\(\\overrightarrow{AD} = \\begin{pmatrix} 2 \\\\ 3 \\\\ 2 \\end{pmatrix}\\), Kreuzprodukt \\(\\begin{pmatrix} 2 \\\\ -6 \\\\ 7 \\end{pmatrix}\\), \\(A = \\sqrt{89} \\approx 9{,}43\\)."
+      },
+      {
+        id: 26,
+        level: 5,
+        typ: "numerisch",
+        frage: "Berechne im Dreieck \\(A(1|0|1)\\), \\(B(3|2|2)\\), \\(C(2|3|4)\\) die Länge der Höhe auf die Seite \\(\\overline{AB}\\). Runde auf zwei Dezimalstellen.",
+        loesung: 2.36,
+        toleranz: 0.01,
+        tipp: "Flächeninhalt auf zwei Arten: über das Kreuzprodukt und über Grundseite mal Höhe.",
+        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 2 \\\\ 2 \\\\ 1 \\end{pmatrix}\\), \\(|\\overrightarrow{AB}| = 3\\); \\(\\overrightarrow{AC} = \\begin{pmatrix} 1 \\\\ 3 \\\\ 3 \\end{pmatrix}\\), Kreuzprodukt \\(\\begin{pmatrix} 3 \\\\ -5 \\\\ 4 \\end{pmatrix}\\), Betrag \\(\\sqrt{50}\\). \\(A = \\frac{1}{2}\\sqrt{50}\\) und \\(A = \\frac{1}{2} \\cdot 3 \\cdot h \\Rightarrow h = \\frac{\\sqrt{50}}{3} \\approx 2{,}36\\)."
+      },
+      {
+        id: 27,
+        level: 5,
+        typ: "mc",
+        frage: "Ein Schüler berechnet \\(\\begin{pmatrix} 1 \\\\ 2 \\\\ 3 \\end{pmatrix} \\times \\begin{pmatrix} 2 \\\\ -1 \\\\ 1 \\end{pmatrix}\\):<br>Schritt 1: erste Komponente \\(2 \\cdot 1 - 3 \\cdot (-1) = 5\\)<br>Schritt 2: zweite Komponente \\(1 \\cdot 1 - 3 \\cdot 2 = -5\\)<br>Schritt 3: dritte Komponente \\(1 \\cdot (-1) - 2 \\cdot 2 = -5\\)<br>Schritt 4: Ergebnis \\(\\begin{pmatrix} 5 \\\\ -5 \\\\ -5 \\end{pmatrix}\\)<br>Welcher Schritt ist der erste fehlerhafte?",
         optionen: [
-            "\\(A = |\\overrightarrow{AB} \\times \\overrightarrow{AC}|\\)",
-            "\\(A = \\frac{1}{2} |\\overrightarrow{AB} \\times \\overrightarrow{AC}|\\)",
-            "\\(A = \\overrightarrow{AB} \\cdot \\overrightarrow{AC}\\)",
-            "\\(A = \\frac{1}{2} (\\overrightarrow{AB} + \\overrightarrow{AC})\\)"
+          "Schritt 1",
+          "Schritt 2",
+          "Schritt 3",
+          "Schritt 4"
         ],
         korrekt: 1,
-        tipp: "Das Dreieck ist halb so groß wie das Parallelogramm.",
-        loesungsweg: "Der Flächeninhalt eines Dreiecks ist halb so groß wie der des aufgespannten Parallelogramms: \\(A = \\frac{1}{2} |\\overrightarrow{AB} \\times \\overrightarrow{AC}|\\)."
-    },
-    {
-        id: 32, level: 6, typ: "numerisch",
-        frage: "Berechne den Flächeninhalt des Dreiecks mit \\(A(0|0|0)\\), \\(B(1|0|0)\\), \\(C(0|1|0)\\).",
-        loesung: 0.5, toleranz: 0.01,
-        tipp: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 1 \\\\ 0 \\\\ 0 \\end{pmatrix}\\), \\(\\overrightarrow{AC} = \\begin{pmatrix} 0 \\\\ 1 \\\\ 0 \\end{pmatrix}\\). Kreuzprodukt bilden, dann halbieren.",
-        loesungsweg: "\\(\\overrightarrow{AB} \\times \\overrightarrow{AC} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 1 \\end{pmatrix}\\), Betrag \\(= 1\\). Fläche \\(= \\frac{1}{2} \\cdot 1 = 0{,}5\\)."
-    },
-    {
-        id: 33, level: 6, typ: "numerisch",
-        frage: "Berechne den Flächeninhalt des Dreiecks mit \\(A(0|0|0)\\), \\(B(2|0|0)\\), \\(C(0|3|0)\\).",
-        loesung: 3, toleranz: 0,
-        tipp: "\\(\\overrightarrow{AB} \\times \\overrightarrow{AC} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 6 \\end{pmatrix}\\). Halbieren!",
-        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 2 \\\\ 0 \\\\ 0 \\end{pmatrix}\\), \\(\\overrightarrow{AC} = \\begin{pmatrix} 0 \\\\ 3 \\\\ 0 \\end{pmatrix}\\). Kreuzprodukt: \\(\\begin{pmatrix} 0 \\\\ 0 \\\\ 6 \\end{pmatrix}\\), Betrag \\(6\\). Fläche \\(= \\frac{1}{2} \\cdot 6 = 3\\)."
-    },
-    {
-        id: 34, level: 6, typ: "numerisch",
-        frage: "Berechne den Flächeninhalt des Dreiecks mit \\(A(0|0|0)\\), \\(B(3|0|0)\\), \\(C(0|4|0)\\).",
-        loesung: 6, toleranz: 0,
-        tipp: "Rechtwinkliges Dreieck mit Katheten \\(3\\) und \\(4\\).",
-        loesungsweg: "\\(\\overrightarrow{AB} \\times \\overrightarrow{AC} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 12 \\end{pmatrix}\\), Betrag \\(= 12\\). Fläche \\(= \\frac{1}{2} \\cdot 12 = 6\\). Stimmt mit \\(\\frac{1}{2} \\cdot 3 \\cdot 4\\) überein."
-    },
-    {
-        id: 35, level: 6, typ: "numerisch",
-        frage: "Berechne den Flächeninhalt des Dreiecks mit \\(A(1|1|0)\\), \\(B(3|1|0)\\), \\(C(1|4|0)\\).",
-        loesung: 3, toleranz: 0,
-        tipp: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 2 \\\\ 0 \\\\ 0 \\end{pmatrix}\\), \\(\\overrightarrow{AC} = \\begin{pmatrix} 0 \\\\ 3 \\\\ 0 \\end{pmatrix}\\).",
-        loesungsweg: "\\(\\overrightarrow{AB} \\times \\overrightarrow{AC} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 6 \\end{pmatrix}\\), Betrag \\(= 6\\). Fläche \\(= \\frac{1}{2} \\cdot 6 = 3\\)."
-    },
-    {
-        id: 36, level: 6, typ: "numerisch",
-        frage: "Berechne den Flächeninhalt des Dreiecks mit \\(A(1|2|3)\\), \\(B(4|2|3)\\), \\(C(1|6|3)\\).",
-        loesung: 6, toleranz: 0,
-        tipp: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 3 \\\\ 0 \\\\ 0 \\end{pmatrix}\\), \\(\\overrightarrow{AC} = \\begin{pmatrix} 0 \\\\ 4 \\\\ 0 \\end{pmatrix}\\).",
-        loesungsweg: "\\(\\overrightarrow{AB} \\times \\overrightarrow{AC} = \\begin{pmatrix} 0 \\cdot 0 - 0 \\cdot 4 \\\\ 0 \\cdot 0 - 3 \\cdot 0 \\\\ 3 \\cdot 4 - 0 \\cdot 0 \\end{pmatrix} = \\begin{pmatrix} 0 \\\\ 0 \\\\ 12 \\end{pmatrix}\\), Betrag \\(= 12\\). Fläche \\(= \\frac{1}{2} \\cdot 12 = 6\\)."
-    }
-
+        tipp: "Die zweite Komponente ist \\(a_3 b_1 - a_1 b_3\\); prüfe die Reihenfolge.",
+        loesungsweg: "Schritt 1 ist richtig. In Schritt 2 wurden die Faktoren vertauscht: richtig ist \\(3 \\cdot 2 - 1 \\cdot 1 = 5\\). Schritt 3 ist richtig, Schritt 4 übernimmt den Fehler. Korrektes Ergebnis \\(\\begin{pmatrix} 5 \\\\ 5 \\\\ -5 \\end{pmatrix}\\)."
+      },
+      {
+        id: 28,
+        level: 5,
+        typ: "numerisch",
+        frage: "Das Dreieck mit \\(A(0|1|2)\\), \\(B(2|3|2)\\) und \\(C(t|1|4)\\) hat den Flächeninhalt \\(3\\). Bestimme den positiven Wert von \\(t\\).",
+        loesung: 1,
+        toleranz: 0,
+        tipp: "Kreuzprodukt mit \\(t\\) berechnen, Betrag als Gleichung ansetzen.",
+        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 2 \\\\ 2 \\\\ 0 \\end{pmatrix}\\), \\(\\overrightarrow{AC} = \\begin{pmatrix} t \\\\ 0 \\\\ 2 \\end{pmatrix}\\), Kreuzprodukt \\(\\begin{pmatrix} 4 \\\\ -4 \\\\ -2t \\end{pmatrix}\\). \\(\\frac{1}{2}\\sqrt{32 + 4t^2} = 3 \\Rightarrow 32 + 4t^2 = 36 \\Rightarrow t = 1\\) (positiv)."
+      },
+      {
+        id: 29,
+        level: 5,
+        typ: "numerisch",
+        frage: "Berechne den Flächeninhalt des ebenen Vierecks \\(ABCD\\) mit \\(A(1|1|0)\\), \\(B(4|1|1)\\), \\(C(5|4|2)\\) und \\(D(-1|4|0)\\). Runde auf zwei Dezimalstellen.",
+        loesung: 14.54,
+        toleranz: 0.01,
+        tipp: "Zerlege das Viereck durch eine Diagonale in zwei Dreiecke.",
+        loesungsweg: "\\(\\overrightarrow{AB} \\times \\overrightarrow{AC} = \\begin{pmatrix} 3 \\\\ 0 \\\\ 1 \\end{pmatrix} \\times \\begin{pmatrix} 4 \\\\ 3 \\\\ 2 \\end{pmatrix} = \\begin{pmatrix} -3 \\\\ -2 \\\\ 9 \\end{pmatrix}\\), Betrag \\(\\sqrt{94}\\). \\(\\overrightarrow{AC} \\times \\overrightarrow{AD} = \\begin{pmatrix} 4 \\\\ 3 \\\\ 2 \\end{pmatrix} \\times \\begin{pmatrix} -2 \\\\ 3 \\\\ 0 \\end{pmatrix} = \\begin{pmatrix} -6 \\\\ -4 \\\\ 18 \\end{pmatrix}\\), Betrag \\(\\sqrt{376}\\). \\(A = \\frac{1}{2}(\\sqrt{94} + \\sqrt{376}) \\approx 14{,}54\\)."
+      },
+      {
+        id: 30,
+        level: 5,
+        typ: "numerisch",
+        frage: "Eine Ebene geht durch \\(P(1|2|0)\\), \\(Q(3|1|2)\\) und \\(R(0|2|3)\\). Berechne den Betrag der ersten Koordinate des Normaleneinheitsvektors dieser Ebene. Runde auf zwei Dezimalstellen.",
+        loesung: 0.35,
+        toleranz: 0.01,
+        tipp: "Spannvektoren aus den drei Punkten, Kreuzprodukt, normieren.",
+        loesungsweg: "\\(\\overrightarrow{PQ} = \\begin{pmatrix} 2 \\\\ -1 \\\\ 2 \\end{pmatrix}\\), \\(\\overrightarrow{PR} = \\begin{pmatrix} -1 \\\\ 0 \\\\ 3 \\end{pmatrix}\\), Kreuzprodukt \\(\\begin{pmatrix} -3 \\\\ -8 \\\\ -1 \\end{pmatrix}\\), Betrag \\(\\sqrt{74}\\). Erste Koordinate von \\(\\vec{n}_0\\): \\(\\frac{3}{\\sqrt{74}} \\approx 0{,}35\\) (Betrag)."
+      },
+      // ========== LEVEL 6 — wagnerisch (6 Aufgaben) ==========
+      {
+        id: 31,
+        level: 6,
+        typ: "mc",
+        frage: "Warum steht \\(\\vec{a} \\times \\vec{b}\\) für alle Vektoren \\(\\vec{a}\\), \\(\\vec{b}\\) senkrecht auf \\(\\vec{a}\\)?",
+        optionen: [
+          "Weil das Skalarprodukt \\((\\vec{a} \\times \\vec{b}) \\cdot \\vec{a}\\) nach Ausmultiplizieren der Komponentenformel für alle \\(\\vec{a}\\), \\(\\vec{b}\\) den Wert \\(0\\) ergibt.",
+          "Weil \\(\\vec{a} \\times \\vec{b}\\) stets der Nullvektor ist, und der Nullvektor steht auf allem senkrecht.",
+          "Weil \\(\\vec{a} \\times \\vec{b}\\) immer dieselbe Länge wie \\(\\vec{a}\\) hat.",
+          "Das gilt nur, wenn \\(\\vec{a}\\) und \\(\\vec{b}\\) selbst senkrecht aufeinander stehen."
+        ],
+        korrekt: 0,
+        tipp: "Schreibe \\((\\vec{a} \\times \\vec{b}) \\cdot \\vec{a}\\) mit den Komponentenformeln aus und beobachte, wie sich die Produkte aufheben.",
+        loesungsweg: "\\((a_2 b_3 - a_3 b_2) a_1 + (a_3 b_1 - a_1 b_3) a_2 + (a_1 b_2 - a_2 b_1) a_3\\): Jedes Produkt tritt einmal mit Plus und einmal mit Minus auf, die Summe ist \\(0\\). Das gilt für beliebige \\(\\vec{a}\\), \\(\\vec{b}\\), auch wenn sie nicht orthogonal sind."
+      },
+      {
+        id: 32,
+        level: 6,
+        typ: "mc",
+        frage: "Für zwei Vektoren \\(\\vec{b}\\), \\(\\vec{c}\\) und einen Vektor \\(\\vec{a} \\neq \\vec{0}\\) gilt \\(\\vec{a} \\times \\vec{b} = \\vec{a} \\times \\vec{c}\\). Folgt daraus \\(\\vec{b} = \\vec{c}\\)?",
+        optionen: [
+          "Nein: Es folgt nur, dass \\(\\vec{b} - \\vec{c}\\) kollinear zu \\(\\vec{a}\\) ist.",
+          "Ja, weil man beide Seiten durch \\(\\vec{a}\\) kürzen kann.",
+          "Ja, sofern \\(\\vec{b}\\) und \\(\\vec{c}\\) gleich lang sind.",
+          "Nein: Es folgt, dass \\(\\vec{b}\\) und \\(\\vec{c}\\) senkrecht aufeinander stehen."
+        ],
+        korrekt: 0,
+        tipp: "Bringe alles auf eine Seite und nutze, dass das Kreuzprodukt komponentenweise linear ist.",
+        loesungsweg: "\\(\\vec{a} \\times (\\vec{b} - \\vec{c}) = \\vec{0}\\). Das Kreuzprodukt ist genau dann der Nullvektor, wenn die Faktoren kollinear sind (oder einer \\(\\vec{0}\\) ist). Also \\(\\vec{b} - \\vec{c} = k\\vec{a}\\), etwa \\(\\vec{b} = \\vec{c} + \\vec{a}\\) ist ein Gegenbeispiel zu \\(\\vec{b} = \\vec{c}\\)."
+      },
+      {
+        id: 33,
+        level: 6,
+        typ: "mc",
+        frage: "Zwei Vektoren \\(\\vec{a}\\), \\(\\vec{b}\\) spannen ein Parallelogramm mit Flächeninhalt \\(F\\) auf. Wie groß ist der Flächeninhalt des Parallelogramms, das von \\(2\\vec{a}\\) und \\(\\frac{1}{2}\\vec{b}\\) aufgespannt wird?",
+        optionen: [
+          "\\(F\\)",
+          "\\(2F\\)",
+          "\\(\\frac{1}{2}F\\)",
+          "\\(4F\\)"
+        ],
+        korrekt: 0,
+        tipp: "Wie verhält sich das Kreuzprodukt gegenüber Vorfaktoren?",
+        loesungsweg: "\\((2\\vec{a}) \\times (\\frac{1}{2}\\vec{b}) = 2 \\cdot \\frac{1}{2} \\cdot (\\vec{a} \\times \\vec{b}) = \\vec{a} \\times \\vec{b}\\). Der Betrag und damit der Flächeninhalt bleiben gleich (anschaulich: doppelte Grundseite, halbe Höhe)."
+      },
+      {
+        id: 34,
+        level: 6,
+        typ: "numerisch",
+        frage: "Berechne das Volumen des Spats, der von \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 1 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 2 \\\\ 1 \\\\ 3 \\end{pmatrix}\\) und \\(\\vec{c} = \\begin{pmatrix} 1 \\\\ 1 \\\\ 4 \\end{pmatrix}\\) aufgespannt wird.",
+        loesung: 8,
+        toleranz: 0,
+        tipp: "Grundfläche als Kreuzprodukt, Höhe über das Skalarprodukt mit dem dritten Vektor.",
+        loesungsweg: "\\(\\vec{a} \\times \\vec{b} = \\begin{pmatrix} 5 \\\\ -1 \\\\ -3 \\end{pmatrix}\\). \\((\\vec{a} \\times \\vec{b}) \\cdot \\vec{c} = 5 - 1 - 12 = -8\\). Volumen \\(V = |-8| = 8\\)."
+      },
+      {
+        id: 35,
+        level: 6,
+        typ: "numerisch",
+        frage: "Ein Zeltdach hat die Form eines Dreiecks mit den Ecken \\(A(1|0|3)\\), \\(B(7|2|3)\\) und dem Firstpunkt \\(F(3|5|6)\\) (Angaben in Metern). Wie viel Quadratmeter Stoff werden für diese Dachfläche benötigt? Runde auf zwei Dezimalstellen.",
+        loesung: 16.09,
+        toleranz: 0.01,
+        tipp: "Welche Größe ist gesucht, und welches Produkt liefert sie?",
+        loesungsweg: "\\(\\overrightarrow{AB} = \\begin{pmatrix} 6 \\\\ 2 \\\\ 0 \\end{pmatrix}\\), \\(\\overrightarrow{AF} = \\begin{pmatrix} 2 \\\\ 5 \\\\ 3 \\end{pmatrix}\\), Kreuzprodukt \\(\\begin{pmatrix} 6 \\\\ -18 \\\\ 26 \\end{pmatrix}\\), Betrag \\(\\sqrt{1036}\\). Fläche \\(\\frac{1}{2}\\sqrt{1036} \\approx 16{,}09\\,\\text{m}^2\\)."
+      },
+      {
+        id: 36,
+        level: 6,
+        typ: "numerisch",
+        frage: "Der Spat, der von \\(\\vec{a} = \\begin{pmatrix} 1 \\\\ 2 \\\\ 1 \\end{pmatrix}\\), \\(\\vec{b} = \\begin{pmatrix} 2 \\\\ 1 \\\\ 3 \\end{pmatrix}\\) und \\(\\vec{c} = \\begin{pmatrix} t \\\\ 1 \\\\ 1 \\end{pmatrix}\\) aufgespannt wird, hat das Volumen \\(12\\). Bestimme den positiven Wert von \\(t\\). Runde auf eine Dezimalstelle.",
+        loesung: 3.2,
+        toleranz: 0.05,
+        tipp: "Das Spatprodukt kann negativ sein; das Volumen ist sein Betrag. Das ergibt zwei Fälle.",
+        loesungsweg: "\\(\\vec{a} \\times \\vec{b} = \\begin{pmatrix} 5 \\\\ -1 \\\\ -3 \\end{pmatrix}\\), Spatprodukt \\(5t - 1 - 3 = 5t - 4\\). \\(|5t - 4| = 12 \\Rightarrow t = 3{,}2\\) oder \\(t = -1{,}6\\). Positiver Wert: \\(t = 3{,}2\\)."
+      }
     ];
     </script>
     <script src="../p3-reflexion.js"></script>
