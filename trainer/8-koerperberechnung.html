@@ -295,21 +295,18 @@
         id: 28,
         level: 5,
         typ: "numerisch",
-        frage: "Berechne die Oberfläche eines Kegels mit \\(r = 3\\,\\text{cm}\\) und Mantellinie \\(s = 5\\,\\text{cm}\\).<br>Formel: \\(O = \\pi r^2 + \\pi r s\\). Runde auf eine Dezimalstelle.",
+        frage: "Berechne die Oberfläche eines Kegels mit \\(r = 3\\,\\text{cm}\\) und Mantellinie \\(s = 5\\,\\text{cm}\\). Runde auf eine Dezimalstelle.",
         loesung: 75.4,
         toleranz: 0.1,
         tipp: "\\(O = \\pi \\cdot 9 + \\pi \\cdot 3 \\cdot 5 = 9\\pi + 15\\pi = 24\\pi\\)",
         loesungsweg: "$$O = \\pi r^2 + \\pi r s = 9\\pi + 15\\pi = 24\\pi \\approx 75{,}4\\,\\text{cm}^2$$"
       },
       {
-        id: 29,
-        level: 5,
-        typ: "numerisch",
-        frage: "Ein Kegel hat \\(r = 5\\,\\text{cm}\\) und \\(h = 12\\,\\text{cm}\\). Berechne zuerst die Mantellinie \\(s = \\sqrt{r^2 + h^2}\\) und dann die Oberfläche. Runde auf eine Dezimalstelle.",
-        loesung: 282.7,
-        toleranz: 0.1,
-        tipp: "\\(s = \\sqrt{25 + 144} = \\sqrt{169} = 13\\). Dann \\(O = \\pi \\cdot 25 + \\pi \\cdot 5 \\cdot 13 = 25\\pi + 65\\pi = 90\\pi\\).",
-        loesungsweg: "$$s = \\sqrt{5^2 + 12^2} = \\sqrt{169} = 13\\,\\text{cm}$$ $$O = \\pi r^2 + \\pi r s = 25\\pi + 65\\pi = 90\\pi \\approx 282{,}7\\,\\text{cm}^2$$"
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Ein Kegel hat den Radius \\(r = 5\\,\\text{cm}\\) und die Hoehe \\(h = 12\\,\\text{cm}\\). Berechne seine Oberflaeche in \\(\\text{cm}^2\\). Runde auf zwei Dezimalstellen.",
+        loesung: 282.74, toleranz: 0.5,
+        tipp: "Die Oberflaeche besteht aus Grundkreis und Mantel; fuer den Mantel fehlt noch eine Groesse, die sich aus \\(r\\) und \\(h\\) ergibt.",
+        loesungsweg: "Mantellinie ueber den Satz des Pythagoras: $$s = \\sqrt{r^2 + h^2} = \\sqrt{25 + 144} = 13\\,\\text{cm}$$ Oberflaeche: $$O = \\pi r^2 + \\pi r s = 25\\pi + 65\\pi = 90\\pi \\approx 282{,}74\\,\\text{cm}^2$$"
       },
       {
         id: 30,
@@ -353,14 +350,11 @@
         loesungsweg: "$$V_{\\text{Zyl}} = 320\\pi$$ $$320\\pi = \\frac{1}{3} \\pi \\cdot 36 \\cdot h_K = 12\\pi \\cdot h_K$$ $$h_K = \\frac{320}{12} = \\frac{80}{3} \\approx 26{,}7\\,\\text{cm}$$"
       },
       {
-        id: 34,
-        level: 6,
-        typ: "numerisch",
-        frage: "Berechne die Oberfläche einer Kugel mit \\(r = 5\\,\\text{cm}\\).<br>Formel: \\(O = 4\\pi r^2\\). Runde auf eine Dezimalstelle.",
-        loesung: 314.2,
-        toleranz: 0.1,
-        tipp: "\\(O = 4\\pi \\cdot 25 = 100\\pi\\)",
-        loesungsweg: "$$O = 4\\pi r^2 = 4\\pi \\cdot 25 = 100\\pi \\approx 314{,}2\\,\\text{cm}^2$$"
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Eine Kugel hat die Oberflaeche \\(314\\,\\text{cm}^2\\). Wie gross ist ihr Radius in cm? Runde auf zwei Dezimalstellen.",
+        loesung: 5, toleranz: 0.05,
+        tipp: "Stelle die Formel fuer die Kugeloberflaeche nach dem Radius um.",
+        loesungsweg: "Aus \\(O = 4\\pi r^2\\) folgt $$r = \\sqrt{\\frac{O}{4\\pi}} = \\sqrt{\\frac{314}{12{,}566}} \\approx \\sqrt{24{,}99} \\approx 5{,}00\\,\\text{cm}$$ Die Umkehrung ist anspruchsvoller als das blosse Einsetzen in die Formel."
       },
       {
         id: 35,

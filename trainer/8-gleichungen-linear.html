@@ -199,128 +199,105 @@
         tipp: "Hauptnenner ist \\(6\\): \\(\\dfrac{x}{6} + \\dfrac{2x}{6} = 5\\), also \\(\\dfrac{3x}{6} = 5\\).",
         loesungsweg: "$$\\frac{x}{6} + \\frac{x}{3} = 5 \\quad | \\cdot 6$$ $$x + 2x = 30$$ $$3x = 30 \\quad | :3$$ $$x = 10$$"
       },
-      // ========== LEVEL 4 — Verhältnisgleichungen und Formelumstellung ==========
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 4 — Formeln umstellen und anwenden, Textgleichungen
+      // ═══════════════════════════════════════════════════════════
       {
-        id: 19,
-        level: 4,
-        typ: "numerisch",
-        frage: "Löse die Verhältnisgleichung: \\(\\dfrac{x}{6} = \\dfrac{5}{3}\\)",
-        loesung: 10,
-        toleranz: 0,
-        tipp: "Multipliziere beide Seiten mit \\(6\\).",
-        loesungsweg: "$$\\frac{x}{6} = \\frac{5}{3} \\quad | \\cdot 6$$ $$x = \\frac{30}{3} = 10$$"
+        id: 19, level: 4, typ: "numerisch",
+        frage: "Für ein Dreieck gilt \\(A = \\dfrac{a \\cdot h}{2}\\). Berechne die Höhe \\(h\\) für \\(A = 24\\,\\text{cm}^2\\) und \\(a = 6\\,\\text{cm}\\).",
+        loesung: 8, toleranz: 0.01,
+        tipp: "Stelle die Formel zuerst nach \\(h\\) um, bevor du einsetzt.",
+        loesungsweg: "$$A = \\frac{a h}{2} \\;\\Big| \\cdot 2 \\Rightarrow 2A = a h \\;\\Big| : a \\Rightarrow h = \\frac{2A}{a}$$ Einsetzen: \\(h = \\frac{48}{6} = 8\\,\\text{cm}\\)."
       },
       {
-        id: 20,
-        level: 4,
-        typ: "mc",
-        frage: "Die Formel für den Umfang eines Rechtecks lautet \\(U = 2(l + b)\\). Löse nach \\(b\\) auf.",
-        optionen: ["\\(b = \\dfrac{U}{2} - l\\)", "\\(b = \\dfrac{U - l}{2}\\)", "\\(b = U - 2l\\)", "\\(b = 2U - l\\)"],
+        id: 20, level: 4, typ: "numerisch",
+        frage: "Für den Umfang eines Rechtecks gilt \\(U = 2(a+b)\\). Berechne \\(b\\) für \\(U = 30\\,\\text{cm}\\) und \\(a = 9\\,\\text{cm}\\).",
+        loesung: 6, toleranz: 0.01,
+        tipp: "Teile zuerst durch \\(2\\), dann bleibt eine einfache Gleichung.",
+        loesungsweg: "$$30 = 2(9 + b) \\;\\Big| : 2 \\Rightarrow 15 = 9 + b \\Rightarrow b = 6\\,\\text{cm}$$"
+      },
+      {
+        id: 21, level: 4, typ: "mc",
+        frage: "Ein Schüler stellt \\(v = \\dfrac{s}{t}\\) nach \\(t\\) um und schreibt \\(t = \\dfrac{v}{s}\\). Was ist dazu zu sagen?",
+        optionen: [
+            "Falsch – richtig ist \\(t = \\frac{s}{v}\\); die Probe mit \\(s = 100\\), \\(v = 50\\) zeigt den Fehler sofort",
+            "Richtig, Zähler und Nenner dürfen vertauscht werden",
+            "Falsch, richtig wäre \\(t = s \\cdot v\\)",
+            "Richtig, aber nur wenn \\(s > v\\) ist"
+        ],
         korrekt: 0,
-        tipp: "Teile zuerst durch \\(2\\), dann subtrahiere \\(l\\).",
-        loesungsweg: "$$U = 2(l + b) \\quad | :2$$ $$\\frac{U}{2} = l + b \\quad | -l$$ $$b = \\frac{U}{2} - l$$"
+        tipp: "Prüfe mit einer Beispielrechnung: Wie lange braucht man für \\(100\\,\\text{km}\\) bei \\(50\\,\\text{km/h}\\)?",
+        loesungsweg: "Aus \\(v = \\frac{s}{t}\\) folgt durch Multiplikation mit \\(t\\): \\(v t = s\\), also \\(t = \\frac{s}{v}\\). Probe: \\(\\frac{100}{50} = 2\\,\\text{h}\\) – sinnvoll. Die falsche Formel ergäbe \\(\\frac{50}{100} = 0{,}5\\,\\text{h}\\)."
       },
       {
-        id: 21,
-        level: 4,
-        typ: "numerisch",
-        frage: "Löse die Verhältnisgleichung: \\(\\dfrac{3}{x} = \\dfrac{9}{12}\\). Gib \\(x\\) an.",
-        loesung: 4,
-        toleranz: 0,
-        tipp: "Kreuzweise multiplizieren: \\(3 \\cdot 12 = 9 \\cdot x\\).",
-        loesungsweg: "$$\\frac{3}{x} = \\frac{9}{12}$$ Kreuzweise multiplizieren: $$3 \\cdot 12 = 9 \\cdot x$$ $$36 = 9x \\quad | :9$$ $$x = 4$$"
+        id: 22, level: 4, typ: "numerisch",
+        frage: "Es gilt \\(v = \\dfrac{s}{t}\\). Wie viele Stunden \\(t\\) braucht man für \\(s = 180\\,\\text{km}\\) bei \\(v = 20\\,\\text{km/h}\\)?",
+        loesung: 9, toleranz: 0.01,
+        tipp: "Stelle die Formel nach \\(t\\) um.",
+        loesungsweg: "$$t = \\frac{s}{v} = \\frac{180}{20} = 9\\,\\text{h}$$"
       },
       {
-        id: 22,
-        level: 4,
-        typ: "mc",
-        frage: "Stelle die Formel \\(A = \\dfrac{a \\cdot h}{2}\\) nach \\(h\\) um.",
-        optionen: ["\\(h = \\dfrac{A}{2a}\\)", "\\(h = \\dfrac{2A}{a}\\)", "\\(h = 2Aa\\)", "\\(h = \\dfrac{a}{2A}\\)"],
-        korrekt: 1,
-        tipp: "Multipliziere zuerst mit \\(2\\), dann teile durch \\(a\\).",
-        loesungsweg: "$$A = \\frac{a \\cdot h}{2} \\quad | \\cdot 2$$ $$2A = a \\cdot h \\quad | :a$$ $$h = \\frac{2A}{a}$$"
+        id: 23, level: 4, typ: "numerisch",
+        frage: "\\(3\\,\\text{kg}\\) Äpfel kosten \\(5{,}40\\,€\\). Wie viel kosten \\(7\\,\\text{kg}\\) in Euro? Runde auf zwei Dezimalstellen.",
+        loesung: 12.6, toleranz: 0.01,
+        tipp: "Bestimme zuerst den Preis für ein Kilogramm.",
+        loesungsweg: "Preis pro Kilogramm: \\(\\frac{5{,}40}{3} = 1{,}80\\,€\\). Für \\(7\\,\\text{kg}\\): $$7 \\cdot 1{,}80 = 12{,}60\\,€$$"
       },
       {
-        id: 23,
-        level: 4,
-        typ: "numerisch",
-        frage: "Löse: \\(\\dfrac{x + 2}{4} = \\dfrac{x - 1}{2}\\)",
-        loesung: 4,
-        toleranz: 0,
-        tipp: "Hauptnenner \\(4\\): Multipliziere beide Seiten mit \\(4\\).",
-        loesungsweg: "$$\\frac{x + 2}{4} = \\frac{x - 1}{2} \\quad | \\cdot 4$$ $$x + 2 = 2(x - 1)$$ $$x + 2 = 2x - 2 \\quad | -x$$ $$2 = x - 2 \\quad | +2$$ $$x = 4$$"
+        id: 24, level: 4, typ: "numerisch",
+        frage: "Vermindert man eine Zahl um ihr Drittel, so erhält man \\(18\\). Wie heißt die Zahl?",
+        loesung: 27, toleranz: 0.01,
+        tipp: "Nenne die Zahl \\(x\\) und schreibe „ihr Drittel\" als Term.",
+        loesungsweg: "$$x - \\frac{x}{3} = 18 \\Rightarrow \\frac{2}{3}x = 18 \\Rightarrow x = 27$$ Probe: \\(27 - 9 = 18\\) ✓."
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 5 — mehrschrittig, Parameter, Ungleichung im Kontext
+      // ═══════════════════════════════════════════════════════════
+      {
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Für welchen Wert von \\(a\\) hat die Gleichung \\(3x + a = 3x + 7\\) unendlich viele Lösungen?",
+        loesung: 7, toleranz: 0.01,
+        tipp: "Was passiert mit \\(x\\), wenn man beide Seiten vergleicht?",
+        loesungsweg: "Subtrahiert man \\(3x\\), bleibt \\(a = 7\\) – eine Aussage ohne \\(x\\). Ist sie wahr (also \\(a = 7\\)), stimmt die Gleichung für <b>jedes</b> \\(x\\); für jedes andere \\(a\\) entsteht ein Widerspruch und es gibt gar keine Lösung."
       },
       {
-        id: 24,
-        level: 4,
-        typ: "mc",
-        frage: "Stelle die Formel \\(v = \\dfrac{s}{t}\\) nach \\(t\\) um.",
-        optionen: ["\\(t = s \\cdot v\\)", "\\(t = \\dfrac{s}{v}\\)", "\\(t = \\dfrac{v}{s}\\)", "\\(t = s - v\\)"],
-        korrekt: 1,
-        tipp: "Multipliziere mit \\(t\\) und teile dann durch \\(v\\).",
-        loesungsweg: "$$v = \\frac{s}{t} \\quad | \\cdot t$$ $$v \\cdot t = s \\quad | :v$$ $$t = \\frac{s}{v}$$"
-      },
-      // ========== LEVEL 5 — Nichtlineare Gleichungen durch Interpretation ==========
-      {
-        id: 25,
-        level: 5,
-        typ: "mc",
-        frage: "Bestimme die Lösungsmenge von \\(x^2 = 16\\).",
-        optionen: ["\\(\\mathbb{L} = \\{4\\}\\)", "\\(\\mathbb{L} = \\{-4;\\, 4\\}\\)", "\\(\\mathbb{L} = \\{-4\\}\\)", "\\(\\mathbb{L} = \\{\\,\\}\\)"],
-        korrekt: 1,
-        tipp: "Eine quadratische Gleichung kann zwei Lösungen haben: die positive und die negative Wurzel.",
-        loesungsweg: "$$x^2 = 16$$ $$x = \\pm\\sqrt{16} = \\pm 4$$ $$\\mathbb{L} = \\{-4;\\, 4\\}$$"
+        id: 26, level: 5, typ: "numerisch",
+        frage: "Löse die Gleichung \\(\\dfrac{x+1}{2} + \\dfrac{x-1}{3} = 4\\).",
+        loesung: 4.6, toleranz: 0.02,
+        tipp: "Multipliziere beide Seiten mit dem Hauptnenner der Brüche.",
+        loesungsweg: "Hauptnenner \\(6\\): $$3(x+1) + 2(x-1) = 24 \\Rightarrow 3x + 3 + 2x - 2 = 24$$ $$5x + 1 = 24 \\Rightarrow x = 4{,}6$$"
       },
       {
-        id: 26,
-        level: 5,
-        typ: "mc",
-        frage: "Bestimme die Lösungsmenge von \\(|x| = 5\\).",
-        optionen: ["\\(\\mathbb{L} = \\{5\\}\\)", "\\(\\mathbb{L} = \\{-5\\}\\)", "\\(\\mathbb{L} = \\{-5;\\, 5\\}\\)", "\\(\\mathbb{L} = \\{\\,\\}\\)"],
-        korrekt: 2,
-        tipp: "Der Betrag einer Zahl ist \\(5\\), wenn die Zahl selbst \\(5\\) oder \\(-5\\) ist.",
-        loesungsweg: "$$|x| = 5$$ $$x = 5 \\quad \\text{oder} \\quad x = -5$$ $$\\mathbb{L} = \\{-5;\\, 5\\}$$"
+        id: 27, level: 5, typ: "mc",
+        frage: "Ein Schüler löst \\(4x - 3 = 2x + 7\\):<br>Schritt 1: \\(4x - 2x = 7 - 3\\)<br>Schritt 2: \\(2x = 4\\)<br>Schritt 3: \\(x = 2\\)<br>Welcher Schritt ist der erste fehlerhafte?",
+        optionen: ["Schritt 1", "Schritt 2", "Schritt 3", "Kein Schritt ist fehlerhaft"],
+        korrekt: 0,
+        tipp: "Achte auf das Vorzeichen, mit dem die \\(-3\\) auf die andere Seite wandert.",
+        loesungsweg: "Beim Umstellen wird \\(-3\\) durch Addition von \\(3\\) beseitigt, rechts entsteht also \\(7 + 3 = 10\\), nicht \\(7 - 3\\). Richtig: $$2x = 10 \\Rightarrow x = 5$$ Probe: \\(4 \\cdot 5 - 3 = 17 = 2 \\cdot 5 + 7\\) ✓ (mit \\(x = 2\\) ergäbe sich \\(5 \\neq 11\\))."
       },
       {
-        id: 27,
-        level: 5,
-        typ: "numerisch",
-        frage: "Löse: \\(\\sqrt[3]{x} = 2\\). Gib \\(x\\) an.",
-        loesung: 8,
-        toleranz: 0,
-        tipp: "Hebe die dritte Wurzel auf, indem du beide Seiten hoch \\(3\\) nimmst.",
-        loesungsweg: "$$\\sqrt[3]{x} = 2 \\quad | \\text{hoch } 3$$ $$x = 2^3 = 8$$"
+        id: 28, level: 5, typ: "numerisch",
+        frage: "Ein Vater ist heute dreimal so alt wie sein Sohn. In \\(10\\) Jahren wird er nur noch doppelt so alt sein. Wie alt ist der Sohn heute?",
+        loesung: 10, toleranz: 0,
+        tipp: "Nenne das Alter des Sohnes \\(s\\) und formuliere beide Angaben als Gleichungen.",
+        loesungsweg: "Heute: Vater \\(3s\\). In zehn Jahren: $$3s + 10 = 2(s + 10) \\Rightarrow 3s + 10 = 2s + 20 \\Rightarrow s = 10$$ Der Sohn ist \\(10\\), der Vater \\(30\\); in zehn Jahren \\(20\\) und \\(40\\) ✓."
       },
       {
-        id: 28,
-        level: 5,
-        typ: "mc",
-        frage: "Bestimme die Lösungsmenge von \\(x^2 = -9\\) in \\(\\mathbb{R}\\).",
-        optionen: ["\\(\\mathbb{L} = \\{3\\}\\)", "\\(\\mathbb{L} = \\{-3;\\, 3\\}\\)", "\\(\\mathbb{L} = \\{-3\\}\\)", "\\(\\mathbb{L} = \\{\\,\\}\\)"],
-        korrekt: 3,
-        tipp: "Kann ein Quadrat in den reellen Zahlen negativ sein?",
-        loesungsweg: "$$x^2 = -9$$ Ein Quadrat ist immer \\(\\geq 0\\). Es gibt keine reelle Zahl, deren Quadrat \\(-9\\) ergibt. $$\\mathbb{L} = \\{\\,\\}$$"
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Eine Taxifahrt kostet \\(4{,}00\\,€\\) Grundpreis und \\(1{,}50\\,€\\) je Kilometer. Wie viele volle Kilometer kann man für höchstens \\(25\\,€\\) fahren?",
+        loesung: 14, toleranz: 0,
+        tipp: "Stelle eine Ungleichung auf und runde am Ende sinnvoll ab.",
+        loesungsweg: "$$4 + 1{,}5x \\leq 25 \\Rightarrow 1{,}5x \\leq 21 \\Rightarrow x \\leq 14$$ Es sind also genau \\(14\\) Kilometer möglich (Kosten: \\(25{,}00\\,€\\)); bei \\(15\\,\\text{km}\\) wären es \\(26{,}50\\,€\\)."
       },
       {
-        id: 29,
-        level: 5,
-        typ: "numerisch",
-        frage: "Löse: \\(x^2 = 49\\). Gib die positive Lösung an.",
-        loesung: 7,
-        toleranz: 0,
-        tipp: "Ziehe die Wurzel: \\(x = \\pm\\sqrt{49}\\). Gefragt ist die positive Lösung.",
-        loesungsweg: "$$x^2 = 49$$ $$x = \\pm\\sqrt{49} = \\pm 7$$ Die positive Lösung ist \\(x = 7\\)."
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Löse die Gleichung \\(2(3x - 4) - 3(x - 2) = 10\\).",
+        loesung: 4, toleranz: 0.01,
+        tipp: "Löse beide Klammern auf und achte beim Minuszeichen vor der zweiten Klammer auf die Vorzeichen.",
+        loesungsweg: "$$6x - 8 - 3x + 6 = 10 \\Rightarrow 3x - 2 = 10 \\Rightarrow 3x = 12 \\Rightarrow x = 4$$ Häufiger Fehler: \\(-3(x-2) = -3x - 6\\) statt \\(-3x + 6\\)."
       },
-      {
-        id: 30,
-        level: 5,
-        typ: "mc",
-        frage: "Bestimme die Lösungsmenge von \\(|x - 3| = 7\\).",
-        optionen: ["\\(\\mathbb{L} = \\{10\\}\\)", "\\(\\mathbb{L} = \\{-4\\}\\)", "\\(\\mathbb{L} = \\{-4;\\, 10\\}\\)", "\\(\\mathbb{L} = \\{4;\\, -10\\}\\)"],
-        korrekt: 2,
-        tipp: "Setze den Klammerinhalt gleich \\(7\\) und gleich \\(-7\\).",
-        loesungsweg: "$$|x - 3| = 7$$ Fall 1: \\(x - 3 = 7 \\Rightarrow x = 10\\) $$ $$ Fall 2: \\(x - 3 = -7 \\Rightarrow x = -4\\) $$\\mathbb{L} = \\{-4;\\, 10\\}$$"
-      },
+
       // ========== LEVEL 6 — Textaufgaben, Gleichung aufstellen, Sonderfälle ==========
       {
         id: 31,

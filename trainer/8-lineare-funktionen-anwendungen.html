@@ -53,7 +53,7 @@
         typ: "numerisch",
         frage: "Ein Pizzalieferdienst berechnet 2,50 Euro Liefergebuehr plus den Pizzapreis. Jede Pizza kostet 8 Euro. Stelle die Funktion auf und berechne die Kosten für 3 Pizzen (in Euro).",
         loesung: 26.5,
-        toleranz: 0,
+        toleranz: 0.01,
         tipp: "\\(f(x) = 8x + 2{,}50\\). Setze \\(x = 3\\) ein.",
         loesungsweg: "$$f(x) = 8x + 2{,}50$$ $$f(3) = 8 \\cdot 3 + 2{,}50 = 24 + 2{,}50 = 26{,}50 \\text{ Euro}$$"
       },
@@ -260,67 +260,58 @@
         tipp: "\\(2 + 1{,}50x = 2x\\). Loese nach \\(x\\) auf.",
         loesungsweg: "$$2 + 1{,}50x = 2x$$ $$2 = 0{,}50x$$ $$x = 4 \\text{ Stunden}$$"
       },
-      // ========== LEVEL 5 — Aus Messdaten Funktionsgleichung bestimmen, Prognosen ==========
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 5 — Modell aufstellen und weiterrechnen, Grenzen prüfen
+      // ═══════════════════════════════════════════════════════════
       {
-        id: 25,
-        level: 5,
-        typ: "numerisch",
-        frage: "Messung: Nach 2 Stunden sind 60 Liter im Tank, nach 6 Stunden 180 Liter. Bestimme die Steigung \\(m\\) der linearen Funktion.",
-        loesung: 30,
-        toleranz: 0,
-        tipp: "\\(m = \\frac{180 - 60}{6 - 2}\\).",
-        loesungsweg: "$$m = \\frac{180 - 60}{6 - 2} = \\frac{120}{4} = 30 \\text{ Liter/Stunde}$$"
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Ein Becken wird gleichmäßig gefüllt: Nach \\(4\\) Stunden sind \\(120\\) Liter drin, nach \\(9\\) Stunden \\(245\\) Liter. Wie viele Liter waren zu Beginn im Becken?",
+        loesung: 20, toleranz: 0.5,
+        tipp: "Bestimme zuerst die Zuflussrate als Steigung, dann den Anfangswert.",
+        loesungsweg: "Zuflussrate: $$m = \\frac{245 - 120}{9 - 4} = 25\\;\\text{Liter pro Stunde}$$ Anfangswert aus \\((4 \\mid 120)\\): \\(120 = 25 \\cdot 4 + n \\Rightarrow n = 20\\). Zu Beginn waren \\(20\\) Liter im Becken."
       },
       {
-        id: 26,
-        level: 5,
-        typ: "numerisch",
-        frage: "Messpunkte: \\((3,\\, 21)\\) und \\((7,\\, 45)\\). Bestimme den y-Achsenabschnitt \\(n\\) der linearen Funktion \\(f(x) = mx + n\\).",
-        loesung: 3,
-        toleranz: 0,
-        tipp: "Berechne zuerst \\(m = \\frac{45 - 21}{7 - 3}\\), dann setze einen Punkt ein.",
-        loesungsweg: "Steigung: \\(m = \\frac{45 - 21}{7 - 3} = \\frac{24}{4} = 6\\). Einsetzen von \\((3, 21)\\): $$21 = 6 \\cdot 3 + n \\Rightarrow n = 21 - 18 = 3$$ Also: \\(f(x) = 6x + 3\\)."
+        id: 26, level: 5, typ: "numerisch",
+        frage: "Eine Pflanze wächst gleichmäßig: Nach \\(3\\) Wochen ist sie \\(11\\,\\text{cm}\\), nach \\(8\\) Wochen \\(21\\,\\text{cm}\\) hoch. Wie hoch war sie beim Einpflanzen (in cm)?",
+        loesung: 5, toleranz: 0.1,
+        tipp: "Die Anfangshöhe ist der Funktionswert zum Zeitpunkt \\(0\\).",
+        loesungsweg: "Wachstum: \\(m = \\frac{21-11}{8-3} = 2\\,\\frac{\\text{cm}}{\\text{Woche}}\\). Aus \\((3\\mid11)\\): \\(11 = 2 \\cdot 3 + n \\Rightarrow n = 5\\). Die Pflanze war \\(5\\,\\text{cm}\\) hoch."
       },
       {
-        id: 27,
-        level: 5,
-        typ: "numerisch",
-        frage: "Ein Wasserbecken wird gleichmäßig gefuellt. Messung: Nach 4 Stunden 120 Liter, nach 10 Stunden 300 Liter. Wie viele Liter sind nach 15 Stunden im Becken?",
-        loesung: 450,
-        toleranz: 0,
-        tipp: "Bestimme \\(m\\) und \\(n\\), dann setze \\(x = 15\\) ein.",
-        loesungsweg: "Steigung: \\(m = \\frac{300 - 120}{10 - 4} = \\frac{180}{6} = 30\\). Anfangswert: \\(120 = 30 \\cdot 4 + n \\Rightarrow n = 0\\). Also \\(f(x) = 30x\\). $$f(15) = 30 \\cdot 15 = 450 \\text{ Liter}$$"
+        id: 27, level: 5, typ: "numerisch",
+        frage: "Ein Taxi kostet \\(3{,}50\\,€\\) Grundpreis und \\(1{,}20\\,€\\) je Kilometer. Ein zweites Unternehmen verlangt \\(1{,}70\\,€\\) je Kilometer ohne Grundpreis. Ab wie vielen Kilometern ist das erste Taxi günstiger?",
+        loesung: 7, toleranz: 0.01,
+        tipp: "Stelle beide Kostenfunktionen auf und bestimme die Stelle, an der sie gleich viel kosten.",
+        loesungsweg: "$$3{,}5 + 1{,}2x = 1{,}7x \\Rightarrow 3{,}5 = 0{,}5x \\Rightarrow x = 7$$ Ab \\(7\\,\\text{km}\\) ist das erste Taxi günstiger; darunter lohnt sich das zweite."
       },
       {
-        id: 28,
-        level: 5,
-        typ: "mc",
-        frage: "Messdaten eines Heizkörpers: Nach 10 min ist die Temperatur 22 Grad, nach 30 min 34 Grad. Wie lautet die Funktionsgleichung \\(f(x)\\)?",
-        optionen: ["\\(f(x) = 0{,}6x + 16\\)", "\\(f(x) = 0{,}6x + 22\\)", "\\(f(x) = 1{,}2x + 10\\)", "\\(f(x) = 0{,}5x + 17\\)"],
+        id: 28, level: 5, typ: "mc",
+        frage: "Eine Kerze brennt gleichmäßig ab; ihre Länge beschreibt \\(L(t) = 20 - 2{,}5t\\) (in cm, \\(t\\) in Stunden). Was gilt für \\(t = 10\\)?",
+        optionen: [
+            "Das Modell ist dort nicht mehr sinnvoll – die Kerze ist nach \\(8\\) Stunden abgebrannt",
+            "Die Kerze ist \\(-5\\,\\text{cm}\\) lang",
+            "Die Kerze brennt weiter, nur langsamer",
+            "Das Modell gilt für alle \\(t\\), weil die Funktion definiert ist"
+        ],
         korrekt: 0,
-        tipp: "Steigung: \\(m = \\frac{34 - 22}{30 - 10}\\). Dann \\(n\\) bestimmen.",
-        loesungsweg: "Steigung: \\(m = \\frac{34 - 22}{30 - 10} = \\frac{12}{20} = 0{,}6\\). Einsetzen: \\(22 = 0{,}6 \\cdot 10 + n \\Rightarrow n = 22 - 6 = 16\\). Also: \\(f(x) = 0{,}6x + 16\\)."
+        tipp: "Berechne die Nullstelle und überlege, was danach mit der Kerze passiert.",
+        loesungsweg: "$$20 - 2{,}5t = 0 \\Rightarrow t = 8$$ Nach \\(8\\) Stunden ist die Kerze vollständig abgebrannt. Die Funktion liefert für \\(t = 10\\) zwar den Wert \\(-5\\), negative Längen gibt es aber nicht – der sinnvolle Definitionsbereich endet bei \\(t = 8\\)."
       },
       {
-        id: 29,
-        level: 5,
-        typ: "numerisch",
-        frage: "Eine Pflanze ist nach 3 Wochen 11 cm und nach 8 Wochen 21 cm hoch. Wie hoch (in cm) wird sie nach 12 Wochen sein?",
-        loesung: 29,
-        toleranz: 0,
-        tipp: "Steigung: \\(m = \\frac{21 - 11}{8 - 3}\\). Dann \\(n\\) bestimmen und \\(f(12)\\) berechnen.",
-        loesungsweg: "Steigung: \\(m = \\frac{21 - 11}{8 - 3} = \\frac{10}{5} = 2\\) cm/Woche. Einsetzen: \\(11 = 2 \\cdot 3 + n \\Rightarrow n = 5\\). Also \\(f(x) = 2x + 5\\). $$f(12) = 2 \\cdot 12 + 5 = 29 \\text{ cm}$$"
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Ein Kopierladen vergleicht zwei Geräte: Gerät A kostet \\(40\\,€\\) Monatsmiete und \\(0{,}05\\,€\\) je Kopie, Gerät B \\(10\\,€\\) Miete und \\(0{,}10\\,€\\) je Kopie. Ab wie vielen Kopien im Monat ist Gerät A günstiger?",
+        loesung: 600, toleranz: 1,
+        tipp: "Stelle für beide Geräte die monatlichen Kosten als Funktion der Kopienzahl auf.",
+        loesungsweg: "$$40 + 0{,}05x = 10 + 0{,}10x \\Rightarrow 30 = 0{,}05x \\Rightarrow x = 600$$ Bei genau \\(600\\) Kopien kosten beide Geräte \\(70\\,€\\); darüber ist Gerät A günstiger, weil es je Kopie nur halb so viel verlangt."
       },
       {
-        id: 30,
-        level: 5,
-        typ: "numerisch",
-        frage: "Messung eines Tanks: Bei \\(x = 5\\) sind 85 Liter drin, bei \\(x = 20\\) sind 40 Liter drin (\\(x\\) in Stunden). Wann ist der Tank leer? Gib die Stundenzahl an.",
-        loesung: 33.33,
-        toleranz: 0.1,
-        tipp: "Bestimme \\(f(x) = mx + n\\) und setze \\(f(x) = 0\\).",
-        loesungsweg: "Steigung: \\(m = \\frac{40 - 85}{20 - 5} = \\frac{-45}{15} = -3\\). Einsetzen: \\(85 = -3 \\cdot 5 + n \\Rightarrow n = 100\\). Also \\(f(x) = -3x + 100\\). Nullstelle: $$0 = -3x + 100 \\Rightarrow x = \\frac{100}{3} \\approx 33{,}33 \\text{ Stunden}$$"
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Zwei Kerzen brennen gleichmäßig: A ist \\(24\\,\\text{cm}\\) lang und verliert \\(3\\,\\text{cm}\\) pro Stunde, B ist \\(18\\,\\text{cm}\\) lang und verliert \\(1{,}5\\,\\text{cm}\\) pro Stunde. Nach wie vielen Stunden sind beide gleich lang?",
+        loesung: 4, toleranz: 0.01,
+        tipp: "Stelle für beide Kerzen eine Längenfunktion auf und setze sie gleich.",
+        loesungsweg: "$$24 - 3t = 18 - 1{,}5t \\Rightarrow 6 = 1{,}5t \\Rightarrow t = 4$$ Nach \\(4\\) Stunden sind beide \\(12\\,\\text{cm}\\) lang; danach ist B länger."
       },
+
       // ========== LEVEL 6 — Komplexe Modellierung: Break-Even, Bewegungsaufgaben ==========
       {
         id: 31,

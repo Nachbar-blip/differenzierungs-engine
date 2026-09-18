@@ -199,189 +199,162 @@
         tipp: "\\(b^2 = 15^2 - 9^2 = 225 - 81 = \\,?\\)",
         loesungsweg: "$$b^2 = 15^2 - 9^2 = 225 - 81 = 144 \\quad \\Rightarrow \\quad b = \\sqrt{144} = 12$$"
       },
-      // ========== LEVEL 4 — Mit Wurzeln rechnen (nicht-ganzzahlige Ergebnisse) ==========
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 4 — Hypotenuse selbst erkennen, Sachaufgaben ohne Vorgabe
+      // ═══════════════════════════════════════════════════════════
       {
-        id: 19,
-        level: 4,
-        typ: "numerisch",
-        frage: "Berechne \\(c\\) für \\(a = 3\\) und \\(b = 5\\). Runde auf zwei Nachkommastellen.",
-        loesung: 5.83,
-        toleranz: 0.01,
-        tipp: "\\(c^2 = 9 + 25 = 34\\). Dann \\(c = \\sqrt{34} \\approx \\,?\\)",
-        loesungsweg: "$$c^2 = 3^2 + 5^2 = 9 + 25 = 34 \\quad \\Rightarrow \\quad c = \\sqrt{34} \\approx 5{,}83$$"
+        id: 19, level: 4, typ: "numerisch",
+        frage: "In einem rechtwinkligen Dreieck sind zwei Seiten bekannt: \\(9\\,\\text{cm}\\) und \\(12\\,\\text{cm}\\), wobei \\(12\\,\\text{cm}\\) die längste Seite ist. Wie lang ist die dritte Seite? Runde auf zwei Dezimalstellen.",
+        loesung: 7.94, toleranz: 0.02,
+        tipp: "Die längste Seite ist die Hypotenuse – überlege, ob du sie suchst oder bereits kennst.",
+        loesungsweg: "Hier ist \\(12\\,\\text{cm}\\) die Hypotenuse, gesucht ist eine Kathete: $$b = \\sqrt{12^2 - 9^2} = \\sqrt{144 - 81} = \\sqrt{63} \\approx 7{,}94\\,\\text{cm}$$ Wer hier \\(\\sqrt{9^2 + 12^2} = 15\\) rechnet, hat die Hypotenuse falsch zugeordnet."
       },
       {
-        id: 20,
-        level: 4,
-        typ: "numerisch",
-        frage: "Berechne \\(c\\) für \\(a = 4\\) und \\(b = 7\\). Runde auf zwei Nachkommastellen.",
-        loesung: 8.06,
-        toleranz: 0.01,
-        tipp: "\\(c^2 = 16 + 49 = 65\\). Dann \\(c = \\sqrt{65} \\approx \\,?\\)",
-        loesungsweg: "$$c^2 = 4^2 + 7^2 = 16 + 49 = 65 \\quad \\Rightarrow \\quad c = \\sqrt{65} \\approx 8{,}06$$"
+        id: 20, level: 4, typ: "numerisch",
+        frage: "Eine Zeltstange steht senkrecht und ist \\(2{,}5\\,\\text{m}\\) hoch. Eine Abspannleine führt von der Spitze zu einem Hering, der \\(1{,}8\\,\\text{m}\\) vom Fuß entfernt im Boden steckt. Wie lang ist die Leine in Metern? Runde auf zwei Dezimalstellen.",
+        loesung: 3.08, toleranz: 0.02,
+        tipp: "Zeichne eine Skizze: Welche der drei Strecken liegt dem rechten Winkel gegenüber?",
+        loesungsweg: "Stange und Boden bilden den rechten Winkel, die Leine ist die Hypotenuse: $$l = \\sqrt{2{,}5^2 + 1{,}8^2} = \\sqrt{6{,}25 + 3{,}24} = \\sqrt{9{,}49} \\approx 3{,}08\\,\\text{m}$$"
       },
       {
-        id: 21,
-        level: 4,
-        typ: "numerisch",
-        frage: "Berechne die Kathete \\(b\\) für \\(c = 10\\) und \\(a = 7\\). Runde auf zwei Nachkommastellen.",
-        loesung: 7.14,
-        toleranz: 0.01,
-        tipp: "\\(b^2 = 100 - 49 = 51\\). Dann \\(b = \\sqrt{51} \\approx \\,?\\)",
-        loesungsweg: "$$b^2 = 10^2 - 7^2 = 100 - 49 = 51 \\quad \\Rightarrow \\quad b = \\sqrt{51} \\approx 7{,}14$$"
-      },
-      {
-        id: 22,
-        level: 4,
-        typ: "numerisch",
-        frage: "Ein rechtwinkliges Dreieck hat \\(a = 2\\) und \\(b = 6\\). Berechne \\(c\\). Runde auf zwei Nachkommastellen.",
-        loesung: 6.32,
-        toleranz: 0.01,
-        tipp: "\\(c^2 = 4 + 36 = 40\\). Dann \\(c = \\sqrt{40} \\approx \\,?\\)",
-        loesungsweg: "$$c^2 = 2^2 + 6^2 = 4 + 36 = 40 \\quad \\Rightarrow \\quad c = \\sqrt{40} \\approx 6{,}32$$"
-      },
-      {
-        id: 23,
-        level: 4,
-        typ: "numerisch",
-        frage: "Berechne die Kathete \\(a\\) für \\(c = 12\\) und \\(b = 5\\). Runde auf zwei Nachkommastellen.",
-        loesung: 10.91,
-        toleranz: 0.01,
-        tipp: "\\(a^2 = 144 - 25 = 119\\). Dann \\(a = \\sqrt{119} \\approx \\,?\\)",
-        loesungsweg: "$$a^2 = 12^2 - 5^2 = 144 - 25 = 119 \\quad \\Rightarrow \\quad a = \\sqrt{119} \\approx 10{,}91$$"
-      },
-      {
-        id: 24,
-        level: 4,
-        typ: "numerisch",
-        frage: "Berechne \\(c\\) für \\(a = 1\\) und \\(b = 1\\). Runde auf zwei Nachkommastellen.",
-        loesung: 1.41,
-        toleranz: 0.01,
-        tipp: "\\(c^2 = 1 + 1 = 2\\). Dann \\(c = \\sqrt{2} \\approx \\,?\\)",
-        loesungsweg: "$$c^2 = 1^2 + 1^2 = 2 \\quad \\Rightarrow \\quad c = \\sqrt{2} \\approx 1{,}41$$"
-      },
-      // ========== LEVEL 5 — Umkehrung: Rechtwinkliges Dreieck prüfen, Diagonalen ==========
-      {
-        id: 25,
-        level: 5,
-        typ: "mc",
-        frage: "Ist das Dreieck mit den Seiten \\(a = 7\\), \\(b = 24\\), \\(c = 25\\) rechtwinklig?",
-        optionen: ["Ja", "Nein"],
+        id: 21, level: 4, typ: "mc",
+        frage: "Ein Schüler rechnet für ein rechtwinkliges Dreieck mit der Hypotenuse \\(10\\) und einer Kathete \\(6\\): \\(x = \\sqrt{10^2 + 6^2} \\approx 11{,}66\\). Was ist dazu zu sagen?",
+        optionen: [
+            "Falsch – gesucht ist eine Kathete, also \\(x = \\sqrt{10^2 - 6^2} = 8\\)",
+            "Richtig, der Satz des Pythagoras lautet immer \\(a^2 + b^2\\)",
+            "Falsch, richtig wäre \\(x = 10 - 6 = 4\\)",
+            "Richtig, aber das Ergebnis muss gerundet werden"
+        ],
         korrekt: 0,
-        tipp: "Prüfe: \\(7^2 + 24^2 = 49 + 576 = 625\\). Ist das gleich \\(25^2\\)?",
-        loesungsweg: "$$7^2 + 24^2 = 49 + 576 = 625 = 25^2 \\quad \\checkmark$$ Ja, das Dreieck ist rechtwinklig."
+        tipp: "Kann eine Kathete länger sein als die Hypotenuse?",
+        loesungsweg: "Die Hypotenuse ist stets die längste Seite – ein Ergebnis von \\(11{,}66\\) bei einer Hypotenuse von \\(10\\) ist schon deshalb unmöglich. Beim Suchen einer <b>Kathete</b> wird subtrahiert: $$x = \\sqrt{100 - 36} = \\sqrt{64} = 8$$"
       },
       {
-        id: 26,
-        level: 5,
-        typ: "mc",
-        frage: "Ist das Dreieck mit den Seiten \\(a = 5\\), \\(b = 7\\), \\(c = 9\\) rechtwinklig?",
-        optionen: ["Ja", "Nein"],
-        korrekt: 1,
-        tipp: "Prüfe: \\(5^2 + 7^2 = 25 + 49 = 74\\). Ist das gleich \\(9^2 = 81\\)?",
-        loesungsweg: "$$5^2 + 7^2 = 25 + 49 = 74 \\neq 81 = 9^2$$ Nein, das Dreieck ist <b>nicht</b> rechtwinklig."
+        id: 22, level: 4, typ: "numerisch",
+        frage: "Ein Rechteck ist \\(8\\,\\text{cm}\\) breit und \\(15\\,\\text{cm}\\) lang. Wie lang ist seine Diagonale in cm?",
+        loesung: 17, toleranz: 0.01,
+        tipp: "Die Diagonale teilt das Rechteck in zwei rechtwinklige Dreiecke.",
+        loesungsweg: "$$d = \\sqrt{8^2 + 15^2} = \\sqrt{64 + 225} = \\sqrt{289} = 17\\,\\text{cm}$$"
       },
       {
-        id: 27,
-        level: 5,
-        typ: "numerisch",
-        frage: "Berechne die Diagonale \\(d\\) eines Rechtecks mit den Seiten \\(a = 3\\) cm und \\(b = 4\\) cm.",
-        loesung: 5,
-        toleranz: 0,
-        tipp: "Die Diagonale teilt das Rechteck in zwei rechtwinklige Dreiecke. Es gilt: \\(d^2 = a^2 + b^2\\).",
-        loesungsweg: "$$d^2 = 3^2 + 4^2 = 9 + 16 = 25 \\quad \\Rightarrow \\quad d = \\sqrt{25} = 5 \\text{ cm}$$"
+        id: 23, level: 4, typ: "numerisch",
+        frage: "Ein Dreieck hat die Seitenlängen \\(7\\,\\text{cm}\\), \\(24\\,\\text{cm}\\) und \\(25\\,\\text{cm}\\). Ist es rechtwinklig? Gib die Länge der Hypotenuse an, falls ja – sonst \\(0\\).",
+        loesung: 25, toleranz: 0,
+        tipp: "Prüfe mit der Umkehrung des Satzes: Vergleiche die Quadrate der beiden kürzeren Seiten mit dem der längsten.",
+        loesungsweg: "$$7^2 + 24^2 = 49 + 576 = 625 = 25^2$$ Die Umkehrung des Satzes des Pythagoras liefert: Das Dreieck ist rechtwinklig, die längste Seite \\(25\\,\\text{cm}\\) ist die Hypotenuse."
       },
       {
-        id: 28,
-        level: 5,
-        typ: "numerisch",
-        frage: "Ein Rechteck hat die Seiten 5 cm und 12 cm. Wie lang ist die Diagonale?",
-        loesung: 13,
-        toleranz: 0,
-        tipp: "\\(d^2 = 5^2 + 12^2 = 25 + 144 = \\,?\\)",
-        loesungsweg: "$$d^2 = 5^2 + 12^2 = 25 + 144 = 169 \\quad \\Rightarrow \\quad d = \\sqrt{169} = 13 \\text{ cm}$$"
+        id: 24, level: 4, typ: "numerisch",
+        frage: "Eine \\(6\\,\\text{m}\\) lange Leiter steht \\(2\\,\\text{m}\\) von einer senkrechten Wand entfernt. Bis zu welcher Höhe in Metern reicht sie? Runde auf zwei Dezimalstellen.",
+        loesung: 5.66, toleranz: 0.02,
+        tipp: "Die Leiter ist die längste der drei Strecken.",
+        loesungsweg: "Die Leiter ist die Hypotenuse, die Höhe eine Kathete: $$h = \\sqrt{6^2 - 2^2} = \\sqrt{32} \\approx 5{,}66\\,\\text{m}$$"
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 5 — zweifacher Pythagoras, Figuren zerlegen
+      // ═══════════════════════════════════════════════════════════
+      {
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Ein gleichschenkliges Dreieck hat die Schenkel \\(10\\,\\text{cm}\\) und die Basis \\(12\\,\\text{cm}\\). Wie hoch ist es über der Basis (in cm)?",
+        loesung: 8, toleranz: 0.01,
+        tipp: "Die Höhe halbiert die Basis und erzeugt zwei rechtwinklige Teildreiecke.",
+        loesungsweg: "Die Höhe teilt die Basis in zwei Hälften zu je \\(6\\,\\text{cm}\\). Im Teildreieck ist der Schenkel die Hypotenuse: $$h = \\sqrt{10^2 - 6^2} = \\sqrt{64} = 8\\,\\text{cm}$$"
       },
       {
-        id: 29,
-        level: 5,
-        typ: "numerisch",
-        frage: "Berechne die Raumdiagonale \\(d\\) eines Quaders mit \\(a = 3\\) cm, \\(b = 4\\) cm und \\(c = 12\\) cm.",
-        loesung: 13,
-        toleranz: 0,
-        tipp: "Raumdiagonale: \\(d^2 = a^2 + b^2 + c^2\\). Wende Pythagoras zweimal an.",
-        loesungsweg: "$$d^2 = a^2 + b^2 + c^2 = 9 + 16 + 144 = 169 \\quad \\Rightarrow \\quad d = \\sqrt{169} = 13 \\text{ cm}$$"
+        id: 26, level: 5, typ: "numerisch",
+        frage: "Ein gleichschenkliges Trapez hat die parallelen Seiten \\(10\\,\\text{cm}\\) und \\(4\\,\\text{cm}\\) sowie die Schenkel \\(5\\,\\text{cm}\\). Wie hoch ist es (in cm)?",
+        loesung: 4, toleranz: 0.01,
+        tipp: "Zeichne von beiden Ecken der kurzen Seite die Höhen ein – wie breit ist der überstehende Teil jeweils?",
+        loesungsweg: "Der Überstand beträgt auf jeder Seite \\(\\frac{10-4}{2} = 3\\,\\text{cm}\\). Im entstehenden rechtwinkligen Dreieck ist der Schenkel die Hypotenuse: $$h = \\sqrt{5^2 - 3^2} = \\sqrt{16} = 4\\,\\text{cm}$$"
       },
       {
-        id: 30,
-        level: 5,
-        typ: "mc",
-        frage: "Ist das Dreieck mit den Seiten \\(a = 9\\), \\(b = 40\\), \\(c = 41\\) rechtwinklig?",
-        optionen: ["Ja", "Nein"],
+        id: 27, level: 5, typ: "numerisch",
+        frage: "Ein Quader hat die Kantenlängen \\(3\\,\\text{cm}\\), \\(4\\,\\text{cm}\\) und \\(12\\,\\text{cm}\\). Wie lang ist seine Raumdiagonale in cm?",
+        loesung: 13, toleranz: 0.01,
+        tipp: "Bestimme zuerst die Diagonale der Grundfläche und wende den Satz dann ein zweites Mal an.",
+        loesungsweg: "Grundflächendiagonale: \\(\\sqrt{3^2 + 4^2} = 5\\). Raumdiagonale: $$d = \\sqrt{5^2 + 12^2} = \\sqrt{169} = 13\\,\\text{cm}$$ Kurz: \\(d = \\sqrt{a^2+b^2+c^2}\\)."
+      },
+      {
+        id: 28, level: 5, typ: "numerisch",
+        frage: "Ein gleichseitiges Dreieck hat die Seitenlänge \\(6\\,\\text{cm}\\). Wie hoch ist es? Runde auf zwei Dezimalstellen.",
+        loesung: 5.2, toleranz: 0.02,
+        tipp: "Die Höhe halbiert die Grundseite; im Teildreieck ist die Seitenlänge die Hypotenuse.",
+        loesungsweg: "$$h = \\sqrt{6^2 - 3^2} = \\sqrt{27} \\approx 5{,}20\\,\\text{cm}$$ Allgemein gilt \\(h = \\frac{\\sqrt{3}}{2}a\\)."
+      },
+      {
+        id: 29, level: 5, typ: "mc",
+        frage: "Ein Dreieck hat die Seiten \\(6\\,\\text{cm}\\), \\(8\\,\\text{cm}\\) und \\(11\\,\\text{cm}\\). Ist es rechtwinklig?",
+        optionen: [
+            "Nein – es gilt \\(6^2 + 8^2 = 100\\), aber \\(11^2 = 121\\)",
+            "Ja, denn \\(6\\), \\(8\\) gehören zum Tripel \\(3\\text{-}4\\text{-}5\\)",
+            "Ja, denn \\(6 + 8 > 11\\)",
+            "Das lässt sich ohne Winkelangabe nicht entscheiden"
+        ],
         korrekt: 0,
-        tipp: "Prüfe: \\(9^2 + 40^2 = 81 + 1600 = 1681\\). Ist das gleich \\(41^2\\)?",
-        loesungsweg: "$$9^2 + 40^2 = 81 + 1600 = 1681 = 41^2 \\quad \\checkmark$$ Ja, das Dreieck ist rechtwinklig."
-      },
-      // ========== LEVEL 6 — Anwendungsaufgaben ==========
-      {
-        id: 31,
-        level: 6,
-        typ: "numerisch",
-        frage: "Eine 5 m lange Leiter lehnt an einer Wand. Der Fuss der Leiter ist 3 m von der Wand entfernt. Wie hoch reicht die Leiter an der Wand?",
-        loesung: 4,
-        toleranz: 0,
-        tipp: "Die Leiter ist die Hypotenuse (\\(c = 5\\)), der Abstand zur Wand eine Kathete (\\(a = 3\\)). Gesucht: \\(b\\).",
-        loesungsweg: "$$b^2 = c^2 - a^2 = 5^2 - 3^2 = 25 - 9 = 16 \\quad \\Rightarrow \\quad b = 4 \\text{ m}$$"
+        tipp: "Die Umkehrung des Satzes verlangt Gleichheit – prüfe sie mit Zahlen.",
+        loesungsweg: "$$6^2 + 8^2 = 36 + 64 = 100 \\neq 121 = 11^2$$ Da die Summe <b>kleiner</b> ist als das Quadrat der längsten Seite, ist der größte Winkel sogar stumpf. Zum Tripel \\(6\\text{-}8\\text{-}10\\) fehlt dem Dreieck ein Zentimeter; \\(6 + 8 > 11\\) sichert nur, dass es das Dreieck überhaupt gibt."
       },
       {
-        id: 32,
-        level: 6,
-        typ: "numerisch",
-        frage: "Zwei Orte liegen an einem See. Von Ort A geht man 6 km nach Osten und dann 8 km nach Norden zu Ort B. Wie weit ist die direkte Entfernung über den See? ",
-        loesung: 10,
-        toleranz: 0,
-        tipp: "Die Wege nach Osten und Norden bilden die Katheten. Die direkte Entfernung ist die Hypotenuse.",
-        loesungsweg: "$$d^2 = 6^2 + 8^2 = 36 + 64 = 100 \\quad \\Rightarrow \\quad d = \\sqrt{100} = 10 \\text{ km}$$"
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Ein Mast wird mit zwei gleich langen Seilen abgespannt. Die Seile sind in \\(8\\,\\text{m}\\) Höhe am Mast befestigt und jeweils \\(6\\,\\text{m}\\) vom Mastfuß entfernt im Boden verankert. Wie viele Meter Seil werden insgesamt benötigt?",
+        loesung: 20, toleranz: 0.01,
+        tipp: "Berechne zuerst die Länge eines Seils – und denke daran, dass zwei benötigt werden.",
+        loesungsweg: "Ein Seil: $$\\sqrt{8^2 + 6^2} = \\sqrt{100} = 10\\,\\text{m}$$ Für beide Seile: \\(2 \\cdot 10 = 20\\,\\text{m}\\)."
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 6 — Verallgemeinern, begründen, modellieren
+      // ═══════════════════════════════════════════════════════════
+      {
+        id: 31, level: 6, typ: "mc",
+        frage: "Worauf beruht die übliche Begründung des Satzes des Pythagoras mit dem „Zerlegungsbeweis\"?",
+        optionen: [
+            "Dieselbe Fläche wird auf zwei Arten zusammengesetzt – einmal bleiben die Quadrate über den Katheten frei, einmal das über der Hypotenuse",
+            "Man misst viele Dreiecke aus und stellt fest, dass es immer stimmt",
+            "Er folgt unmittelbar aus der Dreiecksungleichung",
+            "Er gilt nur für Dreiecke mit ganzzahligen Seiten und wird abgezählt"
+        ],
+        korrekt: 0,
+        tipp: "Warum genügt es nicht, den Satz an Beispielen nachzumessen?",
+        loesungsweg: "Beim Zerlegungsbeweis legt man vier kongruente rechtwinklige Dreiecke auf zwei Arten in dasselbe große Quadrat. Die jeweils frei bleibende Fläche muss gleich groß sein – einmal ist sie \\(a^2 + b^2\\), einmal \\(c^2\\). Messen an Beispielen zeigt nur, dass es plausibel ist; ein Beweis muss für <b>alle</b> rechtwinkligen Dreiecke gelten."
       },
       {
-        id: 33,
-        level: 6,
-        typ: "numerisch",
-        frage: "Berechne die Höhe \\(h\\) eines gleichseitigen Dreiecks mit Seitenlänge \\(a = 6\\) cm. Runde auf zwei Nachkommastellen.",
-        loesung: 5.20,
-        toleranz: 0.01,
-        tipp: "Die Höhe teilt die Grundseite in zwei Hälften. Es gilt: \\(h = \\frac{a}{2} \\cdot \\sqrt{3}\\) oder berechne mit Pythagoras: \\(h^2 = a^2 - \\left(\\frac{a}{2}\\right)^2\\).",
-        loesungsweg: "$$h^2 = 6^2 - 3^2 = 36 - 9 = 27 \\quad \\Rightarrow \\quad h = \\sqrt{27} = 3\\sqrt{3} \\approx 5{,}20 \\text{ cm}$$"
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Ein Quadrat hat die Diagonale \\(10\\,\\text{cm}\\). Wie lang ist seine Seite in cm? Runde auf zwei Dezimalstellen.",
+        loesung: 7.07, toleranz: 0.02,
+        tipp: "Die Diagonale zerlegt das Quadrat in zwei rechtwinklige Dreiecke mit zwei gleich langen Katheten.",
+        loesungsweg: "Mit der Seitenlänge \\(a\\) gilt $$a^2 + a^2 = 10^2 \\Rightarrow 2a^2 = 100 \\Rightarrow a = \\sqrt{50} \\approx 7{,}07\\,\\text{cm}$$ Allgemein: \\(d = a\\sqrt{2}\\)."
       },
       {
-        id: 34,
-        level: 6,
-        typ: "numerisch",
-        frage: "Berechne den Abstand der Punkte \\(A(1 \\mid 2)\\) und \\(B(4 \\mid 6)\\).",
-        loesung: 5,
-        toleranz: 0,
-        tipp: "Abstandsformel: \\(d = \\sqrt{(x_B - x_A)^2 + (y_B - y_A)^2}\\). Berechne \\(\\Delta x = 4 - 1\\) und \\(\\Delta y = 6 - 2\\).",
-        loesungsweg: "$$d = \\sqrt{(4-1)^2 + (6-2)^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5$$"
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Ein gleichseitiges Dreieck hat die Seitenlänge \\(8\\,\\text{cm}\\). Berechne seinen Flächeninhalt in \\(\\text{cm}^2\\). Runde auf zwei Dezimalstellen.",
+        loesung: 27.71, toleranz: 0.05,
+        tipp: "Zuerst die Höhe mit dem Satz des Pythagoras, dann die Flächenformel.",
+        loesungsweg: "Höhe: \\(h = \\sqrt{8^2 - 4^2} = \\sqrt{48} \\approx 6{,}93\\,\\text{cm}\\). $$A = \\frac{1}{2} \\cdot 8 \\cdot 6{,}93 \\approx 27{,}71\\,\\text{cm}^2$$"
       },
       {
-        id: 35,
-        level: 6,
-        typ: "numerisch",
-        frage: "Berechne den Abstand der Punkte \\(P(2 \\mid 1)\\) und \\(Q(5 \\mid 5)\\).",
-        loesung: 5,
-        toleranz: 0,
-        tipp: "\\(d = \\sqrt{(5-2)^2 + (5-1)^2} = \\sqrt{9 + 16}\\)",
-        loesungsweg: "$$d = \\sqrt{(5-2)^2 + (5-1)^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5$$"
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Eine Rampe überwindet einen Höhenunterschied von \\(1{,}2\\,\\text{m}\\) auf einer waagerechten Strecke von \\(5\\,\\text{m}\\). Wie lang ist die Rampenfläche in Metern? Runde auf zwei Dezimalstellen.",
+        loesung: 5.14, toleranz: 0.02,
+        tipp: "Skizziere das rechtwinklige Dreieck aus Höhe, waagerechter Strecke und Rampe.",
+        loesungsweg: "$$l = \\sqrt{5^2 + 1{,}2^2} = \\sqrt{25 + 1{,}44} = \\sqrt{26{,}44} \\approx 5{,}14\\,\\text{m}$$ Die Rampe ist also nur \\(14\\,\\text{cm}\\) länger als die waagerechte Strecke – bei flachen Steigungen fällt der Unterschied kaum ins Gewicht."
       },
       {
-        id: 36,
-        level: 6,
-        typ: "numerisch",
-        frage: "Ein Fussballfeld ist 100 m lang und 60 m breit. Wie lang ist die Diagonale? Runde auf zwei Nachkommastellen.",
-        loesung: 116.62,
-        toleranz: 0.01,
-        tipp: "Die Diagonale ist die Hypotenuse: \\(d^2 = 100^2 + 60^2\\).",
-        loesungsweg: "$$d^2 = 100^2 + 60^2 = 10000 + 3600 = 13600 \\quad \\Rightarrow \\quad d = \\sqrt{13600} \\approx 116{,}62 \\text{ m}$$"
+        id: 35, level: 6, typ: "numerisch",
+        frage: "In einem rechtwinkligen Dreieck werden beide Katheten verdoppelt. Um welchen Faktor wächst die Hypotenuse?",
+        loesung: 2, toleranz: 0.01,
+        tipp: "Setze \\(2a\\) und \\(2b\\) in den Satz des Pythagoras ein und klammere aus.",
+        loesungsweg: "$$c_{\\text{neu}} = \\sqrt{(2a)^2 + (2b)^2} = \\sqrt{4(a^2+b^2)} = 2\\sqrt{a^2+b^2} = 2c$$ Auch die Hypotenuse verdoppelt sich – das Dreieck wird ähnlich vergrößert. (Der Flächeninhalt vervierfacht sich dabei.)"
+      },
+      {
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Das Dreieck mit den Seiten \\(9\\), \\(12\\) und \\(15\\) ist rechtwinklig. Mit welchem Faktor wurde das bekannte Tripel \\(3\\text{-}4\\text{-}5\\) dafür vervielfacht?",
+        loesung: 3, toleranz: 0,
+        tipp: "Vergleiche die Seiten paarweise mit \\(3\\), \\(4\\) und \\(5\\).",
+        loesungsweg: "$$9 = 3 \\cdot 3, \\qquad 12 = 3 \\cdot 4, \\qquad 15 = 3 \\cdot 5$$ Der Faktor ist \\(3\\). Weil sich beim Vervielfachen aller Seiten die Gleichung \\(a^2+b^2=c^2\\) nur mit \\(k^2\\) multipliziert, bleibt die Rechtwinkligkeit erhalten – aus jedem Tripel entstehen so unendlich viele weitere."
       }
+
     ];
     </script>
     <script src="../p3-reflexion.js"></script>

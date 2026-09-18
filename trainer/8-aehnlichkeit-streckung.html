@@ -212,51 +212,63 @@
         loesungsweg: "\\(k = \\dfrac{DE}{AB} = \\dfrac{15}{6} = 2{,}5\\). Damit \\(EF = 2{,}5 \\cdot 10 = 25\\)."
     },
 
-    // ══════════════════════════════════════════════════════════════
-    // LEVEL 5 — Strahlensätze anwenden
-    // ══════════════════════════════════════════════════════════════
-    {
-        id: 25, level: 5, typ: "numerisch",
-        frage: "Zwei Geraden werden von zwei Parallelen geschnitten. Die Abschnitte auf der ersten Geraden sind \\(4\\) und \\(6\\). Auf der zweiten Geraden ist der erste Abschnitt \\(6\\). Berechne den zweiten Abschnitt.",
-        loesung: 9, toleranz: 0.01,
-        tipp: "Erster Strahlensatz: \\(\\frac{4}{6} = \\frac{6}{x}\\).",
-        loesungsweg: "\\(\\dfrac{4}{6} = \\dfrac{6}{x} \\Rightarrow x = \\dfrac{6 \\cdot 6}{4} = \\dfrac{36}{4} = 9\\)."
-    },
-    {
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 5 — begründen, Umkehrung prüfen, Flächenfaktor, Modell
+      // ═══════════════════════════════════════════════════════════
+      {
+        id: 25, level: 5, typ: "mc",
+        frage: "Woran erkennt man am sichersten, dass zwei Dreiecke ähnlich sind?",
+        optionen: [
+            "Sie stimmen in zwei Winkeln überein – dann auch im dritten, und alle Seitenverhältnisse sind gleich",
+            "Sie haben denselben Flächeninhalt",
+            "Sie haben eine gemeinsame Seite",
+            "Sie sind beide rechtwinklig"
+        ],
+        korrekt: 0,
+        tipp: "Wie viele Winkel eines Dreiecks muss man kennen, um seine Form festzulegen?",
+        loesungsweg: "Stimmen zwei Winkel überein, so auch der dritte (Winkelsumme \\(180°\\)) – die Dreiecke haben dieselbe Form und unterscheiden sich nur in der Größe. Das ist der Ähnlichkeitssatz WW. Gleicher Flächeninhalt oder ein gemeinsamer rechter Winkel sagen über die Form nichts aus."
+      },
+      {
         id: 26, level: 5, typ: "numerisch",
-        frage: "Von einem Zentrum \\(Z\\) gehen zwei Strahlen aus. Auf dem ersten Strahl liegen die Punkte \\(A\\) und \\(B\\) mit \\(ZA = 3\\) und \\(ZB = 9\\). Auf dem zweiten Strahl liegt \\(C\\) mit \\(ZC = 5\\). Bestimme \\(ZD\\), wobei \\(D\\) so liegt, dass \\(AB \\parallel CD\\).",
-        loesung: 15, toleranz: 0.01,
-        tipp: "\\(\\frac{ZA}{ZB} = \\frac{ZC}{ZD}\\).",
-        loesungsweg: "\\(\\dfrac{ZA}{ZB} = \\dfrac{ZC}{ZD} \\Rightarrow \\dfrac{3}{9} = \\dfrac{5}{ZD} \\Rightarrow ZD = \\dfrac{5 \\cdot 9}{3} = 15\\)."
-    },
-    {
-        id: 27, level: 5, typ: "numerisch",
-        frage: "Zwei Parallelen schneiden zwei Strahlen von einem Zentrum \\(Z\\). Gegeben: \\(ZA = 8\\), \\(AB = 4\\), \\(ZC = 6\\). Berechne \\(CD\\).",
-        loesung: 3, toleranz: 0.01,
-        tipp: "Erster Strahlensatz: \\(\\frac{ZA}{AB} = \\frac{ZC}{CD}\\).",
-        loesungsweg: "\\(\\dfrac{ZA}{AB} = \\dfrac{ZC}{CD} \\Rightarrow \\dfrac{8}{4} = \\dfrac{6}{CD} \\Rightarrow CD = \\dfrac{6 \\cdot 4}{8} = 3\\)."
-    },
-    {
+        frage: "Von einem Zentrum \\(Z\\) gehen zwei Strahlen aus: \\(\\overline{ZA} = 6\\), \\(\\overline{ZB} = 9\\) auf dem einen, \\(\\overline{ZC} = 8\\), \\(\\overline{ZD} = 12\\) auf dem anderen. Sind die Strecken \\(\\overline{AC}\\) und \\(\\overline{BD}\\) parallel? Gib \\(1\\) für ja, \\(0\\) für nein an.",
+        loesung: 1, toleranz: 0,
+        tipp: "Vergleiche die Verhältnisse auf beiden Strahlen.",
+        loesungsweg: "$$\\frac{ZA}{ZB} = \\frac{6}{9} = \\frac{2}{3}, \\qquad \\frac{ZC}{ZD} = \\frac{8}{12} = \\frac{2}{3}$$ Die Verhältnisse stimmen überein – nach der Umkehrung des Strahlensatzes sind die Strecken parallel. Antwort: \\(1\\)."
+      },
+      {
+        id: 27, level: 5, typ: "mc",
+        frage: "Ein Schüler setzt beim Strahlensatz an: \\(\\dfrac{ZA}{ZB} = \\dfrac{BD}{AC}\\). Was ist dazu zu sagen?",
+        optionen: [
+            "Falsch – die Strecken sind vertauscht; zu \\(ZA\\) gehört \\(AC\\), also \\(\\frac{ZA}{ZB} = \\frac{AC}{BD}\\)",
+            "Richtig, die Reihenfolge ist beliebig",
+            "Falsch, es müsste \\(\\frac{ZA}{AC} = \\frac{ZB}{BD}\\) heißen und sonst nichts",
+            "Richtig, solange alle Strecken positiv sind"
+        ],
+        korrekt: 0,
+        tipp: "Welche Strecken gehören jeweils zum kleinen, welche zum großen Dreieck?",
+        loesungsweg: "Im kleineren Dreieck liegen \\(ZA\\) und \\(AC\\) zusammen, im größeren \\(ZB\\) und \\(BD\\). Einander entsprechende Strecken müssen im Bruch auf derselben Seite stehen: $$\\frac{ZA}{ZB} = \\frac{AC}{BD}$$ Die angegebene Form kehrt eine Seite um und liefert deshalb falsche Ergebnisse (außer im Sonderfall gleicher Verhältnisse)."
+      },
+      {
         id: 28, level: 5, typ: "numerisch",
-        frage: "Nach dem zweiten Strahlensatz gilt: Die Parallelstrecke \\(p_1 = 5\\) und \\(p_2 = 10\\). Die Entfernung vom Zentrum zur ersten Parallelen ist \\(ZA = 7\\). Bestimme \\(ZB\\) (Entfernung zur zweiten Parallelen).",
-        loesung: 14, toleranz: 0.01,
-        tipp: "Zweiter Strahlensatz: \\(\\frac{p_1}{p_2} = \\frac{ZA}{ZB}\\).",
-        loesungsweg: "\\(\\dfrac{5}{10} = \\dfrac{7}{ZB} \\Rightarrow ZB = \\dfrac{7 \\cdot 10}{5} = 14\\)."
-    },
-    {
+        frage: "Zwei ähnliche Dreiecke haben den Streckfaktor \\(k = 3\\). Das kleinere hat den Flächeninhalt \\(12\\,\\text{cm}^2\\). Wie groß ist die Fläche des größeren in \\(\\text{cm}^2\\)?",
+        loesung: 108, toleranz: 0.5,
+        tipp: "Längen werden mit \\(k\\) gestreckt – womit werden Flächen gestreckt?",
+        loesungsweg: "Bei einer Streckung mit dem Faktor \\(k\\) wachsen Flächen mit \\(k^2\\): $$A_{\\text{groß}} = 3^2 \\cdot 12 = 108\\,\\text{cm}^2$$ Ein häufiger Fehler ist \\(3 \\cdot 12 = 36\\)."
+      },
+      {
         id: 29, level: 5, typ: "numerisch",
-        frage: "Gegeben: \\(ZA = 6\\), \\(ZB = 10\\), \\(ZC = 9\\). Bestimme \\(ZD\\), wenn \\(AC \\parallel BD\\).",
-        loesung: 15, toleranz: 0.01,
-        tipp: "\\(\\frac{ZA}{ZB} = \\frac{ZC}{ZD}\\).",
-        loesungsweg: "\\(\\dfrac{6}{10} = \\dfrac{9}{ZD} \\Rightarrow ZD = \\dfrac{9 \\cdot 10}{6} = 15\\)."
-    },
-    {
+        frage: "Ein \\(1{,}80\\,\\text{m}\\) großer Mensch wirft einen Schatten von \\(2{,}40\\,\\text{m}\\). Zur gleichen Zeit wirft ein Baum einen Schatten von \\(14\\,\\text{m}\\). Wie hoch ist der Baum in Metern? Runde auf zwei Dezimalstellen.",
+        loesung: 10.5, toleranz: 0.05,
+        tipp: "Mensch und Baum bilden mit ihren Schatten zwei ähnliche Dreiecke – die Sonnenstrahlen verlaufen parallel.",
+        loesungsweg: "$$\\frac{h}{14} = \\frac{1{,}80}{2{,}40} = 0{,}75 \\Rightarrow h = 10{,}5\\,\\text{m}$$ Die Ähnlichkeit folgt daraus, dass beide Dreiecke einen rechten Winkel und denselben Sonnenstandswinkel haben (WW)."
+      },
+      {
         id: 30, level: 5, typ: "numerisch",
-        frage: "Vom Zentrum \\(Z\\) gehen zwei Strahlen aus. Auf dem ersten: \\(ZA = 5\\), \\(ZB = 15\\). Zwischen den Parallelen beträgt die Strecke auf dem zweiten Strahl \\(CD = 8\\). Berechne \\(ZC\\).",
-        loesung: 4, toleranz: 0.01,
-        tipp: "\\(\\frac{ZA}{AB} = \\frac{ZC}{CD}\\). Beachte: \\(AB = ZB - ZA = 10\\).",
-        loesungsweg: "\\(AB = 15 - 5 = 10\\). \\(\\dfrac{ZA}{AB} = \\dfrac{ZC}{CD} \\Rightarrow \\dfrac{5}{10} = \\dfrac{ZC}{8} \\Rightarrow ZC = \\dfrac{5 \\cdot 8}{10} = 4\\)."
-    },
+        frage: "Auf einer Karte im Maßstab \\(1:25\\,000\\) sind zwei Orte \\(8\\,\\text{cm}\\) voneinander entfernt. Wie weit sind sie in Wirklichkeit entfernt (in km)?",
+        loesung: 2, toleranz: 0.01,
+        tipp: "Rechne zuerst in Zentimeter und wandle das Ergebnis dann in Kilometer um.",
+        loesungsweg: "$$8\\,\\text{cm} \\cdot 25\\,000 = 200\\,000\\,\\text{cm} = 2000\\,\\text{m} = 2\\,\\text{km}$$ Der Maßstab ist ein Streckfaktor: Jede Kartenlänge wird mit \\(25\\,000\\) multipliziert."
+      },
 
     // ══════════════════════════════════════════════════════════════
     // LEVEL 6 — Anwendungen (Schatten, Foto, Fläche)

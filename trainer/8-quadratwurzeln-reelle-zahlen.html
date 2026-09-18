@@ -260,128 +260,116 @@
         tipp: "Erweitere mit \\(\\sqrt{5}\\): \\(\\dfrac{4}{\\sqrt{5}} \\cdot \\dfrac{\\sqrt{5}}{\\sqrt{5}}\\).",
         loesungsweg: "$$\\frac{4}{\\sqrt{5}} = \\frac{4}{\\sqrt{5}} \\cdot \\frac{\\sqrt{5}}{\\sqrt{5}} = \\frac{4\\sqrt{5}}{5}$$"
       },
-      // ========== LEVEL 5 — Zahlbereiche und irrationale Zahlen ==========
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 5 — umformen statt erkennen, Wurzelgleichungen mit Probe
+      // ═══════════════════════════════════════════════════════════
       {
-        id: 25,
-        level: 5,
-        typ: "mc",
-        frage: "Welche Aussage beschreibt die Zahlbereichshierarchie korrekt?",
-        optionen: ["\\(\\mathbb{N} \\subset \\mathbb{Z} \\subset \\mathbb{Q} \\subset \\mathbb{R}\\)", "\\(\\mathbb{R} \\subset \\mathbb{Q} \\subset \\mathbb{Z} \\subset \\mathbb{N}\\)", "\\(\\mathbb{N} \\subset \\mathbb{Q} \\subset \\mathbb{Z} \\subset \\mathbb{R}\\)", "\\(\\mathbb{Z} \\subset \\mathbb{N} \\subset \\mathbb{Q} \\subset \\mathbb{R}\\)"],
+        id: 25, level: 5, typ: "numerisch",
+        frage: "Schreibe \\(\\sqrt{72}\\) in der Form \\(a\\sqrt{2}\\). Welchen Wert hat \\(a\\)?",
+        loesung: 6, toleranz: 0,
+        tipp: "Zerlege \\(72\\) in ein Produkt aus einer möglichst großen Quadratzahl und dem Rest.",
+        loesungsweg: "$$\\sqrt{72} = \\sqrt{36 \\cdot 2} = \\sqrt{36}\\cdot\\sqrt{2} = 6\\sqrt{2}$$ Also \\(a = 6\\). Mit \\(\\sqrt{9 \\cdot 8} = 3\\sqrt{8}\\) wäre man nicht fertig – \\(8\\) enthält noch den Faktor \\(4\\)."
+      },
+      {
+        id: 26, level: 5, typ: "mc",
+        frage: "Ein Schüler rechnet \\(\\sqrt{9 + 16} = \\sqrt{9} + \\sqrt{16} = 7\\). Was ist dazu zu sagen?",
+        optionen: [
+            "Falsch – es gilt \\(\\sqrt{25} = 5\\); Wurzeln lassen sich nur über Produkte zerlegen",
+            "Richtig, denn die Wurzel ist verteilbar",
+            "Falsch, richtig wäre \\(\\sqrt{9+16} = 9 + 4 = 13\\)",
+            "Richtig, aber nur bei Quadratzahlen"
+        ],
         korrekt: 0,
-        tipp: "Natuerliche Zahlen sind eine Teilmenge der ganzen Zahlen, diese der rationalen, diese der reellen Zahlen.",
-        loesungsweg: "Die korrekte Hierarchie ist: $$\\mathbb{N} \\subset \\mathbb{Z} \\subset \\mathbb{Q} \\subset \\mathbb{R}$$ Natuerliche \\(\\subset\\) Ganze \\(\\subset\\) Rationale \\(\\subset\\) Reelle Zahlen."
+        tipp: "Rechne zuerst die Summe unter der Wurzel aus.",
+        loesungsweg: "$$\\sqrt{9+16} = \\sqrt{25} = 5 \\neq 7$$ Das Wurzelgesetz gilt für Produkte: \\(\\sqrt{a \\cdot b} = \\sqrt{a}\\cdot\\sqrt{b}\\). Für Summen gibt es keine entsprechende Regel – derselbe Fehlertyp wie \\((a+b)^2 = a^2 + b^2\\)."
       },
       {
-        id: 26,
-        level: 5,
-        typ: "mc",
-        frage: "Welche Zahl ist irrational?",
-        optionen: ["\\(\\sqrt{4}\\)", "\\(\\sqrt{2}\\)", "\\(\\dfrac{3}{7}\\)", "\\(0{,}5\\)"],
-        korrekt: 1,
-        tipp: "Eine irrationale Zahl laesst sich nicht als Bruch zweier ganzer Zahlen schreiben. Prüfe, ob die Wurzel glatt aufgeht.",
-        loesungsweg: "\\(\\sqrt{4} = 2\\) ist rational. \\(\\frac{3}{7}\\) und \\(0{,}5\\) sind Brueche, also rational. <b>\\(\\sqrt{2}\\)</b> ist irrational, denn 2 ist keine Quadratzahl."
+        id: 27, level: 5, typ: "numerisch",
+        frage: "Löse die Gleichung \\(\\sqrt{x + 3} = x - 3\\).",
+        loesung: 6, toleranz: 0.01,
+        tipp: "Quadriere beide Seiten – und prüfe am Ende beide Kandidaten in der Ausgangsgleichung.",
+        loesungsweg: "Quadrieren: $$x + 3 = x^2 - 6x + 9 \\Rightarrow x^2 - 7x + 6 = 0 \\Rightarrow x = 1 \\;\\text{oder}\\; x = 6$$ Probe: \\(x = 1\\): \\(\\sqrt{4} = 2\\), aber \\(1 - 3 = -2\\) ✗. \\(x = 6\\): \\(\\sqrt{9} = 3 = 6 - 3\\) ✓. Nur \\(x = 6\\) löst die Gleichung; \\(x = 1\\) ist eine beim Quadrieren entstandene Scheinlösung."
       },
       {
-        id: 27,
-        level: 5,
-        typ: "mc",
-        frage: "Welche der folgenden Zahlen ist rational?",
-        optionen: ["\\(\\sqrt{3}\\)", "\\(\\sqrt{5}\\)", "\\(\\sqrt{16}\\)", "\\(\\pi\\)"],
-        korrekt: 2,
-        tipp: "Eine rationale Zahl laesst sich als Bruch schreiben. Welche Wurzel geht glatt auf?",
-        loesungsweg: "$$\\sqrt{16} = 4 = \\frac{4}{1}$$ Das ist eine rationale Zahl. Die anderen (\\(\\sqrt{3}\\), \\(\\sqrt{5}\\), \\(\\pi\\)) sind irrational."
+        id: 28, level: 5, typ: "numerisch",
+        frage: "Mache den Nenner rational: \\(\\dfrac{6}{\\sqrt{3}} = a\\sqrt{3}\\). Welchen Wert hat \\(a\\)?",
+        loesung: 2, toleranz: 0.01,
+        tipp: "Erweitere den Bruch mit \\(\\sqrt{3}\\).",
+        loesungsweg: "$$\\frac{6}{\\sqrt{3}} = \\frac{6\\sqrt{3}}{\\sqrt{3}\\cdot\\sqrt{3}} = \\frac{6\\sqrt{3}}{3} = 2\\sqrt{3}$$ Also \\(a = 2\\)."
       },
       {
-        id: 28,
-        level: 5,
-        typ: "mc",
-        frage: "Zu welchem Zahlbereich gehört \\(\\sqrt{7}\\)?",
-        optionen: ["\\(\\mathbb{N}\\)", "\\(\\mathbb{Z}\\)", "\\(\\mathbb{Q}\\)", "\\(\\mathbb{R} \\setminus \\mathbb{Q}\\) (irrational)"],
-        korrekt: 3,
-        tipp: "7 ist keine Quadratzahl. Geht die Wurzel glatt auf?",
-        loesungsweg: "7 ist keine Quadratzahl, daher ist \\(\\sqrt{7}\\) <b>irrational</b>. Sie gehört zu \\(\\mathbb{R} \\setminus \\mathbb{Q}\\)."
+        id: 29, level: 5, typ: "numerisch",
+        frage: "Ein Quadrat hat den Flächeninhalt \\(50\\,\\text{cm}^2\\). Wie lang ist seine Seite in cm? Runde auf zwei Dezimalstellen.",
+        loesung: 7.07, toleranz: 0.02,
+        tipp: "Die Seitenlänge ist die Wurzel aus dem Flächeninhalt.",
+        loesungsweg: "$$a = \\sqrt{50} = 5\\sqrt{2} \\approx 7{,}07\\,\\text{cm}$$ Der Wert ist irrational – exakt lässt er sich nur als Wurzelterm angeben."
       },
       {
-        id: 29,
-        level: 5,
-        typ: "numerisch",
-        frage: "Berechne \\(\\sqrt[3]{27}\\).",
-        loesung: 3,
-        toleranz: 0,
-        tipp: "Welche Zahl ergibt hoch 3 genommen 27? \\(3^3 = \\,?\\)",
-        loesungsweg: "$$\\sqrt[3]{27} = 3 \\quad \\text{denn } 3^3 = 27$$"
+        id: 30, level: 5, typ: "numerisch",
+        frage: "Zwischen welchen beiden aufeinanderfolgenden ganzen Zahlen liegt \\(\\sqrt{40}\\)? Gib die kleinere an.",
+        loesung: 6, toleranz: 0,
+        tipp: "Suche die beiden Quadratzahlen, zwischen denen \\(40\\) liegt.",
+        loesungsweg: "$$36 < 40 < 49 \\Rightarrow 6 < \\sqrt{40} < 7$$ Die kleinere Zahl ist \\(6\\) (genauer: \\(\\sqrt{40} \\approx 6{,}32\\))."
+      },
+
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 6 — Irrationalität, Termumformungen, Anwendungen
+      // ═══════════════════════════════════════════════════════════
+      {
+        id: 31, level: 6, typ: "mc",
+        frage: "Warum ist \\(\\sqrt{2}\\) keine rationale Zahl?",
+        optionen: [
+            "Weil die Annahme \\(\\sqrt{2} = \\frac{p}{q}\\) als vollständig gekürzter Bruch auf den Widerspruch führt, dass \\(p\\) und \\(q\\) beide gerade sein müssten",
+            "Weil der Taschenrechner viele Nachkommastellen anzeigt",
+            "Weil \\(2\\) keine Quadratzahl ist – das genügt als Beweis",
+            "Weil \\(\\sqrt{2}\\) größer als \\(1\\) ist"
+        ],
+        korrekt: 0,
+        tipp: "Was passiert, wenn man \\(\\sqrt{2} = \\frac{p}{q}\\) (vollständig gekürzt) annimmt und quadriert?",
+        loesungsweg: "Aus \\(2q^2 = p^2\\) folgt, dass \\(p^2\\) und damit \\(p\\) gerade ist; mit \\(p = 2k\\) ergibt sich \\(q^2 = 2k^2\\), also ist auch \\(q\\) gerade. Damit wäre der Bruch doch noch kürzbar – Widerspruch zur Annahme. Viele Nachkommastellen im Display beweisen dagegen nichts: Auch \\(\\frac{1}{7}\\) sieht so aus, ist aber rational."
       },
       {
-        id: 30,
-        level: 5,
-        typ: "numerisch",
-        frage: "Berechne \\(\\sqrt[3]{64}\\).",
-        loesung: 4,
-        toleranz: 0,
-        tipp: "Welche Zahl ergibt hoch 3 genommen 64? Probiere \\(4^3\\).",
-        loesungsweg: "$$\\sqrt[3]{64} = 4 \\quad \\text{denn } 4^3 = 64$$"
-      },
-      // ========== LEVEL 6 — Komplexe Ausdrücke, Gleichungen mit Wurzeln ==========
-      {
-        id: 31,
-        level: 6,
-        typ: "mc",
-        frage: "Berechne \\((\\sqrt{3} + \\sqrt{2})^2\\).",
-        optionen: ["\\(5\\)", "\\(5 + 2\\sqrt{6}\\)", "\\(5 + \\sqrt{6}\\)", "\\(7\\)"],
-        korrekt: 1,
-        tipp: "Nutze die 1. binomische Formel: \\((a+b)^2 = a^2 + 2ab + b^2\\) mit \\(a = \\sqrt{3}\\) und \\(b = \\sqrt{2}\\).",
-        loesungsweg: "$$(\\sqrt{3} + \\sqrt{2})^2 = (\\sqrt{3})^2 + 2 \\cdot \\sqrt{3} \\cdot \\sqrt{2} + (\\sqrt{2})^2 = 3 + 2\\sqrt{6} + 2 = 5 + 2\\sqrt{6}$$"
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Berechne \\(\\left(\\sqrt{5} + \\sqrt{2}\\right)^2\\). Das Ergebnis hat die Form \\(a + b\\sqrt{10}\\). Welchen Wert hat \\(a\\)?",
+        loesung: 7, toleranz: 0,
+        tipp: "Wende die erste binomische Formel an und beachte \\(\\left(\\sqrt{5}\\right)^2 = 5\\).",
+        loesungsweg: "$$\\left(\\sqrt5 + \\sqrt2\\right)^2 = 5 + 2\\sqrt5\\sqrt2 + 2 = 7 + 2\\sqrt{10}$$ Also \\(a = 7\\) (und \\(b = 2\\)). Der Wert beträgt rund \\(13{,}32\\)."
       },
       {
-        id: 32,
-        level: 6,
-        typ: "numerisch",
-        frage: "Loese die Gleichung \\(\\sqrt{x} = 5\\). Gib \\(x\\) an.",
-        loesung: 25,
-        toleranz: 0,
-        tipp: "Quadriere beide Seiten: \\((\\sqrt{x})^2 = 5^2\\).",
-        loesungsweg: "$$\\sqrt{x} = 5 \\quad \\Rightarrow \\quad x = 5^2 = 25$$"
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Der Flächeninhalt eines Quadrats wird verdoppelt. Um welchen Faktor wächst seine Seitenlänge? Runde auf zwei Dezimalstellen.",
+        loesung: 1.41, toleranz: 0.01,
+        tipp: "Drücke die Seite durch die Fläche aus und vergleiche beide Fälle.",
+        loesungsweg: "$$a_{\\text{neu}} = \\sqrt{2A} = \\sqrt{2}\\cdot\\sqrt{A} = \\sqrt{2} \\cdot a \\approx 1{,}41 \\cdot a$$ Die Seite wächst also nur um rund \\(41\\,\\%\\), nicht auf das Doppelte. (Das ist zugleich das Verhältnis der DIN-A-Formate.)"
       },
       {
-        id: 33,
-        level: 6,
-        typ: "numerisch",
-        frage: "Loese die Gleichung \\(\\sqrt{x} = 7\\). Gib \\(x\\) an.",
-        loesung: 49,
-        toleranz: 0,
-        tipp: "Quadriere beide Seiten: \\((\\sqrt{x})^2 = 7^2\\).",
-        loesungsweg: "$$\\sqrt{x} = 7 \\quad \\Rightarrow \\quad x = 7^2 = 49$$"
+        id: 34, level: 6, typ: "mc",
+        frage: "Ein Schüler löst \\(\\sqrt{x} = -4\\) durch Quadrieren und erhält \\(x = 16\\). Was ist dazu zu sagen?",
+        optionen: [
+            "Die Gleichung hat keine Lösung – eine Quadratwurzel ist nie negativ; \\(x = 16\\) ist eine Scheinlösung",
+            "Richtig, \\(x = 16\\) löst die Gleichung",
+            "Richtig, aber es fehlt die zweite Lösung \\(x = -16\\)",
+            "Falsch, richtig wäre \\(x = -16\\)"
+        ],
+        korrekt: 0,
+        tipp: "Setze \\(x = 16\\) in die ursprüngliche Gleichung ein.",
+        loesungsweg: "Probe: \\(\\sqrt{16} = 4 \\neq -4\\). Die Quadratwurzel ist als <b>nicht-negative</b> Lösung definiert, die Gleichung also unlösbar. Beim Quadrieren können Scheinlösungen entstehen, weil dabei Vorzeichen verloren gehen – deshalb ist die Probe bei Wurzelgleichungen Pflicht."
       },
       {
-        id: 34,
-        level: 6,
-        typ: "mc",
-        frage: "Berechne \\((\\sqrt{5} - \\sqrt{3})^2\\).",
-        optionen: ["\\(2\\)", "\\(8 - 2\\sqrt{15}\\)", "\\(2 - \\sqrt{15}\\)", "\\(8\\)"],
-        korrekt: 1,
-        tipp: "Nutze die 2. binomische Formel: \\((a-b)^2 = a^2 - 2ab + b^2\\) mit \\(a = \\sqrt{5}\\) und \\(b = \\sqrt{3}\\).",
-        loesungsweg: "$$(\\sqrt{5} - \\sqrt{3})^2 = (\\sqrt{5})^2 - 2 \\cdot \\sqrt{5} \\cdot \\sqrt{3} + (\\sqrt{3})^2 = 5 - 2\\sqrt{15} + 3 = 8 - 2\\sqrt{15}$$"
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Für welche natürliche Zahl \\(n\\) gilt \\(n^2 < 60 < (n+1)^2\\)?",
+        loesung: 7, toleranz: 0,
+        tipp: "Gesucht ist die ganze Zahl unterhalb von \\(\\sqrt{60}\\).",
+        loesungsweg: "$$49 < 60 < 64 \\Rightarrow 7 < \\sqrt{60} < 8$$ Also \\(n = 7\\). Dieses Einschachteln zwischen Quadratzahlen ist die Grundidee der Intervallschachtelung, mit der sich Wurzeln beliebig genau bestimmen lassen."
       },
       {
-        id: 35,
-        level: 6,
-        typ: "numerisch",
-        frage: "Loese die Gleichung \\(\\sqrt{2x + 1} = 3\\). Gib \\(x\\) an.",
-        loesung: 4,
-        toleranz: 0,
-        tipp: "Quadriere beide Seiten: \\(2x + 1 = 9\\). Loese nach \\(x\\) auf.",
-        loesungsweg: "$$\\sqrt{2x + 1} = 3 \\quad \\Rightarrow \\quad 2x + 1 = 9 \\quad \\Rightarrow \\quad 2x = 8 \\quad \\Rightarrow \\quad x = 4$$"
-      },
-      {
-        id: 36,
-        level: 6,
-        typ: "numerisch",
-        frage: "Ein quadratisches Grundstück hat einen Flächeninhalt von 200 m\\(^2\\). Berechne die Seitenlänge. Runde auf zwei Nachkommastellen.",
-        loesung: 14.14,
-        toleranz: 0.01,
-        tipp: "Die Seitenlänge eines Quadrats ist \\(a = \\sqrt{A}\\), also \\(a = \\sqrt{200}\\).",
-        loesungsweg: "$$a = \\sqrt{200} = \\sqrt{100 \\cdot 2} = 10\\sqrt{2} \\approx 14{,}14 \\text{ m}$$"
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Ein quadratisches Grundstück hat die Diagonale \\(20\\,\\text{m}\\). Wie groß ist seine Fläche in \\(\\text{m}^2\\)?",
+        loesung: 200, toleranz: 0.5,
+        tipp: "Die Diagonale zerlegt das Quadrat in zwei rechtwinklige Dreiecke mit gleich langen Katheten.",
+        loesungsweg: "Mit der Seite \\(a\\) gilt \\(a^2 + a^2 = 20^2\\), also $$2a^2 = 400 \\Rightarrow a^2 = 200$$ Der Flächeninhalt ist gerade \\(a^2 = 200\\,\\text{m}^2\\) – die Seitenlänge \\(a = \\sqrt{200} \\approx 14{,}14\\,\\text{m}\\) wird dafür gar nicht gebraucht."
       }
+
     ];
     </script>
     <script src="../p3-reflexion.js"></script>

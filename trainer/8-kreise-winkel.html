@@ -202,66 +202,56 @@
         loesungsweg: "$$\\text{Zentriwinkel} = 2 \\cdot 48^\\circ = 96^\\circ$$"
       },
 
-      // ========== LEVEL 4 -- Satz des Thales ==========
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 4 — Thales anwenden und entscheiden
+      // ═══════════════════════════════════════════════════════════
       {
-        id: 19,
-        level: 4,
-        typ: "mc",
-        frage: "Was besagt der Satz des Thales?",
-        optionen: ["Jeder Winkel im Kreis ist rechtwinklig", "Jeder Peripheriewinkel im Halbkreis ist ein rechter Winkel", "Der Zentriwinkel ist immer \\(90^\\circ\\)", "Tangente und Sehne stehen senkrecht aufeinander"],
-        korrekt: 1,
-        tipp: "Es geht um den Spezialfall, dass die Sehne ein Durchmesser ist.",
-        loesungsweg: "Der <b>Satz des Thales</b>: Liegt ein Punkt \\(C\\) auf dem Halbkreis über dem Durchmesser \\(\\overline{AB}\\), so ist \\(\\angle ACB = 90^\\circ\\). Der Durchmesser als Sehne erzeugt einen Zentriwinkel von \\(180^\\circ\\), also Peripheriewinkel \\(= 90^\\circ\\)."
+        id: 19, level: 4, typ: "numerisch",
+        frage: "Die Punkte \\(A\\) und \\(B\\) sind Endpunkte eines Kreisdurchmessers mit \\(\\overline{AB} = 10\\,\\text{cm}\\). Der Punkt \\(C\\) liegt auf dem Kreis, und es gilt \\(\\overline{AC} = 6\\,\\text{cm}\\). Wie lang ist \\(\\overline{BC}\\) in cm?",
+        loesung: 8, toleranz: 0.01,
+        tipp: "Nach dem Satz des Thales ist der Winkel bei \\(C\\) ein rechter – damit lässt sich der Satz des Pythagoras anwenden.",
+        loesungsweg: "Weil \\(C\\) auf dem Thaleskreis über \\(\\overline{AB}\\) liegt, ist das Dreieck bei \\(C\\) rechtwinklig; \\(\\overline{AB}\\) ist die Hypotenuse. $$\\overline{BC} = \\sqrt{10^2 - 6^2} = \\sqrt{64} = 8\\,\\text{cm}$$"
       },
       {
-        id: 20,
-        level: 4,
-        typ: "mc",
-        frage: "Ein Dreieck \\(ABC\\) ist in einen Kreis einbeschrieben. Die Seite \\(\\overline{AB}\\) ist ein Durchmesser. Welchen Winkel hat das Dreieck bei \\(C\\)?",
-        optionen: ["\\(45^\\circ\\)", "\\(60^\\circ\\)", "\\(90^\\circ\\)", "Das hängt von der Lage von \\(C\\) ab"],
-        korrekt: 2,
-        tipp: "Wende den Satz des Thales an.",
-        loesungsweg: "Nach dem Satz des Thales ist \\(\\angle ACB = 90^\\circ\\), da \\(C\\) auf dem Thaleskreis über dem Durchmesser \\(\\overline{AB}\\) liegt."
+        id: 20, level: 4, typ: "numerisch",
+        frage: "Ein Punkt \\(C\\) liegt auf dem Thaleskreis über der Strecke \\(\\overline{AB}\\). Wie groß ist der Innenwinkel des Dreiecks \\(ABC\\) bei \\(C\\) in Grad?",
+        loesung: 90, toleranz: 0,
+        tipp: "Genau diese Aussage macht der Satz des Thales.",
+        loesungsweg: "Der Satz des Thales besagt: Liegt \\(C\\) auf dem Kreis mit dem Durchmesser \\(\\overline{AB}\\), so ist der Winkel bei \\(C\\) stets \\(90°\\) – unabhängig davon, wo genau auf dem Halbkreis \\(C\\) liegt."
       },
       {
-        id: 21,
-        level: 4,
-        typ: "mc",
-        frage: "Ein Kreis hat den Durchmesser \\(\\overline{AB}\\) mit \\(|AB| = 10\\,\\text{cm}\\). Der Punkt \\(C\\) liegt auf dem Kreis mit \\(|AC| = 6\\,\\text{cm}\\). Wie lang ist \\(|BC|\\)?",
-        optionen: ["\\(4\\,\\text{cm}\\)", "\\(6\\,\\text{cm}\\)", "\\(8\\,\\text{cm}\\)", "\\(10\\,\\text{cm}\\)"],
-        korrekt: 2,
-        tipp: "Nach Thales ist das Dreieck rechtwinklig bei \\(C\\). Nutze Pythagoras.",
-        loesungsweg: "Nach Thales: \\(\\angle ACB = 90^\\circ\\). Mit Pythagoras: $$|BC|^2 = |AB|^2 - |AC|^2 = 100 - 36 = 64$$ $$|BC| = 8\\,\\text{cm}$$"
+        id: 21, level: 4, typ: "numerisch",
+        frage: "Ein Dreieck hat die Seiten \\(\\overline{AB} = 13\\,\\text{cm}\\), \\(\\overline{AC} = 5\\,\\text{cm}\\) und \\(\\overline{BC} = 12\\,\\text{cm}\\). Liegt \\(C\\) auf dem Thaleskreis über \\(\\overline{AB}\\)? Gib \\(1\\) für ja und \\(0\\) für nein an.",
+        loesung: 1, toleranz: 0,
+        tipp: "Prüfe mit der Umkehrung des Satzes des Pythagoras, ob der Winkel bei \\(C\\) ein rechter ist.",
+        loesungsweg: "$$5^2 + 12^2 = 25 + 144 = 169 = 13^2$$ Das Dreieck ist bei \\(C\\) rechtwinklig. Nach der Umkehrung des Satzes des Thales liegt \\(C\\) damit auf dem Kreis mit dem Durchmesser \\(\\overline{AB}\\) – die Antwort ist \\(1\\)."
       },
       {
-        id: 22,
-        level: 4,
-        typ: "mc",
-        frage: "Ein Punkt \\(C\\) liegt innerhalb eines Kreises mit Durchmesser \\(\\overline{AB}\\). Wie ist der Winkel \\(\\angle ACB\\)?",
-        optionen: ["Kleiner als \\(90^\\circ\\)", "Genau \\(90^\\circ\\)", "Größer als \\(90^\\circ\\)", "Das kann man nicht sagen"],
-        korrekt: 2,
-        tipp: "Auf dem Kreis ist der Winkel genau \\(90^\\circ\\). Was passiert, wenn der Punkt näher rückt?",
-        loesungsweg: "Liegt \\(C\\) <b>innerhalb</b> des Kreises, ist \\(\\angle ACB > 90^\\circ\\). Liegt \\(C\\) <b>auf</b> dem Kreis, ist \\(\\angle ACB = 90^\\circ\\) (Thales). Liegt \\(C\\) <b>außerhalb</b>, ist \\(\\angle ACB < 90^\\circ\\). Das ist die <b>Umkehrung des Satzes des Thales</b>."
+        id: 22, level: 4, typ: "mc",
+        frage: "Warum ist der Winkel bei \\(C\\) im Thales-Dreieck immer \\(90°\\)?",
+        optionen: [
+            "Der Mittelpunkt zerlegt das Dreieck in zwei gleichschenklige Teildreiecke; die Winkelsumme führt auf \\(2\\alpha + 2\\beta = 180°\\), also \\(\\alpha + \\beta = 90°\\)",
+            "Weil der Durchmesser die längste Sehne im Kreis ist",
+            "Weil alle Radien gleich lang sind und deshalb jeder Winkel \\(90°\\) beträgt",
+            "Das gilt nur, wenn \\(C\\) genau über dem Mittelpunkt liegt"
+        ],
+        korrekt: 0,
+        tipp: "Verbinde den Mittelpunkt \\(M\\) mit \\(C\\) – welche Strecken sind dann gleich lang?",
+        loesungsweg: "Die Strecke \\(\\overline{MC}\\) ist ein Radius, ebenso \\(\\overline{MA}\\) und \\(\\overline{MB}\\). Es entstehen zwei gleichschenklige Dreiecke mit den Basiswinkeln \\(\\alpha\\) bzw. \\(\\beta\\). Die Winkelsumme im großen Dreieck liefert $$\\alpha + (\\alpha + \\beta) + \\beta = 180° \\Rightarrow \\alpha + \\beta = 90°$$ Der Winkel bei \\(C\\) ist gerade \\(\\alpha + \\beta\\) – und das gilt für <b>jede</b> Lage von \\(C\\) auf dem Halbkreis."
       },
       {
-        id: 23,
-        level: 4,
-        typ: "mc",
-        frage: "Wie kann man prüfen, ob ein Punkt \\(C\\) auf dem Thaleskreis über \\(\\overline{AB}\\) liegt?",
-        optionen: ["Messen, ob \\(|AC| = |BC|\\)", "Prüfen, ob \\(\\angle ACB = 90^\\circ\\)", "Prüfen, ob \\(|AC| + |BC| = |AB|\\)", "Prüfen, ob \\(C\\) der Mittelpunkt von \\(\\overline{AB}\\) ist"],
-        korrekt: 1,
-        tipp: "Die Umkehrung des Satzes des Thales liefert das Kriterium.",
-        loesungsweg: "Nach der <b>Umkehrung des Satzes des Thales</b> gilt: Wenn \\(\\angle ACB = 90^\\circ\\), dann liegt \\(C\\) auf dem Thaleskreis über \\(\\overline{AB}\\)."
+        id: 23, level: 4, typ: "numerisch",
+        frage: "In einem Kreis gehört zu einer Sehne der Zentriwinkel \\(130°\\). Wie groß ist der zugehörige Peripheriewinkel in Grad?",
+        loesung: 65, toleranz: 0,
+        tipp: "Der Peripheriewinkel ist halb so groß wie der Zentriwinkel über demselben Bogen.",
+        loesungsweg: "$$\\varphi = \\frac{130°}{2} = 65°$$ Der Satz gilt für jeden Punkt auf dem größeren Bogen – alle diese Peripheriewinkel sind gleich groß."
       },
       {
-        id: 24,
-        level: 4,
-        typ: "numerisch",
-        frage: "In einem Thaleskreis über \\(\\overline{AB}\\) mit \\(|AB| = 13\\,\\text{cm}\\) liegt der Punkt \\(C\\) auf dem Kreis. Es gilt \\(|AC| = 5\\,\\text{cm}\\). Berechne \\(|BC|\\) (in cm).",
-        loesung: 12,
-        toleranz: 0.01,
-        tipp: "Nach Thales ist \\(\\angle ACB = 90^\\circ\\). Wende Pythagoras an.",
-        loesungsweg: "$$|BC| = \\sqrt{|AB|^2 - |AC|^2} = \\sqrt{169 - 25} = \\sqrt{144} = 12\\,\\text{cm}$$"
+        id: 24, level: 4, typ: "numerisch",
+        frage: "Von einem Punkt \\(P\\) außerhalb eines Kreises mit dem Radius \\(5\\,\\text{cm}\\) wird eine Tangente gelegt; der Mittelpunktsabstand beträgt \\(\\overline{OP} = 13\\,\\text{cm}\\). Wie lang ist die Strecke von \\(P\\) bis zum Berührpunkt (in cm)?",
+        loesung: 12, toleranz: 0.01,
+        tipp: "Der Berührradius steht senkrecht auf der Tangente.",
+        loesungsweg: "Radius, Tangentenabschnitt und \\(\\overline{OP}\\) bilden ein rechtwinkliges Dreieck mit \\(\\overline{OP}\\) als Hypotenuse: $$t = \\sqrt{13^2 - 5^2} = \\sqrt{144} = 12\\,\\text{cm}$$"
       },
 
       // ========== LEVEL 5 -- Sehnentangentenwinkel, kombinierte Winkelsaetze ==========
@@ -326,72 +316,58 @@
         loesungsweg: "$$b = \\frac{\\alpha}{360^\\circ} \\cdot 2\\pi r$$ $$5\\pi = \\frac{\\alpha}{360^\\circ} \\cdot 2\\pi \\cdot 10 = \\frac{\\alpha}{360^\\circ} \\cdot 20\\pi$$ $$\\frac{5\\pi}{20\\pi} = \\frac{\\alpha}{360^\\circ}$$ $$\\alpha = \\frac{1}{4} \\cdot 360^\\circ = 90^\\circ$$"
       },
 
-      // ========== LEVEL 6 -- Anwendungen ==========
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 6 — Aussagen über Winkel am Kreis prüfen und anwenden
+      // ═══════════════════════════════════════════════════════════
       {
-        id: 31,
-        level: 6,
-        typ: "mc",
-        frage: "Welche Konstruktionsbeschreibung für eine Tangente von \\(P\\) an den Kreis \\(k(M, r)\\) ist korrekt?",
+        id: 31, level: 6, typ: "mc",
+        frage: "„Jeder Peripheriewinkel über einer Sehne ist halb so groß wie der Zentriwinkel.\" Gilt das auch für einen Punkt auf dem <b>kleineren</b> Bogen?",
         optionen: [
-          "Zeichne eine Parallele zu \\(\\overline{PM}\\) durch den Kreis",
-          "Bestimme den Mittelpunkt von \\(\\overline{PM}\\), schlage Thaleskreis, Schnittpunkte mit \\(k\\) sind die Berührungspunkte",
-          "Zeichne einen Kreis um \\(P\\) mit Radius \\(r\\)",
-          "Fälle das Lot von \\(P\\) auf \\(M\\)"
+            "Nein – dort ergänzen sich die beiden Peripheriewinkel zu \\(180°\\); der Winkel ist \\(180°\\) minus dem halben Zentriwinkel",
+            "Ja, der Satz gilt für jeden Punkt des Kreises",
+            "Nein, dort gibt es überhaupt keinen Peripheriewinkel",
+            "Ja, aber nur wenn die Sehne ein Durchmesser ist"
         ],
-        korrekt: 1,
-        tipp: "Der Thaleskreis erzeugt den rechten Winkel, den die Tangente braucht.",
-        loesungsweg: "Korrekt ist: Mittelpunkt \\(H\\) von \\(\\overline{PM}\\) bestimmen, Thaleskreis um \\(H\\) mit Radius \\(|HM|\\) schlagen. Die Schnittpunkte des Thaleskreises mit \\(k\\) sind die Berührungspunkte -- dort steht der Radius senkrecht, also entsteht die Tangente."
+        korrekt: 0,
+        tipp: "Zeichne eine Sehne und je einen Punkt auf beiden Bögen – vergleiche die beiden Winkel.",
+        loesungsweg: "Der Peripheriewinkelsatz gilt für alle Punkte <b>desselben</b> Bogens. Liegt \\(C\\) auf dem anderen Bogen, so bilden die beiden Peripheriewinkel ein Sehnenviereck und ergänzen sich zu \\(180°\\). Beispiel: Zentriwinkel \\(100°\\) – auf dem großen Bogen \\(50°\\), auf dem kleinen \\(130°\\). Nur beim Durchmesser (Zentriwinkel \\(180°\\)) liefern beide Bögen denselben Wert \\(90°\\)."
       },
       {
-        id: 32,
-        level: 6,
-        typ: "numerisch",
-        frage: "Von einem Punkt \\(P\\) mit Abstand \\(15\\,\\text{cm}\\) zum Mittelpunkt wird eine Tangente an einen Kreis mit \\(r = 9\\,\\text{cm}\\) gelegt. Wie lang ist der Tangentenabschnitt (in cm)?",
-        loesung: 12,
-        toleranz: 0.01,
-        tipp: "Pythagoras: \\(t = \\sqrt{d^2 - r^2}\\).",
-        loesungsweg: "$$t = \\sqrt{d^2 - r^2} = \\sqrt{15^2 - 9^2} = \\sqrt{225 - 81} = \\sqrt{144} = 12\\,\\text{cm}$$"
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Ein rechtwinkliges Dreieck hat die Hypotenuse \\(10\\,\\text{cm}\\). Wie groß ist der Radius seines Umkreises in cm?",
+        loesung: 5, toleranz: 0.01,
+        tipp: "Wo liegt der Umkreismittelpunkt eines rechtwinkligen Dreiecks?",
+        loesungsweg: "Nach der Umkehrung des Satzes des Thales liegt die Ecke mit dem rechten Winkel auf dem Kreis über der Hypotenuse – diese ist also der Durchmesser des Umkreises: $$r = \\frac{10}{2} = 5\\,\\text{cm}$$ Der Umkreismittelpunkt ist der Mittelpunkt der Hypotenuse."
       },
       {
-        id: 33,
-        level: 6,
-        typ: "numerisch",
-        frage: "Berechne die Länge eines Kreisbogens mit Radius \\(r = 6\\,\\text{cm}\\) und Zentriwinkel \\(\\alpha = 60^\\circ\\). Runde auf zwei Dezimalstellen (in cm).",
-        loesung: 6.28,
-        toleranz: 0.1,
-        tipp: "Bogenlänge \\(b = \\frac{\\alpha}{360^\\circ} \\cdot 2\\pi r\\).",
-        loesungsweg: "$$b = \\frac{60^\\circ}{360^\\circ} \\cdot 2\\pi \\cdot 6 = \\frac{1}{6} \\cdot 12\\pi = 2\\pi \\approx 6{,}28\\,\\text{cm}$$"
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Gegeben sind \\(A(0\\mid0)\\), \\(B(8\\mid0)\\) und \\(C(4\\mid4)\\). Liegt \\(C\\) auf dem Thaleskreis über \\(\\overline{AB}\\)? Gib \\(1\\) für ja und \\(0\\) für nein an.",
+        loesung: 1, toleranz: 0,
+        tipp: "Bestimme Mittelpunkt und Radius des Thaleskreises und prüfe den Abstand zu \\(C\\).",
+        loesungsweg: "Mittelpunkt: \\(M(4\\mid0)\\); Radius: \\(r = 4\\). Abstand: $$\\overline{MC} = \\sqrt{(4-4)^2 + 4^2} = 4 = r$$ \\(C\\) liegt also auf dem Kreis – die Antwort ist \\(1\\). Probe: \\(\\overline{AC} = \\overline{BC} = \\sqrt{32}\\) und \\(32 + 32 = 64 = 8^2\\) ✓."
       },
       {
-        id: 34,
-        level: 6,
-        typ: "numerisch",
-        frage: "Berechne die Fläche eines Kreisausschnitts mit Radius \\(r = 10\\,\\text{cm}\\) und Zentriwinkel \\(\\alpha = 90^\\circ\\). Runde auf zwei Dezimalstellen (in cm\\(^2\\)).",
-        loesung: 78.54,
-        toleranz: 0.1,
-        tipp: "Flächeninhalt: \\(A = \\frac{\\alpha}{360^\\circ} \\cdot \\pi r^2\\).",
-        loesungsweg: "$$A = \\frac{90^\\circ}{360^\\circ} \\cdot \\pi \\cdot 10^2 = \\frac{1}{4} \\cdot 100\\pi = 25\\pi \\approx 78{,}54\\,\\text{cm}^2$$"
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Über einer Sehne beträgt der Peripheriewinkel auf dem größeren Bogen \\(40°\\). Wie groß ist der Peripheriewinkel auf dem kleineren Bogen in Grad?",
+        loesung: 140, toleranz: 0,
+        tipp: "Die beiden Winkel liegen im selben Sehnenviereck gegenüber.",
+        loesungsweg: "Peripheriewinkel über verschiedenen Bögen derselben Sehne ergänzen sich zu \\(180°\\): $$180° - 40° = 140°$$ (Der Zentriwinkel über dem größeren Bogen beträgt hier \\(80°\\).)"
       },
       {
-        id: 35,
-        level: 6,
-        typ: "numerisch",
-        frage: "Ein Kreisausschnitt hat den Radius \\(r = 8\\,\\text{cm}\\) und den Zentriwinkel \\(\\alpha = 120^\\circ\\). Berechne die Bogenlänge (in cm). Runde auf zwei Dezimalstellen.",
-        loesung: 16.76,
-        toleranz: 0.1,
-        tipp: "\\(b = \\frac{\\alpha}{360^\\circ} \\cdot 2\\pi r\\).",
-        loesungsweg: "$$b = \\frac{120^\\circ}{360^\\circ} \\cdot 2\\pi \\cdot 8 = \\frac{1}{3} \\cdot 16\\pi = \\frac{16\\pi}{3} \\approx 16{,}76\\,\\text{cm}$$"
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Von einem Punkt \\(P\\) aus ist die Tangentenstrecke an einen Kreis \\(24\\,\\text{cm}\\) lang; der Kreisradius beträgt \\(7\\,\\text{cm}\\). Wie weit ist \\(P\\) vom Mittelpunkt entfernt (in cm)?",
+        loesung: 25, toleranz: 0.01,
+        tipp: "Hier ist die gesuchte Strecke die Hypotenuse des rechtwinkligen Dreiecks.",
+        loesungsweg: "$$\\overline{OP} = \\sqrt{24^2 + 7^2} = \\sqrt{576 + 49} = \\sqrt{625} = 25\\,\\text{cm}$$ Anders als bei der Tangentenlänge wird hier addiert – entscheidend ist, welche Strecke dem rechten Winkel gegenüberliegt."
       },
       {
-        id: 36,
-        level: 6,
-        typ: "numerisch",
-        frage: "Die Fläche eines Kreisausschnitts beträgt \\(A = 50\\,\\text{cm}^2\\). Der Radius ist \\(r = 10\\,\\text{cm}\\). Berechne den Zentriwinkel \\(\\alpha\\) in Grad. Runde auf eine Dezimalstelle.",
-        loesung: 57.3,
-        toleranz: 0.5,
-        tipp: "Stelle \\(A = \\frac{\\alpha}{360^\\circ} \\cdot \\pi r^2\\) nach \\(\\alpha\\) um.",
-        loesungsweg: "$$A = \\frac{\\alpha}{360^\\circ} \\cdot \\pi r^2$$ $$50 = \\frac{\\alpha}{360^\\circ} \\cdot \\pi \\cdot 100$$ $$\\frac{\\alpha}{360^\\circ} = \\frac{50}{100\\pi} = \\frac{1}{2\\pi}$$ $$\\alpha = \\frac{360^\\circ}{2\\pi} \\approx 57{,}3^\\circ$$"
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Ein Fußballspieler läuft auf einem Halbkreis um das Tor \\(\\overline{AB}\\) (Durchmesser). Unter welchem Winkel in Grad sieht er das Tor, wenn er sich auf diesem Halbkreis befindet?",
+        loesung: 90, toleranz: 0,
+        tipp: "Der Sehwinkel auf das Tor ist der Winkel des Dreiecks an seiner Position.",
+        loesungsweg: "Der Spieler steht auf dem Thaleskreis über \\(\\overline{AB}\\) – sein Sehwinkel beträgt daher konstant \\(90°\\), egal wo auf dem Halbkreis er sich befindet. Läuft er <b>innerhalb</b> des Kreises, wird der Winkel größer, außerhalb kleiner; deshalb ist der „beste Schusswinkel\" eine Frage der Lage zum Thaleskreis."
       }
+
     ];
     </script>
     <script src="../p3-reflexion.js"></script>

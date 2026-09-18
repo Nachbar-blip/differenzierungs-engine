@@ -214,7 +214,7 @@
         id: 20,
         level: 4,
         typ: "numerisch",
-        frage: "Berechne \\(49 \\cdot 51\\) mithilfe der 3. binomischen Formel: \\((50 - 1)(50 + 1)\\).",
+        frage: "Berechne \\(49 \\cdot 51\\) im Kopf. Beide Faktoren liegen gleich weit von \\(50\\) entfernt.",
         loesung: 2499,
         toleranz: 0,
         tipp: "\\((50 - 1)(50 + 1) = 50^2 - 1^2 = 2500 - 1\\).",
@@ -315,73 +315,64 @@
         id: 30,
         level: 5,
         typ: "numerisch",
-        frage: "Berechne \\(97^2\\) mithilfe der 2. binomischen Formel: \\((100 - 3)^2\\).",
+        frage: "Berechne \\(97^2\\) im Kopf, ohne schriftlich zu multiplizieren.",
         loesung: 9409,
         toleranz: 0,
         tipp: "\\((100 - 3)^2 = 100^2 - 2 \\cdot 100 \\cdot 3 + 3^2 = 10000 - 600 + 9\\).",
         loesungsweg: "$$97^2 = (100 - 3)^2 = 10000 - 600 + 9 = 9409$$"
       },
-      // ========== LEVEL 6 — Komplexe Termumformungen ==========
+      // ═══════════════════════════════════════════════════════════
+      // LEVEL 6 — Fehler widerlegen, Terme aus Figuren, Rechentricks
+      // ═══════════════════════════════════════════════════════════
       {
-        id: 31,
-        level: 6,
-        typ: "mc",
-        frage: "Multipliziere aus: \\((x + 2)(3x - 5)\\).",
-        optionen: ["\\(3x^2 + x - 10\\)", "\\(3x^2 - x - 10\\)", "\\(3x^2 + x + 10\\)", "\\(3x^2 + 11x - 10\\)"],
+        id: 31, level: 6, typ: "mc",
+        frage: "Ein Schüler behauptet \\((a+b)^2 = a^2 + b^2\\). Womit lässt sich das am überzeugendsten widerlegen?",
+        optionen: [
+            "Mit einem Zahlenbeispiel: \\((3+4)^2 = 49\\), aber \\(3^2 + 4^2 = 25\\) – es fehlt der Term \\(2ab\\)",
+            "Damit, dass Klammern immer zuerst gerechnet werden",
+            "Damit, dass die Formel nur für positive Zahlen gilt",
+            "Gar nicht – die Behauptung stimmt"
+        ],
         korrekt: 0,
-        tipp: "Verwende die FOIL-Methode: \\(x \\cdot 3x\\), \\(x \\cdot (-5)\\), \\(2 \\cdot 3x\\), \\(2 \\cdot (-5)\\).",
-        loesungsweg: "$$\\begin{aligned}(x + 2)(3x - 5) &= 3x^2 - 5x + 6x - 10 \\\\ &= 3x^2 + x - 10\\end{aligned}$$"
+        tipp: "Ein einziges Gegenbeispiel genügt, um eine allgemeine Behauptung zu widerlegen.",
+        loesungsweg: "$$(3+4)^2 = 7^2 = 49, \\qquad 3^2 + 4^2 = 9 + 16 = 25$$ Die Differenz \\(24\\) ist genau \\(2ab = 2 \\cdot 3 \\cdot 4\\). Geometrisch: Im Quadrat der Seitenlänge \\(a+b\\) stecken neben den Teilquadraten \\(a^2\\) und \\(b^2\\) noch zwei Rechtecke mit je \\(ab\\)."
       },
       {
-        id: 32,
-        level: 6,
-        typ: "numerisch",
-        frage: "Vereinfache \\((x + 1)^2 + (x + 2)^2\\). Wie lautet der Koeffizient vor \\(x\\)?",
-        loesung: 6,
-        toleranz: 0,
-        tipp: "\\((x+1)^2 = x^2 + 2x + 1\\) und \\((x+2)^2 = x^2 + 4x + 4\\). Addiere die \\(x\\)-Terme.",
-        loesungsweg: "$$\\begin{aligned}(x+1)^2 + (x+2)^2 &= (x^2 + 2x + 1) + (x^2 + 4x + 4) \\\\ &= 2x^2 + 6x + 5\\end{aligned}$$ Koeffizient vor \\(x = 6\\)."
+        id: 32, level: 6, typ: "numerisch",
+        frage: "Für welchen Wert von \\(c\\) ist \\(x^2 + 6x + c\\) ein vollständiges Quadrat?",
+        loesung: 9, toleranz: 0,
+        tipp: "Vergleiche mit der ersten binomischen Formel: Welcher Wert steht dort an der Stelle von \\(6x\\)?",
+        loesungsweg: "Aus \\((x+d)^2 = x^2 + 2dx + d^2\\) folgt \\(2d = 6\\), also \\(d = 3\\) und $$c = d^2 = 9$$ Es ist \\(x^2 + 6x + 9 = (x+3)^2\\). Diese Überlegung ist die quadratische Ergänzung, die in Klasse 9 gebraucht wird."
       },
       {
-        id: 33,
-        level: 6,
-        typ: "mc",
-        frage: "Ein Quadrat hat die Seitenlänge \\((x + 3)\\). Ein zweites Quadrat hat die Seitenlänge \\((x - 3)\\). Wie groß ist der Flächenunterschied?",
-        optionen: ["\\(12x\\)", "\\(6x\\)", "\\(18\\)", "\\(9\\)"],
-        korrekt: 0,
-        tipp: "Flächenunterschied: \\((x+3)^2 - (x-3)^2\\). Nutze die 3. binomische Formel als Trick!",
-        loesungsweg: "$$\\begin{aligned}(x+3)^2 - (x-3)^2 &= [(x+3) + (x-3)] \\cdot [(x+3) - (x-3)] \\\\ &= 2x \\cdot 6 = 12x\\end{aligned}$$"
+        id: 33, level: 6, typ: "numerisch",
+        frage: "Ein Quadrat mit der Seitenlänge \\(x\\) wird in eine Richtung um \\(3\\,\\text{cm}\\) verlängert und in die andere um \\(3\\,\\text{cm}\\) verkürzt. Um wie viele \\(\\text{cm}^2\\) ist das entstehende Rechteck kleiner als das Quadrat?",
+        loesung: 9, toleranz: 0,
+        tipp: "Stelle beide Flächen als Terme auf und bilde die Differenz – die dritte binomische Formel hilft.",
+        loesungsweg: "Rechteckfläche: $$(x+3)(x-3) = x^2 - 9$$ Quadratfläche: \\(x^2\\). Die Differenz beträgt \\(9\\,\\text{cm}^2\\) – <b>unabhängig</b> von \\(x\\). Das Rechteck ist also immer genau \\(9\\,\\text{cm}^2\\) kleiner."
       },
       {
-        id: 34,
-        level: 6,
-        typ: "numerisch",
-        frage: "Vereinfache \\((2a + b)^2 - 4a^2\\). Wie lautet der Koeffizient vor \\(ab\\)?",
-        loesung: 4,
-        toleranz: 0,
-        tipp: "\\((2a + b)^2 = 4a^2 + 4ab + b^2\\). Was bleibt nach Subtraktion von \\(4a^2\\)?",
-        loesungsweg: "$$\\begin{aligned}(2a + b)^2 - 4a^2 &= 4a^2 + 4ab + b^2 - 4a^2 \\\\ &= 4ab + b^2\\end{aligned}$$ Koeffizient vor \\(ab = 4\\)."
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Faktorisiere \\(2x^2 - 50\\) vollständig in der Form \\(2(x-a)(x+a)\\). Welchen Wert hat \\(a\\) (positiv)?",
+        loesung: 5, toleranz: 0,
+        tipp: "Klammere zuerst den gemeinsamen Faktor aus – dann steht eine binomische Formel da.",
+        loesungsweg: "$$2x^2 - 50 = 2\\left(x^2 - 25\\right) = 2(x-5)(x+5)$$ Also \\(a = 5\\). Wer den Faktor \\(2\\) nicht ausklammert, erkennt die dritte binomische Formel nicht."
       },
       {
-        id: 35,
-        level: 6,
-        typ: "mc",
-        frage: "Vereinfache \\((x + 1)(x - 1)(x^2 + 1)\\).",
-        optionen: ["\\(x^4 + 1\\)", "\\(x^4 - 1\\)", "\\(x^4 - 2x^2 + 1\\)", "\\(x^4 + 2x^2 - 1\\)"],
-        korrekt: 1,
-        tipp: "Erst \\((x+1)(x-1) = x^2 - 1\\). Dann wende nochmals die 3. binomische Formel an: \\((x^2 - 1)(x^2 + 1)\\).",
-        loesungsweg: "$$\\begin{aligned}(x+1)(x-1)(x^2+1) &= (x^2 - 1)(x^2 + 1) \\\\ &= x^4 - 1\\end{aligned}$$"
+        id: 35, level: 6, typ: "numerisch",
+        frage: "Berechne \\((x+1)(x-1)(x^2+1)\\) für \\(x = 2\\).",
+        loesung: 15, toleranz: 0,
+        tipp: "Fasse zuerst die ersten beiden Klammern mit der dritten binomischen Formel zusammen.",
+        loesungsweg: "$$(x+1)(x-1) = x^2 - 1 \\Rightarrow (x^2-1)(x^2+1) = x^4 - 1$$ Für \\(x = 2\\): \\(16 - 1 = 15\\). Zweimal dieselbe Formel hintereinander – direktes Ausmultiplizieren wäre deutlich aufwendiger."
       },
       {
-        id: 36,
-        level: 6,
-        typ: "numerisch",
-        frage: "Ein Grundstück hat die Masse \\((2x + 5)\\) m und \\((2x - 5)\\) m. Ein quadratisches Grundstück hat die Seitenlänge \\(2x\\) m. Um wie viel \\(\\text{m}^2\\) ist das quadratische Grundstück größer?",
-        loesung: 25,
-        toleranz: 0,
-        tipp: "Rechteck: \\((2x+5)(2x-5) = 4x^2 - 25\\). Quadrat: \\((2x)^2 = 4x^2\\). Differenz?",
-        loesungsweg: "$$\\begin{aligned}\\text{Quadrat} - \\text{Rechteck} &= (2x)^2 - (2x+5)(2x-5) \\\\ &= 4x^2 - (4x^2 - 25) = 25\\end{aligned}$$ Das Quadrat ist \\(25\\,\\text{m}^2\\) größer."
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Berechne \\(103 \\cdot 97\\) mit Hilfe der dritten binomischen Formel.",
+        loesung: 9991, toleranz: 0,
+        tipp: "Beide Zahlen liegen gleich weit von \\(100\\) entfernt.",
+        loesungsweg: "$$103 \\cdot 97 = (100+3)(100-3) = 100^2 - 3^2 = 10\\,000 - 9 = 9991$$ Im Kopf deutlich schneller als schriftliches Multiplizieren."
       }
+
     ];
     </script>
     <script src="../p3-reflexion.js"></script>
