@@ -336,19 +336,12 @@
         loesungsweg: "$$K = \\frac{Z \\cdot 100}{p} = \\frac{45 \\cdot 100}{3} = \\frac{4500}{3} = 1500\\,€$$"
       },
       {
-        id: 26,
-        level: 5,
-        typ: "mc",
-        frage: "Ein Kapital von \\(2000\\,€\\) bringt in einem Jahr \\(80\\,€\\) Zinsen. Wie hoch ist der Zinssatz?",
-        optionen: [
-          "\\(2\\,\\%\\)",
-          "\\(3\\,\\%\\)",
-          "\\(4\\,\\%\\)",
-          "\\(5\\,\\%\\)"
-        ],
-        korrekt: 2,
-        tipp: "Stelle um: \\(p = \\frac{Z \\cdot 100}{K}\\).",
-        loesungsweg: "$$p = \\frac{Z \\cdot 100}{K} = \\frac{80 \\cdot 100}{2000} = \\frac{8000}{2000} = 4\\,\\%$$"
+        id: 26, level: 5, typ: "numerisch",
+        frage: "Ein Pullover kostet nach \\(30\\,\\%\\) Rabatt noch \\(42\\,€\\). Wie viel Euro kostete er vorher?",
+        loesung: 60,
+        toleranz: 0.01,
+        tipp: "Welchem Prozentsatz des alten Preises entsprechen die \\(42\\,€\\)?",
+        loesungsweg: "Nach \\(30\\,\\%\\) Rabatt sind noch \\(70\\,\\%\\) zu zahlen. $$42 : 0{,}7 = 60\\,€$$ Probe: \\(30\\,\\%\\) von \\(60\\,€\\) sind \\(18\\,€\\), und \\(60 - 18 = 42\\) ✓. Achtung: \\(30\\,\\%\\) von \\(42\\,€\\) aufzuschlagen waere falsch — der Rabatt bezieht sich auf den alten Preis.",
       },
       {
         id: 27,
@@ -361,19 +354,12 @@
         loesungsweg: "$$K = \\frac{75 \\cdot 100}{2{,}5} = \\frac{7500}{2{,}5} = 3000\\,€$$"
       },
       {
-        id: 28,
-        level: 5,
-        typ: "mc",
-        frage: "\\(5000\\,€\\) bringen in \\(6\\) Monaten \\(50\\,€\\) Zinsen. Wie hoch ist der Jahreszinssatz?",
-        optionen: [
-          "\\(1\\,\\%\\)",
-          "\\(1{,}5\\,\\%\\)",
-          "\\(2\\,\\%\\)",
-          "\\(2{,}5\\,\\%\\)"
-        ],
-        korrekt: 2,
-        tipp: "Aus der Monatsformel: \\(p = \\frac{Z \\cdot 100 \\cdot 12}{K \\cdot m}\\).",
-        loesungsweg: "$$p = \\frac{Z \\cdot 100 \\cdot 12}{K \\cdot m} = \\frac{50 \\cdot 100 \\cdot 12}{5000 \\cdot 6} = \\frac{60000}{30000} = 2\\,\\%$$"
+        id: 28, level: 5, typ: "numerisch",
+        frage: "Angebot A: \\(250\\,€\\) mit \\(12\\,\\%\\) Rabatt. Angebot B: \\(230\\,€\\) zuzüglich \\(2\\,\\%\\) Versandkosten. Wie viel Euro kostet das günstigere Angebot?",
+        loesung: 220,
+        toleranz: 0.01,
+        tipp: "Rechne beide Endpreise aus, bevor du vergleichst.",
+        loesungsweg: "Angebot A: \\(250 \\cdot 0{,}88 = 220\\,€\\). Angebot B: \\(230 \\cdot 1{,}02 = 234{,}60\\,€\\). Günstiger ist <b>A</b> mit \\(220\\,€\\) — der zunächst höhere Grundpreis sagt nichts über den Endpreis.",
       },
       {
         id: 29,
@@ -403,14 +389,17 @@
 
       // ========== LEVEL 6 — wagnerisch (6 Aufgaben) ==========
       {
-        id: 31,
-        level: 6,
-        typ: "numerisch",
-        frage: "Du legst \\(1000\\,€\\) zu \\(5\\,\\%\\) Zinseszins für \\(2\\) Jahre an. Wie viel hast du danach? (auf Cent genau)",
-        loesung: 1102.50,
-        toleranz: 0.01,
-        tipp: "Zinseszins: \\(K_n = K_0 \\cdot \\left(1 + \\frac{p}{100}\\right)^n\\).",
-        loesungsweg: "$$K_2 = 1000 \\cdot 1{,}05^2 = 1000 \\cdot 1{,}1025 = 1102{,}50\\,€$$"
+        id: 31, level: 6, typ: "mc",
+        frage: "Ein Preis wird zuerst um \\(20\\,\\%\\) erhöht und danach um \\(20\\,\\%\\) gesenkt. Ist er danach wieder so hoch wie am Anfang?",
+        optionen: [
+          "Nein — er liegt bei \\(96\\,\\%\\) des Ausgangspreises, weil die Senkung vom erhöhten Preis berechnet wird",
+          "Ja, plus \\(20\\,\\%\\) und minus \\(20\\,\\%\\) heben sich auf",
+          "Nein, er ist danach höher als vorher",
+          "Das hängt vom Ausgangspreis ab"
+        ],
+        korrekt: 0,
+        tipp: "Rechne mit einem bequemen Ausgangspreis, zum Beispiel \\(100\\,€\\).",
+        loesungsweg: "Aus \\(100\\,€\\) werden \\(120\\,€\\). Davon \\(20\\,\\%\\) sind \\(24\\,€\\): $$120 - 24 = 96\\,€$$ Der Grundwert der zweiten Rechnung ist der <b>erhöhte</b> Preis, nicht der ursprüngliche. Das Ergebnis \\(96\\,\\%\\) ist vom Ausgangspreis unabhängig.",
       },
       {
         id: 32,
@@ -438,19 +427,12 @@
         loesungsweg: "$$\\text{Nach Rabatt: } 500 \\cdot 0{,}80 = 400\\,€$$ $$\\text{Mit MwSt: } 400 \\cdot 1{,}19 = 476\\,€$$"
       },
       {
-        id: 34,
-        level: 6,
-        typ: "mc",
-        frage: "\\(2000\\,€\\) werden zu \\(4\\,\\%\\) Zinseszins für \\(3\\) Jahre angelegt. Wie hoch ist das Endkapital?",
-        optionen: [
-          "\\(2240\\,€\\)",
-          "\\(2249{,}73\\,€\\)",
-          "\\(2260\\,€\\)",
-          "\\(2320\\,€\\)"
-        ],
-        korrekt: 1,
-        tipp: "\\(K_3 = 2000 \\cdot 1{,}04^3\\). Berechne schrittweise: \\(1{,}04^2 = 1{,}0816\\), dann \\(\\cdot\\, 1{,}04\\).",
-        loesungsweg: "$$K_3 = 2000 \\cdot 1{,}04^3 = 2000 \\cdot 1{,}124864 = 2249{,}73\\,€$$"
+        id: 34, level: 6, typ: "numerisch",
+        frage: "Eine Jacke kostet nach \\(25\\,\\%\\) Rabatt \\(60\\,€\\). Um wie viele Euro wurde sie reduziert?",
+        loesung: 20,
+        toleranz: 0.01,
+        tipp: "Bestimme zuerst den Preis vor dem Rabatt.",
+        loesungsweg: "Nach \\(25\\,\\%\\) Rabatt sind noch \\(75\\,\\%\\) zu zahlen: \\(60 : 0{,}75 = 80\\,€\\). Der Rabatt beträgt $$80 - 60 = 20\\,€$$ Gefragt war der Nachlass, nicht der alte Preis — der Zwischenschritt reicht also noch nicht.",
       },
       {
         id: 35,
@@ -463,19 +445,12 @@
         loesungsweg: "$$\\text{Angebot A: } 800 \\cdot 0{,}85 = 680\\,€$$ $$\\text{Angebot B: } 700 \\cdot 1{,}03 = 721\\,€$$ Angebot A ist mit \\(680\\,€\\) günstiger."
       },
       {
-        id: 36,
-        level: 6,
-        typ: "mc",
-        frage: "Ein Kapital von \\(1000\\,€\\) wird 2 Jahre mit Zinseszins zu \\(10\\,\\%\\) angelegt. Wie viel mehr Zinsen bringt Zinseszins im Vergleich zu einfacher Verzinsung?",
-        optionen: [
-          "\\(5\\,€\\)",
-          "\\(10\\,€\\)",
-          "\\(15\\,€\\)",
-          "\\(20\\,€\\)"
-        ],
-        korrekt: 1,
-        tipp: "Einfache Zinsen: \\(2 \\cdot 100 = 200\\,€\\). Zinseszins: \\(1000 \\cdot 1{,}1^2 - 1000\\).",
-        loesungsweg: "$$\\text{Einfach: } Z = 1000 \\cdot \\frac{10}{100} \\cdot 2 = 200\\,€$$ $$\\text{Zinseszins: } 1000 \\cdot 1{,}1^2 - 1000 = 1210 - 1000 = 210\\,€$$ $$\\text{Differenz: } 210 - 200 = 10\\,€$$"
+        id: 36, level: 6, typ: "numerisch",
+        frage: "Ein Schüler berechnet die Zinsen für \\(3000\\,€\\) bei \\(4\\,\\%\\) und einer Laufzeit von \\(90\\) Tagen als \\(120\\,€\\). Wie hoch sind die Zinsen tatsächlich (in Euro)?",
+        loesung: 30,
+        toleranz: 0.01,
+        tipp: "Der Zinssatz gilt für ein ganzes Jahr — wie lang ist die Laufzeit im Vergleich dazu?",
+        loesungsweg: "Jahreszinsen wären \\(3000 \\cdot 0{,}04 = 120\\,€\\). \\(90\\) Tage sind ein Viertel eines Zinsjahres (\\(360\\) Tage): $$120 \\cdot \\frac{90}{360} = 30\\,€$$ Der Schüler hat die Laufzeit vergessen.",
       }
     ];
     </script>
