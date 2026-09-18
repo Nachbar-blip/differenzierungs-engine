@@ -28,6 +28,8 @@ FORMEL_ANSAGE = re.compile(
 RECHENART_ANSAGE = re.compile(
     r"^\s*(Addiere|Subtrahiere|Multipliziere|Dividiere|Kuerze|Kürze|Erweitere)\b", re.I)
 NULL_AUSWERTUNG = re.compile(r"f'\(0\)|f\\'\(0\)|an der Stelle\s*(x\s*=\s*)?0\b", re.I)
+# Die Engine rendert kein Markdown: **fett** erscheint woertlich (Sichtpruefung 2026-09-18).
+MARKDOWN_FETT = re.compile(r"\*\*[^*\r\n]+\*\*")
 KETTEN_TRAINER = re.compile(r"ableitungsregeln|kettenregel")
 
 
@@ -88,6 +90,10 @@ def pruefe_trainer(pfad: Path, aufgaben: list):
                 hart.append(f"{k}: Dezimal-Loesung ohne toleranz")
         else:
             hart.append(f"{k}: typ ungueltig ({typ})")
+
+        for feld in ("frage", "tipp", "loesungsweg"):
+            if MARKDOWN_FETT.search(a.get(feld) or ""):
+                hart.append(f"{k}: Markdown-Sternchen in '{feld}' (bitte <b>…</b>)")
 
         if lv >= 4 and FORMEL_ANSAGE.search(frage):
             hart.append(f"{k}: Formel-/Rechenweg-Ansage in Level >= 4")
