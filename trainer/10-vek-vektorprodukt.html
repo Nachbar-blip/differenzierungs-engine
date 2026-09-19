@@ -126,7 +126,7 @@
         ],
         korrekt: 0,
         tipp: "Berechne \\((1 \\cdot 3 - 1 \\cdot 2, \\ 1 \\cdot 1 - 1 \\cdot 3, \\ 1 \\cdot 2 - 1 \\cdot 1)\\).",
-        loesungsweg: "\\(\\begin{pmatrix} 1 \\cdot 3 - 1 \\cdot 2 \\\\ 1 \\cdot 1 - 1 \\cdot 3 \\\\ 1 \\cdot 2 - 1 \\cdot 1 \\end{pmatrix} = \\begin{pmatrix} 1 \\\\ -2 \\\\ 1 \\end{pmatrix}\\)."
+        loesungsweg: "Beim Kreuzprodukt wird jede Zeile aus den beiden <b>anderen</b> gebildet (Zeile 1 aus 2 und 3, Zeile 2 aus 3 und 1, Zeile 3 aus 1 und 2): $$\\begin{pmatrix}1\\\\1\\\\1\\end{pmatrix} \\times \\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix} = \\begin{pmatrix}1 \\cdot 3 - 1 \\cdot 2\\\\1 \\cdot 1 - 1 \\cdot 3\\\\1 \\cdot 2 - 1 \\cdot 1\\end{pmatrix} = \\begin{pmatrix}1\\\\-2\\\\1\\end{pmatrix}$$ Probe: Das Skalarprodukt mit beiden Ausgangsvektoren ist null (\\(1-2+1 = 0\\) und \\(1-4+3 = 0\\)) ✓ — das Ergebnis steht also senkrecht auf beiden."
       },
       {
         id: 9,
@@ -441,8 +441,7 @@
         toleranz: 0.05,
         tipp: "Das Spatprodukt kann negativ sein; das Volumen ist sein Betrag. Das ergibt zwei Fälle.",
         loesungsweg: "\\(\\vec{a} \\times \\vec{b} = \\begin{pmatrix} 5 \\\\ -1 \\\\ -3 \\end{pmatrix}\\), Spatprodukt \\(5t - 1 - 3 = 5t - 4\\). \\(|5t - 4| = 12 \\Rightarrow t = 3{,}2\\) oder \\(t = -1{,}6\\). Positiver Wert: \\(t = 3{,}2\\)."
-      }
-    ];
+      }];
     </script>
     <script src="../p3-reflexion.js"></script>
     <script src="../spirale-engine.js"></script>

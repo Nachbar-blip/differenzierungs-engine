@@ -49,7 +49,7 @@
         frage: "Ein Histogramm zeigt folgende absolute Häufigkeiten: Klasse \\([0;\\ 10)\\): 5, Klasse \\([10;\\ 20)\\): 8, Klasse \\([20;\\ 30)\\): 12, Klasse \\([30;\\ 40)\\): 5. Wie viele Datenwerte liegen insgesamt vor?",
         loesung: 30, toleranz: 0,
         tipp: "Alle Häufigkeiten addieren.",
-        loesungsweg: "\\(5 + 8 + 12 + 5 = 30\\)."
+        loesungsweg: "Die absoluten Häufigkeiten aller Klassen werden addiert: $$5 + 8 + 12 + 5 = 30$$ Diese Gesamtzahl ist der Grundwert für alle relativen Häufigkeiten — im Histogramm entspricht sie der Summe aller Säulenhöhen."
       },
       {
         id: 5, level: 1, typ: "mc",
@@ -89,7 +89,7 @@
         frage: "Von 50 Werten liegen 12 in der Klasse \\([20;\\ 30)\\). Berechne die relative Häufigkeit dieser Klasse als Dezimalzahl.",
         loesung: 0.24, toleranz: 0.001,
         tipp: "Relative Häufigkeit = absolute Häufigkeit / Gesamtanzahl.",
-        loesungsweg: "\\(\\frac{12}{50} = 0{,}24\\)."
+        loesungsweg: "Relative Häufigkeit ist die absolute Häufigkeit geteilt durch die Gesamtzahl: $$\\frac{12}{50} = 0{,}24 = 24\\,\\%$$ Das Ergebnis liegt stets zwischen \\(0\\) und \\(1\\); ein Wert über \\(1\\) wäre ein sicheres Zeichen für einen vertauschten Bruch."
       },
       {
         id: 9, level: 2, typ: "mc",
@@ -316,9 +316,9 @@
       },
       {
         id: 34, level: 6, typ: "numerisch",
-        frage: "Zwei Klassen schreiben dieselbe Arbeit. Klasse 9a: Median \(12\), \(Q_1 = 10\), \(Q_3 = 14\). Klasse 9b: Median \(10\), \(Q_1 = 6\), \(Q_3 = 14\). Um wie viel ist der Interquartilsabstand der 9b groesser?",
+        frage: "Zwei Klassen schreiben dieselbe Arbeit. Klasse 9a: Median \(12\), \(Q_1 = 10\), \(Q_3 = 14\). Klasse 9b: Median \(10\), \(Q_1 = 6\), \(Q_3 = 14\). Um wie viel ist der Interquartilsabstand der 9b größer?",
         loesung: 4, toleranz: 0.01,
-        tipp: "Berechne beide Interquartilsabstaende und bilde die Differenz.",
+        tipp: "Berechne beide Interquartilsabstände und bilde die Differenz.",
         loesungsweg: "9a: \(\text{IQR} = 14 - 10 = 4\). 9b: \(\text{IQR} = 14 - 6 = 8\). Differenz: $$8 - 4 = 4$$ Beide Klassen erreichen im oberen Quartil denselben Wert, aber in der 9b streuen die mittleren 50 % doppelt so weit - die Leistungen liegen dort deutlich weiter auseinander."
       },
       {
@@ -340,9 +340,7 @@
         korrekt: 0,
         tipp: "Lange Flanke nach rechts bedeutet: obere Datenhälfte ist gestreckter.",
         loesungsweg: "Bei rechtsschiefer Verteilung ziehen wenige große Werte die obere Hälfte auseinander: Median rückt näher an \\(Q_1\\), der rechte Whisker (und ggf. Ausreißer rechts) wird länger."
-      }
-
-    ];
+      }];
     </script>
     <script src="../p3-reflexion.js"></script>
     <script src="../spirale-engine.js"></script>

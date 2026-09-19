@@ -296,7 +296,7 @@
         ],
         korrekt: 1,
         tipp: "Im Bankwesen rechnet man mit 360 Tagen pro Jahr.",
-        loesungsweg: "Die Tageszinsformel lautet: $$Z = K \\cdot \\frac{p \\cdot t}{100 \\cdot 360}$$"
+        loesungsweg: "Die Jahreszinsen \\(K \\cdot \\tfrac{p}{100}\\) werden auf den Anteil des Jahres heruntergerechnet, den \\(t\\) Tage ausmachen: $$Z = K \\cdot \\frac{p \\cdot t}{100 \\cdot 360}$$ Im Bankwesen gilt das Jahr traditionell als \\(360\\) Tage lang (zwölf Monate zu je \\(30\\)) — mit \\(365\\) im Nenner käme ein etwas kleinerer Betrag heraus."
       },
       {
         id: 23,
@@ -341,7 +341,7 @@
         loesung: 60,
         toleranz: 0.01,
         tipp: "Welchem Prozentsatz des alten Preises entsprechen die \\(42\\,€\\)?",
-        loesungsweg: "Nach \\(30\\,\\%\\) Rabatt sind noch \\(70\\,\\%\\) zu zahlen. $$42 : 0{,}7 = 60\\,€$$ Probe: \\(30\\,\\%\\) von \\(60\\,€\\) sind \\(18\\,€\\), und \\(60 - 18 = 42\\) ✓. Achtung: \\(30\\,\\%\\) von \\(42\\,€\\) aufzuschlagen waere falsch — der Rabatt bezieht sich auf den alten Preis.",
+        loesungsweg: "Nach \\(30\\,\\%\\) Rabatt sind noch \\(70\\,\\%\\) zu zahlen. $$42 : 0{,}7 = 60\\,€$$ Probe: \\(30\\,\\%\\) von \\(60\\,€\\) sind \\(18\\,€\\), und \\(60 - 18 = 42\\) ✓. Achtung: \\(30\\,\\%\\) von \\(42\\,€\\) aufzuschlagen wäre falsch — der Rabatt bezieht sich auf den alten Preis.",
       },
       {
         id: 27,
@@ -451,8 +451,7 @@
         toleranz: 0.01,
         tipp: "Der Zinssatz gilt für ein ganzes Jahr — wie lang ist die Laufzeit im Vergleich dazu?",
         loesungsweg: "Jahreszinsen wären \\(3000 \\cdot 0{,}04 = 120\\,€\\). \\(90\\) Tage sind ein Viertel eines Zinsjahres (\\(360\\) Tage): $$120 \\cdot \\frac{90}{360} = 30\\,€$$ Der Schüler hat die Laufzeit vergessen.",
-      }
-    ];
+      }];
     </script>
     <script src="../p3-reflexion.js"></script>
     <script src="../spirale-engine.js"></script>

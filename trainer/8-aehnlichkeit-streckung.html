@@ -82,7 +82,7 @@
         frage: "Eine Strecke ist \\(6\\,\\text{cm}\\) lang. Sie wird mit dem Streckfaktor \\(k = 2{,}5\\) zentrisch gestreckt. Wie lang ist die Bildstrecke (in cm)?",
         loesung: 15, toleranz: 0.01,
         tipp: "Bildlänge = Originallänge \\(\\cdot k\\).",
-        loesungsweg: "\\(6\\,\\text{cm} \\cdot 2{,}5 = 15\\,\\text{cm}\\)."
+        loesungsweg: "Bei der zentrischen Streckung wird jede Länge mit dem Streckfaktor multipliziert: $$6\\,\\text{cm} \\cdot 2{,}5 = 15\\,\\text{cm}$$ Wegen \\(k > 1\\) wird die Strecke länger; für \\(k < 1\\) entstünde eine Verkleinerung."
     },
     {
         id: 9, level: 2, typ: "numerisch",
@@ -96,7 +96,7 @@
         frage: "Ein Rechteck hat die Seiten \\(4\\,\\text{cm}\\) und \\(7\\,\\text{cm}\\). Es wird mit \\(k = 3\\) gestreckt. Wie lang ist die längere Seite des Bildes (in cm)?",
         loesung: 21, toleranz: 0,
         tipp: "Multipliziere die längere Seite mit dem Streckfaktor.",
-        loesungsweg: "\\(7\\,\\text{cm} \\cdot 3 = 21\\,\\text{cm}\\)."
+        loesungsweg: "Beide Seiten werden mit \\(k\\) multipliziert, die längere bleibt die längere: $$7\\,\\text{cm} \\cdot 3 = 21\\,\\text{cm}$$ Das Bildrechteck misst \\(12\\,\\text{cm} \\times 21\\,\\text{cm}\\); seine Fläche ist \\(k^2 = 9\\)-mal so groß."
     },
     {
         id: 11, level: 2, typ: "mc",
@@ -188,7 +188,7 @@
         frage: "Zwei ähnliche Dreiecke haben den Streckfaktor \\(k = 1{,}5\\). Eine Seite des Originals ist \\(8\\,\\text{cm}\\). Wie lang ist die entsprechende Seite des Bildes (in cm)?",
         loesung: 12, toleranz: 0.01,
         tipp: "Bildseite \\(= k \\cdot\\) Originalseite.",
-        loesungsweg: "\\(8\\,\\text{cm} \\cdot 1{,}5 = 12\\,\\text{cm}\\)."
+        loesungsweg: "$$8\\,\\text{cm} \\cdot 1{,}5 = 12\\,\\text{cm}$$ Bei ähnlichen Figuren gilt derselbe Faktor für <b>jede</b> Seite — die Winkel bleiben dabei unverändert."
     },
     {
         id: 22, level: 4, typ: "numerisch",
@@ -314,9 +314,7 @@
         loesung: 5.6, toleranz: 0.01,
         tipp: "Die Person steht an der Stelle, ab der ihr eigener Schatten beginnt. Nutze ähnliche Dreiecke: \\(\\frac{6}{8} = \\frac{1{,}8}{s}\\), wobei \\(s\\) die Schattenlänge der Person ist.",
         loesungsweg: "Schattenlänge der Person: \\(\\dfrac{6}{8} = \\dfrac{1{,}8}{s} \\Rightarrow s = \\dfrac{1{,}8 \\cdot 8}{6} = 2{,}4\\,\\text{m}\\). Abstand zum Mast: \\(8 - 2{,}4 = 5{,}6\\,\\text{m}\\)."
-    }
-
-    ];
+    }];
     </script>
     <script src="../p3-reflexion.js"></script>
     <script src="../spirale-engine.js"></script>

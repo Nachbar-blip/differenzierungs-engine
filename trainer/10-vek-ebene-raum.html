@@ -30,7 +30,7 @@
         ],
         korrekt: 0,
         tipp: "Der Ortsvektor übernimmt die Koordinaten in genau der gleichen Reihenfolge \\((x, y, z)\\).",
-        loesungsweg: "\\(\\overrightarrow{OS} = \\begin{pmatrix} -1 \\\\ 0 \\\\ 4 \\end{pmatrix}\\)."
+        loesungsweg: "Der Ortsvektor führt vom Ursprung zum Punkt; seine Komponenten sind deshalb genau die Koordinaten: $$\\overrightarrow{OS} = \\begin{pmatrix}-1\\\\0\\\\4\\end{pmatrix}$$ Die Vorzeichen bleiben dabei unverändert — anders als beim Gegenvektor \\(\\overrightarrow{SO}\\)."
       },
       {
         id: 2,
@@ -60,7 +60,7 @@
         ],
         korrekt: 0,
         tipp: "Beachte: \\(1 - (-3) = 4\\).",
-        loesungsweg: "\\(\\begin{pmatrix} 5-2 \\\\ 2-4 \\\\ 1-(-3) \\end{pmatrix} = \\begin{pmatrix} 3 \\\\ -2 \\\\ 4 \\end{pmatrix}\\)."
+        loesungsweg: "Vektoren werden komponentenweise subtrahiert: $$\\begin{pmatrix}5-2\\\\2-4\\\\1-(-3)\\end{pmatrix} = \\begin{pmatrix}3\\\\-2\\\\4\\end{pmatrix}$$ In der dritten Zeile wird eine negative Zahl abgezogen, aus \\(1-(-3)\\) wird also \\(1+3 = 4\\)."
       },
       {
         id: 4,
@@ -75,7 +75,7 @@
         ],
         korrekt: 0,
         tipp: "Multipliziere jede Komponente mit \\(-2\\). Negatives mal Negatives wird positiv!",
-        loesungsweg: "\\(-2 \\cdot \\begin{pmatrix} 3 \\\\ -1 \\\\ 4 \\end{pmatrix} = \\begin{pmatrix} -6 \\\\ 2 \\\\ -8 \\end{pmatrix}\\)."
+        loesungsweg: "Bei der Multiplikation mit einer Zahl wird jede Komponente einzeln multipliziert: $$-2 \\cdot \\begin{pmatrix}3\\\\-1\\\\4\\end{pmatrix} = \\begin{pmatrix}-6\\\\2\\\\-8\\end{pmatrix}$$ Der negative Faktor dreht zusätzlich alle Vorzeichen um — der Vektor zeigt in die Gegenrichtung und ist doppelt so lang."
       },
       {
         id: 5,
@@ -441,8 +441,7 @@
         toleranz: 0,
         tipp: "Wie hängt die Raumdiagonale eines Würfels mit seiner Kantenlänge zusammen?",
         loesungsweg: "\\(|\\overrightarrow{AG}| = \\sqrt{9 + 9 + 9} = \\sqrt{27} = 3\\sqrt{3}\\). Für einen Würfel gilt \\(d = a\\sqrt{3}\\), also \\(a = 3\\) und \\(V = 27\\)."
-      }
-    ];
+      }];
     </script>
     <script src="../p3-reflexion.js"></script>
     <script src="../spirale-engine.js"></script>

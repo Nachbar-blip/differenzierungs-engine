@@ -31,7 +31,7 @@
         ],
         korrekt: 0,
         tipp: "Die 1-σ-Regel beschreibt das engste der drei klassischen Intervalle.",
-        loesungsweg: "Die 1-σ-Regel besagt: \\(P(\\mu - \\sigma \\le X \\le \\mu + \\sigma) \\approx 68{,}3\\,\\%\\)."
+        loesungsweg: "Die 1-σ-Regel: $$P(\\mu - \\sigma \\le X \\le \\mu + \\sigma) \\approx 68{,}3\\,\\%$$ Gut zwei Drittel aller Werte liegen also höchstens eine Standardabweichung vom Erwartungswert entfernt. Die drei Regeln lauten der Reihe nach \\(68{,}3\\,\\%\\), \\(95{,}4\\,\\%\\) und \\(99{,}7\\,\\%\\); sie gelten näherungsweise, sofern \\(\\sigma > 3\\) ist."
     },
     {
         id: 2, level: 1, typ: "mc",
@@ -44,7 +44,7 @@
         ],
         korrekt: 1,
         tipp: "95,4 % gehört zur 2-σ-Regel.",
-        loesungsweg: "Die 2-σ-Regel: \\(P(\\mu - 2\\sigma \\le X \\le \\mu + 2\\sigma) \\approx 95{,}4\\,\\%\\)."
+        loesungsweg: "$$P(\\mu - 2\\sigma \\le X \\le \\mu + 2\\sigma) \\approx 95{,}4\\,\\%$$ Das 2-σ-Intervall ist doppelt so breit wie das 1-σ-Intervall, fängt aber nicht doppelt so viele Werte — die Verteilung ist in der Mitte am dichtesten."
     },
     {
         id: 3, level: 1, typ: "mc",
@@ -57,7 +57,7 @@
         ],
         korrekt: 2,
         tipp: "Die 3-σ-Regel deckt fast alle Werte ab — aber nicht ganz 100 %.",
-        loesungsweg: "Die 3-σ-Regel: \\(P(\\mu - 3\\sigma \\le X \\le \\mu + 3\\sigma) \\approx 99{,}7\\,\\%\\)."
+        loesungsweg: "$$P(\\mu - 3\\sigma \\le X \\le \\mu + 3\\sigma) \\approx 99{,}7\\,\\%$$ Fast alle Werte liegen also im 3-σ-Bereich, aber eben nicht alle: Rund \\(3\\) von \\(1000\\) fallen heraus. Genau das macht Abweichungen jenseits von \\(3\\sigma\\) zu einem starken Hinweis darauf, dass die Annahme nicht stimmt."
     },
     {
         id: 4, level: 1, typ: "mc",
@@ -83,7 +83,7 @@
         ],
         korrekt: 0,
         tipp: "Innerhalb liegen \\(95{,}4\\,\\%\\), also außerhalb \\(100\\,\\% - 95{,}4\\,\\%\\).",
-        loesungsweg: "Außerhalb des 2-σ-Intervalls: \\(100\\,\\% - 95{,}4\\,\\% = 4{,}6\\,\\%\\)."
+        loesungsweg: "Innerhalb des 2-σ-Intervalls liegen \\(95{,}4\\,\\%\\), also außerhalb: $$100\\,\\% - 95{,}4\\,\\% = 4{,}6\\,\\%$$ Das verteilt sich zu gleichen Teilen auf beide Seiten, je \\(2{,}3\\,\\%\\). Nicht zu verwechseln mit den \\(5\\,\\%\\) des Signifikanzniveaus, zu denen der Faktor \\(1{,}96\\) gehört."
     },
     {
         id: 6, level: 1, typ: "mc",
@@ -238,7 +238,7 @@
         frage: "Bestimme die obere Grenze des Schwankungsintervalls (2-σ) für die relative Häufigkeit bei \\(n = 400\\), \\(p = 0{,}25\\). Runde auf vier Dezimalstellen.",
         loesung: 0.2933, toleranz: 0.001,
         tipp: "Obere Grenze: \\(p + 2\\sqrt{\\frac{p(1-p)}{n}}\\).",
-        loesungsweg: "Obere Grenze: \\(0{,}25 + 2 \\cdot 0{,}02165 = 0{,}2933\\)."
+        loesungsweg: "Für die <b>relative</b> Häufigkeit ist \\(\\sigma = \\sqrt{\\tfrac{p(1-p)}{n}}\\): $$\\sqrt{\\frac{0{,}25 \\cdot 0{,}75}{400}} = \\sqrt{0{,}00046875} \\approx 0{,}02165$$ $$0{,}25 + 2 \\cdot 0{,}02165 \\approx 0{,}2933$$ Beim <b>absoluten</b> Wert stünde stattdessen \\(\\sigma = \\sqrt{np(1-p)} \\approx 8{,}66\\)."
     },
     {
         id: 23, level: 4, typ: "mc",
@@ -376,10 +376,7 @@
         korrekt: 0,
         tipp: "Berechne \\(\\mu\\) und \\(\\sigma\\) und vergleiche den beobachteten Wert mit \\(\\mu + 2\\sigma\\).",
         loesungsweg: "\\(\\mu = 800 \\cdot 0{,}06 = 48\\), \\(\\sigma = \\sqrt{800 \\cdot 0{,}06 \\cdot 0{,}94} \\approx 6{,}72\\). Die \\(2\\sigma\\)-Umgebung reicht bis $$48 + 2 \\cdot 6{,}72 \\approx 61{,}4$$ Der Wert \\(60\\) liegt knapp darunter. Die absolute Abweichung von \\(12\\) Stück wirkt groß, ist gemessen an der Streuung aber unauffällig – genau dafür ist die Sigma-Umgebung der richtige Maßstab."
-      }
-
-
-    ];
+      }];
     </script>
     <script src="../p3-reflexion.js"></script>
     <script src="../spirale-engine.js"></script>

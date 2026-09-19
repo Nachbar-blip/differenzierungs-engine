@@ -113,7 +113,7 @@
         ],
         korrekt: 0,
         tipp: "Für das 95 %-Niveau ist \\(z = 1{,}96\\). Die Formel verwendet \\(h \\pm z \\cdot \\sqrt{\\frac{h(1-h)}{n}}\\).",
-        loesungsweg: "Das 95 %-Konfidenzintervall lautet \\(\\left[ h - 1{,}96 \\cdot \\sqrt{\\frac{h(1-h)}{n}} \\;,\\; h + 1{,}96 \\cdot \\sqrt{\\frac{h(1-h)}{n}} \\right]\\)."
+        loesungsweg: "Um die beobachtete relative Häufigkeit \\(h\\) wird die geschätzte Standardabweichung mit dem Faktor \\(z = 1{,}96\\) abgetragen: $$\\left[h - 1{,}96\\sqrt{\\frac{h(1-h)}{n}}\\;;\\; h + 1{,}96\\sqrt{\\frac{h(1-h)}{n}}\\right]$$ Unter der Wurzel steht \\(h\\), nicht das unbekannte \\(p\\) — genau das unterscheidet das Konfidenz- vom Prognoseintervall. Mit wachsendem \\(n\\) wird das Intervall schmaler, und zwar mit \\(\\tfrac{1}{\\sqrt n}\\): Für die halbe Breite braucht es den vierfachen Stichprobenumfang."
     },
     {
         id: 8, level: 2, typ: "numerisch",
@@ -411,9 +411,7 @@
         korrekt: 0,
         tipp: "Da \\(H_0\\) abgelehnt wird (\\(102 \\ge 101\\)): Welcher Fehler kann bei einer Ablehnung passieren?",
         loesungsweg: "Da \\(X = 102 \\ge 101\\), wird \\(H_0\\) abgelehnt. Bei einer Ablehnung kann nur ein Fehler 1. Art auftreten: \\(H_0\\) wird fälschlicherweise verworfen, obwohl der Anteil tatsächlich bei \\(p \\le 0{,}6\\) liegt."
-    }
-
-    ];
+    }];
     </script>
     <script src="../p3-reflexion.js"></script>
     <script src="../spirale-engine.js"></script>

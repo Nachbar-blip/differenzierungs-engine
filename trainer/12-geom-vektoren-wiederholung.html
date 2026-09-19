@@ -47,7 +47,7 @@
         optionen: ["\\(\\begin{pmatrix} -3 \\\\ 4 \\end{pmatrix}\\)", "\\(\\begin{pmatrix} 5 \\\\ -8 \\end{pmatrix}\\)", "\\(\\begin{pmatrix} -3 \\\\ -4 \\end{pmatrix}\\)", "\\(\\begin{pmatrix} 3 \\\\ 4 \\end{pmatrix}\\)"],
         korrekt: 0,
         tipp: "Addiere komponentenweise: \\(1 + (-4)\\) und \\(-2 + 6\\).",
-        loesungsweg: "\\(\\begin{pmatrix} 1+(-4) \\\\ -2+6 \\end{pmatrix} = \\begin{pmatrix} -3 \\\\ 4 \\end{pmatrix}\\)."
+        loesungsweg: "Vektoren werden komponentenweise addiert: $$\\binom{1}{-2} + \\binom{-4}{6} = \\binom{1-4}{-2+6} = \\binom{-3}{4}$$ Jede Zeile wird für sich gerechnet; die Vorzeichen sind dabei mitzuführen."
     },
     {
         id: 5, level: 1, typ: "numerisch",
@@ -99,7 +99,7 @@
         ],
         korrekt: 0,
         tipp: "Multipliziere jede Komponente mit \\(-2\\).",
-        loesungsweg: "\\(-2 \\cdot \\begin{pmatrix} 1 \\\\ -3 \\\\ 2 \\end{pmatrix} = \\begin{pmatrix} -2 \\\\ 6 \\\\ -4 \\end{pmatrix}\\)."
+        loesungsweg: "Bei der Multiplikation mit einer Zahl wird jede Komponente einzeln multipliziert: $$-2 \\cdot \\begin{pmatrix}1\\\\-3\\\\2\\end{pmatrix} = \\begin{pmatrix}-2\\\\6\\\\-4\\end{pmatrix}$$ Der negative Faktor dreht zusätzlich alle Vorzeichen um."
     },
     {
         id: 11, level: 2, typ: "numerisch",
@@ -317,10 +317,7 @@
         loesung: 22.6, toleranz: 0.2,
         tipp: "Vergleiche die Höhe mit der Länge der Diagonale in der Grundfläche.",
         loesungsweg: "Die Raumdiagonale zeigt in Richtung \\((6\\mid4\\mid3)\\), ihr Schatten in der Grundfläche in Richtung \\((6\\mid4\\mid0)\\) mit der Länge $$\\sqrt{36 + 16} = \\sqrt{52} \\approx 7{,}21$$ Damit $$\\tan\\alpha = \\frac{3}{7{,}21} \\approx 0{,}416 \\Rightarrow \\alpha \\approx 22{,}6°$$"
-      }
-
-
-    ];
+      }];
     </script>
     <script src="../p3-reflexion.js"></script>
     <script src="../spirale-engine.js"></script>

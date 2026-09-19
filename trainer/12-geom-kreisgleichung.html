@@ -47,7 +47,7 @@
         optionen: ["\\(M(1 \\mid -5)\\)", "\\(M(-1 \\mid 5)\\)", "\\(M(1 \\mid 5)\\)", "\\(M(-1 \\mid -5)\\)"],
         korrekt: 0,
         tipp: "\\((y+5)^2 = (y-(-5))^2\\). Der Mittelpunkt ist \\(M(a \\mid b)\\) mit \\((x-a)^2 + (y-b)^2 = r^2\\).",
-        loesungsweg: "Aus \\((x-1)^2 + (y-(-5))^2 = 9\\) folgt \\(M(1 \\mid -5)\\)."
+        loesungsweg: "In der Kreisgleichung \\((x-m_1)^2 + (y-m_2)^2 = r^2\\) stehen die Koordinaten des Mittelpunkts mit umgekehrtem Vorzeichen. Wegen \\((y+5)^2 = (y-(-5))^2\\) folgt $$M(1 \\mid -5), \\qquad r = 3$$ Das Pluszeichen in der Klammer bedeutet also eine <b>negative</b> Koordinate."
     },
     {
         id: 5, level: 1, typ: "numerisch",
@@ -295,7 +295,7 @@
         ],
         korrekt: 0,
         tipp: "Wenn ein Kreis beide Achsen berührt, muss \\(|a| = |b| = r\\) gelten. Wie viele Vorzeichenkombinationen gibt es?",
-        loesungsweg: "\\(M(\\pm r \\mid \\pm r)\\), also \\(M(3,3)\\), \\(M(-3,3)\\), \\(M(-3,-3)\\), \\(M(3,-3)\\). Es gibt 4 Kreise."
+        loesungsweg: "Berührt ein Kreis beide Achsen, so ist sein Abstand zu jeder Achse gleich dem Radius. Damit haben beide Mittelpunktskoordinaten den Betrag \\(3\\): $$M(\\pm 3 \\mid \\pm 3)$$ Für die zwei Vorzeichen gibt es \\(2 \\cdot 2 = 4\\) Kombinationen — also <b>vier</b> Kreise, in jedem Quadranten einen. Sie gehen durch Spiegelung an den Achsen auseinander hervor."
     },
     {
         id: 34, level: 6, typ: "numerisch",
@@ -317,9 +317,7 @@
         loesung: 3, toleranz: 0.01,
         tipp: "Wie groß ist der Abstand des Mittelpunkts von der \\(y\\)-Achse – und wie groß muss er bei Berührung sein?",
         loesungsweg: "Der Mittelpunkt ist \\(M(a \\mid 0)\\), der Radius \\(3\\). Der Abstand des Mittelpunkts von der \\(y\\)-Achse beträgt \\(|a|\\). Berührung verlangt $$|a| = r = 3$$ Für \\(a > 0\\) also \\(a = 3\\); der Berührpunkt ist der Ursprung. Für \\(a > 3\\) hätte der Kreis keinen Punkt auf der \\(y\\)-Achse, für \\(0 < a < 3\\) zwei."
-    }
-
-    ];
+    }];
     </script>
     <script src="../p3-reflexion.js"></script>
     <script src="../spirale-engine.js"></script>

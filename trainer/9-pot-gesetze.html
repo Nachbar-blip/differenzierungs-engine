@@ -97,7 +97,7 @@
         optionen: ["\\(\\dfrac{a^4}{b^4}\\)", "\\(\\dfrac{a}{b^4}\\)", "\\(\\dfrac{4a}{4b}\\)", "\\(\\dfrac{a^4}{b}\\)"],
         korrekt: 0,
         tipp: "Der Exponent wirkt sowohl auf Zähler als auch auf Nenner.",
-        loesungsweg: "$$\\left(\\frac{a}{b}\\right)^4 = \\frac{a^4}{b^4}$$"
+        loesungsweg: "Beim Potenzieren eines Bruchs werden Zähler und Nenner einzeln potenziert: $$\\left(\\frac ab\\right)^4 = \\frac{a^4}{b^4}$$ Denn der Bruch steht viermal als Faktor da, die Zähler und die Nenner werden also jeweils miteinander multipliziert."
       },
       {
         id: 9,
@@ -107,7 +107,7 @@
         optionen: ["\\(-a^3\\)", "\\(\\dfrac{1}{a^3}\\)", "\\(\\dfrac{1}{3a}\\)", "\\(\\dfrac{-1}{a^3}\\)"],
         korrekt: 1,
         tipp: "Es gilt \\(a^{-n} = \\dfrac{1}{a^n}\\).",
-        loesungsweg: "$$a^{-3} = \\frac{1}{a^3}$$"
+        loesungsweg: "Ein negativer Exponent bedeutet den Kehrwert: $$a^{-3} = \\frac{1}{a^3}$$ Das Vorzeichen des Exponenten sagt nichts über das Vorzeichen des Werts — für \\(a = 2\\) etwa ist \\(2^{-3} = \\tfrac18\\), also positiv."
       },
       {
         id: 10,
@@ -366,9 +366,7 @@
         loesung: 4096, toleranz: 0,
         tipp: "Zähle zuerst die Verdopplungsschritte im gesamten Zeitraum.",
         loesungsweg: "In \\(4\\) Stunden \\(= 240\\) Minuten liegen $$\\frac{240}{20} = 12$$ Verdopplungen. Der Wachstumsfaktor ist also $$2^{12} = 4096$$"
-      }
-
-    ];
+      }];
     </script>
     <script src="../p3-reflexion.js"></script>
     <script src="../spirale-engine.js"></script>

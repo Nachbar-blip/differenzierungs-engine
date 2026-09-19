@@ -150,7 +150,7 @@
         ],
         korrekt: 1,
         tipp: "Produkte im Argument werden zu Summen der Logarithmen.",
-        loesungsweg: "Produktgesetz: \\(\\log(u \\cdot v) = \\log(u) + \\log(v)\\).",
+        loesungsweg: "Das Produktgesetz macht aus einem Produkt im Argument eine Summe: $$\\log(a \\cdot b) = \\log a + \\log b$$ Es folgt unmittelbar aus \\(10^m \\cdot 10^n = 10^{m+n}\\) — Logarithmen sind Exponenten, und Exponenten werden beim Multiplizieren addiert. Für <b>Summen</b> im Argument gibt es dagegen kein Gesetz: \\(\\log(a+b)\\) lässt sich nicht zerlegen.",
         "bereich": "Algebra"
     },
     {
@@ -375,10 +375,7 @@
         loesung: 10.2, toleranz: 0.2,
         tipp: "Stelle beide Wachstumsfunktionen auf, setze sie gleich und logarithmiere.",
         loesungsweg: "\\(A(t) = 100 \\cdot 2^{t/3}\\), \\(B(t) = 400 \\cdot 1{,}1^{t}\\). Gleichsetzen und durch \\(100\\) teilen: $$2^{t/3} = 4 \\cdot 1{,}1^t$$ Logarithmieren: $$\\frac{t}{3}\\lg 2 = \\lg 4 + t \\lg 1{,}1$$ $$t\\,(0{,}1003 - 0{,}0414) = 0{,}602 \\Rightarrow t \\approx \\frac{0{,}602}{0{,}0590} \\approx 10{,}2$$ Nach gut \\(10\\) Stunden zieht A gleich – die Verdopplung alle drei Stunden entspricht rund \\(26\\,\\%\\) Wachstum pro Stunde und schlägt damit die \\(10\\,\\%\\) von B."
-      }
-
-
-    ];
+      }];
     </script>
     <script src="../p3-reflexion.js"></script>
     <script src="../spirale-engine.js"></script>

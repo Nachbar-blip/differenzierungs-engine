@@ -113,7 +113,7 @@
         ],
         korrekt: 1,
         tipp: "Punkt-Steigungsform: Steigung mal \\((x - x_0)\\) plus Funktionswert.",
-        loesungsweg: "Die Tangentengleichung lautet: \\(t(x) = f'(x_0) \\cdot (x - x_0) + f(x_0)\\)."
+        loesungsweg: "Die Tangente geht durch den Punkt \\((x_0|f(x_0))\\) und hat dort die Steigung \\(f'(x_0)\\). Eingesetzt in die Punkt-Steigungs-Form: $$t(x) = f'(x_0)(x-x_0) + f(x_0)$$ Probe: \\(t(x_0) = 0 + f(x_0)\\) ✓ Die <b>Ableitung</b> steht beim Klammerterm, der <b>Funktionswert</b> als Summand — diese Rollen werden leicht vertauscht."
       },
       {
         id: 12, level: 2, typ: "numerisch",
@@ -328,9 +328,7 @@
         loesung: -2.25, toleranz: 0.01,
         tipp: "Stelle die Normale auf und setze sie mit der Parabel gleich; eine Lösung kennst du bereits.",
         loesungsweg: "\\(f'(2) = 4\\), also \\(m_n = -\\frac{1}{4}\\) und $$n(x) = -\\frac{1}{4}(x-2) + 4 = -0{,}25x + 4{,}5$$ Gleichsetzen mit der Parabel: $$x^2 = -0{,}25x + 4{,}5 \\;\\Longleftrightarrow\\; 4x^2 + x - 18 = 0$$ $$x_{1/2} = \\frac{-1 \\pm \\sqrt{1 + 288}}{8} = \\frac{-1 \\pm 17}{8}$$ Das ergibt \\(x = 2\\) (der bekannte Punkt) und \\(x = -\\frac{18}{8} = -2{,}25\\)."
-      }
-
-    ];
+      }];
     </script>
     <script src="../p3-reflexion.js"></script>
     <script src="../spirale-engine.js"></script>

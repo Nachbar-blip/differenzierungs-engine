@@ -97,7 +97,7 @@
             optionen: ["\\(\\frac{1}{8}\\)", "\\(\\frac{3}{8}\\)", "\\(\\frac{1}{3}\\)", "\\(\\frac{5}{8}\\)"],
             korrekt: 1,
             tipp: "\\(3\\) günstige von \\(8\\) möglichen, gleich wahrscheinlichen Ergebnissen.",
-            loesungsweg: "\\(P(\\text{rot}) = \\frac{3}{8}\\)."
+            loesungsweg: "Nach Laplace: günstige durch mögliche Fälle, sofern alle Felder gleich groß sind. $$P(\\text{rot}) = \\frac38 = 0{,}375$$ Die Wahrscheinlichkeit für „nicht rot\" ist entsprechend \\(\\tfrac58\\); zusammen ergibt das \\(1\\)."
         },
         {
             id: 11, level: 2, typ: "mc",
@@ -315,9 +315,7 @@
         loesung: 10, toleranz: 0,
         tipp: "Erwartete Anzahl heißt: Wahrscheinlichkeit mal Anzahl der Würfe.",
         loesungsweg: "$$60 \\cdot \\frac{1}{6} = 10$$ Beobachtet wurden \\(18\\) – fast doppelt so viele. Das ist ein Hinweis darauf, dass der Würfel gezinkt sein könnte, aber kein Beweis: Auch faire Würfel liefern Abweichungen, die bei nur \\(60\\) Würfen recht groß ausfallen können."
-      }
-
-    ];
+      }];
     </script>
     <script src="../p3-reflexion.js"></script>
     <script src="../spirale-engine.js"></script>

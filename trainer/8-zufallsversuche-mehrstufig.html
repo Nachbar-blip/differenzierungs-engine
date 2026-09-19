@@ -31,7 +31,7 @@
       },
       {
         id: 2, level: 1, typ: "mc",
-        frage: "Welche Ergebnismenge gehört zum zweimaligen Muenzwurf?",
+        frage: "Welche Ergebnismenge gehört zum zweimaligen Münzwurf?",
         optionen: [
           "\\(\\Omega = \\{K, Z\\}\\)",
           "\\(\\Omega = \\{KK, KZ, ZK, ZZ\\}\\)",
@@ -47,7 +47,7 @@
         frage: "Ein Würfel wird zweimal geworfen. Wie viele Pfade hat das Baumdiagramm insgesamt?",
         loesung: 36, toleranz: 0,
         tipp: "Erster Wurf: 6 Möglichkeiten. Zweiter Wurf: 6 Möglichkeiten.",
-        loesungsweg: "Anzahl der Pfade: \\(6 \\cdot 6 = 36\\)."
+        loesungsweg: "Nach dem Zählprinzip werden die Möglichkeiten der Stufen multipliziert: $$6 \\cdot 6 = 36$$ Jeder der \\(6\\) Äste des ersten Wurfs verzweigt sich erneut in \\(6\\) — daher das Produkt und nicht die Summe."
       },
       {
         id: 4, level: 1, typ: "mc",
@@ -75,7 +75,7 @@
         optionen: ["6", "8", "12", "36"],
         korrekt: 2,
         tipp: "Die Münze hat 2, der Würfel 6 Möglichkeiten.",
-        loesungsweg: "Anzahl der Pfade: \\(2 \\cdot 6 = 12\\). Z. B. (K,1), (K,2), ..., (K,6), (Z,1), ..., (Z,6)."
+        loesungsweg: "Nach dem Zählprinzip werden die Möglichkeiten der beiden Stufen multipliziert: $$2 \\cdot 6 = 12$$ Die Pfade sind \\((K;1)\\) bis \\((K;6)\\) und \\((Z;1)\\) bis \\((Z;6)\\). Dass die Stufen unterschiedlich viele Ausgänge haben, ändert am Prinzip nichts — addiert wird nie."
       },
 
       // ===============================================================
@@ -158,7 +158,7 @@
         ],
         korrekt: 1,
         tipp: "Die 2. Pfadregel kommt zum Einsatz, wenn mehrere Pfade zu einem Ereignis gehören.",
-        loesungsweg: "2. Pfadregel (Summenregel): Gehoeren mehrere Pfade zu einem Ereignis, werden ihre Wahrscheinlichkeiten addiert."
+        loesungsweg: "2. Pfadregel (Summenregel): Gehören mehrere Pfade zu einem Ereignis, werden ihre Wahrscheinlichkeiten addiert."
       },
       {
         id: 14, level: 3, typ: "numerisch",
@@ -185,21 +185,21 @@
         ],
         korrekt: 1,
         tipp: "Welche Paare ergeben Summe 3? (1,2) und (2,1).",
-        loesungsweg: "Guenstige Pfade: (1,2) und (2,1). Jeder hat Wahrscheinlichkeit \\(\\frac{1}{36}\\). Summenregel: \\(P = \\frac{1}{36} + \\frac{1}{36} = \\frac{2}{36} = \\frac{1}{18}\\)."
+        loesungsweg: "Günstige Pfade: (1,2) und (2,1). Jeder hat Wahrscheinlichkeit \\(\\frac{1}{36}\\). Summenregel: \\(P = \\frac{1}{36} + \\frac{1}{36} = \\frac{2}{36} = \\frac{1}{18}\\)."
       },
       {
         id: 17, level: 3, typ: "numerisch",
         frage: "Münze und Würfel: Wie groß ist \\(P(\\text{Kopf und gerade Zahl})\\)? Gib das Ergebnis als Dezimalzahl ein.",
         loesung: 0.25, toleranz: 0.01,
         tipp: "Gerade Zahlen: 2, 4, 6. Das sind 3 Pfade, die zum Ereignis gehören.",
-        loesungsweg: "Guenstige Pfade: (K,2), (K,4), (K,6). Jeder hat \\(P = \\frac{1}{2} \\cdot \\frac{1}{6} = \\frac{1}{12}\\). Summenregel: \\(P = 3 \\cdot \\frac{1}{12} = \\frac{3}{12} = \\frac{1}{4} = 0{,}25\\)."
+        loesungsweg: "Günstige Pfade: (K,2), (K,4), (K,6). Jeder hat \\(P = \\frac{1}{2} \\cdot \\frac{1}{6} = \\frac{1}{12}\\). Summenregel: \\(P = 3 \\cdot \\frac{1}{12} = \\frac{3}{12} = \\frac{1}{4} = 0{,}25\\)."
       },
       {
         id: 18, level: 3, typ: "numerisch",
         frage: "Ein Würfel wird zweimal geworfen. Wie groß ist \\(P(\\text{Augensumme 7})\\)? Runde auf zwei Nachkommastellen.",
         loesung: 0.17, toleranz: 0.01,
         tipp: "Welche Paare ergeben Summe 7? Zähle alle: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1).",
-        loesungsweg: "Guenstige Pfade: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1) -- das sind 6 Stück. \\(P = \\frac{6}{36} = \\frac{1}{6} \\approx 0{,}17\\)."
+        loesungsweg: "Günstige Pfade: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1) -- das sind 6 Stück. \\(P = \\frac{6}{36} = \\frac{1}{6} \\approx 0{,}17\\)."
       },
 
       // ===============================================================
@@ -224,7 +224,7 @@
         ],
         korrekt: 0,
         tipp: "Wenn eine Kugel nicht zurückgelegt wird, ändert sich die Gesamtanzahl.",
-        loesungsweg: "Ohne Zurücklegen verringert sich die Gesamtanzahl und ggf. die Anzahl guenstiger Kugeln. Die Wahrscheinlichkeiten im Baum ändern sich von Stufe zu Stufe."
+        loesungsweg: "Ohne Zurücklegen verringert sich die Gesamtanzahl und ggf. die Anzahl günstiger Kugeln. Die Wahrscheinlichkeiten im Baum ändern sich von Stufe zu Stufe."
       },
       {
         id: 21, level: 4, typ: "numerisch",
@@ -270,13 +270,13 @@
         ],
         korrekt: 1,
         tipp: "Bei \"mindestens eine 6\" müsste man viele Pfade addieren. Das Gegenereignis \"keine 6\" hat oft nur einen Pfad.",
-        loesungsweg: "Beispiel: \\(P(\\text{mind. eine 6 bei 3 Wuerfen})\\) hat viele guenstige Pfade. Das Gegenereignis \\(P(\\text{keine 6})\\) hat nur einen: \\(\\frac{5}{6} \\cdot \\frac{5}{6} \\cdot \\frac{5}{6}\\). Dann: \\(P = 1 - P(\\text{keine 6})\\)."
+        loesungsweg: "Beispiel: \\(P(\\text{mind. eine 6 bei 3 Würfen})\\) hat viele günstige Pfade. Das Gegenereignis \\(P(\\text{keine 6})\\) hat nur einen: \\(\\frac{5}{6} \\cdot \\frac{5}{6} \\cdot \\frac{5}{6}\\). Dann: \\(P = 1 - P(\\text{keine 6})\\)."
       },
       {
         id: 26, level: 5, typ: "numerisch",
         frage: "Ein Würfel wird dreimal geworfen. Wie groß ist \\(P(\\text{mindestens eine 6})\\)? Runde auf zwei Nachkommastellen. $$P = 1 - P(\\text{keine 6})^3$$",
         loesung: 0.42, toleranz: 0.01,
-        tipp: "\\(P(\\text{keine 6 in einem Wurf}) = \\frac{5}{6}\\). Für drei Wuerfe: \\(\\left(\\frac{5}{6}\\right)^3\\).",
+        tipp: "\\(P(\\text{keine 6 in einem Wurf}) = \\frac{5}{6}\\). Für drei Würfe: \\(\\left(\\frac{5}{6}\\right)^3\\).",
         loesungsweg: "\\(P(\\text{keine 6}) = \\left(\\frac{5}{6}\\right)^3 = \\frac{125}{216} \\approx 0{,}579\\). Also \\(P(\\text{mind. eine 6}) = 1 - 0{,}579 \\approx 0{,}42\\)."
       },
       {
@@ -314,10 +314,10 @@
 
       {
         id: 31, level: 6, typ: "numerisch",
-        frage: "Aus einer Urne mit \\(5\\) roten und \\(3\\) blauen Kugeln wird zweimal <b>ohne</b> Zuruecklegen gezogen. Wie gross ist die Wahrscheinlichkeit, dass beide Kugeln rot sind? Runde auf vier Dezimalstellen.",
+        frage: "Aus einer Urne mit \\(5\\) roten und \\(3\\) blauen Kugeln wird zweimal <b>ohne</b> Zurücklegen gezogen. Wie gross ist die Wahrscheinlichkeit, dass beide Kugeln rot sind? Runde auf vier Dezimalstellen.",
         loesung: 0.3571, toleranz: 0.002,
-        tipp: "Beim zweiten Zug haben sich Zaehler und Nenner geaendert.",
-        loesungsweg: "$$P = \\frac{5}{8} \\cdot \\frac{4}{7} = \\frac{20}{56} = \\frac{5}{14} \\approx 0{,}3571$$ Mit Zuruecklegen waere es \\(\\left(\\frac58\\right)^2 \\approx 0{,}3906\\) - ohne Zuruecklegen ist die zweite rote Kugel etwas unwahrscheinlicher."
+        tipp: "Beim zweiten Zug haben sich Zähler und Nenner geändert.",
+        loesungsweg: "$$P = \\frac{5}{8} \\cdot \\frac{4}{7} = \\frac{20}{56} = \\frac{5}{14} \\approx 0{,}3571$$ Mit Zurücklegen wäre es \\(\\left(\\frac58\\right)^2 \\approx 0{,}3906\\) - ohne Zurücklegen ist die zweite rote Kugel etwas unwahrscheinlicher."
       },
       {
         id: 32, level: 6, typ: "numerisch",
@@ -348,19 +348,18 @@
       },
       {
         id: 35, level: 6, typ: "numerisch",
-        frage: "In einer Klasse sind 12 Maedchen und 8 Jungen. Es werden zufaellig 2 Schüler ohne Zurücklegen für ein Projekt ausgewaehlt. Wie groß ist \\(P(\\text{gemischtes Team})\\)? Runde auf zwei Nachkommastellen.",
+        frage: "In einer Klasse sind 12 Mädchen und 8 Jungen. Es werden zufällig 2 Schüler ohne Zurücklegen für ein Projekt ausgewählt. Wie groß ist \\(P(\\text{gemischtes Team})\\)? Runde auf zwei Nachkommastellen.",
         loesung: 0.51, toleranz: 0.01,
-        tipp: "Gegenereignis: \\(P(\\text{2 Maedchen}) + P(\\text{2 Jungen})\\). Oder direkt: \\(P(\\text{MJ}) + P(\\text{JM})\\).",
+        tipp: "Gegenereignis: \\(P(\\text{2 Mädchen}) + P(\\text{2 Jungen})\\). Oder direkt: \\(P(\\text{MJ}) + P(\\text{JM})\\).",
         loesungsweg: "\\(P(\\text{MJ}) = \\frac{12}{20} \\cdot \\frac{8}{19} = \\frac{96}{380}\\). \\(P(\\text{JM}) = \\frac{8}{20} \\cdot \\frac{12}{19} = \\frac{96}{380}\\). \\(P(\\text{gemischt}) = \\frac{192}{380} = \\frac{48}{95} \\approx 0{,}51\\)."
       },
       {
         id: 36, level: 6, typ: "numerisch",
-        frage: "In einer Urne liegen \\(3\\) rote und \\(x\\) blaue Kugeln. Zieht man zweimal <b>mit</b> Zuruecklegen, so betraegt die Wahrscheinlichkeit fuer zweimal Rot genau \\(\\frac{1}{9}\\). Wie viele blaue Kugeln liegen in der Urne?",
+        frage: "In einer Urne liegen \\(3\\) rote und \\(x\\) blaue Kugeln. Zieht man zweimal <b>mit</b> Zurücklegen, so beträgt die Wahrscheinlichkeit für zweimal Rot genau \\(\\frac{1}{9}\\). Wie viele blaue Kugeln liegen in der Urne?",
         loesung: 6, toleranz: 0,
-        tipp: "Stelle die Wahrscheinlichkeit mit \\(x\\) auf und loese die entstehende Gleichung.",
+        tipp: "Stelle die Wahrscheinlichkeit mit \\(x\\) auf und löse die entstehende Gleichung.",
         loesungsweg: "Bei \\(3 + x\\) Kugeln insgesamt gilt $$\\left(\\frac{3}{3+x}\\right)^2 = \\frac{1}{9} \\Rightarrow \\frac{3}{3+x} = \\frac{1}{3} \\Rightarrow 3 + x = 9 \\Rightarrow x = 6$$ Probe: Bei \\(3\\) von \\(9\\) Kugeln ist \\(P(\\text{rot}) = \\frac13\\) und \\(P(\\text{zweimal rot}) = \\frac19\\) ✓."
-      },
-    ];
+      },];
     </script>
     <script src="../p3-reflexion.js"></script>
     <script src="../spirale-engine.js"></script>

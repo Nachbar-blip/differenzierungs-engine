@@ -177,7 +177,7 @@
         loesung: 42.2,
         toleranz: 0.05,
         tipp: "Faktor \\(0{,}75\\) dreimal anwenden.",
-        loesungsweg: "\\(0{,}75^3 = 0{,}421875\\), also etwa \\(42{,}2\\,\\%\\)."
+        loesungsweg: "Abnahme um \\(25\\,\\%\\) bedeutet den Faktor \\(0{,}75\\), dreimal angewendet: $$0{,}75^3 = 0{,}421875 \\approx 42{,}2\\,\\%$$ Dreimal \\(25\\,\\%\\) sind also <b>nicht</b> \\(75\\,\\%\\) Verlust: Jede Abnahme bezieht sich auf den bereits verringerten Bestand."
       },
       {
         id: 14,
@@ -197,7 +197,7 @@
         loesung: 10.25,
         toleranz: 0.01,
         tipp: "Prozente addieren sich nicht – rechne mit dem Faktor.",
-        loesungsweg: "\\(1{,}05^2 = 1{,}1025\\), also \\(10{,}25\\,\\%\\) Gesamtwachstum (nicht \\(10\\,\\%\\))."
+        loesungsweg: "Prozentsätze dürfen nicht addiert werden; gerechnet wird mit dem Faktor: $$1{,}05^2 = 1{,}1025 \\;\\Rightarrow\\; 10{,}25\\,\\%$$ Die zusätzlichen \\(0{,}25\\,\\%\\) sind das Wachstum des Wachstums — im zweiten Jahr wird auch der Zuwachs des ersten verzinst."
       },
       {
         id: 16,
@@ -207,7 +207,7 @@
         loesung: 72.8,
         toleranz: 0.05,
         tipp: "\\(q^3\\) berechnen, dann \\(1\\) abziehen.",
-        loesungsweg: "\\(1{,}2^3 = 1{,}728\\), also \\(72{,}8\\,\\%\\)."
+        loesungsweg: "Drei Zeitschritte mit dem Faktor \\(1{,}2\\): $$1{,}2^3 = 1{,}728 \\;\\Rightarrow\\; 1{,}728 - 1 = 0{,}728 = 72{,}8\\,\\%$$ Die \\(1\\) muss abgezogen werden, weil nach dem <b>Zuwachs</b> gefragt ist, nicht nach dem Gesamtfaktor."
       },
       {
         id: 17,
@@ -436,8 +436,7 @@
         toleranz: 0.02,
         tipp: "\\(q^4 = 3\\), also \\(q = 3^{1/4}\\).",
         loesungsweg: "\\(q = \\sqrt[4]{3} \\approx 1{,}3161\\), also etwa \\(31{,}61\\,\\%\\) pro Jahr."
-      }
-    ];
+      }];
     </script>
     <script src="../p3-reflexion.js"></script>
     <script src="../spirale-engine.js"></script>
