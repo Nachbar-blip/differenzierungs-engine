@@ -22,3 +22,11 @@ quellen-raw/
 
 # Playwright test reports
 tests/reports/*.html
+
+# Schueler-spezifische Leistungsfeststellung (Nachpruefung) - bleibt lokal/privat
+Leistungsfeststellung/
+
+# Artefakte der Testlaeufe (pytest/Playwright) - entstehen bei jedem Lauf neu
+__pycache__/
+reports/
+tests/full_run.log
