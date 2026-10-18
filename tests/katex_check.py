@@ -2,7 +2,8 @@
 
 Die Playwright-Suite prueft KaTeX nur auf der ersten angezeigten Aufgabe; Fehler in den
 uebrigen 35 blieben unsichtbar (gefunden 2026-09-17 bei der Sichtpruefung Welle 1).
-Braucht einen laufenden Server (DIFFENGINE_BASE_URL, Standard http://127.0.0.1:8765).
+Braucht einen laufenden Server (DIFFENGINE_BASE_URL, Standard http://127.0.0.1:8766;
+8765 ist der Server von Ref4OHG).
 
     python tests/katex_check.py trainer/10-exp-funktionen.html ...
 """
@@ -13,7 +14,7 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
-BASE = os.environ.get("DIFFENGINE_BASE_URL", "http://127.0.0.1:8765")
+BASE = os.environ.get("DIFFENGINE_BASE_URL", "http://127.0.0.1:8766")
 
 
 def pruefe(page, name: str) -> list:

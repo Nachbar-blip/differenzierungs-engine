@@ -4,7 +4,12 @@ import os
 import pytest
 from playwright.sync_api import sync_playwright
 
-BASE_URL = os.environ.get("DIFFENGINE_BASE_URL", "https://nachbar-blip.github.io/differenzierungs-engine")
+# Befund 2026-09-30 (Mathepfade, Ref4OHG): Die Suite lief fest gegen die deployte GitHub-Pages-Seite.
+# Lokal geaenderte Aufgaben, Engine oder CSS wurden damit nie geprueft - "pytest gruen" war falsche
+# Sicherheit, solange das Repo der Veroeffentlichung voraus war. Vorgabe ist jetzt der lokale Server
+# (im Repo-Root: python -m http.server 8766 --bind 127.0.0.1; 8765 ist Ref4OHG); die deployte Seite
+# testet man ausdruecklich per DIFFENGINE_BASE_URL=https://nachbar-blip.github.io/differenzierungs-engine
+BASE_URL = os.environ.get("DIFFENGINE_BASE_URL", "http://127.0.0.1:8766")
 
 TRAINER_FILES = [
     "7-dreiecke-konstruktionen.html",
