@@ -43,7 +43,10 @@ BEFUNDE_JS = r"""() => {
       const l = Math.max(Math.min(...basen.map(b => b.left)), clipL);
       const r = Math.min(Math.max(...basen.map(b => b.right)), clipR);
       if (r > rechts + 1 || l < links - 1) out.push(['ragt', k.className, tex]);
-      // Umbrochene Formel: die Zeilen duerfen nicht aneinanderstossen (Nenner auf Zaehler)
+      // Umbrochene abgesetzte Formel: die Zeilen duerfen nicht aneinanderstossen (Nenner auf
+      // Zaehler). Inline-Formeln brechen nur um, wenn sie breiter sind als der Kasten; dort
+      // beruehren sich hoechstens die Kaesten der Bausteine im Zeilenabstand des Textes, die
+      // Zeichen nicht (Sichtpruefung) - darum nur abgesetzte.
       const reihen = [];
       basen.forEach((b, i) => {
         if (i && gleicheZeile(b, basen[i - 1])) {
@@ -51,7 +54,9 @@ BEFUNDE_JS = r"""() => {
           z.top = Math.min(z.top, b.top); z.bottom = Math.max(z.bottom, b.bottom);
         } else reihen.push({top: b.top, bottom: b.bottom});
       });
-      if (reihen.some((z, i) => i && z.top - reihen[i - 1].bottom < 2)) out.push(['eng', k.className, tex]);
+      if (f.closest('.katex-display') && reihen.some((z, i) => i && z.top - reihen[i - 1].bottom < 2)) {
+        out.push(['eng', k.className, tex]);
+      }
       if (f.closest('.katex-display')) continue;
       const breite = basen.reduce((s, b) => s + b.width, 0);
       const zeilen = basen.filter((b, i) => i === 0 || !gleicheZeile(b, basen[i - 1])).length;
