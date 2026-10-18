@@ -289,7 +289,7 @@ header p {
 
 /* KaTeX in MC options */
 .mc-option .katex {
-    font-size: 1.05em;
+    font-size: 1.15em;
 }
 
 /* ===== Feedback ===== */
@@ -336,7 +336,7 @@ header p {
 }
 
 .loesungsweg .katex {
-    font-size: 1.1em;
+    font-size: 1.15em;
 }
 
 .loesungsweg .katex-display {
@@ -405,7 +405,64 @@ header p {
 }
 
 .tipp-box .katex {
-    font-size: 1.05em;
+    font-size: 1.15em;
+}
+
+/* ===== Formelsatz (gilt in allen Kaesten: Frage, Optionen, Tipp, Loesungsweg) ===== */
+
+/* Formelgroesse in Optionen, Tipp und Loesungsweg: 1.15em (vorher 1.05 / 1.1) - Hochzahlen
+   lagen bei rund 11px, ein Minus im Exponenten war kaum zu erkennen. Nicht 1.21em (KaTeX-
+   Vorgabe): Das machte bei 360px ein Drittel mehr Formeln breiter als ihren Kasten. */
+
+/* Abgesetzte Formel, die breiter ist als der Kasten (Handy): zuerst an Relations- und
+   Rechenzeichen umbrechen (KaTeX verbietet das mit nowrap); was dann noch zu breit ist
+   (ein einzelner Bruch, eine Klammer), scrollt in sich, statt aus dem Kasten zu ragen.
+   overflow-y:hidden schneidet an der Kante ab, und die Formelzeile ist genau so hoch wie
+   ihr Inhalt - Nenner und Hochzahlen verloeren am Rand ein Pixel. Darum 4px Luft per
+   padding, durch negativen margin ausgeglichen; flow-root verhindert, dass dieser margin
+   mit dem Aussenabstand der Formel verschmilzt. Die Hoehe bleibt so unveraendert. */
+.katex-display {
+    display: flow-root;
+}
+
+.katex-display > .katex {
+    white-space: normal;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 4px 0;
+    margin: -4px 0;
+}
+
+/* Inline-Formel samt angeklebter Zeichen (spirale-engine.js: haltFormelnZusammen) bleibt
+   in einer Zeile - KaTeX erlaubt sonst hinter jedem Relations- und Rechenzeichen einen
+   Umbruch ("k <" am Zeilenende, "0" in der naechsten). inline-block statt nowrap: Ist die
+   Formel breiter als der Kasten, bricht sie weiter an diesen Stellen um, statt ihn zu
+   sprengen. width:max-content, damit der margin-right fuer das haengende Satzzeichen
+   (s. u.) nicht von der verfuegbaren Breite abgeht. */
+.formel {
+    display: inline-block;
+    width: max-content;
+    max-width: 100%;
+}
+
+/* Satzzeichen direkt hinter der Formel: ohne eigene Breite, damit es nie allein umbricht
+   (den Platz dahinter gibt die Engine der Formel als margin-right mit). */
+.formel-zeichen {
+    display: inline-block;
+    width: 0;
+    white-space: nowrap;
+}
+
+/* Inline-Formel, die auch umbrochen breiter ist als der Kasten (ein langer Bruch, eine
+   grosse Klammer - die Engine erkennt das beim Setzen): eigene Zeile, scrollt in sich.
+   Luft oben/unten wie bei der abgesetzten Formel. */
+.formel-breit {
+    display: block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 4px 0;
+    margin-top: -4px;
+    margin-bottom: -4px;
 }
 
 /* ===== Level-Nachrichten (Toast) ===== */

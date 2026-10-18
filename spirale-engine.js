@@ -162,7 +162,49 @@
         ],
         throwOnError: false
       });
+      haltFormelnZusammen(container);
     }
+  }
+
+  // Inline-Formel und angeklebte Zeichen ("\(x\)?", "(\(a\))", "\(y\)-Achse") gehoeren
+  // zusammen. Fuer den Browser ist die Formel ein Kasten, vor und hinter dem er umbrechen
+  // darf - das "?" stand dann allein in der naechsten Zeile. auto-render legt um jede
+  // Formel ein eigenes <span>: Es bekommt die Klasse .formel (spirale.css haelt es in
+  // einer Zeile) und nimmt die Zeichen ohne Leerraum davor und dahinter mit auf.
+  // Ein reines Satzzeichen dahinter bekommt die Breite 0 (.formel-zeichen) und haengt an der
+  // Formel; den Platz dahinter haelt ein gleich breiter Aussenabstand frei. Sonst stuende
+  // es wieder allein, sobald die Formel den Kasten genau fuellt.
+  function haltFormelnZusammen(container) {
+    container.querySelectorAll('.katex').forEach(function (formel) {
+      const huelle = formel.parentNode;
+      if (huelle.childNodes.length !== 1 || huelle.classList.contains('katex-display')) return;
+      huelle.classList.add('formel');
+      const vor = huelle.previousSibling;
+      const nach = huelle.nextSibling;
+      const davor = vor && vor.nodeType === 3 && /\S+$/.exec(vor.nodeValue);
+      const danach = nach && nach.nodeType === 3 && /^\S+/.exec(nach.nodeValue);
+      if (davor) huelle.insertBefore(vor.splitText(davor.index), formel);
+      // Passt die Formel auch umbrochen nicht in den Kasten (ein langer Bruch, eine grosse
+      // Klammer), scrollt sie in sich (.formel-breit), statt herauszuragen.
+      const rand = huelle.getBoundingClientRect().right + 1;
+      const ragt = function (teil) { return teil.getBoundingClientRect().right > rand; };
+      if (Array.prototype.some.call(formel.querySelectorAll('.katex-html > .base'), ragt)) {
+        huelle.classList.add('formel-breit');
+      }
+      if (danach) {
+        nach.splitText(danach[0].length);
+        const bereich = document.createRange();
+        bereich.selectNodeContents(nach);
+        const breite = /^[.,;:!?)\]]+$/.test(danach[0]) && bereich.getBoundingClientRect().width;
+        let ziel = huelle;
+        if (breite) {
+          ziel = huelle.appendChild(document.createElement('span'));
+          ziel.className = 'formel-zeichen';
+          huelle.style.marginRight = breite / parseFloat(getComputedStyle(huelle).fontSize) + 'em';
+        }
+        ziel.appendChild(nach);
+      }
+    });
   }
 
   // ── UI-Bausteine ────────────────────────────────────────────
