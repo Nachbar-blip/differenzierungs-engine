@@ -30,6 +30,7 @@ def test_erreichte_segmente_sind_eingefaerbt(page):
     leer = farben[5]
     assert all(f != leer for f in farben[:3]), farben
     assert farben[3] != farben[2], "aktives Segment hebt sich ab"
+    assert farben[0].startswith("rgb("), f"erreichtes Segment deckend, nicht {farben[0]}"
 
 
 def test_levelaufstieg_blinkt_am_segment_und_meldung_ist_gestylt(page):

@@ -85,7 +85,8 @@ header p {
 }
 
 .level-segment.completed {
-    background: rgba(34, 197, 94, 0.6);
+    /* deckend: das halbdurchsichtige Gruen verschwand auf dem gruenen Verlauf der Mathepfade */
+    background: #86efac;
 }
 
 .level-segment.active {

@@ -210,7 +210,7 @@ from pathlib import Path
 
 _BS = "\\\\"   # ein TeX-Backslash im Dateitext (TeX steht in JS-Strings)
 _KEIN_BETRAG = tuple(_BS + w for w in ("left", "right", "middle", "big", "Big", "bigg", "Bigg", "bigl", "bigr"))
-_BRUCHSTELLE = re.compile(r"[+=<>]|(?<![{(\[^_])-|" + re.escape(_BS)
+_BRUCHSTELLE = re.compile(r"[+=<>]|(?<![{(\[^_|])-|" + re.escape(_BS)
                           + r"(cdot|le|ge|leq|geq|neq|approx|pm|mp|times|Rightarrow|iff)(?![a-zA-Z])")
 
 
@@ -237,7 +237,7 @@ def _offene_betraege(formel):
             if offen is None:
                 offen = i
             else:
-                if _BRUCHSTELLE.search(formel[offen + 1:i]):
+                if _BRUCHSTELLE.search(formel[offen:i]):   # mit '|': Minus gleich dahinter ist Vorzeichen
                     out.append(formel[offen:i + 1])
                 offen = None
         i += 1
