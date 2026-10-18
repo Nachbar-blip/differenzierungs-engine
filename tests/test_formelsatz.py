@@ -8,10 +8,13 @@ Aufgabentexten - deshalb genuegen wenige Aufgaben je Mangel:
   seite    die Seite laesst sich waagerecht schieben
   umbruch  eine Inline-Formel, die in den Kasten passt, laeuft ueber zwei Zeilen ("k <" / "0")
   zeichen  ein angeklebtes Zeichen steht in einer anderen Zeile als die Formel ("?" allein)
+  eng      eine umbrochene Formel, deren Zeilen sich beruehren (Nenner stoesst auf den
+           Zaehler der naechsten Zeile) - erst durch den Umbruch abgesetzter Formeln moeglich
 
 Uebernommen aus Ref4OHG (gleiche Engine). Messung vor der Korrektur ueber alle 3631 Aufgaben
 mit Formeln aus allen 103 Trainern (inkl. Kl. 5/6), je 360 und 700 px: ragt 511, seite 357,
-umbruch 2214, zeichen 243 Befunde. Die Faelle unten sind eine Auswahl daraus.
+umbruch 2214, zeichen 243 Befunde. Die Faelle unten sind eine Auswahl daraus. "eng" fand erst
+die Sichtpruefung nach der Uebernahme.
 """
 
 import pytest
@@ -40,6 +43,15 @@ BEFUNDE_JS = r"""() => {
       const l = Math.max(Math.min(...basen.map(b => b.left)), clipL);
       const r = Math.min(Math.max(...basen.map(b => b.right)), clipR);
       if (r > rechts + 1 || l < links - 1) out.push(['ragt', k.className, tex]);
+      // Umbrochene Formel: die Zeilen duerfen nicht aneinanderstossen (Nenner auf Zaehler)
+      const reihen = [];
+      basen.forEach((b, i) => {
+        if (i && gleicheZeile(b, basen[i - 1])) {
+          const z = reihen[reihen.length - 1];
+          z.top = Math.min(z.top, b.top); z.bottom = Math.max(z.bottom, b.bottom);
+        } else reihen.push({top: b.top, bottom: b.bottom});
+      });
+      if (reihen.some((z, i) => i && z.top - reihen[i - 1].bottom < 2)) out.push(['eng', k.className, tex]);
       if (f.closest('.katex-display')) continue;
       const breite = basen.reduce((s, b) => s + b.width, 0);
       const zeilen = basen.filter((b, i) => i === 0 || !gleicheZeile(b, basen[i - 1])).length;
@@ -115,6 +127,8 @@ FAELLE = [
     ("10-func-lgs-3-gauss.html", 29, 700, "zeichen"),              # ","
     ("7-koerper-volumen.html", 30, 360, "zeichen"),                # ")" in MC-Option
     ("5-groessen-einheiten.html", 34, 360, "zeichen"),             # "(" davor, Kl. 5
+    # abgesetzte Formel mit Bruechen, nach der Uebernahme umbrochen: Nenner "5" stiess auf "785"
+    ("6-daten-kenngroessen.html", 35, 360, "eng"),                 # Kl. 6
 ]
 
 

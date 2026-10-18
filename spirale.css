@@ -442,6 +442,14 @@ header p {
     margin: -4px 0;
 }
 
+/* Umbrochene abgesetzte Formel: KaTeX-Bausteine (.base) sind genau so hoch wie ihr Inhalt,
+   hohe Teile (Brueche) bestimmen die Zeilenhoehe - die Zeilen stiessen aneinander, der
+   Nenner der einen beruehrte den Zaehler der naechsten. 0.15em Abstand oben und unten.
+   Niedrige Bausteine bleiben innerhalb der normalen Zeilenhoehe, aendern also nichts. */
+.katex-display > .katex > .katex-html > .base {
+    margin-block: 0.15em;
+}
+
 /* Inline-Formel samt angeklebter Zeichen (spirale-engine.js: haltFormelnZusammen) bleibt
    in einer Zeile - KaTeX erlaubt sonst hinter jedem Relations- und Rechenzeichen einen
    Umbruch ("k <" am Zeilenende, "0" in der naechsten). inline-block statt nowrap: Ist die
