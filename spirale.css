@@ -784,20 +784,25 @@ header p {
     }
 }
 
-/* ==================== P3-Pilot ==================== */
+/* ==================== P3: Fehlertyp-Reflexion (p3-reflexion.js) ==================== */
+/* Gleicher Block wie in der DifferenzierungsEngine; Aenderungen in beiden nachziehen. */
 
 .btn-session-ende {
   margin-left: 0.75rem;
+  margin-top: 16px;
   padding: 0.4rem 0.8rem;
+  min-height: 44px;
   font-size: 0.9rem;
   background: transparent;
   color: var(--spirale-primary);
   border: 1px solid var(--spirale-primary);
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
+  vertical-align: bottom;
 }
 
-.btn-session-ende:hover {
+.btn-session-ende:hover,
+.btn-session-ende:focus-visible {
   background: var(--spirale-primary);
   color: #fff;
 }
@@ -807,11 +812,25 @@ header p {
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-align: left;
 }
 
 .p3-rueckblick h2 {
   margin-top: 0;
   color: var(--spirale-primary);
+}
+
+.p3-nobr {
+  white-space: nowrap;
+}
+
+.p3-rueckblick h2:focus {
+  outline: none;
+}
+
+.p3-anleitung {
+  margin: 0.2rem 0 0;
+  color: #555;
 }
 
 .p3-kacheln {
@@ -825,6 +844,7 @@ header p {
   border-radius: 6px;
   padding: 0.8rem;
   background: #fafafa;
+  min-width: 0;
 }
 
 .p3-kachel-kopf {
@@ -837,8 +857,39 @@ header p {
 
 .p3-kachel-frage {
   font-size: 0.95rem;
+  line-height: 1.6;
   margin-bottom: 0.6rem;
   color: #333;
+}
+
+.p3-kachel-frage .katex {
+  font-size: 1.15em;
+}
+
+.p3-loesungsweg {
+  margin: 0 0 0.6rem;
+  font-size: 0.92rem;
+  color: #444;
+}
+
+.p3-loesungsweg summary {
+  cursor: pointer;
+  color: var(--spirale-primary);
+  font-weight: 600;
+  padding: 0.2rem 0;
+}
+
+.p3-loesungsweg-text {
+  margin-top: 0.4rem;
+  padding: 0.6rem 0.8rem;
+  background: #fff;
+  border-left: 3px solid var(--spirale-primary);
+  border-radius: 4px;
+  line-height: 1.6;
+}
+
+.p3-loesungsweg-text .katex {
+  font-size: 1.15em;
 }
 
 .p3-kachel-buttons {
@@ -849,10 +900,12 @@ header p {
 
 .p3-ft-btn {
   padding: 0.3rem 0.7rem;
+  min-height: 36px;
   font-size: 0.85rem;
   border: 1px solid #bbb;
   border-radius: 4px;
   background: #fff;
+  color: #222;
   cursor: pointer;
 }
 
@@ -917,6 +970,10 @@ header p {
   color: #555;
 }
 
+.p3-empfehlung:empty {
+  display: none;
+}
+
 .p3-leer-hinweis {
   color: #666;
   font-style: italic;
@@ -924,7 +981,13 @@ header p {
 }
 
 @media (max-width: 480px) {
+  /* Drei Kaesten ineinander kosten auf dem Handy Breite: abgesetzte Formeln im Loesungsweg
+     brachen sonst mitten im Term um ("3|k -" / "1|"), obwohl sie im Feedback passen. */
+  .p3-rueckblick { padding: 0.75rem; }
+  .p3-kachel { padding: 0.6rem 0.5rem; }
+  .p3-loesungsweg-text { padding: 0.5rem 0.4rem; border-left-width: 2px; }
   .p3-balken { grid-template-columns: repeat(1, 1fr); }
   .p3-kachel-buttons { flex-direction: column; }
-  .p3-ft-btn { width: 100%; }
+  .p3-ft-btn { width: 100%; min-height: 44px; }
+  .btn-session-ende { margin-left: 0; width: 100%; }
 }

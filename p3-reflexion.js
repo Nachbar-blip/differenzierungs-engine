@@ -1,13 +1,23 @@
 /**
- * p3-reflexion.js — Pattern-3-Fehlertyp-Reflexion für DiffEngine
+ * p3-reflexion.js — Pattern-3-Fehlertyp-Reflexion (DiffEngine, Ref4OHG)
+ *
+ * Gleiche Datei in beiden Repos; Aenderungen in beiden nachziehen.
  *
  * Aktiv nur wenn THEMA_CONFIG.p3Enabled === true.
- * Hakt sich per window.P3 in spirale-engine.js ein (optional chaining).
+ * Hakt sich per window.P3 in spirale-engine.js ein (die Engine prueft, ob P3 da ist).
  *
- * LocalStorage-Keys:
- *   p3-history-<THEMA_KEY>       — Level-6-Aufgaben-Historie dieser Session
- *   p3-reflexion-<THEMA_KEY>     — Klassifikations-Klicks
- *   p3-level6-reached-<THEMA_KEY> — Flag für permanente Button-Sichtbarkeit
+ * Gesammelt wird jede Aufgabe, die auf Level 6 gestellt war - auch die, mit der man
+ * wieder auf Level 5 faellt; nicht die Level-5-Aufgabe, mit der man aufsteigt.
+ * Ab dem ersten Erreichen von Level 6 steht im Feedback der Knopf zum Rueckblick.
+ *
+ * LocalStorage-Keys (<NS> = data-sammlung am <script>-Tag, z. B. "ref4ohg-"; leer in DiffEngine):
+ *   p3-<NS>history-<THEMA_KEY>        — Level-6-Aufgaben dieser Runde
+ *   p3-<NS>reflexion-<THEMA_KEY>      — Einordnungen (id@ts der Aufgabe -> Typ)
+ *   p3-<NS>level6-reached-<THEMA_KEY> — Flag fuer dauerhafte Knopf-Sichtbarkeit
+ *
+ * Warum der Namensraum: Alle Sammlungen liegen unter nachbar-blip.github.io und teilen sich
+ * damit einen localStorage. Ohne ihn zeigte der Rueckblick von Ref4OHG bei gleichem THEMA_KEY
+ * die Aufgaben-IDs aus der DiffEngine - mit fremden Aufgabentexten.
  */
 
 (function () {
@@ -22,7 +32,10 @@
     return;
   }
 
-  const STORAGE_LEVEL6_FLAG = 'p3-level6-reached-' + THEMA_KEY;
+  const skript = document.currentScript;
+  const NS = skript && skript.dataset.sammlung ? skript.dataset.sammlung + '-' : '';
+
+  const STORAGE_LEVEL6_FLAG = 'p3-' + NS + 'level6-reached-' + THEMA_KEY;
 
   function readLevel6Reached() {
     try {
@@ -40,13 +53,17 @@
     }
   }
 
-  const STORAGE_HISTORY = 'p3-history-' + THEMA_KEY;
+  const STORAGE_HISTORY = 'p3-' + NS + 'history-' + THEMA_KEY;
   const P3_HISTORY_MAX = 50;
 
   function readHistory() {
     try {
       const raw = localStorage.getItem(STORAGE_HISTORY);
-      return raw ? JSON.parse(raw) : [];
+      const history = raw ? JSON.parse(raw) : [];
+      // Ein kaputter Stand ('{}', 'null', fremde Eintraege) darf den Trainer nicht sperren
+      return Array.isArray(history)
+        ? history.filter(function (e) { return e && typeof e.id === 'number'; })
+        : [];
     } catch (e) {
       return [];
     }
@@ -69,12 +86,13 @@
     writeHistory(history);
   }
 
-  const STORAGE_REFLEXION = 'p3-reflexion-' + THEMA_KEY;
+  const STORAGE_REFLEXION = 'p3-' + NS + 'reflexion-' + THEMA_KEY;
 
   function readReflexion() {
     try {
       const raw = localStorage.getItem(STORAGE_REFLEXION);
-      return raw ? JSON.parse(raw) : {};
+      const ref = raw ? JSON.parse(raw) : {};
+      return ref && typeof ref === 'object' && !Array.isArray(ref) ? ref : {};
     } catch (e) {
       return {};
     }
@@ -88,26 +106,34 @@
     }
   }
 
+  // Schluessel einer Kachel: bleibt gleich, wenn vorn alte Eintraege herausfallen
+  // (der Index in der Historie verschob sich dabei, die Einordnung rutschte auf die Nachbaraufgabe)
+  function kachelKey(entry) {
+    return entry.id + '@' + entry.ts;
+  }
+
   function zaehleTypen() {
     const ref = readReflexion();
     const zaehler = { richtig: 0, rechenfehler: 0, idee: 0 };
-    Object.values(ref).forEach(function (typ) {
+    readHistory().forEach(function (entry) {
+      const typ = ref[kachelKey(entry)];
       if (typ && zaehler.hasOwnProperty(typ)) zaehler[typ]++;
     });
     return zaehler;
   }
 
+  // Der Rueckblick zeigt nur Level-6-Aufgaben: "eine Stufe hoeher" gibt es hier nicht.
   function berechneEmpfehlung(zaehler) {
     const total = zaehler.richtig + zaehler.rechenfehler + zaehler.idee;
     if (total < 3) return '';
     if (zaehler.idee >= 2) {
-      return 'Mehrere Verständnislücken — geh nochmal zu den Grundlagen / zur Definition.';
+      return 'Mehrere Verständnislücken — üb eine Stufe tiefer und lies dort die Lösungswege genau.';
     }
     if (zaehler.rechenfehler >= 3) {
       return 'Rechenfehler häufen sich — Tempo raus, jeden Schritt aufschreiben.';
     }
     if (zaehler.richtig / total > 0.7) {
-      return 'Läuft. Beim nächsten Mal eine Stufe höher arbeiten.';
+      return 'Läuft. Level 6 sitzt — nimm dir das nächste Thema vor.';
     }
     return '';
   }
@@ -122,13 +148,18 @@
     if (emp) emp.textContent = berechneEmpfehlung(zaehler);
   }
 
+  // data: { aufgabeId, correct, level (Stufe der Aufgabe), levelVor, levelNach }
   function onAnswered(data) {
     if (!data || typeof data.aufgabeId !== 'number') return;
-    if (data.levelNach !== 6) return;
 
-    if (data.levelVor < 6) {
+    const stufe = typeof data.level === 'number' ? data.level : data.levelVor;
+
+    // auch stufe === 6: Wer schon vor P3 auf Level 6 stand und gleich absteigt
+    if ((data.levelNach === 6 || stufe === 6) && !readLevel6Reached()) {
       writeLevel6Reached(true);
     }
+
+    if (stufe !== 6) return;
 
     pushHistory({
       id: data.aufgabeId,
@@ -145,7 +176,7 @@
     const btn = document.createElement('button');
     btn.id = 'btnSessionEnden';
     btn.className = 'btn btn-session-ende';
-    btn.textContent = 'Session beenden & Rückblick';
+    btn.textContent = 'Runde beenden & Rückblick';
     btn.addEventListener('click', openRueckblick);
     container.appendChild(btn);
   }
@@ -155,21 +186,58 @@
     return AUFGABEN.find(function (a) { return a.id === id; });
   }
 
-  function kuerzeFrage(text, maxLen) {
-    if (!text) return '';
-    if (text.length <= maxLen) return text;
-    return text.substring(0, maxLen - 1) + '…';
+  // Formeln wie in der Aufgabe setzen: die Engine-Funktion haelt Inline-Formeln und
+  // Satzzeichen zusammen; ohne sie (aeltere Engine) nur KaTeX.
+  function setzeFormeln(container) {
+    if (typeof window.spiraleRenderMath === 'function') {
+      window.spiraleRenderMath(container);
+    } else if (typeof renderMathInElement === 'function') {
+      renderMathInElement(container, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '\\(', right: '\\)', display: false }
+        ],
+        throwOnError: false
+      });
+    }
   }
+
+  function kachelHtml(entry, idx) {
+    const auf = findAufgabe(entry.id);
+    // Frage und Loesungsweg sind Trainer-HTML (wie in der Aufgabenkarte), nicht gekuerzt:
+    // Wer einordnen soll, muss die ganze Aufgabe vor sich haben.
+    const frage = auf ? auf.frage : '(Aufgabe nicht gefunden)';
+    const weg = auf && auf.loesungsweg
+      ? `<details class="p3-loesungsweg"><summary>Lösungsweg ansehen</summary>` +
+        `<div class="p3-loesungsweg-text">${auf.loesungsweg}</div></details>`
+      : '';
+    const badge = entry.correct
+      ? '<span class="p3-badge ok">&check; richtig</span>'
+      : '<span class="p3-badge fehler">&cross; falsch</span>';
+    const knopf = function (typ, text) {
+      return `<button type="button" class="p3-ft-btn" data-typ="${typ}" aria-pressed="false">${text}</button>`;
+    };
+    return `
+      <div class="p3-kachel" data-idx="${idx}" data-key="${kachelKey(entry)}">
+        <div class="p3-kachel-kopf">Aufgabe #${entry.id} ${badge}</div>
+        <div class="p3-kachel-frage">${frage}</div>
+        ${weg}
+        <div class="p3-kachel-buttons" role="group" aria-label="Wie lief diese Aufgabe?">
+          ${knopf('richtig', 'Konnte ich')}
+          ${knopf('rechenfehler', 'Rechenfehler')}
+          ${knopf('idee', 'Keine Idee')}
+        </div>
+      </div>
+    `;
+  }
+
+  const AUFGABEN_UI = '.aufgabe-karte, #feedback, #tippBox, #btnTipp, .keyboard-hint';
 
   function openRueckblick() {
     const app = document.getElementById('app');
     if (!app) return;
 
-    // Aufgaben-UI ausblenden
     const aufgabenKarte = app.querySelector('.aufgabe-karte');
-    const feedback = app.querySelector('#feedback');
-    if (aufgabenKarte) aufgabenKarte.style.display = 'none';
-    if (feedback) feedback.style.display = 'none';
 
     // Alten Rückblick entfernen
     const alt = document.getElementById('p3Rueckblick');
@@ -183,82 +251,81 @@
     if (history.length === 0) {
       container.innerHTML = `
         <h2>Rückblick</h2>
-        <p class="p3-leer-hinweis">Noch keine Aufgaben auf Level 6 in dieser Session.</p>
-        <button id="btnZurueckZumTraining" class="btn">Zurück zum Training</button>
+        <p class="p3-leer-hinweis">Noch keine Aufgaben auf Level 6 in dieser Runde.</p>
+        <button type="button" id="btnZurueckZumTraining" class="btn btn-weiter">Zurück zum Training</button>
       `;
     } else {
-      const kacheln = history.map(function (entry, idx) {
-        const auf = findAufgabe(entry.id);
-        const frage = auf ? kuerzeFrage(auf.frage, 120) : '(Aufgabe nicht gefunden)';
-        const badge = entry.correct
-          ? '<span class="p3-badge ok">&check; richtig</span>'
-          : '<span class="p3-badge fehler">&cross; falsch</span>';
-        return `
-          <div class="p3-kachel" data-idx="${idx}">
-            <div class="p3-kachel-kopf">Aufgabe #${entry.id} ${badge}</div>
-            <div class="p3-kachel-frage">${frage}</div>
-            <div class="p3-kachel-buttons">
-              <button class="p3-ft-btn" data-typ="richtig">Konnte ich</button>
-              <button class="p3-ft-btn" data-typ="rechenfehler">Rechenfehler</button>
-              <button class="p3-ft-btn" data-typ="idee">Keine Idee</button>
-            </div>
-          </div>
-        `;
-      }).join('\n');
-
       container.innerHTML = `
-        <h2>Rückblick auf deine Level-6-Aufgaben</h2>
-        <div class="p3-kacheln">${kacheln}</div>
+        <h2>Rückblick auf deine <span class="p3-nobr">Level-6-Aufgaben</span></h2>
+        <p class="p3-anleitung">Wie lief jede Aufgabe? Ordne sie ein — unten siehst du dein Muster.</p>
+        <div class="p3-kacheln">${history.map(kachelHtml).join('\n')}</div>
         <aside class="p3-sammler" id="p3Sammler">
-          <h3>Dein Muster in dieser Session</h3>
+          <h3>Dein Muster in dieser Runde</h3>
           <div class="p3-balken" id="p3Balken">
             <div class="p3-segment" data-typ="richtig"><span class="p3-label">Konnte ich</span><span class="p3-zahl" id="p3-z-richtig">0</span></div>
             <div class="p3-segment" data-typ="rechenfehler"><span class="p3-label">Rechenfehler</span><span class="p3-zahl" id="p3-z-rechenfehler">0</span></div>
             <div class="p3-segment" data-typ="idee"><span class="p3-label">Keine Idee</span><span class="p3-zahl" id="p3-z-idee">0</span></div>
           </div>
-          <p class="p3-empfehlung" id="p3Empfehlung"></p>
+          <p class="p3-empfehlung" id="p3Empfehlung" aria-live="polite"></p>
         </aside>
-        <button id="btnZurueckZumTraining" class="btn">Zurück zum Training</button>
+        <button type="button" id="btnZurueckZumTraining" class="btn btn-weiter">Zurück zum Training</button>
       `;
     }
 
-    app.appendChild(container);
+    // Aufgaben-UI erst ausblenden, wenn der Rueckblick steht. Tipp und Tastenhinweis gehoeren
+    // zur versteckten Aufgabe (die Tasten sind waehrenddessen gesperrt). naechsteAufgabe baut
+    // beim Zurueckgehen alles neu auf.
+    app.querySelectorAll(AUFGABEN_UI).forEach(function (el) { el.style.display = 'none'; });
 
-    // KaTeX-Rendering in Rückblick (wenn vorhanden)
-    if (typeof renderMathInElement === 'function') {
-      renderMathInElement(container, {
-        delimiters: [
-          { left: '$$', right: '$$', display: true },
-          { left: '\\(', right: '\\)', display: false }
-        ],
-        throwOnError: false
-      });
+    // an die Stelle der Aufgabenkarte, nicht ans Ende hinter "Fortschritt zuruecksetzen"
+    if (aufgabenKarte) {
+      app.insertBefore(container, aufgabenKarte);
+    } else {
+      app.appendChild(container);
     }
+    setzeFormeln(container);
+    markiereGespeicherte(container);
+    updateSammelbalken();
 
-    // Klick-Listener (Task 17 + 19)
     bindFehlertypButtons(container);
     bindZurueckButton(container);
+
+    container.scrollIntoView({ block: 'start' });
+    const erste = container.querySelector('h2');
+    if (erste) {
+      erste.tabIndex = -1;
+      erste.focus({ preventScroll: true });
+    }
+  }
+
+  function markiere(kachel, typ) {
+    kachel.querySelectorAll('.p3-ft-btn').forEach(function (b) {
+      const an = b.dataset.typ === typ;
+      b.classList.toggle('p3-ft-gewaehlt', an);
+      b.setAttribute('aria-pressed', an ? 'true' : 'false');
+    });
+  }
+
+  // Nach einem Reload im Rueckblick stehen die Einordnungen noch im Speicher.
+  function markiereGespeicherte(container) {
+    const ref = readReflexion();
+    container.querySelectorAll('.p3-kachel').forEach(function (kachel) {
+      const typ = ref[kachel.dataset.key];
+      if (typ) markiere(kachel, typ);
+    });
   }
 
   function bindFehlertypButtons(container) {
-    const buttons = container.querySelectorAll('.p3-ft-btn');
-    buttons.forEach(function (btn) {
+    container.querySelectorAll('.p3-ft-btn').forEach(function (btn) {
       btn.addEventListener('click', function () {
         const kachel = btn.closest('.p3-kachel');
         if (!kachel) return;
 
-        const idx = kachel.dataset.idx;
-        const typ = btn.dataset.typ;
-
         const ref = readReflexion();
-        ref[idx] = typ;
+        ref[kachel.dataset.key] = btn.dataset.typ;
         writeReflexion(ref);
 
-        kachel.querySelectorAll('.p3-ft-btn').forEach(function (b) {
-          b.classList.remove('p3-ft-gewaehlt');
-        });
-        btn.classList.add('p3-ft-gewaehlt');
-
+        markiere(kachel, btn.dataset.typ);
         updateSammelbalken();
       });
     });
@@ -280,10 +347,7 @@
       // Aufgaben-UI wieder zeigen
       const app = document.getElementById('app');
       if (!app) return;
-      const aufgabenKarte = app.querySelector('.aufgabe-karte');
-      const feedback = app.querySelector('#feedback');
-      if (aufgabenKarte) aufgabenKarte.style.display = '';
-      if (feedback) feedback.style.display = '';
+      app.querySelectorAll(AUFGABEN_UI).forEach(function (el) { el.style.display = ''; });
 
       // Nächste Aufgabe direkt triggern — Engine-API
       if (typeof window.naechsteAufgabe === 'function') {
@@ -292,8 +356,20 @@
     });
   }
 
+  // "Fortschritt zuruecksetzen" der Engine: auch Runde, Einordnungen und Level-6-Flag
+  function reset() {
+    try {
+      localStorage.removeItem(STORAGE_HISTORY);
+      localStorage.removeItem(STORAGE_REFLEXION);
+      localStorage.removeItem(STORAGE_LEVEL6_FLAG);
+    } catch (e) { /* no-op */ }
+    const rueckblick = document.getElementById('p3Rueckblick');
+    if (rueckblick) rueckblick.remove();
+  }
+
   window.P3 = {
     onAnswered: onAnswered,
-    renderSessionEndButton: renderSessionEndButton
+    renderSessionEndButton: renderSessionEndButton,
+    reset: reset
   };
 })();

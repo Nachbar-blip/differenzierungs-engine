@@ -468,14 +468,19 @@
     renderStats();
     saveState();
 
-    // P3-Hook: Antwort registrieren (nur wenn P3 aktiv)
+    // P3-Hook: Antwort registrieren (nur wenn P3 aktiv). level = Stufe der Aufgabe.
     if (window.P3 && typeof window.P3.onAnswered === 'function') {
       window.P3.onAnswered({
         aufgabeId: currentAufgabe.id,
         correct: correct,
+        level: currentAufgabe.level,
         levelVor: spiralResult.prevLevel,
         levelNach: spiralResult.newLevel
       });
+      // Knopf erst jetzt: showFeedback lief vor dem Hook, das Level-6-Flag kann eben erst gesetzt sein
+      if (typeof window.P3.renderSessionEndButton === 'function') {
+        window.P3.renderSessionEndButton(document.getElementById('feedback'));
+      }
     }
   }
 
@@ -548,11 +553,6 @@
     if (btnWeiter) {
       btnWeiter.addEventListener('click', naechsteAufgabe);
       setTimeout(() => btnWeiter.focus(), 50);
-    }
-
-    // P3-Hook: Session-beenden-Button rendern (wenn P3 aktiv)
-    if (window.P3 && typeof window.P3.renderSessionEndButton === 'function') {
-      window.P3.renderSessionEndButton(fb);
     }
 
     // Tipp-Button ausblenden
@@ -653,6 +653,10 @@
     localStorage.removeItem(STORAGE_KEY);
     state = JSON.parse(JSON.stringify(DEFAULT_STATE));
     saveState();
+    // P3 gehoert zum Fortschritt (Runde, Einordnungen, Level-6-Flag)
+    if (window.P3 && typeof window.P3.reset === 'function') {
+      window.P3.reset();
+    }
 
     const aufgabe = getNextAufgabe();
     if (aufgabe) renderAufgabe(aufgabe);
@@ -667,6 +671,11 @@
         (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA');
 
       if (inInput) return;
+
+      // P3-Rueckblick offen oder Fokus auf seinem Knopf: Die Tasten gehoeren nicht der
+      // (versteckten) Aufgabe - sonst schaltet Enter dahinter weiter, statt den Knopf zu druecken
+      if (document.getElementById('p3Rueckblick') ||
+          (e.target && e.target.id === 'btnSessionEnden')) return;
 
       // Enter → Prüfen oder Weiter
       if (e.key === 'Enter') {
@@ -735,6 +744,8 @@
   window.naechsteAufgabe = naechsteAufgabe;
   window.zeigeTipp = zeigeTipp;
   window.resetFortschritt = resetFortschritt;
+  // Formelsatz wie in der Aufgabenkarte (p3-reflexion.js setzt damit den Rueckblick)
+  window.spiraleRenderMath = renderMath;
   // Lese-Hook fuer die E2E-Suite (gemischte Optionsreihenfolge sichtbar machen)
   window.spiraleAktuelleAufgabe = function () { return currentAufgabe; };
 
