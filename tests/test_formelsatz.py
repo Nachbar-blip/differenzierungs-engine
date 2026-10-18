@@ -198,3 +198,55 @@ def test_abgesetzte_formel_wird_nicht_beschnitten(page):
     for w in werte:
         assert w["luftOben"] >= 3 and w["luftUnten"] >= 3, w
         assert abs(w["hoehe"] - w["inhalt"]) < 0.5, w
+
+
+# --- Betraege in abgesetzten Formeln (statisch, ohne Browser) -------------
+# Abgesetzte Formeln duerfen auf dem Handy umbrechen (spirale.css), KaTeX bricht dabei auf
+# oberster Ebene an Relations- und Rechenzeichen. Ein Betrag |3k - 1| ist fuer KaTeX keine
+# Einheit und brach innen um ("3|k -" / "1|"). Gruppiert ({|3k - 1|}) bleibt er zusammen.
+
+import re
+from pathlib import Path
+
+_BS = "\\\\"   # ein TeX-Backslash im Dateitext (TeX steht in JS-Strings)
+_KEIN_BETRAG = tuple(_BS + w for w in ("left", "right", "middle", "big", "Big", "bigg", "Bigg", "bigl", "bigr"))
+_BRUCHSTELLE = re.compile(r"[+=<>]|(?<![{(\[^_])-|" + re.escape(_BS)
+                          + r"(cdot|le|ge|leq|geq|neq|approx|pm|mp|times|Rightarrow|iff)(?![a-zA-Z])")
+
+
+def _offene_betraege(formel):
+    """Betraege auf oberster Klammerebene, die innen umbrechen koennen und nicht gruppiert sind."""
+    tiefe, offen, i, out = 0, None, 0, []
+    while i < len(formel):
+        if formel.startswith(_BS + _BS, i):
+            i += 4
+            continue
+        if formel.startswith(_BS, i):
+            i += 2
+            m = re.match(r"[a-zA-Z]+", formel[i:])
+            if m:
+                i += m.end()
+                if formel[:i].endswith(_KEIN_BETRAG) and formel.startswith("|", i):
+                    i += 1
+            else:
+                i += 1
+            continue
+        c = formel[i]
+        tiefe += (c == "{") - (c == "}")
+        if c == "|" and tiefe == 0:
+            if offen is None:
+                offen = i
+            else:
+                if _BRUCHSTELLE.search(formel[offen + 1:i]):
+                    out.append(formel[offen:i + 1])
+                offen = None
+        i += 1
+    return out
+
+
+def test_betraege_in_abgesetzten_formeln_sind_gruppiert():
+    befunde = []
+    for datei in sorted((Path(__file__).resolve().parent.parent / "trainer").glob("*.html")):
+        for formel in re.findall(r"\$\$(.*?)\$\$", datei.read_text(encoding="utf-8"), re.S):
+            befunde += [f"{datei.name}: {b}" for b in _offene_betraege(formel)]
+    assert not befunde, "als {|...|} schreiben:\n" + "\n".join(befunde)

@@ -21,7 +21,14 @@
     6: 'wagnerisch'
   };
 
-  const STORAGE_KEY = 'spirale-' + THEMA_KEY;
+  // Alle Sammlungen liegen unter nachbar-blip.github.io und teilen sich einen localStorage.
+  // Gleichnamige Trainer (DiffEngine und Ref4OHG) teilten sich so Level und beantwortete
+  // Aufgaben. Mit data-sammlung am <script>-Tag bekommt eine Sammlung eigene Keys
+  // ("spirale-ref4ohg-<THEMA_KEY>"); ohne Attribut bleibt es bei "spirale-<THEMA_KEY>".
+  const skript = document.currentScript;
+  const SAMMLUNG = skript && skript.dataset.sammlung ? skript.dataset.sammlung : '';
+  const ALTER_KEY = 'spirale-' + THEMA_KEY;
+  const STORAGE_KEY = SAMMLUNG ? 'spirale-' + SAMMLUNG + '-' + THEMA_KEY : ALTER_KEY;
 
   const DEFAULT_STATE = {
     level: 3,
@@ -43,7 +50,11 @@
 
   function loadState() {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
+      // Umzug: Stand unter dem alten Key einmalig uebernehmen. Der alte Key bleibt stehen,
+      // er kann einer anderen Sammlung gehoeren.
+      let raw = localStorage.getItem(STORAGE_KEY);
+      const umzug = !raw && STORAGE_KEY !== ALTER_KEY;
+      if (umzug) raw = localStorage.getItem(ALTER_KEY);
       if (raw) {
         state = JSON.parse(raw);
         // Sicherstellen, dass alle Felder vorhanden sind
@@ -52,6 +63,7 @@
             state[key] = DEFAULT_STATE[key];
           }
         }
+        if (umzug) saveState();
       } else {
         state = JSON.parse(JSON.stringify(DEFAULT_STATE));
       }
@@ -102,7 +114,7 @@
       // Zwei Lesarten pruefen: Standard (Komma als Dezimaltrennzeichen) und
       // deutsche Tausenderschreibweise ("1.628,89", "12.800") — sonst wird die
       // normgerechte Eingabe grosser Zahlen faelschlich als falsch gewertet
-      const lesarten = [parseFloat(roh.replace(',', '.'))];
+      const lesarten = [parseFloat(roh.replace(/,/g, '.'))];
       if (/^-?\d{1,3}(\.\d{3})+(,\d+)?$/.test(roh)) {
         lesarten.push(parseFloat(roh.replace(/\./g, '').replace(',', '.')));
       }
@@ -220,7 +232,7 @@
     let segments = '';
     for (let i = 1; i <= 6; i++) {
       const active = i === state.level ? ' active' : '';
-      const filled = i <= state.level ? ' filled' : '';
+      const filled = i <= state.level ? ' completed' : '';
       segments += `<div class="level-segment${active}${filled}" data-level="${i}">${i}</div>`;
     }
     return `<div class="level-anzeige">
@@ -298,7 +310,7 @@
       const seg = container.querySelector(`[data-level="${i}"]`);
       if (!seg) continue;
       seg.classList.toggle('active', i === state.level);
-      seg.classList.toggle('filled', i <= state.level);
+      seg.classList.toggle('completed', i <= state.level);
     }
 
     const label = container.querySelector('.level-label');
@@ -466,7 +478,6 @@
 
     // Stats aktualisieren
     renderStats();
-    saveState();
 
     // P3-Hook: Antwort registrieren (nur wenn P3 aktiv). level = Stufe der Aufgabe.
     if (window.P3 && typeof window.P3.onAnswered === 'function') {
@@ -563,12 +574,12 @@
   }
 
   function animateLevelChange(isUp) {
-    const anzeige = $('.level-anzeige');
-    if (!anzeige) return;
+    const activeSeg = $(`.level-segment.active`);
+    if (!activeSeg) return;
 
     const cls = isUp ? 'flash-up' : 'flash-down';
-    anzeige.classList.add(cls);
-    setTimeout(() => anzeige.classList.remove(cls), 800);
+    activeSeg.classList.add(cls);
+    setTimeout(() => activeSeg.classList.remove(cls), 800);
   }
 
   // ── Nächste Aufgabe ─────────────────────────────────────────
