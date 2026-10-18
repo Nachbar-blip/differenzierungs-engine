@@ -103,6 +103,9 @@ FAELLE = [
     # Inline-Formel in einer MC-Option, die auch umbrochen nicht passt (Wurzel aus Bruch in Klammer)
     ("12-lk-stoch-beurteilende-statistik.html", 7, 360, "ragt"),
     ("12-lk-geom-kreis-kreis.html", 1, 360, "seite"),
+    # ohne Formel: ein Wort breiter als sein Kasten (Titel, Zahlwort in MC-Option, Kl. 5)
+    ("10-stoch-verteilungen.html", 1, 360, "seite"),
+    ("5-zahlen-stellenwert.html", 14, 360, "seite"),
     ("10-stoch-verteilungen.html", 1, 360, "umbruch"),             # Fragetext
     ("10-exp-funktionen.html", 16, 700, "umbruch"),
     ("10-trig-einheitskreis.html", 30, 360, "umbruch"),            # MC-Option

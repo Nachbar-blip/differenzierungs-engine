@@ -21,6 +21,15 @@ body {
 .spirale-container {
     max-width: 800px;
     margin: 0 auto;
+    /* Ein einzelnes Wort, das breiter ist als sein Kasten ("Wahrscheinlichkeitsverteilungen"
+       im Titel, "dreihundertzwanzigtausendvierhundertsechsundfuenfzig" in einer Option),
+       machte auf dem Handy die ganze Seite waagerecht verschiebbar. Lange Woerter werden
+       darum nach Silben getrennt (lang="de"); kurze bleiben ganz (hyphenate-limit-chars:
+       erst ab 12 Zeichen, je Teil mindestens 5). Nur was sich so nicht trennen laesst,
+       bricht break-word im Wort um - sonst aendert es nichts. */
+    hyphens: auto;
+    hyphenate-limit-chars: 12 5 5;
+    overflow-wrap: break-word;
 }
 
 /* ===== Header ===== */
