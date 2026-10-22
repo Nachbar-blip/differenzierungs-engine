@@ -30,3 +30,6 @@ Leistungsfeststellung/
 __pycache__/
 reports/
 tests/full_run.log
+
+# interner Abgleich mit dem Materialindex (nennt Quellen) - nur lokal
+docs/plans/2026-04-11-indexer-abgleich-report.md
